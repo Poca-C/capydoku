@@ -1,5 +1,6 @@
 import SwiftUI
 import UIKit
+import UIKit.UIGestureRecognizerSubclass
 import CapydokuCore
 
 struct PuzzleBoardView: UIViewRepresentable {
@@ -20,6 +21,7 @@ struct PuzzleBoardView: UIViewRepresentable {
     let onMark: ([Int]) -> Void
     var onBeginSwipe: () -> Void = {}
     var onEndSwipe: (Bool) -> Void = { _ in }
+    var onInputActivityChange: (UUID, Bool) -> Void = { _, _ in }
 
     func makeUIView(context: Context) -> PuzzleGridUIView {
         let view = PuzzleGridUIView()
@@ -34,7 +36,45 @@ struct PuzzleBoardView: UIViewRepresentable {
                          tutorialTargets: tutorialTargets, locked: locked, hideAccessibility: hideAccessibility,
                          language: language,
                          onToggle: onToggle, onSubmit: onSubmit, onMark: onMark,
-                         onBeginSwipe: onBeginSwipe, onEndSwipe: onEndSwipe)
+                         onBeginSwipe: onBeginSwipe, onEndSwipe: onEndSwipe,
+                         onInputActivityChange: onInputActivityChange)
+    }
+
+    static func dismantleUIView(_ uiView: PuzzleGridUIView, coordinator: ()) {
+        uiView.cancelInputActivity()
+    }
+}
+
+/// UIKit resets a recognizer only after its recognition attempt reaches a
+/// terminal state. In particular, touchesEnded is too early for double taps.
+/// https://developer.apple.com/documentation/uikit/uigesturerecognizer/reset()
+private final class BoardActivityTapRecognizer: UITapGestureRecognizer {
+    private let activityID = UUID()
+    weak var activity: BoardInputActivity?
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
+        activity?.begin(activityID)
+        super.touchesBegan(touches, with: event)
+    }
+
+    override func reset() {
+        super.reset()
+        activity?.end(activityID)
+    }
+}
+
+private final class BoardActivityPanRecognizer: UIPanGestureRecognizer {
+    private let activityID = UUID()
+    weak var activity: BoardInputActivity?
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
+        activity?.begin(activityID)
+        super.touchesBegan(touches, with: event)
+    }
+
+    override func reset() {
+        super.reset()
+        activity?.end(activityID)
     }
 }
 
@@ -55,6 +95,9 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     private var onMark: (([Int]) -> Void)?
     private var onBeginSwipe: (() -> Void)?
     private var onEndSwipe: ((Bool) -> Void)?
+    private var onInputActivityChange: ((UUID, Bool) -> Void)?
+    let inputActivity = BoardInputActivity()
+    private var inputRecognizers: [UIGestureRecognizer] = []
     private var swipeFeedbackActive = false
     private var cells: [PuzzleCellAccessibilityElement] = []
     private enum DragAxis { case pending, horizontal, vertical, invalid }
@@ -76,16 +119,22 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         isMultipleTouchEnabled = false
         isAccessibilityElement = false
         accessibilityIdentifier = "puzzle_board"
-        let single = UITapGestureRecognizer(target: self, action: #selector(singleTap(_:)))
-        let double = UITapGestureRecognizer(target: self, action: #selector(doubleTap(_:)))
+        inputActivity.onChange = { [weak self] owner, busy in self?.onInputActivityChange?(owner, busy) }
+        let single = BoardActivityTapRecognizer(target: self, action: #selector(singleTap(_:)))
+        let double = BoardActivityTapRecognizer(target: self, action: #selector(doubleTap(_:)))
+        single.activity = inputActivity
+        double.activity = inputActivity
         double.numberOfTapsRequired = 2
         single.require(toFail: double)
-        let pan = UIPanGestureRecognizer(target: self, action: #selector(pan(_:)))
+        let pan = BoardActivityPanRecognizer(target: self, action: #selector(pan(_:)))
+        pan.activity = inputActivity
         pan.maximumNumberOfTouches = 1
         pan.delegate = self
         addGestureRecognizer(single)
         addGestureRecognizer(double)
         addGestureRecognizer(pan)
+        inputRecognizers = [single, double, pan]
+        updateInputAvailability()
         contentMode = .redraw
         feedbackOverlay.isUserInteractionEnabled = false
         feedbackOverlay.isAccessibilityElement = false
@@ -101,7 +150,8 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
                    language: AppLanguage = .simplifiedChinese,
                    onToggle: @escaping (Int) -> Void, onSubmit: @escaping (Int) -> Void,
                    onMark: @escaping ([Int]) -> Void,
-                   onBeginSwipe: @escaping () -> Void = {}, onEndSwipe: @escaping (Bool) -> Void = { _ in }) {
+                   onBeginSwipe: @escaping () -> Void = {}, onEndSwipe: @escaping (Bool) -> Void = { _ in },
+                   onInputActivityChange: @escaping (UUID, Bool) -> Void = { _, _ in }) {
         let sameBoard = self.size == size && self.regions == regions && self.sessionID == sessionID
         let addedFound = found.subtracting(self.found)
         let addedErrors = errors.subtracting(self.errors)
@@ -121,9 +171,10 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
             effect.removeFromSuperview()
         }
         if !sameBoard || locked {
-            finishSwipe(cancelled: true)
-            dragStart = nil
-            visited.removeAll()
+            // Disable the actual recognizers as well as clearing our ledger:
+            // an old tap must not arrive after a new session has been unlocked.
+            self.locked = true
+            cancelInputActivity()
         }
         self.size = max(1, size)
         self.sessionID = sessionID
@@ -144,6 +195,10 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         self.onMark = onMark
         self.onBeginSwipe = onBeginSwipe
         self.onEndSwipe = onEndSwipe
+        // Cancellation above must notify the outgoing session's callback.
+        // Only subsequent attempts belong to this updated board configuration.
+        self.onInputActivityChange = onInputActivityChange
+        updateInputAvailability()
         refreshAccessibility()
         setNeedsDisplay()
         if hasConfigured, sameBoard, effectsEnabled, window != nil, !UIAccessibility.isReduceMotionEnabled {
@@ -200,11 +255,11 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     private func region(_ index: Int) -> Int { regions.indices.contains(index) ? regions[index] : 0 }
 
     @objc private func singleTap(_ gesture: UITapGestureRecognizer) {
-        guard !locked, let index = cell(at: gesture.location(in: self)), !found.contains(index) else { return }
+        guard gesture.state == .recognized, !locked, let index = cell(at: gesture.location(in: self)), !found.contains(index) else { return }
         onToggle?(index)
     }
     @objc private func doubleTap(_ gesture: UITapGestureRecognizer) {
-        guard !locked, let index = cell(at: gesture.location(in: self)), !found.contains(index) else { return }
+        guard gesture.state == .recognized, !locked, let index = cell(at: gesture.location(in: self)), !found.contains(index) else { return }
         submit(index)
     }
 
@@ -273,7 +328,22 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
 
     override func didMoveToWindow() {
         super.didMoveToWindow()
-        if window == nil { finishSwipe(cancelled: true); clearFeedback(); pendingSubmission = nil }
+        if window == nil { cancelInputActivity(); clearFeedback(); pendingSubmission = nil }
+        else { updateInputAvailability() }
+    }
+
+    func cancelInputActivity() {
+        for recognizer in inputRecognizers where recognizer.isEnabled { recognizer.isEnabled = false }
+        finishSwipe(cancelled: true)
+        dragStart = nil
+        dragAxis = .pending
+        visited.removeAll()
+        inputActivity.cancelAll()
+    }
+
+    private func updateInputAvailability() {
+        let enabled = !locked && window != nil
+        for recognizer in inputRecognizers where recognizer.isEnabled != enabled { recognizer.isEnabled = enabled }
     }
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool { false }

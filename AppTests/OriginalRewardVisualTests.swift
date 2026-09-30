@@ -255,4 +255,31 @@ final class OriginalRewardVisualTests: XCTestCase {
         XCTAssertEqual(rig.model.session, before)
         XCTAssertNil(rig.model.errorMessage)
     }
+
+    @MainActor func testLevelStartOfferRendersConfiguredVisibleDisabledAndHiddenStates() async throws {
+        let url = try XCTUnwrap(Bundle(for: Self.self).url(forResource: "reference-gameplay-synthetic-row", withExtension: "json"))
+        let source = try JSONDecoder().decode(ReferenceLevelGameplay.self, from: Data(contentsOf: url))
+        for state in [ReferenceButtonState.enabled, .disabled, .locked, .hidden] {
+            let rig = try OriginalRewardVisualRig { model in
+                var row = source
+                row.adsEnabled = true
+                row.levelStartFreeAd.enabled = true
+                row.levelStartFreeAd.visible = state != .hidden
+                row.levelStartFreeAd.buttonState = state
+                row.levelStartFreeAd.freeCount = 1
+                row.levelStartFreeAd.rewardCount = 1
+                model.config = DemoConfig(referenceGameplay: row)
+                model.start(level: 1)
+            }
+            defer { rig.close() }
+            let before = try XCTUnwrap(rig.model.session)
+            XCTAssertEqual(rig.model.levelStartFreeVisible, state != .hidden)
+            XCTAssertEqual(rig.model.levelStartFreeAvailable, state == .enabled)
+            XCTAssertNil(rig.model.errorMessage, "The synthetic state must pass actual persistence validation.")
+            try await pause(120)
+            try capture(rig, "level-start-offer-\(state.rawValue)-synthetic-config")
+            XCTAssertEqual(rig.model.session, before)
+            XCTAssertTrue(rig.model.progress.rewardLedger.isEmpty)
+        }
+    }
 }

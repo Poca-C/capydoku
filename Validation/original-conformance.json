@@ -339,8 +339,8 @@
       ],
       "title": "单击撤销、双击优先、轴向滑动、无自动 X",
       "status": "implemented",
-      "implemented": "UIKit 棋盘手势层及 GameSession 已实现；错误 X 已改为可手动撤销。",
-      "gap": "本轮最终构建的双设备完整手势回归待汇总；旧测试不能替代当前包验证。",
+      "implemented": "UIKit 棋盘手势层及 GameSession 已实现；错误 X 已改为可手动撤销。 0.2.13重新用实际UIKit识别器执行单击/双击/横纵滑动/斜滑/划出棋盘，随后免费提示与零库存模拟广告入口均正常；现行包九步教学亦重验。",
+      "gap": "新增手势保护及后续道具流程的实际范围见本轮记录；真实多指同时操作、低版本及真机手感仍待验，不将档案棋盘手势fixture当当前全关卡试玩。",
       "evidence": [
         "App/Views/PuzzleBoardView.swift",
         "Sources/CapydokuCore/GameSession.swift",
@@ -413,7 +413,7 @@
       ],
       "title": "直接找答案与道具操作幂等",
       "status": "verified",
-      "implemented": "随机揭示未找到答案、计分、不扣生命、不自动 X；消费及奖励重复回调保护存在。 0.2.9 direct扣次、揭示、分数和使用记录原子保存，最后一步通关同事务；写失败不发布成功效果，重复回调不重复执行。",
+      "implemented": "随机揭示未找到答案、计分、不扣生命、不自动 X；消费及奖励重复回调保护存在。 0.2.9 direct扣次、揭示、分数和使用记录原子保存，最后一步通关同事务；写失败不发布成功效果，重复回调不重复执行。 0.2.13新增原文[97]的未完成手势保护：单/双击识别等待和持续滑动期间不发起道具或广告；当前操作继续，识别器结束后放行。",
       "gap": "正式道具参数及真机压力仍待验；本轮本地库存与模拟奖励、故障恢复路径通过。",
       "evidence": [
         "Sources/CapydokuCore/GameSession.swift",
@@ -422,7 +422,10 @@
         "AppTests/AppModelTests.swift",
         "AppTests/BuffUseDurabilityTests.swift",
         "Tests/CapydokuCoreTests/HintUsePersistenceTests.swift",
-        "Validation/original-verification.json"
+        "Validation/original-verification.json",
+        "App/Services/BoardInputActivity.swift",
+        "AppTests/BoardInputActivityTests.swift",
+        "AppTests/BoardInputRewardGateTests.swift"
       ]
     },
     {
@@ -477,13 +480,16 @@
       ],
       "title": "关卡开始免费广告配置与入口",
       "status": "partial",
-      "implemented": "客户端入口、奖励类型/数量、领取配额、库存和中断台账已接入。",
-      "gap": "triggerOrder 未消费；缺真实逐关配置和同冻结版本默认配置，当前无实际入口配置可验。",
+      "implemented": "客户端入口、奖励类型/数量、领取配额、库存和中断台账已接入。 0.2.13分离visible与可领取条件，disabled/locked/配额耗尽保留入口但禁用；hidden和全局关闭广告才隐藏。合成配置的保存校验、奖励防重与实际页面已验证。",
+      "gap": "开局triggerOrder仍未消费；缺真实逐关配置及冻结参考的顺序定义，不把合成测试数据当正式值。",
       "evidence": [
         "App/AppModel.swift",
         "Sources/CapydokuCore/PlayerProgress.swift",
         "Sources/CapydokuCore/SaveStore.swift",
-        "Reference/gameplay-row-worksheet.json"
+        "Reference/gameplay-row-worksheet.json",
+        "AppTests/BoardInputRewardGateTests.swift",
+        "AppTests/OriginalRewardVisualTests.swift",
+        "Docs/original-interaction/manifest.json"
       ]
     },
     {
@@ -1093,7 +1099,7 @@
       ],
       "title": "签到页面、周期礼盒和自然日状态",
       "status": "partial",
-      "implemented": "左上返回、抱牌角色、Day Streak及横向状态按附图布局；0.2.7补周期末达到领取条件时的短弹跳/粒子，后台/离页/领取后清理。当前配置下领取幂等、重入及保存通过；测试预置前六日实际签到业务记录。",
+      "implemented": "左上返回、抱牌角色、Day Streak及横向状态按附图布局；0.2.7补周期末达到领取条件时的短弹跳/粒子，后台/离页/领取后清理。当前配置下领取幂等、重入及保存通过；测试预置前六日实际签到业务记录。 0.2.13已领取/未来日期变为只读禁用状态；领取按钮补焦点绑定，关闭失败提示的路由有实际目标，避免重复按钮反馈。",
       "gap": "真实奖励/补签条件、正式项目时区和服务器时间未冻结，正式签到对标待验。",
       "evidence": [
         "App/Views/SupportingViews.swift",
@@ -1114,7 +1120,7 @@
       ],
       "title": "44pt、状态、焦点恢复与可读性",
       "status": "partial",
-      "implemented": "17e已验证Settings/模拟广告/结算底层控件隔离、关闭后恢复原盘、主要按钮44×44及长文案自然增高；有效Button动作发反馈，明暗背景分别配文字色。Hint保留只读棋盘并路由解释焦点。",
+      "implemented": "17e已验证Settings/模拟广告/结算底层控件隔离、关闭后恢复原盘、主要按钮44×44及长文案自然增高；有效Button动作发反馈，明暗背景分别配文字色。Hint保留只读棋盘并路由解释焦点。 0.2.13补开关与签到功能文字对比，按下开关文字仍大于4.5:1；装饰色保留。",
       "gap": "Hint的XCTest语义树仍可包含禁用背景内容，不据此宣称VoiceOver可达或不可达；真实VoiceOver焦点顺序、所有动态字体档位、最低系统和真机仍待验。",
       "evidence": [
         "App/Views/RootView.swift",
@@ -1127,7 +1133,8 @@
         "Validation/original-verification.json",
         "Validation/test-runs/original-ui-artwork-021-final.xcresult",
         "Validation/test-runs/original-ui-scrim-021-final.xcresult",
-        "Docs/original-reference/manifest.json"
+        "Docs/original-reference/manifest.json",
+        "AppTests/FunctionalContrastTests.swift"
       ]
     },
     {
@@ -1638,7 +1645,7 @@
       ],
       "title": "iOS技术验收与SDK升级兼容",
       "status": "partial",
-      "implemented": "0.2.12通过129项Core及17Pro193项App（不含OriginalUIContractTests）。新增中英切换/冷启动/同盘恢复UI在17Pro和17e均通过；17Pro另复验英文首页层级和首次同意流程，实际UI共5+3项通过。28张当前双语实际截图逐张检查，Release无签名构建及两模拟器正常安装启动完成。历史重装、正式难度和真机状态不重标。",
+      "implemented": "0.2.13通过17Pro213项App（不含OriginalUIContractTests），含手势聚合/生命周期、道具入口门控、免费入口状态和功能文字对比测试；实际模拟器操作与截图范围见验证记录。Core和关卡未改，129项Core证据保留0.2.12版本，历史真机/重装/难度不重标。 17Pro和17e各4项选定UI回归通过；未签名Release和正常安装启动通过，两台现有存档逐字节保留。该结果不是全量UI、真机或上架验收。",
       "gap": "这不是全部设备/全部场景通过。真机、最低系统、真实SDK升级及远程关闭尚未验证；组合UI运行的启动冲突及成功单独重验已如实记录。",
       "evidence": [
         "Validation/original-verification.json",
@@ -1661,7 +1668,11 @@
         "AppTests/AppLanguageStateTests.swift",
         "Tests/CapydokuCoreTests/AppLanguagePersistenceTests.swift",
         "UITests/AppLanguageUITests.swift",
-        "Docs/chinese-language/manifest.json"
+        "Docs/chinese-language/manifest.json",
+        "AppTests/BoardInputActivityTests.swift",
+        "AppTests/BoardInputRewardGateTests.swift",
+        "AppTests/FunctionalContrastTests.swift",
+        "Docs/original-interaction/manifest.json"
       ]
     },
     {
@@ -1962,5 +1973,5 @@
       ]
     }
   ],
-  "currentBuild": "0.2.12 (15)"
+  "currentBuild": "0.2.13 (16)"
 }

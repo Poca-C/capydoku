@@ -1,0 +1,109 @@
+{
+  "build": "0.2.13 (16)",
+  "date": "2026-10-01",
+  "sourceParagraphs": [
+    88,
+    97,
+    299,
+    303,
+    305,
+    306
+  ],
+  "captureMethod": "Actual RootView hosted screenshots for synthetic offer states; actual simulator UI tests for check-in/settings.",
+  "limitations": [
+    "Offer configurations are synthetic, not frozen Pawdoku values.",
+    "Images do not prove physical multi-touch, VoiceOver focus or full dynamic-font acceptance."
+  ],
+  "images": [
+    {
+      "path": "Docs/original-interaction/pro-level-start-offer-hidden-synthetic-config.png",
+      "device": "iPhone 17 Pro",
+      "test": "OriginalRewardVisualTests/testLevelStartOfferRendersConfiguredVisibleDisabledAndHiddenStates()",
+      "source": "Validation/test-runs/original-0213-app-attachments/90A2F9CD-DA8D-40DE-AA9A-0D30C56EE1A6.png",
+      "bundle": "Validation/test-runs/original-0213-app-final.xcresult",
+      "sha256": "413ca8f0d8d279128381d0334b30062420cdb4a961c61105f98a4491c2d6dc54",
+      "visualReview": "Individually viewed: visible disabled/locked offer kept readable, hidden absent, check-in claimed/unclaimed states intact. No confirmed clipping in sampled state."
+    },
+    {
+      "path": "Docs/original-interaction/pro-level-start-offer-locked-synthetic-config.png",
+      "device": "iPhone 17 Pro",
+      "test": "OriginalRewardVisualTests/testLevelStartOfferRendersConfiguredVisibleDisabledAndHiddenStates()",
+      "source": "Validation/test-runs/original-0213-app-attachments/3433DA57-667C-4E2C-8CAE-47EFCF9116F3.png",
+      "bundle": "Validation/test-runs/original-0213-app-final.xcresult",
+      "sha256": "cc83d5a5443ad13fb06e0f88528cde922508e53b1418a39f27a999333312a538",
+      "visualReview": "Individually viewed: visible disabled/locked offer kept readable, hidden absent, check-in claimed/unclaimed states intact. No confirmed clipping in sampled state."
+    },
+    {
+      "path": "Docs/original-interaction/pro-level-start-offer-disabled-synthetic-config.png",
+      "device": "iPhone 17 Pro",
+      "test": "OriginalRewardVisualTests/testLevelStartOfferRendersConfiguredVisibleDisabledAndHiddenStates()",
+      "source": "Validation/test-runs/original-0213-app-attachments/8E9238D3-F780-4FBE-B4D3-CD57614E9E4D.png",
+      "bundle": "Validation/test-runs/original-0213-app-final.xcresult",
+      "sha256": "cc83d5a5443ad13fb06e0f88528cde922508e53b1418a39f27a999333312a538",
+      "visualReview": "Individually viewed: visible disabled/locked offer kept readable, hidden absent, check-in claimed/unclaimed states intact. No confirmed clipping in sampled state."
+    },
+    {
+      "path": "Docs/original-interaction/pro-level-start-offer-enabled-synthetic-config.png",
+      "device": "iPhone 17 Pro",
+      "test": "OriginalRewardVisualTests/testLevelStartOfferRendersConfiguredVisibleDisabledAndHiddenStates()",
+      "source": "Validation/test-runs/original-0213-app-attachments/4413EA8E-BF16-4396-BE39-2B5AFCF84906.png",
+      "bundle": "Validation/test-runs/original-0213-app-final.xcresult",
+      "sha256": "0343f0cc57629f6d5fc7955e8e489bd622fee3ac4fc75f667bebb1cee4a9b6ea",
+      "visualReview": "Individually viewed: visible disabled/locked offer kept readable, hidden absent, check-in claimed/unclaimed states intact. No confirmed clipping in sampled state."
+    },
+    {
+      "path": "Docs/original-interaction/pro-claimed-date-remains-visible-and-disabled.png",
+      "device": "iPhone 17 Pro",
+      "test": "CapydokuUITests/testDailyClaimIsGrantedOnceAndPersists()",
+      "source": "Validation/test-runs/original-0213-pro-attachments/51A708C8-48DD-4E7D-99E5-3D5244EEA7CD.png",
+      "bundle": "Validation/test-runs/original-0213-ui-pro.xcresult",
+      "sha256": "d8c61f7df387adb5261d44e24ca6b217c462663928440ba67d092491dafc0b7d",
+      "visualReview": "Individually viewed: visible disabled/locked offer kept readable, hidden absent, check-in claimed/unclaimed states intact. No confirmed clipping in sampled state."
+    },
+    {
+      "path": "Docs/original-interaction/pro-current-check-in-44pt-touch-targets.png",
+      "device": "iPhone 17 Pro",
+      "test": "CapydokuUITests/testDailyClaimIsGrantedOnceAndPersists()",
+      "source": "Validation/test-runs/original-0213-pro-attachments/716339B0-B2CD-46E5-82B6-78EDD1011D45.png",
+      "bundle": "Validation/test-runs/original-0213-ui-pro.xcresult",
+      "sha256": "b5eb2db56583b74703e8504f13c445b64816f4b7b2f25606518e85630f6a5685",
+      "visualReview": "Individually viewed: visible disabled/locked offer kept readable, hidden absent, check-in claimed/unclaimed states intact. No confirmed clipping in sampled state."
+    },
+    {
+      "path": "Docs/original-interaction/17e-chinese-checkin.png",
+      "device": "iPhone 17e",
+      "test": "AppLanguageUITests/testDefaultChineseSwitchAndRelaunchPreserveBoard()",
+      "source": "Validation/test-runs/original-0213-17e-attachments/35C0B927-D0B7-44E7-9EF7-7FEC3504864A.png",
+      "bundle": "Validation/test-runs/original-0213-ui-17e.xcresult",
+      "sha256": "b1ad323e67c3d3f60aa80470d410a84c4c0c9184f9a0923138861302184ced83",
+      "visualReview": "Individually viewed on iPhone 17e: 0 and 连续签到天数 are dark orange and clear; all seven Chinese weekday labels fit on one row, with the current 周三 orange and future weekdays dark gray-blue. The orange current-day outline, blue future-day circles and seventh-day gift are intact. Character art and back control fit without clipping. A screenshot alone does not prove disabled interaction or touch-target size."
+    },
+    {
+      "path": "Docs/original-interaction/17e-claimed-date-remains-visible-and-disabled.png",
+      "device": "iPhone 17e",
+      "test": "CapydokuUITests/testDailyClaimIsGrantedOnceAndPersists()",
+      "source": "Validation/test-runs/original-0213-17e-attachments/5FC7800D-A295-4DE5-84DA-7EE300D1962A.png",
+      "bundle": "Validation/test-runs/original-0213-ui-17e.xcresult",
+      "sha256": "229cc60aa3bbe3428cc0705ecbf61b67e4318c78a631618492cf81612935e6a8",
+      "visualReview": "Individually viewed on iPhone 17e: the claimed first day remains an orange circle with a clear white tick, the future-day circles retain their artwork, and 1 / Day Streak plus all seven weekday labels remain readable without clipping. Character celebration particles do not obscure the date row. Disabled interaction is verified by the source UI test, not by pixels alone."
+    },
+    {
+      "path": "Docs/original-interaction/17e-settings-on-off-chinese.png",
+      "device": "iPhone 17e",
+      "test": "CapydokuUITests/testSettingsStayIndependentAndPersist()",
+      "source": "Validation/test-runs/original-0213-17e-attachments/1FAF98E9-4E52-408D-8E14-E19CED94EDC9.png",
+      "bundle": "Validation/test-runs/original-0213-ui-17e.xcresult",
+      "sha256": "cfb7919e5e8eb6d637a0df6f348ba9f28dcd3fec0f1e58aca7d0b396ae10ce7e",
+      "visualReview": "Individually viewed on iPhone 17e: Chinese Settings, Language, Feedback and Restart labels fit without clipping; the music switch shows white 关 on a brown track and the other three show white 开 on green tracks. The selected 简体中文 button appears paler than the English selected-state capture; this sample may include the language-button press/transition and is not evidence of its settled-state contrast. The disabled home-screen Restart remains pale as expected."
+    },
+    {
+      "path": "Docs/original-interaction/17e-settings-on-off-english.png",
+      "device": "iPhone 17e",
+      "test": "CapydokuUITests/testSettingsStayIndependentAndPersist()",
+      "source": "Validation/test-runs/original-0213-17e-attachments/9442D6D7-3E03-49FE-AB6A-45DF75A56F7D.png",
+      "bundle": "Validation/test-runs/original-0213-ui-17e.xcresult",
+      "sha256": "3f124f19286d9a2ff287daafca15bde43e2449596671b8c454a33d997576547a",
+      "visualReview": "Individually viewed on iPhone 17e: OFF is readable on the brown music track and all three ON labels are readable on green tracks. Settings, Language, Feedback and the two language choices fit with no overlap or clipping; the selected English choice is white on dark orange. Restart is visibly disabled on the home screen."
+    }
+  ]
+}

@@ -156,6 +156,34 @@ final class CapydokuUITests: XCTestCase {
         expectValue(app.otherElements["lives"], "3")
     }
 
+    func testToolsResumeAfterNativeTapDoubleTapAndPanRecognizersFinish() {
+        // Exercises the real UIKit recognizers. Policy tests separately cover
+        // a competing tool request while any recognizer is still pending.
+        for kind in ["single", "double", "horizontal", "vertical", "diagonal", "outside"] {
+            launchGame()
+            switch kind {
+            case "single": cell(0).tap(); expectValue(cell(0), "marked")
+            case "double": cell(1).doubleTap(); expectValue(cell(1), "found")
+            case "horizontal": drag(from: 0, to: 3); expectValue(cell(3), "marked")
+            case "vertical": drag(from: 0, to: 12); expectValue(cell(12), "marked")
+            case "diagonal": drag(from: 0, to: 15); XCTAssertEqual(boardValues(), Array(repeating: "empty", count: 16))
+            default:
+                cell(0).coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+                    .press(forDuration: 0.05, thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: 0.01, dy: 0.45)))
+            }
+            let before = boardValues()
+            tapButton("hint")
+            XCTAssertTrue(app.buttons["hint_apply"].waitForExistence(timeout: 5), "Completed \(kind) must release the input gate.")
+            tapButton("hint_close")
+            XCTAssertEqual(boardValues(), before)
+            // The second use is the zero-inventory, simulated-ad path.
+            tapButton("hint")
+            XCTAssertTrue(app.buttons["hint_apply"].waitForExistence(timeout: 8), "\(kind) must not leave advertisements permanently blocked.")
+            tapButton("hint_close")
+            XCTAssertEqual(boardValues(), before)
+        }
+    }
+
     func testHintApplyAddsExclusionsWithoutRevealingOrLosingLives() {
         launchGame()
         tapButton("hint")
@@ -310,6 +338,7 @@ final class CapydokuUITests: XCTestCase {
         expectValue(music, initialMusic == "1" ? "0" : "1")
         XCTAssertEqual(others.map { app.descendants(matching: .any).matching(identifier: $0).firstMatch.value as? String }, before, "Each preference should be independent.")
         let saved = music.value as? String
+        attachScreen("Settings functional ON and OFF contrast English")
         tapButton("settings_done")
         app.terminate()
         app.launchArguments = ["-ui-testing", "-legacy-fixture"]
@@ -318,6 +347,9 @@ final class CapydokuUITests: XCTestCase {
         XCTAssertTrue(music.waitForExistence(timeout: 5))
         XCTAssertEqual(music.value as? String, saved)
         XCTAssertEqual(others.map { app.descendants(matching: .any).matching(identifier: $0).firstMatch.value as? String }, before)
+        tapButton("language_zh_hans")
+        XCTAssertEqual(music.value as? String, saved)
+        attachScreen("Settings functional ON and OFF contrast Chinese")
     }
 
     func testDailyClaimIsGrantedOnceAndPersists() {
@@ -339,6 +371,9 @@ final class CapydokuUITests: XCTestCase {
         XCTAssertFalse(app.alerts.firstMatch.exists, "Successful check-in uses its date state and a short celebration, without an extra confirmation popup.")
         XCTAssertEqual(app.staticTexts["checkin_streak"].label, "1")
         XCTAssertFalse(app.buttons["claim_reward"].exists)
+        XCTAssertFalse(app.buttons["checkin_day_1"].isEnabled, "A claimed date is a read-only status.")
+        XCTAssertFalse(app.buttons["checkin_day_2"].isEnabled, "A future date cannot be claimed.")
+        attachScreen("Claimed date remains visible and disabled")
         app.terminate()
         app.launchArguments = ["-ui-testing"]
         app.launch()

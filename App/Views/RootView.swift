@@ -274,7 +274,10 @@ struct GameView: View {
                                         locked: s.status != .playing || !canPresentFeedback || model.tutorial?.action == "read",
                                         onToggle: model.toggle, onSubmit: model.submit, onMark: model.mark,
                                         onBeginSwipe: model.beginSwipeFeedback,
-                                        onEndSwipe: { model.endSwipeFeedback(cancelled: $0) })
+                                        onEndSwipe: { model.endSwipeFeedback(cancelled: $0) },
+                                        onInputActivityChange: { token, active in
+                                            model.setBoardInputActivity(token, active: active, sessionID: s.id)
+                                        })
                             .frame(width: boardSide, height: boardSide)
                         Spacer(minLength: 10)
                         if model.hint != nil {
@@ -285,13 +288,17 @@ struct GameView: View {
                         } else {
                             VStack(spacing: 0) {
                                 Group {
-                                    if model.levelStartFreeAvailable {
+                                    if model.levelStartFreeVisible {
                                         CapyButton(id: "level_start_free", action: model.levelStartFree) {
                                             HStack(spacing: 6) {
-                                                Image(systemName: "play.rectangle.fill").foregroundColor(CapyPalette.video)
+                                                Image(systemName: "play.rectangle.fill")
+                                                    .foregroundColor(model.levelStartFreeAvailable ? CapyPalette.video : CapyPalette.checkInSecondaryText)
                                                 Text(language.text("Free tool")).font(.system(size: 13, weight: .bold, design: .rounded))
                                             }.padding(.horizontal, 16).frame(minHeight: 44)
-                                        }.buttonStyle(CapyPressStyle()).accessibilityIdentifier("level_start_free")
+                                        }.buttonStyle(CapyPressStyle(disabledOpacity: 1))
+                                            .disabled(!model.levelStartFreeAvailable)
+                                            .foregroundColor(model.levelStartFreeAvailable ? CapyPalette.ink : CapyPalette.checkInSecondaryText)
+                                            .accessibilityIdentifier("level_start_free")
                                     } else { Color.clear.accessibilityHidden(true) }
                                 }.frame(height: 44)
                                 HStack(spacing: 68) {

@@ -91,7 +91,7 @@ struct IconSwitchStyle: ToggleStyle {
                     Text(language.text(configuration.isOn ? "ON" : "OFF")).font(.system(size: 12, weight: .heavy, design: .rounded))
                         .foregroundColor(.white).frame(maxWidth: .infinity)
                     if configuration.isOn { Circle().fill(.white).frame(width: 17, height: 17) }
-                }.padding(3).background(configuration.isOn ? CapyPalette.green : CapyPalette.line).clipShape(Capsule())
+                }.padding(3).background(configuration.isOn ? CapyPalette.switchOnTrack : CapyPalette.switchOffTrack).clipShape(Capsule())
             }.padding(.horizontal, 5).padding(.vertical, 9).frame(maxWidth: .infinity)
                 .background(CapyPalette.paper)
                 .overlay(RoundedRectangle(cornerRadius: 17).stroke(CapyPalette.line, lineWidth: 1))
@@ -102,7 +102,6 @@ struct IconSwitchStyle: ToggleStyle {
 
 struct CheckInView: View {
     @Environment(\.appLanguage) private var language
-    @Environment(\.capyButtonActivation) private var activate
     @EnvironmentObject private var model: AppModel
     @Environment(\.accessibilityReduceMotion) private var systemReduceMotion
     // Only hosted-view verification passes an override; normal use follows
@@ -160,8 +159,8 @@ struct CheckInView: View {
                     .overlay { if showRewardBurst { CheckInParticleBurst(progress: burstProgress).allowsHitTesting(false) } }
                     .accessibilityHidden(true)
                 Text("\(shownStreak)").font(.system(size: 78, weight: .heavy, design: .rounded))
-                    .foregroundColor(CapyPalette.orange).padding(.top, 8).accessibilityIdentifier("checkin_streak").capyFocus("checkin_streak")
-                Text(language.text("Day Streak")).font(.system(size: 26, weight: .heavy, design: .rounded)).foregroundColor(CapyPalette.orange)
+                    .foregroundColor(CapyPalette.actionOrange).padding(.top, 8).accessibilityIdentifier("checkin_streak").capyFocus("checkin_streak")
+                Text(language.text("Day Streak")).font(.system(size: 26, weight: .heavy, design: .rounded)).foregroundColor(CapyPalette.actionOrange)
                 Spacer().frame(height: max(32, geometry.size.height * 0.07))
                 Group {
                     if cycleDays == 7 {
@@ -190,10 +189,9 @@ struct CheckInView: View {
         let canClaim = model.progress.checkIn.canClaim(on: model.now) && day == shownCycleDay + 1
         return VStack(spacing: 12) {
             Text(language.text(weekday(day))).font(.system(size: 12, weight: .heavy, design: .rounded))
-                .foregroundColor(claimed || canClaim ? CapyPalette.orange : Color(red: 0.61, green: 0.69, blue: 0.74))
-            Button {
+                .foregroundColor(claimed || canClaim ? CapyPalette.actionOrange : CapyPalette.checkInSecondaryText)
+            CapyButton(id: canClaim ? "claim_reward" : "checkin_day_\(day)") {
                 guard model.progress.checkIn.canClaim(on: model.now), day == shownCycleDay + 1 else { return }
-                activate("claim_reward")
                 let previousClaim = model.progress.checkIn.lastClaimedDay
                 model.claim()
                 if !reduceMotion && model.progress.checkIn.lastClaimedDay != previousClaim {
@@ -223,7 +221,7 @@ struct CheckInView: View {
                     }
                     if canClaim { Circle().stroke(CapyPalette.orange, lineWidth: 2) }
                 }.frame(minWidth: 44, maxWidth: 48, minHeight: 44, maxHeight: 48)
-            }.buttonStyle(CapyPressStyle()).disabled(!canClaim && !claimed)
+            }.buttonStyle(CapyPressStyle(disabledOpacity: 1)).disabled(!canClaim)
                 .accessibilityLabel(language.text(canClaim ? "Claim today's reward" : "Day \(day), \(claimed ? "claimed" : "not claimed")"))
                 .accessibilityIdentifier(canClaim ? "claim_reward" : "checkin_day_\(day)")
         }.frame(maxWidth: .infinity)

@@ -7,7 +7,10 @@ enum AppSheet: String, Identifiable { case settings, debug, reward; var id: Stri
 @MainActor
 final class AppModel: ObservableObject {
     @Published var progress = PlayerProgress()
-    @Published var screen: AppScreen = .home { didSet { syncFeedbackState(); restoreSavedHint() } }
+    @Published var screen: AppScreen = .home { didSet {
+        if screen != .game { boardInputOwners.removeAll() }
+        syncFeedbackState(); restoreSavedHint()
+    } }
     @Published var sheet: AppSheet? { didSet { syncFeedbackState(); if sheet == nil { restoreSavedHint() } } }
     @Published private(set) var hint: PuzzleHint? { didSet { syncFeedbackState() } }
     @Published var loading = false { didSet { syncFeedbackState(); if !loading { restoreSavedHint() } } }
@@ -56,6 +59,10 @@ final class AppModel: ObservableObject {
     private var saveRevision = 0
     private var levels: [Int: Puzzle] = [:]
     private var active = true
+    // These transient owners are never saved and do not lock the board itself.
+    // Each UIKit board owns its token until all recognizers finish, including
+    // the system's single-tap wait for a possible second tap.
+    private var boardInputOwners: [UUID: UUID] = [:]
     private var timer: Timer?
     private var loadingID = UUID()
     private var generationCandidateLimitOverride: Int?
@@ -209,6 +216,10 @@ final class AppModel: ObservableObject {
         guard let row = session?.config.referenceGameplay else { return true }
         return row.hint.enabled && row.hint.buttonState == .enabled && (progress.availableHints > 0 || (row.adsEnabled && row.hint.rewardedAdEnabled))
     }
+    var levelStartFreeVisible: Bool {
+        guard let row = session?.config.referenceGameplay else { return false }
+        return row.adsEnabled && row.levelStartFreeAd.visible
+    }
     var levelStartFreeAvailable: Bool {
         guard let row = session?.config.referenceGameplay else { return false }
         return row.adsEnabled && row.levelStartFreeAd.enabled && row.levelStartFreeAd.visible && row.levelStartFreeAd.buttonState == .enabled && progress.levelStartFreeRewardsRemaining > 0
@@ -229,7 +240,7 @@ final class AppModel: ObservableObject {
             catch { errorMessage = "Your revival could not be saved. Please try again." }
         } else { offer(.revive) }
     }
-    func levelStartFree() { guard levelStartFreeAvailable, canTouchBoard else { return }; offer(.levelStartFree) }
+    func levelStartFree() { guard !boardInputInProgress, levelStartFreeAvailable, canTouchBoard else { return }; offer(.levelStartFree) }
     private func configuration(for level: Int) -> DemoConfig {
         var value = config
         if let imported = referenceConfiguration, let row = imported.level(level) {
@@ -773,7 +784,7 @@ final class AppModel: ObservableObject {
     func direct() {
         syncFeedbackState(); defer { syncFeedbackState() }
         let time = ProcessInfo.processInfo.systemUptime
-        guard canTouchBoard, tutorial == nil, directVisible, directEnabled, time - lastDirectTime > 0.35 else { return }
+        guard !boardInputInProgress, canTouchBoard, tutorial == nil, directVisible, directEnabled, time - lastDirectTime > 0.35 else { return }
         if progress.availableDirect == 0 { lastDirectTime = time; offer(.direct); return }
         let source = progress.nextDirectSource
         flushPendingSaves(); saveRevision += 1
@@ -797,7 +808,7 @@ final class AppModel: ObservableObject {
         }
     }
     func showHint() {
-        guard canTouchBoard, tutorial == nil, hintEnabled, let s = session, s.status == .playing else { return }
+        guard !boardInputInProgress, canTouchBoard, tutorial == nil, hintEnabled, let s = session, s.status == .playing else { return }
         guard let preview = PuzzleHints.next(puzzle: s.puzzle, found: s.found, marks: s.marks) else {
             notice = "Every useful exclusion is already marked. Try locating the remaining capybaras."; return
         }
@@ -901,7 +912,7 @@ final class AppModel: ObservableObject {
         }
     }
     func offer(_ kind: RewardKind) {
-        guard startupFlowCompleted, !loading, !rewardBusy, !interstitialBusy, sheet == nil, hint == nil, progress.canReceiveReward(kind) else { return }
+        guard !boardInputInProgress, startupFlowCompleted, !loading, !rewardBusy, !interstitialBusy, sheet == nil, hint == nil, progress.canReceiveReward(kind) else { return }
         if let row = session?.config.referenceGameplay {
             let enabled: Bool
             switch kind {
@@ -916,7 +927,7 @@ final class AppModel: ObservableObject {
         runReward()
     }
     func runReward() {
-        guard startupFlowCompleted, active, sheet == .reward, !loading, !rewardBusy, !interstitialBusy else { return }
+        guard !boardInputInProgress, startupFlowCompleted, active, sheet == .reward, !loading, !rewardBusy, !interstitialBusy else { return }
         if let offerID = activeOfferID, let signal = pendingRewardSignal {
             errorMessage = nil
             rewardBusy = true
@@ -1066,6 +1077,20 @@ final class AppModel: ObservableObject {
         }
     }
     private var canTouchBoard: Bool { active && screen == .game && !loading && !rewardBusy && !interstitialBusy && !challengePending && sheet == nil && hint == nil && progress.activeHintUse == nil && session?.status == .playing }
+
+    var boardInputInProgress: Bool {
+        guard let id = session?.id else { return false }
+        return boardInputOwners.values.contains(id)
+    }
+    func setBoardInputActivity(_ token: UUID, active isActive: Bool, sessionID: UUID) {
+        if !isActive {
+            if boardInputOwners[token] == sessionID { boardInputOwners.removeValue(forKey: token) }
+            return
+        }
+        guard active, screen == .game, session?.id == sessionID else { return }
+        boardInputOwners = boardInputOwners.filter { $0.value == sessionID }
+        boardInputOwners[token] = sessionID
+    }
     private func resumeConfirmedRewardHint() {
         guard let expected = deferredRewardHintSessionID else { return }
         guard session?.id == expected, session?.pendingRewardHint == true else {
@@ -1143,6 +1168,7 @@ final class AppModel: ObservableObject {
         }
     }
     func setActive(_ value: Bool) {
+        if !value { boardInputOwners.removeAll() }
         active = value; now = Date(); syncFeedbackState()
         if value { analytics.beginSession(source: "resume") } else { analytics.endSession(reason: "background") }
         flushInterstitialEvents()

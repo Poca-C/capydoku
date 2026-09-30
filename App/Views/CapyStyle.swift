@@ -9,6 +9,13 @@ enum CapyPalette {
     static let orange = Color(red: 0.97, green: 0.56, blue: 0.08)
     // Functional labels/buttons need contrast; decorative artwork keeps the reference orange.
     static let actionOrange = Color(red: 0.72, green: 0.30, blue: 0.015)
+    // Functional text colors for Original [306]. White ON/OFF text has 8.23:1
+    // and 8.56:1 contrast on these tracks (4.92:1 / 4.99:1 while pressed).
+    // The decorative green, line and orange colors remain unchanged.
+    static let switchOnTrack = Color(red: 0.14, green: 0.35, blue: 0.18)
+    static let switchOffTrack = Color(red: 0.37, green: 0.28, blue: 0.23)
+    // 5.33:1 against cream; actionOrange is 4.64:1 against the same page.
+    static let checkInSecondaryText = Color(red: 0.35, green: 0.40, blue: 0.43)
     static let orangeLight = Color(red: 0.98, green: 0.88, blue: 0.77)
     static let muted = Color(red: 0.62, green: 0.45, blue: 0.41)
     static let green = Color(red: 0.24, green: 0.64, blue: 0.31)
@@ -133,11 +140,14 @@ struct CapyButtonStyle: ButtonStyle {
 }
 
 struct CapyPressStyle: ButtonStyle {
+    // A disabled check-in date is a persistent status, so it keeps its full
+    // claimed/unclaimed artwork while remaining genuinely non-interactive.
+    var disabledOpacity: Double = 0.45
     @Environment(\.isEnabled) private var isEnabled
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     func makeBody(configuration: Configuration) -> some View {
         configuration.label.frame(minWidth: 44, minHeight: 44).contentShape(Rectangle())
-            .opacity(isEnabled ? (configuration.isPressed ? 0.8 : 1) : 0.45)
+            .opacity(isEnabled ? (configuration.isPressed ? 0.8 : 1) : disabledOpacity)
             .scaleEffect(configuration.isPressed && !reduceMotion ? 0.93 : 1)
             .animation(reduceMotion ? nil : .easeOut(duration: 0.12), value: configuration.isPressed)
     }
