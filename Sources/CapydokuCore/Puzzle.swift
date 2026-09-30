@@ -9,12 +9,14 @@ public struct Puzzle: Codable, Equatable, Identifiable, Sendable {
     public var seed: UInt64
     public var generatorVersion: String
     public var difficulty: String
+    public var generationMetadata: PuzzleGenerationMetadata?
 
     public init(id: Int, size: Int, regions: [Int], solution: [Int], seed: UInt64,
-                generatorVersion: String, difficulty: String) {
+                generatorVersion: String, difficulty: String, generationMetadata: PuzzleGenerationMetadata? = nil) {
         self.id = id; self.size = size; self.regions = regions
         self.solution = solution.sorted(); self.seed = seed
         self.generatorVersion = generatorVersion; self.difficulty = difficulty
+        self.generationMetadata = generationMetadata
     }
 
     public func isSolutionCell(_ cell: Int) -> Bool { solution.contains(cell) }

@@ -1,3 +1,5 @@
+> 历史记录：本文记录0.1.x对后续88条Checklist的检查，不代表符合原始Word。0.2.0以 `original-conformance.md` 与 `original-verification.json` 为准；原文冲突已优先纠正。
+
 # Capydoku 首轮 Demo 验收记录
 
 依据原《Capydoku成品验收Checklist》88条逐项映射。原Word未修改。**“通过（Demo）”只表示本轮临时配置和指定测试层面通过，不代表正式版本已验收或已经上架。**

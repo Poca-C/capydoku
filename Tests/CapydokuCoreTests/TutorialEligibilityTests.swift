@@ -10,10 +10,12 @@ final class TutorialEligibilityTests: XCTestCase {
     }
 
     func testPackagedFirstPuzzleRemainsReproducibleAndTeachablyPlayable() throws {
-        let puzzle = packagedFirstPuzzle
+        let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
+        let catalog = try JSONDecoder().decode([Puzzle].self, from: Data(contentsOf: root.appendingPathComponent("Resources/levels.json")))
+        let puzzle = try XCTUnwrap(catalog.first { $0.id == 1 })
         XCTAssertTrue(PuzzleHints.canTeach(puzzle: puzzle))
-        XCTAssertEqual(try PuzzleGenerator.generate(level: 1, seed: puzzle.seed), puzzle,
-                       "The eligibility gate must not change the existing Level 1 output.")
+        XCTAssertEqual(try PuzzleGenerator.rebuild(puzzle), puzzle,
+                       "The published candidate must rebuild exactly from its recorded metadata.")
         var game = GameSession(puzzle: puzzle)
         for step in PuzzleHints.tutorial(puzzle: puzzle) {
             switch step.action {
@@ -31,7 +33,7 @@ final class TutorialEligibilityTests: XCTestCase {
             XCTAssertTrue(game.errors.isEmpty)
             XCTAssertTrue(game.marks.isDisjoint(with: puzzle.solution))
         }
-        XCTAssertEqual(game.found, [1])
+        XCTAssertEqual(game.found, Set(PuzzleHints.tutorial(puzzle: puzzle).last!.targetCells))
         XCTAssertEqual(game.score, game.config.baseScore)
     }
 

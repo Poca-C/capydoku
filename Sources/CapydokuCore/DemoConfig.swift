@@ -14,20 +14,24 @@ public struct DemoConfig: Codable, Equatable, Sendable {
     public var checkInCycleDays: Int
     public var generatorBudgetMilliseconds: Int
     public var generatorCandidateLimit: Int
+    /// Per-session snapshot: active sessions never change when a later config is imported.
+    public var referenceGameplay: ReferenceLevelGameplay?
     /// Implementation ceiling, not an independently adjustable difficulty setting.
     public let maximumBoardSize: Int
 
     public static let `default` = DemoConfig()
 
-    public init(version: String = "demo-2026-09-v2", initialLives: Int = 3,
+    public init(version: String = "original-demo-unverified-v3", initialLives: Int = 3,
                 hintsPerLevel: Int = 1, directPerLevel: Int = 1,
                 baseScore: Int = 100, comboBonus: Int = 20,
                 comboThresholds: [Int] = [2, 3, 4], dailyHintReward: Int = 1,
                 cycleDirectReward: Int = 1, checkInCycleDays: Int = 7,
                 generatorBudgetMilliseconds: Int = 4_000,
-                generatorCandidateLimit: Int = 150) {
+                generatorCandidateLimit: Int = 150,
+                referenceGameplay: ReferenceLevelGameplay? = nil) {
         self.version = version
-        self.initialLives = max(1, min(initialLives, 99))
+        self.referenceGameplay = referenceGameplay
+        self.initialLives = max(1, min(referenceGameplay?.startingLives ?? initialLives, 99))
         self.hintsPerLevel = max(0, hintsPerLevel)
         self.directPerLevel = max(0, directPerLevel)
         self.baseScore = max(0, baseScore)

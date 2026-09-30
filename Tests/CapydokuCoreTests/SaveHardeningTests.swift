@@ -138,7 +138,10 @@ final class SaveHardeningTests: XCTestCase {
     }
 
     func testTwoHundredFortyDeterministicMutationsAndRestores() throws {
-        var progress = try freshProgress(level: 150)
+        let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
+        let catalog = try JSONDecoder().decode([Puzzle].self, from: Data(contentsOf: root.appendingPathComponent("Resources/levels.json")))
+        var progress = PlayerProgress()
+        progress.begin(puzzle: try XCTUnwrap(catalog.first { $0.size == 10 }))
         let boardSize = progress.session!.puzzle.size
         XCTAssertEqual(boardSize, 10)
         let started = Date()

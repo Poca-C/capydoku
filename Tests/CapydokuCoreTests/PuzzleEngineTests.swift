@@ -62,14 +62,21 @@ final class PuzzleEngineTests: XCTestCase {
 
     func testExperimentalThreeTenLevelGroupsWithRuntimeBudget() throws {
         let configuration = DemoConfig.default
+        let catalogURL = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent().appendingPathComponent("Resources/levels.json")
+        let fixed = try JSONDecoder().decode([Puzzle].self, from: Data(contentsOf: catalogURL))
+        var corpus = fixed.map { SimilarityCorpusEntry(game: "CapyDoku", puzzle: $0) }
         var fingerprints = Set<String>()
         for level in 151...180 {
             let started = ProcessInfo.processInfo.systemUptime
             let puzzle: Puzzle
             do {
-                puzzle = try PuzzleGenerator.generate(level: level,
+                let result = try PuzzleGenerator.generateAudited(level: level, corpus: corpus,
                     maxAttempts: configuration.generatorCandidateLimit,
                     timeBudgetMilliseconds: configuration.generatorBudgetMilliseconds)
+                puzzle = try XCTUnwrap(result.puzzle, "Strict batch failed at \(level): \(result.report.rejectionReasons)")
+                XCTAssertEqual(result.report.selectedSimilarityReport?.comparedBoards, level - 1)
+                XCTAssertEqual(result.report.selectedSimilarityReport?.exceptions, [])
+                corpus.append(SimilarityCorpusEntry(game: "CapyDoku", puzzle: puzzle))
             } catch {
                 let milliseconds = Int((ProcessInfo.processInfo.systemUptime - started) * 1_000)
                 XCTFail("Level \(level) failed after \(milliseconds) ms with \(configuration.generatorBudgetMilliseconds) ms budget: \(error)")
@@ -86,8 +93,10 @@ final class PuzzleEngineTests: XCTestCase {
     }
 
     func testHintsNeverTrustWrongPlayerMarksAndOnlyEliminateSafeCells() throws {
+        let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
+        let catalog = try JSONDecoder().decode([Puzzle].self, from: Data(contentsOf: root.appendingPathComponent("Resources/levels.json")))
         for level in [1, 13, 54, 105] {
-            let puzzle = try PuzzleGenerator.generate(level: level)
+            let puzzle = try XCTUnwrap(catalog.first { $0.id == level })
             var marks = Set(puzzle.solution) // every answer incorrectly crossed out by the user
             let found = Set(puzzle.solution.prefix(1))
             var seenHint = false

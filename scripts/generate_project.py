@@ -14,18 +14,19 @@ def arr(values): return '(' + ', '.join(values) + (',' if values else '') + ')'
 app_sources = sorted((ROOT/'App').rglob('*.swift'))
 ui_sources = sorted((ROOT/'UITests').glob('*.swift'))
 unit_sources = sorted((ROOT/'AppTests').glob('*.swift'))
+unit_resources = sorted((ROOT/'Tests/Fixtures').glob('*.json'))
 resources = sorted((ROOT/'Resources').glob('*.json'))
 resources += [ROOT/'App/PrivacyInfo.xcprivacy']
 asset = ROOT/'App/Resources/Assets.xcassets'
 if asset.exists(): resources.append(asset)
 audio = ROOT/'App/Resources/Audio'
-if audio.exists(): resources += sorted(audio.glob('*.wav'))
+if audio.exists(): resources += sorted(p for p in audio.iterdir() if p.suffix.lower() in {'.wav', '.mp3', '.m4a', '.aif', '.aiff', '.caf'})
 
 def files(paths, phase):
     refs=[]; builds=[]
     for path in paths:
         rel=str(path.relative_to(ROOT))
-        typ={'.swift':'sourcecode.swift','.json':'text.json','.xcassets':'folder.assetcatalog', '.wav':'audio.wav','.xcprivacy':'text.xml'}.get(path.suffix,'text')
+        typ={'.swift':'sourcecode.swift','.json':'text.json','.xcassets':'folder.assetcatalog', '.wav':'audio.wav', '.mp3':'audio.mp3', '.m4a':'audio.mp4', '.aif':'audio.aiff', '.aiff':'audio.aiff', '.caf':'file', '.xcprivacy':'text.xml'}.get(path.suffix,'text')
         ref=obj('ref:'+rel, f'isa = PBXFileReference; lastKnownFileType = {q(typ)}; path = {q(rel)}; sourceTree = SOURCE_ROOT;')
         build=obj('build:'+phase+rel, f'isa = PBXBuildFile; fileRef = {ref};')
         refs.append(ref); builds.append(build)
@@ -34,12 +35,13 @@ def files(paths, phase):
 app_refs,app_builds=files(app_sources,'sources')
 test_refs,test_builds=files(ui_sources,'tests')
 unit_refs,unit_builds=files(unit_sources,'unit-tests')
+unit_resource_refs,unit_resource_builds=files(unit_resources,'unit-test-resources')
 resource_refs,resource_builds=files(resources,'resources')
 app_product=obj('app-product','isa = PBXFileReference; explicitFileType = wrapper.application; path = Capydoku.app; sourceTree = BUILT_PRODUCTS_DIR;')
 test_product=obj('test-product','isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = CapydokuUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR;')
 unit_product=obj('unit-product','isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = CapydokuAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR;')
 products=obj('products',f'isa = PBXGroup; children = {arr([app_product,test_product,unit_product])}; name = Products; sourceTree = "<group>";')
-main_group=obj('main-group',f'isa = PBXGroup; children = {arr(app_refs+test_refs+unit_refs+resource_refs+[products])}; sourceTree = "<group>";')
+main_group=obj('main-group',f'isa = PBXGroup; children = {arr(app_refs+test_refs+unit_refs+resource_refs+unit_resource_refs+[products])}; sourceTree = "<group>";')
 package=obj('core-package','isa = XCLocalSwiftPackageReference; relativePath = .;')
 product_dep=obj('core-product',f'isa = XCSwiftPackageProductDependency; package = {package}; productName = CapydokuCore;')
 core_build=obj('core-build',f'isa = PBXBuildFile; productRef = {product_dep};')
@@ -52,7 +54,7 @@ test_src=phase('test-src','PBXSourcesBuildPhase',test_builds)
 test_res=phase('test-res','PBXResourcesBuildPhase',[])
 test_frameworks=phase('test-frameworks','PBXFrameworksBuildPhase',[])
 unit_src=phase('unit-src','PBXSourcesBuildPhase',unit_builds)
-unit_res=phase('unit-res','PBXResourcesBuildPhase',[])
+unit_res=phase('unit-res','PBXResourcesBuildPhase',unit_resource_builds)
 unit_frameworks=phase('unit-frameworks','PBXFrameworksBuildPhase',[])
 
 def configs(prefix,settings):
@@ -66,7 +68,7 @@ def configs(prefix,settings):
     return obj(prefix+'list',f'isa = XCConfigurationList; buildConfigurations = {arr(ids)}; defaultConfigurationIsVisible = 0; defaultConfigurationName = Release;')
 
 project_config=configs('project-',{'SDKROOT':'iphoneos','IPHONEOS_DEPLOYMENT_TARGET':'15.0','SWIFT_VERSION':'5.0','CLANG_ENABLE_MODULES':'YES','CLANG_ENABLE_OBJC_ARC':'YES','ENABLE_TESTABILITY':'YES','ONLY_ACTIVE_ARCH':'YES'})
-app_config=configs('app-',{'PRODUCT_NAME':'Capydoku','PRODUCT_BUNDLE_IDENTIFIER':'com.capydoku.demo','INFOPLIST_FILE':'App/Info.plist','GENERATE_INFOPLIST_FILE':'NO','TARGETED_DEVICE_FAMILY':'1','CODE_SIGN_STYLE':'Automatic','MARKETING_VERSION':'0.1.1','CURRENT_PROJECT_VERSION':'2','ASSETCATALOG_COMPILER_APPICON_NAME':'AppIcon','LD_RUNPATH_SEARCH_PATHS':'$(inherited) @executable_path/Frameworks','SUPPORTS_MACCATALYST':'NO','SWIFT_EMIT_LOC_STRINGS':'YES'})
+app_config=configs('app-',{'PRODUCT_NAME':'Capydoku','PRODUCT_BUNDLE_IDENTIFIER':'com.capydoku.demo','INFOPLIST_FILE':'App/Info.plist','GENERATE_INFOPLIST_FILE':'NO','TARGETED_DEVICE_FAMILY':'1','CODE_SIGN_STYLE':'Automatic','MARKETING_VERSION':'0.2.0','CURRENT_PROJECT_VERSION':'3','ASSETCATALOG_COMPILER_APPICON_NAME':'AppIcon','LD_RUNPATH_SEARCH_PATHS':'$(inherited) @executable_path/Frameworks','SUPPORTS_MACCATALYST':'NO','SWIFT_EMIT_LOC_STRINGS':'YES'})
 test_config=configs('uitest-',{'PRODUCT_NAME':'CapydokuUITests','PRODUCT_BUNDLE_IDENTIFIER':'com.capydoku.demo.uitests','GENERATE_INFOPLIST_FILE':'YES','TARGETED_DEVICE_FAMILY':'1','CODE_SIGN_STYLE':'Automatic','TEST_TARGET_NAME':'Capydoku','LD_RUNPATH_SEARCH_PATHS':'$(inherited) @executable_path/Frameworks @loader_path/Frameworks'})
 unit_config=configs('unit-',{'PRODUCT_NAME':'CapydokuAppTests','PRODUCT_BUNDLE_IDENTIFIER':'com.capydoku.demo.apptests','GENERATE_INFOPLIST_FILE':'YES','TARGETED_DEVICE_FAMILY':'1','CODE_SIGN_STYLE':'Automatic','BUNDLE_LOADER':'$(TEST_HOST)','TEST_HOST':'$(BUILT_PRODUCTS_DIR)/Capydoku.app/Capydoku','LD_RUNPATH_SEARCH_PATHS':'$(inherited) @executable_path/Frameworks @loader_path/Frameworks'})
 app_target=obj('app-target',f'isa = PBXNativeTarget; buildConfigurationList = {app_config}; buildPhases = {arr([app_src,app_frameworks,app_res])}; buildRules = (); dependencies = (); name = Capydoku; packageProductDependencies = {arr([product_dep])}; productName = Capydoku; productReference = {app_product}; productType = "com.apple.product-type.application";')

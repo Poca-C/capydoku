@@ -5,8 +5,8 @@ import CapydokuCore
 /// Exercises the saved onboarding as actual player actions, including a fresh model
 /// before every step and halfway through each swipe. No launch flags inject progress.
 final class TutorialRecoveryTests: XCTestCase {
-    @MainActor private func model(at directory: URL) -> AppModel {
-        AppModel(saveDirectory: directory, runsTimer: false, feedbackEnabled: false)
+    @MainActor private func model(at directory: URL, puzzle: Puzzle? = nil) -> AppModel {
+        AppModel(saveDirectory: directory, runsTimer: false, feedbackEnabled: false, bundledPuzzles: puzzle.map { [$0] })
     }
 
     private func directory() -> URL {
@@ -17,7 +17,7 @@ final class TutorialRecoveryTests: XCTestCase {
         let session = try XCTUnwrap(previous.session)
         let step = previous.progress.tutorialStep
         let completed = previous.progress.tutorialCompleted
-        let restored = model(at: directory)
+        let restored = model(at: directory, puzzle: session.puzzle)
         XCTAssertNil(restored.errorMessage)
         XCTAssertNil(restored.notice, "A normal teaching checkpoint must load without backup recovery.")
         restored.startOrContinue()
@@ -162,7 +162,7 @@ final class TutorialRecoveryTests: XCTestCase {
             let puzzle = try PuzzleGenerator.generate(level: 1, seed: seed, timeBudgetMilliseconds: 8_000)
             XCTAssertTrue(PuzzleSolver.validate(puzzle).valid)
             fingerprints.insert(puzzle.fingerprint)
-            let app = model(at: dir)
+            let app = model(at: dir, puzzle: puzzle)
             app.progress.begin(puzzle: puzzle, config: app.config)
             app.save()
             app.startOrContinue() // Preserve this generated board instead of loading the bundled Level 1.

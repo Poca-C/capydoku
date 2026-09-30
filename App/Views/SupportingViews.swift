@@ -4,41 +4,83 @@ import CapydokuCore
 
 struct SettingsView: View {
     @EnvironmentObject private var model: AppModel
-    @Environment(\.dismiss) private var dismiss
+    @AccessibilityFocusState private var headingFocused: Bool
+    @State private var showingFeedback = false
     var body: some View {
-        NavigationView {
-            Form {
-                Section(header: Text("Make yourself comfortable")) {
-                    Toggle("Music", isOn: $model.progress.settings.musicEnabled).accessibilityIdentifier("music_toggle")
-                    Toggle("Sound effects", isOn: $model.progress.settings.soundEnabled).accessibilityIdentifier("sound_toggle")
-                    Toggle("Voice encouragement", isOn: $model.progress.settings.voiceEnabled).accessibilityIdentifier("voice_toggle")
-                    Toggle("Haptics", isOn: $model.progress.settings.hapticsEnabled).accessibilityIdentifier("haptics_toggle")
-                }
-                Section(header: Text("How to play")) {
-                    Text("One capybara in each row, each column and each colored region. Capybaras cannot touch, even diagonally.").font(.subheadline)
-                    Text("Tap to add or remove an X. Double-tap to place a capybara. Swipe horizontally or vertically to add multiple Xs.").font(.subheadline)
-                    Text("Red Xs are confirmed mistakes and stay locked. Repeating the same mistake never costs another heart.").font(.caption).foregroundColor(.secondary)
-                    Button("Replay the guided introduction") { model.replayTutorial() }.accessibilityIdentifier("replay_tutorial")
-                }
-                Section(header: Text("Internal demo")) {
-                    Text("150 original puzzles plus a local generation experiment. Rewards, scoring and difficulty are provisional.").font(.caption)
-                    Text("All progress stays on this device. This build contains no real ads, accounts, purchases or analytics SDKs.").font(.caption)
+        VStack(spacing: 0) {
+            ZStack {
+                Text("Settings").font(.system(size: 33, weight: .heavy, design: .rounded))
+                    .accessibilityAddTraits(.isHeader).accessibilityFocused($headingFocused).accessibilityIdentifier("settings_title")
                     #if DEBUG
-                    Button("Developer tools") { model.sheet = nil; DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { model.sheet = .debug } }.accessibilityIdentifier("developer_tools")
+                    .onLongPressGesture(minimumDuration: 1) { model.sheet = .debug }
+                    .accessibilityAction(named: "Developer tools") { model.sheet = .debug }
                     #endif
-                    HStack { Text("Version"); Spacer(); Text("0.1.0 (1)").foregroundColor(.secondary) }
+                HStack {
+                    Spacer()
+                    Button { model.sheet = nil } label: {
+                        Image(systemName: "xmark").font(.system(size: 25, weight: .bold)).frame(width: 48, height: 48)
+                    }.buttonStyle(CapyPressStyle()).accessibilityLabel("Close settings").accessibilityIdentifier("settings_done")
                 }
-            }
-            .tint(CapyPalette.orange)
-            .navigationTitle("Settings")
-            .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() }.accessibilityIdentifier("settings_done") } }
-        }.navigationViewStyle(.stack)
+            }.padding(.horizontal, 12).frame(height: 66).background(CapyPalette.orangeLight.opacity(0.55))
+            VStack(spacing: 28) {
+                HStack(spacing: 7) {
+                    setting("Music", symbol: "music.note", binding: $model.progress.settings.musicEnabled, id: "music_toggle")
+                    setting("Sound effects", symbol: "speaker.wave.2.fill", binding: $model.progress.settings.soundEnabled, id: "sound_toggle")
+                    setting("Voice", symbol: "person.wave.2.fill", binding: $model.progress.settings.voiceEnabled, id: "voice_toggle")
+                    setting("Haptics", symbol: "iphone.radiowaves.left.and.right", binding: $model.progress.settings.hapticsEnabled, id: "haptics_toggle")
+                }.padding(.top, 6)
+                VStack(spacing: 15) {
+                    Button {
+                        model.exportDiagnostics(); showingFeedback = model.exportURL != nil
+                    } label: { Text("Feedback").frame(maxWidth: .infinity) }
+                        .buttonStyle(CapyButtonStyle(secondary: true)).accessibilityIdentifier("feedback")
+                    Button {
+                        model.sheet = nil; model.restart()
+                    } label: { Text("Restart").frame(maxWidth: .infinity) }
+                        .buttonStyle(CapyButtonStyle()).disabled(model.session == nil).accessibilityIdentifier("restart")
+                }
+            }.padding(.horizontal, 18).padding(.top, 24).padding(.bottom, 28)
+        }
+        .background(CapyPalette.paper).clipShape(RoundedRectangle(cornerRadius: 28))
+        .frame(maxWidth: 365).padding(.horizontal, 24)
+        .accessibilityAddTraits(.isModal)
+        .onAppear { headingFocused = true }
         .onChange(of: model.progress.settings) { _ in model.settingsChanged() }
+        .sheet(isPresented: $showingFeedback) { if let url = model.exportURL { ShareSheet(items: [url]) } }
+    }
+    private func setting(_ label: String, symbol: String, binding: Binding<Bool>, id: String) -> some View {
+        Toggle(isOn: binding) {
+            Image(systemName: symbol).font(.system(size: 27, weight: .semibold)).frame(height: 33)
+        }.toggleStyle(IconSwitchStyle()).accessibilityLabel(label).accessibilityIdentifier(id)
+    }
+}
+
+struct IconSwitchStyle: ToggleStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        Button { configuration.isOn.toggle() } label: {
+            VStack(spacing: 8) {
+                configuration.label
+                HStack(spacing: 2) {
+                    if !configuration.isOn { Circle().fill(.white).frame(width: 17, height: 17) }
+                    Text(configuration.isOn ? "ON" : "OFF").font(.system(size: 12, weight: .heavy, design: .rounded))
+                        .foregroundColor(.white).frame(maxWidth: .infinity)
+                    if configuration.isOn { Circle().fill(.white).frame(width: 17, height: 17) }
+                }.padding(3).background(configuration.isOn ? CapyPalette.green : CapyPalette.line).clipShape(Capsule())
+            }.padding(.horizontal, 5).padding(.vertical, 9).frame(maxWidth: .infinity)
+                .background(CapyPalette.paper)
+                .overlay(RoundedRectangle(cornerRadius: 17).stroke(CapyPalette.line, lineWidth: 1))
+        }.buttonStyle(CapyPressStyle()).accessibilityValue(configuration.isOn ? "1" : "0")
+            .accessibilityAddTraits(configuration.isOn ? [.isButton, .isSelected] : .isButton)
     }
 }
 
 struct CheckInView: View {
     @EnvironmentObject private var model: AppModel
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var rewardBounce = false
+    @State private var showRewardBurst = false
+    @State private var burstProgress: CGFloat = 0
+    private var cycleDays: Int { max(1, model.config.checkInCycleDays) }
     private var shownCycleDay: Int {
         let checkIn = model.progress.checkIn
         guard checkIn.canClaim(on: model.now), let last = checkIn.lastClaimedDay else { return checkIn.cycleDay }
@@ -49,81 +91,142 @@ struct CheckInView: View {
         guard let last = model.progress.checkIn.lastClaimedDay else { return 0 }
         return CheckInState.utcDay(for: model.now) > last + 1 ? 0 : model.progress.checkIn.streak
     }
+    private var cycleStart: Int {
+        if shownCycleDay == 0 { return CheckInState.utcDay(for: model.now) }
+        return (model.progress.checkIn.lastClaimedDay ?? CheckInState.utcDay(for: model.now)) - shownCycleDay + 1
+    }
     var body: some View {
-        ScrollView {
-            VStack(spacing: 24) {
+        GeometryReader { geometry in
+            VStack(spacing: 0) {
                 HStack {
                     IconButton(symbol: "chevron.left", label: "Home", id: "checkin_home", action: model.home)
-                    Spacer(); Text("Daily check-in").font(.system(size: 22, weight: .bold, design: .rounded)); Spacer()
-                    Color.clear.frame(width: 44, height: 44)
-                }
-                CapyMascot(mood: .happy, size: 128)
-                VStack(spacing: 8) {
-                    Text("Good to see you again.").font(.system(size: 28, weight: .bold, design: .rounded))
-                    Text("A little help for your next quiet moment.").font(.system(size: 14, design: .rounded)).foregroundColor(CapyPalette.muted)
-                }
-                HStack {
-                    Label("\(shownStreak) day streak", systemImage: "flame.fill")
                     Spacer()
-                    Text("\(model.progress.bonusHints) hints · \(model.progress.bonusDirect) finds").accessibilityIdentifier("bonus_inventory")
-                }.font(.system(size: 12, weight: .semibold, design: .rounded)).foregroundColor(CapyPalette.green)
-                LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: 4), spacing: 12) {
-                    ForEach(1...7, id: \.self) { day in
-                        let claimed = day <= shownCycleDay
-                        VStack(spacing: 12) {
-                            Text("DAY \(day)").font(.system(size: 10, weight: .bold, design: .rounded)).tracking(0.6)
-                            Image(systemName: claimed ? "checkmark.circle.fill" : day == 7 ? "gift.fill" : "lightbulb.fill").font(.system(size: 24)).foregroundColor(claimed ? CapyPalette.green : CapyPalette.orange)
-                            Text(day == 7 ? "hint + find" : "+1 hint").font(.system(size: 11, weight: .semibold, design: .rounded))
-                        }.frame(maxWidth: .infinity).padding(.vertical, 18).background(claimed ? CapyPalette.regionColors[1].opacity(0.55) : CapyPalette.paper).clipShape(RoundedRectangle(cornerRadius: 18))
+                }.padding(.top, 8)
+                Spacer(minLength: 15)
+                Group {
+                    if let art = UIImage(named: "CapyCheckIn") {
+                        Image(uiImage: art).resizable().scaledToFit()
+                    } else {
+                        VStack(spacing: -40) {
+                            CapyMascot(mood: .happy, size: 210)
+                            Image(systemName: "pawprint.fill").font(.system(size: 63)).foregroundColor(.white)
+                                .frame(width: 175, height: 118).background(CapyPalette.orange)
+                                .clipShape(RoundedRectangle(cornerRadius: 19))
+                        }
+                    }
+                }.frame(width: geometry.size.width * 0.68, height: geometry.size.height * 0.34)
+                    .scaleEffect(rewardBounce ? 1.06 : 1)
+                    .overlay { if showRewardBurst { CheckInParticleBurst(progress: burstProgress).allowsHitTesting(false) } }
+                    .accessibilityHidden(true)
+                Text("\(shownStreak)").font(.system(size: 78, weight: .heavy, design: .rounded))
+                    .foregroundColor(CapyPalette.orange).padding(.top, 8).accessibilityIdentifier("checkin_streak")
+                Text("Day Streak").font(.system(size: 26, weight: .heavy, design: .rounded)).foregroundColor(CapyPalette.orange)
+                Spacer().frame(height: max(32, geometry.size.height * 0.07))
+                Group {
+                    if cycleDays == 7 {
+                        HStack(alignment: .top, spacing: 4) {
+                            ForEach(1...cycleDays, id: \.self) { day in dayView(day) }
+                        }
+                    } else {
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(alignment: .top, spacing: 10) {
+                                ForEach(1...cycleDays, id: \.self) { day in dayView(day).frame(width: 48) }
+                            }
+                        }.frame(height: 82)
                     }
                 }
-                CapyCard {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Label("A full week, an extra find", systemImage: "sparkles").font(.system(size: 16, weight: .bold, design: .rounded))
-                        Text("Claim a hint every day. On day 7, get a Find too. Missing a day restarts the streak.").font(.system(size: 13, design: .rounded)).foregroundColor(CapyPalette.muted)
-                    }
-                }
-                Button(action: model.claim) { Text(model.progress.checkIn.canClaim(on: model.now) ? "Claim today's treat" : "Claimed for today").frame(maxWidth: .infinity) }
-                    .buttonStyle(CapyButtonStyle()).disabled(!model.progress.checkIn.canClaim(on: model.now)).accessibilityIdentifier("claim_reward")
-                Text("DEMO REWARDS · Refreshes at 00:00 UTC\nDevice clock is used; no server time is connected.")
-                    .font(.system(size: 10, design: .rounded)).foregroundColor(CapyPalette.muted).multilineTextAlignment(.center)
-            }.padding(.horizontal, 24).padding(.vertical, 10)
+                Spacer(minLength: 30)
+            }.padding(.horizontal, 18)
         }
+    }
+    private func dayView(_ day: Int) -> some View {
+        let claimed = day <= shownCycleDay
+        let canClaim = model.progress.checkIn.canClaim(on: model.now) && day == shownCycleDay + 1
+        return VStack(spacing: 12) {
+            Text(weekday(day)).font(.system(size: 12, weight: .heavy, design: .rounded))
+                .foregroundColor(claimed || canClaim ? CapyPalette.orange : Color(red: 0.61, green: 0.69, blue: 0.74))
+            Button {
+                guard canClaim else { return }
+                let previousClaim = model.progress.checkIn.lastClaimedDay
+                model.claim()
+                if !reduceMotion && model.progress.checkIn.lastClaimedDay != previousClaim {
+                    burstProgress = 0; showRewardBurst = true
+                    withAnimation(.spring(response: 0.25, dampingFraction: 0.4)) { rewardBounce = true }
+                    DispatchQueue.main.async {
+                        withAnimation(.easeOut(duration: 0.7)) { burstProgress = 1 }
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { withAnimation { rewardBounce = false } }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) { showRewardBurst = false }
+                }
+            } label: {
+                ZStack {
+                    Circle().fill(claimed ? CapyPalette.orange : Color(red: 0.82, green: 0.89, blue: 0.92))
+                    if day == cycleDays {
+                        Image(systemName: "gift.fill").font(.system(size: 28)).foregroundColor(claimed ? .white : CapyPalette.orange)
+                    } else if claimed {
+                        Image(systemName: "checkmark").font(.system(size: 22, weight: .heavy)).foregroundColor(.white)
+                    }
+                    if canClaim { Circle().stroke(CapyPalette.orange, lineWidth: 2) }
+                }.frame(minWidth: 44, maxWidth: 48, minHeight: 44, maxHeight: 48)
+            }.buttonStyle(CapyPressStyle()).disabled(!canClaim && !claimed)
+                .accessibilityLabel(canClaim ? "Claim today's reward" : "Day \(day), \(claimed ? "claimed" : "not claimed")")
+                .accessibilityIdentifier(canClaim ? "claim_reward" : "checkin_day_\(day)")
+        }.frame(maxWidth: .infinity)
+    }
+    private func weekday(_ day: Int) -> String {
+        let date = Date(timeIntervalSince1970: Double(cycleStart + day - 1) * 86_400)
+        var calendar = Calendar(identifier: .gregorian); calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        return ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"][calendar.component(.weekday, from: date) - 1]
+    }
+}
+
+/// Brief, non-interactive particles; disabled with Reduce Motion and removed after 0.75 s.
+struct CheckInParticleBurst: View, Animatable {
+    var progress: CGFloat
+    var animatableData: CGFloat {
+        get { progress }
+        set { progress = newValue }
+    }
+    var body: some View {
+        Canvas { context, size in
+            context.opacity = Double(1 - progress)
+            let colors = [CapyPalette.orange, Color.yellow, CapyPalette.green, CapyPalette.regionColors[0]]
+            for particle in 0..<16 {
+                let angle = CGFloat(particle) * .pi * 2 / 16
+                let radius = (20 + progress * min(size.width, size.height) * 0.62) * (particle.isMultiple(of: 2) ? 1 : 0.78)
+                let point = CGPoint(x: size.width / 2 + cos(angle) * radius,
+                                    y: size.height / 2 + sin(angle) * radius + progress * progress * 28)
+                context.draw(Text(particle.isMultiple(of: 3) ? "✦" : "●")
+                    .font(.system(size: particle.isMultiple(of: 3) ? 17 : 7, weight: .bold))
+                    .foregroundColor(colors[particle % colors.count]), at: point)
+            }
+        }.accessibilityHidden(true)
     }
 }
 
 struct RewardView: View {
     @EnvironmentObject private var model: AppModel
-    @Environment(\.dismiss) private var dismiss
     var body: some View {
-        NavigationView {
-            ScrollView {
-                VStack(spacing: 24) {
-                    CapyMascot(mood: .neutral, size: 140)
-                    Text(model.rewardKind == .revive ? "A fresh little chance" : "A little helping paw").font(.system(size: 27, weight: .bold, design: .rounded))
-                    Text("SIMULATED REWARD · NO REAL AD").font(.system(size: 10, weight: .bold, design: .rounded)).tracking(1).foregroundColor(CapyPalette.orange)
-                    Text(model.rewardKind == .revive ? "Restore your lives and keep this board." : model.rewardKind == .hint ? "Preview one hint. Apply only when you're ready." : "Find one of the remaining capybaras.").font(.system(size: 16, design: .rounded)).multilineTextAlignment(.center)
-                    CapyCard {
-                        VStack(alignment: .leading, spacing: 10) {
-                            Text("Simulation outcome").font(.headline)
-                            Picker("Outcome", selection: $model.rewardScenario) {
-                                ForEach(RewardScenario.allCases) { Text($0.rawValue).tag($0) }
-                            }.pickerStyle(.menu).disabled(model.rewardBusy || model.rewardRetryPending).accessibilityIdentifier("reward_scenario")
-                            Text("Success grants once. Cancel, failure and timeout grant nothing. Duplicate tests idempotency; interruption saves a receipt for recovery. No callback times out after 5 seconds.").font(.caption).foregroundColor(CapyPalette.muted)
-                        }.frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                    if model.rewardRetryPending {
-                        Text("Your reward is waiting to be saved. Free up storage if needed, then retry. You do not need to run another simulation.")
-                            .font(.callout).foregroundColor(CapyPalette.ink)
-                    }
-                    Button(action: model.runReward) {
-                        HStack { if model.rewardBusy { ProgressView().tint(.white) }; Text(model.rewardBusy ? "Simulating…" : model.rewardRetryPending ? "Retry save" : "Run simulation") }.frame(maxWidth: .infinity)
-                    }.buttonStyle(CapyButtonStyle()).disabled(model.rewardBusy).accessibilityIdentifier("run_reward")
-                }.padding(26)
-            }.background(CapyPalette.cream.ignoresSafeArea())
-                .navigationTitle("Demo reward").navigationBarTitleDisplayMode(.inline)
-                .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Close") { dismiss() }.disabled(model.rewardBusy || model.rewardRetryPending).accessibilityIdentifier("reward_close") } }
-        }.navigationViewStyle(.stack).interactiveDismissDisabled(model.rewardBusy || model.rewardRetryPending)
+        CapyCard(padding: 26) {
+            VStack(spacing: 22) {
+                HStack {
+                    Spacer()
+                    Button { model.sheet = nil } label: {
+                        Image(systemName: "xmark").font(.system(size: 22, weight: .bold)).frame(width: 44, height: 44)
+                    }.disabled(model.rewardBusy || model.rewardRetryPending || model.interstitialBusy).accessibilityLabel("Close reward").accessibilityIdentifier("reward_close")
+                }
+                Image(systemName: "play.rectangle.fill").font(.system(size: 64)).foregroundColor(CapyPalette.video)
+                Text(model.interstitialBusy ? "Simulated interstitial" : "Demo Video").font(.system(size: 27, weight: .heavy, design: .rounded)).multilineTextAlignment(.center)
+                Text(model.interstitialBusy ? "Internal demo · no real ad" : "Simulated reward · no real ad").font(.system(size: 13, weight: .semibold, design: .rounded)).foregroundColor(CapyPalette.muted)
+                if model.rewardRetryPending && !model.interstitialBusy {
+                    Text("Your reward is waiting to be saved.").font(.callout).multilineTextAlignment(.center)
+                    Button("Retry save", action: model.runReward).buttonStyle(CapyButtonStyle()).accessibilityIdentifier("run_reward")
+                } else {
+                    ProgressView().tint(CapyPalette.orange).padding(12)
+                    Text("Loading…").font(.system(size: 16, weight: .bold, design: .rounded))
+                }
+            }
+        }.frame(maxWidth: 340).padding(.horizontal, 24).accessibilityAddTraits(.isModal)
     }
 }
 
@@ -144,6 +247,12 @@ struct DebugView: View {
                         }.accessibilityIdentifier("jump_go")
                     }
                     Button("Replay tutorial", action: model.replayTutorial)
+                }
+                Section(header: Text("Reward simulation")) {
+                    Picker("Outcome", selection: $model.rewardScenario) {
+                        ForEach(RewardScenario.allCases) { Text($0.rawValue).tag($0) }
+                    }.pickerStyle(.menu).accessibilityIdentifier("reward_scenario")
+                    Text("Selected outcome applies to the next demo video. Real ad integration is supplied separately.").font(.caption)
                 }
                 if let s = model.session {
                     Section(header: Text("Current board snapshot")) {

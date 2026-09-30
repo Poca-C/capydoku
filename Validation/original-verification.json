@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-09-30",
+  "build": "0.2.0 (3)",
+  "status": "PLAYABLE_ORIGINAL_ALIGNMENT_DEMO_WITH_REFERENCE_AND_EXTERNAL_GAPS",
+  "originalSHA256": "274bbf15f031bd80bb8b360cf14c0266acff370a230d9cad1b1785461df54dd2",
+  "currentPackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49",
+  "environment": {
+    "xcode": "26.6 (17F113)",
+    "simulatorOS": "iOS 26.5",
+    "devices": [
+      "iPhone 17 Pro",
+      "iPhone 17e"
+    ],
+    "realDevice": "not tested for this build",
+    "minimumOSRuntime": "not tested; compile target iOS 15"
+  },
+  "core": {
+    "passed": 83,
+    "failed": 0,
+    "log": "Validation/test-runs/original-core-final-integration.log",
+    "seconds": 24.525,
+    "followUpCandidateBudgetGuard": {
+      "passed": 6,
+      "failed": 0,
+      "log": "Validation/test-runs/original-candidate-minimum.log"
+    }
+  },
+  "pythonImport": {
+    "passed": 6,
+    "failed": 0,
+    "command": "python3 -m unittest discover -s scripts -p 'test_import_reference_gameplay.py'"
+  },
+  "independentFixedLevels": {
+    "passed": 150,
+    "total": 150,
+    "report": "Validation/independent-validation.json"
+  },
+  "generation": {
+    "fixed": 150,
+    "experimental": 30,
+    "uniqueAnswers": 180,
+    "uniqueRegionStructures": 180,
+    "all180UniqueSolutionAndConnected": true,
+    "logicOnlyFixedPlaythroughs": 150,
+    "metadataRebuilds": 150,
+    "exceptions": [],
+    "report": "Validation/original-generation/summary.json",
+    "formalDifficultyCalibration": "missing frozen Pawdoku samples",
+    "crossProductComparison": "missing other-product corpus"
+  },
+  "xcodeRuns": [
+    {
+      "device": "iPhone 17 Pro",
+      "bundle": "Validation/test-runs/original-final-app-ui.xcresult",
+      "appTestsPassed": 22,
+      "uiTestsPassed": 4,
+      "failed": 0,
+      "scope": "All current app tests plus current-pack page hierarchy, 4/6/8/10 boards, hint preview/apply, first-run legal links and permission flow."
+    },
+    {
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-ui-last-regression.xcresult",
+      "uiTestsPassed": 2,
+      "failed": 0,
+      "scope": "Check-in persists without success alert; failure and mock revival preserve current game without success alert. Uses explicit archived board fixture for stable gestures."
+    },
+    {
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-ui-artwork-final.xcresult",
+      "uiTestsPassed": 2,
+      "failed": 0,
+      "scope": "Current-pack six-screen capture; archived L10 challenge transition. L10 current-pack follow-up separately recorded."
+    },
+    {
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-ui-final.xcresult",
+      "uiTestsPassed": 3,
+      "failed": 0,
+      "scope": "Archived fixture full tutorial, hint Apply and rapid interactions."
+    },
+    {
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-ui-current-pack-paths.xcresult",
+      "uiTestsPassed": 2,
+      "failed": 0,
+      "scope": "Current production L1 complete tutorial and current 6x6 L10 first-clear challenge followed by restart without duplicate challenge."
+    },
+    {
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-ui-checkin-touch-target.xcresult",
+      "uiTestsPassed": 1,
+      "failed": 0,
+      "scope": "Claim target measured at least44x44pt, all seven dates on one line, no duplicate award, persistence after relaunch."
+    },
+    {
+      "device": "iPhone 17 Pro",
+      "bundle": "Validation/test-runs/original-release-candidate.xcresult",
+      "appTestsPassed": 29,
+      "appTestsFailed": 0,
+      "uiTestsPassed": 3,
+      "uiTestsFailed": 1,
+      "scope": "All AppTests passed. Hint UI case failed during app.launch with background assertion error while a second runner briefly targeted this simulator; game assertions were not reached. Retried independently below. Entire bundle must NOT be described as green."
+    },
+    {
+      "device": "iPhone 17 Pro",
+      "bundle": "Validation/test-runs/reward-readiness-compatibility.xcresult",
+      "appTestsPassed": 13,
+      "failed": 0,
+      "scope": "Final placement-aware provider code:7 readiness/privacy/fault tests plus6 existing provider compatibility and receipt persistence tests."
+    },
+    {
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-hint-final.xcresult",
+      "uiTestsPassed": 1,
+      "failed": 0,
+      "scope": "Isolated successful rerun of current-board hint preview/close/automatic simulated reward/Apply using final provider bridge."
+    },
+    {
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-ui-current-pack-endless.xcresult",
+      "uiTestsPassed": 2,
+      "failed": 0,
+      "scope": "Current8x8 L150→6x6 generated L151, exact board/mark restoration; failed generation retains completed L150 through home and cold relaunch."
+    }
+  ],
+  "visualEvidence": {
+    "path": "Docs/original-reference",
+    "inspected": true,
+    "scope": "Compared layout and character theme with supplied Word figures. Not a pixel/timing match to unavailable frozen recordings."
+  },
+  "remaining": [
+    "Frozen Pawdoku release/captures and actual per-level gameplay/difficulty configurations",
+    "Reference audio files, detailed playback timing and group mappings",
+    "Cross-product corpus and reviewed similarity calibration",
+    "Exact trigger ordering and alternate-board restart behavior",
+    "Production legal/support endpoints and service adapters/data dashboards",
+    "Physical-device, old-system, TestFlight and App Store release validation"
+  ],
+  "historicalFailuresRetained": "Initial UI/app runs and first full-core run failed on changed fixture assumptions or real UI issues; these are retained under Validation/test-runs. Only explicitly listed successful reruns count. Old 88-item checklist completion counts are superseded.",
+  "applicationTests": {
+    "passed": 29,
+    "failed": 0,
+    "bundle": "Validation/test-runs/original-release-candidate.xcresult",
+    "scope": "AppTests portion passed; combined bundle also contains the separately documented UI launch failure."
+  },
+  "supersededOrInterruptedRuns": [
+    "reward-readiness-final was intentionally interrupted to stop two runners targeting one simulator; not counted as success."
+  ],
+  "buildVerification": {
+    "simulatorDebug": "passed",
+    "simulatorLog": "Validation/test-runs/original-final-build.log",
+    "genericIOSReleaseUnsigned": "passed",
+    "releaseLog": "Validation/test-runs/original-final-release-build.log",
+    "installedOn": [
+      "iPhone 17 Pro",
+      "iPhone 17e"
+    ],
+    "normalLaunch": "iPhone 17 Pro launched without test/reset flags;Welcome verified visually;existing normal user data preserved",
+    "normalLaunchScreenshot": "Validation/test-runs/original-normal-launch.png",
+    "bundleVersion": "0.2.0 (3)",
+    "signingAndDeviceExecution": "Release compilation was unsigned;no physical-device or App Store claim",
+    "sourceDocumentSHA256Unchanged": true
+  }
+}

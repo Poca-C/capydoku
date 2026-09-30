@@ -1,0 +1,32 @@
+{
+  "date": "2026-09-30",
+  "baseline": "Original Word sections 6.2–6.5 and 7.2–7.3",
+  "implementationScope": "Local offline contract adapter only; no live analytics, advertising, push or CMP SDK is connected.",
+  "verification": {
+    "device": "iPhone 17 Pro simulator",
+    "analyticsAppTestsPassed": 5,
+    "startupAppTestsPassed": 4,
+    "log": "Validation/test-runs/analytics-startup-audit.log"
+  },
+  "fixed": [
+    "First-launch test flag now overrides automatic XCTest host bypass.",
+    "Cancelled permission tasks no longer claim successful completion; the saved acceptance can resume pending steps.",
+    "An accepted-version file without an acceptance timestamp is no longer trusted.",
+    "Analytics remains disabled until consent; unknown events/fields, incomplete required fields, invalid enums and negative counters are rejected.",
+    "String IDs remain strings even when they contain only digits; integer and boolean fields use their declared types.",
+    "Failed writes remain queued in memory with original identifiers and timestamps and retry after storage recovers.",
+    "Active session state is persisted, permitting a single interrupted-session end on next launch.",
+    "Short background transitions reuse the session; a longer break creates a new session and excludes background time from active duration.",
+    "Corrupt primary analytics queue is preserved and the previous valid backup is attempted.",
+    "Default Keychain identity namespace distinguishes normal, UI-test and app-test storage directories."
+  ],
+  "pendingReferenceDecisions": [
+    "Actual project session timeout is absent. The injectable local-demo default is 300 seconds and is not a frozen Pawdoku value.",
+    "Original table says session_end on background while session_start is new only after background timeout. This adapter persists a pending end at the background timestamp and finalizes it on a long resume or cold start; exact platform reconciliation needs freezing.",
+    "Original requires one level_end per attempt but also supports unlimited same-board revives. A failed attempt later revived to victory needs a frozen analytics rule: update the single result or start a new attempt. Current app preserves attempt and first terminal result.",
+    "Interstitial placement_id is not listed in the section 6.3 placement enum despite section 8.6 adding interstitial ad_type. A formal placement enum must be supplied before live analytics.",
+    "Publisher Terms/Privacy documents, regional CMP implementation, SDK credentials/environment IDs and reinstall identity policy have not been supplied. Local legal pages are explicitly internal-demo notices.",
+    "Raw SDK impression-start callback must drive ad_result started for a live adapter; the current rewarded adapter is a simulation.",
+    "Network transport, acknowledgment, revenue and production dashboards are not verified by these local tests."
+  ]
+}

@@ -33,12 +33,14 @@ public enum SaveStoreError: LocalizedError {
 /// Serial, atomic local persistence. File work is deliberately tiny; callers can use one serial queue.
 /// Reward methods persist the receipt before applying its effect and roll back memory if saving fails.
 public final class SaveStore: @unchecked Sendable {
-    public static let currentSchemaVersion = 2
+    public static let currentSchemaVersion = 3
     public let directory: URL
     public var primaryURL: URL { directory.appendingPathComponent("progress.json") }
     public var backupURL: URL { directory.appendingPathComponent("progress.backup.json") }
     private let lock = NSRecursiveLock()
     private let fileManager: FileManager
+    private let packagedPuzzle: ((Int) -> Puzzle?)?
+    private let archivedPuzzles: ((Int) -> [Puzzle])?
     // Each board is immutable during play. Keep a small exact-value cache so saving a tap
     // does not repeatedly solve the same board (or the previous board kept as backup).
     private var validatedPuzzles: [Puzzle] = []
@@ -49,8 +51,10 @@ public final class SaveStore: @unchecked Sendable {
         var checksum: String
     }
 
-    public init(directory: URL? = nil, fileManager: FileManager = .default) {
+    public init(directory: URL? = nil, fileManager: FileManager = .default, packagedPuzzle: ((Int) -> Puzzle?)? = nil, archivedPuzzles: ((Int) -> [Puzzle])? = nil) {
         self.fileManager = fileManager
+        self.packagedPuzzle = packagedPuzzle
+        self.archivedPuzzles = archivedPuzzles
         self.directory = directory ?? fileManager.urls(for: .applicationSupportDirectory,
                                                        in: .userDomainMask)[0]
             .appendingPathComponent("Capydoku", isDirectory: true)
@@ -94,7 +98,7 @@ public final class SaveStore: @unchecked Sendable {
         try validate(progress)
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.sortedKeys]
-        let payload = try encoder.encode(progress)
+        let payload = try statePayload(progress, encoder: encoder)
         let envelope = Envelope(schemaVersion: Self.currentSchemaVersion, payload: payload,
                                 checksum: Self.checksum(payload))
         let data = try encoder.encode(envelope)
@@ -143,8 +147,11 @@ public final class SaveStore: @unchecked Sendable {
         guard !offerID.isEmpty, progress.rewardLedger[offerID] == nil,
               progress.canReceiveReward(kind) else { return false }
         return try transaction(progress: &progress) { candidate in
+            let free = kind == .levelStartFree ? candidate.session?.config.referenceGameplay?.levelStartFreeAd : nil
             candidate.rewardLedger[offerID] = RewardRecord(id: offerID, kind: kind,
-                                                          sessionID: candidate.session?.id)
+                sessionID: candidate.session?.id, inventoryTool: free?.reward, inventoryCount: free?.rewardCount,
+                inventoryCarry: free?.inventoryAcrossLevels, quotaKey: kind == .levelStartFree ? candidate.levelStartFreeQuotaKey : nil,
+                levelID: kind == .levelStartFree ? candidate.session?.puzzle.id : nil)
             return true
         }
     }
@@ -194,9 +201,67 @@ public final class SaveStore: @unchecked Sendable {
         guard Self.checksum(envelope.payload) == envelope.checksum else { throw SaveStoreError.checksumMismatch }
         // Schema 1 used the same JSON payload without optional tracking fields. Their decoding defaults
         // preserve inventory, check-in and completion; version 2 adds grant and reward recovery records.
-        let progress = try JSONDecoder().decode(PlayerProgress.self, from: envelope.payload)
+        let progress = try JSONDecoder().decode(PlayerProgress.self, from: resolvedPayload(envelope.payload))
         try validate(progress)
         return (progress, envelope.schemaVersion < Self.currentSchemaVersion)
+    }
+
+    /// The shipped app stores only a reference for packaged boards (§7.4).
+    /// Experimental 151+ boards live in an immutable board cache, separate from player state.
+    /// A nil resolver keeps the legacy standalone-core encoding available for migration tools.
+    private func statePayload(_ progress: PlayerProgress, encoder: JSONEncoder) throws -> Data {
+        let data = try encoder.encode(progress)
+        guard let packagedPuzzle, let puzzle = progress.session?.puzzle,
+              var root = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+              var session = root["session"] as? [String: Any] else { return data }
+        let boardData = try encoder.encode(puzzle)
+        let digest = Self.checksum(boardData)
+        let source: String
+        if puzzle.id <= 150 {
+            guard packagedPuzzle(puzzle.id) == puzzle || archivedPuzzles?(puzzle.id).contains(puzzle) == true else {
+                throw SaveStoreError.invalidState("packaged board does not match this build")
+            }
+            source = "bundle"
+        } else {
+            source = "experimental-cache"
+            let cache = directory.appendingPathComponent("BoardCache", isDirectory: true)
+            try fileManager.createDirectory(at: cache, withIntermediateDirectories: true)
+            let url = cache.appendingPathComponent(digest + ".json")
+            if !fileManager.fileExists(atPath: url.path) { try boardData.write(to: url, options: .atomic) }
+        }
+        session.removeValue(forKey: "puzzle")
+        session["puzzleReference"] = ["levelID": puzzle.id, "source": source, "checksum": digest]
+        root["session"] = session
+        return try JSONSerialization.data(withJSONObject: root, options: [.sortedKeys])
+    }
+
+    private func resolvedPayload(_ data: Data) throws -> Data {
+        guard var root = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+              var session = root["session"] as? [String: Any],
+              let reference = session["puzzleReference"] as? [String: Any] else { return data }
+        guard let level = reference["levelID"] as? Int, let source = reference["source"] as? String,
+              let digest = reference["checksum"] as? String, digest.count == 64,
+              digest.allSatisfy({ $0.isHexDigit }) else { throw SaveStoreError.invalidState("invalid puzzle reference") }
+        let boardData: Data
+        if source == "bundle", level <= 150 {
+            let encoder = JSONEncoder(); encoder.outputFormatting = [.sortedKeys]
+            let candidates = [packagedPuzzle?(level)].compactMap { $0 } + (archivedPuzzles?(level) ?? [])
+            let encoded = try candidates.map { try encoder.encode($0) }
+            guard let matching = encoded.first(where: { Self.checksum($0) == digest }) else {
+                throw SaveStoreError.invalidState("matching packaged board version is unavailable")
+            }
+            boardData = matching
+        } else if source == "experimental-cache", level >= 151 {
+            boardData = try Data(contentsOf: directory.appendingPathComponent("BoardCache/" + digest + ".json"))
+        } else { throw SaveStoreError.invalidState("referenced board is unavailable") }
+        guard Self.checksum(boardData) == digest else { throw SaveStoreError.checksumMismatch }
+        let board = try JSONSerialization.jsonObject(with: boardData)
+        guard let dictionary = board as? [String: Any], dictionary["id"] as? Int == level else {
+            throw SaveStoreError.invalidState("board reference level mismatch")
+        }
+        session["puzzle"] = board; session.removeValue(forKey: "puzzleReference")
+        root["session"] = session
+        return try JSONSerialization.data(withJSONObject: root, options: [.sortedKeys])
     }
 
     private func validate(_ progress: PlayerProgress) throws {
@@ -206,6 +271,10 @@ public final class SaveStore: @unchecked Sendable {
         func positive(_ value: Int) -> Bool { value > 0 && counter(value) }
         guard positive(progress.unlockedLevel), positive(progress.currentLevel),
               counter(progress.bonusHints), counter(progress.bonusDirect), counter(progress.tutorialStep),
+              counter(progress.carriedToolBalance.hints), counter(progress.carriedToolBalance.direct),
+              progress.referenceToolGrantKeys.allSatisfy({ !$0.isEmpty }),
+              progress.freeReviveUsage.allSatisfy({ !$0.key.isEmpty && counter($0.value) }),
+              progress.levelStartLocalBalances.allSatisfy({ Int($0.key).map(positive) == true && counter($0.value.hints) && counter($0.value.direct) }),
               counter(progress.checkIn.streak), counter(progress.checkIn.cycleDay),
               counter(progress.checkIn.completedCycles),
               progress.completedLevels.allSatisfy(positive),
@@ -215,15 +284,23 @@ public final class SaveStore: @unchecked Sendable {
               progress.rewardLedger.allSatisfy({ !$0.key.isEmpty && $0.key == $0.value.id }) else {
             throw SaveStoreError.invalidState("progress, inventory or reward records are out of range")
         }
+        for record in progress.rewardLedger.values where record.kind == .levelStartFree {
+            guard record.inventoryTool != nil, record.inventoryCarry != nil,
+                  record.inventoryCount.map({ (1...10_000).contains($0) }) == true,
+                  !(record.quotaKey?.isEmpty ?? true), record.levelID.map(positive) == true else {
+                throw SaveStoreError.invalidState("level-start reward is missing its frozen offer snapshot")
+            }
+        }
         guard let session = progress.session else { return }
         let config = session.config
+        if let reference = config.referenceGameplay { try reference.validate(level: session.puzzle.id) }
         let normalized = DemoConfig(version: config.version, initialLives: config.initialLives,
                                     hintsPerLevel: config.hintsPerLevel, directPerLevel: config.directPerLevel,
                                     baseScore: config.baseScore, comboBonus: config.comboBonus,
                                     comboThresholds: config.comboThresholds, dailyHintReward: config.dailyHintReward,
                                     cycleDirectReward: config.cycleDirectReward, checkInCycleDays: config.checkInCycleDays,
                                     generatorBudgetMilliseconds: config.generatorBudgetMilliseconds,
-                                    generatorCandidateLimit: config.generatorCandidateLimit)
+                                    generatorCandidateLimit: config.generatorCandidateLimit, referenceGameplay: config.referenceGameplay)
         guard config == normalized, !config.version.isEmpty,
               counter(config.hintsPerLevel), counter(config.directPerLevel),
               counter(config.dailyHintReward), counter(config.cycleDirectReward),

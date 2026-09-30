@@ -1,0 +1,71 @@
+{
+  "adsEnabled": null,
+  "bannerEnabled": null,
+  "bannerReviewEvidenceID": null,
+  "directFind": {
+    "buttonState": null,
+    "enabled": null,
+    "evidenceID": null,
+    "firstUnlockBonusCount": null,
+    "initialFreeCount": null,
+    "inventoryAcrossLevels": null,
+    "regrantPolicy": null,
+    "rewardedAdEnabled": null,
+    "unlockLevel": null,
+    "visible": null
+  },
+  "failure": {
+    "canDismiss": null,
+    "evidenceID": null,
+    "flowID": null,
+    "restartButtonTitle": null,
+    "restartCreatesNewBoard": null,
+    "reviveButtonTitle": null,
+    "title": null
+  },
+  "hint": {
+    "buttonState": null,
+    "enabled": null,
+    "evidenceID": null,
+    "firstUnlockBonusCount": null,
+    "initialFreeCount": null,
+    "inventoryAcrossLevels": null,
+    "regrantPolicy": null,
+    "rewardedAdEnabled": null,
+    "unlockLevel": null,
+    "visible": null
+  },
+  "interstitial": {
+    "adTimeoutSeconds": null,
+    "cooldownSeconds": null,
+    "enabled": null,
+    "evidenceID": null,
+    "frequency": null,
+    "onNextLevel": null,
+    "onReturnHome": null,
+    "startLevel": null
+  },
+  "levelStartFreeAd": {
+    "buttonState": null,
+    "enabled": null,
+    "evidenceID": null,
+    "freeCount": null,
+    "inventoryAcrossLevels": null,
+    "resetPolicy": null,
+    "reward": null,
+    "rewardCount": null,
+    "triggerOrder": null,
+    "visible": null
+  },
+  "revive": {
+    "enabled": null,
+    "evidenceID": null,
+    "freeCount": null,
+    "resetPolicy": null,
+    "restoredLives": null,
+    "rewardedAdEnabled": null,
+    "unlimitedRevives": null
+  },
+  "rewardedAdTimeoutSeconds": null,
+  "startingLives": null
+}

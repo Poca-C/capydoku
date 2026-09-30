@@ -1,7 +1,7 @@
 import XCTest
 
 /// Regression coverage for interrupted onboarding and interactions that cross UI boundaries.
-/// Uses the real packaged Level 1 fixture (solution 1, 7, 8, 14), not injected answers.
+/// Uses the archived v2 level pack explicitly (solution 1, 7, 8, 14); answers are never injected.
 final class HardeningUITests: XCTestCase {
     private var app: XCUIApplication!
 
@@ -11,7 +11,7 @@ final class HardeningUITests: XCTestCase {
     }
 
     private func launch(tutorial: Bool = false) {
-        app.launchArguments = ["-ui-testing", "-reset-demo", "-level", "1"]
+        app.launchArguments = ["-ui-testing", "-legacy-fixture", "-reset-demo", "-level", "1"]
         if !tutorial { app.launchArguments.append("-skip-tutorial") }
         app.launch()
         XCTAssertTrue(cell(0).waitForExistence(timeout: 15))
@@ -36,7 +36,7 @@ final class HardeningUITests: XCTestCase {
     }
 
     private func tap(_ id: String, file: StaticString = #filePath, line: UInt = #line) {
-        let button = app.buttons[id]
+        let button = app.descendants(matching: .any).matching(identifier: id).firstMatch
         XCTAssertTrue(button.waitForExistence(timeout: 5), "Missing \(id)", file: file, line: line)
         // Keep scrolling touches outside the interactive board.
         for _ in 0..<3 where !button.isHittable {
@@ -55,7 +55,7 @@ final class HardeningUITests: XCTestCase {
 
     private func relaunchAndContinue() {
         app.terminate()
-        app.launchArguments = ["-ui-testing"]
+        app.launchArguments = ["-ui-testing", "-legacy-fixture"]
         app.launch()
         tap("play")
         XCTAssertTrue(cell(0).waitForExistence(timeout: 5))
@@ -115,11 +115,14 @@ final class HardeningUITests: XCTestCase {
     func testMixedBackToBackGesturesNeverRepeatDamageOrScore() {
         launch()
         cell(0).tap()
+        expectValue(cell(0), "marked") // Establish two gestures, rather than an ambiguous triple-tap.
         cell(0).doubleTap()
         expectValue(cell(0), "error")
         let errorPoint = cell(0).coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
         errorPoint.tap()
+        expectValue(cell(0), "empty")
         errorPoint.doubleTap()
+        expectValue(cell(0), "error")
         cell(1).doubleTap()
         let foundPoint = cell(1).coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
         foundPoint.doubleTap()
@@ -130,12 +133,12 @@ final class HardeningUITests: XCTestCase {
         secondFound.tap()
         secondFound.doubleTap()
         expectValue(cell(7), "found")
-        expectValue(app.otherElements["lives"], "2")
+        expectValue(app.otherElements["lives"], "1")
         XCTAssertEqual(app.staticTexts["score"].label, "220")
         let expected = (0..<16).map { index in
             index == 0 ? "error" : [1, 7].contains(index) ? "found" : index == 2 ? "marked" : "empty"
         }
-        XCTAssertEqual(values(), expected, "Back-to-back operations must preserve errors, found cells and only the intended X marks.")
+        XCTAssertEqual(values(), expected, "Separate wrong submissions deduct separate lives; duplicate confirmations of found cells do not score again.")
     }
 
     func testSwipeStopsWhenFingerLeavesBoard() {
@@ -171,16 +174,17 @@ final class HardeningUITests: XCTestCase {
         tap("hint")
         XCTAssertTrue(app.buttons["hint_apply"].waitForExistence(timeout: 5))
         XCTAssertEqual(values(), before)
+        XCTAssertFalse(app.buttons["settings"].exists, "The modal hint replaces settings with its close action.")
+        cell(2).coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        XCTAssertEqual(values(), before, "The preview must freeze board input.")
+        tap("hint_close")
         tap("settings")
-        let sound = app.switches["sound_toggle"]
+        let sound = app.descendants(matching: .any).matching(identifier: "sound_toggle").firstMatch
         XCTAssertTrue(sound.waitForExistence(timeout: 5))
         let previousSound = sound.value as? String
-        sound.coordinate(withNormalizedOffset: CGVector(dx: 0.93, dy: 0.5)).tap()
+        sound.tap()
         expectValue(sound, previousSound == "1" ? "0" : "1")
         tap("settings_done")
-        XCTAssertTrue(app.buttons["hint_apply"].waitForExistence(timeout: 5), "Settings should leave the current preview open.")
-        XCTAssertEqual(values(), before, "Opening settings must not apply a hint or mutate gameplay.")
-        tap("hint_close")
         XCTAssertTrue(app.buttons["hint"].waitForExistence(timeout: 5))
         XCTAssertFalse(app.buttons["hint_apply"].exists, "Closed previews must expose no stale Apply action.")
         XCTAssertEqual(values(), before)
@@ -188,30 +192,36 @@ final class HardeningUITests: XCTestCase {
         relaunchAndContinue()
         XCTAssertFalse(app.buttons["hint_apply"].exists)
         XCTAssertEqual(values(), before)
+        XCTAssertEqual(app.buttons["hint"].value as? String, "Video reward", "Closing or relaunching must not refund the consumed hint.")
         tap("hint")
-        XCTAssertTrue(app.buttons["run_reward"].waitForExistence(timeout: 5), "Closing or relaunching must not refund the consumed hint.")
-        tap("reward_close")
+        XCTAssertTrue(app.buttons["hint_apply"].waitForExistence(timeout: 8))
+        tap("hint_close")
         XCTAssertTrue(app.buttons["hint"].waitForExistence(timeout: 5))
         XCTAssertEqual(values(), before)
         XCTAssertEqual(app.staticTexts["score"].label, score)
         expectValue(app.otherElements["lives"], "3")
     }
+    private func selectRewardScenario(_ title: String) {
+        tap("settings")
+        app.staticTexts["settings_title"].press(forDuration: 1.2)
+        XCTAssertTrue(app.buttons["debug_done"].waitForExistence(timeout: 5))
+        tap("reward_scenario")
+        app.buttons[title].tap()
+        tap("debug_done")
+    }
+
     func testRewardWithoutCallbackTimesOutAndCanRetry() {
         launch()
         tap("hint"); tap("hint_close")
+        selectRewardScenario("No callback (timeout)")
         tap("hint")
-        tap("reward_scenario")
-        // Menu items must be selected inside the popup; the page's scroll helper
-        // would dismiss a menu while its presentation animation is settling.
-        app.buttons["No callback (timeout)"].tap()
-        tap("run_reward")
         let alert = app.alerts.firstMatch
         XCTAssertTrue(alert.waitForExistence(timeout: 10))
         XCTAssertTrue(alert.staticTexts.containing(NSPredicate(format: "label CONTAINS %@", "timed out")).firstMatch.exists)
         alert.buttons["OK"].tap()
         XCTAssertFalse(app.buttons["hint_apply"].exists)
+        selectRewardScenario("Success")
         tap("hint")
-        tap("reward_scenario"); app.buttons["Success"].tap(); tap("run_reward")
         XCTAssertTrue(app.buttons["hint_apply"].waitForExistence(timeout: 5))
         tap("hint_close")
         XCTAssertEqual(values(), Array(repeating: "empty", count: 16))

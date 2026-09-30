@@ -12,5 +12,6 @@
 <key>UISupportedInterfaceOrientations</key><array><string>UIInterfaceOrientationPortrait</string></array>
 <key>UILaunchScreen</key><dict/>
 <key>UIUserInterfaceStyle</key><string>Light</string>
+<key>NSUserTrackingUsageDescription</key><string>Your choice controls permission for advertising measurement when advertising services are enabled.</string>
 <key>ITSAppUsesNonExemptEncryption</key><false/>
 </dict></plist>

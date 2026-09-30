@@ -53,21 +53,35 @@ public struct GameSession: Codable, Equatable, Sendable {
         self.score = 0
         self.combo = 0
         self.status = .playing
-        self.hintsRemaining = grantFreeTools ? config.hintsPerLevel : 0
-        self.directRemaining = grantFreeTools ? config.directPerLevel : 0
+        self.hintsRemaining = grantFreeTools ? Self.initialGrant(config.referenceGameplay?.hint, level: puzzle.id, fallback: config.hintsPerLevel) : 0
+        self.directRemaining = grantFreeTools ? Self.initialGrant(config.referenceGameplay?.directFind, level: puzzle.id, fallback: config.directPerLevel) : 0
         self.attempt = max(1, attempt)
         self.elapsedSeconds = 0
         self.hasRevived = false
         self.pendingRewardHint = false
     }
 
+    private static func initialGrant(_ tool: ReferenceToolConfiguration?, level: Int, fallback: Int) -> Int {
+        guard let tool else { return fallback }
+        return tool.enabled && level >= tool.unlockLevel && tool.regrantPolicy != .never ? tool.initialFreeCount : 0
+    }
+
+    public var directToolEnabled: Bool {
+        guard let tool = config.referenceGameplay?.directFind else { return true }
+        return tool.enabled && tool.visible && tool.buttonState == .enabled && puzzle.id >= tool.unlockLevel
+    }
+    public var hintToolEnabled: Bool {
+        guard let tool = config.referenceGameplay?.hint else { return true }
+        return tool.enabled && tool.visible && tool.buttonState == .enabled && puzzle.id >= tool.unlockLevel
+    }
+
     private func isCell(_ cell: Int) -> Bool { (0..<(puzzle.size * puzzle.size)).contains(cell) }
 
     @discardableResult
     public mutating func toggleMark(at cell: Int) -> Bool {
-        guard status == .playing, isCell(cell), !found.contains(cell), !errors.contains(cell) else { return false }
-        // Red Xs are confirmed mistakes, not editable player guesses.
-        if marks.contains(cell) { marks.remove(cell) } else { marks.insert(cell) }
+        guard status == .playing, isCell(cell), !found.contains(cell) else { return false }
+        // The original specification allows tapping any X to undo it, including a red error X.
+        if marks.contains(cell) { marks.remove(cell); errors.remove(cell) } else { marks.insert(cell) }
         return true
     }
 
@@ -84,7 +98,7 @@ public struct GameSession: Codable, Equatable, Sendable {
 
     @discardableResult
     public mutating func submit(cell: Int) -> MoveResult {
-        guard status == .playing, isCell(cell), !found.contains(cell), !errors.contains(cell) else {
+        guard status == .playing, isCell(cell), !found.contains(cell) else {
             return .ignored
         }
         if puzzle.solution.contains(cell) { return reveal(cell) }
@@ -109,7 +123,7 @@ public struct GameSession: Codable, Equatable, Sendable {
 
     @discardableResult
     public mutating func directFind() -> Int? {
-        guard status == .playing, directRemaining > 0 else { return nil }
+        guard status == .playing, directToolEnabled, directRemaining > 0 else { return nil }
         guard let cell = revealDirectReward() else { return nil }
         directRemaining -= 1
         return cell
@@ -126,7 +140,7 @@ public struct GameSession: Codable, Equatable, Sendable {
 
     @discardableResult
     public mutating func consumeHint() -> Bool {
-        guard status == .playing, hasUnmarkedExclusions else { return false }
+        guard status == .playing, hintToolEnabled, hasUnmarkedExclusions else { return false }
         if pendingRewardHint { pendingRewardHint = false; return true }
         guard hintsRemaining > 0 else { return false }
         hintsRemaining -= 1
@@ -145,6 +159,15 @@ public struct GameSession: Codable, Equatable, Sendable {
         self = GameSession(puzzle: puzzle, config: config, attempt: attempt + 1, grantFreeTools: false)
         hintsRemaining = hints
         directRemaining = direct
+        if let reference = config.referenceGameplay {
+            if reference.hint.regrantPolicy == .everyAttempt && hintToolEnabled { hintsRemaining += reference.hint.initialFreeCount }
+            if reference.directFind.regrantPolicy == .everyAttempt && directToolEnabled { directRemaining += reference.directFind.initialFreeCount }
+        }
+    }
+
+    mutating func addInventory(_ kind: ReferenceToolKind, count: Int) {
+        guard count > 0 else { return }
+        if kind == .hint { hintsRemaining += count } else { directRemaining += count }
     }
 
     mutating func restoreToolBalance(_ balance: ToolBalance) {
@@ -155,7 +178,8 @@ public struct GameSession: Codable, Equatable, Sendable {
     @discardableResult
     public mutating func revive() -> Bool {
         guard status == .lost else { return false }
-        lives = config.initialLives
+        guard config.referenceGameplay?.revive.enabled != false else { return false }
+        lives = config.referenceGameplay?.revive.restoredLives ?? config.initialLives
         status = .playing
         hasRevived = true
         // Found animals, manual Xs and red mistake Xs all survive revival.

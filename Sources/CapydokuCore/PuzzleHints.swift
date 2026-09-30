@@ -20,21 +20,21 @@ public struct TutorialStep: Codable, Equatable, Identifiable, Sendable {
 }
 
 public enum PuzzleHints {
-    private struct Deduction {
+    struct Deduction {
         var forced: Int?
         var excluded: Set<Int>
         var explanation: String
         var rule: String
     }
 
-    private static func units(_ p: Puzzle) -> [(String, [Int])] {
+    static func units(_ p: Puzzle) -> [(String, [Int])] {
         let n = p.size
         return (0..<n).map { r in ("Row \(r + 1)", (0..<n).map { r * n + $0 }) }
             + (0..<n).map { c in ("Column \(c + 1)", (0..<n).map { $0 * n + c }) }
             + (0..<n).map { region in ("Region \(region + 1)", p.regions.indices.filter { p.regions[$0] == region }) }
     }
 
-    private static func deduction(_ p: Puzzle, candidates: Set<Int>, confirmed: Set<Int>) -> Deduction? {
+    static func deduction(_ p: Puzzle, candidates: Set<Int>, confirmed: Set<Int>) -> Deduction? {
         for (name, cells) in units(p) where confirmed.isDisjoint(with: cells) {
             let remaining = cells.filter { candidates.contains($0) }
             if remaining.count == 1 {
@@ -169,7 +169,7 @@ public enum PuzzleHints {
 
     /// Eligibility gate for the current nine-step Level 1 introduction.
     /// A valid puzzle alone is insufficient: its highlighted operations and the
-    /// final single-cell-region explanation must also be safe and completable.
+    /// complete action path must follow a current logical deduction, not the saved answer.
     public static func canTeach(puzzle p: Puzzle) -> Bool {
         guard p.id == 1, p.size == 4, PuzzleSolver.validate(p).valid else { return false }
         let steps = tutorial(puzzle: p)
@@ -178,7 +178,7 @@ public enum PuzzleHints {
         let cells = Set(p.regions.indices)
         guard steps.allSatisfy({ !$0.targetCells.isEmpty && Set($0.targetCells).count == $0.targetCells.count && Set($0.targetCells).isSubset(of: cells) }),
               steps[8].targetCells.count == 1, let animal = steps[8].targetCells.first,
-              p.isSolutionCell(animal), p.regions.filter({ $0 == p.regions[animal] }).count == 1 else { return false }
+              let proof = deduction(p, candidates: cells, confirmed: []), proof.forced == animal else { return false }
 
         // The four rule demonstrations must describe this board and this animal.
         let row = Set(cells.filter { $0 / p.size == animal / p.size })
@@ -194,7 +194,7 @@ public enum PuzzleHints {
         var marks = Set<Int>()
         for step in steps[4...7] {
             let targets = Set(step.targetCells)
-            guard targets.isDisjoint(with: p.solution) else { return false }
+            guard targets.isSubset(of: proof.excluded) else { return false }
             if step.action == "tap" {
                 let cell = step.targetCells[0]
                 if marks.contains(cell) { marks.remove(cell) } else { marks.insert(cell) }
@@ -218,14 +218,14 @@ public enum PuzzleHints {
 
     public static func tutorial(puzzle p: Puzzle) -> [TutorialStep] {
         guard (1...16).contains(p.size), p.regions.count == p.size * p.size,
-              !p.solution.isEmpty, p.solution.allSatisfy({ p.regions.indices.contains($0) }) else { return [] }
-        let animal = p.solution.first(where: { cell in p.regions.filter { $0 == p.regions[cell] }.count == 1 }) ?? p.solution[0]
-        let safe = p.regions.indices.first(where: { !p.isSolutionCell($0) }) ?? 0
+              p.regions.allSatisfy({ (0..<p.size).contains($0) }),
+              let proof = deduction(p, candidates: Set(p.regions.indices), confirmed: []),
+              let animal = proof.forced, let safe = proof.excluded.sorted().first else { return [] }
         var swipe = [Int]()
         for row in 0..<p.size {
             for col in 0..<(p.size - 1) {
                 let a = row * p.size + col, b = a + 1
-                if !p.isSolutionCell(a) && !p.isSolutionCell(b) { swipe = [a, b]; break }
+                if proof.excluded.contains(a) && proof.excluded.contains(b) { swipe = [a, b]; break }
             }
             if !swipe.isEmpty { break }
         }
@@ -233,7 +233,7 @@ public enum PuzzleHints {
         for col in 0..<p.size {
             for row in 0..<(p.size - 1) {
                 let a = row * p.size + col, b = a + p.size
-                if !p.isSolutionCell(a) && !p.isSolutionCell(b) && !swipe.contains(a) && !swipe.contains(b) {
+                if proof.excluded.contains(a) && proof.excluded.contains(b) && !swipe.contains(a) && !swipe.contains(b) {
                     verticalSwipe = [a, b]; break
                 }
             }
@@ -247,7 +247,7 @@ public enum PuzzleHints {
             TutorialStep(id: "column", title: "One per column", instruction: "Each column also contains exactly one capybara.", targetCells: (0..<p.size).map { $0 * p.size + animal % p.size }, action: "read"),
             TutorialStep(id: "region", title: "One per region", instruction: "Each connected color region contains exactly one capybara.", targetCells: p.regions.indices.filter { p.regions[$0] == p.regions[animal] }, action: "read"),
             TutorialStep(id: "neighbors", title: "Give them space", instruction: "Capybaras cannot touch, even diagonally.", targetCells: adjacent, action: "read"),
-            TutorialStep(id: "mark", title: "Tap to mark X", instruction: "Tap the highlighted cell to mark it as empty.", targetCells: [safe], action: "tap"),
+            TutorialStep(id: "mark", title: "Tap to mark X", instruction: "The single-cell region already tells us where a capybara must be. The highlighted cell conflicts with it. Tap to mark X.", targetCells: [safe], action: "tap"),
             TutorialStep(id: "undo", title: "Tap again to undo", instruction: "Tap the same cell again to remove the X.", targetCells: [safe], action: "tap"),
             TutorialStep(id: "swipe", title: "Swipe across a row", instruction: "Swipe from the first highlighted cell to the second to mark both cells.", targetCells: swipe, action: "swipe"),
             TutorialStep(id: "swipeVertical", title: "Swipe down a column", instruction: "Now swipe vertically between the two highlighted cells. Straight swipes mark X; diagonal swipes do not.", targetCells: verticalSwipe, action: "swipe"),

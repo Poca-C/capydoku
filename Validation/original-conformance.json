@@ -1,0 +1,1685 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-09-30",
+  "source": {
+    "path": "卡皮巴拉主题（Capydoku）区域逻辑小游戏需求说明_Vfinal_程序化关卡生成版(1).docx",
+    "title": "卡皮巴拉主题（Capydoku）区域逻辑小游戏需求说明 V1.3",
+    "sha256": "274bbf15f031bd80bb8b360cf14c0266acff370a230d9cad1b1785461df54dd2",
+    "index": "Reference/Original/document.txt",
+    "indexConvention": "0-based Word body-block index shown in [n], including tables; not page numbers."
+  },
+  "authority": "Original Word text and supplied figures are authoritative. Later plans/checklists only verify; they cannot simplify or remove original scope.",
+  "overall": "PARTIAL_ORIGINAL_CONFORMANCE — playable demo plus corrected client implementation; not frozen-reference acceptance or App Store release.",
+  "method": "Grouped substantive requirements across chapters 1–8. Observation-only prose, repeated illustrations and summary tables are not counted as separate acceptance items. Status is per stated evidence scope, not a completion percentage.",
+  "statusDefinitions": {
+    "implemented": "Code is present and inspected; no claim of full current-build acceptance.",
+    "verified": "The specifically described behavior has current scoped verification evidence; remaining limitations still apply.",
+    "awaiting_reference": "Frozen reference values/assets/corpus needed for this requirement are absent; local defaults cannot substitute.",
+    "external_pending": "External SDK/services/publisher/release inputs or integration are outstanding; this does not remove client-side work.",
+    "partial": "Some required behavior, integration, verification or source alignment remains incomplete."
+  },
+  "evidenceLimitations": [
+    "旧88项Checklist的完成数字与originalRequirementsPreserved标志不作为原文符合性证据；旧版报告只保留历史。",
+    "当前150+30严格生产完成，180唯一答案及不同区域结构，无相似性豁免；数值Profile仍未经Pawdoku校准，跨产品语料缺失。",
+    "原文只固定L1为4×4；本地早期尺寸安排不能覆盖原文的去重要求。",
+    "最终截图已目视核对；当前包页面、教学及L10流程有测试，但不声称与尚未提供的冻结录屏逐帧一致。",
+    "真实广告SDK由外部供应；客户端入口、配置、库存、复活和奖励安全仍是本Demo责任。",
+    "Daily Challenge保留锁定入口，Profile明确不做。正式原音频、真实SDK、真机及上架均待验。"
+  ],
+  "priorityClientFollowUps": [
+    {
+      "id": "CLIENT-01",
+      "sourceParagraphs": [
+        88,
+        89,
+        113,
+        291
+      ],
+      "priority": "P1",
+      "topic": "Do not accept unimplemented imported behavior silently",
+      "finding": "triggerOrder is not executed; restartCreatesNewBoard is not implemented as a complete alternate-board path. Frozen capture must settle behavior; current unsupported state must be explicit.",
+      "evidence": [
+        "App/AppModel.swift",
+        "Sources/CapydokuCore/ReferenceGameplayConfiguration.swift"
+      ],
+      "next": "已加明确未支持提示及原局不变测试；换盘正式路径和triggerOrder语义仍待冻结资料。"
+    },
+    {
+      "id": "CLIENT-02",
+      "sourceParagraphs": [
+        324,
+        325,
+        327,
+        329,
+        331,
+        333
+      ],
+      "priority": "P2",
+      "topic": "Complete audio playback/configuration contract",
+      "finding": "Current manifest has volume/delay/concurrency/loops but no complete page applicability, loop-point or fade policy; bulk swipe audio can be suppressed by the minimum interval. Actual reference audio is missing.",
+      "evidence": [
+        "App/Services/FeedbackPlayer.swift",
+        "Resources/audio-manifest.json"
+      ],
+      "next": "Add mappings/timing support alongside the supplied original audio; remain silent and unverified before assets arrive."
+    },
+    {
+      "id": "CLIENT-03",
+      "sourceParagraphs": [
+        442,
+        428
+      ],
+      "priority": "本地已验证",
+      "topic": "广告位加载与展示合同",
+      "finding": "已接按广告位预热/ready/展示/立即补载；offer落盘后才展示，超时覆盖等待ready，重复/过期回调隔离，启动完成前禁用广告；插页失败及超时可继续且不发奖。13项最终专项及兼容测试通过。",
+      "evidence": [
+        "App/Services/RewardProvider.swift",
+        "App/AppModel.swift",
+        "AppTests/RewardReadinessTests.swift",
+        "Validation/test-runs/reward-readiness-compatibility.xcresult"
+      ],
+      "next": "正式逐关广告位表、真实SDK、单元缓存及网络性能待联调。"
+    },
+    {
+      "id": "CLIENT-04",
+      "sourceParagraphs": [
+        402,
+        406,
+        407
+      ],
+      "priority": "已验证",
+      "topic": "One-time state corruption recovery",
+      "finding": "同意/通关/挑战状态已迁移SHA校验双副本，主文件损坏回退测试通过；旧主存档与归档棋盘升级恢复通过。",
+      "evidence": [
+        "App/Services/StartupController.swift",
+        "App/AppModel.swift"
+      ],
+      "next": "保留真机中断和长期存储压力的正式验收。"
+    },
+    {
+      "id": "CLIENT-05",
+      "sourceParagraphs": [
+        303,
+        305,
+        306
+      ],
+      "priority": "P2",
+      "topic": "Touch target and focus audit",
+      "finding": "签到38pt已修为至少44×44，并以17e实际UI尺寸与单行测试验证。",
+      "evidence": [
+        "App/Views/SupportingViews.swift",
+        "App/Views/RootView.swift"
+      ],
+      "next": "保留全局焦点恢复、长英文、动态字体和对比度的专项验收。"
+    }
+  ],
+  "rows": [
+    {
+      "id": "REF-01",
+      "section": "1",
+      "sourceParagraphs": [
+        5,
+        7
+      ],
+      "title": "冻结 Pawdoku 唯一参考版本及资料",
+      "status": "awaiting_reference",
+      "implemented": "已保存原 Word 正文、28 张附图及原文校验值。",
+      "gap": "缺商店版本、完整录屏、采样设备/系统、正式配置和音频清单；Word 附图不能替代完整冻结基线。",
+      "evidence": [
+        "Reference/Original/document.json",
+        "Reference/Original/document.txt",
+        "Reference/gameplay-template.json"
+      ]
+    },
+    {
+      "id": "REF-02",
+      "section": "1",
+      "sourceParagraphs": [
+        8
+      ],
+      "title": "150 关玩法与商业化映射",
+      "status": "partial",
+      "implemented": "定义并接入逐关 direct/hint、免费广告、复活、失败与插页配置模型；失败标题/按钮/关闭、免费复活配额已补接。",
+      "gap": "真实逐关值尚缺；triggerOrder、restartCreatesNewBoard 的精确语义和执行路径仍待冻结，不可称全字段执行完毕。",
+      "evidence": [
+        "Sources/CapydokuCore/ReferenceGameplayConfiguration.swift",
+        "App/AppModel.swift",
+        "Sources/CapydokuCore/PlayerProgress.swift"
+      ]
+    },
+    {
+      "id": "REF-03",
+      "section": "1",
+      "sourceParagraphs": [
+        9
+      ],
+      "title": "结构化导入与禁止导入参考棋盘",
+      "status": "verified",
+      "implemented": "导入脚本严格拒绝未知字段/棋盘/答案，验证完整 150 关、来源校验值、字段类型；7 个 Swift 和 6 个 Python 测试通过。",
+      "gap": "验证的是导入契约，未收到真实冻结数据，不能据此声称对标完成。",
+      "evidence": [
+        "scripts/import_reference_gameplay.py",
+        "scripts/test_import_reference_gameplay.py",
+        "Tests/CapydokuCoreTests/ReferenceGameplayConfigurationTests.swift",
+        "Validation/reference-gameplay-import.json"
+      ]
+    },
+    {
+      "id": "REF-04",
+      "section": "1",
+      "sourceParagraphs": [
+        10
+      ],
+      "title": "基线变更控制",
+      "status": "implemented",
+      "implemented": "支持上一版本字段差异及同版本内容变更拒绝。",
+      "gap": "实际冻结、人工评审和版本更新记录尚无。",
+      "evidence": [
+        "scripts/import_reference_gameplay.py",
+        "Reference/gameplay-import.md"
+      ]
+    },
+    {
+      "id": "REF-05",
+      "section": "1",
+      "sourceParagraphs": [
+        32,
+        33,
+        34,
+        36
+      ],
+      "title": "原创棋盘与高还原英文主题",
+      "status": "partial",
+      "implemented": "棋盘自研生成、英文 UI 已重排为原文层级，使用原创 2D 角色。",
+      "gap": "难度、Rank 节点、弹窗节奏及冻结录屏逐项对标尚未完成。",
+      "evidence": [
+        "Sources/CapydokuCore/GenerationPipeline.swift",
+        "App/Views/RootView.swift",
+        "App/Views/SupportingViews.swift"
+      ]
+    },
+    {
+      "id": "PLAY-01",
+      "section": "2.1",
+      "sourceParagraphs": [
+        15,
+        24,
+        42,
+        43,
+        44,
+        45,
+        55
+      ],
+      "title": "四条规则、唯一解与区域连通",
+      "status": "verified",
+      "implemented": "当前180关独立检查全部唯一解、区域连通且满足四条规则；包校验值已固定。",
+      "gap": "合法性不等于正式难度符合参考。",
+      "evidence": [
+        "Sources/CapydokuCore/PuzzleSolver.swift",
+        "Sources/CapydokuCore/Puzzle.swift",
+        "Validation/original-generation/independent-validation.json",
+        "Validation/original-generation/summary.json"
+      ]
+    },
+    {
+      "id": "PLAY-02",
+      "section": "2.1",
+      "sourceParagraphs": [
+        30,
+        35,
+        46,
+        60,
+        127,
+        130,
+        133,
+        134
+      ],
+      "title": "单击撤销、双击优先、轴向滑动、无自动 X",
+      "status": "implemented",
+      "implemented": "UIKit 棋盘手势层及 GameSession 已实现；错误 X 已改为可手动撤销。",
+      "gap": "本轮最终构建的双设备完整手势回归待汇总；旧测试不能替代当前包验证。",
+      "evidence": [
+        "App/Views/PuzzleBoardView.swift",
+        "Sources/CapydokuCore/GameSession.swift",
+        "UITests/CapydokuUITests.swift"
+      ]
+    },
+    {
+      "id": "PLAY-03",
+      "section": "2.2",
+      "sourceParagraphs": [
+        64,
+        102
+      ],
+      "title": "不含金币/体力/钻石或随机事件",
+      "status": "implemented",
+      "implemented": "当前资源为局内分数、生命与独立道具库存，无货币或随机经济事件。",
+      "gap": "不应后续擅加累计货币、充值或账号系统。",
+      "evidence": [
+        "Sources/CapydokuCore/GameSession.swift",
+        "Sources/CapydokuCore/PlayerProgress.swift"
+      ]
+    },
+    {
+      "id": "PLAY-04",
+      "section": "2.2",
+      "sourceParagraphs": [
+        66,
+        67,
+        75,
+        83
+      ],
+      "title": "道具显示/解锁/逐关免费次数与跨关规则",
+      "status": "awaiting_reference",
+      "implemented": "导入 schema、库存隔离、赠送记录、跨关及重发策略已有代码。",
+      "gap": "真实 Pawdoku 逐关配置未提供；Demo 默认次数不是原文已确认值。",
+      "evidence": [
+        "Sources/CapydokuCore/ReferenceGameplayConfiguration.swift",
+        "Sources/CapydokuCore/PlayerProgress.swift",
+        "Validation/reference-gameplay-import.json"
+      ]
+    },
+    {
+      "id": "PLAY-05",
+      "section": "2.2",
+      "sourceParagraphs": [
+        68,
+        85,
+        284
+      ],
+      "title": "放大镜/灯泡、红数字与绿色视频角标",
+      "status": "implemented",
+      "implemented": "工具保持左找答案、右提示，圆按钮及角标，direct 使用头像放大镜。",
+      "gap": "实际显示节点和视觉节奏须冻结比对；禁用广告后的零库存状态需最终配置场景检查。",
+      "evidence": [
+        "App/Views/RootView.swift",
+        "Reference/Original/image4.jpeg",
+        "Reference/Original/image6.jpeg",
+        "Reference/Original/image7.jpeg"
+      ]
+    },
+    {
+      "id": "PLAY-06",
+      "section": "2.2",
+      "sourceParagraphs": [
+        69,
+        70,
+        71,
+        84,
+        97
+      ],
+      "title": "直接找答案与道具操作幂等",
+      "status": "implemented",
+      "implemented": "随机揭示未找到答案、计分、不扣生命、不自动 X；消费及奖励重复回调保护存在。",
+      "gap": "需最终构建回归无库存/有库存/后台/过关等完整客户端路径。",
+      "evidence": [
+        "Sources/CapydokuCore/GameSession.swift",
+        "Sources/CapydokuCore/PlayerProgress.swift",
+        "App/AppModel.swift",
+        "AppTests/AppModelTests.swift"
+      ]
+    },
+    {
+      "id": "PLAY-07",
+      "section": "2.2",
+      "sourceParagraphs": [
+        76
+      ],
+      "title": "原提示内容、规则、高亮、遮罩与动效",
+      "status": "awaiting_reference",
+      "implemented": "共享推理器生成可解释提示，UI 已改为遮罩预览与 Apply。",
+      "gap": "现有提示文案为工程实现；缺冻结原提示资源、文案、规则映射与录屏。",
+      "evidence": [
+        "Sources/CapydokuCore/PuzzleHints.swift",
+        "App/Views/RootView.swift",
+        "Reference/Original/image5.jpeg"
+      ]
+    },
+    {
+      "id": "PLAY-08",
+      "section": "2.2",
+      "sourceParagraphs": [
+        77,
+        78,
+        79,
+        135
+      ],
+      "title": "提示仅预览，Apply 应用，关闭不改盘",
+      "status": "verified",
+      "implemented": "当前包在17 Pro验证提示仅预览、关闭不改盘、观看模拟广告自动进预览、Apply才写X；App测试覆盖重复操作与后台限制。",
+      "gap": "原提示文案、时序和规则映射仍待冻结资料。",
+      "evidence": [
+        "App/AppModel.swift",
+        "App/Views/RootView.swift",
+        "UITests/OriginalReferenceUITests.swift",
+        "Validation/original-verification.json"
+      ]
+    },
+    {
+      "id": "PLAY-09",
+      "section": "2.2",
+      "sourceParagraphs": [
+        88,
+        89,
+        91,
+        92
+      ],
+      "title": "关卡开始免费广告配置与入口",
+      "status": "partial",
+      "implemented": "客户端入口、奖励类型/数量、领取配额、库存和中断台账已接入。",
+      "gap": "triggerOrder 未消费；缺真实逐关配置和同冻结版本默认配置，当前无实际入口配置可验。",
+      "evidence": [
+        "App/AppModel.swift",
+        "Sources/CapydokuCore/PlayerProgress.swift",
+        "Sources/CapydokuCore/SaveStore.swift",
+        "Reference/gameplay-row-worksheet.json"
+      ]
+    },
+    {
+      "id": "PLAY-10",
+      "section": "2.3",
+      "sourceParagraphs": [
+        106,
+        110
+      ],
+      "title": "胜利判定、锁输入、结算与随机标语",
+      "status": "partial",
+      "implemented": "全部找到且生命为正即胜利，显示角色和下一关；存在无失误反馈。",
+      "gap": "正式随机标语库、击败玩家比例/Rank 口径与分数规则缺冻结资料，不能编造统计。",
+      "evidence": [
+        "Sources/CapydokuCore/GameSession.swift",
+        "App/Views/RootView.swift"
+      ]
+    },
+    {
+      "id": "PLAY-11",
+      "section": "2.3",
+      "sourceParagraphs": [
+        112,
+        113,
+        119,
+        125
+      ],
+      "title": "失败、复活与重试",
+      "status": "partial",
+      "implemented": "生命耗尽失败；复活保留棋盘/红X/分数。失败标题/按钮/可关闭状态已接配置；免费复活优先消耗配额。",
+      "gap": "真实失败流程仍待基线；restartCreatesNewBoard尚不支持全路径，不能静默假称新棋盘策略已完成。",
+      "evidence": [
+        "Sources/CapydokuCore/GameSession.swift",
+        "App/Views/RootView.swift",
+        "App/AppModel.swift"
+      ]
+    },
+    {
+      "id": "PLAY-12",
+      "section": "2.3",
+      "sourceParagraphs": [
+        123
+      ],
+      "title": "剩一命提示",
+      "status": "implemented",
+      "implemented": "生命降为 1 时出现短暂文字提示。",
+      "gap": "出现时机、弹层形态、时长尚未与冻结视频验证。",
+      "evidence": [
+        "App/Views/RootView.swift",
+        "Reference/Original/image17.png"
+      ]
+    },
+    {
+      "id": "PLAY-13",
+      "section": "2.4",
+      "sourceParagraphs": [
+        129,
+        136
+      ],
+      "title": "正确/错误的非纯颜色反馈",
+      "status": "partial",
+      "implemented": "正确头像、星星；错误红 X、破心图标、摇动；Combo 文本已存在。",
+      "gap": "原图要求的角色摇头、心撕裂转 X、进度联动和精确节奏尚未逐帧核对。",
+      "evidence": [
+        "App/Views/PuzzleBoardView.swift",
+        "App/Views/RootView.swift",
+        "Reference/Original/image19.png"
+      ]
+    },
+    {
+      "id": "GEN-01",
+      "section": "3.1",
+      "sourceParagraphs": [
+        140,
+        141,
+        150,
+        151,
+        152,
+        153
+      ],
+      "title": "原创关卡生产，不复制具体原地图/答案",
+      "status": "verified",
+      "implemented": "严格生产150关与后续30关，读取自有Profile与命名空间种子；不导入参考地图或答案。",
+      "gap": "正式参考难度和跨产品语料仍缺。",
+      "evidence": [
+        "Sources/CapydokuCore/PuzzleGenerator.swift",
+        "Sources/CapydokuCore/GenerationPipeline.swift",
+        "scripts/import_reference_gameplay.py",
+        "Validation/original-generation/summary.json"
+      ]
+    },
+    {
+      "id": "GEN-02",
+      "section": "3.2",
+      "sourceParagraphs": [
+        155,
+        156,
+        157
+      ],
+      "title": "逐关 Difficulty Profile 与 10%–15% 容差",
+      "status": "awaiting_reference",
+      "implemented": "配置结构覆盖原文主要难度字段，保留 profile 版本、来源及区间。",
+      "gap": "当前数值为 local estimate，缺 Pawdoku 对应关卡的真实采样；不能声称曲线镜像或容差合格。",
+      "evidence": [
+        "Sources/CapydokuCore/DifficultyProfile.swift",
+        "Resources/difficulty-profiles.json"
+      ]
+    },
+    {
+      "id": "GEN-03",
+      "section": "3.3",
+      "sourceParagraphs": [
+        159,
+        160,
+        169
+      ],
+      "title": "L1 动态教学目标及逻辑安全",
+      "status": "verified",
+      "implemented": "当前L1保持4×4，按可证明排除生成教学目标；去掉隐藏答案仍获得同一教学路径，元数据重建一致。",
+      "gap": "正式引导时序仍待冻结录屏。",
+      "evidence": [
+        "Sources/CapydokuCore/PuzzleHints.swift",
+        "Tests/CapydokuCoreTests/OriginalStorageTests.swift",
+        "Tests/CapydokuCoreTests/TutorialEligibilityTests.swift",
+        "Validation/original-generation/summary.json"
+      ]
+    },
+    {
+      "id": "GEN-04",
+      "section": "3.3",
+      "sourceParagraphs": [
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168
+      ],
+      "title": "教学覆盖四条规则和全部操作",
+      "status": "verified",
+      "implemented": "当前L1完整9步教学在17e通过，四规则、Tap、Undo、横滑、纵滑、Double Tap，提交后无自动X；App测试覆盖分步恢复。",
+      "gap": "真人理解效果、精确节奏仍待参考与试玩。",
+      "evidence": [
+        "Sources/CapydokuCore/PuzzleHints.swift",
+        "App/AppModel.swift",
+        "AppTests/TutorialRecoveryTests.swift",
+        "Validation/test-runs/original-ui-current-pack-paths.xcresult",
+        "Validation/original-verification.json"
+      ]
+    },
+    {
+      "id": "GEN-05",
+      "section": "3.4",
+      "sourceParagraphs": [
+        171,
+        172
+      ],
+      "title": "前 20 关难度角色与节奏",
+      "status": "partial",
+      "implemented": "新包按前20关的指定角色生成，输出逐关实际指标，L10/20提高推理深度，L17降低。",
+      "gap": "角色和本地分值不等于Pawdoku体验一致，缺前20关真实采样。",
+      "evidence": [
+        "Sources/CapydokuCore/DifficultyProfile.swift",
+        "Validation/original-generation/summary.json"
+      ]
+    },
+    {
+      "id": "GEN-06",
+      "section": "3.5",
+      "sourceParagraphs": [
+        174,
+        175,
+        176
+      ],
+      "title": "150 关 Target 与可复现元数据",
+      "status": "verified",
+      "implemented": "150关均包含Profile和生成版本/种子/候选编号；150次按元数据重建全部相同。",
+      "gap": "当前目标数值为本地估计，正式Profile待导入。",
+      "evidence": [
+        "Sources/CapydokuCore/GenerationPipeline.swift",
+        "Sources/CapydokuCore/Puzzle.swift",
+        "Validation/original-generation/production-rebuild-audit.json"
+      ]
+    },
+    {
+      "id": "GEN-07",
+      "section": "3.6",
+      "sourceParagraphs": [
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185
+      ],
+      "title": "每十关 Hard 与恢复波形",
+      "status": "partial",
+      "implemented": "每十关Hard且后续恢复，包含尺寸相同但推理深度不同及Compact Hard；实际指标见报告。",
+      "gap": "波形已用本地指标筛选，仍需参考采样和真人体验。",
+      "evidence": [
+        "Sources/CapydokuCore/DifficultyProfile.swift",
+        "Sources/CapydokuCore/DifficultyEvaluation.swift",
+        "Resources/difficulty-profiles.json",
+        "Validation/original-generation/summary.json"
+      ]
+    },
+    {
+      "id": "GEN-08",
+      "section": "3.7",
+      "sourceParagraphs": [
+        188,
+        189,
+        190,
+        191,
+        192,
+        193,
+        194
+      ],
+      "title": "Generate Many→Solver→Difficulty→Similarity→Select Best",
+      "status": "verified",
+      "implemented": "完整180个入选批次每批100候选；含15个拒绝批次共19500候选，依次执行求解、难度、严格相似度筛选再选优。预算不足100时拒绝输出。",
+      "gap": "正式难度参数与跨产品库仍需外部证据。",
+      "evidence": [
+        "Sources/CapydokuCore/GenerationPipeline.swift",
+        "Validation/original-generation/levels-report.json",
+        "Validation/original-generation/summary.json",
+        "Validation/test-runs/original-candidate-minimum.log"
+      ]
+    },
+    {
+      "id": "GEN-09",
+      "section": "3.8",
+      "sourceParagraphs": [
+        197
+      ],
+      "title": "Solver 六项硬合法性",
+      "status": "verified",
+      "implemented": "独立求解器验证当前180关全部通过，当前150包SHA256与summary绑定。",
+      "gap": "唯一解与六项硬合法性不证明正式难度对标。",
+      "evidence": [
+        "Sources/CapydokuCore/PuzzleSolver.swift",
+        "scripts/verify_levels.py",
+        "Validation/original-generation/independent-validation.json",
+        "Validation/original-generation/independent-validation-180.json",
+        "Validation/original-generation/summary.json"
+      ]
+    },
+    {
+      "id": "GEN-10",
+      "section": "3.8",
+      "sourceParagraphs": [
+        198,
+        199,
+        200
+      ],
+      "title": "难度输出与 trial_required 筛选",
+      "status": "partial",
+      "implemented": "输出强制步、候选密度、逻辑步数、规则深度及 trialRequired，超区间会拒绝。",
+      "gap": "推理深度是当前规则引擎观测值；时间/风险/压力是估计值，未证明人类最小推理深度或实际难度。",
+      "evidence": [
+        "Sources/CapydokuCore/DifficultyEvaluation.swift",
+        "Sources/CapydokuCore/GenerationPipeline.swift"
+      ]
+    },
+    {
+      "id": "GEN-11",
+      "section": "3.9",
+      "sourceParagraphs": [
+        202,
+        203,
+        204,
+        205,
+        206,
+        207,
+        208
+      ],
+      "title": "多主题不同 seed 命名空间及不同具体 Puzzle",
+      "status": "partial",
+      "implemented": "生成支持产品命名空间，指纹与 corpus 数据结构支持多产品。",
+      "gap": "未收到 Panda/Eagle/Shiba 已上线或待上线关卡库，不能证明实际跨产品不同。",
+      "evidence": [
+        "Sources/CapydokuCore/GenerationPipeline.swift",
+        "Sources/CapydokuCore/PuzzleSimilarity.swift"
+      ]
+    },
+    {
+      "id": "GEN-12",
+      "section": "3.10",
+      "sourceParagraphs": [
+        210,
+        211,
+        212,
+        213,
+        214,
+        215,
+        216
+      ],
+      "title": "本产品历史硬拒绝与综合相似度",
+      "status": "partial",
+      "implemented": "累计历史逐关检查：180个不同答案、180种不同区域结构；完全重复硬拒绝，无4×4或其他例外。",
+      "gap": "综合阈值0.90尚需样本评审；跨产品比较缺真实语料。",
+      "evidence": [
+        "Sources/CapydokuCore/PuzzleSimilarity.swift",
+        "Validation/original-generation/summary.json"
+      ]
+    },
+    {
+      "id": "GEN-13",
+      "section": "3.10",
+      "sourceParagraphs": [
+        216,
+        217
+      ],
+      "title": "跨产品相似度检查及报告",
+      "status": "awaiting_reference",
+      "implemented": "报告字段含匹配游戏/关卡/维度、阈值、决策与版本；明确标识缺其他产品 corpus。",
+      "gap": "缺真实跨产品库与评审阈值，原文 Cross-Game Similarity 未验收。",
+      "evidence": [
+        "Sources/CapydokuCore/PuzzleSimilarity.swift",
+        "Validation/original-generation/levels-report.json"
+      ]
+    },
+    {
+      "id": "GEN-14",
+      "section": "3.11",
+      "sourceParagraphs": [
+        219,
+        220,
+        221,
+        222,
+        223,
+        224,
+        225,
+        226
+      ],
+      "title": "上线追溯交付与 seed 重建",
+      "status": "partial",
+      "implemented": "150关完成Target/元数据/Solver/Difficulty/历史Similarity报告、教学映射和重建审计。",
+      "gap": "真实参考校准与跨产品报告缺失，因此还不是完整上线证明。",
+      "evidence": [
+        "Validation/original-generation/production-rebuild-audit.json",
+        "Validation/original-generation/levels-report.json",
+        "App/Views/SupportingViews.swift",
+        "Validation/original-generation/summary.json"
+      ]
+    },
+    {
+      "id": "GEN-15",
+      "section": "3.12",
+      "sourceParagraphs": [
+        228,
+        229,
+        230
+      ],
+      "title": "151+ 十关循环与同等过滤",
+      "status": "partial",
+      "implemented": "151–180三个十关组均使用累计150关历史严格过滤，合法性和限时生成通过；运行保存独立棋盘缓存并恢复。 当前8×8 L150进入6×6 L151与生成失败保留原盘，在17e逐格冷启动恢复通过。",
+      "gap": "缺跨产品库；151+数据架构仍是获准Demo实验。",
+      "evidence": [
+        "App/AppModel.swift",
+        "Sources/CapydokuCore/DifficultyProfile.swift",
+        "Sources/CapydokuCore/SaveStore.swift",
+        "Validation/original-generation/experimental-levels-report.json",
+        "Validation/original-generation/summary.json",
+        "Validation/original-verification.json",
+        "Validation/test-runs/original-ui-current-pack-endless.xcresult"
+      ]
+    },
+    {
+      "id": "GEN-16",
+      "section": "3.13",
+      "sourceParagraphs": [
+        232,
+        233
+      ],
+      "title": "长期难度上限与玩家数据验证",
+      "status": "partial",
+      "implemented": "本地配置与生成预算设规模、推理规则深度上限，失败不放行非法棋盘。",
+      "gap": "未有真实通关率、解题时间、提示/失败率验证；现有上限是工程临时配置。",
+      "evidence": [
+        "Sources/CapydokuCore/DifficultyProfile.swift",
+        "Sources/CapydokuCore/DemoConfig.swift",
+        "App/AppModel.swift"
+      ]
+    },
+    {
+      "id": "ART-01",
+      "section": "4.1",
+      "sourceParagraphs": [
+        238,
+        240,
+        241,
+        242,
+        243,
+        244,
+        245,
+        247,
+        250
+      ],
+      "title": "2D 卡皮巴拉主题、颜色、字体与资产",
+      "status": "partial",
+      "implemented": "奶油/橙/棕圆润 UI、白 X、多色棋盘和卡皮巴拉资源已替换；核心界面非3D。",
+      "gap": "美术仍在本轮修正；最终物种辨识、棋盘小尺寸和完整逐屏比对待验，不能以生成完成代表美术验收。",
+      "evidence": [
+        "App/Views/CapyStyle.swift",
+        "App/Views/PuzzleBoardView.swift",
+        "App/Resources/Assets.xcassets",
+        "Reference/art-provenance.json"
+      ]
+    },
+    {
+      "id": "ART-02",
+      "section": "4.1",
+      "sourceParagraphs": [
+        248,
+        249,
+        252,
+        253,
+        254
+      ],
+      "title": "按压/弹窗/正确错误/奖励动效",
+      "status": "partial",
+      "implemented": "按钮缩放、中央弹窗、角色/星星/破心、签到弹跳及短粒子、Reduce Motion 支持存在。",
+      "gap": "主线程已目视最终7张截图；低性能/真机动效和冻结视频逐帧节奏仍未完成验收。",
+      "evidence": [
+        "App/Views/CapyStyle.swift",
+        "App/Views/RootView.swift",
+        "App/Views/PuzzleBoardView.swift",
+        "App/Views/SupportingViews.swift"
+      ]
+    },
+    {
+      "id": "UI-01",
+      "section": "4.2",
+      "sourceParagraphs": [
+        256,
+        258,
+        259,
+        260,
+        261,
+        262
+      ],
+      "title": "主要页面和流程弹层",
+      "status": "implemented",
+      "implemented": "Home、Gameplay、Settings、Check-in、Hint、模拟广告、结果和L10 Challenge已建立；主线程目视最终7张截图。",
+      "gap": "截图验证页面结构，不替代双设备完整操作、真机或冻结录屏节奏验收。",
+      "evidence": [
+        "App/Views/RootView.swift",
+        "App/Views/SupportingViews.swift",
+        "UITests/OriginalReferenceUITests.swift"
+      ]
+    },
+    {
+      "id": "UI-02",
+      "section": "4.2",
+      "sourceParagraphs": [
+        263,
+        264,
+        308,
+        309,
+        311,
+        312
+      ],
+      "title": "删除 Profile/头像系统及完整3D场景",
+      "status": "implemented",
+      "implemented": "首页仅左签到右设置，无个人资料/昵称/头像选择存储；核心是2D。",
+      "gap": "后续不应因参考图保留 Profile 而误补被明确删除的功能。",
+      "evidence": [
+        "App/Views/RootView.swift",
+        "App/Views/SupportingViews.swift",
+        "Sources/CapydokuCore/PlayerProgress.swift"
+      ]
+    },
+    {
+      "id": "UI-03",
+      "section": "4.2",
+      "sourceParagraphs": [
+        265,
+        266
+      ],
+      "title": "首页 Logo、被动动画、Level N 主按钮",
+      "status": "implemented",
+      "implemented": "Logo/角色位于中部、单个呼吸装饰；暖橙 Level N 进入当前关。",
+      "gap": "相对冻结参考布局密度和动画节奏仍需实际录屏对照。",
+      "evidence": [
+        "App/Views/RootView.swift",
+        "Reference/Original/image22.jpeg"
+      ]
+    },
+    {
+      "id": "UI-04",
+      "section": "4.2",
+      "sourceParagraphs": [
+        267,
+        268
+      ],
+      "title": "Daily Challenge/排行/活动",
+      "status": "awaiting_reference",
+      "implemented": "Daily Challenge 保留灰色禁用带锁入口；未额外实现 Profile 或未定义玩法。",
+      "gap": "展示开放条件、点击反馈、Rank/活动节点缺冻结资料；不能把锁定占位称玩法完成。",
+      "evidence": [
+        "App/Views/RootView.swift",
+        "Reference/Original/image22.jpeg"
+      ]
+    },
+    {
+      "id": "UI-05",
+      "section": "4.2",
+      "sourceParagraphs": [
+        272,
+        273,
+        274,
+        275,
+        276,
+        277,
+        278
+      ],
+      "title": "首次启动顺序与权限恢复",
+      "status": "partial",
+      "implemented": "首次Welcome法律链接、Accept、通知/Tracking顺序及重启不重复同意在模拟器通过；5项启动App测试通过含取消恢复与损坏回退。",
+      "gap": "条款仅内部说明，正式链接、地区DataUse/CMP与真机所有授权组合尚缺。",
+      "evidence": [
+        "App/Services/StartupController.swift",
+        "App/Views/StartupFlowView.swift",
+        "AppTests/StartupControllerTests.swift",
+        "Validation/analytics-startup-audit.json",
+        "Validation/original-verification.json"
+      ]
+    },
+    {
+      "id": "UI-06",
+      "section": "4.2",
+      "sourceParagraphs": [
+        281,
+        282,
+        283,
+        284,
+        285
+      ],
+      "title": "游戏导航、信息区、三规则卡、棋盘、工具及广告留白",
+      "status": "verified",
+      "implemented": "当前包4/6/8/10棋盘在17 Pro实际检查导航/Level/进度/规则/棋盘/工具层级、正方形尺寸与可点击性，参考截图已目视核对。",
+      "gap": "真机、长英文和全部动态字体档位仍待完整验收。",
+      "evidence": [
+        "App/Views/RootView.swift",
+        "UITests/OriginalReferenceUITests.swift",
+        "Reference/Original/image24.png",
+        "Validation/original-verification.json",
+        "Docs/original-reference/04-gameplay.png"
+      ]
+    },
+    {
+      "id": "UI-07",
+      "section": "4.2",
+      "sourceParagraphs": [
+        288,
+        289,
+        290,
+        291,
+        292
+      ],
+      "title": "Settings 四开关、Feedback、Restart",
+      "status": "partial",
+      "implemented": "中央白卡遮罩、X关闭、水平四图标ON/OFF、即时存储；未接入 Pattern 隐藏；Feedback 导出诊断。",
+      "gap": "Feedback正式收件/流程与Restart二次确认基线未定义；重开新棋盘策略尚未完整支持。",
+      "evidence": [
+        "App/Views/SupportingViews.swift",
+        "App/AppModel.swift",
+        "Reference/Original/image25.png"
+      ]
+    },
+    {
+      "id": "UI-08",
+      "section": "4.2",
+      "sourceParagraphs": [
+        295,
+        296,
+        297,
+        298,
+        299
+      ],
+      "title": "签到页面、周期礼盒和自然日状态",
+      "status": "partial",
+      "implemented": "左上返回、抱牌角色、大数值Day Streak、横向状态；周期已跟随配置，加入礼物粒子；领取幂等/回拨限制存在。",
+      "gap": "真实奖励/补签条件、正式项目时区和服务器时间未冻结，正式签到对标待验。",
+      "evidence": [
+        "App/Views/SupportingViews.swift",
+        "Sources/CapydokuCore/PlayerProgress.swift",
+        "Reference/Original/image26.png"
+      ]
+    },
+    {
+      "id": "UI-09",
+      "section": "4.2",
+      "sourceParagraphs": [
+        303,
+        304,
+        305,
+        306
+      ],
+      "title": "44pt、状态、焦点恢复与可读性",
+      "status": "partial",
+      "implemented": "签到按钮最小44×44，17e实测宽高及七天单行通过；主要按钮和弹层有状态、禁用和无障碍标识。",
+      "gap": "所有弹窗焦点恢复、动态字体、长文案及对比度尚未完整审计。",
+      "evidence": [
+        "App/Views/RootView.swift",
+        "App/Views/SupportingViews.swift",
+        "App/Views/CapyStyle.swift",
+        "Validation/test-runs/original-ui-checkin-touch-target.xcresult"
+      ]
+    },
+    {
+      "id": "AUDIO-01",
+      "section": "5",
+      "sourceParagraphs": [
+        314,
+        316,
+        317,
+        318,
+        319,
+        320,
+        321,
+        322,
+        323,
+        346
+      ],
+      "title": "仅使用原音频及逐文件校验",
+      "status": "awaiting_reference",
+      "implemented": "移除自制音频和系统配音，音频 manifest 明确 referenceVerified=false。",
+      "gap": "原音乐、效果音、Combo 音频及清单全部未提供，当前缺失事件保持静音；音乐功能不能记为完成。",
+      "evidence": [
+        "Resources/audio-manifest.json",
+        "App/Services/FeedbackPlayer.swift"
+      ]
+    },
+    {
+      "id": "AUDIO-02",
+      "section": "5",
+      "sourceParagraphs": [
+        324,
+        325,
+        326
+      ],
+      "title": "音乐页面范围、循环、淡入淡出与恢复",
+      "status": "partial",
+      "implemented": "播放器支持音量、loop、开关、暂停恢复及系统音频中断处理。",
+      "gap": "适用页面映射、循环点、切换/淡入淡出参数尚无实现或资源基线，必须补齐后逐项验证。",
+      "evidence": [
+        "App/Services/FeedbackPlayer.swift",
+        "Resources/audio-manifest.json"
+      ]
+    },
+    {
+      "id": "AUDIO-03",
+      "section": "5",
+      "sourceParagraphs": [
+        327,
+        328,
+        329
+      ],
+      "title": "有效按钮点击映射与节流/并发",
+      "status": "partial",
+      "implemented": "统一按钮样式触发点击反馈，manifest 支持最小间隔和并发。",
+      "gap": "目前在按下时触发，取消触摸仍可能触发；缺原按钮白名单及无效/禁用状态音频规则，不能全局统一认定匹配。",
+      "evidence": [
+        "App/Views/CapyStyle.swift",
+        "App/Services/FeedbackPlayer.swift"
+      ]
+    },
+    {
+      "id": "AUDIO-04",
+      "section": "5",
+      "sourceParagraphs": [
+        330,
+        331,
+        332,
+        333,
+        334,
+        335,
+        336
+      ],
+      "title": "单格/连拍/撤销/正确/错误事件",
+      "status": "partial",
+      "implemented": "仅有效标记、撤销、提交扣命触发对应事件；连拍按新增 X 数量调用。",
+      "gap": "原逐格时序、滑动停止/中断处理及双击声音优先级未参考资源验证；连拍批量调用可能被minimumInterval压掉。",
+      "evidence": [
+        "App/AppModel.swift",
+        "App/Views/PuzzleBoardView.swift",
+        "App/Services/FeedbackPlayer.swift"
+      ]
+    },
+    {
+      "id": "AUDIO-05",
+      "section": "5",
+      "sourceParagraphs": [
+        337,
+        338,
+        339,
+        341,
+        342,
+        343
+      ],
+      "title": "Combo 阈值、分组及四开关",
+      "status": "awaiting_reference",
+      "implemented": "四开关保存，播放器按manifest group控制声效/语音，Combo 文本与事件存在。",
+      "gap": "阈值、默认开关、延迟、分组、音量均无冻结值；当前demo参数不可当参考验收值。",
+      "evidence": [
+        "Sources/CapydokuCore/DemoConfig.swift",
+        "Sources/CapydokuCore/GameSession.swift",
+        "App/Services/FeedbackPlayer.swift"
+      ]
+    },
+    {
+      "id": "AUDIO-06",
+      "section": "5",
+      "sourceParagraphs": [
+        344,
+        347,
+        348,
+        349
+      ],
+      "title": "不新增声音及完整音频回归",
+      "status": "partial",
+      "implemented": "代码避免新增胜利音/奖励声，缺正式素材时不播放替代声音。",
+      "gap": "静音不等于音频通过；原资源未到，所有开关组合、广告/后台及快速滑动需真机听测。",
+      "evidence": [
+        "App/Services/FeedbackPlayer.swift",
+        "Resources/audio-manifest.json"
+      ]
+    },
+    {
+      "id": "DATA-01",
+      "section": "6.1",
+      "sourceParagraphs": [
+        351,
+        353,
+        354,
+        383,
+        384
+      ],
+      "title": "四块最小看板与指标口径",
+      "status": "external_pending",
+      "implemented": "客户端已建立本地最小事件合同，不采逐格、X或Combo明细。",
+      "gap": "分析SDK/数据源/仪表盘未接；复活attempt等口径未冻结，四块看板不可宣称可算或上线完成。",
+      "evidence": [
+        "App/Services/AnalyticsRecorder.swift",
+        "Validation/analytics-startup-audit.json"
+      ]
+    },
+    {
+      "id": "DATA-02",
+      "section": "6.2",
+      "sourceParagraphs": [
+        357,
+        360,
+        370,
+        372
+      ],
+      "title": "公共字段、类型、匿名身份与最小数据",
+      "status": "verified",
+      "implemented": "本地合同验证字段类型、必填、枚举及非负计数；数字形ID保持字符串；Keychain匿名身份按测试目录隔离。",
+      "gap": "只验证本地合同；实际SDK公共字段、country来源和重装身份政策仍需冻结与联调。",
+      "evidence": [
+        "App/Services/AnalyticsRecorder.swift",
+        "AppTests/AnalyticsRecorderTests.swift",
+        "Validation/test-runs/analytics-startup-audit.log"
+      ]
+    },
+    {
+      "id": "DATA-03",
+      "section": "6.3",
+      "sourceParagraphs": [
+        364,
+        374,
+        376
+      ],
+      "title": "12 事件边界与业务触发",
+      "status": "partial",
+      "implemented": "实现11个启用事件，coin_change 预留并禁止发送；新增关卡/道具/奖励业务事件。",
+      "gap": "需要最终完整路径核对；事件source、复活后attempt结算、广告真实开始时机及free-ad场景仍待最终审查。",
+      "evidence": [
+        "App/AppModel.swift",
+        "App/Services/AnalyticsRecorder.swift",
+        "Validation/analytics-startup-audit.json"
+      ]
+    },
+    {
+      "id": "DATA-04",
+      "section": "6.4",
+      "sourceParagraphs": [
+        367,
+        368,
+        369,
+        371,
+        375,
+        377
+      ],
+      "title": "广告 offer_id 与冻结配置版本",
+      "status": "partial",
+      "implemented": "同offer串联、参数枚举检查、关卡事件携带配置版本。",
+      "gap": "当前无冻结版本，demo version 不能伪称 pawdoku_config_version 正式值；插页 placement 枚举缺口尚待确认。",
+      "evidence": [
+        "App/AppModel.swift",
+        "App/Services/AnalyticsRecorder.swift",
+        "Validation/analytics-startup-audit.json"
+      ]
+    },
+    {
+      "id": "DATA-05",
+      "section": "6.5",
+      "sourceParagraphs": [
+        379,
+        380,
+        381
+      ],
+      "title": "同意后采集、幂等、离线与失败重试",
+      "status": "verified",
+      "implemented": "本地事件同意前不生成身份/新事件，业务key去重，原ID/时间缓存，写失败重试与中断session恢复；5个专项测试通过。",
+      "gap": "网络上传/确认/服务端去重均未实现验证；300秒session暂定值与延迟结算约定待冻结。",
+      "evidence": [
+        "App/Services/AnalyticsRecorder.swift",
+        "AppTests/AnalyticsRecorderTests.swift",
+        "Validation/test-runs/analytics-startup-audit.log"
+      ]
+    },
+    {
+      "id": "DATA-06",
+      "section": "6.5",
+      "sourceParagraphs": [
+        382,
+        383,
+        384
+      ],
+      "title": "全路径埋点验收与测试正式数据隔离",
+      "status": "partial",
+      "implemented": "事件固定 internal-demo-offline，测试身份和本地目录隔离。",
+      "gap": "未验证真实数据源上的首次打开→引导→失败→重试→广告→通关→Session完整路径，TestFlight/生产数据源尚缺。",
+      "evidence": [
+        "App/Services/AnalyticsRecorder.swift",
+        "Validation/analytics-startup-audit.json"
+      ]
+    },
+    {
+      "id": "TECH-01",
+      "section": "7.1",
+      "sourceParagraphs": [
+        387,
+        388,
+        389
+      ],
+      "title": "iPhone竖屏与最低系统冻结",
+      "status": "partial",
+      "implemented": "工程为 iPhone 竖屏，当前Demo最低iOS15。",
+      "gap": "原文建议iOS14而最终需SDK评估；最低版本尚未正式冻结，当前仅新系统模拟器记录，旧系统与真机待测。",
+      "evidence": [
+        "App/Info.plist",
+        "Package.swift",
+        "scripts/generate_project.py",
+        "Validation/verification-summary.json"
+      ]
+    },
+    {
+      "id": "TECH-02",
+      "section": "7.1",
+      "sourceParagraphs": [
+        390
+      ],
+      "title": "Xcode26/iOS26构建及正式发布",
+      "status": "external_pending",
+      "implemented": "当前0.2.0(3)完成Xcode26.6的Simulator Debug与通用iOS Release无签名构建，两台模拟器安装成功，17Pro正常启动Welcome已目视确认。",
+      "gap": "未签名Release构建不是可分发安装包；真机签名运行、TestFlight、App Store审核及上架均未完成。",
+      "evidence": [
+        "Capydoku.xcodeproj/project.pbxproj",
+        "Validation/verification-summary.json",
+        "App/PrivacyInfo.xcprivacy",
+        "Validation/original-verification.json"
+      ]
+    },
+    {
+      "id": "TECH-03",
+      "section": "7.2",
+      "sourceParagraphs": [
+        392,
+        395
+      ],
+      "title": "分析SDK/广告SDK初始化与权限前置",
+      "status": "external_pending",
+      "implemented": "本地analytics在Accept后启用；模拟广告入口经游戏页访问，真实SDK未链接。",
+      "gap": "需要外部广告SDK适配及实际分析SDK；Tracking/CMP完成前不得真实请求广告，当前未做真实SDK联调。",
+      "evidence": [
+        "App/Services/StartupController.swift",
+        "App/Services/AnalyticsRecorder.swift",
+        "App/Services/RewardProvider.swift"
+      ]
+    },
+    {
+      "id": "TECH-04",
+      "section": "7.2",
+      "sourceParagraphs": [
+        392
+      ],
+      "title": "崩溃/性能、远程配置、推送与CMP",
+      "status": "external_pending",
+      "implemented": "本地存档/包内配置、通知权限、ATT基础调用存在。",
+      "gap": "没有实际崩溃监控、远程拉取及缓存降级、推送注册、地区CMP和SKAdNetwork清单；SDK/供应方资料待提供。",
+      "evidence": [
+        "App/Services/StartupController.swift",
+        "App/AppModel.swift",
+        "App/Info.plist"
+      ]
+    },
+    {
+      "id": "TECH-05",
+      "section": "7.3",
+      "sourceParagraphs": [
+        395,
+        396,
+        397
+      ],
+      "title": "启动允许/拒绝及错误不中断核心游戏",
+      "status": "partial",
+      "implemented": "5项启动App测试与首次安装UI路径通过；额外广告启动门禁测试验证权限流程完成前不预热、不展示。",
+      "gap": "真实地区DataUse、CMP、所有权限允许/拒绝、弱网/SDK超时和物理设备首次安装尚未完整验证。",
+      "evidence": [
+        "App/Services/StartupController.swift",
+        "AppTests/StartupControllerTests.swift",
+        "UITests/OriginalReferenceUITests.swift",
+        "Validation/test-runs/analytics-startup-audit.log"
+      ]
+    },
+    {
+      "id": "TECH-06",
+      "section": "7.3",
+      "sourceParagraphs": [
+        398,
+        399
+      ],
+      "title": "环境隔离与SDK隐私清单",
+      "status": "external_pending",
+      "implemented": "当前明确内部离线环境，App有隐私清单占位配置。",
+      "gap": "没有最终SDK名称/版本/采集字段/政策/关闭方式清单及三环境AppID；实际App Privacy、年龄分级需随正式接入填写。",
+      "evidence": [
+        "App/PrivacyInfo.xcprivacy",
+        "App/Info.plist",
+        "App/Services/AnalyticsRecorder.swift"
+      ]
+    },
+    {
+      "id": "SAVE-01",
+      "section": "7.4",
+      "sourceParagraphs": [
+        401,
+        402
+      ],
+      "title": "纯本地持久化范围",
+      "status": "implemented",
+      "implemented": "局内状态、进度、库存/领取记录、设置、签到、教学、权限、奖励台账都存在本地存储。",
+      "gap": "正式远程配置缓存和冻结快照缺真实资料；同步保存执行方式另列。",
+      "evidence": [
+        "Sources/CapydokuCore/PlayerProgress.swift",
+        "Sources/CapydokuCore/SaveStore.swift",
+        "App/Services/StartupController.swift"
+      ]
+    },
+    {
+      "id": "SAVE-02",
+      "section": "7.4",
+      "sourceParagraphs": [
+        402
+      ],
+      "title": "操作后异步保存与后台强制提交",
+      "status": "verified",
+      "implemented": "本轮改为串行后台保存队列，交易/恢复前flush，进入后台强制提交；主线程报告1条异步保存集成测试通过。",
+      "gap": "验证范围为异步快照不覆盖新奖励及后台最新状态，不代表全部低性能真机帧率达标。",
+      "evidence": [
+        "App/AppModel.swift",
+        "Sources/CapydokuCore/SaveStore.swift",
+        "AppTests/OriginalFlowTests.swift"
+      ]
+    },
+    {
+      "id": "SAVE-03",
+      "section": "7.4",
+      "sourceParagraphs": [
+        404
+      ],
+      "title": "玩家存档不写具体棋盘",
+      "status": "partial",
+      "implemented": "固定包关卡使用 puzzleReference，恢复从包/兼容归档解析；151+单独不可变BoardCache避免混入player payload。",
+      "gap": "固定包引用与旧包兼容恢复已通过；151+缓存是获准Demo实验，不能等同正式版全部棋盘来自安装包的架构。",
+      "evidence": [
+        "Sources/CapydokuCore/SaveStore.swift",
+        "Tests/CapydokuCoreTests/OriginalStorageTests.swift"
+      ]
+    },
+    {
+      "id": "SAVE-04",
+      "section": "7.4",
+      "sourceParagraphs": [
+        405,
+        406,
+        407
+      ],
+      "title": "断点恢复、原子备份与迁移",
+      "status": "verified",
+      "implemented": "主存档校验/备份/损坏保留通过；升级加载旧包进行中局保留盘面/库存/签到。consent/win/challenge已用校验双副本，损坏主文件后恢复一次性状态的App测试通过。",
+      "gap": "双副本均损坏时无法凭空还原；正式主动Home处理仍待参考。",
+      "evidence": [
+        "Sources/CapydokuCore/SaveStore.swift",
+        "Tests/CapydokuCoreTests/OriginalStorageTests.swift",
+        "Tests/CapydokuCoreTests/SaveHardeningTests.swift",
+        "App/Services/DurableStateFile.swift",
+        "Validation/original-verification.json"
+      ]
+    },
+    {
+      "id": "SAVE-05",
+      "section": "7.4",
+      "sourceParagraphs": [
+        408,
+        409,
+        410
+      ],
+      "title": "重装重置、签到防刷与隐私",
+      "status": "partial",
+      "implemented": "本地目录重装重置设计，UTC自然日幂等/时钟回拨阻断，不保存直接身份资料。",
+      "gap": "正式项目时区及服务器时间来源尚缺；新构建卸载重装与实际系统时钟场景待验证。",
+      "evidence": [
+        "Sources/CapydokuCore/PlayerProgress.swift",
+        "Validation/reinstall-audit.json",
+        "App/Services/AnalyticsRecorder.swift"
+      ]
+    },
+    {
+      "id": "TECH-07",
+      "section": "7.5",
+      "sourceParagraphs": [
+        412,
+        413,
+        414,
+        415,
+        416
+      ],
+      "title": "iOS技术验收与SDK升级兼容",
+      "status": "partial",
+      "implemented": "83项Core测试、29项App测试通过；两台模拟器完成记录所列的原文页面、当前教学、L10衔接、150→151、故障恢复等关键回归。",
+      "gap": "这不是全部设备/全部场景通过。真机、最低系统、真实SDK升级及远程关闭尚未验证；组合UI运行的启动冲突及成功单独重验已如实记录。",
+      "evidence": [
+        "Validation/test-runs/analytics-startup-audit.log",
+        "Validation/verification-summary.json",
+        "AppTests/AppModelTests.swift",
+        "Validation/original-verification.json"
+      ]
+    },
+    {
+      "id": "ADS-01",
+      "section": "8.1",
+      "sourceParagraphs": [
+        419,
+        420
+      ],
+      "title": "广告类型、横幅默认关闭与输入锁",
+      "status": "implemented",
+      "implemented": "工具和复活使用模拟激励入口，插页使用独立模拟流程；底部横幅留白，广告时锁棋盘。",
+      "gap": "真实SDK由外部提供，但客户端场景和状态仍属于Demo责任；需最终遮挡/前后台回归。",
+      "evidence": [
+        "App/AppModel.swift",
+        "App/Views/RootView.swift",
+        "App/Views/SupportingViews.swift"
+      ]
+    },
+    {
+      "id": "ADS-02",
+      "section": "8.1",
+      "sourceParagraphs": [
+        421,
+        422
+      ],
+      "title": "广告配置映射与远程控制",
+      "status": "partial",
+      "implemented": "逐关结构已覆盖开关/初始次数/免费广告/失败及插页配置，本局保存配置快照。",
+      "gap": "真实冻结值未到，远程配置拉取/缓存/包内同版本降级与部分字段消费尚不完整。",
+      "evidence": [
+        "Sources/CapydokuCore/ReferenceGameplayConfiguration.swift",
+        "App/AppModel.swift",
+        "Reference/gameplay-template.json"
+      ]
+    },
+    {
+      "id": "ADS-03",
+      "section": "8.2",
+      "sourceParagraphs": [
+        424,
+        425,
+        426
+      ],
+      "title": "胜利页插页触发、频率与去重",
+      "status": "partial",
+      "implemented": "在下一关/回首页前按逐关配置模拟插页，持久化胜利去重及冷却计数。",
+      "gap": "客户端模拟已验证关键衔接与去重；正式起始关、频率及真实SDK行为待冻结联调。",
+      "evidence": [
+        "App/AppModel.swift",
+        "App/Views/SupportingViews.swift"
+      ]
+    },
+    {
+      "id": "ADS-04",
+      "section": "8.2",
+      "sourceParagraphs": [
+        427
+      ],
+      "title": "L10首次胜利→插页→Challenge→L11",
+      "status": "verified",
+      "implemented": "当前6×6 L10通关→Challenge→11在17e通过且重启后不重复；App集成验证模拟插页关闭后才显示Challenge，重复关闭无二次效果。",
+      "gap": "真实插页SDK及冻结频控待外部接入。",
+      "evidence": [
+        "App/AppModel.swift",
+        "App/Views/RootView.swift",
+        "Validation/test-runs/original-ui-current-pack-paths.xcresult",
+        "Validation/original-verification.json"
+      ]
+    },
+    {
+      "id": "ADS-05",
+      "section": "8.2",
+      "sourceParagraphs": [
+        428,
+        429
+      ],
+      "title": "插页失败不阻塞与广告后恢复",
+      "status": "verified",
+      "implemented": "本地插页关闭重复回调、失败及无回调超时均只继续一次，不发奖励；迟到回调不会再次换关。",
+      "gap": "真实SDK无填充/系统中断/声音恢复仍需接入与真机验收。",
+      "evidence": [
+        "App/AppModel.swift",
+        "App/Services/RewardProvider.swift",
+        "AppTests/OriginalFlowTests.swift",
+        "App/Services/FeedbackPlayer.swift",
+        "AppTests/RewardReadinessTests.swift",
+        "Validation/test-runs/reward-readiness-compatibility.xcresult"
+      ]
+    },
+    {
+      "id": "ADS-06",
+      "section": "8.3",
+      "sourceParagraphs": [
+        431,
+        432,
+        433
+      ],
+      "title": "激励四场景、直接拉起、Loading与Video unavailable",
+      "status": "partial",
+      "implemented": "direct/hint/revive/level_start_free 已有入口，不加二次确认；有超时和模拟失败，失败不扣次。",
+      "gap": "真实逐关入口/配额与免费广告triggerOrder待冻结；模拟流程不能代替真实SDK故障与隐私联调。",
+      "evidence": [
+        "App/AppModel.swift",
+        "App/Views/SupportingViews.swift",
+        "Sources/CapydokuCore/PlayerProgress.swift"
+      ]
+    },
+    {
+      "id": "ADS-07",
+      "section": "8.3",
+      "sourceParagraphs": [
+        434,
+        435
+      ],
+      "title": "奖励到账记账、重复回调与中断补偿",
+      "status": "implemented",
+      "implemented": "offer_id在入口创建，先持久化到账再执行；direct/hint未执行补库存，revive不补；重复去重。",
+      "gap": "当前最终构建与新level_start_free分支专项回归待汇总；真实SDK重复/丢回调尚待联调。",
+      "evidence": [
+        "Sources/CapydokuCore/SaveStore.swift",
+        "Sources/CapydokuCore/PlayerProgress.swift",
+        "App/AppModel.swift",
+        "AppTests/AppModelTests.swift"
+      ]
+    },
+    {
+      "id": "ADS-08",
+      "section": "8.4",
+      "sourceParagraphs": [
+        437,
+        438,
+        439
+      ],
+      "title": "直接揭示/满血复活/提示Apply功能结果",
+      "status": "implemented",
+      "implemented": "直接揭示无自动X；复活保留原棋盘并不限制次数；Hint观看后仅展示预览，Apply才写X。",
+      "gap": "功能原理具备，正式原提示与失败UI、满生命及库存值仍待冻结；不能以模拟回调替代SDK验证。",
+      "evidence": [
+        "Sources/CapydokuCore/GameSession.swift",
+        "Sources/CapydokuCore/PlayerProgress.swift",
+        "App/AppModel.swift"
+      ]
+    },
+    {
+      "id": "ADS-09",
+      "section": "8.4",
+      "sourceParagraphs": [
+        440
+      ],
+      "title": "免费次数、重置节点和跨关策略",
+      "status": "partial",
+      "implemented": "direct/hint、level_start_free及revive的配置额度/重置已接；主线程报告免费复活配额持久化专项通过。",
+      "gap": "所有正式免费次数/补充节点和跨关期望仍缺冻结来源，整体仍不能按Pawdoku验收。",
+      "evidence": [
+        "Sources/CapydokuCore/ReferenceGameplayConfiguration.swift",
+        "Sources/CapydokuCore/PlayerProgress.swift",
+        "App/AppModel.swift",
+        "AppTests/OriginalFlowTests.swift"
+      ]
+    },
+    {
+      "id": "ADS-10",
+      "section": "8.5",
+      "sourceParagraphs": [
+        442
+      ],
+      "title": "按需预加载及播放后补加载",
+      "status": "partial",
+      "implemented": "客户端具备placement级预加载、ready、展示及立即补加载；按本局配置预热，启动权限流程完成前禁止广告。重复与过期ready、后台等待和加载不可用均通过专项测试。",
+      "gap": "缺冻结逐关广告位表、真实SDK和广告单元；真实每单元一已加载实例、网络下首屏时延和棋盘帧率仍需联调。",
+      "evidence": [
+        "App/Services/RewardProvider.swift",
+        "App/AppModel.swift",
+        "AppTests/RewardReadinessTests.swift",
+        "Validation/test-runs/reward-readiness-compatibility.xcresult"
+      ]
+    },
+    {
+      "id": "ADS-11",
+      "section": "8.5",
+      "sourceParagraphs": [
+        443,
+        444,
+        445
+      ],
+      "title": "广告音频/打断/快速输入幂等",
+      "status": "partial",
+      "implemented": "广告暂停/恢复背景音、奖励锁和重复回调防护存在，未确认奖励不自动发放。",
+      "gap": "缺真实音频与来电/系统打断真机验证；本轮最终全部场景结果待汇总。",
+      "evidence": [
+        "App/Services/FeedbackPlayer.swift",
+        "App/AppModel.swift",
+        "AppTests/AppModelTests.swift"
+      ]
+    },
+    {
+      "id": "ADS-12",
+      "section": "8.5",
+      "sourceParagraphs": [
+        446
+      ],
+      "title": "新关生效与缓存默认配置降级",
+      "status": "partial",
+      "implemented": "DemoConfig随session保存，新关读取导入配置，不更改进行中局。",
+      "gap": "联网拉取、最近成功缓存及同冻结版本包内默认值未完整接入；当前无真实基线可校验。",
+      "evidence": [
+        "Sources/CapydokuCore/DemoConfig.swift",
+        "App/AppModel.swift",
+        "Sources/CapydokuCore/SaveStore.swift"
+      ]
+    },
+    {
+      "id": "ADS-13",
+      "section": "8.6",
+      "sourceParagraphs": [
+        448,
+        449,
+        450,
+        451,
+        452
+      ],
+      "title": "广告漏斗、收益回传与商业化看板",
+      "status": "external_pending",
+      "implemented": "本地激励事件包含offer/status/rewardGranted及ad_type/network/ad_unit_id。",
+      "gap": "真实收益回传/去重通道、插页placement口径和线上看板未实现验证；不得估算收益或宣称SDK接入完成。",
+      "evidence": [
+        "App/Services/AnalyticsRecorder.swift",
+        "App/AppModel.swift",
+        "Validation/analytics-startup-audit.json"
+      ]
+    },
+    {
+      "id": "ADS-14",
+      "section": "8.7",
+      "sourceParagraphs": [
+        454,
+        455,
+        456,
+        457,
+        458
+      ],
+      "title": "L1–20逐关及故障场景广告验收",
+      "status": "partial",
+      "implemented": "模拟器有奖励失败/中断/重复/超时与库存一致性测试基础。",
+      "gap": "缺原L1–20配置，不能逐关通过；真实SDK、环境、CMP、收益及音频前后必须在外部资料齐全后联调。",
+      "evidence": [
+        "AppTests/AppModelTests.swift",
+        "UITests/HardeningUITests.swift",
+        "Validation/reference-gameplay-import.json"
+      ]
+    }
+  ]
+}

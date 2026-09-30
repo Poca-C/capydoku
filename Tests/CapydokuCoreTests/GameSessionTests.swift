@@ -22,18 +22,18 @@ final class GameSessionTests: XCTestCase {
         XCTAssertEqual(game.score, 100)
     }
 
-    func testWrongSubmissionCostsOneLifeAndCannotBeDoubleCharged() throws {
+    func testAnyXCanBeUndoneAndLaterDoubleTapIsANewSubmission() throws {
         let puzzle = try puzzle()
         var game = GameSession(puzzle: puzzle)
         let wrong = (0..<16).first { !puzzle.solution.contains($0) }!
         XCTAssertEqual(game.submit(cell: wrong), .incorrect(cell: wrong, livesRemaining: 2))
-        XCTAssertEqual(game.submit(cell: wrong), .ignored)
-        XCTAssertEqual(game.lives, 2)
         XCTAssertEqual(game.errors, [wrong])
-        XCTAssertFalse(game.toggleMark(at: wrong), "Confirmed red errors are protected; only player Xs can be undone")
-        XCTAssertEqual(game.errors, [wrong])
-        XCTAssertTrue(game.marks.contains(wrong))
-        XCTAssertEqual(game.submit(cell: wrong), .ignored)
+        XCTAssertTrue(game.toggleMark(at: wrong))
+        XCTAssertTrue(game.errors.isEmpty)
+        XCTAssertFalse(game.marks.contains(wrong))
+        XCTAssertEqual(game.lives, 2, "Undoing a red X neither charges nor refunds a life")
+        XCTAssertTrue(game.toggleMark(at: wrong))
+        XCTAssertEqual(game.submit(cell: wrong), .incorrect(cell: wrong, livesRemaining: 1))
         XCTAssertEqual(game.submit(cell: -1), .ignored)
         XCTAssertEqual(game.submit(cell: 99), .ignored)
     }

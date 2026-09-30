@@ -1,97 +1,82 @@
-# Capydoku · 首轮内测 Demo
+# Capydoku · 原文对齐 Demo
 
-原生 Swift / SwiftUI iPhone 应用，最低编译目标 iOS 15，竖屏。游戏界面按需求使用英文。当前版本 **0.1.1（2）**，处于首轮功能完成后的稳定性补验阶段，用于内部试玩，尚未上架。
+原生 Swift / SwiftUI iPhone 应用，英文界面、竖屏，最低编译目标 iOS 15。当前版本 **0.2.0（3）**，可内部试玩，尚未达到正式验收或上架状态。
 
-本轮计时用途声明在 `App/PrivacyInfo.xcprivacy`：`systemUptime` 用于生成预算和防重复操作的耗时计算，采用 `35F9.1` 理由，依据 [Apple 的 Required Reason API 文档](https://developer.apple.com/documentation/bundleresources/app-privacy-configuration/nsprivacyaccessedapitypes/nsprivacyaccessedapitype)。正式版仍需按最终 SDK 和真实数据处理重新核对。
+## 唯一需求基准
 
-## 直接运行
+以工作区原始《卡皮巴拉主题（Capydoku）区域逻辑小游戏需求说明 V1.3》的正文和内嵌截图为准。`Reference/Original/document.json` 保存源文件校验值与提取结果。后续报告及88条 Checklist只作核查，不能覆盖原文。0.1.x 的功能测试通过记录不证明符合原文。
 
-1. 用 Xcode 打开 `Capydoku.xcodeproj`。
-2. Scheme 选 `Capydoku`，设备选 `iPhone 17 Pro` 或 `iPhone 17e`，点击 Run。
-3. 首次进入会走动态教学；需要跳关时，在 Settings → Developer tools 中输入关卡号。
-4. 真机需在 Signing & Capabilities 选择自己的 Team，并修改 Bundle Identifier（如果现有名称不能用于签名）。本次使用电脑已有开发签名完成了 Release 设备构建；工程没有写入私人 Team ID，也没有提交商店。安装到具体设备仍需该设备被开发配置文件包含、解锁并允许调试。
+当前逐章对照与未完成项见 `Validation/original-conformance.md`；本轮实际测试记录见 `Validation/original-verification.json`。
 
-工程无需安装第三方依赖、XcodeGen 或广告 SDK。最低系统版本是编译目标；实际回归系统和结果见 `Validation/demo-acceptance.md`。
+## 运行和试玩
 
-## 第一次试玩建议
+1. 用 Xcode 打开 `Capydoku.xcodeproj`，选择 `Capydoku` 和 iPhone 17 Pro / iPhone 17e，Run。
+2. 正常首次启动展示 Welcome、可点击的内部演示条款及同意流程，再按系统状态依次处理通知和 Tracking；正式条款与隐私链接待发布方提供。
+3. 从 Level 1 进入动态教学。体验单击 X / 撤销、横纵滑动、双击、Find 和 Hint。Hint 关闭不改盘，Apply 才写入 X。
+4. 故意选错至失败，点击 Play On 直接运行**明确标注的模拟广告**，无需第二次确认；复活保留原局。签到后关闭并重进验证状态。
+5. Debug 构建中，**长按 Settings 标题**进入开发面板，可跳关、选择模拟奖励结果、查看 seed / 配置和导出定位信息。
 
-先完成教学，体验普通 X、双击和横纵滑动。分别试一次 Find 和 Hint（先 Close，再通过模拟奖励重新打开并 Apply）。故意选错三个不同位置后，选择 Revive → Run simulation。最后领取签到，关闭应用再进入，检查盘面和库存。
+当前截图：[首页](Docs/original-reference/01-home.png) · [游戏](Docs/original-reference/04-gameplay.png) · [提示](Docs/original-reference/05-hint.png) · [设置](Docs/original-reference/02-settings.png) · [签到](Docs/original-reference/03-check-in.png)。
 
-想快速看大棋盘或持续生成，在 Developer tools 输入 150 或 151。发现问题时选 Export issue report，把导出的 JSON 连同操作步骤保留给后续修复；无需手抄 seed。
+无需第三方依赖或真实广告 SDK。真机运行需自己的签名与可用设备。本轮仅模拟器测试；先前版本签名成功不算本版本真机通过。
 
-界面预览：[首页](Docs/preview-home.png) · [游戏页](Docs/preview-game.png) · [150 关大棋盘](Docs/preview-level-150.png) · [151 关本地生成](Docs/preview-generated-151.png)。
+## 本次纠正
 
-## 已实现的范围
+- 按原文重建首页、棋盘、三个规则卡、四个横向设置开关、签到日历、提示遮罩及胜负弹层；角色保持卡皮巴拉特征，使用参考风格的原创图像。
+- 红色错误 X 也能单击撤销和再次双击提交；只防同次触摸重复送达，不永久锁住错误格。找到动物不自动打 X。
+- 教学目标来自当前棋盘的逻辑证明，不读取隐藏答案选教学位置。
+- 道具、免费奖励、免费复活、失败文案和插页条件使用逐关配置接口；广告模拟保留完整奖励台账、防重与中断恢复。L10 首次通关按配置经过插页，再展示 A New Challenge。
+- 原先合成的音乐、系统配音与额外音效已撤除。音频只能从参考资源清单导入；**当前没有原音频，保持静音，不能视为音频验收通过**。震动开关独立。
+- 包内关卡不再写入玩家存档，存档保存关卡引用和玩家状态；151+ 实验棋盘另存不可变缓存。保留旧关卡包以恢复旧版本的进行中对局。
+- 正常操作串行异步保存；奖励、签到和进入后台前保证保存顺序。小型同意/通关记录也加入校验及备份。
+- 最小分析事件在同意后进入本地持久队列；没有接入外部分析平台或生成看板。
 
-- 四条规则、单击普通 X／撤销、双击提交、横纵滑动、生命、分数、Combo、失败、反复复活、重开和下一关。
-- Find 与 Hint 独立库存；Hint 先预览，Apply 才改变棋盘；模拟奖励成功／取消／失败／重复回调／到账中断／无回调超时；写盘失败保留结果并支持重试。
-- 根据 L1 棋盘选择目标的 9 步教学；首页、游戏页、设置、签到、胜负、奖励与调试页面。
-- 原创矢量角色和图标、区域色板、操作反馈、程序合成临时音效／音乐、系统语音和震动独立开关。
-- UTC 连续签到、7 天周期、奖励防重复、日期回拨保护。
-- 保存完整对局快照、配置快照、库存、设置、签到、教学、尝试次数和奖励台账；校验、备份回退及迁移。
-- 150 个原创关卡；151+ 在后台限时生成并校验，保留当前棋盘／seed／版本。151–180 连续三组已进行自动验证。
-- 调试跳关、当前 seed／指纹／配置查看、临时参数调整和问题 JSON 导出。调试入口只出现在 Debug 构建。
+## 关卡证据与限制
 
-Daily Challenge、Pattern Mode、排行榜和活动本轮没有入口。真实广告、分析、远程配置、推送等外部服务均未接入；实际广告接入仍按外部分工处理。
+`Resources/levels.json` 是重新生成的150关。每关经过100个候选、求解、难度筛选、相似度拒绝和选优；失败批次另存拒绝原因。本次共筛选19,500个候选，含15个被拒绝批次。
 
-## 本轮临时规则
+150关及151–180三组实验共180关均通过独立唯一解与区域连通检查；180种不同答案排列、180种不同区域结构，严格拒绝完全重复，没有小棋盘例外。150关全部通过共享逻辑推完与按生成元数据重建。难关按推理指标筛选，可有紧凑难关，不能用尺寸替代难度。
 
-配置集中在 `Sources/CapydokuCore/DemoConfig.swift`，版本 `demo-2026-09-v2`。参数与整盘一起存档，不会在进行中变化。开发面板修改只影响下一次新开局，重新启动恢复默认配置。
+**以上不等于已对齐 Pawdoku 的难度体验。** 当前 Profile 数值、预计时长与失败压力为明确标注的本地估计。冻结版难度采样与跨产品对比语料尚未提供。证据见 `Validation/original-generation/summary.json`。
 
-| 参数 | Demo 初值／行为 | 原因与边界 |
-|---|---|---|
-| 生命 | 3；每次成功复活恢复 3 | 可重复复活，保留动物、两类标记与分数 |
-| Find / Hint | 每个首次进入的关卡各 1 次 | 使用后重开或回到该关不补发；签到／奖励库存可跨关 |
-| 分数 | 正确位置 100；连续正确每次额外增加 20 | 临时反馈数值，非参考产品已确认值 |
-| Combo | 连续 2 / 3 / 4 次显示 Nice / Great / Excellent | 错误归零；道具找到也计入，之后可按正式基线调整 |
-| Hint | 显示预览即扣 1；关闭不退款 | 不自动改盘；无可排除格不扣次 |
-| 标记 | 普通 X 可撤销；红 X 是受保护的已判错位置 | 同一错误格重复提交不重复扣血 |
-| 重开 | 原盘、分数归零、生命恢复、尝试 +1 | 剩余道具保持，不重新发放免费道具 |
-| 签到 | 每日 1 Hint；连续第 7 日再加 1 Find | UTC；断签重计；设备时间可被人为前调，未接服务器校时 |
-| 生成 | 默认 4 秒、150 个候选；硬上限 8 秒／500 候选 | 后台执行，失败保留原盘并提示重试，最大 10×10 |
+151+ 在后台有预算地生成，保存同盘、seed 与生成器版本；失败保留旧盘并允许重新尝试。这仍是获准的 Demo 实验方案。
 
-包内关卡规模：L1–10 为 4×4，L11–50 为 6×6，L51–100 为 8×8，L101–150 为 10×10。后续每十关包含 2 Flow、1 Recovery 和末关 Hard，规模为 6／8／10。
+## 尚待资料或接入
 
-**这些标签只描述临时节奏，没有完成正式难度校准。** 本轮增加共同冲突排除和两单位锁，150 关中可用明确逻辑规则解出的关卡由 35 关增加到 141 关。其余 9 关（18、34、65、67、69、96、100、114、127）仍需要明确标为 “Contradiction check” 的反证提示，其中第 96 关暂标 Recovery，仍需调难度。全部 150 关提示安全、可自动通关，清空隐藏答案后提示保持一致；旋转／镜像／区域重命名审计未发现包内等价几何。合法、唯一解和逻辑可解均不等于玩家体验已合格。最新提示指标见 `Validation/hint-quality-audit.json`；`levels-report.json` 保留生产时的原始逻辑指标。
+- Pawdoku 冻结版本、逐关道具/广告/失败流程、难度采样与完整录屏。`Reference/gameplay-template.json` 保持空值，不能把示例数值当冻结配置。导入说明见 `Reference/gameplay-import.md`。
+- 开局免费广告的精确出现顺序、特殊重开换盘行为、分数/Combo、签到奖励/统一时区与服务器校时，仍需参考资料确认。要求重开换盘的导入配置目前会明确报未支持并保留原局，不会静默用同盘替代。
+- 原音频、具体触发映射/淡入淡出/循环点与听感验收；正式法律链接、反馈收件人及发布素材。
+- 真实广告 SDK、分析/崩溃/远程配置/推送服务与后台看板；插页事件字段和复活后结果统计口径需完成合同映射。
+- 真机、最低系统运行、长时间试玩、正式签名和 App Store 发布验收。
+
+Daily Challenge 仅保留锁定入口；Pattern Mode、Profile、排行榜和活动未开放。原文无账号、充值转账或云存档系统，本工程没有新增这些系统。
 
 ## 验证与复现
 
 ```sh
 swift test
 python3 scripts/verify_levels.py
+python3 -m unittest discover -s scripts -p 'test_import_reference_gameplay.py'
 xcodebuild -project Capydoku.xcodeproj -scheme Capydoku \
   -destination 'platform=iOS Simulator,name=iPhone 17 Pro' \
   -derivedDataPath DerivedData CODE_SIGNING_ALLOWED=NO test
 ```
 
-只审计现有150关提示与对称等价（不修改关卡包）：
+只检查现有关卡，避免误覆盖生产包：
 
 ```sh
-swift run -c release CapydokuLevelTool --audit-existing
+swift run -c release CapydokuLevelTool --audit-production --catalog Resources/levels.json --output .
+swift run -c release CapydokuLevelTool --audit-existing --catalog Resources/levels.json --output .
 ```
 
-重新生产关卡（会更新关卡包和报告；修改后需要重新回归）：
+重新生成是显式生产操作。实验生成必须带150关历史，跨产品语料提供后另传 `--similarity-corpus`：
 
 ```sh
 swift run -c release CapydokuLevelTool --start 1 --count 150 --output .
-swift run -c release CapydokuLevelTool --start 151 --count 30 --experimental --output .
+swift run -c release CapydokuLevelTool --start 151 --count 30 --experimental \
+  --history-levels Resources/levels.json --output /tmp/capydoku-experimental
 ```
 
-新增 App、AppTests 或 UITests 源文件后运行 `python3 scripts/generate_project.py` 更新工程。它是本仓库的确定性工程生成脚本；当前工程已生成，不需首次运行时手动执行。
+新增 Swift 或资源文件后运行 `python3 scripts/generate_project.py`。工程已生成，首次打开无需运行脚本。
 
-## 目录与交付资料
-
-| 路径 | 用途 |
-|---|---|
-| `App/` | 应用入口、页面、手势绘制、视听反馈、奖励适配边界 |
-| `Sources/CapydokuCore/` | 与页面独立的规则、生成、提示、对局、存档和奖励逻辑 |
-| `Sources/CapydokuLevelTool/` | 关卡批量生产与自动通关验证工具 |
-| `Resources/levels.json` | 首轮 150 关，附答案、seed、版本及区域信息 |
-| `Tests/` / `AppTests/` / `UITests/` | 核心测试、应用状态与存档集成测试、实际模拟器交互回归 |
-| `Validation/hint-quality-audit.json` | 150 关最新提示安全性、逻辑覆盖和旋转／镜像等价审计 |
-| `Validation/levels-report.json` | 150 关逐关校验；46 个重点关自动通关与同盘恢复 |
-| `Validation/experimental-levels-report.json` | 151–180 三组连续生成与自动通关结果 |
-| `Validation/demo-acceptance.md` | 沿用 88 条原 Checklist 的本轮适用范围与实际结果 |
-| `CHANGELOG.md` | 本轮修复和后续决定项 |
-
-自动通关用于证明规则、提示和恢复正确，不代替你们的真实试玩、难度评价或真机长时间测试。正式资源替换、第三方接入、正式难度与跨产品比较、签名、商店资料和发布验收仍需继续完成。
+目录：`App/` 页面和应用流程，`Sources/CapydokuCore/` 规则/生成/存档，`Reference/` 原文与参考导入材料，`Validation/` 验证证据，`AppTests/` / `Tests/` / `UITests/` 分层测试。临时配置版本为 `original-demo-unverified-v3`，新局生效，进行中对局保持其配置快照。

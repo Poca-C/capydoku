@@ -14,47 +14,47 @@ public enum PuzzleGenerationError: Error, LocalizedError, Equatable {
 }
 
 public struct PuzzleGenerator: Sendable {
-    public static let version = "demo-connected-v2"
+    public static let version = "original-pipeline-v3"
     public static let maximumBoardSize = 10
     public static let generationTimeBudget: TimeInterval = 8
     public init() {}
 
-    /// Provisional internal-demo curve. It does not assert Pawdoku difficulty matching.
+    /// Executable local profile, never represented as sampled Pawdoku values.
     public static func size(for level: Int) -> Int {
-        if level <= 10 { return 4 }
-        if level <= 50 { return 6 }
-        if level <= 100 { return 8 }
-        if level <= 150 { return 10 }
-        switch (level - 151) % 10 {
-        case 0, 1, 5: return 6
-        case 2...4, 6: return 8
-        default: return 10
-        }
+        Int(DifficultyProfile.provisional(level: level).boardSizeCurveTarget.minimum)
     }
 
     public static func difficulty(for level: Int) -> String {
-        if level == 1 { return "Tutorial" }
-        if level == 17 { return "Recovery" }
-        return ["Hard", "Flow", "Flow", "Medium", "Medium", "Challenge", "Recovery", "Medium", "Challenge", "Pre-Hard"][level % 10]
+        DifficultyProfile.role(for: level).0.rawValue
     }
 
     public static func generate(level: Int, seed: UInt64? = nil, maxAttempts: Int = 500,
                                 timeBudgetMilliseconds: Int = 8_000) throws -> Puzzle {
+        let result = try generateAudited(level: level, seed: seed, maxAttempts: maxAttempts,
+                                        timeBudgetMilliseconds: timeBudgetMilliseconds)
+        if let puzzle = result.puzzle { return puzzle }
+        if result.report.termination == "time_budget_exceeded" { throw PuzzleGenerationError.timeBudgetExceeded }
+        throw PuzzleGenerationError.exhausted(attempts: result.report.generatedCandidates)
+    }
+
+    static func generateCandidate(level: Int, seed: UInt64, size: Int, variation: Int,
+                                  timeBudgetMilliseconds: Int) throws -> Puzzle {
+        let maxAttempts = 1
         guard level > 0, maxAttempts > 0, timeBudgetMilliseconds > 0 else { throw PuzzleGenerationError.invalidLevel }
-        let seed = seed ?? (UInt64(level) &* 0x9E3779B97F4A7C15 &+ 0xCA9D0C0)
         var rng = SeededRandom(state: SeededRandom.mixed(seed))
-        let n = size(for: level)
+        let n = size
         let started = ProcessInfo.processInfo.systemUptime
         let deadline = started + min(generationTimeBudget, Double(timeBudgetMilliseconds) / 1_000)
-        for attempt in 0..<min(maxAttempts, 500) {
+        for _ in 0..<min(maxAttempts, 500) {
             if ProcessInfo.processInfo.systemUptime >= deadline { throw PuzzleGenerationError.timeBudgetExceeded }
             let columns = solutionColumns(size: n, rng: &rng)
             let roots = columns.enumerated().map { $0.offset * n + $0.element }
-            // A few small anchor regions make large boards tractable without fixing their shapes.
+            // Candidate construction varies anchor count; subsequent difficulty filtering
+            // rejects shapes that miss the profile. No candidate is accepted by size alone.
             let frozenCount: Int
             if n == 4 { frozenCount = level == 1 ? 1 : 0 }
-            else if n == 10 { frozenCount = min(5, 2 + attempt / 60) }
-            else { frozenCount = min(n - 3, attempt / 100) }
+            else if n == 10 { frozenCount = 2 + variation % 4 }
+            else { frozenCount = variation % max(1, n / 2) }
             var labels = connectedPartition(size: n, roots: roots, frozenCount: frozenCount, rng: &rng)
             guard !labels.contains(-1) else { continue }
             let rootSet = Set(roots)

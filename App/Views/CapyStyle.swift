@@ -1,26 +1,30 @@
 import SwiftUI
+import UIKit
 
-/// Original, code-drawn visual language for this internal demo.
+/// Theme values follow the cream, orange and brown palette in the original specification.
 enum CapyPalette {
-    static let cream = Color(red: 0.98, green: 0.96, blue: 0.91)
-    static let paper = Color(red: 1.00, green: 0.99, blue: 0.96)
-    static let ink = Color(red: 0.27, green: 0.22, blue: 0.17)
-    static let orange = Color(red: 0.91, green: 0.43, blue: 0.22)
-    static let orangeLight = Color(red: 0.99, green: 0.88, blue: 0.72)
-    static let muted = Color(red: 0.53, green: 0.50, blue: 0.43)
-    static let green = Color(red: 0.30, green: 0.46, blue: 0.36)
-    static let line = Color(red: 0.87, green: 0.84, blue: 0.76)
+    static let cream = Color(red: 0.97, green: 0.95, blue: 0.93)
+    static let paper = Color(red: 1.00, green: 0.99, blue: 0.97)
+    static let ink = Color(red: 0.49, green: 0.31, blue: 0.29)
+    static let orange = Color(red: 0.97, green: 0.56, blue: 0.08)
+    static let orangeLight = Color(red: 0.98, green: 0.88, blue: 0.77)
+    static let muted = Color(red: 0.62, green: 0.45, blue: 0.41)
+    static let green = Color(red: 0.24, green: 0.64, blue: 0.31)
+    static let video = Color(red: 0.03, green: 0.73, blue: 0.32)
+    static let life = Color(red: 0.94, green: 0.24, blue: 0.22)
+    static let disabled = Color(red: 0.65, green: 0.68, blue: 0.67)
+    static let line = Color(red: 0.88, green: 0.78, blue: 0.70)
     static let regionColors: [Color] = [
-        Color(red: 0.99, green: 0.86, blue: 0.66),
-        Color(red: 0.80, green: 0.89, blue: 0.74),
-        Color(red: 0.73, green: 0.85, blue: 0.94),
-        Color(red: 0.94, green: 0.77, blue: 0.80),
-        Color(red: 0.86, green: 0.80, blue: 0.95),
-        Color(red: 0.98, green: 0.92, blue: 0.66),
-        Color(red: 0.71, green: 0.89, blue: 0.84),
-        Color(red: 0.96, green: 0.80, blue: 0.69),
-        Color(red: 0.80, green: 0.83, blue: 0.72),
-        Color(red: 0.88, green: 0.83, blue: 0.80)
+        Color(red: 0.23, green: 0.66, blue: 0.74),
+        Color(red: 0.81, green: 0.44, blue: 0.57),
+        Color(red: 0.98, green: 0.84, blue: 0.49),
+        Color(red: 0.76, green: 0.63, blue: 0.07),
+        Color(red: 0.53, green: 0.75, blue: 0.45),
+        Color(red: 0.54, green: 0.47, blue: 0.83),
+        Color(red: 0.24, green: 0.57, blue: 0.37),
+        Color(red: 0.67, green: 0.44, blue: 0.30),
+        Color(red: 0.57, green: 0.74, blue: 0.90),
+        Color(red: 0.91, green: 0.57, blue: 0.83)
     ]
 }
 
@@ -31,6 +35,14 @@ struct CapyMascot: View {
     var size: CGFloat = 100
 
     var body: some View {
+        Group {
+            if let artwork = UIImage(named: mood == .sad ? "CapySad" : size > 90 ? "CapyMascot" : "CapyFace") {
+                Image(uiImage: artwork).resizable().scaledToFit()
+            } else { drawnFace }
+        }.frame(width: size, height: size).accessibilityHidden(true)
+    }
+
+    private var drawnFace: some View {
         Canvas { context, canvas in
             let scale = min(canvas.width, canvas.height) / 100
             context.scaleBy(x: scale, y: scale)
@@ -94,22 +106,52 @@ struct CapyCard<Content: View>: View {
 }
 
 struct CapyButtonStyle: ButtonStyle {
+    @EnvironmentObject private var model: AppModel
     var secondary: Bool = false
     var compact: Bool = false
     @Environment(\.isEnabled) private var isEnabled
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.system(size: compact ? 14 : 17, weight: .bold, design: .rounded))
-            .padding(.horizontal, compact ? 16 : 22)
-            .frame(minHeight: compact ? 44 : 54)
-            .foregroundColor(secondary ? CapyPalette.ink : .white)
-            .background(secondary ? CapyPalette.orangeLight : CapyPalette.orange)
-            .clipShape(RoundedRectangle(cornerRadius: compact ? 15 : 18, style: .continuous))
-            .opacity(isEnabled ? (configuration.isPressed ? 0.82 : 1) : 0.42)
-            .scaleEffect(configuration.isPressed && !reduceMotion ? 0.98 : 1)
-            .animation(reduceMotion ? nil : .easeOut(duration: 0.14), value: configuration.isPressed)
+            .font(.system(size: compact ? 16 : 25, weight: .heavy, design: .rounded))
+            .padding(.horizontal, compact ? 18 : 26)
+            .frame(minHeight: compact ? 44 : 60)
+            .foregroundColor(secondary ? CapyPalette.orange : .white)
+            .background(secondary ? Color.clear : CapyPalette.orange)
+            .clipShape(Capsule())
+            .overlay(Capsule().stroke(secondary ? CapyPalette.orange : .clear, lineWidth: 1.5))
+            .shadow(color: secondary ? .clear : CapyPalette.orange.opacity(0.22), radius: 5, y: 3)
+            .opacity(isEnabled ? (configuration.isPressed ? 0.86 : 1) : 0.42)
+            .scaleEffect(configuration.isPressed && !reduceMotion ? 0.96 : 1)
+            .animation(reduceMotion ? nil : .easeOut(duration: 0.13), value: configuration.isPressed)
+            .onChange(of: configuration.isPressed) { pressed in if pressed { model.uiTap() } }
+    }
+}
+
+struct CapyPressStyle: ButtonStyle {
+    @EnvironmentObject private var model: AppModel
+    @Environment(\.isEnabled) private var isEnabled
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label.opacity(isEnabled ? (configuration.isPressed ? 0.8 : 1) : 0.45)
+            .scaleEffect(configuration.isPressed && !reduceMotion ? 0.93 : 1)
+            .animation(reduceMotion ? nil : .easeOut(duration: 0.12), value: configuration.isPressed)
+            .onChange(of: configuration.isPressed) { pressed in if pressed { model.uiTap() } }
+    }
+}
+
+struct PawBackground: View {
+    var body: some View {
+        GeometryReader { geometry in
+            ForEach(0..<9, id: \.self) { index in
+                Image(systemName: "pawprint.fill")
+                    .font(.system(size: 29 + CGFloat(index % 3) * 8))
+                    .rotationEffect(.degrees(Double(index * 47)))
+                    .foregroundColor(CapyPalette.orange.opacity(0.035))
+                    .position(x: geometry.size.width * [0.03, 0.91, 0.35, 0.78, 0.06, 0.91, 0.20, 0.67, 0.05][index],
+                              y: geometry.size.height * [0.08, 0.10, 0.22, 0.39, 0.49, 0.63, 0.78, 0.93, 0.97][index])
+            }
+        }.allowsHitTesting(false).accessibilityHidden(true)
     }
 }
 

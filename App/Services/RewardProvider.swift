@@ -7,11 +7,31 @@ enum RewardScenario: String, CaseIterable, Identifiable {
     case timeout = "No callback (timeout)"
     var id: String { rawValue }
 }
-enum RewardSignal { case earned, cancelled, failed, interrupted, timedOut }
+enum RewardSignal: Equatable { case earned, cancelled, failed, interrupted, timedOut }
+enum RewardReadiness { case ready, unavailable }
 
-/// A real SDK adapter can implement this boundary without owning game state or inventory.
+/// Placement-based loading boundary; real adapters coalesce concurrent preload requests
+/// and keep at most one ready ad per configured unit. No network SDK is linked here.
 protocol RewardProvider {
+    func preload(placement: RewardKind, completion: @escaping (RewardReadiness) -> Void)
+    func isReady(placement: RewardKind) -> Bool
+    func present(placement: RewardKind, offerID: String, completion: @escaping (RewardSignal) -> Void)
     func present(offerID: String, completion: @escaping (RewardSignal) -> Void)
+    func replenish(placement: RewardKind)
+}
+
+extension RewardProvider {
+    // Existing synchronous mock/test adapters remain source-compatible. A live adapter
+    // supplies its own load/ready implementation after its SDK privacy initialization.
+    func preload(placement: RewardKind, completion: @escaping (RewardReadiness) -> Void) { completion(.ready) }
+    func isReady(placement: RewardKind) -> Bool { true }
+    func present(placement: RewardKind, offerID: String, completion: @escaping (RewardSignal) -> Void) {
+        present(offerID: offerID, completion: completion)
+    }
+    // A new adapter can implement only the placement-aware display API. Legacy local
+    // providers implement the offer-only overload above and use the compatibility bridge.
+    func present(offerID: String, completion: @escaping (RewardSignal) -> Void) { completion(.failed) }
+    func replenish(placement: RewardKind) { preload(placement: placement) { _ in } }
 }
 
 struct MockRewardProvider: RewardProvider {
@@ -27,6 +47,24 @@ struct MockRewardProvider: RewardProvider {
             case .duplicate:
                 completion(.earned)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { completion(.earned) }
+            }
+        }
+    }
+}
+
+enum InterstitialSignal { case closed, failed, timedOut }
+protocol InterstitialProvider {
+    func present(completion: @escaping (InterstitialSignal) -> Void)
+}
+struct MockInterstitialProvider: InterstitialProvider {
+    let scenario: RewardScenario
+    func present(completion: @escaping (InterstitialSignal) -> Void) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            switch scenario {
+            case .timeout: break
+            case .failure, .interrupted: completion(.failed)
+            case .success, .cancel: completion(.closed)
+            case .duplicate: completion(.closed); completion(.closed)
             }
         }
     }

@@ -1,0 +1,95 @@
+{
+  "createdAtUTC" : "2026-09-30T11:46:40Z",
+  "difficultyPassed" : 0,
+  "elapsedMilliseconds" : 14,
+  "generatedCandidates" : 100,
+  "metadata" : {
+    "candidateBatchID" : "original-pipeline-v3:original-ch3-local-estimate-v1:CapyDoku:4990025626674468347",
+    "candidateIndex" : -1,
+    "candidateSeed" : 0,
+    "generationSeed" : 4990025626674468347,
+    "generatorVersion" : "original-pipeline-v3",
+    "productNamespace" : "CapyDoku",
+    "profileVersion" : "original-ch3-local-estimate-v1"
+  },
+  "referenceAcceptance" : "unverified: frozen Pawdoku profiles, calibrated player metrics, and cross-product corpus are required",
+  "rejectionReasons" : {
+    "difficulty:band_score_outside_target" : 63,
+    "difficulty:difficulty_score_outside_target" : 61,
+    "difficulty:error_risk_outside_target" : 70,
+    "solver:invalid_or_non_unique" : 29
+  },
+  "requestedCandidates" : 100,
+  "similarityPassed" : 0,
+  "solverPassed" : 71,
+  "target" : {
+    "bandScoreRange" : {
+      "maximum" : 60,
+      "minimum" : 44
+    },
+    "boardSizeCurveTarget" : {
+      "maximum" : 6,
+      "minimum" : 6
+    },
+    "candidateBatchSize" : 100,
+    "candidateDensityTarget" : {
+      "maximum" : 1,
+      "minimum" : 0
+    },
+    "difficultyBand" : "Challenge",
+    "difficultyRole" : "Error Spike",
+    "difficultyScoreTarget" : {
+      "maximum" : 57.49999999999999,
+      "minimum" : 42.5
+    },
+    "errorRiskTarget" : {
+      "maximum" : 1,
+      "minimum" : 0.35
+    },
+    "failPressureTarget" : {
+      "maximum" : 1,
+      "minimum" : 0
+    },
+    "forcedMoveDensityTarget" : {
+      "maximum" : 1,
+      "minimum" : 0
+    },
+    "hintPressureTarget" : {
+      "maximum" : 1,
+      "minimum" : 0
+    },
+    "levelID" : 15,
+    "logicalStepCountTarget" : {
+      "maximum" : 200,
+      "minimum" : 6
+    },
+    "profileVersion" : "original-ch3-local-estimate-v1",
+    "provenance" : {
+      "source" : "Original Word chapter 3 role sequence; numeric targets are local solver estimates. Frozen Pawdoku sampling is missing.",
+      "status" : "unverified_local_demo"
+    },
+    "reasoningDepthTarget" : {
+      "maximum" : 3,
+      "minimum" : 0
+    },
+    "referenceLevelRange" : {
+      "maximum" : 15,
+      "minimum" : 15
+    },
+    "regionComplexityTarget" : {
+      "maximum" : 1,
+      "minimum" : 0
+    },
+    "regionCountTarget" : {
+      "maximum" : 6,
+      "minimum" : 6
+    },
+    "solveTimeTarget" : {
+      "maximum" : 3600,
+      "minimum" : 0
+    },
+    "tolerancePercent" : 0.15,
+    "trialAllowed" : false
+  },
+  "termination" : "no_candidate_matched"
+}

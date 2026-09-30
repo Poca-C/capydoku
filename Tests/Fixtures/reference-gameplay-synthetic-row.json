@@ -1,0 +1,71 @@
+{
+  "startingLives": 3,
+  "directFind": {
+    "enabled": true,
+    "visible": true,
+    "unlockLevel": 1,
+    "initialFreeCount": 2,
+    "firstUnlockBonusCount": 0,
+    "inventoryAcrossLevels": "retain",
+    "regrantPolicy": "once_per_level",
+    "rewardedAdEnabled": true,
+    "buttonState": "enabled",
+    "evidenceID": "synthetic-test-only"
+  },
+  "hint": {
+    "enabled": true,
+    "visible": true,
+    "unlockLevel": 1,
+    "initialFreeCount": 1,
+    "firstUnlockBonusCount": 0,
+    "inventoryAcrossLevels": "reset",
+    "regrantPolicy": "every_attempt",
+    "rewardedAdEnabled": true,
+    "buttonState": "enabled",
+    "evidenceID": "synthetic-test-only"
+  },
+  "levelStartFreeAd": {
+    "enabled": false,
+    "visible": false,
+    "freeCount": 0,
+    "reward": "hint",
+    "rewardCount": 0,
+    "resetPolicy": "never",
+    "inventoryAcrossLevels": "reset",
+    "triggerOrder": 0,
+    "buttonState": "hidden",
+    "evidenceID": "synthetic-test-only"
+  },
+  "revive": {
+    "enabled": true,
+    "rewardedAdEnabled": true,
+    "restoredLives": 3,
+    "unlimitedRevives": true,
+    "freeCount": 0,
+    "resetPolicy": "never",
+    "evidenceID": "synthetic-test-only"
+  },
+  "failure": {
+    "flowID": "synthetic-fixture",
+    "title": "TEST failure",
+    "reviveButtonTitle": "TEST revive",
+    "restartButtonTitle": "TEST restart",
+    "canDismiss": false,
+    "restartCreatesNewBoard": true,
+    "evidenceID": "synthetic-test-only"
+  },
+  "interstitial": {
+    "enabled": false,
+    "startLevel": 1,
+    "frequency": 1,
+    "cooldownSeconds": 0,
+    "adTimeoutSeconds": 5,
+    "onNextLevel": true,
+    "onReturnHome": true,
+    "evidenceID": "synthetic-test-only"
+  },
+  "adsEnabled": false,
+  "rewardedAdTimeoutSeconds": 5,
+  "bannerEnabled": false,
+  "bannerReviewEvidenceID": null
+}

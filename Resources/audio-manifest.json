@@ -1,0 +1,7 @@
+{
+  "version": "awaiting-frozen-reference",
+  "referenceVerified": false,
+  "clips": {},
+  "requiredEvents": ["background_music", "button_tap", "mark_x", "swipe_x", "erase_x", "double_tap_correct", "double_tap_wrong", "nice", "great", "excellent"],
+  "source": "Original specification chapter 5. No reference audio files were supplied in the Word or workspace. Synthesized substitutes have been removed."
+}

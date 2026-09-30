@@ -1,0 +1,291 @@
+{
+  "createdAtUTC" : "2026-09-30T11:46:42Z",
+  "difficultyPassed" : 1,
+  "elapsedMilliseconds" : 19,
+  "generatedCandidates" : 100,
+  "metadata" : {
+    "candidateBatchID" : "original-pipeline-v3:original-ch3-local-estimate-v1:CapyDoku:16633418755085831386",
+    "candidateIndex" : -1,
+    "candidateSeed" : 0,
+    "generationSeed" : 16633418755085831386,
+    "generatorVersion" : "original-pipeline-v3",
+    "productNamespace" : "CapyDoku",
+    "profileVersion" : "original-ch3-local-estimate-v1"
+  },
+  "referenceAcceptance" : "unverified: frozen Pawdoku profiles, calibrated player metrics, and cross-product corpus are required",
+  "rejectionReasons" : {
+    "difficulty:band_score_outside_target" : 77,
+    "difficulty:difficulty_score_outside_target" : 78,
+    "difficulty:reasoning_depth_outside_target" : 27,
+    "difficulty:trial_not_allowed" : 1,
+    "similarity:answer_pattern" : 1,
+    "similarity:opening_state" : 1,
+    "similarity:rejected" : 1,
+    "solver:invalid_or_non_unique" : 21
+  },
+  "requestedCandidates" : 100,
+  "similarityPassed" : 0,
+  "similarityRejectionExamples" : [
+    {
+      "accepted" : false,
+      "checkerVersion" : "region-answer-opening-v1",
+      "comparedBoards" : 49,
+      "configurationVersion" : "original-ch3-strict-v1",
+      "crossProductStatus" : "missing_other_product_corpus",
+      "exceptions" : [
+
+      ],
+      "matches" : [
+        {
+          "checkerVersion" : "region-answer-opening-v1",
+          "decision" : "Reject",
+          "matchedDimensions" : [
+            "answer_pattern",
+            "opening_state"
+          ],
+          "matchedGame" : "CapyDoku",
+          "matchedLevelID" : 29,
+          "similarityScore" : 0.6249999999999999,
+          "threshold" : 0.9
+        },
+        {
+          "checkerVersion" : "region-answer-opening-v1",
+          "decision" : "Accept with recorded overlap",
+          "matchedDimensions" : [
+            "opening_state"
+          ],
+          "matchedGame" : "CapyDoku",
+          "matchedLevelID" : 15,
+          "similarityScore" : 0.575,
+          "threshold" : 0.9
+        },
+        {
+          "checkerVersion" : "region-answer-opening-v1",
+          "decision" : "Accept with recorded overlap",
+          "matchedDimensions" : [
+            "opening_state"
+          ],
+          "matchedGame" : "CapyDoku",
+          "matchedLevelID" : 37,
+          "similarityScore" : 0.42499999999999993,
+          "threshold" : 0.9
+        },
+        {
+          "checkerVersion" : "region-answer-opening-v1",
+          "decision" : "Accept with recorded overlap",
+          "matchedDimensions" : [
+            "opening_state"
+          ],
+          "matchedGame" : "CapyDoku",
+          "matchedLevelID" : 18,
+          "similarityScore" : 0.4,
+          "threshold" : 0.9
+        },
+        {
+          "checkerVersion" : "region-answer-opening-v1",
+          "decision" : "Accept with recorded overlap",
+          "matchedDimensions" : [
+            "opening_state"
+          ],
+          "matchedGame" : "CapyDoku",
+          "matchedLevelID" : 23,
+          "similarityScore" : 0.3375,
+          "threshold" : 0.9
+        },
+        {
+          "checkerVersion" : "region-answer-opening-v1",
+          "decision" : "Accept with recorded overlap",
+          "matchedDimensions" : [
+            "opening_state"
+          ],
+          "matchedGame" : "CapyDoku",
+          "matchedLevelID" : 30,
+          "similarityScore" : 0.3375,
+          "threshold" : 0.9
+        },
+        {
+          "checkerVersion" : "region-answer-opening-v1",
+          "decision" : "Accept with recorded overlap",
+          "matchedDimensions" : [
+            "opening_state"
+          ],
+          "matchedGame" : "CapyDoku",
+          "matchedLevelID" : 39,
+          "similarityScore" : 0.32499999999999996,
+          "threshold" : 0.9
+        },
+        {
+          "checkerVersion" : "region-answer-opening-v1",
+          "decision" : "Accept with recorded overlap",
+          "matchedDimensions" : [
+            "opening_state"
+          ],
+          "matchedGame" : "CapyDoku",
+          "matchedLevelID" : 20,
+          "similarityScore" : 0.3125,
+          "threshold" : 0.9
+        },
+        {
+          "checkerVersion" : "region-answer-opening-v1",
+          "decision" : "Accept with recorded overlap",
+          "matchedDimensions" : [
+            "opening_state"
+          ],
+          "matchedGame" : "CapyDoku",
+          "matchedLevelID" : 48,
+          "similarityScore" : 0.30000000000000004,
+          "threshold" : 0.9
+        },
+        {
+          "checkerVersion" : "region-answer-opening-v1",
+          "decision" : "Accept with recorded overlap",
+          "matchedDimensions" : [
+            "opening_state"
+          ],
+          "matchedGame" : "CapyDoku",
+          "matchedLevelID" : 10,
+          "similarityScore" : 0.275,
+          "threshold" : 0.9
+        },
+        {
+          "checkerVersion" : "region-answer-opening-v1",
+          "decision" : "Accept with recorded overlap",
+          "matchedDimensions" : [
+            "opening_state"
+          ],
+          "matchedGame" : "CapyDoku",
+          "matchedLevelID" : 16,
+          "similarityScore" : 0.275,
+          "threshold" : 0.9
+        },
+        {
+          "checkerVersion" : "region-answer-opening-v1",
+          "decision" : "Accept with recorded overlap",
+          "matchedDimensions" : [
+            "opening_state"
+          ],
+          "matchedGame" : "CapyDoku",
+          "matchedLevelID" : 25,
+          "similarityScore" : 0.2625,
+          "threshold" : 0.9
+        },
+        {
+          "checkerVersion" : "region-answer-opening-v1",
+          "decision" : "Accept with recorded overlap",
+          "matchedDimensions" : [
+            "opening_state"
+          ],
+          "matchedGame" : "CapyDoku",
+          "matchedLevelID" : 9,
+          "similarityScore" : 0.26249999999999996,
+          "threshold" : 0.9
+        },
+        {
+          "checkerVersion" : "region-answer-opening-v1",
+          "decision" : "Accept with recorded overlap",
+          "matchedDimensions" : [
+            "opening_state"
+          ],
+          "matchedGame" : "CapyDoku",
+          "matchedLevelID" : 19,
+          "similarityScore" : 0.25,
+          "threshold" : 0.9
+        },
+        {
+          "checkerVersion" : "region-answer-opening-v1",
+          "decision" : "Accept with recorded overlap",
+          "matchedDimensions" : [
+            "opening_state"
+          ],
+          "matchedGame" : "CapyDoku",
+          "matchedLevelID" : 35,
+          "similarityScore" : 0.25,
+          "threshold" : 0.9
+        },
+        {
+          "checkerVersion" : "region-answer-opening-v1",
+          "decision" : "Accept with recorded overlap",
+          "matchedDimensions" : [
+            "opening_state"
+          ],
+          "matchedGame" : "CapyDoku",
+          "matchedLevelID" : 38,
+          "similarityScore" : 0.2,
+          "threshold" : 0.9
+        }
+      ],
+      "originalStrictAcceptance" : false
+    }
+  ],
+  "solverPassed" : 79,
+  "target" : {
+    "bandScoreRange" : {
+      "maximum" : 100,
+      "minimum" : 60
+    },
+    "boardSizeCurveTarget" : {
+      "maximum" : 6,
+      "minimum" : 6
+    },
+    "candidateBatchSize" : 100,
+    "candidateDensityTarget" : {
+      "maximum" : 1,
+      "minimum" : 0
+    },
+    "difficultyBand" : "Hard",
+    "difficultyRole" : "Hard",
+    "difficultyScoreTarget" : {
+      "maximum" : 80.5,
+      "minimum" : 59.5
+    },
+    "errorRiskTarget" : {
+      "maximum" : 1,
+      "minimum" : 0
+    },
+    "failPressureTarget" : {
+      "maximum" : 1,
+      "minimum" : 0
+    },
+    "forcedMoveDensityTarget" : {
+      "maximum" : 1,
+      "minimum" : 0
+    },
+    "hintPressureTarget" : {
+      "maximum" : 1,
+      "minimum" : 0
+    },
+    "levelID" : 50,
+    "logicalStepCountTarget" : {
+      "maximum" : 200,
+      "minimum" : 6
+    },
+    "profileVersion" : "original-ch3-local-estimate-v1",
+    "provenance" : {
+      "source" : "Original Word chapter 3 role sequence; numeric targets are local solver estimates. Frozen Pawdoku sampling is missing.",
+      "status" : "unverified_local_demo"
+    },
+    "reasoningDepthTarget" : {
+      "maximum" : 3,
+      "minimum" : 2
+    },
+    "referenceLevelRange" : {
+      "maximum" : 50,
+      "minimum" : 50
+    },
+    "regionComplexityTarget" : {
+      "maximum" : 1,
+      "minimum" : 0
+    },
+    "regionCountTarget" : {
+      "maximum" : 6,
+      "minimum" : 6
+    },
+    "solveTimeTarget" : {
+      "maximum" : 3600,
+      "minimum" : 0
+    },
+    "tolerancePercent" : 0.15,
+    "trialAllowed" : false
+  },
+  "termination" : "no_candidate_matched"
+}

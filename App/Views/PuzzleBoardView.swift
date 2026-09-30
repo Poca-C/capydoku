@@ -98,9 +98,11 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         refreshAccessibility()
         setNeedsDisplay()
         if hasConfigured, sameBoard, window != nil, !UIAccessibility.isReduceMotionEnabled {
-            for index in addedFound { pulse(at: index, color: UIColor(CapyPalette.green), strong: true) }
-            for index in addedErrors { pulse(at: index, color: UIColor.systemRed, strong: true) }
+            for index in addedFound { pulse(at: index, color: UIColor(CapyPalette.orange), strong: true); celebrate(at: index) }
             for index in changedMarks { pulse(at: index, color: ink.withAlphaComponent(0.45), strong: false) }
+        }
+        if hasConfigured, sameBoard, window != nil {
+            for index in addedErrors { mistake(at: index) }
         }
         hasConfigured = true
     }
@@ -131,7 +133,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     }
 
     private var boardRect: CGRect {
-        let side = max(0, min(bounds.width, bounds.height) - 4)
+        let side = max(0, min(bounds.width, bounds.height) - 14)
         return CGRect(x: (bounds.width - side) / 2, y: (bounds.height - side) / 2, width: side, height: side)
     }
     private var cellSide: CGFloat { boardRect.width / CGFloat(size) }
@@ -149,11 +151,11 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     private func region(_ index: Int) -> Int { regions.indices.contains(index) ? regions[index] : 0 }
 
     @objc private func singleTap(_ gesture: UITapGestureRecognizer) {
-        guard !locked, let index = cell(at: gesture.location(in: self)), !found.contains(index), !errors.contains(index) else { return }
+        guard !locked, let index = cell(at: gesture.location(in: self)), !found.contains(index) else { return }
         onToggle?(index)
     }
     @objc private func doubleTap(_ gesture: UITapGestureRecognizer) {
-        guard !locked, let index = cell(at: gesture.location(in: self)), !found.contains(index), !errors.contains(index) else { return }
+        guard !locked, let index = cell(at: gesture.location(in: self)), !found.contains(index) else { return }
         onSubmit?(index)
     }
 
@@ -230,14 +232,14 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
             element.accessibilityLabel = "Row \(index / size + 1), column \(index % size + 1), region \(region(index) + 1)"
             element.accessibilityValue = state
             let extra = tutorialTargets.contains(index) ? " Tutorial target." : preview.contains(index) ? " Hint preview." : ""
-            element.accessibilityHint = errors.contains(index) ? "A permanent mistake marker. It cannot be removed." : "Activate to toggle an exclusion mark. Use the Confirm capybara custom action to submit.\(extra)"
-            element.accessibilityTraits = locked || found.contains(index) || errors.contains(index) ? [.button, .notEnabled] : .button
+            element.accessibilityHint = "Activate to toggle an exclusion mark. Use the Confirm capybara custom action to submit.\(extra)"
+            element.accessibilityTraits = locked || found.contains(index) ? [.button, .notEnabled] : .button
             element.accessibilityFrameInContainerSpace = rect(for: index)
         }
     }
 
     fileprivate func activate(index: Int, submit: Bool) -> Bool {
-        guard !locked, !found.contains(index), !errors.contains(index) else { return false }
+        guard !locked, !found.contains(index) else { return false }
         if submit { onSubmit?(index) } else { onToggle?(index) }
         return true
     }
@@ -245,79 +247,92 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     override func draw(_ rect: CGRect) {
         guard let context = UIGraphicsGetCurrentContext(), cellSide > 0 else { return }
         let board = boardRect
-        context.saveGState()
-        context.addPath(UIBezierPath(roundedRect: board, cornerRadius: 10).cgPath)
-        context.clip()
+        (preview.isEmpty ? UIColor.white : UIColor.white.withAlphaComponent(0.22)).setFill()
+        UIBezierPath(roundedRect: board.insetBy(dx: -6, dy: -6), cornerRadius: 12).fill()
+        let gap = max(1.1, min(2, cellSide * 0.028))
         for index in 0..<(size * size) {
-            let r = self.rect(for: index)
+            let r = self.rect(for: index).insetBy(dx: gap, dy: gap)
             let paletteIndex = ((region(index) % CapyPalette.regionColors.count) + CapyPalette.regionColors.count) % CapyPalette.regionColors.count
-            context.setFillColor(UIColor(CapyPalette.regionColors[paletteIndex]).cgColor)
-            context.fill(r)
-            if preview.contains(index) {
-                context.setFillColor(UIColor.white.withAlphaComponent(0.36).cgColor)
-                context.fill(r)
-                context.setStrokeColor(UIColor.systemBlue.cgColor)
-                context.setLineWidth(2)
-                context.setLineDash(phase: 0, lengths: [3, 2])
-                context.stroke(r.insetBy(dx: 4, dy: 4))
-                context.setLineDash(phase: 0, lengths: [])
-            }
+            let fill = UIColor(CapyPalette.regionColors[paletteIndex])
+            let tile = UIBezierPath(roundedRect: r, cornerRadius: max(3, cellSide * 0.05))
+            fill.setFill(); tile.fill()
             if found.contains(index) { drawCapy(in: r, context: context) }
             else if errors.contains(index) { drawX(in: r, context: context, error: true) }
             else if marks.contains(index) { drawX(in: r, context: context, error: false) }
+            if !preview.isEmpty {
+                if preview.contains(index) {
+                    // An outlined X is a preview only; no exclusion enters the saved state.
+                    drawX(in: r, context: context, error: false, previewFill: fill)
+                } else {
+                    UIColor.black.withAlphaComponent(0.66).setFill(); tile.fill()
+                }
+            }
             if tutorialTargets.contains(index) {
                 context.setStrokeColor(UIColor(CapyPalette.orange).cgColor)
                 context.setLineWidth(3)
-                context.stroke(r.insetBy(dx: 3, dy: 3))
-                let dot = CGRect(x: r.maxX - 9, y: r.minY + 4, width: 5, height: 5)
-                context.setFillColor(UIColor(CapyPalette.orange).cgColor)
-                context.fillEllipse(in: dot)
-            }
-            // Thin cell lines remain visible inside every irregular region.
-            context.setStrokeColor(ink.withAlphaComponent(0.14).cgColor)
-            context.setLineWidth(0.6)
-            context.stroke(r)
-        }
-        context.setStrokeColor(ink.withAlphaComponent(0.82).cgColor)
-        context.setLineWidth(size >= 9 ? 2 : 2.5)
-        context.setLineCap(.square)
-        for index in 0..<(size * size) {
-            let r = self.rect(for: index)
-            if index % size < size - 1 && region(index) != region(index + 1) {
-                context.move(to: CGPoint(x: r.maxX, y: r.minY))
-                context.addLine(to: CGPoint(x: r.maxX, y: r.maxY))
-            }
-            if index / size < size - 1 && region(index) != region(index + size) {
-                context.move(to: CGPoint(x: r.minX, y: r.maxY))
-                context.addLine(to: CGPoint(x: r.maxX, y: r.maxY))
+                context.addPath(UIBezierPath(roundedRect: r.insetBy(dx: 2, dy: 2), cornerRadius: 5).cgPath)
+                context.strokePath()
+                let dot = CGRect(x: r.maxX - 10, y: r.minY + 5, width: 6, height: 6)
+                context.setFillColor(UIColor(CapyPalette.orange).cgColor); context.fillEllipse(in: dot)
             }
         }
-        context.strokePath()
-        context.restoreGState()
-        context.setStrokeColor(ink.cgColor)
-        context.setLineWidth(2)
-        context.addPath(UIBezierPath(roundedRect: board, cornerRadius: 10).cgPath)
-        context.strokePath()
     }
 
-    private func drawX(in rect: CGRect, context: CGContext, error: Bool) {
-        let r = rect.insetBy(dx: rect.width * 0.31, dy: rect.height * 0.31)
-        let color = error ? UIColor(red: 0.78, green: 0.18, blue: 0.15, alpha: 1) : ink.withAlphaComponent(0.65)
-        if error {
-            context.setFillColor(UIColor.white.withAlphaComponent(0.7).cgColor)
-            context.fillEllipse(in: rect.insetBy(dx: rect.width * 0.18, dy: rect.height * 0.18))
+    private func drawX(in rect: CGRect, context: CGContext, error: Bool, previewFill: UIColor? = nil) {
+        let r = rect.insetBy(dx: rect.width * 0.23, dy: rect.height * 0.23)
+        func stroke(_ color: UIColor, width: CGFloat) {
+            context.setStrokeColor(color.cgColor); context.setLineWidth(width); context.setLineCap(.round)
+            context.move(to: CGPoint(x: r.minX, y: r.minY)); context.addLine(to: CGPoint(x: r.maxX, y: r.maxY))
+            context.move(to: CGPoint(x: r.maxX, y: r.minY)); context.addLine(to: CGPoint(x: r.minX, y: r.maxY))
+            context.strokePath()
         }
-        context.setStrokeColor(color.cgColor)
-        context.setLineWidth(error ? 3 : 2.2)
-        context.setLineCap(.round)
-        context.move(to: CGPoint(x: r.minX, y: r.minY))
-        context.addLine(to: CGPoint(x: r.maxX, y: r.maxY))
-        context.move(to: CGPoint(x: r.maxX, y: r.minY))
-        context.addLine(to: CGPoint(x: r.minX, y: r.maxY))
-        context.strokePath()
+        let width = max(3.2, rect.width * 0.11)
+        stroke(error ? UIColor(CapyPalette.life) : .white, width: width)
+        if let previewFill { stroke(previewFill, width: max(1, width - 2.6)) }
+    }
+
+    private func celebrate(at index: Int) {
+        let cell = rect(for: index)
+        if let image = UIImage(named: "CapyFace") {
+            let face = UIImageView(image: image); face.contentMode = .scaleAspectFit
+            face.frame = cell.insetBy(dx: cell.width * 0.07, dy: cell.height * 0.07)
+            face.isUserInteractionEnabled = false; addSubview(face)
+            face.transform = CGAffineTransform(scaleX: 0.65, y: 0.65)
+            UIView.animate(withDuration: 0.25, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.4) { face.transform = .identity } completion: { _ in face.removeFromSuperview() }
+        }
+        for number in 0..<5 {
+            let star = UIImageView(image: UIImage(systemName: "star.fill")); star.tintColor = UIColor(CapyPalette.orange)
+            star.frame = CGRect(x: cell.midX - 5, y: cell.midY - 5, width: 10, height: 10)
+            addSubview(star)
+            let angle = CGFloat(number) * .pi * 2 / 5
+            UIView.animate(withDuration: 0.48, animations: {
+                star.center = CGPoint(x: cell.midX + cos(angle) * cell.width * 0.65, y: cell.midY + sin(angle) * cell.height * 0.65)
+                star.alpha = 0; star.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+            }, completion: { _ in star.removeFromSuperview() })
+        }
+    }
+
+    private func mistake(at index: Int) {
+        let r = rect(for: index).insetBy(dx: cellSide * 0.16, dy: cellSide * 0.16)
+        let brokenHeart = UIImageView(image: UIImage(systemName: "heart.slash.fill"))
+        brokenHeart.frame = r; brokenHeart.contentMode = .scaleAspectFit
+        brokenHeart.tintColor = UIColor(CapyPalette.life); brokenHeart.isUserInteractionEnabled = false; addSubview(brokenHeart)
+        if UIAccessibility.isReduceMotionEnabled {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { brokenHeart.removeFromSuperview() }
+            return
+        }
+        let shake = CAKeyframeAnimation(keyPath: "transform.translation.x")
+        shake.values = [0, -5, 5, -4, 4, 0]; shake.duration = 0.3
+        brokenHeart.layer.add(shake, forKey: "mistake")
+        UIView.animate(withDuration: 0.2, delay: 0.3, options: .curveEaseIn, animations: {
+            brokenHeart.alpha = 0; brokenHeart.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
+        }, completion: { _ in brokenHeart.removeFromSuperview() })
     }
 
     private func drawCapy(in rect: CGRect, context: CGContext) {
+        if let image = UIImage(named: "CapyFace") {
+            image.draw(in: rect.insetBy(dx: rect.width * 0.07, dy: rect.height * 0.07)); return
+        }
         let r = rect.insetBy(dx: rect.width * 0.11, dy: rect.height * 0.10)
         context.saveGState()
         context.translateBy(x: r.minX, y: r.minY)

@@ -6,7 +6,7 @@ struct CapydokuApp: App {
     @Environment(\.scenePhase) private var phase
     var body: some Scene {
         WindowGroup {
-            RootView().environmentObject(model)
+            StartupFlowView(directory: model.saveDirectory).environmentObject(model)
                 .preferredColorScheme(.light)
                 .onChange(of: phase) { model.setActive($0 == .active) }
         }

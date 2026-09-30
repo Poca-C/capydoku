@@ -79,7 +79,7 @@ func runHintQualityAudit(inputURL: URL, baselineURL: URL, outputURL: URL) throws
         "catalogMutated": false,
         "scope": "Fixed original 150-level internal-demo catalog. Human-readable deduction coverage is a provisional engineering metric, not Pawdoku difficulty equivalence, human playtesting, or formal cross-product similarity acceptance.",
         "method": "Replay safe hints and row-single placements; verify every exclusion against the independently solver-validated unique answer. Repeating each hint with an empty stored solution must produce exactly the same hint. Player marks are not logical premises. Contradiction checks remain honestly labeled exhaustive search.",
-        "baselineMethod": "Single candidates and region-to-row/column locks from the pre-improvement levels-report.json, matched by exact geometry fingerprint.",
+        "baselineMethod": "Only matching geometry entries from the supplied baseline report are counted. Do not interpret this as a before/after improvement when the catalogs differ.",
         "newRules": ["Common conflict: a cell outside a row, column or region conflicts with every remaining candidate in that unit.",
                      "Two-unit lock: two rows, columns or regions have all candidates inside two units of another family, reserving those units for the pair."],
         "count": puzzles.count,

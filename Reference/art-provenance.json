@@ -1,0 +1,61 @@
+{
+  "source": "卡皮巴拉主题（Capydoku）区域逻辑小游戏需求说明_Vfinal_程序化关卡生成版(1).docx",
+  "date": "2026-09-30",
+  "method": "Built-in image_gen; four distinct calls. App icon resized only for asset-catalog packaging with macOS sips.",
+  "references": {
+    "identity": "Reference/Original/image1.png",
+    "home": "Reference/Original/image22.jpeg",
+    "checkIn": "Reference/Original/image26.png",
+    "game": "Reference/Original/image24.png"
+  },
+  "assets": [
+    {
+      "name": "CapyMascot",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha": true,
+      "prompt": "Use case: stylized-concept. Asset type: Capydoku iOS game mascot PNG, isolated on a genuinely transparent background. The supplied images are references only: image 1 defines the warm brown capybara identity and friendly face; image 2 defines warm playful simple mobile-game context. Produce ONE full-body sitting capybara centered and front-facing, cute round small ears, broad blunt capybara muzzle, small dark oval nose, calm friendly dot eyes and very subtle smile. Style MUST be clean 2D flat illustration, bold smooth cocoa outlines, warm caramel body, pale cream muzzle and belly, simple flat highlights only. Soft rounded chunky forms, no fur texture, no 3D, no photographic effect. Short hands resting on tummy, small feet visible; a readable capybara, not cat, otter, beaver or bear. Keep all body parts inside square composition with 8% transparent margin. No text, no logo, no scenery, no ground rectangle, no shadows outside character. This asset will be lightly animated as a single sprite at 180pt on the home screen. 1024 square preferred. Preserve transparent alpha."
+    },
+    {
+      "name": "CapyCheckIn",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha": true,
+      "prompt": "Use case: precise-object-edit. Asset type: one transparent CapyCheckIn illustration for a native iOS game, no UI. Image 1 is our established Capydoku 2D capybara mascot: PRESERVE this exact character identity, same warm caramel and cream colors, cocoa outline, face, ears, friendly proportions and clean 2D illustrated shading. Image 2 is composition-only reference for check-in. Change the mascot pose to match reference 2: capybara visible from head to lower chest, eyes joyfully CLOSED as upside-down small curves, face centered behind an orange rounded-square plaque held by two small paws at its left and right sides. The orange plaque covers the tummy, extends from under the chin nearly to bottom of image, has a single large pure-white paw-print symbol (one palm + four toes) centered. Use the broad blunt capybara muzzle identity from image1, absolutely no otter whiskers or otter/dog/cat features. Entire character and plaque visible in square canvas with 8% transparent padding. Keep the plaque as simple softly rounded 2D orange shape, dark orange lower edge. Genuine transparent background with alpha, no scenery, no background plate, no text, no number, no floor or surrounding shadow. Must remain one integrated isolated illustration, not a screen."
+    },
+    {
+      "name": "CapyFace",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha": true,
+      "prompt": "Use case: precise-object-edit. Asset type: CapyFace, a compact native iOS puzzle board character-head sprite, isolated PNG with genuine transparent background. Image 1 is our existing capybara mascot and this is an identity-preserving edit. Show ONLY the same character's complete head including two small round ears and broad blunt muzzle, no body, no neck. Preserve warm caramel face, cocoa outline, pale cream muzzle, eyes and small friendly smile. Simplify shading to 2D flat illustration with only 3 major flat fills; remove tiny fur details, minimize highlights so this is highly readable at 24 pixels tall. Friendly calm eyes should remain open, use small glossy dark-brown ovals rather than oversized white eyes. Make the broad capybara muzzle rectangular-rounded rather than bear-like pointed. Straight frontal centered pose, head occupies 86% of canvas width, balanced margin. No props, collar, text, logo, scenery, background rectangle, shadow outside head. Transparent alpha is essential. Single head only, no sheet, 1024 square."
+    },
+    {
+      "name": "AppIcon",
+      "size": [
+        1024,
+        1024
+      ],
+      "alpha": false,
+      "prompt": "Use case: precise-object-edit. Asset type: final 1024x1024 full square iOS app icon. Edit the supplied ORIGINAL Capydoku icon ONLY by removing the black rounded-corner exterior: extend the colorful purple and orange puzzle tiles and white grid lines naturally to all four square corners and edges. Keep the exact same furry smiling capybara face, pose, proportions, facial expression, lighting, glossy eyes, fur, tile layout, white X marks, colors and overall composition as the reference. Do not redesign or change the character, do not flatten its rendering, do not add or remove objects. Full bleed square, opaque RGB, absolutely no transparent pixels, no corner radius, no black corners, no outline frame, no text, no watermark. Output exactly square 1024x1024 if possible. This is a tiny technical asset correction preserving the supplied image."
+    }
+  ],
+  "review": "App icon retains supplied reference composition. Final four UI sprite revisions visually checked for capybara anatomy and shared 2D style; face, plaque composition and sad expression inspected individually.",
+  "anatomyRevision": {
+    "reason": "First sprite revision looked like a teddy bear; rejected at parent visual review. Replaced with long blunt rectangular capybara muzzle, tiny top ears and nostrils, then derived consistent face/check-in/sad states.",
+    "method": "Built-in image_gen reference edits, transparent backgrounds, no programmatic image alteration.",
+    "assets": {
+      "CapyMascot": "exec-0b544910-5687-4d5a-a77c-8d476b255d68.png",
+      "CapyFace": "exec-b98df0a7-5670-4842-b57f-10c9b1daa1fb.png",
+      "CapyCheckIn": "exec-e60a7312-3fbf-4bba-bca3-0c392e09069e.png",
+      "CapySad": "exec-447ffc00-b0e6-4835-adfa-b310f0553dae.png"
+    },
+    "sourceDirectory": "/Users/poca/.codex/generated_images/01a0e813-17dd-7982-8f94-3ccb88f674e2"
+  }
+}

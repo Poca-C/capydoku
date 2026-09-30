@@ -2,9 +2,9 @@ import XCTest
 @testable import CapydokuCore
 
 final class HintQualityTests: XCTestCase {
-    private func catalog() throws -> [Puzzle] {
+    private func catalog(legacy: Bool = false) throws -> [Puzzle] {
         let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
-        return try JSONDecoder().decode([Puzzle].self, from: Data(contentsOf: root.appendingPathComponent("Resources/levels.json")))
+        return try JSONDecoder().decode([Puzzle].self, from: Data(contentsOf: root.appendingPathComponent(legacy ? "Resources/levels-legacy-v2.json" : "Resources/levels.json")))
     }
 
     private func exhaustHints(_ puzzle: Puzzle, initialMarks: Set<Int> = []) -> (Set<Int>, [String: Int]) {
@@ -25,8 +25,9 @@ final class HintQualityTests: XCTestCase {
         return (marks, rules)
     }
 
+    // Keep these known boundary-rule boards as legacy fixtures; production levels may change.
     func testCommonConflictProvidesSafeAnswerIndependentDeductions() throws {
-        let p = try XCTUnwrap(catalog().first { $0.id == 2 })
+        let p = try XCTUnwrap(catalog(legacy: true).first { $0.id == 2 })
         let (marks, rules) = exhaustHints(p)
         XCTAssertGreaterThan(rules["Common conflict", default: 0], 0)
         XCTAssertEqual(rules["Contradiction check", default: 0], 0)
@@ -34,7 +35,7 @@ final class HintQualityTests: XCTestCase {
     }
 
     func testTwoUnitLockCompletesPreviouslySearchDependentBoard() throws {
-        let p = try XCTUnwrap(catalog().first { $0.id == 24 })
+        let p = try XCTUnwrap(catalog(legacy: true).first { $0.id == 24 })
         let (marks, rules) = exhaustHints(p)
         XCTAssertGreaterThan(rules["Two-unit lock", default: 0], 0)
         XCTAssertEqual(rules["Contradiction check", default: 0], 0)
@@ -43,7 +44,7 @@ final class HintQualityTests: XCTestCase {
     }
 
     func testSearchFallbackIsExplicitAndAlsoAnswerIndependent() throws {
-        let p = try XCTUnwrap(catalog().first { $0.id == 18 })
+        let p = try XCTUnwrap(catalog(legacy: true).first { $0.id == 18 })
         let (marks, rules) = exhaustHints(p)
         XCTAssertGreaterThan(rules["Contradiction check", default: 0], 0)
         XCTAssertTrue(PuzzleSolver.validate(p).logicalMetrics.requiresSearch)
@@ -51,7 +52,7 @@ final class HintQualityTests: XCTestCase {
     }
 
     func testWrongPlayerMarksCannotPoisonNewRules() throws {
-        let p = try XCTUnwrap(catalog().first { $0.id == 24 })
+        let p = try XCTUnwrap(catalog(legacy: true).first { $0.id == 24 })
         let (marks, rules) = exhaustHints(p, initialMarks: Set(p.solution))
         XCTAssertGreaterThan(rules["Two-unit lock", default: 0], 0)
         XCTAssertEqual(marks, Set(p.regions.indices))
@@ -91,6 +92,6 @@ final class HintQualityTests: XCTestCase {
             XCTAssertTrue(report.valid, "Level \(p.id): \(report.errors)")
             if !report.logicalMetrics.requiresSearch { solved += 1 }
         }
-        XCTAssertGreaterThanOrEqual(solved, 141)
+        XCTAssertEqual(solved, 150, "Current strict production targets reject boards requiring search")
     }
 }

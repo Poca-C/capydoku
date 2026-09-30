@@ -1,0 +1,240 @@
+{
+  "source": "Original Word chapter 3; numeric difficulty targets are local engineering hypotheses, unverified against frozen Pawdoku data",
+  "generatorVersion": "original-pipeline-v3",
+  "profileVersion": "original-ch3-local-estimate-v1",
+  "fixedLevels": 150,
+  "experimentalLevels": 30,
+  "selectedBatchCandidates": 18000,
+  "rejectedBatches": 15,
+  "totalCandidatesIncludingRetries": 19500,
+  "allSelectedBatchesCompleted": true,
+  "allSelectedBoardsWithinLocalTarget": true,
+  "trialRequiredBoards": 0,
+  "maximumObservedRuleDepth": 3,
+  "strictSameProductSimilarity": true,
+  "allEarlierBoardsCompared": true,
+  "distinctAnswerPatterns": 180,
+  "distinctGeometries": 180,
+  "rebuildFromMetadataPassed": 150,
+  "logicOnlyHintPlaythroughsPassed": 150,
+  "levelPackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49",
+  "acceptanceStatus": "STRUCTURAL_PIPELINE_VERIFIED_REFERENCE_CALIBRATION_PENDING",
+  "missing": [
+    "Frozen Pawdoku per-level difficulty measurements and calibration of inferred solve time / risk / hint / failure pressure.",
+    "Cross-product published/pending puzzle corpus and reviewed similarity threshold."
+  ],
+  "exceptions": [],
+  "earlyBoardSizing": "L1 and L2 are 4x4; L3\u20135 are 6x6 with single-candidate reasoning and high forced density. Board-size targets remain local estimates pending frozen reference sampling.",
+  "firstTwentyCurve": [
+    {
+      "level": 1,
+      "role": "Tutorial",
+      "size": 4,
+      "score": 9.26388888888889,
+      "observedRuleDepth": 1,
+      "forcedDensity": 1,
+      "errorRiskEstimate": 0.12083333333333335
+    },
+    {
+      "level": 2,
+      "role": "Entry / Flow",
+      "size": 4,
+      "score": 9.26388888888889,
+      "observedRuleDepth": 1,
+      "forcedDensity": 1,
+      "errorRiskEstimate": 0.12083333333333335
+    },
+    {
+      "level": 3,
+      "role": "Entry / Flow",
+      "size": 6,
+      "score": 9.493888888888888,
+      "observedRuleDepth": 1,
+      "forcedDensity": 1,
+      "errorRiskEstimate": 0.12383333333333334
+    },
+    {
+      "level": 4,
+      "role": "Entry / Flow",
+      "size": 6,
+      "score": 9.493888888888888,
+      "observedRuleDepth": 1,
+      "forcedDensity": 1,
+      "errorRiskEstimate": 0.12383333333333334
+    },
+    {
+      "level": 5,
+      "role": "Entry / Flow",
+      "size": 6,
+      "score": 9.468333333333334,
+      "observedRuleDepth": 1,
+      "forcedDensity": 1,
+      "errorRiskEstimate": 0.12350000000000003
+    },
+    {
+      "level": 6,
+      "role": "Basic Mastery",
+      "size": 6,
+      "score": 40.3138,
+      "observedRuleDepth": 2,
+      "forcedDensity": 0.6,
+      "errorRiskEstimate": 0.20938
+    },
+    {
+      "level": 7,
+      "role": "Basic Mastery",
+      "size": 6,
+      "score": 40.21185185185185,
+      "observedRuleDepth": 2,
+      "forcedDensity": 0.6666666666666666,
+      "errorRiskEstimate": 0.2500740740740741
+    },
+    {
+      "level": 8,
+      "role": "Basic Mastery",
+      "size": 6,
+      "score": 39.4237037037037,
+      "observedRuleDepth": 2,
+      "forcedDensity": 0.6666666666666666,
+      "errorRiskEstimate": 0.2334814814814815
+    },
+    {
+      "level": 9,
+      "role": "Scale Up",
+      "size": 6,
+      "score": 53.21660899653979,
+      "observedRuleDepth": 2,
+      "forcedDensity": 0.35294117647058826,
+      "errorRiskEstimate": 0.33734717416378324
+    },
+    {
+      "level": 10,
+      "role": "Hard",
+      "size": 6,
+      "score": 69.98765432098766,
+      "observedRuleDepth": 3,
+      "forcedDensity": 0.3333333333333333,
+      "errorRiskEstimate": 0.36913580246913574
+    },
+    {
+      "level": 11,
+      "role": "Deep Dive / Flow",
+      "size": 6,
+      "score": 30.26857142857143,
+      "observedRuleDepth": 2,
+      "forcedDensity": 0.8571428571428571,
+      "errorRiskEstimate": 0.15923809523809526
+    },
+    {
+      "level": 12,
+      "role": "Deep Dive / Flow",
+      "size": 6,
+      "score": 30.26857142857143,
+      "observedRuleDepth": 2,
+      "forcedDensity": 0.8571428571428571,
+      "errorRiskEstimate": 0.15923809523809526
+    },
+    {
+      "level": 13,
+      "role": "Deep Dive / Flow",
+      "size": 6,
+      "score": 30.725714285714286,
+      "observedRuleDepth": 2,
+      "forcedDensity": 0.8571428571428571,
+      "errorRiskEstimate": 0.16685714285714287
+    },
+    {
+      "level": 14,
+      "role": "Deep Dive / Flow",
+      "size": 6,
+      "score": 30.26857142857143,
+      "observedRuleDepth": 2,
+      "forcedDensity": 0.8571428571428571,
+      "errorRiskEstimate": 0.15923809523809526
+    },
+    {
+      "level": 15,
+      "role": "Error Spike",
+      "size": 6,
+      "score": 50.14180555555556,
+      "observedRuleDepth": 2,
+      "forcedDensity": 0.5,
+      "errorRiskEstimate": 0.3714027777777778
+    },
+    {
+      "level": 16,
+      "role": "Thinking Peak",
+      "size": 6,
+      "score": 72.77305,
+      "observedRuleDepth": 3,
+      "forcedDensity": 0.3,
+      "errorRiskEstimate": 0.4183050000000001
+    },
+    {
+      "level": 17,
+      "role": "Recovery",
+      "size": 6,
+      "score": 29.822857142857146,
+      "observedRuleDepth": 2,
+      "forcedDensity": 0.8571428571428571,
+      "errorRiskEstimate": 0.15180952380952384
+    },
+    {
+      "level": 18,
+      "role": "High Mastery",
+      "size": 6,
+      "score": 50.28686390532544,
+      "observedRuleDepth": 2,
+      "forcedDensity": 0.46153846153846156,
+      "errorRiskEstimate": 0.3476607495069034
+    },
+    {
+      "level": 19,
+      "role": "High Mastery",
+      "size": 6,
+      "score": 49.14745562130177,
+      "observedRuleDepth": 2,
+      "forcedDensity": 0.46153846153846156,
+      "errorRiskEstimate": 0.31884812623274167
+    },
+    {
+      "level": 20,
+      "role": "Hard / Compact Hard",
+      "size": 6,
+      "score": 70.3271972318339,
+      "observedRuleDepth": 3,
+      "forcedDensity": 0.35294117647058826,
+      "errorRiskEstimate": 0.39507266435986155
+    }
+  ],
+  "fullCoreTests": {
+    "passed": 82,
+    "failed": 0,
+    "seconds": 25.043,
+    "log": "Validation/test-runs/original-core-full-test-final.log"
+  },
+  "runtimeStrictExperimentalAudit": {
+    "count": 30,
+    "history": "All 150 shipped puzzles plus earlier generated experimental puzzles",
+    "maxMilliseconds": 602,
+    "minMilliseconds": 162,
+    "budgetMilliseconds": 4000,
+    "build": "Debug CLI on development Mac; simulator/device timings are separate"
+  },
+  "configurationExecutionAudit": {
+    "syntheticFixtureOnly": true,
+    "passedTests": 8,
+    "failureCount": 0,
+    "implemented": [
+      "tool initial count / first unlock bonus / once-per-level / every-attempt / never grant",
+      "independent tool carry/reset across levels",
+      "level-start rewarded-ad offer snapshots and callback idempotency",
+      "level-start reward count and once-per-level / every-attempt / lifetime quota",
+      "reward-specific carry/reset separate from normal inventory",
+      "interrupted level-start rewards restore original quantity and scope once",
+      "free revive quota and atomic state restoration",
+      "reference snapshot and older-save compatibility"
+    ],
+    "frozenPawdokuValuesExecuted": false
+  }
+}

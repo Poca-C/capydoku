@@ -1,0 +1,13 @@
+{
+  "configVersion": null,
+  "errors": [],
+  "fieldDifferences": null,
+  "levelCount": 150,
+  "note": "Importer does not verify authenticity of supplied captures. Human review of cited evidence is required; no competitor board data is accepted.",
+  "outputSHA256": null,
+  "readyForUse": false,
+  "schemaVersion": 1,
+  "sourceFile": "/Users/poca/Documents/ChatGPT/capydoku开发/Reference/gameplay-template.json",
+  "sourceFileSHA256": "2630da3234e6f9e57c17c2ff38b23079a12fc3e2d24f4a27df45887fcd9d3659",
+  "status": "awaiting_baseline"
+}
