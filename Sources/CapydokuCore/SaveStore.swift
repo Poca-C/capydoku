@@ -160,13 +160,15 @@ public final class SaveStore: @unchecked Sendable {
     /// Separate receipt phase enables testing a kill between callback and effect execution.
     @discardableResult
     public func markRewardReceived(offerID: String, progress: inout PlayerProgress,
-                                   completionEvent: Data? = nil) throws -> Bool {
+                                   completionEvent: Data? = nil,
+                                   pendingEvents: [String: Data] = [:]) throws -> Bool {
         lock.lock(); defer { lock.unlock() }
         guard let record = progress.rewardLedger[offerID] else { throw SaveStoreError.missingOffer }
         guard record.state == .offered else { return false }
         return try transaction(progress: &progress) { candidate in
             candidate.rewardLedger[offerID]?.state = .rewarded
             candidate.rewardLedger[offerID]?.completionEvent = completionEvent
+            candidate.rewardLedger[offerID]?.pendingAdEvents.merge(pendingEvents) { original, _ in original }
             return true
         }
     }
@@ -174,15 +176,18 @@ public final class SaveStore: @unchecked Sendable {
     @discardableResult
     public func grantReward(offerID: String, progress: inout PlayerProgress,
                             completionEvent: Data? = nil,
+                            pendingEvents: [String: Data] = [:],
                             finalize: ((inout PlayerProgress, RewardOutcome) -> Void)? = nil) throws -> RewardOutcome {
         lock.lock(); defer { lock.unlock() }
         guard let record = progress.rewardLedger[offerID] else { throw SaveStoreError.missingOffer }
         if record.state == .executed || record.state == .compensated { return .duplicate }
         guard record.state == .offered || record.state == .rewarded else { return .ignored }
         if record.state == .offered {
-            _ = try markRewardReceived(offerID: offerID, progress: &progress, completionEvent: completionEvent)
+            _ = try markRewardReceived(offerID: offerID, progress: &progress,
+                                       completionEvent: completionEvent, pendingEvents: pendingEvents)
         }
         return try transaction(progress: &progress) { candidate in
+            candidate.rewardLedger[offerID]?.pendingAdEvents.merge(pendingEvents) { original, _ in original }
             let outcome = candidate.executeReward(offerID: offerID)
             // A reward can finish a level. Its completion and pending business
             // event must commit with the effect, not in a second vulnerable save.
@@ -192,11 +197,15 @@ public final class SaveStore: @unchecked Sendable {
     }
 
     @discardableResult
-    public func cancelReward(offerID: String, progress: inout PlayerProgress) throws -> Bool {
+    public func cancelReward(offerID: String, progress: inout PlayerProgress,
+                             pendingEvents: [String: Data] = [:]) throws -> Bool {
         lock.lock(); defer { lock.unlock() }
         guard progress.rewardLedger[offerID]?.state == .offered else { return false }
         return try transaction(progress: &progress) { candidate in
             candidate.rewardLedger[offerID]?.state = .cancelled
+            // Retries retain the original occurrence rather than replacing its
+            // frozen event identity, time or attribution.
+            candidate.rewardLedger[offerID]?.pendingAdEvents.merge(pendingEvents) { original, _ in original }
             return true
         }
     }
@@ -298,7 +307,9 @@ public final class SaveStore: @unchecked Sendable {
               progress.levelToolBalances.allSatisfy({ Int($0.key).map(positive) == true && counter($0.value.hints) && counter($0.value.direct) }),
               progress.rewardLedger.allSatisfy({ !$0.key.isEmpty && $0.key == $0.value.id
                   && ($0.value.analyticsOffer?.count ?? 0) <= 32_768
-                  && ($0.value.completionEvent?.count ?? 0) <= 32_768 }) else {
+                  && ($0.value.completionEvent?.count ?? 0) <= 32_768
+                  && $0.value.pendingAdEvents.count <= 3
+                  && $0.value.pendingAdEvents.allSatisfy({ UUID(uuidString: $0.key) != nil && !$0.value.isEmpty && $0.value.count <= 32_768 }) }) else {
             throw SaveStoreError.invalidState("progress, inventory or reward records are out of range")
         }
         for record in progress.rewardLedger.values where record.kind == .levelStartFree {

@@ -24,11 +24,16 @@ public struct RewardRecord: Codable, Equatable, Identifiable, Sendable {
     public var analyticsOffer: Data?
     /// Opaque completion event frozen with the durable reward receipt, before its effect.
     public var completionEvent: Data?
+    /// The offer snapshot is retained for attribution after delivery is acknowledged.
+    public var analyticsOfferPending: Bool
+    /// Frozen started or non-reward terminal events awaiting durable analytics delivery.
+    public var pendingAdEvents: [String: Data]
 
     public init(id: String, kind: RewardKind, state: RewardState = .offered,
                 sessionID: UUID?, createdAt: Date = Date(), inventoryTool: ReferenceToolKind? = nil,
                 inventoryCount: Int? = nil, inventoryCarry: ReferenceInventoryCarry? = nil, quotaKey: String? = nil, levelID: Int? = nil,
-                analyticsOffer: Data? = nil, completionEvent: Data? = nil) {
+                analyticsOffer: Data? = nil, completionEvent: Data? = nil,
+                pendingAdEvents: [String: Data] = [:], analyticsOfferPending: Bool? = nil) {
         self.id = id
         self.kind = kind
         self.state = state
@@ -41,6 +46,32 @@ public struct RewardRecord: Codable, Equatable, Identifiable, Sendable {
         self.levelID = levelID
         self.analyticsOffer = analyticsOffer
         self.completionEvent = completionEvent
+        self.analyticsOfferPending = analyticsOfferPending ?? (analyticsOffer != nil)
+        self.pendingAdEvents = pendingAdEvents
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case id, kind, state, sessionID, createdAt
+        case inventoryTool, inventoryCount, inventoryCarry, quotaKey, levelID
+        case analyticsOffer, completionEvent, analyticsOfferPending, pendingAdEvents
+    }
+
+    public init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        id = try values.decode(String.self, forKey: .id)
+        kind = try values.decode(RewardKind.self, forKey: .kind)
+        state = try values.decode(RewardState.self, forKey: .state)
+        sessionID = try values.decodeIfPresent(UUID.self, forKey: .sessionID)
+        createdAt = try values.decode(Date.self, forKey: .createdAt)
+        inventoryTool = try values.decodeIfPresent(ReferenceToolKind.self, forKey: .inventoryTool)
+        inventoryCount = try values.decodeIfPresent(Int.self, forKey: .inventoryCount)
+        inventoryCarry = try values.decodeIfPresent(ReferenceInventoryCarry.self, forKey: .inventoryCarry)
+        quotaKey = try values.decodeIfPresent(String.self, forKey: .quotaKey)
+        levelID = try values.decodeIfPresent(Int.self, forKey: .levelID)
+        analyticsOffer = try values.decodeIfPresent(Data.self, forKey: .analyticsOffer)
+        completionEvent = try values.decodeIfPresent(Data.self, forKey: .completionEvent)
+        analyticsOfferPending = try values.decodeIfPresent(Bool.self, forKey: .analyticsOfferPending) ?? (analyticsOffer != nil)
+        pendingAdEvents = try values.decodeIfPresent([String: Data].self, forKey: .pendingAdEvents) ?? [:]
     }
 }
 

@@ -166,9 +166,9 @@
         452,
         455
       ],
-      "priority": "P1 · 道具持久链已补，激励非完成状态待补",
+      "priority": "本地业务持久链已验证，真实服务待验",
       "topic": "真实业务结果不能因去重或中断而丢失",
-      "finding": "0.2.6–028补真实结果、奖励完成及插页持久链；0.2.9把道具效果和buff_use同盘保存，提示保留同一预览并区分实际展示与Apply，关闭不退次数。17项新增应用专项、7项核心及两设备实际提示恢复路径通过。",
+      "finding": "0.2.6–028补真实结果、奖励完成及插页持久链；0.2.9把道具效果和buff_use同盘保存，提示保留同一预览并区分实际展示与Apply，关闭不退次数。17项新增应用专项、7项核心及两设备实际提示恢复路径通过。 0.2.10补激励offer/started/skipped/failed/超时的原事实持久恢复；125核心和162应用全套通过，含9项核心与14项应用新增，17e亦复验。",
       "evidence": [
         "App/AppModel.swift",
         "App/Services/AnalyticsRecorder.swift",
@@ -182,9 +182,27 @@
         "Reference/interstitial-analytics-contract.md",
         "AppTests/BuffUseDurabilityTests.swift",
         "Tests/CapydokuCoreTests/HintUsePersistenceTests.swift",
-        "Docs/original-tools/manifest.json"
+        "Docs/original-tools/manifest.json",
+        "AppTests/RewardLifecycleDurabilityTests.swift",
+        "Tests/CapydokuCoreTests/RewardAdEventPersistenceTests.swift"
       ],
-      "next": "补激励started/failed/skipped的持久边界；真实SDK、网络上报及正式统计口径仍待联调。"
+      "next": "真实SDK及元数据时机、网络上报、服务端确认去重、正式统计口径仍待联调；未首次落盘即强退无法恢复未知事实。"
+    },
+    {
+      "id": "CLIENT-09",
+      "sourceParagraphs": [
+        272,
+        278
+      ],
+      "priority": "P1 · 客户端待修",
+      "topic": "区分启动加载与品牌预加载",
+      "finding": "image23及正文明确两张不同页面；当前StartupStage仅有一个loading，资源完成后直接进入Welcome。",
+      "evidence": [
+        "Reference/Original/document.txt",
+        "App/Services/StartupController.swift",
+        "App/Views/StartupFlowView.swift"
+      ],
+      "next": "按原图分开两个可辨认阶段并验证顺序；不得把临时停留时间或虚假加载百分比当成原文参数。"
     }
   ],
   "rows": [
@@ -687,8 +705,8 @@
       ],
       "title": "Generate Many→Solver→Difficulty→Similarity→Select Best",
       "status": "verified",
-      "implemented": "完整180个入选批次每批100候选；含15个拒绝批次共19500候选，依次执行求解、难度、严格相似度筛选再选优。预算不足100时拒绝输出。",
-      "gap": "正式难度参数与跨产品库仍需外部证据。",
+      "implemented": "完整180个入选批次每批100候选；含15个拒绝批次共19500候选，依次执行求解、难度、严格相似度筛选再选优。预算不足100时拒绝输出。 此处verified仅指本地流水线和Capydoku自身历史去重，未验证Pawdoku难度或其他产品的相似度。",
+      "gap": "正式难度参数与跨产品关卡库仍缺，完整跨产品相似度验收未通过。",
       "evidence": [
         "Sources/CapydokuCore/GenerationPipeline.swift",
         "Validation/original-generation/levels-report.json",
@@ -995,7 +1013,7 @@
       "title": "首次启动顺序与权限恢复",
       "status": "partial",
       "implemented": "首次Welcome法律链接、Accept、通知/Tracking顺序及重启不重复同意在模拟器通过；5项启动App测试通过含取消恢复与损坏回退。",
-      "gap": "条款仅内部说明，正式链接、地区DataUse/CMP与真机所有授权组合尚缺。",
+      "gap": "原文[272、278]及image23要求可区分的Loading→Brand Loading；当前仍合并为一个临时加载阶段，属于客户端待修。原文未规定停留时长或进度百分比，不自行冻结。条款仅内部说明，正式链接、地区DataUse/CMP与真机所有授权组合尚缺。",
       "evidence": [
         "App/Services/StartupController.swift",
         "App/Views/StartupFlowView.swift",
@@ -1289,8 +1307,8 @@
       ],
       "title": "12 事件边界与业务触发",
       "status": "partial",
-      "implemented": "实现11个启用事件，coin_change 预留并禁止发送；新增关卡/道具/奖励业务事件。 0.2.2补齐库存来源批次，配置免费/首次赠送/签到/广告及补偿能跨保存、重开、换关保留；Hint预览与Apply使用同次来源，应用集成已验证。 0.2.6补独立实际结果与随存档保存的冻结事件；复活/继续胜负不再被吞，签到返回不生成虚假quit；奖励通关原子提交。 0.2.7补已确认奖励回执的completed恢复，保留原上下文，奖励实际补库存后才标到账。 0.2.8补插页offer/result、actual started和持久重试；后台终态不会提前创建不可操作的下一关。 0.2.9 buff_use与真实道具效果同次持久化；预览使用身份、来源、库存和原提示保存，重试保留原事件。实际广告offer跨会话、队列失败及冷恢复归属专项通过。",
-      "gap": "未知来源旧库存继续诊断；激励非完成状态的完整中断保存未补。正式attempt/时长、真实SDK及钥匙串仍待验。",
+      "implemented": "实现11个启用事件，coin_change 预留并禁止发送；新增关卡/道具/奖励业务事件。 0.2.2补齐库存来源批次，配置免费/首次赠送/签到/广告及补偿能跨保存、重开、换关保留；Hint预览与Apply使用同次来源，应用集成已验证。 0.2.6补独立实际结果与随存档保存的冻结事件；复活/继续胜负不再被吞，签到返回不生成虚假quit；奖励通关原子提交。 0.2.7补已确认奖励回执的completed恢复，保留原上下文，奖励实际补库存后才标到账。 0.2.8补插页offer/result、actual started和持久重试；后台终态不会提前创建不可操作的下一关。 0.2.9 buff_use与真实道具效果同次持久化；预览使用身份、来源、库存和原提示保存，重试保留原事件。实际广告offer跨会话、队列失败及冷恢复归属专项通过。 0.2.10补原offer及实际started/skipped/failed/加载超时的持久保存，重试保留原ID/时间/归属；未知最终回调不猜结果、不补奖。9项核心新增与14项应用新增专项通过。",
+      "gap": "未知来源旧库存继续诊断；正式attempt/时长、真实SDK及钥匙串仍待验。本地事件链不等于真实线上数据验收。",
       "evidence": [
         "App/AppModel.swift",
         "App/Services/AnalyticsRecorder.swift",
@@ -1309,7 +1327,9 @@
         "AppTests/AnalyticsRecorderTests.swift",
         "Reference/interstitial-analytics-contract.md",
         "AppTests/BuffUseDurabilityTests.swift",
-        "Tests/CapydokuCoreTests/HintUsePersistenceTests.swift"
+        "Tests/CapydokuCoreTests/HintUsePersistenceTests.swift",
+        "AppTests/RewardLifecycleDurabilityTests.swift",
+        "Tests/CapydokuCoreTests/RewardAdEventPersistenceTests.swift"
       ]
     },
     {
@@ -1325,7 +1345,7 @@
       ],
       "title": "广告 offer_id 与冻结配置版本",
       "status": "partial",
-      "implemented": "同offer串联、参数枚举检查、关卡事件携带配置版本。 插页事件同offer串联并保留原关卡/会话/配置。",
+      "implemented": "同offer串联、参数枚举检查、关卡事件携带配置版本。 插页事件同offer串联并保留原关卡/会话/配置。 0.2.10激励元数据由适配器提供并随原offer冻结；未配置适配器标unconfigured，Mock明确标simulation，回调不借用当前关卡或当前广告位。",
       "gap": "demo version不是正式pawdoku_config_version。插页placement使用明确的demo_interstitial_win_v1，closed映射仅为内部v1；正式枚举及SDK终态合同仍待冻结。",
       "evidence": [
         "App/AppModel.swift",
@@ -1334,7 +1354,9 @@
         "AppTests/InterstitialAnalyticsTests.swift",
         "AppTests/AnalyticsRecorderTests.swift",
         "Reference/interstitial-analytics-contract.md",
-        "Validation/original-verification.json"
+        "Validation/original-verification.json",
+        "AppTests/RewardLifecycleDurabilityTests.swift",
+        "Tests/CapydokuCoreTests/RewardAdEventPersistenceTests.swift"
       ]
     },
     {
@@ -1347,8 +1369,8 @@
       ],
       "title": "同意后采集、幂等、离线与失败重试",
       "status": "partial",
-      "implemented": "同意后本地持久队列、原ID/时间去重；0.2.5补写失败后的会话切换，0.2.6补结果与棋盘原子保存、跨关待发事件及冷恢复。103核心／102应用中相关专项通过，17e复验23应用。 0.2.7补完成奖励事件随首次回执保存、队列成功后确认，丢确认重试保持原事件，不重复补奖；109核心及114应用相关用例通过。 0.2.8插页事件先持久保存再送队列，确认失败保留原事件；写失败、冷恢复、会话轮转及重复回调通过专项。 0.2.9补道具待发送事件与队列确认，真实文件写失败、丢确认和生产异步旧快照均经过回归；同意前已展示的提示不在同意后补造历史。",
-      "gap": "激励非完成状态的完整中断边界仍待补；网络上传/确认/服务端去重未接。正式session与结果口径待冻结；首次实际展示尚未写成功便强退无法恢复未落盘事实。",
+      "implemented": "同意后本地持久队列、原ID/时间去重；0.2.5补写失败后的会话切换，0.2.6补结果与棋盘原子保存、跨关待发事件及冷恢复。103核心／102应用中相关专项通过，17e复验23应用。 0.2.7补完成奖励事件随首次回执保存、队列成功后确认，丢确认重试保持原事件，不重复补奖；109核心及114应用相关用例通过。 0.2.8插页事件先持久保存再送队列，确认失败保留原事件；写失败、冷恢复、会话轮转及重复回调通过专项。 0.2.9补道具待发送事件与队列确认，真实文件写失败、丢确认和生产异步旧快照均经过回归；同意前已展示的提示不在同意后补造历史。 0.2.10补原offer及实际started/skipped/failed/加载超时的持久保存，重试保留原ID/时间/归属；未知最终回调不猜结果、不补奖。9项核心新增与14项应用新增专项通过。",
+      "gap": "网络上传/确认/服务端去重未接。正式session与结果口径待冻结；首次实际事实尚未写成功便强退无法恢复未落盘内容。",
       "evidence": [
         "App/Services/AnalyticsRecorder.swift",
         "AppTests/AnalyticsRecorderTests.swift",
@@ -1360,7 +1382,9 @@
         "AppTests/InterstitialAnalyticsTests.swift",
         "Reference/interstitial-analytics-contract.md",
         "AppTests/BuffUseDurabilityTests.swift",
-        "Tests/CapydokuCoreTests/HintUsePersistenceTests.swift"
+        "Tests/CapydokuCoreTests/HintUsePersistenceTests.swift",
+        "AppTests/RewardLifecycleDurabilityTests.swift",
+        "Tests/CapydokuCoreTests/RewardAdEventPersistenceTests.swift"
       ]
     },
     {
@@ -1499,7 +1523,7 @@
       ],
       "title": "纯本地持久化范围",
       "status": "implemented",
-      "implemented": "局内状态、进度、库存/领取记录、设置、签到、教学、权限、奖励台账都存在本地存储。 0.2.9增加当前已消费提示预览、展示状态及待发送道具事件，和已有对局、库存、来源、奖励台账一起本地保存。",
+      "implemented": "局内状态、进度、库存/领取记录、设置、签到、教学、权限、奖励台账都存在本地存储。 0.2.9增加当前已消费提示预览、展示状态及待发送道具事件，和已有对局、库存、来源、奖励台账一起本地保存。 0.2.10验证激励已观察状态、旧档迁移、存档/队列失败、冷恢复及过期回调隔离；未收到最终回调不补造终态。",
       "gap": "正式远程配置与冻结参数仍待资料；不新增账号或云存档。",
       "evidence": [
         "Sources/CapydokuCore/PlayerProgress.swift",
@@ -1507,7 +1531,9 @@
         "App/Services/StartupController.swift",
         "AppTests/BuffUseDurabilityTests.swift",
         "Tests/CapydokuCoreTests/HintUsePersistenceTests.swift",
-        "Validation/original-verification.json"
+        "Validation/original-verification.json",
+        "AppTests/RewardLifecycleDurabilityTests.swift",
+        "Tests/CapydokuCoreTests/RewardAdEventPersistenceTests.swift"
       ]
     },
     {
@@ -1551,7 +1577,7 @@
       ],
       "title": "断点恢复、原子备份与迁移",
       "status": "verified",
-      "implemented": "主存档校验/备份/损坏保留通过；升级加载旧包进行中局保留盘面/库存/签到。consent/win/challenge已用校验双副本，损坏主文件后恢复一次性状态的App测试通过。 0.2.9验证旧schema迁移默认空提示/事件、原预览及来源恢复、非法预览拒绝；恢复已消费广告提示不再次补库存。",
+      "implemented": "主存档校验/备份/损坏保留通过；升级加载旧包进行中局保留盘面/库存/签到。consent/win/challenge已用校验双副本，损坏主文件后恢复一次性状态的App测试通过。 0.2.9验证旧schema迁移默认空提示/事件、原预览及来源恢复、非法预览拒绝；恢复已消费广告提示不再次补库存。 0.2.10验证激励已观察状态、旧档迁移、存档/队列失败、冷恢复及过期回调隔离；未收到最终回调不补造终态。",
       "gap": "双副本均损坏时无法凭空还原；正式主动Home处理仍待参考，真机强退及存储压力仍待验。",
       "evidence": [
         "Sources/CapydokuCore/SaveStore.swift",
@@ -1561,7 +1587,9 @@
         "Validation/original-verification.json",
         "AppTests/BuffUseDurabilityTests.swift",
         "Tests/CapydokuCoreTests/HintUsePersistenceTests.swift",
-        "Docs/original-tools/manifest.json"
+        "Docs/original-tools/manifest.json",
+        "AppTests/RewardLifecycleDurabilityTests.swift",
+        "Tests/CapydokuCoreTests/RewardAdEventPersistenceTests.swift"
       ]
     },
     {
@@ -1595,7 +1623,7 @@
       ],
       "title": "iOS技术验收与SDK升级兼容",
       "status": "partial",
-      "implemented": "0.2.8最终17Pro131项App通过；17e34项App及L10/完整通关/模态隔离3项UI通过。Core与关卡包未改，沿用0.2.7的109项核心证据，不标为本轮重跑；026重装及旧图册保留版本。",
+      "implemented": "0.2.10最终125核心、17Pro162应用通过；17e两批合计24应用及复活/直接道具重开2条UI通过。Release未签名构建和两台正常模拟器安装启动通过；保留初次归属测试夹具失败及修正结果。历史图册、重装与难度证据保持原版本。",
       "gap": "这不是全部设备/全部场景通过。真机、最低系统、真实SDK升级及远程关闭尚未验证；组合UI运行的启动冲突及成功单独重验已如实记录。",
       "evidence": [
         "Validation/original-verification.json",
@@ -1607,7 +1635,9 @@
         "Validation/test-runs/original-027-17e-receipt-visual.xcresult",
         "AppTests/InterstitialAnalyticsTests.swift",
         "AppTests/AnalyticsRecorderTests.swift",
-        "Reference/interstitial-analytics-contract.md"
+        "Reference/interstitial-analytics-contract.md",
+        "AppTests/RewardLifecycleDurabilityTests.swift",
+        "Tests/CapydokuCoreTests/RewardAdEventPersistenceTests.swift"
       ]
     },
     {
@@ -1740,7 +1770,7 @@
       ],
       "title": "奖励到账记账、重复回调与中断补偿",
       "status": "implemented",
-      "implemented": "offer_id在入口创建，先持久化到账再执行；direct/hint未执行补库存，revive不补；重复去重。 0.2.7将原offer上下文与首次completed模板分别随offer/回执保存，冷启动补偿后记录真实到账状态；写失败和丢确认重试不重复补奖。",
+      "implemented": "offer_id在入口创建，先持久化到账再执行；direct/hint未执行补库存，revive不补；重复去重。 0.2.7将原offer上下文与首次completed模板分别随offer/回执保存，冷启动补偿后记录真实到账状态；写失败和丢确认重试不重复补奖。 0.2.10补原offer及实际started/skipped/failed/加载超时的持久保存，重试保留原ID/时间/归属；未知最终回调不猜结果、不补奖。9项核心新增与14项应用新增专项通过。",
       "gap": "本地回执边界测试通过，不等于真实SDK、系统精确指令间强退或所有广告统计链通过。首次回执写入失败后被杀无法凭空恢复。",
       "evidence": [
         "Sources/CapydokuCore/SaveStore.swift",
@@ -1749,7 +1779,9 @@
         "AppTests/AppModelTests.swift",
         "AppTests/RewardCompletionRecoveryTests.swift",
         "Tests/CapydokuCoreTests/RewardAnalyticsReceiptTests.swift",
-        "Validation/original-verification.json"
+        "Validation/original-verification.json",
+        "AppTests/RewardLifecycleDurabilityTests.swift",
+        "Tests/CapydokuCoreTests/RewardAdEventPersistenceTests.swift"
       ]
     },
     {
@@ -1817,7 +1849,7 @@
       ],
       "title": "广告音频/打断/快速输入幂等",
       "status": "partial",
-      "implemented": "广告显示、后台和棋盘输入锁独立传递；展示最终结束后释放广告音频锁，即便奖励写盘仍需重试。后台提示恢复、重复回调和原子音频路由通过AppTests。 仅实际started回调上报开始并锁定广告音频；4项就绪/开始/重复/过期/完成场景在0.2.6复验。 0.2.8插页也采用实际started信号，等待加载/请求展示不算正在播放；旧/重复回调不解锁新流程。",
+      "implemented": "广告显示、后台和棋盘输入锁独立传递；展示最终结束后释放广告音频锁，即便奖励写盘仍需重试。后台提示恢复、重复回调和原子音频路由通过AppTests。 仅实际started回调上报开始并锁定广告音频；4项就绪/开始/重复/过期/完成场景在0.2.6复验。 0.2.8插页也采用实际started信号，等待加载/请求展示不算正在播放；旧/重复回调不解锁新流程。 0.2.10验证激励已观察状态、旧档迁移、存档/队列失败、冷恢复及过期回调隔离；未收到最终回调不补造终态。",
       "gap": "真实适配器仍须满足奖励/关闭最终结果与插页终态合同；来电、系统弹窗、正式音频和SDK真机联调待验。",
       "evidence": [
         "App/Services/FeedbackPlayer.swift",
@@ -1829,7 +1861,9 @@
         "Validation/original-verification.json",
         "AppTests/InterstitialAnalyticsTests.swift",
         "AppTests/AnalyticsRecorderTests.swift",
-        "Reference/interstitial-analytics-contract.md"
+        "Reference/interstitial-analytics-contract.md",
+        "AppTests/RewardLifecycleDurabilityTests.swift",
+        "Tests/CapydokuCoreTests/RewardAdEventPersistenceTests.swift"
       ]
     },
     {
@@ -1865,8 +1899,8 @@
       ],
       "title": "广告漏斗、收益回传与商业化看板",
       "status": "partial",
-      "implemented": "本地激励事件包含offer/status/rewardGranted及ad_type/network/ad_unit_id。 0.2.7补已确认激励奖励的completed持久恢复，保留原ID/发生时间/归属，按实际执行或补偿决定reward_granted。 0.2.8补本地插页offer/result和actual started，以冻结事件重试，所有插页reward_granted=false，无收益估算。 0.2.9补buff_use原子保存和冷恢复，奖励完成→使用→通关顺序经过含真实offer上下文的本地故障测试。",
-      "gap": "激励非完成状态持久化、真实收益回传/线上去重、正式插页placement/closed/元数据合同和看板仍待联调。",
+      "implemented": "本地激励事件包含offer/status/rewardGranted及ad_type/network/ad_unit_id。 0.2.7补已确认激励奖励的completed持久恢复，保留原ID/发生时间/归属，按实际执行或补偿决定reward_granted。 0.2.8补本地插页offer/result和actual started，以冻结事件重试，所有插页reward_granted=false，无收益估算。 0.2.9补buff_use原子保存和冷恢复，奖励完成→使用→通关顺序经过含真实offer上下文的本地故障测试。 0.2.10补原offer及实际started/skipped/failed/加载超时的持久保存，重试保留原ID/时间/归属；未知最终回调不猜结果、不补奖。9项核心新增与14项应用新增专项通过。",
+      "gap": "真实收益回传/线上去重、正式插页placement/closed/元数据合同和看板仍待联调。激励错误类别目前是本地分类，真实SDK错误与元数据时机尚待映射。",
       "evidence": [
         "App/Services/AnalyticsRecorder.swift",
         "App/AppModel.swift",
@@ -1878,7 +1912,9 @@
         "AppTests/AnalyticsRecorderTests.swift",
         "Reference/interstitial-analytics-contract.md",
         "AppTests/BuffUseDurabilityTests.swift",
-        "Tests/CapydokuCoreTests/HintUsePersistenceTests.swift"
+        "Tests/CapydokuCoreTests/HintUsePersistenceTests.swift",
+        "AppTests/RewardLifecycleDurabilityTests.swift",
+        "Tests/CapydokuCoreTests/RewardAdEventPersistenceTests.swift"
       ]
     },
     {
@@ -1902,5 +1938,5 @@
       ]
     }
   ],
-  "currentBuild": "0.2.9 (12)"
+  "currentBuild": "0.2.10 (13)"
 }

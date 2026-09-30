@@ -64,6 +64,10 @@ final class AppModel: ObservableObject {
     private var rewardDeadline: DispatchWorkItem?
     private var pendingRewardSignal: RewardSignal?
     private var pendingRewardCompletion: Data?
+    /// Observed SDK facts awaiting their first durable write. Keep the first
+    /// prepared bytes on failure; a retry must not regenerate occurrence time.
+    private var pendingRewardObservations: [String: [String: Data]] = [:]
+    private(set) var rewardRecordingError: String?
     private var deferredRewardHintSessionID: UUID?
     private let rewardProvider: RewardProvider?
     private var activeRewardProvider: RewardProvider?
@@ -250,7 +254,7 @@ final class AppModel: ObservableObject {
         // Recovery can compensate a receipt in memory even when its recovery
         // write failed. Confirm that state on disk before reporting any result.
         if analytics.enabled && (!progress.pendingBuffEvents.isEmpty || !progress.pendingLevelResultEvents.isEmpty ||
-            progress.rewardLedger.values.contains(where: { $0.completionEvent != nil })) { save(force: true) }
+            !pendingRewardObservations.isEmpty || progress.rewardLedger.values.contains(where: { $0.completionEvent != nil || $0.analyticsOfferPending || !$0.pendingAdEvents.isEmpty })) { save(force: true) }
         syncFeedbackState()
         applySettings()
         if progress.session == nil { screen = .home }
@@ -262,6 +266,7 @@ final class AppModel: ObservableObject {
     /// transitions flush the same queue before committing, so an older snapshot can never
     /// overwrite a later reward or a restored save.
     func save(force: Bool = false) {
+        guard persistRewardObservations() else { return }
         progress.captureSessionBalance()
         syncFeedbackState()
         let snapshot = progress
@@ -294,7 +299,7 @@ final class AppModel: ObservableObject {
     func flushPendingSaves() { saveQueue.sync {} }
 
     private func deliverSavedGameplayEvents(_ saved: PlayerProgress) {
-        deliverSavedRewardResults(saved.rewardLedger)
+        guard deliverSavedRewardResults(saved.rewardLedger) else { return }
         // A tool may find the last animal. Its actual use precedes that win,
         // including after a queue failure or a cold start.
         if deliverSavedBuffUses(saved.pendingBuffEvents) {
@@ -343,10 +348,45 @@ final class AppModel: ObservableObject {
         if acknowledged { save() }
     }
 
-    private func deliverSavedRewardResults(_ saved: [String: RewardRecord]) {
-        guard analytics.enabled else { return }
+    private func deliverSavedRewardResults(_ saved: [String: RewardRecord]) -> Bool {
+        guard analytics.enabled else { return true }
         var acknowledged = false
-        for (id, record) in saved.filter({ $0.value.completionEvent != nil }).sorted(by: { $0.value.createdAt < $1.value.createdAt }) {
+        var complete = true
+        let records = saved.filter { $0.value.analyticsOfferPending || !$0.value.pendingAdEvents.isEmpty || $0.value.completionEvent != nil }
+        for (id, record) in records.sorted(by: { $0.value.createdAt < $1.value.createdAt }) {
+            guard let current = progress.rewardLedger[id] else { continue }
+            if let offerData = record.analyticsOffer {
+                guard current.analyticsOffer == offerData,
+                      let offer = try? JSONDecoder().decode(AnalyticsRecorder.PreparedEvent.self, from: offerData),
+                      offer.event.eventName == "ad_offer_shown", offer.event.parameters["offer_id"] == .text(id),
+                      analytics.commit(offer) else { complete = false; continue }
+                if current.analyticsOfferPending {
+                    progress.rewardLedger[id]?.analyticsOfferPending = false
+                    acknowledged = true
+                }
+            }
+            let observations = record.pendingAdEvents.compactMap { eventID, data -> (String, Data, AnalyticsRecorder.PreparedEvent)? in
+                guard let event = try? JSONDecoder().decode(AnalyticsRecorder.PreparedEvent.self, from: data),
+                      event.event.eventID == eventID, event.event.eventName == "ad_result",
+                      event.event.parameters["offer_id"] == .text(id),
+                      event.event.parameters["reward_granted"] == .flag(false),
+                      ["started", "skipped", "failed"].contains(where: { event.event.parameters["status"] == .text($0) }) else { return nil }
+                return (eventID, data, event)
+            }.sorted {
+                // Provider callbacks define lifecycle order even when wall clock
+                // moves backwards between presentation and its final outcome.
+                let a = $0.2.event.parameters["status"] == .text("started")
+                let b = $1.2.event.parameters["status"] == .text("started")
+                return a != b ? a : $0.2.event.eventTime < $1.2.event.eventTime
+            }
+            var lifecycleComplete = observations.count == record.pendingAdEvents.count
+            for (eventID, data, prepared) in observations {
+                guard let currentData = progress.rewardLedger[id]?.pendingAdEvents[eventID] else { continue }
+                guard currentData == data, analytics.commit(prepared) else { lifecycleComplete = false; break }
+                progress.rewardLedger[id]?.pendingAdEvents.removeValue(forKey: eventID)
+                acknowledged = true
+            }
+            guard lifecycleComplete else { complete = false; continue }
             guard [.executed, .compensated, .cancelled].contains(record.state),
                   let data = record.completionEvent,
                   progress.rewardLedger[id]?.completionEvent == data,
@@ -358,14 +398,57 @@ final class AppModel: ObservableObject {
             // Receipt proves completion; actual execution/compensation decides
             // reward_granted. A killed revive is never compensated or reported granted.
             completed.event.parameters["reward_granted"] = .flag(record.state == .executed || record.state == .compensated)
-            if let offerData = record.analyticsOffer,
-               let offer = try? JSONDecoder().decode(AnalyticsRecorder.PreparedEvent.self, from: offerData),
-               !analytics.commit(offer) { continue }
-            guard analytics.commit(completed) else { continue }
+            guard analytics.commit(completed) else { complete = false; continue }
             progress.rewardLedger[id]?.completionEvent = nil
             acknowledged = true
         }
         if acknowledged { save() }
+        return complete
+    }
+
+    /// This is a storage retry, never an advertisement replay. A failed started
+    /// write must not dismiss or interfere with the currently playing video.
+    @discardableResult private func persistRewardObservations() -> Bool {
+        guard !pendingRewardObservations.isEmpty else { return true }
+        // A failed terminal transaction must retry through receive(), which
+        // commits its ledger outcome with these observations. A timer or
+        // background save cannot acknowledge only half of that transaction.
+        guard !rewardRetryPending || pendingRewardSignal == nil else { return false }
+        flushPendingSaves(); saveRevision += 1
+        do {
+            try store.transaction(progress: &progress) { candidate in
+                for (offerID, events) in pendingRewardObservations where candidate.rewardLedger[offerID] != nil {
+                    candidate.rewardLedger[offerID]?.pendingAdEvents.merge(events) { original, _ in original }
+                }
+            }
+            acknowledgeRewardObservations(progress.rewardLedger)
+            return true
+        } catch {
+            rewardRecordingError = "Observed advertisement events await a storage retry: \(error.localizedDescription)"
+            return false
+        }
+    }
+
+    private func acknowledgeRewardObservations(_ saved: [String: RewardRecord]) {
+        for (offerID, events) in pendingRewardObservations {
+            for (id, data) in events where saved[offerID]?.pendingAdEvents[id] == data {
+                pendingRewardObservations[offerID]?.removeValue(forKey: id)
+            }
+            if pendingRewardObservations[offerID]?.isEmpty == true { pendingRewardObservations.removeValue(forKey: offerID) }
+        }
+        if pendingRewardObservations.isEmpty { rewardRecordingError = nil }
+    }
+
+    private func stageRewardObservation(_ record: RewardRecord, status: String, errorCode: String = "") {
+        // The display flag and first-terminal-signal gate prevent duplicates in
+        // memory; the frozen event key also protects a lost acknowledgement.
+        guard let data = prepareRewardResult(record, status: status, errorCode: errorCode),
+              let event = try? JSONDecoder().decode(AnalyticsRecorder.PreparedEvent.self, from: data) else { return }
+        let alreadyPending = pendingRewardObservations[record.id, default: [:]].values.contains {
+            (try? JSONDecoder().decode(AnalyticsRecorder.PreparedEvent.self, from: $0).key) == event.key
+        }
+        guard !alreadyPending else { return }
+        pendingRewardObservations[record.id, default: [:]][event.event.eventID] = data
     }
 
     func startOrContinue() {
@@ -834,20 +917,21 @@ final class AppModel: ObservableObject {
         let offerID = UUID().uuidString
         do {
             flushPendingSaves()
+            let provider = rewardProvider ?? MockRewardProvider(scenario: rewardScenario)
+            let metadata = provider.analyticsMetadata
             let placement = rewardKind == .direct ? "direct_find" : rewardKind == .levelStartFree ? "level_start_free" : rewardKind.rawValue
             let rewardType = rewardKind == .levelStartFree ? (session?.config.referenceGameplay?.levelStartFreeAd.reward.rawValue ?? "") : placement
             let offered = session.flatMap { analytics.prepare("ad_offer_shown", key: offerID, level: $0.puzzle.id, config: $0.config.version,
-                parameters: ["offer_id": offerID, "placement_id": placement, "reward_type": rewardType, "buff_type": rewardKind == .revive ? "" : rewardType, "reward_amount": "\(rewardKind == .levelStartFree ? ($0.config.referenceGameplay?.levelStartFreeAd.rewardCount ?? 0) : 1)", "ad_type": "rewarded", "network": "simulation", "ad_unit_id": "internal-demo"]) }
+                parameters: ["offer_id": offerID, "placement_id": placement, "reward_type": rewardType, "buff_type": rewardKind == .revive ? "" : rewardType, "reward_amount": "\(rewardKind == .levelStartFree ? ($0.config.referenceGameplay?.levelStartFreeAd.rewardCount ?? 0) : 1)", "ad_type": "rewarded", "network": metadata.network, "ad_unit_id": metadata.adUnitID]) }
             let offerData = offered.flatMap { try? JSONEncoder().encode($0) }
             guard try store.prepareReward(offerID: offerID, kind: rewardKind, progress: &progress, analyticsOffer: offerData) else {
                 notice = "This reward is not available right now."; sheet = nil; return
             }
             activeOfferID = offerID
-            let provider = rewardProvider ?? MockRewardProvider(scenario: rewardScenario)
             activeRewardProvider = provider
             pendingRewardCompletion = nil
             rewardIsReady = false; rewardPresentationRequested = false; rewardWasReplenished = false
-            if let offered { analytics.commit(offered) }
+            deliverSavedGameplayEvents(progress)
             rewardBusy = true
             let deadline = DispatchWorkItem { [weak self] in self?.receive(.timedOut, offerID: offerID) }
             rewardDeadline = deadline
@@ -865,7 +949,7 @@ final class AppModel: ObservableObject {
         guard activeOfferID == offerID, rewardBusy, !rewardPresentationRequested, pendingRewardSignal == nil,
               progress.rewardLedger[offerID]?.state == .offered else { return }
         switch readiness {
-        case .unavailable: receive(.failed, offerID: offerID)
+        case .unavailable: receive(.failed, offerID: offerID, errorCode: "unavailable")
         case .ready:
             // ad_timeout_sec applies while loading. A playing ad must await its
             // final SDK outcome, including a valid reward after a long video.
@@ -889,7 +973,7 @@ final class AppModel: ObservableObject {
             provider.replenish(placement: rewardKind)
         }
     }
-    private func receive(_ signal: RewardSignal, offerID: String) {
+    private func receive(_ signal: RewardSignal, offerID: String, errorCode: String = "") {
         // A late duplicate must not dismiss a newer sheet or unlock a newer transaction.
         guard let record = progress.rewardLedger[offerID], record.state == .offered || record.state == .rewarded else { return }
         guard activeOfferID == offerID else { return }
@@ -899,7 +983,8 @@ final class AppModel: ObservableObject {
                   !rewardDisplayActive else { return }
             rewardDisplayActive = true
             syncFeedbackState()
-            trackAdResult(offerID, status: "started", granted: false)
+            stageRewardObservation(record, status: "started")
+            if persistRewardObservations() { deliverSavedGameplayEvents(progress) }
             return
         }
         // The adapter delivers a final display outcome. Receipt persistence may still
@@ -912,14 +997,20 @@ final class AppModel: ObservableObject {
         if (signal == .earned || signal == .interrupted), pendingRewardCompletion == nil {
             pendingRewardCompletion = record.completionEvent ?? prepareRewardCompletion(record)
         }
+        if signal == .cancelled || signal == .failed || signal == .timedOut {
+            stageRewardObservation(record, status: signal == .cancelled ? "skipped" : "failed",
+                errorCode: signal == .cancelled ? "" : signal == .timedOut ? "loading_timeout" : errorCode.isEmpty ? "presentation_failed" : errorCode)
+        }
         flushPendingSaves()
         do {
             switch signal {
             case .started: return // Nonterminal presentation signals are handled above.
             case .earned:
-                let result = try store.grantReward(offerID: offerID, progress: &progress, completionEvent: pendingRewardCompletion) { candidate, outcome in
+                let result = try store.grantReward(offerID: offerID, progress: &progress, completionEvent: pendingRewardCompletion,
+                    pendingEvents: pendingRewardObservations[offerID, default: [:]]) { candidate, outcome in
                     self.finalizeRewardResult(outcome, in: &candidate, offerID: offerID)
                 }
+                acknowledgeRewardObservations(progress.rewardLedger)
                 deliverSavedGameplayEvents(progress)
                 sheet = nil
                 switch result {
@@ -938,8 +1029,9 @@ final class AppModel: ObservableObject {
                 case .ignored: break
                 }
             case .cancelled, .failed, .timedOut:
-                try store.cancelReward(offerID: offerID, progress: &progress)
-                trackAdResult(offerID, status: signal == .cancelled ? "skipped" : "failed", granted: false)
+                try store.cancelReward(offerID: offerID, progress: &progress, pendingEvents: pendingRewardObservations[offerID, default: [:]])
+                acknowledgeRewardObservations(progress.rewardLedger)
+                deliverSavedGameplayEvents(progress)
                 sheet = nil
                 switch signal {
                 case .cancelled: notice = "Simulation cancelled. No reward was issued."
@@ -947,13 +1039,19 @@ final class AppModel: ObservableObject {
                 default: notice = "Video unavailable. Please try again."
                 }
             case .interrupted:
-                try store.markRewardReceived(offerID: offerID, progress: &progress, completionEvent: pendingRewardCompletion)
+                try store.markRewardReceived(offerID: offerID, progress: &progress, completionEvent: pendingRewardCompletion,
+                    pendingEvents: pendingRewardObservations[offerID, default: [:]])
+                acknowledgeRewardObservations(progress.rewardLedger)
+                deliverSavedGameplayEvents(progress)
                 sheet = nil
                 notice = "Reward receipt saved. Use Recover save in Developer tools, or relaunch, to test interruption recovery."
             }
             activeOfferID = nil; pendingRewardSignal = nil; pendingRewardCompletion = nil; rewardRetryPending = false
             activeRewardProvider = nil; rewardIsReady = false
         } catch {
+            // grantReward may have saved the receipt before its effect write
+            // failed. Acknowledge only matching observed bytes in that receipt.
+            acknowledgeRewardObservations(progress.rewardLedger)
             rewardRetryPending = true
             errorMessage = "The reward could not be saved. Free up storage if needed, then tap Retry save. Your receipt is kept for this retry. \(error.localizedDescription)"
         }
@@ -1031,6 +1129,9 @@ final class AppModel: ObservableObject {
         flushInterstitialEvents()
         if !value { save(force: true) }
         else {
+            // Foreground retry must confirm the whole snapshot, including any
+            // ordinary gameplay result still waiting on the background writer.
+            save(force: true)
             if let offerID = activeOfferID { displayReadyReward(offerID: offerID) }
             displayReadyInterstitial()
             if screen == .game && winTransitionID != nil && !interstitialBusy && !challengePending { completeWinTransition() }
@@ -1042,7 +1143,7 @@ final class AppModel: ObservableObject {
     func consentAccepted() {
         analytics.acceptConsent()
         flushInterstitialEvents()
-        if !progress.pendingBuffEvents.isEmpty || !progress.pendingLevelResultEvents.isEmpty || progress.rewardLedger.values.contains(where: { $0.completionEvent != nil }) { save(force: true) }
+        if !pendingRewardObservations.isEmpty || !progress.pendingBuffEvents.isEmpty || !progress.pendingLevelResultEvents.isEmpty || progress.rewardLedger.values.contains(where: { $0.completionEvent != nil || $0.analyticsOfferPending || !$0.pendingAdEvents.isEmpty }) { save(force: true) }
     }
     /// Called only after the startup view reaches Home, including optional permission completion.
     /// This permits local adapter use; it does not claim a real SDK/CMP has been initialized.
@@ -1123,17 +1224,18 @@ final class AppModel: ObservableObject {
               let data = try? JSONEncoder().encode(prepared) else { return }
         candidate.pendingBuffEvents[prepared.event.eventID] = data
     }
-    private func trackAdResult(_ id: String, status: String, granted: Bool) {
-        let placement = rewardKind == .direct ? "direct_find" : rewardKind == .levelStartFree ? "level_start_free" : rewardKind.rawValue
-        track("ad_result", key: id + ":" + status, parameters: ["offer_id": id, "placement_id": placement, "status": status, "reward_granted": "\(granted)", "ad_type": "rewarded", "network": "simulation", "ad_unit_id": "internal-demo", "error_code": status == "failed" ? "simulation_failed" : ""])
-    }
     private func prepareRewardCompletion(_ record: RewardRecord) -> Data? {
+        prepareRewardResult(record, status: "completed")
+    }
+    private func prepareRewardResult(_ record: RewardRecord, status: String, errorCode: String = "") -> Data? {
         // No retrospective fabrication for old/pre-consent receipts without context.
         guard let data = record.analyticsOffer,
-              let offer = try? JSONDecoder().decode(AnalyticsRecorder.PreparedEvent.self, from: data) else { return nil }
-        let placement = record.kind == .direct ? "direct_find" : record.kind == .levelStartFree ? "level_start_free" : record.kind.rawValue
-        guard let event = analytics.prepareRelated("ad_result", key: record.id + ":completed", to: offer.event,
-            parameters: ["offer_id": record.id, "placement_id": placement, "status": "completed", "reward_granted": "false", "ad_type": "rewarded", "network": "simulation", "ad_unit_id": "internal-demo", "error_code": ""]) else { return nil }
+              let offer = try? JSONDecoder().decode(AnalyticsRecorder.PreparedEvent.self, from: data),
+              case .text(let placement) = offer.event.parameters["placement_id"],
+              case .text(let network) = offer.event.parameters["network"],
+              case .text(let unit) = offer.event.parameters["ad_unit_id"] else { return nil }
+        guard let event = analytics.prepareRelated("ad_result", key: record.id + ":" + status, to: offer.event,
+            parameters: ["offer_id": record.id, "placement_id": placement, "status": status, "reward_granted": "false", "ad_type": "rewarded", "network": network, "ad_unit_id": unit, "error_code": errorCode]) else { return nil }
         return try? JSONEncoder().encode(event)
     }
     func exportDiagnostics() {
@@ -1143,12 +1245,13 @@ final class AppModel: ObservableObject {
             let referenceGameplay: ReferenceGameplayConfiguration?; let generationReport: GenerationPipelineReport?
             let unattributedToolUsesSinceLaunch: Int
             let interstitialRecordingError: String?
+            let rewardRecordingError: String?
             let gameplayConfiguration: GameplayConfigurationDiagnostics
         }
         do {
             let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "unknown"
             let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "unknown"
-            let report = Report(generatedAt: Date(), build: "\(version) (\(build))", demoConfig: config, progress: progress, levelPackCount: levels.count, referenceGameplay: referenceConfiguration, generationReport: lastGenerationReport, unattributedToolUsesSinceLaunch: unattributedToolUseCount, interstitialRecordingError: interstitialRecordingError, gameplayConfiguration: gameplayConfigurationDiagnostics)
+            let report = Report(generatedAt: Date(), build: "\(version) (\(build))", demoConfig: config, progress: progress, levelPackCount: levels.count, referenceGameplay: referenceConfiguration, generationReport: lastGenerationReport, unattributedToolUsesSinceLaunch: unattributedToolUseCount, interstitialRecordingError: interstitialRecordingError, rewardRecordingError: rewardRecordingError, gameplayConfiguration: gameplayConfigurationDiagnostics)
             let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
             let url = FileManager.default.temporaryDirectory.appendingPathComponent("Capydoku-diagnostics.json")
             try encoder.encode(report).write(to: url, options: .atomic)

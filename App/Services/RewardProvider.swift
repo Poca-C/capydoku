@@ -10,6 +10,12 @@ enum RewardScenario: String, CaseIterable, Identifiable {
 enum RewardSignal: Equatable { case started, earned, cancelled, failed, interrupted, timedOut }
 enum RewardReadiness { case ready, unavailable }
 
+struct RewardAnalyticsMetadata {
+    let network: String
+    let adUnitID: String
+    static let simulation = Self(network: "simulation", adUnitID: "internal-demo")
+}
+
 /// Placement-based loading boundary; real adapters coalesce concurrent preload requests
 /// and keep at most one ready ad per configured unit. No network SDK is linked here.
 /// `present` emits `started` only after the SDK confirms presentation; being ready
@@ -18,6 +24,7 @@ enum RewardReadiness { case ready, unavailable }
 /// failure callbacks before emitting the final result; a reward callback
 /// alone must not dismiss the app's display state while the SDK video is still open.
 protocol RewardProvider {
+    var analyticsMetadata: RewardAnalyticsMetadata { get }
     func preload(placement: RewardKind, completion: @escaping (RewardReadiness) -> Void)
     func isReady(placement: RewardKind) -> Bool
     func present(placement: RewardKind, offerID: String, completion: @escaping (RewardSignal) -> Void)
@@ -26,6 +33,9 @@ protocol RewardProvider {
 }
 
 extension RewardProvider {
+    var analyticsMetadata: RewardAnalyticsMetadata {
+        .init(network: "unconfigured", adUnitID: "unconfigured")
+    }
     // Existing synchronous mock/test adapters remain source-compatible. A live adapter
     // supplies its own load/ready implementation after its SDK privacy initialization.
     func preload(placement: RewardKind, completion: @escaping (RewardReadiness) -> Void) { completion(.ready) }
@@ -41,6 +51,7 @@ extension RewardProvider {
 
 struct MockRewardProvider: RewardProvider {
     let scenario: RewardScenario
+    var analyticsMetadata: RewardAnalyticsMetadata { .simulation }
     func preload(placement: RewardKind, completion: @escaping (RewardReadiness) -> Void) {
         if scenario != .timeout { completion(.ready) }
     }
