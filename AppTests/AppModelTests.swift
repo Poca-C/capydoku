@@ -22,7 +22,7 @@ final class AppModelTests: XCTestCase {
     private func drainCallbacks() async { try? await Task.sleep(nanoseconds: 30_000_000) }
     @MainActor private func exhaustHint(_ model: AppModel) {
         model.showHint(); XCTAssertNotNil(model.hint)
-        model.hint = nil
+        model.closeHint()
         XCTAssertEqual(model.progress.availableHints, 0)
     }
 
@@ -44,7 +44,7 @@ final class AppModelTests: XCTestCase {
         await drainCallbacks()
         XCTAssertFalse(app.rewardBusy); XCTAssertNotNil(app.hint)
         XCTAssertEqual(app.progress.rewardLedger[provider.offers[0].0]?.state, .executed)
-        app.hint = nil
+        app.closeHint()
         provider.offers[0].1(.earned); provider.offers[0].1(.cancelled)
         await drainCallbacks()
         XCTAssertNil(app.hint); XCTAssertEqual(app.progress.availableHints, 0)
@@ -65,7 +65,7 @@ final class AppModelTests: XCTestCase {
         let preview = app.hint
         app.setActive(false); app.setActive(true)
         XCTAssertEqual(app.hint, preview); XCTAssertEqual(provider.offers.count, 1)
-        app.hint = nil; app.setActive(true)
+        app.closeHint(); app.setActive(true)
         provider.offers[0].1(.earned); await drainCallbacks()
         XCTAssertNil(app.hint); XCTAssertEqual(app.progress.availableHints, 0)
     }
@@ -83,7 +83,7 @@ final class AppModelTests: XCTestCase {
         XCTAssertEqual(restored.progress.availableHints, 1); XCTAssertEqual(restored.session?.marks, board)
         restored.notice = nil; restored.showHint()
         XCTAssertNotNil(restored.hint); XCTAssertEqual(restored.progress.availableHints, 0)
-        restored.hint = nil; restored.loadProgress()
+        restored.closeHint(); restored.loadProgress()
         XCTAssertEqual(restored.progress.availableHints, 0)
     }
 
@@ -161,7 +161,7 @@ final class AppModelTests: XCTestCase {
         XCTAssertFalse(app.rewardRetryPending); XCTAssertNil(app.sheet)
         XCTAssertEqual(provider.offers.count, 1); XCTAssertNotNil(app.hint)
         XCTAssertEqual(app.progress.rewardLedger[provider.offers[0].0]?.state, .executed)
-        app.hint = nil; provider.offers[0].1(.earned)
+        app.closeHint(); provider.offers[0].1(.earned)
         await drainCallbacks()
         XCTAssertNil(app.hint); XCTAssertEqual(app.progress.availableHints, 0)
     }

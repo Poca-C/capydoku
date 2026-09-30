@@ -17,7 +17,7 @@ final class OriginalFlowTests: XCTestCase {
         let app = AppModel(saveDirectory: root, runsTimer: true, feedbackEnabled: false)
         app.progress.tutorialCompleted = true; app.start(level: 1)
         for _ in 0..<25 { app.toggle(0); app.toggle(2) }
-        app.showHint(); XCTAssertNotNil(app.hint); app.hint = nil
+        app.showHint(); XCTAssertNotNil(app.hint); app.closeHint()
         app.showHint() // Transaction must flush queued gesture/hint snapshots before its offer.
         try? await Task.sleep(nanoseconds: 700_000_000)
         XCTAssertNotNil(app.hint)

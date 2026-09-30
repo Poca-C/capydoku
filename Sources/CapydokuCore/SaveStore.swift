@@ -288,6 +288,7 @@ public final class SaveStore: @unchecked Sendable {
               progress.referenceToolGrantKeys.allSatisfy({ !$0.isEmpty }),
               progress.freeReviveUsage.allSatisfy({ !$0.key.isEmpty && counter($0.value) }),
               progress.pendingLevelResultEvents.allSatisfy({ UUID(uuidString: $0.key) != nil && !$0.value.isEmpty && $0.value.count <= 32_768 }),
+              progress.pendingBuffEvents.allSatisfy({ UUID(uuidString: $0.key) != nil && !$0.value.isEmpty && $0.value.count <= 32_768 }),
               progress.levelStartLocalBalances.allSatisfy({ Int($0.key).map(positive) == true && counter($0.value.hints) && counter($0.value.direct) }),
               counter(progress.checkIn.streak), counter(progress.checkIn.cycleDay),
               counter(progress.checkIn.completedCycles),
@@ -307,7 +308,10 @@ public final class SaveStore: @unchecked Sendable {
                 throw SaveStoreError.invalidState("level-start reward is missing its frozen offer snapshot")
             }
         }
-        guard let session = progress.session else { return }
+        guard let session = progress.session else {
+            guard progress.activeHintUse == nil else { throw SaveStoreError.invalidState("hint preview has no session") }
+            return
+        }
         let config = session.config
         if let reference = config.referenceGameplay { try reference.validate(level: session.puzzle.id) }
         let normalized = DemoConfig(version: config.version, initialLives: config.initialLives,
@@ -332,6 +336,17 @@ public final class SaveStore: @unchecked Sendable {
             throw SaveStoreError.invalidState("invalid board structure")
         }
         let cells = Set(0..<(size * size))
+        if let use = progress.activeHintUse {
+            let hintCells = Set(use.hint.cells)
+            guard session.status == .playing, use.sessionID == session.id,
+                  !session.pendingRewardHint,
+                  !hintCells.isEmpty, hintCells.count == use.hint.cells.count,
+                  hintCells.isSubset(of: cells), hintCells.isDisjoint(with: Set(session.puzzle.solution)),
+                  counter(use.inventoryBefore), counter(use.inventoryAfter),
+                  use.inventoryBefore == use.inventoryAfter + 1 else {
+                throw SaveStoreError.invalidState("hint preview does not match its consumed item and current board")
+            }
+        }
         guard Set(session.puzzle.solution).isSubset(of: cells),
               session.found.isSubset(of: Set(session.puzzle.solution)),
               session.marks.isSubset(of: cells), session.errors.isSubset(of: cells),

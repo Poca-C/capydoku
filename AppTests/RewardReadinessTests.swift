@@ -36,7 +36,7 @@ final class RewardReadinessTests: XCTestCase {
     @MainActor private func model(_ root: URL, _ provider: ReadinessRewards, timeout: TimeInterval = 1) -> AppModel {
         let app = AppModel(saveDirectory: root, rewardProvider: provider, rewardTimeout: timeout, runsTimer: false, feedbackEnabled: false)
         app.progress.tutorialCompleted = true; app.start(level: 1)
-        app.showHint(); XCTAssertNotNil(app.hint); app.hint = nil
+        app.showHint(); XCTAssertNotNil(app.hint); app.closeHint()
         XCTAssertEqual(app.progress.availableHints, 0)
         return app
     }
@@ -86,7 +86,7 @@ final class RewardReadinessTests: XCTestCase {
         provider.displays[0].callback(.earned); provider.displays[0].callback(.earned); await drain()
         XCTAssertEqual(app.progress.rewardLedger[id]?.state, .executed)
         XCTAssertNotNil(app.hint); XCTAssertFalse(app.rewardBusy)
-        app.hint = nil
+        app.closeHint()
         loading.callback(.ready); provider.displays[0].callback(.earned); await drain()
         XCTAssertNil(app.hint); XCTAssertEqual(app.progress.availableHints, 0)
         XCTAssertEqual(provider.displays.count, 1); XCTAssertEqual(provider.replacements, [.hint])

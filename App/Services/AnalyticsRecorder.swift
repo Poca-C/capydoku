@@ -218,12 +218,12 @@ final class AnalyticsRecorder {
         return retryPendingWrites()
     }
 
-    /// Complete an offer using its frozen attribution even if the foreground
-    /// session or current board changed while the SDK was showing the ad.
+    /// Complete an offer or record its direct effect using frozen attribution,
+    /// even if the foreground analytics session changed during the ad.
     func prepareRelated(_ name: String, key: String, to original: Event,
                         parameters: [String: String], at date: Date = Date()) -> PreparedEvent? {
         guard enabled, identity?.userID == original.userID, !key.isEmpty,
-              name == "ad_result",
+              ["ad_result", "buff_use"].contains(name),
               let typed = Self.validateParameters(name: name, parameters: parameters) else { return nil }
         let event = Event(eventID: UUID().uuidString, eventName: name, eventTime: date,
             userID: original.userID, sessionID: original.sessionID, platform: original.platform,

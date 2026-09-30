@@ -209,11 +209,11 @@ struct GameView: View {
                     VStack(spacing: 0) {
                         HStack {
                             IconButton(symbol: "arrow.left", label: "Home", id: "home") {
-                                if model.hint != nil { model.hint = nil } else { model.home() }
+                                if model.hint != nil { model.closeHint() } else { model.home() }
                             }.accessibilityHidden(covered || model.hint != nil).disabled(model.hint != nil)
                             Spacer()
                             IconButton(symbol: model.hint == nil ? "gearshape.fill" : "xmark", label: model.hint == nil ? "Settings" : "Close hint", id: model.hint == nil ? "settings" : "hint_close") {
-                                if model.hint != nil { model.hint = nil } else { model.sheet = .settings }
+                                if model.hint != nil { model.closeHint() } else { model.sheet = .settings }
                             }
                         }.frame(height: 44).padding(.horizontal, 8)
                         HStack(spacing: 52) {
@@ -235,7 +235,26 @@ struct GameView: View {
                                 .accessibilityElement(children: .ignore).accessibilityLabel("Lives").accessibilityValue("\(s.lives)").accessibilityIdentifier("lives")
                         }.frame(height: 40).opacity(model.hint == nil ? 1 : 0.35).accessibilityHidden(covered || model.hint != nil)
                         Group {
-                            if let hint = model.hint { HintPanel(hint: hint).frame(height: 66, alignment: .bottom) }
+                            if let hint = model.hint, let useID = model.progress.activeHintUse?.id {
+                                HintPanel(hint: hint).frame(height: 66, alignment: .bottom)
+                                    .id(useID)
+                                    .onAppear { model.hintDidAppear(useID: useID) }
+                                    .onChange(of: scenePhase) { phase in
+                                        if phase == .active { model.hintDidAppear(useID: useID) }
+                                    }
+                                    .onChange(of: model.errorMessage) { message in
+                                        if message == nil { model.hintDidAppear(useID: useID) }
+                                    }
+                                    .onChange(of: model.notice) { message in
+                                        if message == nil { model.hintDidAppear(useID: useID) }
+                                    }
+                                    .onChange(of: model.sheet) { sheet in
+                                        if sheet == nil { model.hintDidAppear(useID: useID) }
+                                    }
+                                    .onChange(of: model.loading) { loading in
+                                        if !loading { model.hintDidAppear(useID: useID) }
+                                    }
+                            }
                             else { RuleStrip() }
                         }.frame(height: 66).padding(.top, 8)
                         Spacer(minLength: 10)

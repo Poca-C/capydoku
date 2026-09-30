@@ -1,0 +1,35 @@
+{
+  "build": "0.2.9 (12)",
+  "scope": "Current-pack Level 1 actual hint before process termination and restored on Continue. UI tests also applied marks and verified they survived a second termination. These images do not prove frozen hint wording or timing parity.",
+  "images": [
+    {
+      "path": "Docs/original-tools/17e-hint-restored.png",
+      "device": "iPhone 17e",
+      "timestamp": 1790782132.726,
+      "test": "CapydokuUITests/testCurrentPackHintRestoresAfterTerminationAndApplyStaysSaved()",
+      "state": "restored"
+    },
+    {
+      "path": "Docs/original-tools/17e-hint-before.png",
+      "device": "iPhone 17e",
+      "timestamp": 1790782125.827,
+      "test": "CapydokuUITests/testCurrentPackHintRestoresAfterTerminationAndApplyStaysSaved()",
+      "state": "before"
+    },
+    {
+      "path": "Docs/original-tools/pro-hint-restored.png",
+      "device": "iPhone 17 Pro",
+      "timestamp": 1790782201.906,
+      "test": "CapydokuUITests/testCurrentPackHintRestoresAfterTerminationAndApplyStaysSaved()",
+      "state": "restored"
+    },
+    {
+      "path": "Docs/original-tools/pro-hint-before.png",
+      "device": "iPhone 17 Pro",
+      "timestamp": 1790782195.014,
+      "test": "CapydokuUITests/testCurrentPackHintRestoresAfterTerminationAndApplyStaysSaved()",
+      "state": "before"
+    }
+  ],
+  "visualReview": "All four exported screenshots inspected. Explanation, preview cells, lives, score and button layout match across process restoration at both sizes. No clipping found; formal reference wording/timing remains unverified."
+}

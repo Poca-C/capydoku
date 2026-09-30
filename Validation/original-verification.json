@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "date": "2026-09-30",
-  "build": "0.2.8 (11)",
+  "build": "0.2.9 (12)",
   "status": "Partial original-spec alignment; remaining client, reference and release gaps open.",
   "originalSHA256": "274bbf15f031bd80bb8b360cf14c0266acff370a230d9cad1b1785461df54dd2",
   "currentPackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49",
@@ -16,13 +16,12 @@
     "minimumOSRuntime": "not tested; compile target iOS 15"
   },
   "core": {
-    "build": "0.2.7 (10)",
-    "passed": 109,
+    "build": "0.2.9 (12)",
+    "passed": 116,
     "failed": 0,
-    "seconds": 25.983,
-    "log": "Validation/test-runs/original-027-core.log",
-    "scope": "Full Swift package suite, including six new opaque receipt-context durability/migration tests. Production pack unchanged; frozen difficulty parity remains unverified.",
-    "currentBuildScope": "0.2.8 did not change Swift package sources or the level pack. The 109-test 0.2.7 run retains its original build/date; not rerun for 0.2.8."
+    "seconds": 26.818,
+    "log": "Validation/test-runs/original-029-core.log",
+    "scope": "Full Swift package suite, including seven new hint-state migration, validation and recovery cases. Production puzzle pack unchanged; not formal difficulty acceptance."
   },
   "pythonImport": {
     "passed": 6,
@@ -302,6 +301,43 @@
       "uiSeconds": 71.055,
       "failed": 0,
       "scope": "16 interstitial, 8 recorder, 4 rewarded presentation, 6 reward completion recovery. UI: L10 challenge, full puzzle/advance and modal isolation. Existing UI fixtures do not enable interstitial reference config; interstitial-specific assertions exercise the real AppModel through controlled providers. Not a full UI sweep or real-ad visual test."
+    },
+    {
+      "build": "0.2.9 (12)",
+      "device": "iPhone 17 Pro",
+      "bundle": "Validation/test-runs/original-029-tools-app.xcresult",
+      "appTestsPassed": 147,
+      "failed": 0,
+      "scope": "Complete application suite except OriginalUIContractTests; tool persistence plus existing configuration, receipt, interstitial, feedback and hosted UI regressions."
+    },
+    {
+      "build": "0.2.9 (12)",
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-029-17e-tools.xcresult",
+      "appTestsPassed": 22,
+      "uiTestsPassed": 4,
+      "failed": 0,
+      "appSeconds": 1.087,
+      "uiSeconds": 57.618,
+      "scope": "16 durability and six source cases; current-pack hint terminate/restore/Apply/terminate path plus archived-fixture hint close, hint Apply and direct/restart/reward UI paths."
+    },
+    {
+      "build": "0.2.9 (12)",
+      "device": "iPhone 17 Pro",
+      "bundle": "Validation/test-runs/original-029-pro-ui.xcresult",
+      "uiTestsPassed": 2,
+      "failed": 0,
+      "uiSeconds": 38.701,
+      "scope": "Current-pack hint restore/Apply path and archived-fixture full puzzle solve/next-level UI path."
+    },
+    {
+      "build": "0.2.9 (12)",
+      "device": "iPhone 17 Pro",
+      "bundle": "Validation/test-runs/original-029-offer-attribution.xcresult",
+      "appTestsPassed": 1,
+      "failed": 0,
+      "seconds": 0.075,
+      "scope": "New actual reward offer attribution case: foreground analytics session changes, reward callback wins, analytics queue write fails, cold recovery preserves frozen offer attribution and orders completed before buff before win. Production source unchanged since full suite."
     }
   ],
   "visualEvidence": {
@@ -319,20 +355,20 @@
     "Physical-device, old-system, TestFlight and App Store release validation",
     "VoiceOver actual focus navigation and full Dynamic Type/readability verification on physical devices",
     "Frozen correct/wrong/Combo animation frames and timing, found-count/star motion synchronization and physical-device Reduce Motion/feedback review",
-    "Client: free-ad triggerOrder execution and alternate-board restart are not implemented; frozen specifics separately missing.",
     "Formal revive/continue attempt/duration definitions pending; result fix preserves existing attempt and cumulative duration.",
     "Actual system Reduce Motion and full animation timing remain unverified; 0.2.7 uses scoped RootView/CheckInView test overrides.",
-    "Client: buff_use is not durably committed with tool effects. Inventory direct/hint/Apply may record before a successful save; rewarded direct may lose use after effect commit. Rewarded started/failed/skipped also lack a complete receipt-style crash journal.",
-    "Formal interstitial placement/closed mapping, request-vs-display cooldown, repeat-clear counting and provider metadata timing remain to be frozen; local v1 mapping is not reference acceptance."
+    "Formal interstitial placement/closed mapping, request-vs-display cooldown, repeat-clear counting and provider metadata timing remain to be frozen; local v1 mapping is not reference acceptance.",
+    "Client: configured free-ad trigger sequence and reference restart flow are not fully implemented. The invented triggerOrder/restartCreatesNewBoard fields do not define the original behavior; frozen captures must resolve sequencing and whether confirmation or an alternate board is required.",
+    "Client: rewarded started/failed/skipped events still lack the complete durable journal already implemented for confirmed completion and tool use. Real analytics transport/acknowledgement/server deduplication remain unconnected."
   ],
   "historicalFailuresRetained": "Initial UI/app runs and first full-core run failed on changed fixture assumptions or real UI issues; these are retained under Validation/test-runs. Only explicitly listed successful reruns count. Old 88-item checklist completion counts are superseded.",
   "applicationTests": {
-    "build": "0.2.8 (11)",
-    "passed": 131,
+    "build": "0.2.9 (12)",
+    "passed": 147,
     "failed": 0,
-    "seconds": 45.711,
-    "bundle": "Validation/test-runs/original-028-interstitial-app-verified.xcresult",
-    "scope": "All AppTests except OriginalUIContractTests; 16 new interstitial integration cases plus one schema invariant case. Includes all existing rewarded/receipt/session, configuration, gameplay feedback and hosted visual tests. Synthetic reference configuration, injected identity/adapter and explicit persistence boundaries; not real SDK or frozen-reference acceptance."
+    "seconds": 46.804,
+    "bundle": "Validation/test-runs/original-029-tools-app.xcresult",
+    "scope": "All AppTests except OriginalUIContractTests at this run. Includes 16 new tool persistence cases. A later independent 17th tool case passed separately without production code changes; total unique application cases covered in this build: 148, not one 148-case suite. Local injected identity/providers and real filesystem write failures; not external analytics/SDK acceptance."
   },
   "supersededOrInterruptedRuns": [
     "reward-readiness-final was intentionally interrupted to stop two runners targeting one simulator; not counted as success.",
@@ -375,18 +411,18 @@
     }
   ],
   "buildVerification": {
-    "bundleVersion": "0.2.8 (11)",
-    "simulatorDebug": "passed via test build",
-    "simulatorLog": "Validation/test-runs/original-028-interstitial-app-verified.log",
+    "bundleVersion": "0.2.9 (12)",
+    "simulatorDebug": "passed via test builds",
+    "simulatorLog": "Validation/test-runs/original-029-tools-app.log",
     "genericIOSReleaseUnsigned": "passed",
-    "releaseLog": "Validation/test-runs/original-028-release-build.log",
+    "releaseLog": "Validation/test-runs/original-029-release-build.log",
     "installedOn": [
       "iPhone 17 Pro",
       "iPhone 17e"
     ],
-    "normalLaunch": "com.capydoku.demo: 83816; no test/reset arguments; both installed Info.plist values verified 0.2.8 / 11.",
-    "signingAndDeviceExecution": "Unsigned build and simulator only; physical device, TestFlight and App Store untested.",
-    "scope": "Interstitial actual presentation/analytics/outbox, background navigation and cold continuation. Gameplay Swift package, level pack and art unchanged. Historical screenshots and reinstall reports retain their own build labels.",
+    "normalLaunch": "Both installed Info.plist values verified 0.2.9 / 12 and launched without testing/reset arguments; details in Validation/test-runs/original-029-install.json.",
+    "signingAndDeviceExecution": "Unsigned Release build and simulator only; physical device, TestFlight and App Store untested.",
+    "scope": "Atomic tool consumption/effects/events, durable hint preview and actual presentation acknowledgement. No artwork, level-pack, generator or formal reference configuration changes.",
     "sourceDocumentSHA256Unchanged": true
   },
   "audioContract": {
@@ -525,6 +561,14 @@
       "seconds": 40.699,
       "bundle": "Validation/test-runs/original-027-receipt-visual-final.xcresult",
       "scope": "All AppTests except OriginalUIContractTests. Includes six new completion recovery tests and six real hosted-view tests. Injected identity store, scene phase and Reduced Motion fixtures; no real SDK, OS Reduce Motion or Keychain acceptance claim."
+    },
+    {
+      "build": "0.2.8 (11)",
+      "passed": 131,
+      "failed": 0,
+      "seconds": 45.711,
+      "bundle": "Validation/test-runs/original-028-interstitial-app-verified.xcresult",
+      "scope": "All AppTests except OriginalUIContractTests; 16 new interstitial integration cases plus one schema invariant case. Includes all existing rewarded/receipt/session, configuration, gameplay feedback and hosted visual tests. Synthetic reference configuration, injected identity/adapter and explicit persistence boundaries; not real SDK or frozen-reference acceptance."
     }
   ],
   "remoteConfigurationContract": {
@@ -634,6 +678,21 @@
       "signingAndDeviceExecution": "Unsigned compilation only; physical device and App Store untested.",
       "scope": "Persisted rewarded completion metadata and recovery; result entrance/gift lifecycle; eight-slot 8x8 progress layout. No new reinstall run; 0.2.6 reinstall evidence retains its original version.",
       "sourceDocumentSHA256Unchanged": true
+    },
+    {
+      "bundleVersion": "0.2.8 (11)",
+      "simulatorDebug": "passed via test build",
+      "simulatorLog": "Validation/test-runs/original-028-interstitial-app-verified.log",
+      "genericIOSReleaseUnsigned": "passed",
+      "releaseLog": "Validation/test-runs/original-028-release-build.log",
+      "installedOn": [
+        "iPhone 17 Pro",
+        "iPhone 17e"
+      ],
+      "normalLaunch": "com.capydoku.demo: 83816; no test/reset arguments; both installed Info.plist values verified 0.2.8 / 11.",
+      "signingAndDeviceExecution": "Unsigned build and simulator only; physical device, TestFlight and App Store untested.",
+      "scope": "Interstitial actual presentation/analytics/outbox, background navigation and cold continuation. Gameplay Swift package, level pack and art unchanged. Historical screenshots and reinstall reports retain their own build labels.",
+      "sourceDocumentSHA256Unchanged": true
     }
   ],
   "feedbackCorrection": {
@@ -711,6 +770,15 @@
       "seconds": 27.492,
       "log": "Validation/test-runs/original-026-core-atomic-final.log",
       "scope": "Full Swift package suite after reward-finalizer change, including 11 result-phase/persistence cases. Production pack unchanged; no frozen difficulty parity claim."
+    },
+    {
+      "build": "0.2.7 (10)",
+      "passed": 109,
+      "failed": 0,
+      "seconds": 25.983,
+      "log": "Validation/test-runs/original-027-core.log",
+      "scope": "Full Swift package suite, including six new opaque receipt-context durability/migration tests. Production pack unchanged; frozen difficulty parity remains unverified.",
+      "currentBuildScope": "0.2.8 did not change Swift package sources or the level pack. The 109-test 0.2.7 run retains its original build/date; not rerun for 0.2.8."
     }
   ],
   "levelResultCorrection": {
@@ -911,7 +979,7 @@
   ],
   "buffUseAudit": {
     "reviewedIn": "0.2.8 (11)",
-    "status": "unfixed client gap; no completion claim",
+    "status": "Historical 0.2.8 gaps corrected in 0.2.9; see buffUseCorrection for bounded evidence.",
     "paths": [
       "Inventory direct records buff_use before ordinary save completes.",
       "Hint preview asynchronously saves its consumption then records use without knowing durability.",
@@ -919,6 +987,42 @@
       "Rewarded direct commits its game effect first, then generates the use event outside the transaction.",
       "Cold inventory compensation correctly does not emit buff_use; preserve this behavior."
     ],
-    "next": "Persist stable use IDs and prepared events atomically with consumption/effect; give preview/Apply one shared use identity, acknowledge after queue durability, and explicitly define actual hint-display evidence. Keep source-unknown legacy use diagnostic."
+    "next": "Remaining rewarded non-completion events, actual transport and frozen reference acceptance are separate open requirements."
+  },
+  "buffUseCorrection": {
+    "build": "0.2.9 (12)",
+    "sourceParagraphs": [
+      376,
+      379,
+      380,
+      381,
+      435,
+      437,
+      439,
+      455
+    ],
+    "implementation": [
+      "Inventory direct saves consumption, reveal, scoring, use event and any win together; failure publishes none.",
+      "Hint saves consumed inventory and the exact preview; Home recovery does not claim it was shown. HintPanel actual appearance confirms preview once; first failed appearance write retries the same in-memory occurrence.",
+      "Close persists dismissal without refund or marks. Apply requires real new X marks and saves marks, dismissal and applied event together.",
+      "Rewarded direct stages its use in the reward transaction with frozen original offer attribution; cold compensation creates inventory only, never a fabricated use.",
+      "Saved events retry their original IDs, occurrence times, identity/session, level/configuration and source. Queue acknowledgement loss does not repeat effects or reporting.",
+      "Developer-sheet dismissal restores recovered pending preview; legacy unknown-source balances remain usable without fabricated attribution."
+    ],
+    "coreNewCases": 7,
+    "applicationNewCases": 17,
+    "actualUIEvidence": "Docs/original-tools/manifest.json",
+    "visualReview": "Four exported actual UI screenshots inspected at both device sizes; same explanation, preview cells, life and score before/after restore, no clipped panel or Apply button. This is not frozen reference wording/timing acceptance.",
+    "limitations": [
+      "First actual appearance plus failed progress write followed by immediate kill cannot recover an occurrence that was never persisted; the pending same preview is retained and can be displayed again.",
+      "Real SDK/transport, formal hint wording/timing and physical-device interruptions remain unverified.",
+      "Source-unknown legacy consumptions remain diagnostic rather than fabricated analytics."
+    ]
+  },
+  "buffUseInitialFailure": {
+    "scope": "New Core test compilation only",
+    "log": "Validation/test-runs/original-029-core-initial.log",
+    "reason": "A test mutation overlapped read/write access to activeHintUse. Fixed with a local value; final 116-case Core run passed.",
+    "earlySmoke": "Validation/test-runs/original-029-tools-initial.xcresult: 23 passed before final recovery/sheet hardening, not used as final proof."
   }
 }

@@ -7,10 +7,10 @@ enum AppSheet: String, Identifiable { case settings, debug, reward; var id: Stri
 @MainActor
 final class AppModel: ObservableObject {
     @Published var progress = PlayerProgress()
-    @Published var screen: AppScreen = .home { didSet { syncFeedbackState() } }
-    @Published var sheet: AppSheet? { didSet { syncFeedbackState() } }
-    @Published var hint: PuzzleHint? { didSet { syncFeedbackState() } }
-    @Published var loading = false { didSet { syncFeedbackState() } }
+    @Published var screen: AppScreen = .home { didSet { syncFeedbackState(); restoreSavedHint() } }
+    @Published var sheet: AppSheet? { didSet { syncFeedbackState(); if sheet == nil { restoreSavedHint() } } }
+    @Published private(set) var hint: PuzzleHint? { didSet { syncFeedbackState() } }
+    @Published var loading = false { didSet { syncFeedbackState(); if !loading { restoreSavedHint() } } }
     @Published var notice: String? { didSet { syncFeedbackState() } }
     @Published var errorMessage: String? { didSet { syncFeedbackState() } }
     @Published var rewardKind: RewardKind = .hint
@@ -85,7 +85,9 @@ final class AppModel: ObservableObject {
     private var lastRestartTime: TimeInterval = 0
     private var lastDirectTime: TimeInterval = 0
     private var lastSubmission: (sessionID: UUID, cell: Int, time: TimeInterval)?
-    private var hintSource: ToolInventorySource?
+    // Created on actual presentation, not when a preview is merely prepared.
+    // A failed save retries the same first occurrence instead of retiming it.
+    private var pendingHintAppearance: (useID: UUID, event: AnalyticsRecorder.PreparedEvent?)?
     /// Legacy mixed balances have no provable source. Keep gameplay available,
     /// but do not invent the required analytics enum for those consumptions.
     private(set) var unattributedToolUseCount = 0
@@ -238,19 +240,22 @@ final class AppModel: ObservableObject {
         rewardDeadline?.cancel(); rewardDeadline = nil
         let loaded = store.load()
         rewardDisplayActive = false
-        hint = nil; activeOfferID = nil; rewardBusy = false
+        hint = nil; pendingHintAppearance = nil; activeOfferID = nil; rewardBusy = false
         activeRewardProvider = nil; rewardIsReady = false; rewardPresentationRequested = false; rewardWasReplenished = false
         rewardRetryPending = false; pendingRewardSignal = nil; pendingRewardCompletion = nil
         deferredRewardHintSessionID = nil
         if sheet == .reward { sheet = nil }
         notice = nil; errorMessage = nil
         progress = loaded.progress
-        deliverSavedLevelResults(progress.pendingLevelResultEvents)
-        if analytics.enabled && progress.rewardLedger.values.contains(where: { $0.completionEvent != nil }) { save(force: true) }
+        // Recovery can compensate a receipt in memory even when its recovery
+        // write failed. Confirm that state on disk before reporting any result.
+        if analytics.enabled && (!progress.pendingBuffEvents.isEmpty || !progress.pendingLevelResultEvents.isEmpty ||
+            progress.rewardLedger.values.contains(where: { $0.completionEvent != nil })) { save(force: true) }
         syncFeedbackState()
         applySettings()
         if progress.session == nil { screen = .home }
         if let message = loaded.warning { notice = message }
+        restoreSavedHint()
     }
 
     /// Normal gestures enqueue immutable snapshots. Receipt transactions and background
@@ -267,8 +272,7 @@ final class AppModel: ObservableObject {
             do {
                 try saveQueue.sync { try store.save(snapshot) }
                 acknowledgeSavedWinContinuation(snapshot, winID: continuationAtSave)
-                deliverSavedLevelResults(snapshot.pendingLevelResultEvents)
-                deliverSavedRewardResults(snapshot.rewardLedger)
+                deliverSavedGameplayEvents(snapshot)
             }
             catch { errorMessage = "Progress could not be saved: \(error.localizedDescription)" }
         } else {
@@ -277,8 +281,7 @@ final class AppModel: ObservableObject {
                     try store.save(snapshot)
                     DispatchQueue.main.async {
                         self?.acknowledgeSavedWinContinuation(snapshot, winID: continuationAtSave)
-                        self?.deliverSavedLevelResults(snapshot.pendingLevelResultEvents)
-                        self?.deliverSavedRewardResults(snapshot.rewardLedger)
+                        self?.deliverSavedGameplayEvents(snapshot)
                     }
                 }
                 catch {
@@ -289,6 +292,37 @@ final class AppModel: ObservableObject {
         }
     }
     func flushPendingSaves() { saveQueue.sync {} }
+
+    private func deliverSavedGameplayEvents(_ saved: PlayerProgress) {
+        deliverSavedRewardResults(saved.rewardLedger)
+        // A tool may find the last animal. Its actual use precedes that win,
+        // including after a queue failure or a cold start.
+        if deliverSavedBuffUses(saved.pendingBuffEvents) {
+            deliverSavedLevelResults(saved.pendingLevelResultEvents)
+        }
+    }
+
+    private func deliverSavedBuffUses(_ saved: [String: Data]) -> Bool {
+        guard analytics.enabled else { return saved.isEmpty }
+        var acknowledged = false
+        var complete = true
+        let records = saved.compactMap { id, data -> (String, Data, AnalyticsRecorder.PreparedEvent)? in
+            guard let event = try? JSONDecoder().decode(AnalyticsRecorder.PreparedEvent.self, from: data),
+                  event.event.eventID == id, event.event.eventName == "buff_use" else { return nil }
+            return (id, data, event)
+        }.sorted { $0.2.event.eventTime == $1.2.event.eventTime ? $0.2.key < $1.2.key : $0.2.event.eventTime < $1.2.event.eventTime }
+        if records.count != saved.count { complete = false }
+        for (id, data, prepared) in records {
+            guard let current = progress.pendingBuffEvents[id] else { continue }
+            guard current == data, analytics.commit(prepared) else { complete = false; break }
+            progress.pendingBuffEvents.removeValue(forKey: id)
+            acknowledged = true
+        }
+        // If this acknowledgement fails, the original prepared event remains in
+        // the save and the analytics queue deduplicates its next delivery.
+        if acknowledged { save() }
+        return complete
+    }
 
     private func deliverSavedLevelResults(_ saved: [String: Data]) {
         guard analytics.enabled else { return }
@@ -342,13 +376,14 @@ final class AppModel: ObservableObject {
                 completeWinTransition(); return
             }
             trackLevelStart(); preloadRewardPlacementsIfNeeded()
+            restoreSavedHint()
         }
         else { start(level: progress.currentLevel) }
     }
 
     func start(level: Int) {
         guard !loading else { return }
-        hint = nil
+        hint = nil; pendingHintAppearance = nil
         if let puzzle = levels[level] {
             progress.begin(puzzle: puzzle, config: configuration(for: level))
             screen = .game; save(); trackLevelStart(); preloadRewardPlacementsIfNeeded(); return
@@ -394,6 +429,7 @@ final class AppModel: ObservableObject {
 
     func home() {
         guard screen == .game else { hint = nil; screen = .home; return }
+        if hint != nil && !closeHint() { return }
         if session?.status == .won { transitionAfterWin(toHome: true); return }
         trackLevelEnd(.quit); trackTutorialEnd("quit"); hint = nil; screen = .home; save()
     }
@@ -646,13 +682,26 @@ final class AppModel: ObservableObject {
         syncFeedbackState(); defer { syncFeedbackState() }
         let time = ProcessInfo.processInfo.systemUptime
         guard canTouchBoard, tutorial == nil, directVisible, directEnabled, time - lastDirectTime > 0.35 else { return }
-        lastDirectTime = time
-        if progress.availableDirect == 0 { offer(.direct); return }
-        let before = progress.availableDirect
+        if progress.availableDirect == 0 { lastDirectTime = time; offer(.direct); return }
         let source = progress.nextDirectSource
-        if progress.directFind() != nil {
-            trackBuff("direct_find", applied: true, before: before, after: progress.availableDirect, source: source)
-            playRevealFeedback(); afterAction()
+        flushPendingSaves(); saveRevision += 1
+        do {
+            let revealed = try store.transaction(progress: &progress) { candidate -> Bool in
+                let before = candidate.availableDirect
+                guard candidate.directFind() != nil else { return false }
+                stageBuff("direct_find", key: UUID().uuidString, applied: true, before: before,
+                          after: candidate.availableDirect, source: source, in: &candidate)
+                if candidate.finishWin() { stageLevelEnd(.win, in: &candidate) }
+                return true
+            }
+            guard revealed else { return }
+            lastDirectTime = time
+            if source == nil { unattributedToolUseCount += 1 }
+            playRevealFeedback()
+            if session?.status == .won { feedback.play(.win) }
+            deliverSavedGameplayEvents(progress)
+        } catch {
+            errorMessage = "The tool could not be saved. No use was spent. Please try again."
         }
     }
     func showHint() {
@@ -661,19 +710,103 @@ final class AppModel: ObservableObject {
             notice = "Every useful exclusion is already marked. Try locating the remaining capybaras."; return
         }
         if progress.availableHints == 0 { offer(.hint); return }
-        let before = progress.availableHints
-        hintSource = progress.nextHintSource
-        if progress.consumeHint() {
-            hint = preview; save()
-            trackBuff("hint", applied: false, before: before, after: progress.availableHints, source: hintSource)
+        flushPendingSaves(); saveRevision += 1
+        do {
+            let consumed = try store.transaction(progress: &progress) { candidate -> Bool in
+                let before = candidate.availableHints, source = candidate.nextHintSource
+                guard candidate.consumeHint() else { return false }
+                candidate.activeHintUse = HintUseState(sessionID: s.id, hint: preview, source: source,
+                    inventoryBefore: before, inventoryAfter: candidate.availableHints)
+                return true
+            }
+            guard consumed else { return }
+            pendingHintAppearance = nil
+            hint = preview
+        } catch {
+            errorMessage = "The hint could not be saved. No use was spent. Please try again."
         }
     }
+
+    private func restoreSavedHint() {
+        guard active, screen == .game, sheet == nil, !loading, !rewardBusy, !interstitialBusy,
+              let use = progress.activeHintUse, use.sessionID == session?.id,
+              session?.status == .playing else { return }
+        hint = use.hint
+    }
+
+    /// The view calls this only when its HintPanel appears. Preparing a saved
+    /// preview (or recovering it on Home) does not prove that it was displayed.
+    func hintDidAppear(useID: UUID) {
+        guard active, screen == .game, sheet == nil, !loading, !rewardBusy, !interstitialBusy, !challengePending,
+              errorMessage == nil, notice == nil,
+              let use = progress.activeHintUse, use.id == useID,
+              use.sessionID == session?.id, hint == use.hint, !use.previewPresented else { return }
+        if pendingHintAppearance?.useID != useID {
+            pendingHintAppearance = (useID, prepareBuff("hint", key: useID.uuidString + ":0-preview",
+                applied: false, before: use.inventoryBefore, after: use.inventoryAfter,
+                source: use.source, in: progress))
+        }
+        flushPendingSaves(); saveRevision += 1
+        do {
+            try store.transaction(progress: &progress) { candidate in
+                candidate.activeHintUse?.previewPresented = true
+                if let prepared = pendingHintAppearance?.event,
+                   let data = try? JSONEncoder().encode(prepared) {
+                    candidate.pendingBuffEvents[prepared.event.eventID] = data
+                }
+            }
+            if use.source == nil { unattributedToolUseCount += 1 }
+            pendingHintAppearance = nil
+            deliverSavedGameplayEvents(progress)
+        } catch {
+            errorMessage = "The displayed hint could not be saved. Please try again."
+        }
+    }
+
+    @discardableResult func closeHint() -> Bool {
+        guard active, screen == .game, sheet == nil, !loading, !rewardBusy, !interstitialBusy, !challengePending,
+              errorMessage == nil, notice == nil,
+              let use = progress.activeHintUse, use.sessionID == session?.id,
+              hint == use.hint else { return hint == nil }
+        // An actual close/Apply interaction also proves the panel was visible.
+        hintDidAppear(useID: use.id)
+        guard progress.activeHintUse?.previewPresented == true else { return false }
+        flushPendingSaves(); saveRevision += 1
+        do {
+            try store.transaction(progress: &progress) { $0.activeHintUse = nil }
+            hint = nil; pendingHintAppearance = nil
+            deliverSavedGameplayEvents(progress)
+            return true
+        } catch {
+            errorMessage = "The hint could not be closed safely. Please try again."
+            return false
+        }
+    }
+
     func applyHint() {
-        guard active, screen == .game, sheet == nil, !loading, !rewardBusy,
-              session?.status == .playing, let hint else { return }
-        _ = progress.session?.markMany(hint.cells)
-        trackBuff("hint", applied: true, before: progress.availableHints, after: progress.availableHints, source: hintSource)
-        self.hint = nil; save() // Apply has its mapped button feedback; it is not a single-cell tap.
+        guard active, screen == .game, sheet == nil, !loading, !rewardBusy, !interstitialBusy, !challengePending,
+              errorMessage == nil, notice == nil,
+              session?.status == .playing, let use = progress.activeHintUse,
+              use.sessionID == session?.id, hint == use.hint else { return }
+        hintDidAppear(useID: use.id)
+        guard progress.activeHintUse?.previewPresented == true else { return }
+        flushPendingSaves(); saveRevision += 1
+        do {
+            let count = try store.transaction(progress: &progress) { candidate -> Int in
+                let count = candidate.session?.markMany(use.hint.cells) ?? 0
+                guard count > 0 else { return 0 }
+                stageBuff("hint", key: use.id.uuidString + ":1-apply", applied: true,
+                          before: candidate.availableHints, after: candidate.availableHints,
+                          source: use.source, in: &candidate)
+                candidate.activeHintUse = nil
+                return count
+            }
+            guard count > 0 else { return }
+            hint = nil; pendingHintAppearance = nil
+            deliverSavedGameplayEvents(progress)
+        } catch {
+            errorMessage = "The hint marks could not be saved. Your board is unchanged. Please try again."
+        }
     }
     func offer(_ kind: RewardKind) {
         guard startupFlowCompleted, !loading, !rewardBusy, !interstitialBusy, sheet == nil, hint == nil, progress.canReceiveReward(kind) else { return }
@@ -785,20 +918,19 @@ final class AppModel: ObservableObject {
             case .started: return // Nonterminal presentation signals are handled above.
             case .earned:
                 let result = try store.grantReward(offerID: offerID, progress: &progress, completionEvent: pendingRewardCompletion) { candidate, outcome in
-                    self.finalizeRewardResult(outcome, in: &candidate)
+                    self.finalizeRewardResult(outcome, in: &candidate, offerID: offerID)
                 }
-                deliverSavedRewardResults(progress.rewardLedger)
+                deliverSavedGameplayEvents(progress)
                 sheet = nil
                 switch result {
                 case .hintReady:
                     deferredRewardHintSessionID = session?.id
                     resumeConfirmedRewardHint()
                 case .directRevealed:
-                    trackBuff("direct_find", applied: true, before: 0, after: 0, source: .rewardedAd)
                     if screen == .game {
                         playRevealFeedback(acceptedIn: FeedbackEnvironment(page: .game, level: session?.puzzle.id))
+                        if session?.status == .won { feedback.play(.win) }
                     }
-                    afterAction()
                 case .inventoryGranted: break
                 case .revived: break
                 case .duplicate: break
@@ -826,7 +958,7 @@ final class AppModel: ObservableObject {
             errorMessage = "The reward could not be saved. Free up storage if needed, then tap Retry save. Your receipt is kept for this retry. \(error.localizedDescription)"
         }
     }
-    private var canTouchBoard: Bool { active && screen == .game && !loading && !rewardBusy && !interstitialBusy && !challengePending && sheet == nil && hint == nil && session?.status == .playing }
+    private var canTouchBoard: Bool { active && screen == .game && !loading && !rewardBusy && !interstitialBusy && !challengePending && sheet == nil && hint == nil && progress.activeHintUse == nil && session?.status == .playing }
     private func resumeConfirmedRewardHint() {
         guard let expected = deferredRewardHintSessionID else { return }
         guard session?.id == expected, session?.pendingRewardHint == true else {
@@ -903,13 +1035,14 @@ final class AppModel: ObservableObject {
             displayReadyInterstitial()
             if screen == .game && winTransitionID != nil && !interstitialBusy && !challengePending { completeWinTransition() }
             resumeConfirmedRewardHint()
+            restoreSavedHint()
             refreshGameplayConfiguration()
         }
     }
     func consentAccepted() {
         analytics.acceptConsent()
         flushInterstitialEvents()
-        if !progress.pendingLevelResultEvents.isEmpty || progress.rewardLedger.values.contains(where: { $0.completionEvent != nil }) { save(force: true) }
+        if !progress.pendingBuffEvents.isEmpty || !progress.pendingLevelResultEvents.isEmpty || progress.rewardLedger.values.contains(where: { $0.completionEvent != nil }) { save(force: true) }
     }
     /// Called only after the startup view reaches Home, including optional permission completion.
     /// This permits local adapter use; it does not claim a real SDK/CMP has been initialized.
@@ -948,9 +1081,14 @@ final class AppModel: ObservableObject {
     private func trackLevelEnd(_ result: LevelEndResult) {
         stageLevelEnd(result, in: &progress)
     }
-    func finalizeRewardResult(_ result: RewardOutcome, in candidate: inout PlayerProgress) {
-        guard case .directRevealed = result, candidate.finishWin() else { return }
-        stageLevelEnd(.win, in: &candidate)
+    func finalizeRewardResult(_ result: RewardOutcome, in candidate: inout PlayerProgress, offerID: String? = nil) {
+        guard case .directRevealed(let cell) = result, let session = candidate.session else { return }
+        let key = offerID.map { $0 + ":direct" } ?? session.id.uuidString + ":reward-direct:\(cell)"
+        let offer = offerID.flatMap { candidate.rewardLedger[$0]?.analyticsOffer }
+            .flatMap { try? JSONDecoder().decode(AnalyticsRecorder.PreparedEvent.self, from: $0) }
+        stageBuff("direct_find", key: key, applied: true, before: 0, after: 0,
+                  source: .rewardedAd, in: &candidate, relatedTo: offer?.event)
+        if candidate.finishWin() { stageLevelEnd(.win, in: &candidate) }
     }
     private func stageLevelEnd(_ result: LevelEndResult, in candidate: inout PlayerProgress) {
         guard let key = candidate.session?.claimResult(result), let s = candidate.session else { return }
@@ -965,13 +1103,25 @@ final class AppModel: ObservableObject {
         guard tutorial != nil, let s = session else { return }
         track("tutorial_end", key: s.id.uuidString + ":" + result, parameters: ["tutorial_id": "level-1-dynamic", "result": result, "duration_sec": "\(Int(s.elapsedSeconds))"])
     }
-    private func trackBuff(_ type: String, applied: Bool, before: Int, after: Int, source: ToolInventorySource?) {
-        guard let source else {
-            // Count the consumption once, not again when the same hint is applied.
-            if type == "direct_find" || !applied { unattributedToolUseCount += 1 }
-            return
+    private func prepareBuff(_ type: String, key: String, applied: Bool, before: Int, after: Int,
+                             source: ToolInventorySource?, in candidate: PlayerProgress,
+                             relatedTo offer: AnalyticsRecorder.Event? = nil) -> AnalyticsRecorder.PreparedEvent? {
+        guard let source, let session = candidate.session else { return nil }
+        let parameters = ["buff_type": type, "source": source.rawValue, "applied": "\(applied)",
+                          "inventory_before": "\(before)", "inventory_after": "\(after)"]
+        if let offer {
+            return analytics.prepareRelated("buff_use", key: key, to: offer, parameters: parameters)
         }
-        track("buff_use", key: UUID().uuidString, parameters: ["buff_type": type, "source": source.rawValue, "applied": "\(applied)", "inventory_before": "\(before)", "inventory_after": "\(after)"])
+        return analytics.prepare("buff_use", key: key, level: session.puzzle.id,
+                                 config: session.config.version, parameters: parameters)
+    }
+    private func stageBuff(_ type: String, key: String, applied: Bool, before: Int, after: Int,
+                           source: ToolInventorySource?, in candidate: inout PlayerProgress,
+                           relatedTo offer: AnalyticsRecorder.Event? = nil) {
+        guard let prepared = prepareBuff(type, key: key, applied: applied, before: before,
+                                         after: after, source: source, in: candidate, relatedTo: offer),
+              let data = try? JSONEncoder().encode(prepared) else { return }
+        candidate.pendingBuffEvents[prepared.event.eventID] = data
     }
     private func trackAdResult(_ id: String, status: String, granted: Bool) {
         let placement = rewardKind == .direct ? "direct_find" : rewardKind == .levelStartFree ? "level_start_free" : rewardKind.rawValue

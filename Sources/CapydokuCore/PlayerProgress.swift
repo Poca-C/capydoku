@@ -97,6 +97,10 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
     /// Frozen result events travel atomically with player state and survive
     /// replacement of the current board until delivery has been acknowledged.
     public var pendingLevelResultEvents: [String: Data]
+    /// The exact consumed preview, including its original inventory attribution.
+    public var activeHintUse: HintUseState?
+    /// Frozen tool-use events commit with their effect and survive board changes.
+    public var pendingBuffEvents: [String: Data]
     public var freeToolGrantedLevels: Set<Int>
     public var levelToolBalances: [String: ToolBalance]
     public var referenceToolGrantKeys: Set<String>
@@ -121,6 +125,8 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
         bonusDirect = 0
         rewardLedger = [:]
         pendingLevelResultEvents = [:]
+        activeHintUse = nil
+        pendingBuffEvents = [:]
         freeToolGrantedLevels = []
         levelToolBalances = [:]
         referenceToolGrantKeys = []
@@ -162,6 +168,7 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
 
     public mutating func begin(puzzle: Puzzle, config: DemoConfig = .default) {
         _ = recoverInterruptedRewards()
+        activeHintUse = nil
         captureSessionBalance()
         let key = String(puzzle.id)
         if currentLevel != puzzle.id { levelStartLocalBalances.removeValue(forKey: String(currentLevel)) }
@@ -215,6 +222,7 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
 
     public mutating func restart() {
         _ = recoverInterruptedRewards()
+        activeHintUse = nil
         guard let current = session else { return }
         begin(puzzle: current.puzzle, config: current.config)
     }
@@ -482,7 +490,7 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
     private enum CodingKeys: String, CodingKey {
         case unlockedLevel, currentLevel, completedLevels, attemptCounts, session, settings
         case tutorialStep, tutorialCompleted, checkIn, bonusHints, bonusDirect, rewardLedger
-        case pendingLevelResultEvents
+        case pendingLevelResultEvents, activeHintUse, pendingBuffEvents
         case freeToolGrantedLevels, levelToolBalances, referenceToolGrantKeys, carriedToolBalance, levelStartLocalBalances, freeReviveUsage
         case bonusToolSources, levelToolSources, carriedToolSources
     }
@@ -503,6 +511,8 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
         bonusDirect = try values.decodeIfPresent(Int.self, forKey: .bonusDirect) ?? 0
         rewardLedger = try values.decodeIfPresent([String: RewardRecord].self, forKey: .rewardLedger) ?? [:]
         pendingLevelResultEvents = try values.decodeIfPresent([String: Data].self, forKey: .pendingLevelResultEvents) ?? [:]
+        activeHintUse = try values.decodeIfPresent(HintUseState.self, forKey: .activeHintUse)
+        pendingBuffEvents = try values.decodeIfPresent([String: Data].self, forKey: .pendingBuffEvents) ?? [:]
         freeToolGrantedLevels = try values.decodeIfPresent(Set<Int>.self, forKey: .freeToolGrantedLevels) ?? []
         levelToolBalances = try values.decodeIfPresent([String: ToolBalance].self, forKey: .levelToolBalances) ?? [:]
         referenceToolGrantKeys = try values.decodeIfPresent(Set<String>.self, forKey: .referenceToolGrantKeys) ?? []

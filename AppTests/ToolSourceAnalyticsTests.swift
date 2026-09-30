@@ -48,6 +48,10 @@ final class ToolSourceAnalyticsTests: XCTestCase {
         app.notice = nil
         return app
     }
+    @MainActor private func showHint(_ app: AppModel) {
+        app.showHint()
+        if let id = app.progress.activeHintUse?.id { app.hintDidAppear(useID: id) }
+    }
     @MainActor private func uses(_ app: AppModel, type: String) -> [AnalyticsRecorder.Event] {
         app.analytics.events.filter { $0.eventName == "buff_use" && $0.parameters["buff_type"] == .text(type) }
     }
@@ -60,13 +64,13 @@ final class ToolSourceAnalyticsTests: XCTestCase {
         config.referenceGameplay?.directFind.initialFreeCount = 1
         config.referenceGameplay?.directFind.regrantPolicy = .oncePerLevel
         let app = model(directory(), config: config)
-        app.showHint(); XCTAssertNotNil(app.hint)
-        app.hint = nil; app.showHint(); XCTAssertNotNil(app.hint)
+        showHint(app); XCTAssertNotNil(app.hint)
+        app.closeHint(); showHint(app); XCTAssertNotNil(app.hint)
         let hints = uses(app, type: "hint")
         XCTAssertEqual(hints.count, 2)
         XCTAssertEqual(hints.map { $0.parameters["source"] }, [.text("level_config_free"), .text("initial_free")])
         XCTAssertEqual(hints.map { $0.parameters["inventory_after"] }, [.integer(1), .integer(0)])
-        app.hint = nil; app.direct()
+        app.closeHint(); app.direct()
         XCTAssertEqual(uses(app, type: "direct_find").last?.parameters["source"], .text("level_config_free"))
     }
 
@@ -115,14 +119,14 @@ final class ToolSourceAnalyticsTests: XCTestCase {
     @MainActor func testRewardedHintPreviewAndApplyRetainSourceAfterBackgroundAndReload() async throws {
         let dir = directory(), config = try configuration(), provider = SourceTestRewards()
         let app = model(dir, config: config, rewards: provider)
-        app.showHint(); XCTAssertEqual(provider.callbacks.count, 1)
+        showHint(app); XCTAssertEqual(provider.callbacks.count, 1)
         app.setActive(false)
         try XCTUnwrap(provider.callbacks.first)(.earned)
         try await Task.sleep(nanoseconds: 30_000_000)
         XCTAssertNil(app.hint)
         let restored = model(dir, config: config)
         let marks = restored.session?.marks
-        restored.showHint(); XCTAssertNotNil(restored.hint)
+        showHint(restored); XCTAssertNotNil(restored.hint)
         XCTAssertEqual(restored.session?.marks, marks)
         _ = restored.progress.claimCheckIn(config: config)
         restored.applyHint(); restored.applyHint()
@@ -136,7 +140,7 @@ final class ToolSourceAnalyticsTests: XCTestCase {
     @MainActor func testCheckInGiftIsFreeWithoutInventingARewardedEvent() throws {
         let config = try configuration(), app = model(directory(), config: try configuration())
         _ = app.progress.claimCheckIn(config: config)
-        app.showHint()
+        showHint(app)
         XCTAssertNotNil(app.hint)
         XCTAssertEqual(uses(app, type: "hint").first?.parameters["source"], .text("initial_free"))
     }
@@ -147,7 +151,7 @@ final class ToolSourceAnalyticsTests: XCTestCase {
         // Models a pre-provenance balance. Neither a grant nor a receipt proves its source.
         app.progress.bonusHints = 1; app.save()
         let restored = model(dir, config: config)
-        restored.showHint(); XCTAssertNotNil(restored.hint)
+        showHint(restored); XCTAssertNotNil(restored.hint)
         restored.applyHint(); restored.applyHint()
         XCTAssertEqual(restored.progress.availableHints, 0)
         XCTAssertTrue(uses(restored, type: "hint").isEmpty)

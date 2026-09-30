@@ -169,6 +169,42 @@ final class CapydokuUITests: XCTestCase {
         expectValue(app.otherElements["lives"], "3")
     }
 
+    func testCurrentPackHintRestoresAfterTerminationAndApplyStaysSaved() {
+        app.launchArguments = ["-ui-testing", "-reset-demo", "-skip-tutorial", "-level", "1"]
+        app.launch()
+        XCTAssertTrue(cell(0).waitForExistence(timeout: 15))
+        let before = boardValues()
+        tapButton("hint")
+        XCTAssertTrue(app.buttons["hint_apply"].waitForExistence(timeout: 5))
+        let explanation = app.staticTexts["hint_explanation"].label
+        XCTAssertEqual(boardValues(), before)
+        attachScreen("029 Current pack hint before termination")
+
+        app.terminate()
+        app.launchArguments = ["-ui-testing"]
+        app.launch()
+        XCTAssertTrue(app.buttons["play"].waitForExistence(timeout: 15))
+        XCTAssertFalse(app.buttons["hint_apply"].exists, "Recovery on Home does not display a hint.")
+        tapButton("play")
+        XCTAssertTrue(app.buttons["hint_apply"].waitForExistence(timeout: 5))
+        XCTAssertEqual(app.staticTexts["hint_explanation"].label, explanation)
+        XCTAssertEqual(boardValues(), before, "Restoring the same preview must not apply any X marks.")
+        attachScreen("029 Same hint restored on Continue")
+        tapButton("hint_apply")
+        XCTAssertTrue(app.buttons["hint"].waitForExistence(timeout: 5))
+        let applied = boardValues()
+        XCTAssertNotEqual(applied, before)
+        XCTAssertFalse(applied.contains("found"))
+        XCTAssertEqual(app.buttons["hint"].value as? String, "Video reward", "Restoring and applying the preview spends only the original hint.")
+        expectValue(app.otherElements["lives"], "3")
+
+        app.terminate(); app.launch(); tapButton("play")
+        XCTAssertTrue(app.buttons["hint"].waitForExistence(timeout: 5))
+        XCTAssertFalse(app.buttons["hint_apply"].exists, "A completed Apply cannot reopen after relaunch.")
+        XCTAssertEqual(boardValues(), applied)
+        XCTAssertEqual(app.buttons["hint"].value as? String, "Video reward")
+    }
+
     func testDirectToolAndRestartKeepUsedToolUsed() {
         launchGame()
         tapButton("direct")
