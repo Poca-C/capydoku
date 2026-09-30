@@ -23,6 +23,8 @@ final class TutorialRecoveryTests: XCTestCase {
         restored.startOrContinue()
         XCTAssertEqual(restored.progress.tutorialStep, step)
         XCTAssertEqual(restored.progress.tutorialCompleted, completed)
+        XCTAssertEqual(restored.progress.tutorialPlanVersion, previous.progress.tutorialPlanVersion)
+        XCTAssertEqual(restored.tutorial, previous.tutorial, "Cold recovery keeps the same rule identity, wording and targets.")
         XCTAssertEqual(restored.session, session, "Restoration must preserve the board, marks, found cells, score, lives and attempt.")
         XCTAssertEqual(restored.screen, .game)
         return restored
@@ -76,7 +78,8 @@ final class TutorialRecoveryTests: XCTestCase {
         var app = initial
         let original = try XCTUnwrap(app.session)
         let puzzle = original.puzzle
-        let allSteps = PuzzleHints.tutorial(puzzle: puzzle)
+        let version = app.progress.tutorialPlanVersion
+        let allSteps = PuzzleHints.tutorial(puzzle: puzzle, version: version)
         XCTAssertEqual(allSteps.count, 9)
         let animal = try XCTUnwrap(allSteps.last?.targetCells.first)
         for index in 0..<9 {
@@ -84,6 +87,8 @@ final class TutorialRecoveryTests: XCTestCase {
             app = try restore(app, at: directory)
             XCTAssertEqual(app.progress.tutorialStep, index)
             let step = try XCTUnwrap(app.tutorial)
+            XCTAssertEqual(step, allSteps[index])
+            XCTAssertEqual(app.progress.tutorialPlanVersion, version)
             try validateTargets(step, puzzle: puzzle, animal: animal)
             let before = try XCTUnwrap(app.session)
 
@@ -130,6 +135,7 @@ final class TutorialRecoveryTests: XCTestCase {
             XCTAssertTrue(try XCTUnwrap(app.session?.marks).isDisjoint(with: puzzle.solution))
         }
         XCTAssertTrue(app.progress.tutorialCompleted)
+        XCTAssertEqual(app.progress.tutorialPlanVersion, version)
         XCTAssertNil(app.tutorial)
         XCTAssertEqual(app.session?.found, [animal])
         XCTAssertEqual(app.session?.score, original.config.baseScore)
@@ -152,6 +158,9 @@ final class TutorialRecoveryTests: XCTestCase {
         let app = model(at: dir)
         app.start(level: 1)
         XCTAssertEqual(app.session?.puzzle.id, 1)
+        XCTAssertEqual(app.progress.tutorialPlanVersion, .current)
+        XCTAssertEqual(PuzzleHints.tutorial(puzzle: try XCTUnwrap(app.session?.puzzle), version: .current).prefix(4).map(\.id),
+                       ["region", "neighbors", "row", "column"], "Current packaged L1 follows its board-derived rule order.")
         try completeTutorial(app, at: dir)
     }
 
@@ -194,7 +203,8 @@ final class TutorialRecoveryTests: XCTestCase {
             XCTAssertNotEqual(app.session?.id, checkpoint.id)
             XCTAssertEqual(app.session?.attempt, checkpoint.attempt + 1)
             XCTAssertEqual(app.session?.marks, [])
-            XCTAssertEqual(app.tutorial?.id, "row")
+            XCTAssertEqual(app.tutorial?.id, "region")
+            XCTAssertEqual(app.progress.tutorialPlanVersion, .current)
             XCTAssertFalse(app.progress.tutorialCompleted)
             // Execute all four rules, mark, actual undo, both swipes and double tap;
             // the shared helper also restores between every action and mid-swipe.

@@ -1,0 +1,848 @@
+[
+  {
+    "fingerprint" : "b1a630a4836809a4",
+    "level" : 1,
+    "rebuiltFromSeed" : true,
+    "tutorialPlanVersion" : 2,
+    "tutorialSteps" : [
+      {
+        "action" : "read",
+        "id" : "region",
+        "instruction" : "Each connected color region contains exactly one capybara.",
+        "targetCells" : [
+          8
+        ],
+        "title" : "One per region"
+      },
+      {
+        "action" : "read",
+        "id" : "neighbors",
+        "instruction" : "Capybaras cannot touch, even diagonally.",
+        "targetCells" : [
+          4,
+          5,
+          9,
+          12,
+          13
+        ],
+        "title" : "Give them space"
+      },
+      {
+        "action" : "read",
+        "id" : "row",
+        "instruction" : "Each row hides exactly one capybara.",
+        "targetCells" : [
+          8,
+          9,
+          10,
+          11
+        ],
+        "title" : "One per row"
+      },
+      {
+        "action" : "read",
+        "id" : "column",
+        "instruction" : "Each column also contains exactly one capybara.",
+        "targetCells" : [
+          0,
+          4,
+          8,
+          12
+        ],
+        "title" : "One per column"
+      },
+      {
+        "action" : "tap",
+        "id" : "mark",
+        "instruction" : "The single-cell region already tells us where a capybara must be. The highlighted cell conflicts with it. Tap to mark X.",
+        "targetCells" : [
+          0
+        ],
+        "title" : "Tap to mark X"
+      },
+      {
+        "action" : "tap",
+        "id" : "undo",
+        "instruction" : "Tap the same cell again to remove the X.",
+        "targetCells" : [
+          0
+        ],
+        "title" : "Tap again to undo"
+      },
+      {
+        "action" : "swipe",
+        "id" : "swipe",
+        "instruction" : "Swipe from the first highlighted cell to the second to mark both cells.",
+        "targetCells" : [
+          4,
+          5
+        ],
+        "title" : "Swipe across a row"
+      },
+      {
+        "action" : "swipe",
+        "id" : "swipeVertical",
+        "instruction" : "Now swipe vertically between the two highlighted cells. Straight swipes mark X; diagonal swipes do not.",
+        "targetCells" : [
+          9,
+          13
+        ],
+        "title" : "Swipe down a column"
+      },
+      {
+        "action" : "doubleTap",
+        "id" : "find",
+        "instruction" : "The highlighted region has only one cell, so its capybara must be here. Double-tap to find it, then use the four rules to find the rest.",
+        "targetCells" : [
+          8
+        ],
+        "title" : "Double-tap to find"
+      }
+    ]
+  },
+  {
+    "fingerprint" : "c6da40343e507c84",
+    "level" : 2,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "d5b7fe6bc128c9a3",
+    "level" : 3,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "804b15b574ef4c33",
+    "level" : 4,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "b98c3faffcef98b5",
+    "level" : 5,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "6ad3c596230e5f4e",
+    "level" : 6,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "83023cd9439c3abd",
+    "level" : 7,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "fd01a5f01ecc382c",
+    "level" : 8,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "f1f1c21f86dd6bf1",
+    "level" : 9,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "76b2738945ba6ed9",
+    "level" : 10,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "29d177b188441eab",
+    "level" : 11,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "042b32af213b2faa",
+    "level" : 12,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "d47033c7ad6b2878",
+    "level" : 13,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "b36eff267de8b00c",
+    "level" : 14,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "ceca3fe88230e28d",
+    "level" : 15,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "0a71a63f8b5efe72",
+    "level" : 16,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "1891b1442003e900",
+    "level" : 17,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "2786afdb34e424a4",
+    "level" : 18,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "bbf1de047443b2bb",
+    "level" : 19,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "affb144abddd0eea",
+    "level" : 20,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "c87c799a9d4affb9",
+    "level" : 21,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "d873abd273839ff1",
+    "level" : 22,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "1eec47133569daf3",
+    "level" : 23,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "c48a07e83ae42308",
+    "level" : 24,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "ffb5d8026367c84f",
+    "level" : 25,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "f08bdc989e2fbe3a",
+    "level" : 26,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "f1f248ca2e4cfa05",
+    "level" : 27,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "0c7821862f96ec13",
+    "level" : 28,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "5edd75c0b69a8bc1",
+    "level" : 29,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "2b8a94ac4889cb24",
+    "level" : 30,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "46e26bda9ffe3569",
+    "level" : 31,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "9521c2d59082803f",
+    "level" : 32,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "bcab87dd3bb38fc7",
+    "level" : 33,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "7c50660cf8499ba9",
+    "level" : 34,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "528061310d881ad3",
+    "level" : 35,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "d8618383b6022a13",
+    "level" : 36,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "4d48ce850ef19ce4",
+    "level" : 37,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "70855ac13ba3a1b1",
+    "level" : 38,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "c5b9c0a6c0d5c7d7",
+    "level" : 39,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "9abfc61fd9cfac79",
+    "level" : 40,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "256760af5c03512b",
+    "level" : 41,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "94870feca8383724",
+    "level" : 42,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "9b9cb89b266ead04",
+    "level" : 43,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "73290066137f6a14",
+    "level" : 44,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "febbea1013e797e1",
+    "level" : 45,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "effbb7f1d9d10cce",
+    "level" : 46,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "f7c8958cf50e424a",
+    "level" : 47,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "a035d06764fd2b84",
+    "level" : 48,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "0429a73bf6236bc9",
+    "level" : 49,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "2fa27b0f1f67f633",
+    "level" : 50,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "0ad663605614e0c5",
+    "level" : 51,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "66afb95c9aebe383",
+    "level" : 52,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "822d4acbbff64e9a",
+    "level" : 53,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "a2c726ad0d3219aa",
+    "level" : 54,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "6f68faf3e63e9130",
+    "level" : 55,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "951676dedcf863c0",
+    "level" : 56,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "01a7d3f851ae1365",
+    "level" : 57,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "b2ce410af4117caa",
+    "level" : 58,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "94b7259c02103d79",
+    "level" : 59,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "6b1623369d011d46",
+    "level" : 60,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "4e407b629e29618c",
+    "level" : 61,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "ce1d0cdaff4ced40",
+    "level" : 62,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "cda85776a6515a4e",
+    "level" : 63,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "76074b236b7a04eb",
+    "level" : 64,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "9ab9baaa02d8f6ee",
+    "level" : 65,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "5195a3a4b18e531a",
+    "level" : 66,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "d80c8818c52685e9",
+    "level" : 67,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "9db8a1da98d25ed6",
+    "level" : 68,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "7a7528bfb0a7417e",
+    "level" : 69,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "f4d9f5d57d5b2f27",
+    "level" : 70,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "9d28a73a7727c98d",
+    "level" : 71,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "5d2463c55956854a",
+    "level" : 72,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "5206d1d0b47875b3",
+    "level" : 73,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "a2c2b0011a72ef70",
+    "level" : 74,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "a679800522f32971",
+    "level" : 75,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "4c27daf0a06dd301",
+    "level" : 76,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "b495accd01edaff2",
+    "level" : 77,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "ec459e8fbfeeb696",
+    "level" : 78,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "0672e203a34de3af",
+    "level" : 79,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "547fdced88f8c128",
+    "level" : 80,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "0294e9f5bfeb066d",
+    "level" : 81,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "dbab09de9bcf7352",
+    "level" : 82,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "bf026f2b0f9e6e98",
+    "level" : 83,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "af170f81d1b72672",
+    "level" : 84,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "fa0dba98062ddc57",
+    "level" : 85,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "0503c6f3d1367bb0",
+    "level" : 86,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "b79101cb43806c1a",
+    "level" : 87,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "92bc2e694a4fc9a4",
+    "level" : 88,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "40338f45369c1922",
+    "level" : 89,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "0de1f428ef5ed681",
+    "level" : 90,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "80ae4b1c76b07541",
+    "level" : 91,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "4294b3f4e34072f8",
+    "level" : 92,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "fcdfb1cae9d97aa8",
+    "level" : 93,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "d1aab96e620e504a",
+    "level" : 94,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "7db0b01d0a5f7027",
+    "level" : 95,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "ccd8024b6c53f9b8",
+    "level" : 96,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "178a29ef82ae9d2f",
+    "level" : 97,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "a56fae8e8cd6cf03",
+    "level" : 98,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "74ea14ef7c134cc4",
+    "level" : 99,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "afe0cc3d931f43d6",
+    "level" : 100,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "c883b54c1ccc2bd6",
+    "level" : 101,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "81e9d9c97fa98672",
+    "level" : 102,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "86d4a1f4de858bc5",
+    "level" : 103,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "79999adef7fc76fd",
+    "level" : 104,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "7c09201a25850d23",
+    "level" : 105,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "9e7d5fa95186e18c",
+    "level" : 106,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "fc7e66549db2eb17",
+    "level" : 107,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "a7be2b03535387d1",
+    "level" : 108,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "cf99c08ccd4153cd",
+    "level" : 109,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "d4247ea616d8d4c7",
+    "level" : 110,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "77a66d63aa13bfb7",
+    "level" : 111,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "1cebdf6d48b800f7",
+    "level" : 112,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "54a2f8390cbeae35",
+    "level" : 113,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "4c023461086f766d",
+    "level" : 114,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "e9ad4393d7db7ba1",
+    "level" : 115,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "5a488f3f10101667",
+    "level" : 116,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "63c4c738c7cc54eb",
+    "level" : 117,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "84fadab62b26f0fd",
+    "level" : 118,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "d15da6acbc44f11e",
+    "level" : 119,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "08a7744f6aa3ebf0",
+    "level" : 120,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "8e9c94009a468425",
+    "level" : 121,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "fae8c3d84cd749ed",
+    "level" : 122,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "d1b378b02ec64c46",
+    "level" : 123,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "13b78828f8d1f364",
+    "level" : 124,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "2e0fb63ca234340b",
+    "level" : 125,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "b1d061f075f00d80",
+    "level" : 126,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "accdce410b71f45c",
+    "level" : 127,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "96a93b1051a59ffc",
+    "level" : 128,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "419e69b4babb6b6e",
+    "level" : 129,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "4effe56ac5a80f08",
+    "level" : 130,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "65e80a01c214e3ed",
+    "level" : 131,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "0d1248bea210ee92",
+    "level" : 132,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "d72d599c7a8e8d5d",
+    "level" : 133,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "4871c076de7f8274",
+    "level" : 134,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "fa0eaff0034f47c3",
+    "level" : 135,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "7c3e392f7c0dda4b",
+    "level" : 136,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "292f28207247f763",
+    "level" : 137,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "aaa118f5b3bc2642",
+    "level" : 138,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "2a537b700e86da02",
+    "level" : 139,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "83fae89dc1dc26cc",
+    "level" : 140,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "3d4e6160865d21dc",
+    "level" : 141,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "f997627f05b953f3",
+    "level" : 142,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "574dd48c179d3d48",
+    "level" : 143,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "e5ed11cb45537f71",
+    "level" : 144,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "f0e229680b1ebee4",
+    "level" : 145,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "5789df3ce6e434ac",
+    "level" : 146,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "1692d8119b859e2a",
+    "level" : 147,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "97b10cc58d7db789",
+    "level" : 148,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "4d0632c164be01b2",
+    "level" : 149,
+    "rebuiltFromSeed" : true
+  },
+  {
+    "fingerprint" : "5c6aa07a1321806b",
+    "level" : 150,
+    "rebuiltFromSeed" : true
+  }
+]

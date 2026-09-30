@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "date": "2026-10-01",
-  "build": "0.2.18 (21)",
+  "build": "0.2.19 (22)",
   "status": "Partial original-spec alignment; remaining client, reference and release gaps open.",
   "originalSHA256": "274bbf15f031bd80bb8b360cf14c0266acff370a230d9cad1b1785461df54dd2",
   "currentPackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49",
@@ -16,12 +16,12 @@
     "minimumOSRuntime": "not tested; compile target iOS 15"
   },
   "core": {
-    "build": "0.2.16 (19)",
-    "passed": 156,
+    "build": "0.2.19 (22)",
+    "passed": 164,
     "failed": 0,
-    "seconds": 55.319,
-    "log": "Validation/test-runs/original-0216-core.log",
-    "scope": "Complete Swift package suite including12 new generation-archive persistence and validation cases; no new150-level production or formal difficulty acceptance."
+    "seconds": 55.24,
+    "log": "Validation/test-runs/original-0219-core.log",
+    "scope": "Complete Swift package suite. Includes 3 new dynamic/legacy tutorial cases and 5 schema/plan migration cases; generator eligibility still validates 64 seeds. Production 150 boards unchanged; formal difficulty and cross-product reference acceptance remain open."
   },
   "pythonImport": {
     "passed": 6,
@@ -628,6 +628,15 @@
       "failed": 0,
       "skipped": 0,
       "scope": "Actual UI: default Chinese/English switch with cold same-board restore; English first-launch legal/acceptance flow with restart; modal isolation and return to same board. Existing system permission decisions may be retained by this simulator; not fresh hardware permission acceptance."
+    },
+    {
+      "build": "0.2.19 (22)",
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-0219-ui-17e.xcresult",
+      "uiTestsPassed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "scope": "Real UI: v2 current-board full nine-step tutorial; v2 historical-board full tutorial with four cold checkpoints; Chinese tutorial and four board sizes. Historical-board UI uses a legacy board fixture with v2 teaching, not a v1 save migration. V1 migration is verified by AppTests, not mislabeled as UI."
     }
   ],
   "visualEvidence": {
@@ -649,18 +658,17 @@
     "Actual system Reduce Motion and full animation timing remain unverified; 0.2.7 uses scoped RootView/CheckInView test overrides.",
     "Formal interstitial placement/closed mapping, request-vs-display cooldown, repeat-clear counting and provider metadata timing remain to be frozen; local v1 mapping is not reference acceptance.",
     "Client: configured free-ad trigger sequence and reference restart flow are not fully implemented. The invented triggerOrder/restartCreatesNewBoard fields do not define the original behavior; frozen captures must resolve sequencing and whether confirmation or an alternate board is required.",
-    "Real rewarded-ad SDK/metadata/error mapping and analytics transport/acknowledgement/server deduplication remain unconnected; local lifecycle durability is covered in 0.2.10.",
-    "Client: original [159] requires board-dependent tutorial demonstration order. Current targets are dynamic but order remains fixed; versioned plan migration is needed to preserve saved numeric steps. GEN-03 is corrected to partial in 0.2.18."
+    "Real rewarded-ad SDK/metadata/error mapping and analytics transport/acknowledgement/server deduplication remain unconnected; local lifecycle durability is covered in 0.2.10."
   ],
   "historicalFailuresRetained": "Initial UI/app runs and first full-core run failed on changed fixture assumptions or real UI issues; these are retained under Validation/test-runs. Only explicitly listed successful reruns count. Old 88-item checklist completion counts are superseded.",
   "applicationTests": {
-    "build": "0.2.18 (21)",
-    "passed": 277,
+    "build": "0.2.19 (22)",
+    "passed": 281,
     "failed": 0,
     "skipped": 0,
-    "seconds": 103.394,
-    "bundle": "Validation/test-runs/original-0218-app-final-recheck.xcresult",
-    "scope": "Complete AppTests on iPhone 17 Pro with no exclusions. Includes 20 startup cases and 5 gameplay-availability integration cases. Optional notification errors are injected; gameplay generation uses actual runtime generator and local persistence. Not physical-device or real SDK verification."
+    "seconds": 104.114,
+    "bundle": "Validation/test-runs/original-0219-app-final-recheck.xcresult",
+    "scope": "Complete AppTests on iPhone 17 Pro with no exclusions. New schema3 absent-field migration tests preserve each legacy step/target and partial swipe; v2 restores every step over packaged and eight generated boards. Chinese/English copy checked for both plan versions."
   },
   "supersededOrInterruptedRuns": [
     "reward-readiness-final was intentionally interrupted to stop two runners targeting one simulator; not counted as success.",
@@ -703,36 +711,28 @@
     }
   ],
   "buildVerification": {
-    "bundleVersion": "0.2.18 (21)",
+    "bundleVersion": "0.2.19 (22)",
     "simulatorDebug": "passed with local simulator signing",
-    "simulatorLog": "Validation/test-runs/original-0218-app-final-recheck.log",
+    "simulatorLog": "Validation/test-runs/original-0219-app-final-recheck.log",
     "genericIOSReleaseUnsigned": "passed",
-    "releaseLog": "Validation/test-runs/original-0218-release.log",
+    "releaseLog": "Validation/test-runs/original-0219-release.log",
     "signingAndDeviceExecution": "Simulator locally signed; device Release compilation unsigned. No physical-device, minimum-runtime, TestFlight or App Store acceptance. Debug/Release remain one internal Demo environment.",
     "sourceDocumentSHA256Unchanged": true,
-    "normalInstallEvidence": "Validation/original-0218-install-audit.json",
+    "normalInstallEvidence": "Validation/original-0219-install-audit.json",
     "normalInstallDevices": [
       {
         "device": "iPhone 17 Pro",
         "deviceID": "3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3",
-        "version": "0.2.18 (21)",
+        "version": "0.2.19 (22)",
         "dataContainerChanged": true,
-        "launch": "com.capydoku.demo: 57697",
+        "launch": "com.capydoku.demo: 62257",
         "installBytesUnchanged": true,
         "launchPlayerStateUnchanged": true,
         "allEnvelopeChecksumsValid": true,
+        "primarySchemaAfterLaunch": 4,
+        "tutorialPlanVersionAfterLaunch": 1,
         "launchBytesUnchanged": false,
         "before": {
-          "progress.json": {
-            "bytes": 3746,
-            "sha256": "ad7f88ed4c19a7336d82dae94d21fbdd662b209b019a6eaaaf23cef175485139"
-          },
-          "progress.backup.json": {
-            "bytes": 3746,
-            "sha256": "caea64edb451cb8f9d1036598b6177b91ff439d450a9377e5bc760c5ce2e6566"
-          }
-        },
-        "afterLaunch": {
           "progress.json": {
             "bytes": 3746,
             "sha256": "fa5f31ec8c3ea6202656aec3617b39f9e0c82a50aa58dda295e7dd2e1c57421f"
@@ -741,18 +741,30 @@
             "bytes": 3746,
             "sha256": "ad7f88ed4c19a7336d82dae94d21fbdd662b209b019a6eaaaf23cef175485139"
           }
+        },
+        "afterLaunch": {
+          "progress.json": {
+            "bytes": 3778,
+            "sha256": "00bd9fec2adcbbc7e4b5319b113afd3f4b2c854450df63bc4a8ccb336e709f07"
+          },
+          "progress.backup.json": {
+            "bytes": 3778,
+            "sha256": "00bd9fec2adcbbc7e4b5319b113afd3f4b2c854450df63bc4a8ccb336e709f07"
+          }
         }
       },
       {
         "device": "iPhone 17e",
         "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
-        "version": "0.2.18 (21)",
+        "version": "0.2.19 (22)",
         "dataContainerChanged": true,
-        "launch": "com.capydoku.demo: 57721",
+        "launch": "com.capydoku.demo: 62293",
         "installBytesUnchanged": true,
         "launchPlayerStateUnchanged": true,
         "allEnvelopeChecksumsValid": true,
-        "launchBytesUnchanged": true,
+        "primarySchemaAfterLaunch": 4,
+        "tutorialPlanVersionAfterLaunch": 1,
+        "launchBytesUnchanged": false,
         "before": {
           "progress.json": {
             "bytes": 1078,
@@ -765,12 +777,12 @@
         },
         "afterLaunch": {
           "progress.json": {
-            "bytes": 1078,
-            "sha256": "7e8827414371c98c312b7dba72169b67c1bd64c7ef0e305a4541d40b0e7231e4"
+            "bytes": 1110,
+            "sha256": "0d93a250abca328e2616bd599035c05d823cfe5cf9f7248907d620f9b827243c"
           },
           "progress.backup.json": {
-            "bytes": 1078,
-            "sha256": "7e8827414371c98c312b7dba72169b67c1bd64c7ef0e305a4541d40b0e7231e4"
+            "bytes": 1110,
+            "sha256": "0d93a250abca328e2616bd599035c05d823cfe5cf9f7248907d620f9b827243c"
           }
         }
       }
@@ -995,6 +1007,15 @@
       "seconds": 105.074,
       "bundle": "Validation/test-runs/original-0217-app-final.xcresult",
       "scope": "Complete AppTests on iPhone17Pro, no exclusions. Two added actual-rendering contrast cases cover white/hollow/red Xs across10 palette colors and two board widths, and bilingual free-revive badges. Synthetic palette and reference-row fixtures are explicitly labeled."
+    },
+    {
+      "build": "0.2.18 (21)",
+      "passed": 277,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 103.394,
+      "bundle": "Validation/test-runs/original-0218-app-final-recheck.xcresult",
+      "scope": "Complete AppTests on iPhone 17 Pro with no exclusions. Includes 20 startup cases and 5 gameplay-availability integration cases. Optional notification errors are injected; gameplay generation uses actual runtime generator and local persistence. Not physical-device or real SDK verification."
     }
   ],
   "remoteConfigurationContract": {
@@ -1421,6 +1442,80 @@
           }
         }
       ]
+    },
+    {
+      "bundleVersion": "0.2.18 (21)",
+      "simulatorDebug": "passed with local simulator signing",
+      "simulatorLog": "Validation/test-runs/original-0218-app-final-recheck.log",
+      "genericIOSReleaseUnsigned": "passed",
+      "releaseLog": "Validation/test-runs/original-0218-release.log",
+      "signingAndDeviceExecution": "Simulator locally signed; device Release compilation unsigned. No physical-device, minimum-runtime, TestFlight or App Store acceptance. Debug/Release remain one internal Demo environment.",
+      "sourceDocumentSHA256Unchanged": true,
+      "normalInstallEvidence": "Validation/original-0218-install-audit.json",
+      "normalInstallDevices": [
+        {
+          "device": "iPhone 17 Pro",
+          "deviceID": "3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3",
+          "version": "0.2.18 (21)",
+          "dataContainerChanged": true,
+          "launch": "com.capydoku.demo: 57697",
+          "installBytesUnchanged": true,
+          "launchPlayerStateUnchanged": true,
+          "allEnvelopeChecksumsValid": true,
+          "launchBytesUnchanged": false,
+          "before": {
+            "progress.json": {
+              "bytes": 3746,
+              "sha256": "ad7f88ed4c19a7336d82dae94d21fbdd662b209b019a6eaaaf23cef175485139"
+            },
+            "progress.backup.json": {
+              "bytes": 3746,
+              "sha256": "caea64edb451cb8f9d1036598b6177b91ff439d450a9377e5bc760c5ce2e6566"
+            }
+          },
+          "afterLaunch": {
+            "progress.json": {
+              "bytes": 3746,
+              "sha256": "fa5f31ec8c3ea6202656aec3617b39f9e0c82a50aa58dda295e7dd2e1c57421f"
+            },
+            "progress.backup.json": {
+              "bytes": 3746,
+              "sha256": "ad7f88ed4c19a7336d82dae94d21fbdd662b209b019a6eaaaf23cef175485139"
+            }
+          }
+        },
+        {
+          "device": "iPhone 17e",
+          "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+          "version": "0.2.18 (21)",
+          "dataContainerChanged": true,
+          "launch": "com.capydoku.demo: 57721",
+          "installBytesUnchanged": true,
+          "launchPlayerStateUnchanged": true,
+          "allEnvelopeChecksumsValid": true,
+          "launchBytesUnchanged": true,
+          "before": {
+            "progress.json": {
+              "bytes": 1078,
+              "sha256": "7e8827414371c98c312b7dba72169b67c1bd64c7ef0e305a4541d40b0e7231e4"
+            },
+            "progress.backup.json": {
+              "bytes": 1078,
+              "sha256": "7e8827414371c98c312b7dba72169b67c1bd64c7ef0e305a4541d40b0e7231e4"
+            }
+          },
+          "afterLaunch": {
+            "progress.json": {
+              "bytes": 1078,
+              "sha256": "7e8827414371c98c312b7dba72169b67c1bd64c7ef0e305a4541d40b0e7231e4"
+            },
+            "progress.backup.json": {
+              "bytes": 1078,
+              "sha256": "7e8827414371c98c312b7dba72169b67c1bd64c7ef0e305a4541d40b0e7231e4"
+            }
+          }
+        }
+      ]
     }
   ],
   "feedbackCorrection": {
@@ -1547,6 +1642,14 @@
       "seconds": 50.975,
       "log": "Validation/test-runs/original-0215-core.log",
       "scope": "Complete Swift package suite including eight experimental history cases and three cache/checkpoint storage cases. No new packaged-level production or formal difficulty acceptance."
+    },
+    {
+      "build": "0.2.16 (19)",
+      "passed": 156,
+      "failed": 0,
+      "seconds": 55.319,
+      "log": "Validation/test-runs/original-0216-core.log",
+      "scope": "Complete Swift package suite including12 new generation-archive persistence and validation cases; no new150-level production or formal difficulty acceptance."
     }
   ],
   "levelResultCorrection": {
@@ -2369,6 +2472,100 @@
       "Tracking request failures, acceptance persistence and resource errors retain existing blocking/retry behavior; this change specifically fixes optional notification API errors.",
       "Some blockers are exercised by model state control. Actual UI regressions do not simulate an Apple notification service exception or arbitrary physical gesture timing.",
       "Fixed tutorial demonstration order, frozen gameplay/difficulty/reference media, actual audio/services, physical-device and release acceptance remain open."
+    ]
+  },
+  "corrections0219": {
+    "sourceParagraphs": [
+      159,
+      160,
+      161,
+      162,
+      163,
+      164,
+      165,
+      166,
+      167,
+      168,
+      169,
+      402,
+      406,
+      407
+    ],
+    "changes": [
+      "Tutorial plan v2 derives rule order from each board: singleton region proof first, then greatest newly explained exclusions, with deterministic ties. No answer, seed or player marks select that order; all five dependent operation steps remain.",
+      "Saved plan version pins numeric tutorial progress. Missing version in schema1–3 decodes as legacy1; unfinished new L1 attempts use v2, while Continue and cold restoration preserve v1. Completed tutorials do not reopen without explicit Replay.",
+      "Save schema4 requires an explicit known version. Null, missing, wrong-type and unknown versions follow existing backup/rejected-byte preservation paths; schema4 accepts legacy1 so upgrades retain unfinished teaching. This is not lossless downgrade support.",
+      "Level-tool production rebuild exports the tutorial plan version beside its derived steps."
+    ],
+    "focusedCore": {
+      "passed": 12,
+      "failed": 0,
+      "log": "Validation/test-runs/original-0219-tutorial-core.log"
+    },
+    "focusedApp": {
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0,
+      "bundle": "Validation/test-runs/original-0219-tutorial-app.xcresult"
+    },
+    "initialApplicationRun": {
+      "passed": 280,
+      "failed": 1,
+      "assertionFailures": 1,
+      "bundle": "Validation/test-runs/original-0219-app-final.xcresult",
+      "diagnosis": "A localization test still asserted the old fixed rule sequence for the default plan. It now verifies the correct sequence and every Chinese/English string separately for legacy1 and boardDriven2; production behavior was not relaxed."
+    },
+    "coreRegression": {
+      "build": "0.2.19 (22)",
+      "passed": 164,
+      "failed": 0,
+      "seconds": 55.24,
+      "log": "Validation/test-runs/original-0219-core.log",
+      "scope": "Complete Swift package suite. Includes 3 new dynamic/legacy tutorial cases and 5 schema/plan migration cases; generator eligibility still validates 64 seeds. Production 150 boards unchanged; formal difficulty and cross-product reference acceptance remain open."
+    },
+    "applicationRegression": {
+      "build": "0.2.19 (22)",
+      "passed": 281,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 104.114,
+      "bundle": "Validation/test-runs/original-0219-app-final-recheck.xcresult",
+      "scope": "Complete AppTests on iPhone 17 Pro with no exclusions. New schema3 absent-field migration tests preserve each legacy step/target and partial swipe; v2 restores every step over packaged and eight generated boards. Chinese/English copy checked for both plan versions."
+    },
+    "uiRegression": {
+      "build": "0.2.19 (22)",
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-0219-ui-17e.xcresult",
+      "uiTestsPassed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "scope": "Real UI: v2 current-board full nine-step tutorial; v2 historical-board full tutorial with four cold checkpoints; Chinese tutorial and four board sizes. Historical-board UI uses a legacy board fixture with v2 teaching, not a v1 save migration. V1 migration is verified by AppTests, not mislabeled as UI."
+    },
+    "productionRebuild": {
+      "report": "Validation/original-0219-rebuild.json",
+      "sameBoards": 150,
+      "changedPack": false,
+      "tutorialPlanVersion": 2,
+      "scope": "Exact reconstruction from previously saved generation metadata, not new difficulty calibration or cross-product validation."
+    },
+    "visualManifest": "Docs/original-tutorial-0219/manifest.json",
+    "normalInstallEvidence": "Validation/original-0219-install-audit.json",
+    "sourceHashes": {
+      "Sources/CapydokuCore/PuzzleHints.swift": "571d214610ab0e5060853fffd466cf03a8a839b0f20c5b43f8b79c37172805ad",
+      "Sources/CapydokuCore/TutorialPlanVersion.swift": "614b7d566b881366de5a288e02cf96dda0228fe1a6b252f5accca2dfaff55807",
+      "Sources/CapydokuCore/PlayerProgress.swift": "ed143655d6c70e878a65f86806eb1502c93c14b113d73cd09c3193b800d9f6e0",
+      "Sources/CapydokuCore/SaveStore.swift": "d9212843302eaa933cf78b1f68ac6ecce757a8bc0539d78f2297adbfbc15dac4",
+      "App/AppModel.swift": "7a2299720aad363139f9f57a4895638ebbfef2efde0513bcc7d7656d36306bfc",
+      "AppTests/TutorialPlanMigrationTests.swift": "d41b8115a3cd83af4ea1f315bf90666c03ff8ce94b87bdc2b295351e7dad5063",
+      "AppTests/TutorialRecoveryTests.swift": "1d445d961bdf55dc3321faf8f8a140061f925f5d6a45f0be7e93dc31e7fe783e",
+      "Tests/CapydokuCoreTests/DynamicTutorialPlanTests.swift": "927efa2c2aa4269ecd75af488dc1b29c01ffde6dbba449ec5c5654013d4ec7a7",
+      "Tests/CapydokuCoreTests/TutorialPlanStorageTests.swift": "1338a70ffa4e27c36dc2baab94c71013d993a833d15e2459f06e34599e1f3add"
+    },
+    "limitations": [
+      "Rule ordering is the implemented board-derived Demo policy, not a claim of frozen Pawdoku demonstration timing or human usability validation.",
+      "Normal upgrade verifies all existing payload fields plus the sole expected new legacy1 plan field and schema4 envelope; no arbitrary fields are ignored.",
+      "Old clients reject schema4 but may fall back to an earlier schema3 backup. No lossless app downgrade or automatic merge of preserved files is promised.",
+      "Original reference recordings/configuration/audio, production service integration, physical-device and release gates remain open."
     ]
   }
 }

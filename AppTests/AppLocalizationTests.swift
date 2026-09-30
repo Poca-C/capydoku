@@ -106,7 +106,6 @@ final class AppLocalizationTests: XCTestCase {
 
     func testActualPackTutorialCoversAllFourRulesAndAllOperationsInChinese() throws {
         let puzzle = try XCTUnwrap(try packagedPuzzles().first { $0.id == 1 })
-        let steps = PuzzleHints.tutorial(puzzle: puzzle)
         let expected: [(String, String, String)] = [
             ("row", "每行一只", "每一行恰好藏着一只卡皮巴拉。"),
             ("column", "每列一只", "每一列也恰好有一只卡皮巴拉。"),
@@ -118,13 +117,18 @@ final class AppLocalizationTests: XCTestCase {
             ("swipeVertical", "沿一列滑动", "现在沿竖直方向滑过两个高亮格。横向或纵向滑动会标记 X，斜向滑动不会。"),
             ("find", "双击寻找", "高亮区域只有一个格子，卡皮巴拉一定在这里。双击找到它，再运用四条规则寻找其他卡皮巴拉。")
         ]
-        XCTAssertEqual(steps.map(\.id), expected.map { $0.0 })
-        for (id, title, instruction) in expected {
-            let step = try XCTUnwrap(steps.first { $0.id == id })
-            XCTAssertEqual(chinese.text(step.title), title, id)
-            XCTAssertEqual(chinese.text(step.instruction), instruction, id)
-            XCTAssertEqual(AppLanguage.english.text(step.title), step.title, id)
-            XCTAssertEqual(AppLanguage.english.text(step.instruction), step.instruction, id)
+        for version in [TutorialPlanVersion.legacy, .boardDriven] {
+            let steps = PuzzleHints.tutorial(puzzle: puzzle, version: version)
+            let order = version == .legacy ? expected.map { $0.0 }
+                : ["region", "neighbors", "row", "column", "mark", "undo", "swipe", "swipeVertical", "find"]
+            XCTAssertEqual(steps.map(\.id), order)
+            for (id, title, instruction) in expected {
+                let step = try XCTUnwrap(steps.first { $0.id == id })
+                XCTAssertEqual(chinese.text(step.title), title, id)
+                XCTAssertEqual(chinese.text(step.instruction), instruction, id)
+                XCTAssertEqual(AppLanguage.english.text(step.title), step.title, id)
+                XCTAssertEqual(AppLanguage.english.text(step.instruction), step.instruction, id)
+            }
         }
     }
 

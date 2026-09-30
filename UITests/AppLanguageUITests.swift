@@ -85,7 +85,7 @@ final class AppLanguageUITests: XCTestCase {
         app.launchArguments = ["-ui-testing", "-reset-demo", "-level", "1"]
         app.launch()
         XCTAssertTrue(item("tutorial_next").waitForExistence(timeout: 12))
-        XCTAssertTrue(app.staticTexts["每一行恰好藏着一只卡皮巴拉。"].exists)
+        XCTAssertTrue(app.staticTexts["每个连通的颜色区域恰好有一只卡皮巴拉。"].exists)
         capture("chinese-tutorial")
         for (level, size) in [(1,4), (6,6), (51,8), (101,10)] {
             app.terminate()

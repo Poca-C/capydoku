@@ -91,8 +91,11 @@ final class CapydokuUITests: XCTestCase {
         app.launchArguments = ["-ui-testing", "-reset-demo", "-level", "1"]
         app.launch()
         XCTAssertTrue(app.staticTexts["tutorial_title"].waitForExistence(timeout: 15))
-        for rule in ["One per row", "One per column", "One per region", "Give them space"] {
+        // Singleton 8 proves the animal; its five neighbors add the most exclusions,
+        // followed by two new row exclusions and one new column exclusion.
+        for rule in ["One per region", "Give them space", "One per row", "One per column"] {
             XCTAssertTrue(app.staticTexts["tutorial_title"].label.contains(rule))
+            attachScreen("v2-current-board-\(rule)")
             cell(0).tap()
             expectValue(cell(0), "empty", timeout: 5)
             tapButton("tutorial_next")

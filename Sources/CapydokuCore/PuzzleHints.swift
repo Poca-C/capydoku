@@ -173,7 +173,9 @@ public enum PuzzleHints {
     public static func canTeach(puzzle p: Puzzle) -> Bool {
         guard p.id == 1, p.size == 4, PuzzleSolver.validate(p).valid else { return false }
         let steps = tutorial(puzzle: p)
-        guard steps.map(\.id) == ["row", "column", "region", "neighbors", "mark", "undo", "swipe", "swipeVertical", "find"],
+        guard steps.count == 9,
+              Set(steps.prefix(4).map(\.id)) == Set(["row", "column", "region", "neighbors"]),
+              steps.dropFirst(4).map(\.id) == ["mark", "undo", "swipe", "swipeVertical", "find"],
               steps.map(\.action) == ["read", "read", "read", "read", "tap", "tap", "swipe", "swipe", "doubleTap"] else { return false }
         let cells = Set(p.regions.indices)
         guard steps.allSatisfy({ !$0.targetCells.isEmpty && Set($0.targetCells).count == $0.targetCells.count && Set($0.targetCells).isSubset(of: cells) }),
@@ -187,8 +189,8 @@ public enum PuzzleHints {
         let neighbors = Set(cells.filter {
             $0 != animal && abs($0 / p.size - animal / p.size) <= 1 && abs($0 % p.size - animal % p.size) <= 1
         })
-        guard Set(steps[0].targetCells) == row, Set(steps[1].targetCells) == column,
-              Set(steps[2].targetCells) == region, Set(steps[3].targetCells) == neighbors,
+        let ruleTargets = ["row": row, "column": column, "region": region, "neighbors": neighbors]
+        guard steps.prefix(4).allSatisfy({ Set($0.targetCells) == ruleTargets[$0.id] }),
               steps[4].targetCells.count == 1, steps[4].targetCells == steps[5].targetCells else { return false }
 
         var marks = Set<Int>()
@@ -216,7 +218,37 @@ public enum PuzzleHints {
         return !marks.contains(animal)
     }
 
-    public static func tutorial(puzzle p: Puzzle) -> [TutorialStep] {
+    public static func tutorial(puzzle p: Puzzle, version: TutorialPlanVersion = .current) -> [TutorialStep] {
+        let legacy = legacyTutorial(puzzle: p)
+        guard version == .boardDriven else { return legacy }
+        guard legacy.count == 9, let region = legacy.first(where: { $0.id == "region" }),
+              region.targetCells.count == 1, let animal = legacy.last?.targetCells.first else { return [] }
+
+        // First establish the animal from its singleton region. Then explain the
+        // rule that contributes the most NEW certain exclusions on this board.
+        // Ties retain row, column, neighbors order; no seed, answer or player
+        // marks participate, so an immutable board always rebuilds this plan.
+        var orderedRules = [region]
+        var remaining = legacy.prefix(4).filter { $0.id != "region" }
+        var explained = Set(region.targetCells).subtracting([animal])
+        while !remaining.isEmpty {
+            func additions(_ index: Int) -> Set<Int> {
+                Set(remaining[index].targetCells).subtracting([animal]).subtracting(explained)
+            }
+            var best = 0
+            for index in remaining.indices.dropFirst() where additions(index).count > additions(best).count {
+                best = index
+            }
+            let next = remaining.remove(at: best)
+            orderedRules.append(next)
+            explained.formUnion(Set(next.targetCells).subtracting([animal]))
+        }
+        return orderedRules + legacy.dropFirst(4)
+    }
+
+    /// Keep the original target selection and complete sequence for saved v1
+    /// tutorialStep indices, including an interrupted undo or partial swipe.
+    private static func legacyTutorial(puzzle p: Puzzle) -> [TutorialStep] {
         guard (1...16).contains(p.size), p.regions.count == p.size * p.size,
               p.regions.allSatisfy({ (0..<p.size).contains($0) }),
               let proof = deduction(p, candidates: Set(p.regions.indices), confirmed: []),

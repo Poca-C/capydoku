@@ -90,12 +90,14 @@ do {
             var level: Int
             var rebuiltFromSeed: Bool
             var fingerprint: String
+            var tutorialPlanVersion: TutorialPlanVersion?
             var tutorialSteps: [TutorialStep]?
         }
         let puzzles = try JSONDecoder().decode([Puzzle].self, from: Data(contentsOf: URL(fileURLWithPath: argument("--catalog", fallback: "Resources/levels.json"))))
         let rows = try puzzles.map { puzzle in
             RebuildRow(level: puzzle.id, rebuiltFromSeed: try PuzzleGenerator.rebuild(puzzle) == puzzle,
-                fingerprint: puzzle.fingerprint, tutorialSteps: puzzle.id == 1 ? PuzzleHints.tutorial(puzzle: puzzle) : nil)
+                fingerprint: puzzle.fingerprint, tutorialPlanVersion: puzzle.id == 1 ? .current : nil,
+                tutorialSteps: puzzle.id == 1 ? PuzzleHints.tutorial(puzzle: puzzle) : nil)
         }
         let folder = outputDirectory.appendingPathComponent("Validation")
         try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)

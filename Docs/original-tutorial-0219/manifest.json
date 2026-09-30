@@ -1,0 +1,574 @@
+{
+  "schemaVersion": 1,
+  "status": "complete",
+  "resultBundle": "Validation/test-runs/original-0219-ui-17e.xcresult",
+  "exportedAttachmentsManifest": "Validation/test-runs/original-0219-ui-attachments/manifest.json",
+  "export": {
+    "command": "xcrun xcresulttool export attachments --path Validation/test-runs/original-0219-ui-17e.xcresult --output-path Validation/test-runs/original-0219-ui-attachments",
+    "exitCode": 0,
+    "retryNote": "Initial export collided with xcresulttool database materialization during a concurrent summary read; the sequential retry succeeded. No tests were rerun."
+  },
+  "uiSummary": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "deviceId": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+          "deviceName": "iPhone 17e",
+          "modelName": "iPhone 17e",
+          "osBuildNumber": "23F77",
+          "osVersion": "26.5",
+          "platform": "iOS Simulator"
+        },
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "passedTests": 3,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "Capydoku · Built with macOS 26.5.1",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1790796710.551,
+    "passedTests": 3,
+    "result": "Passed",
+    "skippedTests": 0,
+    "startTime": 1790796580.427,
+    "statistics": [],
+    "testFailures": [],
+    "title": "Test - Capydoku",
+    "topInsights": [],
+    "totalTestCount": 3
+  },
+  "artifactCount": 14,
+  "bytePreservation": "All archived PNG files are byte-for-byte copies of the exported XCTest attachments; no crop, rescale, annotation or re-encoding was performed. All originals are 1170×2532 pixels. view_image displayed automatically scaled previews for visual inspection without altering the files.",
+  "scope": {
+    "currentBoardV2": {
+      "count": 5,
+      "pack": "Resources/levels.json",
+      "level": 1,
+      "planVersion": 2,
+      "ruleOrder": [
+        "region",
+        "neighbors",
+        "row",
+        "column"
+      ],
+      "includesCompletion": true,
+      "language": "English selected by CAPYDOKU_UI_LANGUAGE=en",
+      "launchArguments": [
+        "-ui-testing",
+        "-reset-demo",
+        "-level",
+        "1"
+      ]
+    },
+    "historicalBoardV2": {
+      "count": 4,
+      "pack": "Resources/levels-legacy-v2.json",
+      "level": 1,
+      "planVersion": 2,
+      "ruleOrder": [
+        "region",
+        "neighbors",
+        "column",
+        "row"
+      ],
+      "language": "English selected by CAPYDOKU_UI_LANGUAGE=en",
+      "launchArguments": [
+        "-ui-testing",
+        "-legacy-fixture",
+        "-reset-demo",
+        "-level",
+        "1"
+      ],
+      "limitation": "The legacy-fixture flag selects a historical puzzle geometry. This is a fresh v2 tutorial and its v2 cold restarts, NOT actual UI evidence of migrating a legacy v1 saved tutorial. Legacy v1 save migration is covered separately by AppTests/TutorialPlanMigrationTests.swift and Tests/CapydokuCoreTests/TutorialPlanStorageTests.swift."
+    },
+    "chineseRendering": {
+      "count": 5,
+      "language": "Chinese default; no language override",
+      "tutorialPlanVersion": 2,
+      "boardLevels": {
+        "4": 1,
+        "6": 6,
+        "8": 51,
+        "10": 101
+      },
+      "limitation": "The four board-size captures deliberately reset and select known levels with tutorial skipped; they are rendering evidence, not normal progression, persistence or live-user data."
+    },
+    "limitations": [
+      "Only these three selected XCTest UI cases on iPhone 17e / iOS Simulator 26.5 are represented; no device or broader UI-suite claim.",
+      "Static screenshots support layout, displayed step order and visible board state. Interaction and cold-restart outcomes rely on the associated test assertions.",
+      "These are isolated UI-test sessions using reset and level selection; no normal-install preservation claim is made."
+    ]
+  },
+  "visualSummary": {
+    "inspectedCount": 14,
+    "passedCount": 14,
+    "issues": [],
+    "statement": "Viewed every archived image separately. Observed the expected two board-dependent rule orders, current-board teaching completion, default Chinese tutorial and complete 4×4/6×6/8×8/10×10 layouts. No visible truncation, overlap or missing highlighted target found in these captures."
+  },
+  "artifacts": [
+    {
+      "output": "Docs/original-tutorial-0219/chinese-board-10x10.png",
+      "sourceAttachment": "Validation/test-runs/original-0219-ui-attachments/537A9D8C-FDEC-4A9E-A644-59B268A97D76.png",
+      "attachmentName": "chinese-board-10x10",
+      "sourceTest": "AppLanguageUITests/testChineseTutorialAndAllBoardSizesRender()",
+      "sourceTestURL": "test://com.apple.xcode/Capydoku/CapydokuUITests/AppLanguageUITests/testChineseTutorialAndAllBoardSizesRender",
+      "sourceExportMetadata": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+        "deviceName": "iPhone 17e",
+        "exportedFileName": "537A9D8C-FDEC-4A9E-A644-59B268A97D76.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "chinese-board-10x10_0_C20B6CDF-8906-4A40-9AD6-96D4ADC059B5.png",
+        "timestamp": 1790796604.213
+      },
+      "sourceSHA256": "e8aa801c1b810faed41aa3d08c3a48d681ba98a44ac1129c09561338455936ff",
+      "outputSHA256": "e8aa801c1b810faed41aa3d08c3a48d681ba98a44ac1129c09561338455936ff",
+      "byteSize": 210662,
+      "width": 1170,
+      "height": 2532,
+      "visualInspection": {
+        "status": "passed",
+        "method": "view_image",
+        "boardSize": 10,
+        "level": 101,
+        "note": "第 101 关完整 10×10 棋盘；中文页头和规则条清晰，目标计数为 0/10，生命与底部道具完整可见，无可见裁切或重叠。"
+      }
+    },
+    {
+      "output": "Docs/original-tutorial-0219/chinese-board-4x4.png",
+      "sourceAttachment": "Validation/test-runs/original-0219-ui-attachments/CEF1788F-C768-454F-8BC6-AEEE0C6C7F5E.png",
+      "attachmentName": "chinese-board-4x4",
+      "sourceTest": "AppLanguageUITests/testChineseTutorialAndAllBoardSizesRender()",
+      "sourceTestURL": "test://com.apple.xcode/Capydoku/CapydokuUITests/AppLanguageUITests/testChineseTutorialAndAllBoardSizesRender",
+      "sourceExportMetadata": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+        "deviceName": "iPhone 17e",
+        "exportedFileName": "CEF1788F-C768-454F-8BC6-AEEE0C6C7F5E.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "chinese-board-4x4_0_E938601B-7CCE-43C4-A041-EB26DA83C409.png",
+        "timestamp": 1790796591.053
+      },
+      "sourceSHA256": "2b5e2eaa4b8efe2fb456094ef9d59df43041ff4d710268167d1aace1a4b3acb0",
+      "outputSHA256": "2b5e2eaa4b8efe2fb456094ef9d59df43041ff4d710268167d1aace1a4b3acb0",
+      "byteSize": 171977,
+      "width": 1170,
+      "height": 2532,
+      "visualInspection": {
+        "status": "passed",
+        "method": "view_image",
+        "boardSize": 4,
+        "level": 1,
+        "note": "第 1 关完整 4×4 棋盘；中文页头及三项规则条、3 颗生命、底部两道具图标/库存均可见，无可见裁切或重叠。"
+      }
+    },
+    {
+      "output": "Docs/original-tutorial-0219/chinese-board-6x6.png",
+      "sourceAttachment": "Validation/test-runs/original-0219-ui-attachments/24406E15-CC4B-4E7F-9C4D-D403F2A280BD.png",
+      "attachmentName": "chinese-board-6x6",
+      "sourceTest": "AppLanguageUITests/testChineseTutorialAndAllBoardSizesRender()",
+      "sourceTestURL": "test://com.apple.xcode/Capydoku/CapydokuUITests/AppLanguageUITests/testChineseTutorialAndAllBoardSizesRender",
+      "sourceExportMetadata": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+        "deviceName": "iPhone 17e",
+        "exportedFileName": "24406E15-CC4B-4E7F-9C4D-D403F2A280BD.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "chinese-board-6x6_0_5CBF841C-9C02-47E0-A1DA-E00393153BD0.png",
+        "timestamp": 1790796595.386
+      },
+      "sourceSHA256": "f72f3b2b6aff9fe3c1b4e0f1153d83421477fec5fe02e47544fa04e92aadca8c",
+      "outputSHA256": "f72f3b2b6aff9fe3c1b4e0f1153d83421477fec5fe02e47544fa04e92aadca8c",
+      "byteSize": 174962,
+      "width": 1170,
+      "height": 2532,
+      "visualInspection": {
+        "status": "passed",
+        "method": "view_image",
+        "boardSize": 6,
+        "level": 6,
+        "note": "第 6 关完整 6×6 棋盘；中文页头、规则条、生命与底部两道具入口可见，无可见裁切或重叠。"
+      }
+    },
+    {
+      "output": "Docs/original-tutorial-0219/chinese-board-8x8.png",
+      "sourceAttachment": "Validation/test-runs/original-0219-ui-attachments/EA3B5C53-4E9C-4B40-8F7E-FBAECBF6628E.png",
+      "attachmentName": "chinese-board-8x8",
+      "sourceTest": "AppLanguageUITests/testChineseTutorialAndAllBoardSizesRender()",
+      "sourceTestURL": "test://com.apple.xcode/Capydoku/CapydokuUITests/AppLanguageUITests/testChineseTutorialAndAllBoardSizesRender",
+      "sourceExportMetadata": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+        "deviceName": "iPhone 17e",
+        "exportedFileName": "EA3B5C53-4E9C-4B40-8F7E-FBAECBF6628E.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "chinese-board-8x8_0_AE8ECAFB-24E1-47AA-AD36-5BF7F31D7528.png",
+        "timestamp": 1790796599.78
+      },
+      "sourceSHA256": "63b0d5edfeda534848cc732d1f54069c28b8e66615c3b2971cd3b315a4ccea36",
+      "outputSHA256": "63b0d5edfeda534848cc732d1f54069c28b8e66615c3b2971cd3b315a4ccea36",
+      "byteSize": 193423,
+      "width": 1170,
+      "height": 2532,
+      "visualInspection": {
+        "status": "passed",
+        "method": "view_image",
+        "boardSize": 8,
+        "level": 51,
+        "note": "第 51 关完整 8×8 棋盘；中文页头、规则条、8 个目标占位、生命及底部道具可见，无可见裁切或重叠。"
+      }
+    },
+    {
+      "output": "Docs/original-tutorial-0219/chinese-v2-tutorial.png",
+      "sourceAttachment": "Validation/test-runs/original-0219-ui-attachments/E1EF7932-6868-4E33-868B-E1879518DE23.png",
+      "attachmentName": "chinese-tutorial",
+      "sourceTest": "AppLanguageUITests/testChineseTutorialAndAllBoardSizesRender()",
+      "sourceTestURL": "test://com.apple.xcode/Capydoku/CapydokuUITests/AppLanguageUITests/testChineseTutorialAndAllBoardSizesRender",
+      "sourceExportMetadata": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+        "deviceName": "iPhone 17e",
+        "exportedFileName": "E1EF7932-6868-4E33-868B-E1879518DE23.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "chinese-tutorial_0_18966544-2AFD-4744-AF54-1A053A7A521C.png",
+        "timestamp": 1790796586.74
+      },
+      "sourceSHA256": "7f08f88106ad369239ece502b5237e9a35aa2e08ab1f74b52794b8b3352e984f",
+      "outputSHA256": "7f08f88106ad369239ece502b5237e9a35aa2e08ab1f74b52794b8b3352e984f",
+      "byteSize": 182083,
+      "width": 1170,
+      "height": 2532,
+      "visualInspection": {
+        "status": "passed",
+        "method": "view_image",
+        "planVersion": 2,
+        "step": 1,
+        "rule": "region",
+        "highlightedCells": [
+          8
+        ],
+        "note": "默认中文：关卡、分数、规则条、1/9 每个区域一只、中文说明、跳过及知道了均正确显示；单格目标高亮。未见截字或遮挡。"
+      }
+    },
+    {
+      "output": "Docs/original-tutorial-0219/current-v2-01-region.png",
+      "sourceAttachment": "Validation/test-runs/original-0219-ui-attachments/10818EC5-9EE9-4448-953A-F394F07B7915.png",
+      "attachmentName": "v2-current-board-One per region",
+      "sourceTest": "CapydokuUITests/testGuidedTutorialCoversRulesTapUndoBothSwipesAndFind()",
+      "sourceTestURL": "test://com.apple.xcode/Capydoku/CapydokuUITests/CapydokuUITests/testGuidedTutorialCoversRulesTapUndoBothSwipesAndFind",
+      "sourceExportMetadata": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+        "deviceName": "iPhone 17e",
+        "exportedFileName": "10818EC5-9EE9-4448-953A-F394F07B7915.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "v2-current-board-One per region_0_DF104CE6-D1B5-40B6-87C8-85411BF36C13.png",
+        "timestamp": 1790796608.737
+      },
+      "sourceSHA256": "13ee6f8a34f940f9126148ee18c23703052d6ef158bf4e954fcdd6f995276ecb",
+      "outputSHA256": "13ee6f8a34f940f9126148ee18c23703052d6ef158bf4e954fcdd6f995276ecb",
+      "byteSize": 178263,
+      "width": 1170,
+      "height": 2532,
+      "visualInspection": {
+        "status": "passed",
+        "method": "view_image",
+        "planVersion": 2,
+        "step": 1,
+        "rule": "region",
+        "highlightedCells": [
+          8
+        ],
+        "note": "1/9 One per region；第三行第一列单格区域高亮。完整教学正文、Skip 与 Got it 可见，棋盘与控件无可见裁切或重叠。"
+      }
+    },
+    {
+      "output": "Docs/original-tutorial-0219/current-v2-02-neighbors.png",
+      "sourceAttachment": "Validation/test-runs/original-0219-ui-attachments/076D3D4F-FBFC-4AC9-9357-E02AC91610E1.png",
+      "attachmentName": "v2-current-board-Give them space",
+      "sourceTest": "CapydokuUITests/testGuidedTutorialCoversRulesTapUndoBothSwipesAndFind()",
+      "sourceTestURL": "test://com.apple.xcode/Capydoku/CapydokuUITests/CapydokuUITests/testGuidedTutorialCoversRulesTapUndoBothSwipesAndFind",
+      "sourceExportMetadata": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+        "deviceName": "iPhone 17e",
+        "exportedFileName": "076D3D4F-FBFC-4AC9-9357-E02AC91610E1.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "v2-current-board-Give them space_0_865C2167-9C2E-4A5F-B266-7AC87E5A99B5.png",
+        "timestamp": 1790796611.746
+      },
+      "sourceSHA256": "d9d537cd26082006ffecbdd6ea6da12fe5c30a78481d92fc7a2f0c2f0949dc2e",
+      "outputSHA256": "d9d537cd26082006ffecbdd6ea6da12fe5c30a78481d92fc7a2f0c2f0949dc2e",
+      "byteSize": 187972,
+      "width": 1170,
+      "height": 2532,
+      "visualInspection": {
+        "status": "passed",
+        "method": "view_image",
+        "planVersion": 2,
+        "step": 2,
+        "rule": "neighbors",
+        "highlightedCells": [
+          4,
+          5,
+          9,
+          12,
+          13
+        ],
+        "note": "2/9 Give them space；动物目标周围五个在盘邻格高亮，目标格本身不高亮。正文与按钮完整可见。"
+      }
+    },
+    {
+      "output": "Docs/original-tutorial-0219/current-v2-03-row.png",
+      "sourceAttachment": "Validation/test-runs/original-0219-ui-attachments/51E474FC-DB14-46E9-9CB6-F521906D4C98.png",
+      "attachmentName": "v2-current-board-One per row",
+      "sourceTest": "CapydokuUITests/testGuidedTutorialCoversRulesTapUndoBothSwipesAndFind()",
+      "sourceTestURL": "test://com.apple.xcode/Capydoku/CapydokuUITests/CapydokuUITests/testGuidedTutorialCoversRulesTapUndoBothSwipesAndFind",
+      "sourceExportMetadata": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+        "deviceName": "iPhone 17e",
+        "exportedFileName": "51E474FC-DB14-46E9-9CB6-F521906D4C98.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "v2-current-board-One per row_0_47347941-DB83-4E1E-8F81-EBA1A7E5BB24.png",
+        "timestamp": 1790796614.722
+      },
+      "sourceSHA256": "4f4ab4edf7d36c265ec05af4e824e7f9a8e87244808ad5ba5ee3a12cec5efc90",
+      "outputSHA256": "4f4ab4edf7d36c265ec05af4e824e7f9a8e87244808ad5ba5ee3a12cec5efc90",
+      "byteSize": 183549,
+      "width": 1170,
+      "height": 2532,
+      "visualInspection": {
+        "status": "passed",
+        "method": "view_image",
+        "planVersion": 2,
+        "step": 3,
+        "rule": "row",
+        "highlightedCells": [
+          8,
+          9,
+          10,
+          11
+        ],
+        "note": "3/9 One per row；第三行四格高亮，标题、说明和按钮完整可见。"
+      }
+    },
+    {
+      "output": "Docs/original-tutorial-0219/current-v2-04-column.png",
+      "sourceAttachment": "Validation/test-runs/original-0219-ui-attachments/274FDF66-1CC7-47F4-B38F-839F7C54ABAC.png",
+      "attachmentName": "v2-current-board-One per column",
+      "sourceTest": "CapydokuUITests/testGuidedTutorialCoversRulesTapUndoBothSwipesAndFind()",
+      "sourceTestURL": "test://com.apple.xcode/Capydoku/CapydokuUITests/CapydokuUITests/testGuidedTutorialCoversRulesTapUndoBothSwipesAndFind",
+      "sourceExportMetadata": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+        "deviceName": "iPhone 17e",
+        "exportedFileName": "274FDF66-1CC7-47F4-B38F-839F7C54ABAC.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "v2-current-board-One per column_0_68635639-27E4-4D26-888B-36404C3E6643.png",
+        "timestamp": 1790796617.688
+      },
+      "sourceSHA256": "612f5c316db16c74e3d6c43e11326d05d9ebf009fb6cf52e34dcab8ffb3a773b",
+      "outputSHA256": "612f5c316db16c74e3d6c43e11326d05d9ebf009fb6cf52e34dcab8ffb3a773b",
+      "byteSize": 184582,
+      "width": 1170,
+      "height": 2532,
+      "visualInspection": {
+        "status": "passed",
+        "method": "view_image",
+        "planVersion": 2,
+        "step": 4,
+        "rule": "column",
+        "highlightedCells": [
+          0,
+          4,
+          8,
+          12
+        ],
+        "note": "4/9 One per column；第一列四格高亮，标题、说明和按钮完整可见。"
+      }
+    },
+    {
+      "output": "Docs/original-tutorial-0219/current-v2-05-complete.png",
+      "sourceAttachment": "Validation/test-runs/original-0219-ui-attachments/9123830B-8964-4683-8568-DA4A9DA3C66A.png",
+      "attachmentName": "Current Level 1 guided tutorial complete",
+      "sourceTest": "CapydokuUITests/testGuidedTutorialCoversRulesTapUndoBothSwipesAndFind()",
+      "sourceTestURL": "test://com.apple.xcode/Capydoku/CapydokuUITests/CapydokuUITests/testGuidedTutorialCoversRulesTapUndoBothSwipesAndFind",
+      "sourceExportMetadata": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+        "deviceName": "iPhone 17e",
+        "exportedFileName": "9123830B-8964-4683-8568-DA4A9DA3C66A.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Current Level 1 guided tutorial complete_0_6E144E11-0BF9-4550-90A7-95F2D8DD1E7B.png",
+        "timestamp": 1790796633.177
+      },
+      "sourceSHA256": "cbc4f3c8b9f82fc4c3c1975105809825a1797bbb019b1280a2dd17d638e37d0f",
+      "outputSHA256": "cbc4f3c8b9f82fc4c3c1975105809825a1797bbb019b1280a2dd17d638e37d0f",
+      "byteSize": 226665,
+      "width": 1170,
+      "height": 2532,
+      "visualInspection": {
+        "status": "passed",
+        "method": "view_image",
+        "planVersion": 2,
+        "foundCells": [
+          8
+        ],
+        "markedCells": [
+          4,
+          5,
+          9,
+          13
+        ],
+        "note": "教学面板消失；第三行第一列显示卡皮巴拉，四个教学 X 保留；100 分、3 颗生命和底部两个道具入口可见。无可见裁切或遮挡。"
+      }
+    },
+    {
+      "output": "Docs/original-tutorial-0219/legacy-fixture-v2-01-region.png",
+      "sourceAttachment": "Validation/test-runs/original-0219-ui-attachments/1574F8BC-67FA-41EF-8302-CCC171BD5D6F.png",
+      "attachmentName": "v2-historical-board-One per region",
+      "sourceTest": "HardeningUITests/testTutorialRestoresAtReadUndoVerticalSwipeAndFindThenStaysCompleted()",
+      "sourceTestURL": "test://com.apple.xcode/Capydoku/CapydokuUITests/HardeningUITests/testTutorialRestoresAtReadUndoVerticalSwipeAndFindThenStaysCompleted",
+      "sourceExportMetadata": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+        "deviceName": "iPhone 17e",
+        "exportedFileName": "1574F8BC-67FA-41EF-8302-CCC171BD5D6F.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "v2-historical-board-One per region_0_FE7B6345-369D-4A43-BF31-CECE4FB4C995.png",
+        "timestamp": 1790796638.739
+      },
+      "sourceSHA256": "1daffde16353d5987b452abafb4e5d6d33d67f5b038ce00c037d0a530d765519",
+      "outputSHA256": "1daffde16353d5987b452abafb4e5d6d33d67f5b038ce00c037d0a530d765519",
+      "byteSize": 178322,
+      "width": 1170,
+      "height": 2532,
+      "visualInspection": {
+        "status": "passed",
+        "method": "view_image",
+        "planVersion": 2,
+        "step": 1,
+        "rule": "region",
+        "highlightedCells": [
+          1
+        ],
+        "note": "历史棋盘的新教学 1/9 One per region；第一行第二列单格区域高亮。此图是 v2 新局，非旧存档 v1 迁移。面板完整可见。"
+      }
+    },
+    {
+      "output": "Docs/original-tutorial-0219/legacy-fixture-v2-02-neighbors.png",
+      "sourceAttachment": "Validation/test-runs/original-0219-ui-attachments/1EC3858D-5C7F-4774-80BC-FCE21676CB1B.png",
+      "attachmentName": "v2-historical-board-Give them space",
+      "sourceTest": "HardeningUITests/testTutorialRestoresAtReadUndoVerticalSwipeAndFindThenStaysCompleted()",
+      "sourceTestURL": "test://com.apple.xcode/Capydoku/CapydokuUITests/HardeningUITests/testTutorialRestoresAtReadUndoVerticalSwipeAndFindThenStaysCompleted",
+      "sourceExportMetadata": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+        "deviceName": "iPhone 17e",
+        "exportedFileName": "1EC3858D-5C7F-4774-80BC-FCE21676CB1B.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "v2-historical-board-Give them space_0_17B6FE85-50C5-401F-82E3-03BA3D344E1F.png",
+        "timestamp": 1790796642.856
+      },
+      "sourceSHA256": "1b0895a7d63405652515acfad793350149be044c48238c86447d63b1d508ce46",
+      "outputSHA256": "1b0895a7d63405652515acfad793350149be044c48238c86447d63b1d508ce46",
+      "byteSize": 187827,
+      "width": 1170,
+      "height": 2532,
+      "visualInspection": {
+        "status": "passed",
+        "method": "view_image",
+        "planVersion": 2,
+        "step": 2,
+        "rule": "neighbors",
+        "highlightedCells": [
+          0,
+          2,
+          4,
+          5,
+          6
+        ],
+        "note": "2/9 Give them space；目标周围五个在盘邻格高亮，教学正文和按钮完整可见。"
+      }
+    },
+    {
+      "output": "Docs/original-tutorial-0219/legacy-fixture-v2-03-column.png",
+      "sourceAttachment": "Validation/test-runs/original-0219-ui-attachments/BF137ED0-9BAF-4E8E-A29C-D586A11790A0.png",
+      "attachmentName": "v2-historical-board-One per column",
+      "sourceTest": "HardeningUITests/testTutorialRestoresAtReadUndoVerticalSwipeAndFindThenStaysCompleted()",
+      "sourceTestURL": "test://com.apple.xcode/Capydoku/CapydokuUITests/HardeningUITests/testTutorialRestoresAtReadUndoVerticalSwipeAndFindThenStaysCompleted",
+      "sourceExportMetadata": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+        "deviceName": "iPhone 17e",
+        "exportedFileName": "BF137ED0-9BAF-4E8E-A29C-D586A11790A0.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "v2-historical-board-One per column_0_60703B9D-9EA4-4C74-A76D-AA0E8BD03CFE.png",
+        "timestamp": 1790796646.928
+      },
+      "sourceSHA256": "07ac67ab3d1e1030c8af3e1b8700ce1c73802c743caa1fcce7c9889e5c28731e",
+      "outputSHA256": "07ac67ab3d1e1030c8af3e1b8700ce1c73802c743caa1fcce7c9889e5c28731e",
+      "byteSize": 184298,
+      "width": 1170,
+      "height": 2532,
+      "visualInspection": {
+        "status": "passed",
+        "method": "view_image",
+        "planVersion": 2,
+        "step": 3,
+        "rule": "column",
+        "highlightedCells": [
+          1,
+          5,
+          9,
+          13
+        ],
+        "note": "3/9 One per column；第二列四格高亮，证实该历史棋盘的 v2 路径在行之前展示列。"
+      }
+    },
+    {
+      "output": "Docs/original-tutorial-0219/legacy-fixture-v2-04-row.png",
+      "sourceAttachment": "Validation/test-runs/original-0219-ui-attachments/27ABA701-D554-4EA4-B3E4-9D764DECD4C3.png",
+      "attachmentName": "v2-historical-board-One per row",
+      "sourceTest": "HardeningUITests/testTutorialRestoresAtReadUndoVerticalSwipeAndFindThenStaysCompleted()",
+      "sourceTestURL": "test://com.apple.xcode/Capydoku/CapydokuUITests/HardeningUITests/testTutorialRestoresAtReadUndoVerticalSwipeAndFindThenStaysCompleted",
+      "sourceExportMetadata": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+        "deviceName": "iPhone 17e",
+        "exportedFileName": "27ABA701-D554-4EA4-B3E4-9D764DECD4C3.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "v2-historical-board-One per row_0_7F6A5CC0-71B2-4E84-9D79-890760F2666A.png",
+        "timestamp": 1790796659.131
+      },
+      "sourceSHA256": "cbe8b6af10801a94ef0f99f3d9e2647f99533b415338bd9922be88aaf421a399",
+      "outputSHA256": "cbe8b6af10801a94ef0f99f3d9e2647f99533b415338bd9922be88aaf421a399",
+      "byteSize": 182471,
+      "width": 1170,
+      "height": 2532,
+      "visualInspection": {
+        "status": "passed",
+        "method": "view_image",
+        "planVersion": 2,
+        "step": 4,
+        "rule": "row",
+        "highlightedCells": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "note": "4/9 One per row；第一行四格高亮，标题、说明和按钮完整可见。"
+      }
+    }
+  ],
+  "build": "0.2.19 (22)"
+}

@@ -268,10 +268,10 @@ final class AppModel: ObservableObject {
     }
     var tutorial: TutorialStep? {
         guard let s = session, s.puzzle.id == 1, !progress.tutorialCompleted, s.status == .playing else { return nil }
-        let steps = PuzzleHints.tutorial(puzzle: s.puzzle)
+        let steps = PuzzleHints.tutorial(puzzle: s.puzzle, version: progress.tutorialPlanVersion)
         return steps.indices.contains(progress.tutorialStep) ? steps[progress.tutorialStep] : nil
     }
-    var tutorialCount: Int { session.map { PuzzleHints.tutorial(puzzle: $0.puzzle).count } ?? 0 }
+    var tutorialCount: Int { session.map { PuzzleHints.tutorial(puzzle: $0.puzzle, version: progress.tutorialPlanVersion).count } ?? 0 }
 
     func loadProgress() {
         pendingLevelStartID = nil

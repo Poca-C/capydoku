@@ -33,7 +33,9 @@ public enum SaveStoreError: LocalizedError {
 /// Serial, atomic local persistence. File work is deliberately tiny; callers can use one serial queue.
 /// Reward methods persist the receipt before applying its effect and roll back memory if saving fails.
 public final class SaveStore: @unchecked Sendable {
-    public static let currentSchemaVersion = 3
+    // Version 4 binds numeric tutorial progress to an explicit teaching plan.
+    // Older clients must reject it rather than reinterpret the new step order.
+    public static let currentSchemaVersion = 4
     public let directory: URL
     public var primaryURL: URL { directory.appendingPathComponent("progress.json") }
     public var backupURL: URL { directory.appendingPathComponent("progress.backup.json") }
@@ -221,6 +223,12 @@ public final class SaveStore: @unchecked Sendable {
             throw SaveStoreError.unsupportedSchema(envelope.schemaVersion)
         }
         guard Self.checksum(envelope.payload) == envelope.checksum else { throw SaveStoreError.checksumMismatch }
+        if envelope.schemaVersion >= 4 {
+            let payload = try JSONSerialization.jsonObject(with: envelope.payload) as? [String: Any]
+            guard payload?["tutorialPlanVersion"] is Int else {
+                throw SaveStoreError.invalidState("tutorial plan version is missing or invalid")
+            }
+        }
         // Schema 1 used the same JSON payload without optional tracking fields. Their decoding defaults
         // preserve inventory, check-in and completion; version 2 adds grant and reward recovery records.
         let progress = try JSONDecoder().decode(PlayerProgress.self, from: resolvedPayload(envelope.payload))

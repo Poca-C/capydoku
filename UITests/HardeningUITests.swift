@@ -79,6 +79,12 @@ final class HardeningUITests: XCTestCase {
             }
             switch step {
             case 1...4:
+                let rules = ["One per region", "Give them space", "One per column", "One per row"]
+                XCTAssertTrue(app.staticTexts["tutorial_title"].label.contains(rules[step - 1]),
+                              "The historical board geometry needs the column before the row in v2.")
+                let image = XCTAttachment(screenshot: app.screenshot())
+                image.name = "v2-historical-board-\(rules[step - 1])"
+                image.lifetime = .keepAlways; add(image)
                 // Rule explanation screens must not accept guesses.
                 cell(0).coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).doubleTap()
                 expectValue(cell(0), "empty")

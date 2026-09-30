@@ -121,6 +121,9 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
     public var session: GameSession?
     public var settings: GameSettings
     public var tutorialStep: Int
+    /// Persist the interpretation of tutorialStep with its board and marks.
+    /// Upgrading the application must not reorder an unfinished introduction.
+    public var tutorialPlanVersion: TutorialPlanVersion
     public var tutorialCompleted: Bool
     public var checkIn: CheckInState
     public var bonusHints: Int
@@ -152,6 +155,7 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
         session = nil
         settings = GameSettings()
         tutorialStep = 0
+        tutorialPlanVersion = .current
         tutorialCompleted = false
         checkIn = CheckInState()
         bonusHints = 0
@@ -237,7 +241,10 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
         // A new board attempt must replay its teaching actions from the beginning.
         // Continuing or restoring a saved session does not call begin, so its
         // instruction and the marks needed by that instruction stay together.
-        if puzzle.id == 1 && !tutorialCompleted { tutorialStep = 0 }
+        if puzzle.id == 1 && !tutorialCompleted {
+            tutorialStep = 0
+            tutorialPlanVersion = .current
+        }
         currentLevel = puzzle.id
         attemptCounts[key] = attempt
         freeToolGrantedLevels.insert(puzzle.id)
@@ -522,7 +529,7 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
 
     private enum CodingKeys: String, CodingKey {
         case unlockedLevel, currentLevel, completedLevels, attemptCounts, session, settings, experimentalHistoryCheckpoint
-        case tutorialStep, tutorialCompleted, checkIn, bonusHints, bonusDirect, rewardLedger
+        case tutorialStep, tutorialPlanVersion, tutorialCompleted, checkIn, bonusHints, bonusDirect, rewardLedger
         case pendingLevelResultEvents, activeHintUse, pendingBuffEvents
         case freeToolGrantedLevels, levelToolBalances, referenceToolGrantKeys, carriedToolBalance, levelStartLocalBalances, freeReviveUsage
         case bonusToolSources, levelToolSources, carriedToolSources
@@ -539,6 +546,8 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
         session = try values.decodeIfPresent(GameSession.self, forKey: .session)
         settings = try values.decodeIfPresent(GameSettings.self, forKey: .settings) ?? GameSettings()
         tutorialStep = try values.decodeIfPresent(Int.self, forKey: .tutorialStep) ?? 0
+        tutorialPlanVersion = values.contains(.tutorialPlanVersion)
+            ? try values.decode(TutorialPlanVersion.self, forKey: .tutorialPlanVersion) : .legacy
         tutorialCompleted = try values.decodeIfPresent(Bool.self, forKey: .tutorialCompleted) ?? false
         checkIn = try values.decodeIfPresent(CheckInState.self, forKey: .checkIn) ?? CheckInState()
         bonusHints = try values.decodeIfPresent(Int.self, forKey: .bonusHints) ?? 0

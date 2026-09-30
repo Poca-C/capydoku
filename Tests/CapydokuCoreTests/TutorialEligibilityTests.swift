@@ -16,25 +16,28 @@ final class TutorialEligibilityTests: XCTestCase {
         XCTAssertTrue(PuzzleHints.canTeach(puzzle: puzzle))
         XCTAssertEqual(try PuzzleGenerator.rebuild(puzzle), puzzle,
                        "The published candidate must rebuild exactly from its recorded metadata.")
-        var game = GameSession(puzzle: puzzle)
-        for step in PuzzleHints.tutorial(puzzle: puzzle) {
-            switch step.action {
-            case "read": break
-            case "tap": XCTAssertTrue(game.toggleMark(at: try XCTUnwrap(step.targetCells.first)))
-            case "swipe":
-                XCTAssertEqual(game.markMany(step.targetCells), 2)
-                XCTAssertTrue(Set(step.targetCells).isSubset(of: game.marks))
-            case "doubleTap":
-                let target = try XCTUnwrap(step.targetCells.first)
-                XCTAssertEqual(game.submit(cell: target), .correct(cell: target, points: game.config.baseScore, won: false))
-            default: XCTFail("Unknown teaching action")
+        for version in [TutorialPlanVersion.legacy, .boardDriven] {
+            var game = GameSession(puzzle: puzzle)
+            let steps = PuzzleHints.tutorial(puzzle: puzzle, version: version)
+            for step in steps {
+                switch step.action {
+                case "read": break
+                case "tap": XCTAssertTrue(game.toggleMark(at: try XCTUnwrap(step.targetCells.first)))
+                case "swipe":
+                    XCTAssertEqual(game.markMany(step.targetCells), 2)
+                    XCTAssertTrue(Set(step.targetCells).isSubset(of: game.marks))
+                case "doubleTap":
+                    let target = try XCTUnwrap(step.targetCells.first)
+                    XCTAssertEqual(game.submit(cell: target), .correct(cell: target, points: game.config.baseScore, won: false))
+                default: XCTFail("Unknown teaching action")
+                }
+                XCTAssertEqual(game.lives, game.config.initialLives)
+                XCTAssertTrue(game.errors.isEmpty)
+                XCTAssertTrue(game.marks.isDisjoint(with: puzzle.solution))
             }
-            XCTAssertEqual(game.lives, game.config.initialLives)
-            XCTAssertTrue(game.errors.isEmpty)
-            XCTAssertTrue(game.marks.isDisjoint(with: puzzle.solution))
+            XCTAssertEqual(game.found, Set(try XCTUnwrap(steps.last).targetCells))
+            XCTAssertEqual(game.score, game.config.baseScore)
         }
-        XCTAssertEqual(game.found, Set(PuzzleHints.tutorial(puzzle: puzzle).last!.targetCells))
-        XCTAssertEqual(game.score, game.config.baseScore)
     }
 
     func testGeneratedFirstLevelsPassEligibilityAcrossSeeds() throws {

@@ -220,15 +220,18 @@
         159,
         402
       ],
-      "priority": "P1 · 客户端未完成",
+      "priority": "本地已验证，参考节奏与真机待验",
       "topic": "动态教学演示顺序与旧档步骤兼容",
-      "finding": "目标格和操作目标来自当前棋盘，但九步顺序仍固定；GEN-03已改为partial，不以目标动态冒充整条完成。",
+      "finding": "0.2.19已实现棋盘驱动v2顺序、完整v1路径及存档版本迁移；旧九步身份/目标与半程操作原样恢复，新教学尝试才采用v2，GEN-03明确范围内验证通过。",
       "evidence": [
         "Sources/CapydokuCore/PuzzleHints.swift",
         "Sources/CapydokuCore/PlayerProgress.swift",
-        "App/AppModel.swift"
+        "App/AppModel.swift",
+        "Tests/CapydokuCoreTests/DynamicTutorialPlanTests.swift",
+        "AppTests/TutorialPlanMigrationTests.swift",
+        "Docs/original-tutorial-0219/manifest.json"
       ],
-      "next": "新增版本化教学路径，保留旧存档的步骤身份；新教学尝试依据棋盘规则的信息量选择演示顺序，验证逐步冷恢复后再关闭此项。"
+      "next": "继续核对冻结引导录屏与真人理解效果，保留真机验收；不把本地演示排序策略冒充参考时序。"
     }
   ],
   "rows": [
@@ -635,14 +638,19 @@
         169
       ],
       "title": "L1 动态教学目标及逻辑安全",
-      "status": "partial",
-      "implemented": "当前L1保持4×4，按可证明排除动态选择教学坐标与操作目标；去掉隐藏答案仍获得同一教学路径，元数据重建一致。",
-      "gap": "本轮重新核对[159]发现演示顺序仍固定，尚未实现按最终棋盘动态选择顺序；旧版将本行标verified只覆盖目标坐标，不能证明本条全部完成。修正需保留旧档数字步骤对应的教学路径，避免升级中途错步。正式引导时序仍待冻结录屏。",
+      "status": "verified",
+      "implemented": "0.2.19按当前棋盘动态选择目标与规则演示顺序：先证明单格区域，再按新增确定排除格数量讲解其余规则；不读取隐藏答案、seed或玩家标记。当前与历史两张合法L1产生不同顺序，64种子通过教学准入；完整操作路径安全。150关按原生成记录重建一致，新报告标注教学v2。",
+      "gap": "这里验证的是动态目标/顺序与安全路径，不代表冻结参考演示时序、难度体验或真人理解效果。旧进行中对局沿用完整v1路径，只有新教学尝试/主动重开或重播采用v2。",
       "evidence": [
         "Sources/CapydokuCore/PuzzleHints.swift",
         "Tests/CapydokuCoreTests/OriginalStorageTests.swift",
         "Tests/CapydokuCoreTests/TutorialEligibilityTests.swift",
-        "Validation/original-generation/summary.json"
+        "Validation/original-generation/summary.json",
+        "Sources/CapydokuCore/TutorialPlanVersion.swift",
+        "Tests/CapydokuCoreTests/DynamicTutorialPlanTests.swift",
+        "AppTests/TutorialPlanMigrationTests.swift",
+        "Validation/original-0219-rebuild.json",
+        "Docs/original-tutorial-0219/manifest.json"
       ]
     },
     {
@@ -660,7 +668,7 @@
       ],
       "title": "教学覆盖四条规则和全部操作",
       "status": "verified",
-      "implemented": "当前L1完整9步教学在17e通过，四规则、Tap、Undo、横滑、纵滑、Double Tap，提交后无自动X；App测试覆盖分步恢复。 新L1尝试只在教学未完成时重置步骤；中途撤销/半段滑动后重开，完整教学实操通过；Home/冷启动保持当前步骤，完成后不重复教学。",
+      "implemented": "当前L1完整9步教学在17e通过，四规则、Tap、Undo、横滑、纵滑、Double Tap，提交后无自动X；App测试覆盖分步恢复。 新L1尝试只在教学未完成时重置步骤；中途撤销/半段滑动后重开，完整教学实操通过；Home/冷启动保持当前步骤，完成后不重复教学。 0.2.19两种棋盘真实UI走完新版9步，历史棋盘另含四次冷启检查；中英文文案对两教学版本验证，逐步和半程滑动的v1/v2存档恢复通过。",
       "gap": "真人理解效果、精确节奏仍待参考与试玩。",
       "evidence": [
         "Sources/CapydokuCore/PuzzleHints.swift",
@@ -669,7 +677,10 @@
         "Validation/test-runs/original-ui-current-pack-paths.xcresult",
         "Validation/original-verification.json",
         "Tests/CapydokuCoreTests/GameSessionTests.swift",
-        "Validation/test-runs/original-audio-final.xcresult"
+        "Validation/test-runs/original-audio-final.xcresult",
+        "AppTests/TutorialPlanMigrationTests.swift",
+        "Tests/CapydokuCoreTests/TutorialPlanStorageTests.swift",
+        "Docs/original-tutorial-0219/manifest.json"
       ]
     },
     {
@@ -1507,7 +1518,7 @@
       ],
       "title": "Xcode26/iOS26构建及正式发布",
       "status": "external_pending",
-      "implemented": "0.2.18(21)通过Xcode26.6的Simulator Debug及通用iOS Release无签名构建；17Pro与17e均正常覆盖安装、核对版本并无测试/重置参数启动。",
+      "implemented": "0.2.19(22)通过Xcode26.6的Simulator Debug及通用iOS Release无签名构建；17Pro与17e正常覆盖安装、核对版本并无测试/重置参数启动。",
       "gap": "当前仅Debug/Release两套编译配置，均为同一internal Demo；尚无独立TestFlight、预发布和正式构建配置。未签名Release构建不是可分发安装包；真机签名运行、TestFlight、App Store审核及上架均未完成。",
       "evidence": [
         "Capydoku.xcodeproj/project.pbxproj",
@@ -1521,7 +1532,8 @@
         "Validation/original-0216-install-audit.json",
         "scripts/generate_project.py",
         "Capydoku.xcodeproj/xcshareddata/xcschemes/Capydoku.xcscheme",
-        "Validation/original-0218-install-audit.json"
+        "Validation/original-0218-install-audit.json",
+        "Validation/original-0219-install-audit.json"
       ]
     },
     {
@@ -1609,7 +1621,7 @@
       ],
       "title": "纯本地持久化范围",
       "status": "implemented",
-      "implemented": "局内状态、进度、库存/领取记录、设置、签到、教学、权限、奖励台账都存在本地存储。 0.2.9增加当前已消费提示预览、展示状态及待发送道具事件，和已有对局、库存、来源、奖励台账一起本地保存。 0.2.10验证激励已观察状态、旧档迁移、存档/队列失败、冷恢复及过期回调隔离；未收到最终回调不补造终态。",
+      "implemented": "局内状态、进度、库存/领取记录、设置、签到、教学、权限、奖励台账都存在本地存储。 0.2.9增加当前已消费提示预览、展示状态及待发送道具事件，和已有对局、库存、来源、奖励台账一起本地保存。 0.2.10验证激励已观察状态、旧档迁移、存档/队列失败、冷恢复及过期回调隔离；未收到最终回调不补造终态。 0.2.19教学步骤新增版本绑定，旧缺字段存档迁移为legacy1并写schema4；继续原步骤，重开未完成L1才切v2。显式null/错误/未知版本拒绝并保留坏原档，有合法备份则恢复。",
       "gap": "正式远程配置与冻结参数仍待资料；不新增账号或云存档。",
       "evidence": [
         "Sources/CapydokuCore/PlayerProgress.swift",
@@ -1619,7 +1631,9 @@
         "Tests/CapydokuCoreTests/HintUsePersistenceTests.swift",
         "Validation/original-verification.json",
         "AppTests/RewardLifecycleDurabilityTests.swift",
-        "Tests/CapydokuCoreTests/RewardAdEventPersistenceTests.swift"
+        "Tests/CapydokuCoreTests/RewardAdEventPersistenceTests.swift",
+        "Tests/CapydokuCoreTests/TutorialPlanStorageTests.swift",
+        "AppTests/TutorialPlanMigrationTests.swift"
       ]
     },
     {
@@ -1666,7 +1680,7 @@
       ],
       "title": "断点恢复、原子备份与迁移",
       "status": "verified",
-      "implemented": "主存档校验/备份/损坏保留通过；升级加载旧包进行中局保留盘面/库存/签到。consent/win/challenge已用校验双副本，损坏主文件后恢复一次性状态的App测试通过。 0.2.9验证旧schema迁移默认空提示/事件、原预览及来源恢复、非法预览拒绝；恢复已消费广告提示不再次补库存。 0.2.10验证激励已观察状态、旧档迁移、存档/队列失败、冷恢复及过期回调隔离；未收到最终回调不补造终态。 0.2.15修复已存在实验棋盘缓存只检查文件存在的问题：保存引用前校验SHA，坏件先保留再从当前已验证棋盘原子修复；失败抛错且事务不发布新玩家状态。实际文件损坏/保存阻塞与冷恢复通过。",
+      "implemented": "主存档校验/备份/损坏保留通过；升级加载旧包进行中局保留盘面/库存/签到。consent/win/challenge已用校验双副本，损坏主文件后恢复一次性状态的App测试通过。 0.2.9验证旧schema迁移默认空提示/事件、原预览及来源恢复、非法预览拒绝；恢复已消费广告提示不再次补库存。 0.2.10验证激励已观察状态、旧档迁移、存档/队列失败、冷恢复及过期回调隔离；未收到最终回调不补造终态。 0.2.15修复已存在实验棋盘缓存只检查文件存在的问题：保存引用前校验SHA，坏件先保留再从当前已验证棋盘原子修复；失败抛错且事务不发布新玩家状态。实际文件损坏/保存阻塞与冷恢复通过。 0.2.19旧教学版本与九步目标保留，逐步冷恢复及半程横纵滑动验证；schema4显式绑定教学版本，缺失/null/未知版本拒绝后回退并逐字节保留被拒原档。两台正常模拟器真实覆盖升级仅新增legacy1字段并迁移schema4，其余完整字段不变。",
       "gap": "双副本均损坏时无法凭空还原；正式主动Home处理仍待参考，真机强退及存储压力仍待验。",
       "evidence": [
         "Sources/CapydokuCore/SaveStore.swift",
@@ -1679,7 +1693,10 @@
         "Docs/original-tools/manifest.json",
         "AppTests/RewardLifecycleDurabilityTests.swift",
         "Tests/CapydokuCoreTests/RewardAdEventPersistenceTests.swift",
-        "Validation/test-runs/original-0215-storage-core.log"
+        "Validation/test-runs/original-0215-storage-core.log",
+        "Tests/CapydokuCoreTests/TutorialPlanStorageTests.swift",
+        "AppTests/TutorialPlanMigrationTests.swift",
+        "Validation/original-0219-install-audit.json"
       ]
     },
     {
@@ -1716,7 +1733,7 @@
       ],
       "title": "iOS技术验收与SDK升级兼容",
       "status": "partial",
-      "implemented": "0.2.18最终在Pro全量277项App（无排除/跳过）通过；17e三项选定真实UI通过，包含中文默认及双语同盘冷恢复、首次同意流程和模态恢复。Release无签名构建通过，两台正常模拟器覆盖安装启动并验证全部玩家字段保留。两轮旧测试夹具冲突的失败及修正原因均保留。Core和150关包未改，156项Core仍归属0.2.16，0.2.17实际重装证据保留原版本。",
+      "implemented": "0.2.19最终164项Core、Pro全量281项App（无排除/跳过）以及17e三项选定真实UI通过；初次中文测试写死旧顺序的失败保留并修正重验。150关重建为同盘，关卡包未改。未签名Release通过，正常覆盖安装两模拟器；升级只新增教学legacy1版本字段并迁移schema4，其余完整玩家字段保持。旧重装证据保留其版本，不重标本轮。",
       "gap": "这不是全部设备/全部场景通过。真机、最低系统、真实SDK升级及远程关闭尚未验证；历史组合UI运行的启动冲突及成功单独重验已如实记录。",
       "evidence": [
         "Validation/original-verification.json",
@@ -1764,7 +1781,11 @@
         "Validation/original-0217-operation-reinstall.json",
         "AppTests/GameplayAvailabilityTests.swift",
         "Validation/original-0218-install-audit.json",
-        "Validation/test-runs/original-0218-app-final-recheck.xcresult"
+        "Validation/test-runs/original-0218-app-final-recheck.xcresult",
+        "Validation/original-0219-install-audit.json",
+        "Validation/original-0219-rebuild.json",
+        "Docs/original-tutorial-0219/manifest.json",
+        "Validation/test-runs/original-0219-app-final-recheck.xcresult"
       ]
     },
     {
@@ -2065,5 +2086,5 @@
       ]
     }
   ],
-  "currentBuild": "0.2.18 (21)"
+  "currentBuild": "0.2.19 (22)"
 }
