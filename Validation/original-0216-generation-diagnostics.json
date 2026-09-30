@@ -1,0 +1,597 @@
+{
+  "build" : "0.2.16 (19)",
+  "currentBoardGenerationReport" : {
+    "createdAtUTC" : "2026-09-30T18:20:35Z",
+    "difficultyPassed" : 8,
+    "elapsedMilliseconds" : 922,
+    "generatedCandidates" : 100,
+    "metadata" : {
+      "candidateBatchID" : "original-pipeline-v3:original-ch3-endless-capacity-v2:CapyDoku:5960738863027126563",
+      "candidateIndex" : 14,
+      "candidateSeed" : 17858069703551094550,
+      "generationSeed" : 5960738863027126563,
+      "generatorVersion" : "original-pipeline-v3",
+      "productNamespace" : "CapyDoku",
+      "profileVersion" : "original-ch3-endless-capacity-v2"
+    },
+    "referenceAcceptance" : "unverified: frozen Pawdoku profiles, calibrated player metrics, and cross-product corpus are required",
+    "rejectionReasons" : {
+      "difficulty:band_score_outside_target" : 22,
+      "difficulty:difficulty_score_outside_target" : 30,
+      "difficulty:reasoning_depth_outside_target" : 2,
+      "similarity:answer_pattern" : 1,
+      "similarity:rejected" : 1,
+      "solver:invalid_or_non_unique" : 62
+    },
+    "requestedCandidates" : 100,
+    "selectedDifficultyReport" : {
+      "accepted" : true,
+      "measurements" : {
+        "band_score" : 29.206123281880856,
+        "board_size" : 10,
+        "candidate_density" : 0.4471821388488055,
+        "difficulty_score" : 29.206123281880856,
+        "error_risk" : 0.1626116868541111,
+        "fail_pressure_estimate" : 0.1626116868541111,
+        "forced_move_density" : 0.9090909090909091,
+        "hint_pressure_estimate" : 0.054545454545454564,
+        "logical_step_count" : 11,
+        "reasoning_depth" : 2,
+        "region_complexity" : 0.32222222222222224,
+        "region_count" : 10,
+        "solve_time_estimate" : 70
+      },
+      "normalizedTargetDistance" : 1.2839826370663963,
+      "rejectionReasons" : [
+
+      ],
+      "targetProvenance" : {
+        "source" : "Original Word chapter 3 role sequence; numeric targets are local solver estimates. Frozen Pawdoku sampling is missing.",
+        "status" : "unverified_local_demo"
+      }
+    },
+    "selectedSimilarityReport" : {
+      "accepted" : true,
+      "checkerVersion" : "region-answer-opening-v1",
+      "comparedBoards" : 150,
+      "configurationVersion" : "original-ch3-strict-v1",
+      "crossProductStatus" : "missing_other_product_corpus",
+      "exceptions" : [
+
+      ],
+      "matches" : [
+
+      ],
+      "originalStrictAcceptance" : false
+    },
+    "selectedSolverReport" : {
+      "candidateDensity" : 0.4471821388488055,
+      "difficultyScore" : 29.206123281880856,
+      "errorRisk" : 0.1626116868541111,
+      "estimatedFailPressure" : 0.1626116868541111,
+      "estimatedHintPressure" : 0.054545454545454564,
+      "estimatedSolveTime" : 70,
+      "evaluatorVersion" : "shared-deduction-metrics-v1",
+      "exactlyOnePerColumn" : true,
+      "exactlyOnePerRegion" : true,
+      "exactlyOnePerRow" : true,
+      "forcedMoveCount" : 10,
+      "forcedMoveDensity" : 0.9090909090909091,
+      "initialForcedCells" : [
+        24,
+        39,
+        67,
+        85
+      ],
+      "logicalStepCount" : 11,
+      "metricStatus" : "Local rule-engine estimates; not calibrated human solve time, failure probability, or proven minimal reasoning depth. trialRequired means this configured deduction engine stalls.",
+      "noAdjacentCapybaras" : true,
+      "reasoningDepth" : 2,
+      "regionComplexity" : 0.32222222222222224,
+      "regionConnected" : true,
+      "rulesUsed" : {
+        "Common conflict" : 1,
+        "Single candidate" : 10
+      },
+      "trialRequired" : false,
+      "uniqueSolution" : true
+    },
+    "similarityPassed" : 7,
+    "similarityRejectionExamples" : [
+      {
+        "accepted" : false,
+        "checkerVersion" : "region-answer-opening-v1",
+        "comparedBoards" : 150,
+        "configurationVersion" : "original-ch3-strict-v1",
+        "crossProductStatus" : "missing_other_product_corpus",
+        "exceptions" : [
+
+        ],
+        "matches" : [
+          {
+            "checkerVersion" : "region-answer-opening-v1",
+            "decision" : "Reject",
+            "matchedDimensions" : [
+              "answer_pattern"
+            ],
+            "matchedGame" : "CapyDoku",
+            "matchedLevelID" : 5,
+            "similarityScore" : 0.4375,
+            "threshold" : 0.9
+          }
+        ],
+        "originalStrictAcceptance" : false
+      }
+    ],
+    "solverPassed" : 38,
+    "target" : {
+      "bandScoreRange" : {
+        "maximum" : 36,
+        "minimum" : 0
+      },
+      "boardSizeCurveTarget" : {
+        "maximum" : 10,
+        "minimum" : 6
+      },
+      "candidateBatchSize" : 100,
+      "candidateDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "difficultyBand" : "Flow",
+      "difficultyRole" : "Flow",
+      "difficultyScoreTarget" : {
+        "maximum" : 34.5,
+        "minimum" : 25.5
+      },
+      "errorRiskTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "failPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "forcedMoveDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "hintPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "levelID" : 151,
+      "logicalStepCountTarget" : {
+        "maximum" : 200,
+        "minimum" : 6
+      },
+      "profileVersion" : "original-ch3-endless-capacity-v2",
+      "provenance" : {
+        "source" : "Original Word chapter 3 role sequence; numeric targets are local solver estimates. Frozen Pawdoku sampling is missing.",
+        "status" : "unverified_local_demo"
+      },
+      "reasoningDepthTarget" : {
+        "maximum" : 2,
+        "minimum" : 0
+      },
+      "regionComplexityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "regionCountTarget" : {
+        "maximum" : 10,
+        "minimum" : 6
+      },
+      "solveTimeTarget" : {
+        "maximum" : 3600,
+        "minimum" : 0
+      },
+      "tolerancePercent" : 0.15,
+      "trialAllowed" : false
+    },
+    "termination" : "selected_best_match"
+  },
+  "demoConfig" : {
+    "baseScore" : 100,
+    "checkInCycleDays" : 7,
+    "comboBonus" : 20,
+    "comboThresholds" : [
+      2,
+      3,
+      4
+    ],
+    "cycleDirectReward" : 1,
+    "dailyHintReward" : 1,
+    "directPerLevel" : 1,
+    "generatorBudgetMilliseconds" : 4000,
+    "generatorCandidateLimit" : 150,
+    "hintsPerLevel" : 1,
+    "initialLives" : 3,
+    "maximumBoardSize" : 10,
+    "version" : "original-demo-unverified-v3"
+  },
+  "gameplayConfiguration" : {
+    "isRefreshing" : false,
+    "lastError" : "No frozen bundled baseline is installed; remote configuration remains disabled.",
+    "recoveredBackup" : false,
+    "revision" : 0,
+    "source" : "unavailable",
+    "target" : {
+      "appVersion" : "0.2.16",
+      "environment" : "internal_demo",
+      "platform" : "iOS"
+    }
+  },
+  "generatedAt" : 812485236.680761,
+  "generationAuditIssues" : [
+
+  ],
+  "generationReport" : {
+    "createdAtUTC" : "2026-09-30T18:20:36Z",
+    "difficultyPassed" : 0,
+    "elapsedMilliseconds" : 0,
+    "generatedCandidates" : 0,
+    "metadata" : {
+      "candidateBatchID" : "original-pipeline-v3:original-ch3-endless-capacity-v2:CapyDoku:17361453682350325048",
+      "candidateIndex" : -1,
+      "candidateSeed" : 0,
+      "generationSeed" : 17361453682350325048,
+      "generatorVersion" : "original-pipeline-v3",
+      "productNamespace" : "CapyDoku",
+      "profileVersion" : "original-ch3-endless-capacity-v2"
+    },
+    "referenceAcceptance" : "unverified: frozen Pawdoku profiles, calibrated player metrics, and cross-product corpus are required",
+    "rejectionReasons" : {
+      "budget:minimum_100_candidates_required" : 1
+    },
+    "requestedCandidates" : 1,
+    "similarityPassed" : 0,
+    "solverPassed" : 0,
+    "target" : {
+      "bandScoreRange" : {
+        "maximum" : 36,
+        "minimum" : 0
+      },
+      "boardSizeCurveTarget" : {
+        "maximum" : 10,
+        "minimum" : 6
+      },
+      "candidateBatchSize" : 100,
+      "candidateDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "difficultyBand" : "Flow",
+      "difficultyRole" : "Flow",
+      "difficultyScoreTarget" : {
+        "maximum" : 34.5,
+        "minimum" : 25.5
+      },
+      "errorRiskTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "failPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "forcedMoveDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "hintPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "levelID" : 152,
+      "logicalStepCountTarget" : {
+        "maximum" : 200,
+        "minimum" : 6
+      },
+      "profileVersion" : "original-ch3-endless-capacity-v2",
+      "provenance" : {
+        "source" : "Original Word chapter 3 role sequence; numeric targets are local solver estimates. Frozen Pawdoku sampling is missing.",
+        "status" : "unverified_local_demo"
+      },
+      "reasoningDepthTarget" : {
+        "maximum" : 2,
+        "minimum" : 0
+      },
+      "regionComplexityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "regionCountTarget" : {
+        "maximum" : 10,
+        "minimum" : 6
+      },
+      "solveTimeTarget" : {
+        "maximum" : 3600,
+        "minimum" : 0
+      },
+      "tolerancePercent" : 0.15,
+      "trialAllowed" : false
+    },
+    "termination" : "insufficient_candidate_budget"
+  },
+  "generationReportScope" : "Most recent generation attempt; may differ from the current playable board. The separate currentBoardGenerationReport is matched to the complete saved puzzle. Reports describe generation, not player activation or formal reference acceptance.",
+  "levelPackCount" : 150,
+  "progress" : {
+    "attemptCounts" : {
+      "151" : 1
+    },
+    "bonusDirect" : 0,
+    "bonusHints" : 0,
+    "bonusToolSources" : {
+      "direct" : {
+        "batches" : [
+
+        ]
+      },
+      "hints" : {
+        "batches" : [
+
+        ]
+      }
+    },
+    "carriedToolBalance" : {
+      "direct" : 0,
+      "hints" : 0
+    },
+    "carriedToolSources" : {
+      "direct" : {
+        "batches" : [
+
+        ]
+      },
+      "hints" : {
+        "batches" : [
+
+        ]
+      }
+    },
+    "checkIn" : {
+      "completedCycles" : 0,
+      "cycleDay" : 0,
+      "streak" : 0
+    },
+    "completedLevels" : [
+
+    ],
+    "currentLevel" : 151,
+    "experimentalHistoryCheckpoint" : {
+      "chainSHA256" : "517f9458dd1ba67c255683f2342dd9dd400821534b7082c506f069efecfcfb73",
+      "count" : 1
+    },
+    "freeReviveUsage" : {
+
+    },
+    "freeToolGrantedLevels" : [
+      151
+    ],
+    "levelStartLocalBalances" : {
+
+    },
+    "levelToolBalances" : {
+      "151" : {
+        "direct" : 1,
+        "hints" : 1
+      }
+    },
+    "levelToolSources" : {
+      "151" : {
+        "direct" : {
+          "batches" : [
+            {
+              "count" : 1,
+              "source" : "level_config_free"
+            }
+          ]
+        },
+        "hints" : {
+          "batches" : [
+            {
+              "count" : 1,
+              "source" : "level_config_free"
+            }
+          ]
+        }
+      }
+    },
+    "pendingBuffEvents" : {
+
+    },
+    "pendingLevelResultEvents" : {
+
+    },
+    "referenceToolGrantKeys" : [
+
+    ],
+    "rewardLedger" : {
+
+    },
+    "session" : {
+      "attempt" : 1,
+      "combo" : 0,
+      "config" : {
+        "baseScore" : 100,
+        "checkInCycleDays" : 7,
+        "comboBonus" : 20,
+        "comboThresholds" : [
+          2,
+          3,
+          4
+        ],
+        "cycleDirectReward" : 1,
+        "dailyHintReward" : 1,
+        "directPerLevel" : 1,
+        "generatorBudgetMilliseconds" : 4000,
+        "generatorCandidateLimit" : 150,
+        "hintsPerLevel" : 1,
+        "initialLives" : 3,
+        "maximumBoardSize" : 10,
+        "version" : "original-demo-unverified-v3"
+      },
+      "directRemaining" : 1,
+      "elapsedSeconds" : 0,
+      "errors" : [
+
+      ],
+      "found" : [
+
+      ],
+      "hasRevived" : false,
+      "hintsRemaining" : 1,
+      "id" : "72C937AA-8AE5-4E30-A884-989C658E96DB",
+      "lives" : 3,
+      "marks" : [
+
+      ],
+      "pendingRewardHint" : false,
+      "puzzle" : {
+        "difficulty" : "Flow",
+        "generationMetadata" : {
+          "candidateBatchID" : "original-pipeline-v3:original-ch3-endless-capacity-v2:CapyDoku:5960738863027126563",
+          "candidateIndex" : 14,
+          "candidateSeed" : 17858069703551094550,
+          "generationSeed" : 5960738863027126563,
+          "generatorVersion" : "original-pipeline-v3",
+          "productNamespace" : "CapyDoku",
+          "profileVersion" : "original-ch3-endless-capacity-v2"
+        },
+        "generatorVersion" : "original-pipeline-v3",
+        "id" : 151,
+        "regions" : [
+          4,
+          4,
+          4,
+          4,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          5,
+          4,
+          4,
+          4,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          5,
+          5,
+          4,
+          4,
+          2,
+          0,
+          0,
+          1,
+          1,
+          1,
+          5,
+          5,
+          4,
+          4,
+          4,
+          4,
+          0,
+          0,
+          1,
+          3,
+          5,
+          5,
+          4,
+          4,
+          4,
+          4,
+          4,
+          0,
+          0,
+          0,
+          5,
+          4,
+          4,
+          7,
+          4,
+          4,
+          0,
+          0,
+          0,
+          0,
+          5,
+          5,
+          7,
+          7,
+          7,
+          7,
+          7,
+          6,
+          0,
+          0,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          0,
+          0,
+          7,
+          7,
+          9,
+          7,
+          7,
+          8,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          9,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7
+        ],
+        "seed" : 5960738863027126563,
+        "size" : 10,
+        "solution" : [
+          6,
+          18,
+          24,
+          39,
+          43,
+          50,
+          67,
+          71,
+          85,
+          92
+        ]
+      },
+      "resultPhase" : 0,
+      "score" : 0,
+      "status" : "playing"
+    },
+    "settings" : {
+      "hapticsEnabled" : true,
+      "language" : "zh-Hans",
+      "musicEnabled" : true,
+      "soundEnabled" : true,
+      "voiceEnabled" : true
+    },
+    "tutorialCompleted" : true,
+    "tutorialStep" : 0,
+    "unlockedLevel" : 1
+  },
+  "unattributedToolUsesSinceLaunch" : 0
+}

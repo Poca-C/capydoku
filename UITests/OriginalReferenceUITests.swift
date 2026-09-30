@@ -41,6 +41,33 @@ final class OriginalReferenceUITests: XCTestCase {
         capture("original-check-in")
     }
 
+    func testHomeSettingsRestartOpensResetPlayableBoardAndRestoresIt() {
+        app.launchEnvironment["CAPYDOKU_UI_LANGUAGE"] = "zh-Hans"
+        launch(["-level", "2"])
+        XCTAssertTrue(item("cell_0").waitForExistence(timeout: 12))
+        tap("cell_0")
+        let marked = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", "marked"), object: item("cell_0"))
+        XCTAssertEqual(XCTWaiter.wait(for: [marked], timeout: 5), .completed)
+        tap("home")
+        XCTAssertTrue(item("play").waitForExistence(timeout: 5))
+        tap("settings"); tap("restart")
+        XCTAssertTrue(item("cell_0").waitForExistence(timeout: 5), "Restart from Home must enter the reset board.")
+        XCTAssertFalse(item("play").exists)
+        XCTAssertEqual(item("level_title").label, "第 2 关")
+        XCTAssertEqual(item("cell_0").value as? String, "empty")
+        XCTAssertEqual(item("score").label, "0")
+        tap("cell_0")
+        let playable = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", "marked"), object: item("cell_0"))
+        XCTAssertEqual(XCTWaiter.wait(for: [playable], timeout: 5), .completed)
+        capture("home-settings-restart-zh-hans")
+        app.terminate()
+        app.launchArguments = ["-ui-testing"]
+        app.launch(); tap("play")
+        XCTAssertTrue(item("cell_0").waitForExistence(timeout: 5))
+        XCTAssertEqual(item("level_title").label, "第 2 关")
+        XCTAssertEqual(item("cell_0").value as? String, "marked")
+    }
+
     func testAllFourBoardSizesKeepNavigationRulesAndToolsInOrder() {
         for (level, size) in [(1,4),(6,6),(51,8),(101,10)] {
             launch(["-level", "\(level)"])

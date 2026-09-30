@@ -137,12 +137,16 @@ struct CheckInView: View {
     }
     var body: some View {
         GeometryReader { geometry in
+            let compact = geometry.size.width < 360 || geometry.size.height < 640
+            // Keep 44pt targets; a narrow viewport scrolls the row rather than
+            // squeezing seven controls or pushing the gift off the page.
+            let sevenDaysFit = geometry.size.width - 36 >= 7 * 44 + 6 * 4
             VStack(spacing: 0) {
                 HStack {
                     IconButton(symbol: "chevron.left", label: language.text("Home"), id: "checkin_home", action: model.home)
                     Spacer()
                 }.padding(.top, 8)
-                Spacer(minLength: 15)
+                Spacer(minLength: compact ? 8 : 15)
                 Group {
                     if let art = UIImage(named: "CapyCheckIn") {
                         Image(uiImage: art).resizable().scaledToFit()
@@ -154,28 +158,28 @@ struct CheckInView: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 19))
                         }
                     }
-                }.frame(width: geometry.size.width * 0.68, height: geometry.size.height * 0.34)
+                }.frame(width: geometry.size.width * 0.68, height: geometry.size.height * (compact ? 0.25 : 0.34))
                     .scaleEffect(rewardBounce ? 1.06 : 1)
                     .overlay { if showRewardBurst { CheckInParticleBurst(progress: burstProgress).allowsHitTesting(false) } }
                     .accessibilityHidden(true)
-                Text("\(shownStreak)").font(.system(size: 78, weight: .heavy, design: .rounded))
-                    .foregroundColor(CapyPalette.actionOrange).padding(.top, 8).accessibilityIdentifier("checkin_streak").capyFocus("checkin_streak")
-                Text(language.text("Day Streak")).font(.system(size: 26, weight: .heavy, design: .rounded)).foregroundColor(CapyPalette.actionOrange)
-                Spacer().frame(height: max(32, geometry.size.height * 0.07))
+                Text("\(shownStreak)").font(.system(size: compact ? 58 : 78, weight: .heavy, design: .rounded))
+                    .foregroundColor(CapyPalette.actionOrange).padding(.top, compact ? 4 : 8).accessibilityIdentifier("checkin_streak").capyFocus("checkin_streak")
+                Text(language.text("Day Streak")).font(.system(size: compact ? 22 : 26, weight: .heavy, design: .rounded)).foregroundColor(CapyPalette.actionOrange)
+                Spacer().frame(height: compact ? max(16, geometry.size.height * 0.04) : max(32, geometry.size.height * 0.07))
                 Group {
-                    if cycleDays == 7 {
+                    if cycleDays == 7 && sevenDaysFit {
                         HStack(alignment: .top, spacing: 4) {
                             ForEach(1...cycleDays, id: \.self) { day in dayView(day) }
                         }
                     } else {
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack(alignment: .top, spacing: 10) {
-                                ForEach(1...cycleDays, id: \.self) { day in dayView(day).frame(width: 48) }
+                        ScrollView(.horizontal, showsIndicators: true) {
+                            HStack(alignment: .top, spacing: compact ? 8 : 10) {
+                                ForEach(1...cycleDays, id: \.self) { day in dayView(day).frame(width: compact ? 44 : 48) }
                             }
                         }.frame(height: 82)
                     }
                 }
-                Spacer(minLength: 30)
+                Spacer(minLength: compact ? 12 : 30)
             }.padding(.horizontal, 18)
         }
         .onAppear { updateGiftCelebration() }
@@ -224,6 +228,7 @@ struct CheckInView: View {
             }.buttonStyle(CapyPressStyle(disabledOpacity: 1)).disabled(!canClaim)
                 .accessibilityLabel(language.text(canClaim ? "Claim today's reward" : "Day \(day), \(claimed ? "claimed" : "not claimed")"))
                 .accessibilityIdentifier(canClaim ? "claim_reward" : "checkin_day_\(day)")
+                .capyLayoutProbe(canClaim ? "claim_reward" : "checkin_day_\(day)")
         }.frame(maxWidth: .infinity)
     }
     private func updateGiftCelebration() {

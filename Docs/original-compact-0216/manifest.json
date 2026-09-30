@@ -1,0 +1,463 @@
+{
+  "schemaVersion": 1,
+  "capturedBuild": "0.2.16 (19)",
+  "date": "2026-10-01",
+  "sourceParagraphs": [
+    256,
+    282,
+    283,
+    285,
+    297,
+    303
+  ],
+  "scope": "窄屏与较矮竖屏的布局修复证据；中文为用户覆盖原英文要求的默认语言。",
+  "verification": {
+    "finalBundle": "Validation/test-runs/original-0216-compact-expanded.xcresult",
+    "finalTestCount": 4,
+    "finalFailureCount": 0,
+    "elapsedTestSeconds": 11.801,
+    "actualChecks": [
+      "320×568与390×844真实组件宿主：4×4、6×6、8×8、10×10棋盘为正方形且边长至少190pt。",
+      "普通对局的导航、关卡、进度、生命、规则及道具边界可见，信息顺序保持；主要按钮至少44pt。",
+      "棋盘的原生UIView祖先不包含UIScrollView，避免整页滚动与标记手势竞争。",
+      "窄屏七日条可从第一日滚到第七日，滚动不发奖、不改盘；390pt宽保持七日同排。",
+      "附加覆盖AX5提示、教学阅读/确认、可见的导入免费道具入口；只有文字区可独立纵向滚动。",
+      "最终另用RootView完整宿主采集同尺寸游戏/签到，确认父层边界下道具不再被裁。"
+    ],
+    "retainedAttempts": [
+      {
+        "bundle": "Validation/test-runs/original-0216-compact-before.xcresult",
+        "result": "共享新测试GenerationAuditIntegrationTests访问private属性导致构建失败，尚未运行布局测试，不能算布局失败；已由根任务修复该测试。"
+      },
+      {
+        "bundle": "Validation/test-runs/original-0216-compact-before-layout.xcresult",
+        "result": "真实Root截图确认游戏道具底部裁切、签到礼盒越出右侧。游戏项先停于宿主SwiftUI AX查询不到home，不能把该AX失败解释成返回按钮不可见。签到项不存在所需横滚视口。"
+      },
+      {
+        "bundle": "Validation/test-runs/original-0216-compact-before-measured.xcresult",
+        "result": "改为真实Geometry测量后，确认小屏hint道具maxY=593超出568；8格页面settings maxX=359、lives/rules maxX=367超出320。额外189.99999999999997与190的浮点断言差异在最终测试按0.01pt精度处理，不算布局缺陷。"
+      },
+      {
+        "bundle": "Validation/test-runs/original-0216-compact-after-first.xcresult",
+        "result": "首版2项通过；最终扩展到4项覆盖其他游戏状态与Root完整宿主。"
+      }
+    ],
+    "normalSizeUISupplement": {
+      "bundle": "Validation/test-runs/original-0216-ui-pro.xcresult",
+      "capturedBuild": "0.2.16 (19)",
+      "device": "iPhone 17 Pro",
+      "imageCount": 3,
+      "reviewedBy": [
+        "root",
+        "original_remaining_visual"
+      ],
+      "scope": "Three final full-app UI screenshots; distinct from four focused component/Root host tests above. Full suite results are maintained by root."
+    }
+  },
+  "limitations": [
+    "320×568和390×844是iPhone17e模拟器内受限UIHostingController视口；不是已在真实小屏iPhone或iOS15上完成验证。",
+    "Root完整宿主图与组件宿主图区分标注；组件直接使用真实GameView/CheckInView，最后一轮同时注入产品奶油色背景。此前白背景组件图未提升到本图册。",
+    "GeometryObserver仅测量实际已布局视图，默认nil；普通运行不启用测量。原生棋盘边界也与测量回调交叉核验。",
+    "没有把无UIScrollView祖先当成真实手指横纵滑动通过；真机手势和VoiceOver仍需实测。",
+    "AX5由宿主dynamicTypeSize覆盖；没有改变或验证系统设置应用。",
+    "教学确认在100pt独立说明区内可滚动到达，顶部与底部图片分别覆盖其内容，不把裁切的滚动视口说成全文同时可见。",
+    "免费工具图使用明确测试配置展示入口，截图时奖励余额使入口禁用；只证明可见排布和44pt区域，不证明广告可用或参考配置已冻结。",
+    "修复前后部分图片关卡/签到夹具不同；用于布局缺陷与可达性对照，不作同盘逐像素对比。",
+    "正常尺寸完整App/UI回归由根任务另外执行，本图册不宣称全应用或外部资料已验收。"
+  ],
+  "images": [
+    {
+      "path": "Docs/original-compact-0216/before-root-game.png",
+      "title": "修复前：完整Root游戏底部道具被裁",
+      "result": "失败画面",
+      "capturedBuild": "0.2.16 (19)",
+      "hostScope": "RootView完整页宿主",
+      "viewportPoints": [
+        320,
+        568
+      ],
+      "device": "iPhone 17e",
+      "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+      "test": "CompactLayoutTests/testGameplayFitsCompactAndRegularPortraitWithoutScrollingTheBoard()",
+      "source": "Validation/test-runs/original-0216-compact-before-layout-attachments/950B49CC-E438-4237-A362-5F5AD0BA86FF.png",
+      "sourceManifest": "Validation/test-runs/original-0216-compact-before-layout-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0216-compact-before-layout.xcresult",
+      "attachmentName": "portrait-320x568-board-4x4_0_56DF674A-51A5-4182-BFF4-E0B5664019F7.png",
+      "attachmentTimestamp": 1790792391.471,
+      "dimensions": [
+        960,
+        1704
+      ],
+      "sha256": "641e0d4ecb7b5c172f1c52111657983b1897006fb5eca6e9a1c6c0971df1c09b",
+      "individuallyViewed": true,
+      "visualReview": "已逐张view_image检查。4×4棋盘完整，但两枚道具按钮底部越出320×568视口，不能计为通过。此轮游戏自动测试先停于AX查询，裁切由实际图确认。"
+    },
+    {
+      "path": "Docs/original-compact-0216/before-root-checkin.png",
+      "title": "修复前：完整Root签到礼盒越界",
+      "result": "失败画面",
+      "capturedBuild": "0.2.16 (19)",
+      "hostScope": "RootView完整页宿主",
+      "viewportPoints": [
+        320,
+        568
+      ],
+      "device": "iPhone 17e",
+      "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+      "test": "CompactLayoutTests/testSevenDayCheckInRemainsReachableAtCompactAndRegularWidths()",
+      "source": "Validation/test-runs/original-0216-compact-before-layout-attachments/C3C2DFDD-5F0F-48D6-B495-778695599349.png",
+      "sourceManifest": "Validation/test-runs/original-0216-compact-before-layout-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0216-compact-before-layout.xcresult",
+      "attachmentName": "portrait-320x568-checkin-leading_0_0623CBB4-1EF7-4582-B09C-2E59E4D7F5E7.png",
+      "attachmentTimestamp": 1790792392.139,
+      "dimensions": [
+        960,
+        1704
+      ],
+      "sha256": "a04b51de23ab4c77a4b513e176ef0691cdbf7ee9f0565dedb652dea3a8eb8707",
+      "individuallyViewed": true,
+      "visualReview": "已逐张view_image检查。测试夹具已签到六日，第七日礼盒处在右边界之外，七日分支没有横向滚动容器。"
+    },
+    {
+      "path": "Docs/original-compact-0216/after-root-game-8x8.png",
+      "title": "修复后：完整Root的8×8对局",
+      "result": "通过",
+      "capturedBuild": "0.2.16 (19)",
+      "hostScope": "RootView完整页宿主",
+      "viewportPoints": [
+        320,
+        568
+      ],
+      "device": "iPhone 17e",
+      "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+      "test": "CompactLayoutTests/testActualRootPagesAtCompactViewportRetainTheBoardAndScrollableGift()",
+      "source": "Validation/test-runs/original-0216-compact-expanded-attachments/949296B7-FFC3-44E0-AD2D-3BAE2E8CC49A.png",
+      "sourceManifest": "Validation/test-runs/original-0216-compact-expanded-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0216-compact-expanded.xcresult",
+      "attachmentName": "root-320x568-game-leading_0_72CAC50A-1E40-43C8-8C5F-BFDFA2ABA037.png",
+      "attachmentTimestamp": 1790792929.609,
+      "dimensions": [
+        960,
+        1704
+      ],
+      "sha256": "0ce778963c0d619f70d15024cda7a063f39f228d6e88796366d75cd7e480f32e",
+      "individuallyViewed": true,
+      "visualReview": "已逐张view_image检查。返回/设置、关卡/分数、八个进度槽、三颗生命、三张规则、正方棋盘及两道具均完整，底部道具不再越界；规则正文保持完整可读。"
+    },
+    {
+      "path": "Docs/original-compact-0216/after-root-checkin-leading.png",
+      "title": "修复后：完整Root签到起始视口",
+      "result": "通过",
+      "capturedBuild": "0.2.16 (19)",
+      "hostScope": "RootView完整页宿主",
+      "viewportPoints": [
+        320,
+        568
+      ],
+      "device": "iPhone 17e",
+      "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+      "test": "CompactLayoutTests/testActualRootPagesAtCompactViewportRetainTheBoardAndScrollableGift()",
+      "source": "Validation/test-runs/original-0216-compact-expanded-attachments/A1C7B57F-D5B1-425E-9788-AFC170352386.png",
+      "sourceManifest": "Validation/test-runs/original-0216-compact-expanded-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0216-compact-expanded.xcresult",
+      "attachmentName": "root-320x568-check-in-leading_0_9D7DF506-B27D-44C1-A45E-BE713A7B0639.png",
+      "attachmentTimestamp": 1790792930.169,
+      "dimensions": [
+        960,
+        1704
+      ],
+      "sha256": "bcff606244304f25d1427be21f340eb6a31679475ddc28bf6358bcc808a242d5",
+      "individuallyViewed": true,
+      "visualReview": "已逐张view_image检查。装饰及连续签到天数完整，七日条在独立横向视口中，右侧部分下一日提供继续滚动的线索。"
+    },
+    {
+      "path": "Docs/original-compact-0216/after-root-checkin-trailing.png",
+      "title": "修复后：完整Root签到末尾礼盒",
+      "result": "通过",
+      "capturedBuild": "0.2.16 (19)",
+      "hostScope": "RootView完整页宿主",
+      "viewportPoints": [
+        320,
+        568
+      ],
+      "device": "iPhone 17e",
+      "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+      "test": "CompactLayoutTests/testActualRootPagesAtCompactViewportRetainTheBoardAndScrollableGift()",
+      "source": "Validation/test-runs/original-0216-compact-expanded-attachments/CEFB03C7-8414-4FFB-909A-5FEACF0933BF.png",
+      "sourceManifest": "Validation/test-runs/original-0216-compact-expanded-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0216-compact-expanded.xcresult",
+      "attachmentName": "root-320x568-check-in-trailing_0_3F2C8D36-DF37-4468-B526-B8C9CD664A22.png",
+      "attachmentTimestamp": 1790792930.707,
+      "dimensions": [
+        960,
+        1704
+      ],
+      "sha256": "54d4588d25393cbeec6b34cb1fab043fbfec866e61f05f066297ec62b88506ac",
+      "individuallyViewed": true,
+      "visualReview": "已逐张view_image检查。横向滚至末尾后第七日礼盒完整可见，主页面未横移；当前零签到夹具尚未满足周期领取条件。"
+    },
+    {
+      "path": "Docs/original-compact-0216/after-component-game-10x10.png",
+      "title": "紧凑组件：10×10完整对局",
+      "result": "通过",
+      "capturedBuild": "0.2.16 (19)",
+      "hostScope": "GameView组件宿主",
+      "viewportPoints": [
+        320,
+        568
+      ],
+      "device": "iPhone 17e",
+      "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+      "test": "CompactLayoutTests/testGameplayFitsCompactAndRegularPortraitWithoutScrollingTheBoard()",
+      "source": "Validation/test-runs/original-0216-compact-expanded-attachments/E12094CA-3BDE-4DA3-B24E-B518AE4735E8.png",
+      "sourceManifest": "Validation/test-runs/original-0216-compact-expanded-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0216-compact-expanded.xcresult",
+      "attachmentName": "portrait-320x568-board-10x10_0_B20A05EE-788E-41A1-8F98-45655E7B9BC9.png",
+      "attachmentTimestamp": 1790792935.706,
+      "dimensions": [
+        960,
+        1704
+      ],
+      "sha256": "6f1442b7bb5accfb4b9bd49a28a600e1301b7d986603a289329fde8c5714dacb",
+      "individuallyViewed": true,
+      "visualReview": "已逐张view_image检查。0/10、三颗生命、三项规则、100格正方棋盘、两道具和底部留白均可见。测试核验棋盘尺寸与按钮边界，组件不是完整App启动截图。"
+    },
+    {
+      "path": "Docs/original-compact-0216/after-component-normal-game-10x10.png",
+      "title": "正常尺寸组件：保留原有排布",
+      "result": "通过",
+      "capturedBuild": "0.2.16 (19)",
+      "hostScope": "GameView组件宿主",
+      "viewportPoints": [
+        390,
+        844
+      ],
+      "device": "iPhone 17e",
+      "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+      "test": "CompactLayoutTests/testGameplayFitsCompactAndRegularPortraitWithoutScrollingTheBoard()",
+      "source": "Validation/test-runs/original-0216-compact-expanded-attachments/86DCF14E-E60C-4575-8F60-B59A3F3E832F.png",
+      "sourceManifest": "Validation/test-runs/original-0216-compact-expanded-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0216-compact-expanded.xcresult",
+      "attachmentName": "portrait-390x844-board-10x10_0_6BD26140-A5E0-4142-9ED8-DB0160DFC13D.png",
+      "attachmentTimestamp": 1790792938.942,
+      "dimensions": [
+        1170,
+        2532
+      ],
+      "sha256": "5d8e8c523d12f6284b338757a0f38eaa9c4075094ffa00cacdeaaeb7ae7316a2",
+      "individuallyViewed": true,
+      "visualReview": "已逐张view_image检查。390×844采用正常规则横排、信息字号、棋盘及底部道具布局，没有使用紧凑规则卡。此为组件宿主，不替代根任务的正常尺寸真实UI回归。"
+    },
+    {
+      "path": "Docs/original-compact-0216/after-component-hint-ax5-top.png",
+      "title": "紧凑组件：最大辅助字号提示顶部",
+      "result": "通过",
+      "capturedBuild": "0.2.16 (19)",
+      "hostScope": "GameView组件宿主",
+      "viewportPoints": [
+        320,
+        568
+      ],
+      "device": "iPhone 17e",
+      "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+      "test": "CompactLayoutTests/testCompactHintTutorialAndConfiguredFreeToolRemainUsableWithoutPageScrolling()",
+      "source": "Validation/test-runs/original-0216-compact-expanded-attachments/F18FFFF8-F41E-49E9-A37F-0BD5EB488DE8.png",
+      "sourceManifest": "Validation/test-runs/original-0216-compact-expanded-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0216-compact-expanded.xcresult",
+      "attachmentName": "portrait-320x568-hint-initial_0_C7558C9D-23E8-41FE-8419-41055900F992.png",
+      "attachmentTimestamp": 1790792931.28,
+      "dimensions": [
+        960,
+        1704
+      ],
+      "sha256": "d9757635a62a29385e170bbfe62541c76a0db11480b8a7e30c013814569f0a48",
+      "individuallyViewed": true,
+      "visualReview": "已逐张view_image检查。提示正文被约束在独立可滚动视口，关闭X与应用按钮完整，棋盘正方；正文需滚动，图中不宣称显示全文。"
+    },
+    {
+      "path": "Docs/original-compact-0216/after-component-hint-ax5-bottom.png",
+      "title": "紧凑组件：最大辅助字号提示末尾",
+      "result": "通过",
+      "capturedBuild": "0.2.16 (19)",
+      "hostScope": "GameView组件宿主",
+      "viewportPoints": [
+        320,
+        568
+      ],
+      "device": "iPhone 17e",
+      "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+      "test": "CompactLayoutTests/testCompactHintTutorialAndConfiguredFreeToolRemainUsableWithoutPageScrolling()",
+      "source": "Validation/test-runs/original-0216-compact-expanded-attachments/6A1AED7D-3D75-4602-A7CC-BE9CCEA338FF.png",
+      "sourceManifest": "Validation/test-runs/original-0216-compact-expanded-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0216-compact-expanded.xcresult",
+      "attachmentName": "portrait-320x568-hint-scrolled_0_F6451438-A77C-41DB-A268-3A23A9E999E7.png",
+      "attachmentTimestamp": 1790792931.813,
+      "dimensions": [
+        960,
+        1704
+      ],
+      "sha256": "20480fb82836aa6cd82771b27244b441765d581e5ecae12441e9ce227a5122a1",
+      "individuallyViewed": true,
+      "visualReview": "已逐张view_image检查。独立提示视口滚到最后一句，棋盘与应用按钮保持原位；测试确认阅读不改盘。"
+    },
+    {
+      "path": "Docs/original-compact-0216/after-component-tutorial-top.png",
+      "title": "紧凑组件：教学说明顶部",
+      "result": "通过",
+      "capturedBuild": "0.2.16 (19)",
+      "hostScope": "GameView组件宿主",
+      "viewportPoints": [
+        320,
+        568
+      ],
+      "device": "iPhone 17e",
+      "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+      "test": "CompactLayoutTests/testCompactHintTutorialAndConfiguredFreeToolRemainUsableWithoutPageScrolling()",
+      "source": "Validation/test-runs/original-0216-compact-expanded-attachments/80EE95C2-9433-44C4-8824-AB28B5E4E486.png",
+      "sourceManifest": "Validation/test-runs/original-0216-compact-expanded-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0216-compact-expanded.xcresult",
+      "attachmentName": "portrait-320x568-tutorial-initial_0_3C41D780-2742-441C-B698-C2F930EDA69C.png",
+      "attachmentTimestamp": 1790792932.379,
+      "dimensions": [
+        960,
+        1704
+      ],
+      "sha256": "febd6283ccbdae1cd59059efdc53af7b4ff4a5f7796b74178f8eecab8180d7c9",
+      "individuallyViewed": true,
+      "visualReview": "已逐张view_image检查。导航、进度、规则、棋盘完整，教学标题、跳过和说明位于独立100pt说明区；确认按钮需要向下滚动，未删去教学内容。"
+    },
+    {
+      "path": "Docs/original-compact-0216/after-component-tutorial-bottom.png",
+      "title": "紧凑组件：教学确认可滚动到达",
+      "result": "通过",
+      "capturedBuild": "0.2.16 (19)",
+      "hostScope": "GameView组件宿主",
+      "viewportPoints": [
+        320,
+        568
+      ],
+      "device": "iPhone 17e",
+      "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+      "test": "CompactLayoutTests/testCompactHintTutorialAndConfiguredFreeToolRemainUsableWithoutPageScrolling()",
+      "source": "Validation/test-runs/original-0216-compact-expanded-attachments/FC7DBF22-685A-4635-8202-9678890B490A.png",
+      "sourceManifest": "Validation/test-runs/original-0216-compact-expanded-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0216-compact-expanded.xcresult",
+      "attachmentName": "portrait-320x568-tutorial-scrolled_0_8630F593-1B23-4902-8781-0F50D303B4B2.png",
+      "attachmentTimestamp": 1790792932.928,
+      "dimensions": [
+        960,
+        1704
+      ],
+      "sha256": "603b51163a748f1049b6a46434b0f0ce7c00969805c81f7481bec4676c52564d",
+      "individuallyViewed": true,
+      "visualReview": "已逐张view_image检查。滚到教学区底部后知道了按钮完整，棋盘位置不变；测量按钮≥44pt，滚动前后对局状态不变。"
+    },
+    {
+      "path": "Docs/original-compact-0216/after-component-configured-free-tool.png",
+      "title": "紧凑组件：配置免费道具入口保留",
+      "result": "通过",
+      "capturedBuild": "0.2.16 (19)",
+      "hostScope": "GameView组件宿主",
+      "viewportPoints": [
+        320,
+        568
+      ],
+      "device": "iPhone 17e",
+      "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+      "test": "CompactLayoutTests/testCompactHintTutorialAndConfiguredFreeToolRemainUsableWithoutPageScrolling()",
+      "source": "Validation/test-runs/original-0216-compact-expanded-attachments/9807381E-F99C-469F-A33F-D387E85F327E.png",
+      "sourceManifest": "Validation/test-runs/original-0216-compact-expanded-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0216-compact-expanded.xcresult",
+      "attachmentName": "portrait-320x568-free-tool-initial_0_3BECDADE-6B25-4BBE-BAF4-3037507CD45C.png",
+      "attachmentTimestamp": 1790792933.509,
+      "dimensions": [
+        960,
+        1704
+      ],
+      "sha256": "74394d19acd9270509ae8d94152d77ebeff158e0c676e0efe95890309366d97a",
+      "individuallyViewed": true,
+      "visualReview": "已逐张view_image检查。免费道具入口置于左找答案与右提示之间，三者无重叠且在视口内。灰色是该测试夹具当前不可领取状态，仅验证配置可见入口不被省略。"
+    },
+    {
+      "path": "Docs/original-compact-0216/final-pro-ui-home-restart-chinese.png",
+      "title": "最终真实UI：首页重开后中文第2关",
+      "result": "passed",
+      "capturedBuild": "0.2.16 (19)",
+      "hostScope": "Final full-app XCUITest screenshot; reviewed by root and original_remaining_visual",
+      "viewportPoints": [
+        402,
+        874
+      ],
+      "device": "iPhone 17 Pro",
+      "deviceID": "3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3",
+      "test": "OriginalReferenceUITests/testHomeSettingsRestartOpensResetPlayableBoardAndRestoresIt()",
+      "source": "Validation/test-runs/original-0216-ui-pro-attachments/DAAF1B7B-DF2D-4A82-BC02-6FA1F09B1ED2.png",
+      "sourceManifest": "Validation/test-runs/original-0216-ui-pro-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0216-ui-pro.xcresult",
+      "attachmentName": "home-settings-restart-zh-hans_0_A919E45C-F175-46AB-8D84-F300C4BE6703.png",
+      "attachmentTimestamp": 1790793105.693,
+      "dimensions": [
+        1206,
+        2622
+      ],
+      "sha256": "17f973de2be0e5270666939bab18aa56e4d79fe6d288cfe75203bbeb2d5e1eaf",
+      "individuallyViewed": true,
+      "language": "zh-Hans",
+      "visualReview": "根任务已逐张目视，本任务再次view_image复核。正常安全区内导航、关卡/分数、生命/进度、规则、正方棋盘及两道具完整；左上新增X可见。重开、可继续操作与重启恢复由所属UI测试验证，单张截图不独立证明完整操作链。"
+    },
+    {
+      "path": "Docs/original-compact-0216/final-pro-ui-normal-10x10-english.png",
+      "title": "最终真实UI：当前关卡包常规英文10×10",
+      "result": "passed",
+      "capturedBuild": "0.2.16 (19)",
+      "hostScope": "Final full-app XCUITest screenshot; reviewed by root and original_remaining_visual",
+      "viewportPoints": [
+        402,
+        874
+      ],
+      "device": "iPhone 17 Pro",
+      "deviceID": "3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3",
+      "test": "OriginalReferenceUITests/testAllFourBoardSizesKeepNavigationRulesAndToolsInOrder()",
+      "source": "Validation/test-runs/original-0216-ui-pro-attachments/7960A082-6395-4C61-9FBE-CEE9B8E25302.png",
+      "sourceManifest": "Validation/test-runs/original-0216-ui-pro-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0216-ui-pro.xcresult",
+      "attachmentName": "original-board-10x10_0_E06A89AA-8D77-4DBC-B6A6-6D56D09FC0F7.png",
+      "attachmentTimestamp": 1790793089.829,
+      "dimensions": [
+        1206,
+        2622
+      ],
+      "sha256": "0067406cbd05f114bf4b612a671b78e77aa7ac01f7756eb7e553195f76a87b5f",
+      "individuallyViewed": true,
+      "language": "en",
+      "visualReview": "根任务已逐张目视，本任务再次view_image复核。Level 101、Score 0、0/10进度、三颗生命、三张规则、10×10正方棋盘及两道具均完整，顺序与原文一致；本图是正常Pro全App UI，非320×568受限宿主。"
+    },
+    {
+      "path": "Docs/original-compact-0216/final-pro-ui-largest-chinese-hint.png",
+      "title": "最终真实UI：最大中文Hint滚动视口",
+      "result": "passed",
+      "capturedBuild": "0.2.16 (19)",
+      "hostScope": "Final full-app XCUITest screenshot; reviewed by root and original_remaining_visual",
+      "viewportPoints": [
+        402,
+        874
+      ],
+      "device": "iPhone 17 Pro",
+      "deviceID": "3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3",
+      "test": "OriginalReferenceUITests/testLargestTextHintKeepsCloseApplyAndBoardReachableInBothLanguages()",
+      "source": "Validation/test-runs/original-0216-ui-pro-attachments/5E12FD94-2AA1-4EB5-A361-FC2414EA8BC7.png",
+      "sourceManifest": "Validation/test-runs/original-0216-ui-pro-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0216-ui-pro.xcresult",
+      "attachmentName": "largest-text-hint-zh-Hans_0_6890AAA6-5B43-4F78-93F9-0BB0440CDA30.png",
+      "attachmentTimestamp": 1790793128.427,
+      "dimensions": [
+        1206,
+        2622
+      ],
+      "sha256": "2a98e4f957abf39d39e27df5371ec2f652910fc00fb83651134e26be04acc118",
+      "individuallyViewed": true,
+      "language": "zh-Hans",
+      "visualReview": "根任务已逐张目视，本任务再次view_image复核。长提示文字在独立视口下沿裁切，表示可滚动区域，不宣称全文同时可见；关闭、正方棋盘及应用按钮完整可见。所属UI测试覆盖中英最大字体下Close/Apply/棋盘可达；动态字体通过测试启动配置注入，不等同于系统设置页操作验收。"
+    }
+  ]
+}

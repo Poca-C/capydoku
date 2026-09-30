@@ -728,13 +728,14 @@
       ],
       "title": "Generate Many→Solver→Difficulty→Similarity→Select Best",
       "status": "verified",
-      "implemented": "完整180个入选批次每批100候选；含15个拒绝批次共19500候选，依次执行求解、难度、严格相似度筛选再选优。预算不足100时拒绝输出。 此处verified仅指本地流水线和Capydoku自身历史去重，未验证Pawdoku难度或其他产品的相似度。",
+      "implemented": "完整180个入选批次每批100候选；含15个拒绝批次共19500候选，依次执行求解、难度、严格相似度筛选再选优。预算不足100时拒绝输出。 此处verified仅指本地流水线和Capydoku自身历史去重，未验证Pawdoku难度或其他产品的相似度。 0.2.16补运行时完整批次归档：成功与失败的GenerationPipelineResult按内容SHA独立存储，包含Target/Profile、seed/候选批次、过滤计数及入选报告；先保存报告再允许新盘提交，校验/写入失败保留原局。",
       "gap": "正式难度参数与跨产品关卡库仍缺，完整跨产品相似度验收未通过。",
       "evidence": [
         "Sources/CapydokuCore/GenerationPipeline.swift",
         "Validation/original-generation/levels-report.json",
         "Validation/original-generation/summary.json",
-        "Validation/test-runs/original-candidate-minimum.log"
+        "Validation/test-runs/original-candidate-minimum.log",
+        "Sources/CapydokuCore/GenerationAuditStore.swift"
       ]
     },
     {
@@ -848,13 +849,14 @@
       ],
       "title": "上线追溯交付与 seed 重建",
       "status": "partial",
-      "implemented": "150关完成Target/元数据/Solver/Difficulty/历史Similarity报告、教学映射和重建审计。",
-      "gap": "真实参考校准与跨产品报告缺失，因此还不是完整上线证明。",
+      "implemented": "150关完成Target/元数据/Solver/Difficulty/历史Similarity报告、教学映射和重建审计。 0.2.16冷启诊断分别恢复最新生成尝试与按完整Puzzle校验匹配的当前棋盘报告；实际151成功报告和152失败报告并存验证，未提交候选不会冒充当前盘。旧版无报告明确标缺失，不重生成伪造历史。",
+      "gap": "真实参考校准与跨产品报告缺失，因此还不是完整上线证明。 旧版运行时生成报告未保存，无法补证；本地档案不证明正式Pawdoku难度或跨产品验收。",
       "evidence": [
         "Validation/original-generation/production-rebuild-audit.json",
         "Validation/original-generation/levels-report.json",
         "App/Views/SupportingViews.swift",
-        "Validation/original-generation/summary.json"
+        "Validation/original-generation/summary.json",
+        "Validation/original-0216-generation-diagnostics.json"
       ]
     },
     {
@@ -867,7 +869,7 @@
       ],
       "title": "151+ 十关循环与同等过滤",
       "status": "partial",
-      "implemented": "旧Profile下151–180三个十关组使用累计150关历史严格过滤，合法性和限时生成通过；运行保存独立棋盘缓存并恢复。0.2.1旧Profile下8×8 L150进入6×6 L151与生成失败保留原盘，在17e逐格冷启动恢复通过，此为历史证据。0.2.14确认6×6仅90种合法答案，固定尺寸无法长期严格去重。151+临时Profile v2允许在6–10或8–10范围筛选，先跳过答案容量耗尽的尺寸，分数/深度/波形和硬去重不放宽。最终重生成151–180并在完整6×6答案人工历史下生成291–320；新版L151为10×10，这60关与原150关合计210关独立合法、唯一解、区域连通且答案/区域不重复。 0.2.15真实AppModel验证151→152→冷恢复153的累计历史；删除非当前151缓存后，其指纹仍参与拒重。双账册损坏、旧档缺已知历史和新盘写盘失败均保留原局/库存/尝试次数；重复生成151仍比较前一变体。",
+      "implemented": "旧Profile下151–180三个十关组使用累计150关历史严格过滤，合法性和限时生成通过；运行保存独立棋盘缓存并恢复。0.2.1旧Profile下8×8 L150进入6×6 L151与生成失败保留原盘，在17e逐格冷启动恢复通过，此为历史证据。0.2.14确认6×6仅90种合法答案，固定尺寸无法长期严格去重。151+临时Profile v2允许在6–10或8–10范围筛选，先跳过答案容量耗尽的尺寸，分数/深度/波形和硬去重不放宽。最终重生成151–180并在完整6×6答案人工历史下生成291–320；新版L151为10×10，这60关与原150关合计210关独立合法、唯一解、区域连通且答案/区域不重复。 0.2.15真实AppModel验证151→152→冷恢复153的累计历史；删除非当前151缓存后，其指纹仍参与拒重。双账册损坏、旧档缺已知历史和新盘写盘失败均保留原局/库存/尝试次数；重复生成151仍比较前一变体。 0.2.16持续生成的每次实际批次结果独立持久化；历史校验失败等生成前错误不冒充已执行候选批次。报告和历史均保存成功后才进入新盘事务。",
       "gap": "新版60关为151–180及容量压力下291–320，未验证181–290、无限生成或全部未来历史组合；跨产品库、正式参考难度仍缺，151+架构仍为获准Demo实验。",
       "evidence": [
         "App/AppModel.swift",
@@ -881,7 +883,8 @@
         "Tests/CapydokuCoreTests/EndlessCapacityTests.swift",
         "Validation/original-generation-0214-final/independent-audit.json",
         "AppTests/ExperimentalGenerationHistoryTests.swift",
-        "Validation/test-runs/original-0215-app-first.xcresult"
+        "Validation/test-runs/original-0215-app-first.xcresult",
+        "AppTests/GenerationAuditIntegrationTests.swift"
       ]
     },
     {
@@ -1071,7 +1074,7 @@
       ],
       "title": "游戏导航、信息区、三规则卡、棋盘、工具及广告留白",
       "status": "verified",
-      "implemented": "4/6/8/10棋盘的导航/Level/进度/规则/棋盘/工具层级及正方形尺寸有UI验证；0.2.7在17e复验。8×8按原图改为八头像，17Pro及17e实际页面截图均完整。",
+      "implemented": "4/6/8/10棋盘的导航/Level/进度/规则/棋盘/工具层级及正方形尺寸有UI验证；0.2.7在17e复验。8×8按原图改为八头像，17Pro及17e实际页面截图均完整。 0.2.16补窄屏紧凑排布，实际宿主320×568/390×844四种棋盘及完整Root截图验证控件不裁切；教学与Hint独立滚动，不给棋盘增加滚动祖先。",
       "gap": "真机、双语长文案和全部动态字体档位仍待完整验收。",
       "evidence": [
         "App/Views/RootView.swift",
@@ -1080,7 +1083,8 @@
         "Validation/original-verification.json",
         "Docs/original-reference/04-gameplay.png",
         "AppTests/OriginalRewardVisualTests.swift",
-        "Docs/original-rewards/manifest.json"
+        "Docs/original-rewards/manifest.json",
+        "Docs/original-compact-0216/manifest.json"
       ]
     },
     {
@@ -1095,12 +1099,13 @@
       ],
       "title": "Settings 四开关、Feedback、Restart",
       "status": "partial",
-      "implemented": "中央白卡遮罩、X关闭、水平四图标ON/OFF、即时存储；未接入 Pattern 隐藏；Feedback 导出诊断。",
+      "implemented": "中央白卡遮罩、X关闭、水平四图标ON/OFF、即时存储；未接入 Pattern 隐藏；Feedback 导出诊断。 0.2.16修复首页Settings里Restart只重置后台对局却仍停首页：成功重开先进入可操作游戏页，再记录开局；重试防抖、库存、旧盘配置及不支持策略的拒绝行为保留。",
       "gap": "Feedback正式收件/流程与Restart二次确认基线未定义；重开新棋盘策略尚未完整支持。",
       "evidence": [
         "App/Views/SupportingViews.swift",
         "App/AppModel.swift",
-        "Reference/Original/image25.png"
+        "Reference/Original/image25.png",
+        "AppTests/RestartNavigationTests.swift"
       ]
     },
     {
@@ -1115,14 +1120,15 @@
       ],
       "title": "签到页面、周期礼盒和自然日状态",
       "status": "partial",
-      "implemented": "左上返回、抱牌角色、Day Streak及横向状态按附图布局；0.2.7补周期末达到领取条件时的短弹跳/粒子，后台/离页/领取后清理。当前配置下领取幂等、重入及保存通过；测试预置前六日实际签到业务记录。 0.2.13已领取/未来日期变为只读禁用状态；领取按钮补焦点绑定，关闭失败提示的路由有实际目标，避免重复按钮反馈。",
+      "implemented": "左上返回、抱牌角色、Day Streak及横向状态按附图布局；0.2.7补周期末达到领取条件时的短弹跳/粒子，后台/离页/领取后清理。当前配置下领取幂等、重入及保存通过；测试预置前六日实际签到业务记录。 0.2.13已领取/未来日期变为只读禁用状态；领取按钮补焦点绑定，关闭失败提示的路由有实际目标，避免重复按钮反馈。 0.2.16窄屏七日条按44pt热区预算启用横向滚动，礼盒可达；紧凑尺寸压缩上部装饰留白，不改变领取状态和奖励。",
       "gap": "真实奖励/补签条件、正式项目时区和服务器时间未冻结，正式签到对标待验。",
       "evidence": [
         "App/Views/SupportingViews.swift",
         "Sources/CapydokuCore/PlayerProgress.swift",
         "Reference/Original/image26.png",
         "AppTests/OriginalRewardVisualTests.swift",
-        "Docs/original-rewards/manifest.json"
+        "Docs/original-rewards/manifest.json",
+        "Docs/original-compact-0216/manifest.json"
       ]
     },
     {
@@ -1136,7 +1142,7 @@
       ],
       "title": "44pt、状态、焦点恢复与可读性",
       "status": "partial",
-      "implemented": "17e已验证Settings/模拟广告/结算底层控件隔离、关闭后恢复原盘、主要按钮44×44及长文案自然增高；有效Button动作发反馈，明暗背景分别配文字色。Hint保留只读棋盘并路由解释焦点。 0.2.13补开关与签到功能文字对比，按下开关文字仍大于4.5:1；装饰色保留。 0.2.14补Welcome功能文字可读色；真实UI发现新增容器标识覆盖同意按钮标识，删除后两设备首启与重启复验通过。 0.2.15复现并修复长提示从固定66pt区域向上覆盖关闭X；正文独立滚动、视口高度有上限、棋盘保持方形。中英提示正文12档动态字号、最大字号关闭/Apply至少44pt及不遮挡已验证，普通字号布局保留。",
+      "implemented": "17e已验证Settings/模拟广告/结算底层控件隔离、关闭后恢复原盘、主要按钮44×44及长文案自然增高；有效Button动作发反馈，明暗背景分别配文字色。Hint保留只读棋盘并路由解释焦点。 0.2.13补开关与签到功能文字对比，按下开关文字仍大于4.5:1；装饰色保留。 0.2.14补Welcome功能文字可读色；真实UI发现新增容器标识覆盖同意按钮标识，删除后两设备首启与重启复验通过。 0.2.15复现并修复长提示从固定66pt区域向上覆盖关闭X；正文独立滚动、视口高度有上限、棋盘保持方形。中英提示正文12档动态字号、最大字号关闭/Apply至少44pt及不遮挡已验证，普通字号布局保留。 0.2.16实际布局测量验证小屏主要控件44pt、信息顺序和可达性，包含教学、AX5提示及合成免费入口；普通尺寸真实UI回归通过。",
       "gap": "Hint的XCTest语义树仍可包含禁用背景内容，不据此宣称VoiceOver可达或不可达；真实VoiceOver焦点顺序、所有动态字体档位、最低系统和真机仍待验。",
       "evidence": [
         "App/Views/RootView.swift",
@@ -1152,7 +1158,8 @@
         "Docs/original-reference/manifest.json",
         "AppTests/FunctionalContrastTests.swift",
         "Docs/original-welcome-0214/manifest.json",
-        "Docs/original-hint-0215/manifest.json"
+        "Docs/original-hint-0215/manifest.json",
+        "Docs/original-compact-0216/manifest.json"
       ]
     },
     {
@@ -1350,8 +1357,8 @@
       ],
       "title": "12 事件边界与业务触发",
       "status": "partial",
-      "implemented": "实现11个启用事件，coin_change 预留并禁止发送；新增关卡/道具/奖励业务事件。 0.2.2补齐库存来源批次，配置免费/首次赠送/签到/广告及补偿能跨保存、重开、换关保留；Hint预览与Apply使用同次来源，应用集成已验证。 0.2.6补独立实际结果与随存档保存的冻结事件；复活/继续胜负不再被吞，签到返回不生成虚假quit；奖励通关原子提交。 0.2.7补已确认奖励回执的completed恢复，保留原上下文，奖励实际补库存后才标到账。 0.2.8补插页offer/result、actual started和持久重试；后台终态不会提前创建不可操作的下一关。 0.2.9 buff_use与真实道具效果同次持久化；预览使用身份、来源、库存和原提示保存，重试保留原事件。实际广告offer跨会话、队列失败及冷恢复归属专项通过。 0.2.10补原offer及实际started/skipped/failed/加载超时的持久保存，重试保留原ID/时间/归属；未知最终回调不猜结果、不补奖。9项核心新增与14项应用新增专项通过。",
-      "gap": "未知来源旧库存继续诊断；正式attempt/时长、真实SDK及钥匙串仍待验。本地事件链不等于真实线上数据验收。",
+      "implemented": "实现11个启用事件，coin_change 预留并禁止发送；新增关卡/道具/奖励业务事件。 0.2.2补齐库存来源批次，配置免费/首次赠送/签到/广告及补偿能跨保存、重开、换关保留；Hint预览与Apply使用同次来源，应用集成已验证。 0.2.6补独立实际结果与随存档保存的冻结事件；复活/继续胜负不再被吞，签到返回不生成虚假quit；奖励通关原子提交。 0.2.7补已确认奖励回执的completed恢复，保留原上下文，奖励实际补库存后才标到账。 0.2.8补插页offer/result、actual started和持久重试；后台终态不会提前创建不可操作的下一关。 0.2.9 buff_use与真实道具效果同次持久化；预览使用身份、来源、库存和原提示保存，重试保留原事件。实际广告offer跨会话、队列失败及冷恢复归属专项通过。 0.2.10补原offer及实际started/skipped/failed/加载超时的持久保存，重试保留原ID/时间/归属；未知最终回调不猜结果、不补奖。9项核心新增与14项应用新增专项通过。 0.2.16首页Settings重开不再提前生成不可玩首页的level_start，重置后进入游戏再记录新尝试；重复触发和冷恢复不重复记录。",
+      "gap": "未知来源旧库存继续诊断；正式attempt/时长、真实SDK及物理设备钥匙串仍待验。本地事件链不等于真实线上数据验收。",
       "evidence": [
         "App/AppModel.swift",
         "App/Services/AnalyticsRecorder.swift",
@@ -1372,7 +1379,8 @@
         "AppTests/BuffUseDurabilityTests.swift",
         "Tests/CapydokuCoreTests/HintUsePersistenceTests.swift",
         "AppTests/RewardLifecycleDurabilityTests.swift",
-        "Tests/CapydokuCoreTests/RewardAdEventPersistenceTests.swift"
+        "Tests/CapydokuCoreTests/RewardAdEventPersistenceTests.swift",
+        "AppTests/RestartNavigationTests.swift"
       ]
     },
     {
@@ -1477,7 +1485,7 @@
       ],
       "title": "Xcode26/iOS26构建及正式发布",
       "status": "external_pending",
-      "implemented": "0.2.15(18)完成Xcode26.6的Simulator Debug与通用iOS Release无签名构建，两款17Pro/17e均正常覆盖安装并核对版本，无测试/重置参数启动成功。",
+      "implemented": "0.2.16(19)通过Xcode26.6的Simulator Debug及通用iOS Release无签名构建；17Pro与17e均正常覆盖安装、核对版本并无测试/重置参数启动。",
       "gap": "未签名Release构建不是可分发安装包；真机签名运行、TestFlight、App Store审核及上架均未完成。",
       "evidence": [
         "Capydoku.xcodeproj/project.pbxproj",
@@ -1487,7 +1495,8 @@
         "AppTests/InterstitialAnalyticsTests.swift",
         "AppTests/AnalyticsRecorderTests.swift",
         "Reference/interstitial-analytics-contract.md",
-        "Validation/original-0215-install-audit.json"
+        "Validation/original-0215-install-audit.json",
+        "Validation/original-0216-install-audit.json"
       ]
     },
     {
@@ -1607,13 +1616,14 @@
       ],
       "title": "玩家存档不写具体棋盘",
       "status": "partial",
-      "implemented": "固定包关卡使用 puzzleReference，恢复从包/兼容归档解析；151+单独不可变BoardCache避免混入player payload。 0.2.15历史指纹另存独立账册，玩家状态仅增加count+chainSHA256检查点，不嵌入具体区域或答案；旧档可选字段兼容。",
+      "implemented": "固定包关卡使用 puzzleReference，恢复从包/兼容归档解析；151+单独不可变BoardCache避免混入player payload。 0.2.15历史指纹另存独立账册，玩家状态仅增加count+chainSHA256检查点，不嵌入具体区域或答案；旧档可选字段兼容。 0.2.16生成报告独立放在GenerationReports，玩家存档不增加报告或具体棋盘内容。",
       "gap": "固定包引用与旧包兼容恢复已通过；151+缓存是获准Demo实验，不能等同正式版全部棋盘来自安装包的架构。",
       "evidence": [
         "Sources/CapydokuCore/SaveStore.swift",
         "Tests/CapydokuCoreTests/OriginalStorageTests.swift",
         "Sources/CapydokuCore/ExperimentalPuzzleHistoryStore.swift",
-        "Sources/CapydokuCore/PlayerProgress.swift"
+        "Sources/CapydokuCore/PlayerProgress.swift",
+        "AppTests/GenerationAuditIntegrationTests.swift"
       ]
     },
     {
@@ -1673,7 +1683,7 @@
       ],
       "title": "iOS技术验收与SDK升级兼容",
       "status": "partial",
-      "implemented": "0.2.15通过144项Core及17e全量256项App，包含此前排除的4项OriginalUIContractTests。两设备选定UI共7项通过，覆盖大字中英文Hint和150→151完整同盘恢复。真实历史/写盘故障与本地事件链已测；初次失败及修正复验保留。未签名设备Release编译通过。两模拟器正常覆盖安装及启动，安装前后存档字节一致，启动后全部玩家字段一致（仅明确Set字段按集合比较）。",
+      "implemented": "0.2.16通过156项Core与17e全量267项App（无排除项）；两设备选定UI共6次执行通过（Pro 4次、17e 2次）。生成报告冷恢复/写入失败、首页重开和小屏宿主布局已验证。未签名设备Release编译通过，两模拟器正常覆盖安装与启动，全部玩家数据保留；首次编译/小屏失败及修正记录保留。",
       "gap": "这不是全部设备/全部场景通过。真机、最低系统、真实SDK升级及远程关闭尚未验证；组合UI运行的启动冲突及成功单独重验已如实记录。",
       "evidence": [
         "Validation/original-verification.json",
@@ -1709,7 +1719,12 @@
         "Validation/original-0215-install-audit.json",
         "Validation/original-0215-welcome-diagnostic.json",
         "Docs/original-hint-0215/manifest.json",
-        "AppTests/ExperimentalGenerationHistoryTests.swift"
+        "AppTests/ExperimentalGenerationHistoryTests.swift",
+        "Validation/original-0216-install-audit.json",
+        "Docs/original-compact-0216/manifest.json",
+        "AppTests/GenerationAuditIntegrationTests.swift",
+        "AppTests/RestartNavigationTests.swift",
+        "AppTests/CompactLayoutTests.swift"
       ]
     },
     {
@@ -2010,5 +2025,5 @@
       ]
     }
   ],
-  "currentBuild": "0.2.15 (18)"
+  "currentBuild": "0.2.16 (19)"
 }

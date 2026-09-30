@@ -35,5 +35,8 @@
   "No valid save could be recovered. Starting with initial progress; damaged or incompatible files have been retained.": "未找到可恢复的有效存档，已从初始进度开始。损坏或不兼容的文件已保留。",
   "OK": "确定",
   "No unused board remains within the configured size range. Your current board is intact.": "当前尺寸范围内已没有未使用的棋盘，需要更新关卡配置。你的当前棋盘已保留。",
-  "Experimental level history could not be verified. New level generation is paused; your current board is unchanged.": "后续关卡的历史记录校验失败，已暂停生成新关卡。你的当前棋盘保持不变。"
+  "Experimental level history could not be verified. New level generation is paused; your current board is unchanged.": "后续关卡的历史记录校验失败，已暂停生成新关卡。你的当前棋盘保持不变。",
+  "The generation report is internally inconsistent. The new board has not been released.": "新关卡的生成记录校验失败，当前棋盘已保留。",
+  "The generation report archive could not be verified. Existing evidence is preserved.": "关卡生成记录暂时无法读取，原记录已保留。",
+  "The generation report exceeds the local archive size limit.": "关卡生成记录超出本地保存上限，当前棋盘已保留。"
 }

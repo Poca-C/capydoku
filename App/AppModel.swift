@@ -54,6 +54,7 @@ final class AppModel: ObservableObject {
     let analytics: AnalyticsRecorder
     private let store: SaveStore
     private let experimentalHistory: ExperimentalPuzzleHistoryStore
+    private let generationAudits: GenerationAuditStore
     private let gameplayConfigurations: GameplayConfigurationStore
     private let saveQueue = DispatchQueue(label: "com.capydoku.progress-writes", qos: .utility)
     private let synchronousSaves: Bool
@@ -146,6 +147,7 @@ final class AppModel: ObservableObject {
             .flatMap { try? Data(contentsOf: $0) }.flatMap { try? JSONDecoder().decode([Puzzle].self, from: $0) } ?? []
         store = SaveStore(directory: self.saveDirectory, packagedPuzzle: { packagedLevels[$0] }, archivedPuzzles: { id in legacy.filter { $0.id == id } })
         experimentalHistory = ExperimentalPuzzleHistoryStore(directory: self.saveDirectory)
+        generationAudits = GenerationAuditStore(directory: self.saveDirectory)
         let packError = errorMessage
         loadProgress()
         #if DEBUG
@@ -507,6 +509,7 @@ final class AppModel: ObservableObject {
         let retrySeed: UInt64? = retry == 0 ? nil : (UInt64(level) &* 0x9E3779B97F4A7C15 &+ 0xCA9D0C0) ^ (UInt64(retry) &* 0xD1B54A32D192ED03)
         let packaged = Array(levels.values)
         let history = experimentalHistory
+        let audits = generationAudits
         let checkpoint = progress.experimentalHistoryCheckpoint
         let requiredLevels = Set((progress.attemptCounts.keys.compactMap(Int.init)
             + Array(progress.completedLevels) + [session?.puzzle.id].compactMap { $0 }).filter { $0 >= 151 })
@@ -517,6 +520,9 @@ final class AppModel: ObservableObject {
                 // disappear from the similarity corpus on a repeat/debug start.
                 let corpus = packaged.map { SimilarityCorpusEntry(game: "CapyDoku", puzzle: $0) } + previous.corpus
                 let generated = try PuzzleGenerator.generateAudited(level: level, seed: retrySeed, corpus: corpus, similarityConfiguration: .strict, maxAttempts: candidateLimit, timeBudgetMilliseconds: configuration.generatorBudgetMilliseconds)
+                // Original [190–194]: retain the complete batch result, including
+                // rejected batches, before a selected board can become playable.
+                try audits.record(generated)
                 let committed = try generated.puzzle.map { try history.record($0, checkpoint: checkpoint, requiredLevels: requiredLevels) }
                 return (generated, committed)
             }
@@ -738,15 +744,19 @@ final class AppModel: ObservableObject {
     }
     func restart() {
         let time = ProcessInfo.processInfo.systemUptime
-        guard !loading, !rewardBusy, time - lastRestartTime > 0.4 else { return }
-        guard session?.config.referenceGameplay?.failure.restartCreatesNewBoard != true else {
+        guard !loading, !rewardBusy, let current = session, time - lastRestartTime > 0.4 else { return }
+        guard current.config.referenceGameplay?.failure.restartCreatesNewBoard != true else {
             errorMessage = "This imported configuration requires an alternate packaged board. That reference behavior is not available in this build. Your current progress is intact."
             return
         }
         lastRestartTime = time
         hint = nil
-        if let s = session { track("level_restart", key: s.id.uuidString, parameters: ["restart_reason": s.status == .lost ? "after_fail" : "manual", "previous_fail_reason": s.status == .lost ? "life_zero" : "", "next_attempt_no": "\(s.attempt + 1)"]) }
-        progress.restart(); save(); trackLevelStart()
+        track("level_restart", key: current.id.uuidString, parameters: ["restart_reason": current.status == .lost ? "after_fail" : "manual", "previous_fail_reason": current.status == .lost ? "life_zero" : "", "next_attempt_no": "\(current.attempt + 1)"])
+        progress.restart()
+        // Settings is also reachable from Home. Restart opens the reset board
+        // before recording the new playable attempt (original [291], [364]).
+        screen = .game
+        save(); trackLevelStart()
     }
 
     private func tutorialAllows(_ action: String, cells: [Int]) -> Bool {
@@ -1316,6 +1326,9 @@ final class AppModel: ObservableObject {
             let generatedAt: Date; let build: String; let demoConfig: DemoConfig
             let progress: PlayerProgress; let levelPackCount: Int
             let referenceGameplay: ReferenceGameplayConfiguration?; let generationReport: GenerationPipelineReport?
+            let currentBoardGenerationReport: GenerationPipelineReport?
+            let generationAuditIssues: [String]
+            let generationReportScope = "Most recent generation attempt; may differ from the current playable board. The separate currentBoardGenerationReport is matched to the complete saved puzzle. Reports describe generation, not player activation or formal reference acceptance."
             let unattributedToolUsesSinceLaunch: Int
             let interstitialRecordingError: String?
             let rewardRecordingError: String?
@@ -1324,7 +1337,20 @@ final class AppModel: ObservableObject {
         do {
             let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "unknown"
             let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "unknown"
-            let report = Report(generatedAt: Date(), build: "\(version) (\(build))", demoConfig: config, progress: progress, levelPackCount: levels.count, referenceGameplay: referenceConfiguration, generationReport: lastGenerationReport, unattributedToolUsesSinceLaunch: unattributedToolUseCount, interstitialRecordingError: interstitialRecordingError, rewardRecordingError: rewardRecordingError, gameplayConfiguration: gameplayConfigurationDiagnostics)
+            var issues: [String] = []
+            var latestReport = lastGenerationReport
+            if latestReport == nil {
+                do { latestReport = try generationAudits.latest()?.report }
+                catch { issues.append("Latest generation audit could not be verified: \(error.localizedDescription)") }
+            }
+            var currentReport: GenerationPipelineReport?
+            if let puzzle = session?.puzzle, puzzle.id >= 151 {
+                do {
+                    currentReport = try generationAudits.report(for: puzzle)?.report
+                    if currentReport == nil { issues.append("No generation audit is available for this board; older Demo versions did not retain runtime reports. No historical report has been reconstructed or invented.") }
+                } catch { issues.append("Current board generation audit could not be verified: \(error.localizedDescription)") }
+            }
+            let report = Report(generatedAt: Date(), build: "\(version) (\(build))", demoConfig: config, progress: progress, levelPackCount: levels.count, referenceGameplay: referenceConfiguration, generationReport: latestReport, currentBoardGenerationReport: currentReport, generationAuditIssues: issues, unattributedToolUsesSinceLaunch: unattributedToolUseCount, interstitialRecordingError: interstitialRecordingError, rewardRecordingError: rewardRecordingError, gameplayConfiguration: gameplayConfigurationDiagnostics)
             let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
             let url = FileManager.default.temporaryDirectory.appendingPathComponent("Capydoku-diagnostics.json")
             try encoder.encode(report).write(to: url, options: .atomic)

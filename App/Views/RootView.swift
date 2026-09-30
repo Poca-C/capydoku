@@ -1,6 +1,36 @@
 import SwiftUI
 import CapydokuCore
 
+// Optional, read-only measurements of real laid-out controls for hosted UI
+// verification. Normal application views never install an observer.
+private struct CapyLayoutObserverKey: EnvironmentKey {
+    static let defaultValue: ((String, CGRect) -> Void)? = nil
+}
+
+extension EnvironmentValues {
+    var capyLayoutObserver: ((String, CGRect) -> Void)? {
+        get { self[CapyLayoutObserverKey.self] }
+        set { self[CapyLayoutObserverKey.self] = newValue }
+    }
+}
+
+private struct CapyLayoutProbe: ViewModifier {
+    @Environment(\.capyLayoutObserver) private var observer
+    let identifier: String
+    @ViewBuilder func body(content: Content) -> some View {
+        if let observer {
+            content.background(GeometryReader { geometry in
+                Color.clear.onAppear { observer(identifier, geometry.frame(in: .global)) }
+                    .onChange(of: geometry.frame(in: .global)) { observer(identifier, $0) }
+            })
+        } else { content }
+    }
+}
+
+extension View {
+    func capyLayoutProbe(_ identifier: String) -> some View { modifier(CapyLayoutProbe(identifier: identifier)) }
+}
+
 struct RootView: View {
     @EnvironmentObject private var model: AppModel
     // Root owns the preference so independently hosted screens also update.
@@ -218,39 +248,48 @@ struct GameView: View {
                 // Preserve the normal reference layout for short explanations.
                 // Longer/larger text may grow only into spare board space; the
                 // remainder scrolls inside its own viewport, never over Close.
-                let maximumHintHeight = max(66, geometry.size.height - 420 - 190 + 66)
-                let hintHeight = model.hint == nil ? 66 : min(max(66, hintContentHeight), maximumHintHeight)
-                let boardSide = max(190, min(geometry.size.width - 28, geometry.size.height - 420 - (hintHeight - 66), 500))
+                let compact = geometry.size.width < 360 || geometry.size.height < 640
+                let ruleHeight: CGFloat = compact ? 56 : 66
+                let footerHeight: CGFloat = compact ? (model.hint != nil ? 60 : model.tutorial != nil ? 100 : 70) : 130
+                let bannerHeight: CGFloat = model.tutorial == nil ? 44 : 12
+                // Compact space comes from decoration, gaps and the unused free
+                // tool row. The board itself never acquires a scroll container.
+                let fixedHeight: CGFloat = compact ? 44 + 44 + 32 + 4 + 8 + footerHeight + bannerHeight + 8 : 354
+                let maximumHintHeight = max(66, geometry.size.height - fixedHeight - 190)
+                let hintHeight = model.hint == nil ? ruleHeight : min(max(66, hintContentHeight), maximumHintHeight)
+                let boardSide = max(190, min(geometry.size.width - 28, geometry.size.height - fixedHeight - hintHeight, 500))
                 let covered = s.status != .playing || model.sheet != nil || model.loading || model.challengePending
                 ZStack {
                     VStack(spacing: 0) {
                         HStack {
                             IconButton(symbol: "arrow.left", label: "Home", id: "home") {
                                 if model.hint != nil { model.closeHint() } else { model.home() }
-                            }.accessibilityHidden(covered || model.hint != nil).disabled(model.hint != nil)
+                            }.capyLayoutProbe("home").accessibilityHidden(covered || model.hint != nil).disabled(model.hint != nil)
                             Spacer()
                             IconButton(symbol: model.hint == nil ? "gearshape.fill" : "xmark", label: model.hint == nil ? "Settings" : "Close hint", id: model.hint == nil ? "settings" : "hint_close") {
                                 if model.hint != nil { model.closeHint() } else { model.sheet = .settings }
-                            }
+                            }.capyLayoutProbe(model.hint == nil ? "settings" : "hint_close")
                         }.frame(height: 44).padding(.horizontal, 8)
                         HStack(spacing: 52) {
-                            (Text(language.text("Level\n")).font(.system(size: 17, weight: .medium, design: .rounded)) + Text("\(s.puzzle.id)").font(.system(size: 25, weight: .heavy, design: .rounded)))
+                            (Text(language.text("Level\n")).font(.system(size: compact ? 14 : 17, weight: .medium, design: .rounded)) + Text("\(s.puzzle.id)").font(.system(size: compact ? 22 : 25, weight: .heavy, design: .rounded)))
                                 .multilineTextAlignment(.center).accessibilityLabel(language.text("Level \(s.puzzle.id)")).accessibilityIdentifier("level_title").capyFocus("level_title")
+                                .capyLayoutProbe("level_title")
                             VStack(spacing: 0) {
-                                Text(language.text("Score")).font(.system(size: 17, weight: .medium, design: .rounded))
-                                Text("\(s.score)").font(.system(size: 25, weight: .heavy, design: .rounded)).accessibilityIdentifier("score")
+                                Text(language.text("Score")).font(.system(size: compact ? 14 : 17, weight: .medium, design: .rounded))
+                                Text("\(s.score)").font(.system(size: compact ? 22 : 25, weight: .heavy, design: .rounded)).accessibilityIdentifier("score")
                             }
-                        }.frame(height: 56).opacity(model.hint == nil ? 1 : 0.35).accessibilityHidden(covered || model.hint != nil)
-                        HStack(spacing: 18) {
-                            progress(s)
+                        }.frame(height: compact ? 44 : 56).opacity(model.hint == nil ? 1 : 0.35).accessibilityHidden(covered || model.hint != nil)
+                        HStack(spacing: compact ? 12 : 18) {
+                            progress(s, compact: compact)
                             HStack(spacing: 4) {
                                 ForEach(0..<s.config.initialLives, id: \.self) { index in
-                                    Image(systemName: "heart.fill").font(.system(size: 22, weight: .bold))
+                                    Image(systemName: "heart.fill").font(.system(size: compact ? 19 : 22, weight: .bold))
                                         .foregroundColor(index < s.lives ? CapyPalette.life : CapyPalette.orangeLight)
                                 }
                             }.padding(.horizontal, 10).padding(.vertical, 5).background(CapyPalette.paper).clipShape(Capsule())
                                 .accessibilityElement(children: .ignore).accessibilityLabel(language.text("Lives")).accessibilityValue("\(s.lives)").accessibilityIdentifier("lives")
-                        }.frame(height: 40).opacity(model.hint == nil ? 1 : 0.35).accessibilityHidden(covered || model.hint != nil)
+                                .capyLayoutProbe("lives")
+                        }.frame(height: compact ? 32 : 40).opacity(model.hint == nil ? 1 : 0.35).accessibilityHidden(covered || model.hint != nil)
                         Group {
                             if let hint = model.hint, let useID = model.progress.activeHintUse?.id {
                                 ScrollView(.vertical, showsIndicators: true) {
@@ -283,9 +322,9 @@ struct GameView: View {
                                         if !loading { model.hintDidAppear(useID: useID) }
                                     }
                             }
-                            else { RuleStrip() }
-                        }.frame(height: hintHeight).padding(.top, 8)
-                        Spacer(minLength: 10)
+                            else { RuleStrip(compact: compact) }
+                        }.frame(height: hintHeight).padding(.top, compact ? 4 : 8)
+                        Spacer(minLength: compact ? 4 : 10)
                         PuzzleBoardView(puzzle: s.puzzle, found: s.found, marks: s.marks, errors: s.errors,
                                         sessionID: s.id, lives: s.lives,
                                         effectsEnabled: canPresentFeedback,
@@ -299,40 +338,22 @@ struct GameView: View {
                                             model.setBoardInputActivity(token, active: active, sessionID: s.id)
                                         })
                             .frame(width: boardSide, height: boardSide)
-                        Spacer(minLength: 10)
+                            .capyLayoutProbe("puzzle_board")
+                        Spacer(minLength: compact ? 4 : 10)
                         if model.hint != nil {
                             CapyButton(id: "hint_apply", action: model.applyHint) { Text(language.text("Apply")).frame(maxWidth: .infinity) }
-                                .buttonStyle(CapyButtonStyle()).frame(maxWidth: 280).accessibilityIdentifier("hint_apply").frame(height: 130)
+                                .buttonStyle(CapyButtonStyle()).frame(maxWidth: 280).accessibilityIdentifier("hint_apply").capyLayoutProbe("hint_apply").frame(height: footerHeight)
                         } else if let tutorial = model.tutorial {
-                            TutorialPanel(step: tutorial).padding(.top, 8)
-                        } else {
-                            VStack(spacing: 0) {
-                                Group {
-                                    if model.levelStartFreeVisible {
-                                        CapyButton(id: "level_start_free", action: model.levelStartFree) {
-                                            HStack(spacing: 6) {
-                                                Image(systemName: "play.rectangle.fill")
-                                                    .foregroundColor(model.levelStartFreeAvailable ? CapyPalette.video : CapyPalette.checkInSecondaryText)
-                                                Text(language.text("Free tool")).font(.system(size: 13, weight: .bold, design: .rounded))
-                                            }.padding(.horizontal, 16).frame(minHeight: 44)
-                                        }.buttonStyle(CapyPressStyle(disabledOpacity: 1))
-                                            .disabled(!model.levelStartFreeAvailable)
-                                            .foregroundColor(model.levelStartFreeAvailable ? CapyPalette.ink : CapyPalette.checkInSecondaryText)
-                                            .accessibilityIdentifier("level_start_free")
-                                    } else { Color.clear.accessibilityHidden(true) }
-                                }.frame(height: 44)
-                                HStack(spacing: 68) {
-                                    if model.directVisible {
-                                        ToolButton(title: "Find a capy", isDirect: true, count: model.progress.availableDirect, id: "direct", action: model.direct)
-                                            .disabled(!model.directEnabled)
-                                    } else { Color.clear.frame(width: 62, height: 62).accessibilityHidden(true) }
-                                    ToolButton(title: "Hint", isDirect: false, count: model.progress.availableHints, id: "hint", action: model.showHint)
-                                        .disabled(!model.hintEnabled)
-                                }.frame(height: 86)
-                            }.disabled(s.status != .playing || model.sheet != nil || model.rewardBusy)
-                        }
+                            if compact {
+                                // Only the instruction area scrolls. The board
+                                // remains a sibling with its own gesture arena.
+                                ScrollView(.vertical, showsIndicators: true) {
+                                    TutorialPanel(step: tutorial)
+                                }.frame(height: footerHeight)
+                            } else { TutorialPanel(step: tutorial).padding(.top, 8) }
+                        } else { tools(compact: compact).frame(height: footerHeight) }
                         // Reserved in every state, so loading or hiding a banner never moves the board.
-                        Color.clear.frame(height: model.tutorial == nil ? 44 : 12).accessibilityIdentifier("banner_reservation")
+                        Color.clear.frame(height: bannerHeight).accessibilityIdentifier("banner_reservation")
                     }.disabled(s.status != .playing).accessibilityElement(children: covered ? .ignore : .contain).accessibilityHidden(covered).padding(.horizontal, 14).padding(.top, 4).padding(.bottom, 4)
                     if feedback.showLastLife && s.status == .playing && model.hint == nil && model.sheet == nil {
                         VStack {
@@ -364,13 +385,50 @@ struct GameView: View {
         }
     }
 
-    private func progress(_ s: GameSession) -> some View {
+    private var freeToolButton: some View {
+        CapyButton(id: "level_start_free", action: model.levelStartFree) {
+            HStack(spacing: 6) {
+                Image(systemName: "play.rectangle.fill")
+                    .foregroundColor(model.levelStartFreeAvailable ? CapyPalette.video : CapyPalette.checkInSecondaryText)
+                Text(language.text("Free tool")).font(.system(size: 13, weight: .bold, design: .rounded))
+            }.padding(.horizontal, 16).frame(minHeight: 44)
+        }.buttonStyle(CapyPressStyle(disabledOpacity: 1))
+            .disabled(!model.levelStartFreeAvailable)
+            .foregroundColor(model.levelStartFreeAvailable ? CapyPalette.ink : CapyPalette.checkInSecondaryText)
+            .accessibilityIdentifier("level_start_free").capyLayoutProbe("level_start_free")
+    }
+
+    private func toolRow(compact: Bool) -> some View {
+        HStack(spacing: compact ? (model.levelStartFreeVisible ? 8 : 52) : 68) {
+            if model.directVisible {
+                ToolButton(title: "Find a capy", isDirect: true, count: model.progress.availableDirect, id: "direct", action: model.direct)
+                    .disabled(!model.directEnabled)
+            } else { Color.clear.frame(width: 62, height: 62).accessibilityHidden(true) }
+            if compact && model.levelStartFreeVisible { freeToolButton }
+            ToolButton(title: "Hint", isDirect: false, count: model.progress.availableHints, id: "hint", action: model.showHint)
+                .disabled(!model.hintEnabled)
+        }.frame(height: compact ? 70 : 86)
+    }
+
+    private func tools(compact: Bool) -> some View {
+        VStack(spacing: 0) {
+            if !compact {
+                Group {
+                    if model.levelStartFreeVisible { freeToolButton }
+                    else { Color.clear.accessibilityHidden(true) }
+                }.frame(height: 44)
+            }
+            toolRow(compact: compact)
+        }.disabled(model.session?.status != .playing || model.sheet != nil || model.rewardBusy)
+    }
+
+    private func progress(_ s: GameSession, compact: Bool) -> some View {
         HStack(spacing: 3) {
             // Original image24 retains one animal slot through the 8x8 example;
             // the 10x10 example switches to the compact found/total display.
             if s.puzzle.size <= 8 {
                 ForEach(0..<s.puzzle.size, id: \.self) { index in
-                    CapyMascot(mood: .happy, size: 23).opacity(index < s.found.count ? 1 : 0.17)
+                    CapyMascot(mood: .happy, size: compact ? 18 : 23).opacity(index < s.found.count ? 1 : 0.17)
                 }
             } else {
                 CapyMascot(mood: .happy, size: 27)
@@ -379,6 +437,7 @@ struct GameView: View {
             }
         }.padding(.horizontal, 9).padding(.vertical, 4).background(CapyPalette.paper).clipShape(Capsule())
             .accessibilityElement(children: .ignore).accessibilityLabel(language.text(s.lives == 1 ? "One heart left. \(s.found.count) of \(s.puzzle.size) found" : "\(s.found.count) of \(s.puzzle.size) found")).accessibilityIdentifier("found_count")
+            .capyLayoutProbe("found_count")
             .overlay(alignment: .top) {
                 if let combo = feedback.comboText {
                     Text(language.text(combo)).font(.system(size: 14, weight: .heavy, design: .rounded)).foregroundColor(CapyPalette.orange)
@@ -425,26 +484,42 @@ struct ToolButton: View {
         }.buttonStyle(CapyPressStyle()).accessibilityLabel(language.text(title))
             .accessibilityValue(language.text(count > 0 ? "\(count) available" : "Video reward"))
             .accessibilityIdentifier(id)
+            .capyLayoutProbe(id)
     }
 }
 
 struct RuleStrip: View {
     @Environment(\.appLanguage) private var language
+    var compact = false
     var body: some View {
         HStack(spacing: 4) {
             rule(0, "1 Capy per\ncolor")
             rule(1, "1 Capy per\ncolumn and row")
             rule(2, "Capys cannot\ntouch")
-        }.padding(6).background(CapyPalette.paper).clipShape(RoundedRectangle(cornerRadius: 12))
+        }.padding(compact ? 4 : 6).background(CapyPalette.paper).clipShape(RoundedRectangle(cornerRadius: 12))
             .accessibilityElement(children: .combine).accessibilityIdentifier("rule_strip")
+            .capyLayoutProbe("rule_strip")
     }
     private func rule(_ kind: Int, _ title: String) -> some View {
-        HStack(spacing: 4) {
-            RuleDiagram(kind: kind).frame(width: 30, height: 30)
-            Text(language.text(title)).font(.system(size: 10, weight: .semibold, design: .rounded)).minimumScaleFactor(0.8)
-                .fixedSize(horizontal: false, vertical: true)
-        }.frame(maxWidth: .infinity, alignment: .leading).padding(.horizontal, 3).padding(.vertical, 8)
+        Group {
+            if compact {
+                VStack(spacing: 2) {
+                    RuleDiagram(kind: kind).frame(width: 18, height: 18)
+                    ruleText(title).multilineTextAlignment(.center)
+                }
+            } else {
+                HStack(spacing: 4) {
+                    RuleDiagram(kind: kind).frame(width: 30, height: 30)
+                    ruleText(title)
+                }
+            }
+        }.frame(maxWidth: .infinity, alignment: compact ? .center : .leading)
+            .padding(.horizontal, compact ? 2 : 3).padding(.vertical, compact ? 2 : 8)
             .background(CapyPalette.cream).clipShape(RoundedRectangle(cornerRadius: 6))
+    }
+    private func ruleText(_ title: String) -> some View {
+        Text(language.text(title)).font(.system(size: 10, weight: .semibold, design: .rounded)).minimumScaleFactor(0.8)
+            .fixedSize(horizontal: false, vertical: true)
     }
 }
 
@@ -481,11 +556,11 @@ struct TutorialPanel: View {
                     Text("\(model.progress.tutorialStep + 1)/\(model.tutorialCount) · \(language.text(step.title))")
                         .font(.system(size: 14, weight: .bold, design: .rounded)).accessibilityIdentifier("tutorial_title")
                     Spacer()
-                    CapyButton(language.text("Skip"), id: "skip_tutorial", action: model.skipTutorial).buttonStyle(CapyPressStyle()).font(.system(size: 13, weight: .bold, design: .rounded)).frame(minWidth: 44, minHeight: 44).accessibilityIdentifier("skip_tutorial")
+                    CapyButton(language.text("Skip"), id: "skip_tutorial", action: model.skipTutorial).buttonStyle(CapyPressStyle()).font(.system(size: 13, weight: .bold, design: .rounded)).frame(minWidth: 44, minHeight: 44).accessibilityIdentifier("skip_tutorial").capyLayoutProbe("skip_tutorial")
                 }
                 Text(language.text(step.instruction)).font(.system(size: 12, design: .rounded)).fixedSize(horizontal: false, vertical: true)
                 if step.action == "read" {
-                    CapyButton(language.text("Got it"), id: "tutorial_next", action: model.advanceTutorial).buttonStyle(CapyButtonStyle(compact: true)).accessibilityIdentifier("tutorial_next")
+                    CapyButton(language.text("Got it"), id: "tutorial_next", action: model.advanceTutorial).buttonStyle(CapyButtonStyle(compact: true)).accessibilityIdentifier("tutorial_next").capyLayoutProbe("tutorial_next")
                 }
             }.frame(maxWidth: .infinity, alignment: .leading)
         }
