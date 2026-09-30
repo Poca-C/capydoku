@@ -70,15 +70,15 @@ final class AppModel: ObservableObject {
     private let feedbackEnabled: Bool
     private var lastRestartTime: TimeInterval = 0
     private var lastDirectTime: TimeInterval = 0
-    private var lastSubmission: (cell: Int, time: TimeInterval)?
+    private var lastSubmission: (sessionID: UUID, cell: Int, time: TimeInterval)?
     private var hintSource: ToolInventorySource?
     /// Legacy mixed balances have no provable source. Keep gameplay available,
     /// but do not invent the required analytics enum for those consumptions.
     private(set) var unattributedToolUseCount = 0
-    private let feedback = FeedbackPlayer()
+    private let feedback: FeedbackPlayer
 
     init(saveDirectory: URL? = nil, rewardProvider: RewardProvider? = nil,
-         rewardTimeout: TimeInterval = 5, runsTimer: Bool = true, feedbackEnabled: Bool = true, bundledPuzzles: [Puzzle]? = nil, interstitialProvider: InterstitialProvider? = nil, startupBypassForTesting: Bool = true, analyticsIdentityStore: AnalyticsIdentityStore? = nil, gameplayConfigurationStore: GameplayConfigurationStore? = nil) {
+         rewardTimeout: TimeInterval = 5, runsTimer: Bool = true, feedbackEnabled: Bool = true, bundledPuzzles: [Puzzle]? = nil, interstitialProvider: InterstitialProvider? = nil, startupBypassForTesting: Bool = true, analyticsIdentityStore: AnalyticsIdentityStore? = nil, gameplayConfigurationStore: GameplayConfigurationStore? = nil, feedbackPlayer: FeedbackPlayer? = nil) {
         #if DEBUG
         let args = ProcessInfo.processInfo.arguments
         #else
@@ -96,7 +96,8 @@ final class AppModel: ObservableObject {
         self.interstitialProvider = interstitialProvider
         self.synchronousSaves = !runsTimer
         self.rewardTimeout = rewardTimeout.isFinite ? max(0.01, rewardTimeout) : 5
-        self.feedbackEnabled = feedbackEnabled && !testHost
+        self.feedback = feedbackPlayer ?? FeedbackPlayer()
+        self.feedbackEnabled = feedbackEnabled && (!testHost || feedbackPlayer != nil)
         if args.contains("-reset-demo") { try? FileManager.default.removeItem(at: self.saveDirectory) }
         self.analytics = AnalyticsRecorder(directory: self.saveDirectory, identityStore: analyticsIdentityStore)
         let bundledConfiguration = Bundle.main.url(forResource: "reference-gameplay", withExtension: "json")
@@ -435,24 +436,27 @@ final class AppModel: ObservableObject {
     }
     func submit(_ cell: Int) {
         syncFeedbackState(); defer { syncFeedbackState() }
-        guard canTouchBoard, tutorialAllows("doubleTap", cells: [cell]) else { return }
+        guard canTouchBoard, tutorialAllows("doubleTap", cells: [cell]), let sessionID = session?.id else { return }
         let timestamp = ProcessInfo.processInfo.systemUptime
         // Ignore a duplicated delivery of this gesture, not all future attempts at this cell.
-        if let last = lastSubmission, last.cell == cell, timestamp - last.time < 0.28 { return }
-        lastSubmission = (cell, timestamp)
+        if let last = lastSubmission, last.sessionID == sessionID, last.cell == cell, timestamp - last.time < 0.28 { return }
+        lastSubmission = (sessionID, cell, timestamp)
         let result = progress.session?.submit(cell: cell)
         switch result {
         case .correct:
-            feedback.play(.correct)
+            playRevealFeedback()
             if tutorial != nil { advanceTutorial() }
             afterAction()
         case .incorrect: feedback.play(.wrong); if session?.status == .lost { trackLevelEnd("lose") }; save()
         default: break
         }
     }
+    private func playRevealFeedback(acceptedIn context: FeedbackEnvironment? = nil) {
+        feedback.play(.correct, acceptedIn: context)
+        if let count = session?.combo { feedback.play(.combo(count), acceptedIn: context) }
+    }
     private func afterAction() {
         if progress.finishWin() { feedback.play(.win); trackLevelEnd("win") }
-        else if let combo = session?.combo, combo > 1 { feedback.play(.combo(combo)) }
         save()
     }
     func direct() {
@@ -465,7 +469,7 @@ final class AppModel: ObservableObject {
         let source = progress.nextDirectSource
         if progress.directFind() != nil {
             trackBuff("direct_find", applied: true, before: before, after: progress.availableDirect, source: source)
-            feedback.play(.correct); afterAction()
+            playRevealFeedback(); afterAction()
         }
     }
     func showHint() {
@@ -590,7 +594,12 @@ final class AppModel: ObservableObject {
                 case .hintReady:
                     deferredRewardHintSessionID = session?.id
                     resumeConfirmedRewardHint()
-                case .directRevealed: trackBuff("direct_find", applied: true, before: 0, after: 0, source: .rewardedAd); feedback.play(.correct); afterAction()
+                case .directRevealed:
+                    trackBuff("direct_find", applied: true, before: 0, after: 0, source: .rewardedAd)
+                    if screen == .game {
+                        playRevealFeedback(acceptedIn: FeedbackEnvironment(page: .game, level: session?.puzzle.id))
+                    }
+                    afterAction()
                 case .inventoryGranted: break
                 case .revived: break
                 case .duplicate: break
@@ -647,6 +656,15 @@ final class AppModel: ObservableObject {
     func beginSwipeFeedback() { syncFeedbackState(); if canTouchBoard { feedback.beginSwipe() } }
     func endSwipeFeedback(cancelled: Bool) { feedback.endSwipe(cancelled: cancelled) }
     var currentAudioEnvironment: FeedbackEnvironment { feedback.environment }
+    func comboFeedbackPresentation(for count: Int) -> ComboFeedbackPresentation? {
+        guard count > 0 else { return nil }
+        if feedback.hasVerifiedComboConfiguration { return feedback.comboPresentation(count: count) }
+        // The empty unverified production manifest supplies no thresholds. Keep
+        // this visible Demo fallback separate from any claimed reference mapping.
+        guard let thresholds = session?.config.comboThresholds,
+              let index = thresholds.indices.last(where: { count >= thresholds[$0] }) else { return nil }
+        return ComboFeedbackPresentation(text: ["Nice", "Great", "Excellent"][min(index, 2)], delay: 0)
+    }
     private func syncFeedbackState() {
         var page: FeedbackAudioPage
         switch screen { case .home: page = .home; case .game: page = .game; case .checkIn: page = .checkIn }

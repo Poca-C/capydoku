@@ -1,7 +1,7 @@
 import AVFoundation
 import UIKit
 
-enum FeedbackEvent { case tap, mark, erase, correct, wrong, win, combo(Int) }
+enum FeedbackEvent: Equatable { case tap, mark, erase, correct, wrong, win, combo(Int) }
 
 @MainActor
 protocol AudioPlaybackHandle: AnyObject {
@@ -58,6 +58,7 @@ final class FeedbackPlayer {
     private let schedule: Scheduler
     private let clock: () -> TimeInterval
     private let sessionControl: (Bool) -> Bool
+    private let hapticEmitter: ((FeedbackEvent) -> Void)?
     private let suppressProductionAudio: Bool
     private(set) var environment = FeedbackEnvironment(page: .startup)
     private var blocks: Set<FeedbackAudioBlock> { environment.blocks }
@@ -76,7 +77,7 @@ final class FeedbackPlayer {
     init(manifest: ReferenceAudioManifest? = nil, resourceResolver: ((String) -> URL?)? = nil,
          playerFactory: ((URL) -> AudioPlaybackHandle?)? = nil, scheduler: Scheduler? = nil,
          clock: (() -> TimeInterval)? = nil, sessionControl: ((Bool) -> Bool)? = nil,
-         observeSystem: Bool = true) {
+         observeSystem: Bool = true, hapticEmitter: ((FeedbackEvent) -> Void)? = nil) {
         self.manifest = manifest ?? Bundle.main.url(forResource: "audio-manifest", withExtension: "json")
             .flatMap { try? Data(contentsOf: $0) }
             .flatMap { try? JSONDecoder().decode(ReferenceAudioManifest.self, from: $0) } ?? .silent
@@ -92,6 +93,7 @@ final class FeedbackPlayer {
             return AudioScheduledTask { work.cancel() }
         }
         self.clock = clock ?? { ProcessInfo.processInfo.systemUptime }
+        self.hapticEmitter = hapticEmitter
         self.sessionControl = sessionControl ?? { active in
             do {
                 let session = AVAudioSession.sharedInstance()
@@ -183,17 +185,34 @@ final class FeedbackPlayer {
         guard let rule = manifest.buttons?[id], enabled || rule.playWhenDisabled else { return }
         enqueue("button_tap")
     }
-    func play(_ event: FeedbackEvent) {
+    var hasVerifiedComboConfiguration: Bool {
+        manifest.referenceVerified && validationErrors.isEmpty && manifest.combo != nil
+    }
+    func comboPresentation(count: Int) -> ComboFeedbackPresentation? {
+        guard hasVerifiedComboConfiguration, let key = manifest.comboEvent(count: count),
+              let clip = manifest.clips[key] else { return nil }
+        let text = ["nice": "Nice", "great": "Great", "excellent": "Excellent"][key]
+        return text.map { ComboFeedbackPresentation(text: $0, delay: clip.delay) }
+    }
+    /// acceptedIn is reserved for an already committed gameplay action (such as
+    /// an ad reveal that has just completed the board). It does not unlock input
+    /// or bypass background/advertisement/pause blocks or the imported clip scope.
+    func play(_ event: FeedbackEvent, acceptedIn context: FeedbackEnvironment? = nil) {
         if case .tap = event { playButton(id: "generic"); return }
-        guard blocks.isEmpty, !interrupted else { return }
-        if settings.haptic && !Self.isTesting { haptic(event) }
+        guard context == nil ? blocks.isEmpty : !musicBlocked, !interrupted else { return }
+        // A Combo is an optional configured audio cue, not another physical move.
+        // Dispatching every count must not add a second vibration to correct moves.
+        if case .combo = event {} else if settings.haptic {
+            if let hapticEmitter { hapticEmitter(event) }
+            else if !Self.isTesting { haptic(event) }
+        }
         switch event {
         case .tap: break
-        case .mark: enqueue("mark_x")
-        case .erase: enqueue("erase_x")
-        case .correct: enqueue("double_tap_correct")
-        case .wrong: enqueue("double_tap_wrong")
-        case .combo(let count): if let key = manifest.comboEvent(count: count) { enqueue(key) }
+        case .mark: enqueue("mark_x", acceptedIn: context)
+        case .erase: enqueue("erase_x", acceptedIn: context)
+        case .correct: enqueue("double_tap_correct", acceptedIn: context)
+        case .wrong: enqueue("double_tap_wrong", acceptedIn: context)
+        case .combo(let count): if let key = manifest.comboEvent(count: count) { enqueue(key, acceptedIn: context) }
         case .win: break // No victory clip is allowed by original chapter 5.
         }
     }
@@ -251,12 +270,12 @@ final class FeedbackPlayer {
         if sessionReady { return true }
         sessionReady = sessionControl(true); return sessionReady
     }
-    private func enqueue(_ key: String, swipe: Bool = false) {
-        guard let clip = playable(key), clock() - (lastTimes[key] ?? -.infinity) >= clip.minimumInterval else { return }
-        lastTimes[key] = clock(); scheduleClip(key, after: clip.delay, swipe: swipe)
+    private func enqueue(_ key: String, swipe: Bool = false, acceptedIn context: FeedbackEnvironment? = nil) {
+        guard let clip = playable(key, acceptedIn: context), clock() - (lastTimes[key] ?? -.infinity) >= clip.minimumInterval else { return }
+        lastTimes[key] = clock(); scheduleClip(key, after: clip.delay, swipe: swipe, acceptedIn: context)
     }
-    private func scheduleClip(_ key: String, after delay: TimeInterval, swipe: Bool) {
-        let id = UUID(), triggerContext = environment
+    private func scheduleClip(_ key: String, after delay: TimeInterval, swipe: Bool, acceptedIn context: FeedbackEnvironment? = nil) {
+        let id = UUID(), triggerContext = context ?? environment
         let task = schedule(delay) { [weak self] in
             guard let self, self.pending.removeValue(forKey: id) != nil else { return }
             if swipe { self.swipeQueue.consumed() }
@@ -375,7 +394,8 @@ final class FeedbackPlayer {
         switch event {
         case .wrong: UINotificationFeedbackGenerator().notificationOccurred(.error)
         case .win: UINotificationFeedbackGenerator().notificationOccurred(.success)
-        case .correct, .combo: UIImpactFeedbackGenerator(style: .light).impactOccurred(intensity: 0.75)
+        case .correct: UIImpactFeedbackGenerator(style: .light).impactOccurred(intensity: 0.75)
+        case .combo: break
         case .tap, .mark, .erase: UISelectionFeedbackGenerator().selectionChanged()
         }
     }

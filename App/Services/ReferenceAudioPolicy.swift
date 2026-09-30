@@ -59,6 +59,10 @@ struct AudioSwipePolicy: Codable, Equatable {
 struct AudioButtonPolicy: Codable, Equatable { var playWhenDisabled: Bool }
 struct AudioComboCue: Codable, Equatable { var count: Int; var event: String }
 struct AudioComboPolicy: Codable, Equatable { var cues: [AudioComboCue]; var repeatLast: Bool }
+struct ComboFeedbackPresentation: Equatable {
+    var text: String
+    var delay: TimeInterval
+}
 
 /// A verified import must explicitly describe playback choices. No missing field is
 /// replaced with a guessed reference value. The current unverified empty manifest stays silent.

@@ -22,7 +22,7 @@
     "旧88项Checklist的完成数字与originalRequirementsPreserved标志不作为原文符合性证据；旧版报告只保留历史。",
     "当前150+30严格生产完成，180唯一答案及不同区域结构，无相似性豁免；数值Profile仍未经Pawdoku校准，跨产品语料缺失。",
     "原文只固定L1为4×4；本地早期尺寸安排不能覆盖原文的去重要求。",
-    "0.2.1页面截图保留原构建标识；0.2.3补配置客户端、应用回归及首次启动／四种棋盘UI验证，未重跑全部手势／视觉项目，不声称已与缺失的冻结录屏逐帧对齐。",
+    "0.2.1主页面图册保留原构建标识；0.2.4新增反馈组件分时截图、应用集成和操作回归，不声称已与缺失的冻结录屏逐帧对齐。",
     "真实广告SDK由外部供应；客户端入口、配置、库存、复活和奖励安全仍是本Demo责任。",
     "Daily Challenge保留锁定入口，Profile明确不做。正式原音频、真实SDK、真机及上架均待验。"
   ],
@@ -56,14 +56,16 @@
       ],
       "priority": "客户端已验证，原资源待交付",
       "topic": "Complete audio playback/configuration contract",
-      "finding": "页面/弹层范围、循环点/淡出、连拍排队/停止、有效按钮映射及中断策略已补；13项策略与2项路由测试通过。空清单继续静音。",
+      "finding": "播放器策略、App路由和Combo真实成功入口已补；13项策略、2项上下文路由、8项Combo/奖励集成通过，正式资源空清单继续静音。",
       "evidence": [
         "App/Services/FeedbackPlayer.swift",
         "Resources/audio-manifest.json",
         "App/Services/ReferenceAudioPolicy.swift",
         "AppTests/AudioPolicyTests.swift",
         "AppTests/AppModelFeedbackRoutingTests.swift",
-        "Validation/test-runs/original-audio-final.xcresult"
+        "Validation/test-runs/original-audio-final.xcresult",
+        "AppTests/AppModelComboFeedbackTests.swift",
+        "Validation/test-runs/original-024-feedback-lifecycle-final.xcresult"
       ],
       "next": "导入经确认的原音频与每项播放策略，完成逐文件核验及真机听测。"
     },
@@ -460,11 +462,13 @@
       ],
       "title": "剩一命提示",
       "status": "implemented",
-      "implemented": "生命降为 1 时出现短暂文字提示。",
+      "implemented": "生命降为 1 时出现短暂文字提示。 0.2.4增加旧计时取消，复活后再次降至一命不再被旧提示计时提前关闭。",
       "gap": "出现时机、弹层形态、时长尚未与冻结视频验证。",
       "evidence": [
         "App/Views/RootView.swift",
-        "Reference/Original/image17.png"
+        "Reference/Original/image17.png",
+        "App/Views/GameFeedbackPresentation.swift",
+        "AppTests/GameVisualFeedbackTests.swift"
       ]
     },
     {
@@ -476,12 +480,16 @@
       ],
       "title": "正确/错误的非纯颜色反馈",
       "status": "partial",
-      "implemented": "正确头像、星星；错误红 X、破心图标、摇动；Combo 文本已存在。",
-      "gap": "原图要求的角色摇头、心撕裂转 X、进度联动和精确节奏尚未逐帧核对。",
+      "implemented": "已补角色摇头、撕裂爱心淡变红X，并保留正确头像与星星。错误反馈按实际扣命触发，同一红X再错会重播；同次重复送达不扣命也不重播。撤销、重开同盘、离开和后台清理瞬时表现。",
+      "gap": "高层反馈与生命周期已有测试和分时截图；正式角色表情帧、找到数量联动及音画精确节奏仍需冻结录屏和真机核对。现有0.78秒错误动画为明确临时值。",
       "evidence": [
         "App/Views/PuzzleBoardView.swift",
         "App/Views/RootView.swift",
-        "Reference/Original/image19.png"
+        "Reference/Original/image19.png",
+        "App/Views/BoardMistakeFeedbackView.swift",
+        "AppTests/GameVisualFeedbackTests.swift",
+        "Docs/original-feedback/manifest.json",
+        "Validation/test-runs/original-024-feedback-lifecycle-final.xcresult"
       ]
     },
     {
@@ -844,7 +852,7 @@
       ],
       "title": "按压/弹窗/正确错误/奖励动效",
       "status": "partial",
-      "implemented": "按钮缩放、中央弹窗、角色/星星/破心、签到弹跳及短粒子、Reduce Motion 支持存在。 原生隔离容器的Hint/结算遮罩安全区裁切已修复，并以最终截图复核。",
+      "implemented": "按钮缩放、中央弹窗、角色/星星/破心、签到弹跳及短粒子、Reduce Motion 支持存在。 原生隔离容器的Hint/结算遮罩安全区裁切已修复，并以最终截图复核。 0.2.4补摇头/裂心至X和Reduce Motion静态序列，6张组件分时图已目视；动画层不接收触摸或辅助功能焦点。",
       "gap": "主线程已目视最终7张截图；低性能/真机动效和冻结视频逐帧节奏仍未完成验收。",
       "evidence": [
         "App/Views/CapyStyle.swift",
@@ -853,7 +861,9 @@
         "App/Views/SupportingViews.swift",
         "Validation/test-runs/original-ui-artwork-021-final.xcresult",
         "Validation/test-runs/original-ui-scrim-021-final.xcresult",
-        "Docs/original-reference/manifest.json"
+        "Docs/original-reference/manifest.json",
+        "App/Views/BoardMistakeFeedbackView.swift",
+        "Docs/original-feedback/manifest.json"
       ]
     },
     {
@@ -1148,8 +1158,8 @@
       ],
       "title": "Combo 阈值、分组及四开关",
       "status": "awaiting_reference",
-      "implemented": "四开关保存，参考清单显式映射Combo次数、语音/音效分组、延迟及音量；不为缺失配置补默认音频。",
-      "gap": "参考阈值、默认开关、分组和延迟均缺冻结值；播放器可配置不等于App/画面触发已对标。当前App仅在非胜利且Combo>1时派发，须与正式Combo及胜利时序一起校准。",
+      "implemented": "所有实际成功揭示均派发真实Combo次数，包括第1次和最后一步；由有效参考映射决定触发，取消App/画面硬编码>1和非胜利门槛。文字读取同一映射及delay，四开关和分组独立，Combo不增加第二次震动。奖励写盘失败和重复回调不派发成功音。",
+      "gap": "原资源、正式阈值、分组及时间值仍未交付。文字从SwiftUI状态变化排程，不能等同于从操作时刻开始的音频逐帧同步；文字显示时长、延迟遇到暂停/结果/新操作的策略及原版节奏须录屏校准。空正式清单静音，Demo文字仍用明确临时阈值。",
       "evidence": [
         "Sources/CapydokuCore/DemoConfig.swift",
         "Sources/CapydokuCore/GameSession.swift",
@@ -1157,7 +1167,12 @@
         "App/Services/ReferenceAudioPolicy.swift",
         "AppTests/AudioPolicyTests.swift",
         "AppTests/AppModelFeedbackRoutingTests.swift",
-        "Validation/test-runs/original-audio-final.xcresult"
+        "Validation/test-runs/original-audio-final.xcresult",
+        "App/AppModel.swift",
+        "App/Views/GameFeedbackPresentation.swift",
+        "AppTests/AppModelComboFeedbackTests.swift",
+        "AppTests/GameVisualFeedbackTests.swift",
+        "Validation/test-runs/original-024-feedback-lifecycle-final.xcresult"
       ]
     },
     {
@@ -1774,5 +1789,5 @@
       ]
     }
   ],
-  "currentBuild": "0.2.3 (6)"
+  "currentBuild": "0.2.4 (7)"
 }

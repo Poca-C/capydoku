@@ -185,9 +185,13 @@ struct IconButton: View {
 
 struct GameView: View {
     @EnvironmentObject private var model: AppModel
-    @State private var showLastLife = false
-    @State private var comboFeedback: String?
-    @State private var comboSequence = 0
+    @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @StateObject private var feedback = GameFeedbackPresentation()
+    private var canPresentFeedback: Bool {
+        scenePhase == .active && model.hint == nil && model.sheet == nil && !model.loading &&
+        !model.challengePending && model.errorMessage == nil && model.notice == nil
+    }
     var body: some View {
         GeometryReader { geometry in
             if let s = model.session {
@@ -228,9 +232,11 @@ struct GameView: View {
                         }.frame(height: 66).padding(.top, 8)
                         Spacer(minLength: 10)
                         PuzzleBoardView(puzzle: s.puzzle, found: s.found, marks: s.marks, errors: s.errors,
+                                        sessionID: s.id, lives: s.lives,
+                                        effectsEnabled: canPresentFeedback,
                                         preview: Set(model.hint?.cells ?? []), tutorialTargets: Set(model.tutorial?.targetCells ?? []),
                                         hideAccessibility: covered,
-                                        locked: s.status != .playing || model.hint != nil || model.sheet != nil || model.tutorial?.action == "read",
+                                        locked: s.status != .playing || !canPresentFeedback || model.tutorial?.action == "read",
                                         onToggle: model.toggle, onSubmit: model.submit, onMark: model.mark,
                                         onBeginSwipe: model.beginSwipeFeedback,
                                         onEndSwipe: { model.endSwipeFeedback(cancelled: $0) })
@@ -266,7 +272,7 @@ struct GameView: View {
                         // Reserved in every state, so loading or hiding a banner never moves the board.
                         Color.clear.frame(height: model.tutorial == nil ? 44 : 12).accessibilityIdentifier("banner_reservation")
                     }.disabled(s.status != .playing).accessibilityElement(children: covered ? .ignore : .contain).accessibilityHidden(covered).padding(.horizontal, 14).padding(.top, 4).padding(.bottom, 4)
-                    if showLastLife && s.status == .playing && model.hint == nil && model.sheet == nil {
+                    if feedback.showLastLife && s.status == .playing && model.hint == nil && model.sheet == nil {
                         VStack {
                             Text("Only one chance left!")
                                 .font(.system(size: 17, weight: .bold, design: .rounded))
@@ -279,19 +285,18 @@ struct GameView: View {
                     }
                 }
                 .onChange(of: s.combo) { combo in
-                    comboSequence += 1
-                    let sequence = comboSequence
-                    withAnimation(.spring(response: 0.25, dampingFraction: 0.6)) { comboFeedback = combo > 1 ? s.comboText : nil }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
-                        if comboSequence == sequence { withAnimation { comboFeedback = nil } }
-                    }
+                    feedback.setPresentationEnabled(canPresentFeedback)
+                    feedback.combo(model.comboFeedbackPresentation(for: combo))
                 }
-                .onChange(of: s.lives) { lives in
-                    if lives == 1 {
-                        withAnimation { showLastLife = true }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) { withAnimation { showLastLife = false } }
-                    } else { showLastLife = false }
+                .onChange(of: s.lives) {
+                    feedback.setPresentationEnabled(canPresentFeedback)
+                    feedback.life($0)
                 }
+                .onChange(of: s.id) { _ in feedback.clear() }
+                .onChange(of: canPresentFeedback) { feedback.setPresentationEnabled($0) }
+                .onAppear { feedback.setPresentationEnabled(canPresentFeedback) }
+                .onDisappear { feedback.setPresentationEnabled(false) }
+                .animation(reduceMotion ? nil : .easeOut(duration: 0.15), value: feedback.showLastLife)
                 .accessibilityAddTraits(model.hint != nil ? .isModal : [])
             }
         }
@@ -311,8 +316,13 @@ struct GameView: View {
         }.padding(.horizontal, 9).padding(.vertical, 4).background(CapyPalette.paper).clipShape(Capsule())
             .accessibilityElement(children: .ignore).accessibilityLabel(s.lives == 1 ? "One heart left. \(s.found.count) of \(s.puzzle.size) found" : "\(s.found.count) of \(s.puzzle.size) found").accessibilityIdentifier("found_count")
             .overlay(alignment: .top) {
-                if let combo = comboFeedback { Text(combo).font(.system(size: 14, weight: .heavy, design: .rounded)).foregroundColor(CapyPalette.orange).offset(y: -18) }
+                if let combo = feedback.comboText {
+                    Text(combo).font(.system(size: 14, weight: .heavy, design: .rounded)).foregroundColor(CapyPalette.orange)
+                        .offset(y: -18).accessibilityIdentifier("combo_feedback")
+                        .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
+                }
             }
+            .animation(reduceMotion ? nil : .spring(response: 0.25, dampingFraction: 0.6), value: feedback.comboText)
     }
 }
 

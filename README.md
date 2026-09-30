@@ -1,6 +1,6 @@
 # Capydoku · 原文对齐 Demo
 
-原生 Swift / SwiftUI iPhone 应用，英文界面、竖屏，最低编译目标 iOS 15。当前版本 **0.2.3（6）**，可内部试玩，尚未达到正式验收或上架状态。
+原生 Swift / SwiftUI iPhone 应用，英文界面、竖屏，最低编译目标 iOS 15。当前版本 **0.2.4（7）**，可内部试玩，尚未达到正式验收或上架状态。
 
 ## 唯一需求基准
 
@@ -16,11 +16,15 @@
 4. 故意选错至失败，点击 Play On 直接运行**明确标注的模拟广告**，无需第二次确认；复活保留原局。签到后关闭并重进验证状态。
 5. Debug 构建中，**长按 Settings 标题**进入开发面板，可跳关、选择模拟奖励结果、查看 seed / 配置和导出定位信息。
 
-页面未在0.2.2／0.2.3改动，下列截图保留0.2.1的实测版本：[首页](Docs/original-reference/01-home.png) · [游戏](Docs/original-reference/04-gameplay.png) · [提示](Docs/original-reference/05-hint.png) · [设置](Docs/original-reference/02-settings.png) · [签到](Docs/original-reference/03-check-in.png)。
+下列主页面图册保留0.2.1的实测版本；0.2.4新增操作反馈，分时组件截图见 Docs/original-feedback/manifest.json，不能用旧图替代新构建验收：[首页](Docs/original-reference/01-home.png) · [游戏](Docs/original-reference/04-gameplay.png) · [提示](Docs/original-reference/05-hint.png) · [设置](Docs/original-reference/02-settings.png) · [签到](Docs/original-reference/03-check-in.png)。
 
 无需第三方依赖或真实广告 SDK。真机运行需自己的签名与可用设备。本轮仅模拟器测试；先前版本签名成功不算本版本真机通过。
 
 ## 本次纠正
+
+- 补原文“摇头 → 爱心撕裂 → 红叉”反馈，同一红叉再次有效点错也会触发；撤销、重开、切后台和离开游戏清理旧动画。减少动态效果模式显示静态裂心与红叉，动画层不阻挡操作。
+- 修复快速重开后同格操作被上一局防重复规则拦截；防重复现在按对局区分。
+- Combo按真实命中次数交由参考配置判断，包含首次命中与最后一步。文字采用相同映射和延迟；模态/后台到达的旧提示不会在返回后重播。正式音频与精确动画时序仍待资料。
 
 - 补配置客户端：启动读取有效缓存／备份／包内冻结默认值，后台拉取并校验后原子写入；失败不阻塞首页和棋盘。新配置只供下一次创建对局，继续、恢复、Restart及进行中广告保留原快照。
 - 配置按平台、应用版本和环境隔离，拒绝换基线、下发棋盘、坏校验、旧修订号和重复使用版本号；回前台重试采用单调时间退避。缺真实冻结文件或服务地址时不发起请求，不能用测试配置替代正式参数。

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "date": "2026-09-30",
-  "build": "0.2.3 (6)",
+  "build": "0.2.4 (7)",
   "status": "PLAYABLE_ORIGINAL_ALIGNMENT_DEMO_WITH_REFERENCE_AND_EXTERNAL_GAPS",
   "originalSHA256": "274bbf15f031bd80bb8b360cf14c0266acff370a230d9cad1b1785461df54dd2",
   "currentPackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49",
@@ -222,6 +222,32 @@
       "uiTestsPassed": 2,
       "failed": 0,
       "scope": "Configuration integration plus first-launch legal/permission persistence and4/6/8/10 board layout. No full UI sweep."
+    },
+    {
+      "build": "0.2.4 (7)",
+      "device": "iPhone 17 Pro",
+      "bundle": "Validation/test-runs/original-024-feedback-lifecycle-final.xcresult",
+      "appTestsPassed": 86,
+      "failed": 0,
+      "scope": "All AppTests except OriginalUIContractTests. Includes 8 new AppModel-to-player Combo/reward tests, 3 real-board visual/lifecycle tests and 4 deterministic text lifecycle tests. No original audio assets, device listening or frozen animation match claimed."
+    },
+    {
+      "build": "0.2.4 (7) before final alert/background gate",
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-024-17e-interaction.xcresult",
+      "appTestsPassed": 14,
+      "uiTestsPassed": 5,
+      "failed": 0,
+      "scope": "New feedback tests; double tap, horizontal/vertical and diagonal swipe, mixed gestures, and modal isolation. This was before the final alert/background text suppression fix; affected cases rerun below."
+    },
+    {
+      "build": "0.2.4 (7)",
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-024-17e-lifecycle-final.xcresult",
+      "appTestsPassed": 15,
+      "uiTestsPassed": 2,
+      "failed": 0,
+      "scope": "All new feedback tests, plus mixed gestures and modal isolation on final production code. UI tests use the archived gesture fixture where required; modal isolation uses current pack."
     }
   ],
   "visualEvidence": {
@@ -238,16 +264,17 @@
     "Exact trigger ordering and alternate-board restart behavior",
     "Production legal/support endpoints and service adapters/data dashboards",
     "Physical-device, old-system, TestFlight and App Store release validation",
-    "VoiceOver actual focus navigation and full Dynamic Type/readability verification on physical devices"
+    "VoiceOver actual focus navigation and full Dynamic Type/readability verification on physical devices",
+    "Frozen correct/wrong/Combo animation frames and timing, found-count/star motion synchronization and physical-device Reduce Motion/feedback review"
   ],
   "historicalFailuresRetained": "Initial UI/app runs and first full-core run failed on changed fixture assumptions or real UI issues; these are retained under Validation/test-runs. Only explicitly listed successful reruns count. Old 88-item checklist completion counts are superseded.",
   "applicationTests": {
-    "build": "0.2.3 (6)",
-    "passed": 71,
+    "build": "0.2.4 (7)",
+    "passed": 86,
     "failed": 0,
-    "seconds": 11.997,
-    "bundle": "Validation/test-runs/original-023-configuration-app-final.xcresult",
-    "scope": "All AppTests except OriginalUIContractTests. Includes11 new store/HTTP transport tests and6 new AppModel integration tests; uses synthetic reference data and URLProtocol, not a live remote service."
+    "seconds": 14.869,
+    "bundle": "Validation/test-runs/original-024-feedback-lifecycle-final.xcresult",
+    "scope": "All AppTests except OriginalUIContractTests. Includes 8 new AppModel-to-player Combo/reward tests, 3 real-board visual/lifecycle tests and 4 deterministic text lifecycle tests. No original audio assets, device listening or frozen animation match claimed."
   },
   "supersededOrInterruptedRuns": [
     "reward-readiness-final was intentionally interrupted to stop two runners targeting one simulator; not counted as success.",
@@ -271,21 +298,37 @@
       "bundle": "Validation/test-runs/original-023-configuration-app.xcresult",
       "status": "build failed; no tests executed",
       "reason": "New integration test referenced private canTouchBoard. Replaced with an actual toggle action assertion without exposing production internals; subsequent71-test and17e8-test runs passed."
+    },
+    {
+      "build": "0.2.4 development; metadata still 0.2.3 (6)",
+      "bundle": "Validation/test-runs/original-024-feedback-first.xcresult",
+      "tests": 85,
+      "failedTestCases": 1,
+      "failedAssertions": 2,
+      "reason": "New board lifecycle test exposed real cross-session submission debounce: a first same-cell move just after Restart was ignored. Guard now includes session UUID."
+    },
+    {
+      "build": "0.2.4 (7)",
+      "bundle": "Validation/test-runs/original-024-feedback-final.xcresult",
+      "tests": 85,
+      "failedTestCases": 1,
+      "failedAssertions": 2,
+      "reason": "The lifecycle fixture requested two distinct restarts inside the intentional 0.4-second restart debounce. Added a real interval and asserted the session changed; production restart guard was preserved."
     }
   ],
   "buildVerification": {
-    "bundleVersion": "0.2.3 (6)",
+    "bundleVersion": "0.2.4 (7)",
     "simulatorDebug": "passed via test build",
-    "simulatorLog": "Validation/test-runs/original-023-configuration-app-final.log",
+    "simulatorLog": "Validation/test-runs/original-024-feedback-lifecycle-final.log",
     "genericIOSReleaseUnsigned": "passed",
-    "releaseLog": "Validation/test-runs/original-023-release-build.log",
+    "releaseLog": "Validation/test-runs/original-024-release-final-build.log",
     "installedOn": [
       "iPhone 17 Pro",
       "iPhone 17e"
     ],
-    "normalLaunch": "simctl normal launch returned a process on17 Pro without test/reset flags; no separate current normal-launch screenshot claimed",
+    "normalLaunch": "simctl normal launch returned process 59463 on iPhone 17 Pro without test/reset flags; bundle metadata verified as 0.2.4 / 7",
     "signingAndDeviceExecution": "Unsigned compilation only; no physical-device or App Store claim",
-    "scope": "Configuration store/HTTP provider and AppModel integration; current app tests and scoped startup/board UI tests passed. Main artwork/gallery unchanged.",
+    "scope": "Gameplay feedback, session-specific gesture debounce, Combo/audio routing and transient lifecycle. Core package and level pack unchanged; no new core-generation acceptance claim.",
     "sourceDocumentSHA256Unchanged": true
   },
   "audioContract": {
@@ -293,7 +336,9 @@
     "modelRoutingTestsPassed": 2,
     "actualAudioFiles": 0,
     "referenceVerified": false,
-    "limitation": "Injected playback handles and deterministic scheduling verify client decisions, not original audio fidelity or device listening."
+    "limitation": "Injected playback handles and deterministic scheduling verify client decisions, not original audio fidelity or device listening.",
+    "comboIntegrationTestsPassed": 8,
+    "bundle": "Validation/test-runs/original-024-feedback-lifecycle-final.xcresult"
   },
   "uiIsolationDiagnosisHistory": [
     {
@@ -390,6 +435,14 @@
       "seconds": 10.598,
       "bundle": "Validation/test-runs/original-022-tool-sources-app-final.xcresult",
       "scope": "All AppTests except OriginalUIContractTests, whose UI evidence remains 0.2.1. Includes6 new source tests with injected identity store; signed production Keychain not verified."
+    },
+    {
+      "build": "0.2.3 (6)",
+      "passed": 71,
+      "failed": 0,
+      "seconds": 11.997,
+      "bundle": "Validation/test-runs/original-023-configuration-app-final.xcresult",
+      "scope": "All AppTests except OriginalUIContractTests. Includes11 new store/HTTP transport tests and6 new AppModel integration tests; uses synthetic reference data and URLProtocol, not a live remote service."
     }
   ],
   "remoteConfigurationContract": {
@@ -439,6 +492,59 @@
       "signingAndDeviceExecution": "Unsigned compilation only; no physical-device, Keychain or App Store claim",
       "scope": "Inventory source ledger, AppModel analytics routing and test identity injection; UI and level generation unchanged.",
       "sourceDocumentSHA256Unchanged": true
+    },
+    {
+      "bundleVersion": "0.2.3 (6)",
+      "simulatorDebug": "passed via test build",
+      "simulatorLog": "Validation/test-runs/original-023-configuration-app-final.log",
+      "genericIOSReleaseUnsigned": "passed",
+      "releaseLog": "Validation/test-runs/original-023-release-build.log",
+      "installedOn": [
+        "iPhone 17 Pro",
+        "iPhone 17e"
+      ],
+      "normalLaunch": "simctl normal launch returned a process on17 Pro without test/reset flags; no separate current normal-launch screenshot claimed",
+      "signingAndDeviceExecution": "Unsigned compilation only; no physical-device or App Store claim",
+      "scope": "Configuration store/HTTP provider and AppModel integration; current app tests and scoped startup/board UI tests passed. Main artwork/gallery unchanged.",
+      "sourceDocumentSHA256Unchanged": true
     }
-  ]
+  ],
+  "feedbackCorrection": {
+    "build": "0.2.4 (7)",
+    "sourceParagraphs": [
+      129,
+      134,
+      136,
+      252,
+      254,
+      337,
+      338,
+      339
+    ],
+    "visualComponentTestsPassed": 3,
+    "presentationLifecycleTestsPassed": 4,
+    "verified": [
+      "Repeated wrong submission to an existing red X animates for each actual life deduction; duplicate delivery does not replay.",
+      "Session UUID isolates input debounce and same-board restart effects.",
+      "Undo, detached board, new session and feedback suspension discard old transient layers.",
+      "Reduced Motion branch uses a static split-heart then X without transform animations.",
+      "Stale Combo/warning timers cannot overwrite newer cues; blocked late arrivals cannot replay on foreground/modal exit.",
+      "Actual reveal counts including 1 and winning step reach the configured Combo player; audio group/settings respected and no extra Combo vibration.",
+      "Reward persistence failure does not emit correct/Combo until committed; duplicate and background reward signals preserve blocking."
+    ],
+    "visualEvidence": {
+      "path": "Docs/original-feedback",
+      "manifest": "Docs/original-feedback/manifest.json",
+      "inspected": true,
+      "frames": 6,
+      "scope": "Component-window timed captures, not entire product screenshots or a reference recording comparison."
+    },
+    "limits": [
+      "Error animation 0.78 seconds / cleanup 0.8 seconds, visible Combo 1.3 seconds and one-life warning 1.8 seconds remain explicit Demo timings.",
+      "Original expression frames, progress/star synchronization and exact motion curves require frozen recordings.",
+      "Text and audio share count mapping and configured delay, but SwiftUI observation time differs from audio trigger time; no frame-accurate synchronization claim.",
+      "Reference audio files remain absent; player tests use synthetic manifests and fake playback handles.",
+      "Reduce Motion component branch verified, not system-setting changes on physical devices."
+    ]
+  }
 }

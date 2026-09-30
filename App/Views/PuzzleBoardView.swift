@@ -7,6 +7,9 @@ struct PuzzleBoardView: UIViewRepresentable {
     let found: Set<Int>
     let marks: Set<Int>
     let errors: Set<Int>
+    var sessionID: UUID? = nil
+    var lives: Int? = nil
+    var effectsEnabled = true
     var preview: Set<Int> = []
     var tutorialTargets: Set<Int> = []
     var hideAccessibility: Bool = false
@@ -26,6 +29,7 @@ struct PuzzleBoardView: UIViewRepresentable {
     func updateUIView(_ uiView: PuzzleGridUIView, context: Context) {
         uiView.configure(size: puzzle.size, regions: puzzle.regions, found: found,
                          marks: marks, errors: errors, preview: preview,
+                         sessionID: sessionID, lives: lives, effectsEnabled: effectsEnabled,
                          tutorialTargets: tutorialTargets, locked: locked, hideAccessibility: hideAccessibility,
                          onToggle: onToggle, onSubmit: onSubmit, onMark: onMark,
                          onBeginSwipe: onBeginSwipe, onEndSwipe: onEndSwipe)
@@ -57,6 +61,10 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     private var dragStartPoint = CGPoint.zero
     private let ink = UIColor(CapyPalette.ink)
     private var hasConfigured = false
+    private var sessionID: UUID?
+    private var lives: Int?
+    private var pendingSubmission: Int?
+    private let feedbackOverlay = UIView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -76,25 +84,47 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         addGestureRecognizer(double)
         addGestureRecognizer(pan)
         contentMode = .redraw
+        feedbackOverlay.isUserInteractionEnabled = false
+        feedbackOverlay.isAccessibilityElement = false
+        feedbackOverlay.accessibilityElementsHidden = true
+        addSubview(feedbackOverlay)
     }
 
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
     func configure(size: Int, regions: [Int], found: Set<Int>, marks: Set<Int>, errors: Set<Int>,
-                   preview: Set<Int>, tutorialTargets: Set<Int>, locked: Bool, hideAccessibility: Bool = false,
+                   preview: Set<Int>, sessionID: UUID? = nil, lives: Int? = nil, effectsEnabled: Bool = true,
+                   tutorialTargets: Set<Int>, locked: Bool, hideAccessibility: Bool = false,
                    onToggle: @escaping (Int) -> Void, onSubmit: @escaping (Int) -> Void,
                    onMark: @escaping ([Int]) -> Void,
                    onBeginSwipe: @escaping () -> Void = {}, onEndSwipe: @escaping (Bool) -> Void = { _ in }) {
-        let sameBoard = self.size == size && self.regions == regions
+        let sameBoard = self.size == size && self.regions == regions && self.sessionID == sessionID
         let addedFound = found.subtracting(self.found)
         let addedErrors = errors.subtracting(self.errors)
         let changedMarks = marks.symmetricDifference(self.marks).subtracting(found).subtracting(errors)
+        // A red X can be submitted again. Its set membership does not change,
+        // so the actual life deduction, not insertion into errors, owns feedback.
+        let lostLife = self.lives.map { before in lives.map { $0 < before } ?? false } ?? false
+        var mistakeCell: Int?
+        if lostLife {
+            mistakeCell = pendingSubmission.flatMap { errors.contains($0) ? $0 : nil }
+                ?? addedErrors.sorted().first
+        } else if self.lives == nil && lives == nil {
+            mistakeCell = addedErrors.sorted().first
+        }
+        if !sameBoard || !effectsEnabled { clearFeedback() }
+        for effect in feedbackOverlay.subviews.compactMap({ $0 as? BoardMistakeFeedbackView }) where !errors.contains(effect.cellIndex) {
+            effect.removeFromSuperview()
+        }
         if !sameBoard || locked {
             finishSwipe(cancelled: true)
             dragStart = nil
             visited.removeAll()
         }
         self.size = max(1, size)
+        self.sessionID = sessionID
+        self.lives = lives
+        pendingSubmission = nil
         self.regions = regions
         self.found = found
         self.marks = marks
@@ -111,12 +141,12 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         self.onEndSwipe = onEndSwipe
         refreshAccessibility()
         setNeedsDisplay()
-        if hasConfigured, sameBoard, window != nil, !UIAccessibility.isReduceMotionEnabled {
+        if hasConfigured, sameBoard, effectsEnabled, window != nil, !UIAccessibility.isReduceMotionEnabled {
             for index in addedFound { pulse(at: index, color: UIColor(CapyPalette.orange), strong: true); celebrate(at: index) }
             for index in changedMarks { pulse(at: index, color: ink.withAlphaComponent(0.45), strong: false) }
         }
-        if hasConfigured, sameBoard, window != nil {
-            for index in addedErrors { mistake(at: index) }
+        if hasConfigured, sameBoard, effectsEnabled, window != nil, let index = mistakeCell {
+            mistake(at: index)
         }
         hasConfigured = true
     }
@@ -131,7 +161,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         ring.strokeColor = color.cgColor
         ring.lineWidth = strong ? 3 : 1.6
         ring.opacity = 0
-        layer.addSublayer(ring)
+        feedbackOverlay.layer.addSublayer(ring)
         let fade = CABasicAnimation(keyPath: "opacity")
         fade.fromValue = strong ? 0.85 : 0.5
         fade.toValue = 0
@@ -170,6 +200,11 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     }
     @objc private func doubleTap(_ gesture: UITapGestureRecognizer) {
         guard !locked, let index = cell(at: gesture.location(in: self)), !found.contains(index) else { return }
+        submit(index)
+    }
+
+    private func submit(_ index: Int) {
+        pendingSubmission = index
         onSubmit?(index)
     }
 
@@ -233,13 +268,15 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
 
     override func didMoveToWindow() {
         super.didMoveToWindow()
-        if window == nil { finishSwipe(cancelled: true) }
+        if window == nil { finishSwipe(cancelled: true); clearFeedback(); pendingSubmission = nil }
     }
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool { false }
 
     override func layoutSubviews() {
         super.layoutSubviews()
+        if feedbackOverlay.bounds.size != bounds.size { clearFeedback() }
+        feedbackOverlay.frame = bounds
         for (index, element) in cells.enumerated() { element.accessibilityFrameInContainerSpace = rect(for: index) }
     }
 
@@ -271,9 +308,9 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         }
     }
 
-    fileprivate func activate(index: Int, submit: Bool) -> Bool {
-        guard !locked, !found.contains(index) else { return false }
-        if submit { onSubmit?(index) } else { onToggle?(index) }
+    @discardableResult func activate(index: Int, submit: Bool) -> Bool {
+        guard !locked, (0..<(size * size)).contains(index), !found.contains(index) else { return false }
+        if submit { self.submit(index) } else { onToggle?(index) }
         return true
     }
 
@@ -329,14 +366,14 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         if let image = UIImage(named: "CapyFace") {
             let face = UIImageView(image: image); face.contentMode = .scaleAspectFit
             face.frame = cell.insetBy(dx: cell.width * 0.07, dy: cell.height * 0.07)
-            face.isUserInteractionEnabled = false; addSubview(face)
+            face.isUserInteractionEnabled = false; feedbackOverlay.addSubview(face)
             face.transform = CGAffineTransform(scaleX: 0.65, y: 0.65)
             UIView.animate(withDuration: 0.25, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.4) { face.transform = .identity } completion: { _ in face.removeFromSuperview() }
         }
         for number in 0..<5 {
             let star = UIImageView(image: UIImage(systemName: "star.fill")); star.tintColor = UIColor(CapyPalette.orange)
             star.frame = CGRect(x: cell.midX - 5, y: cell.midY - 5, width: 10, height: 10)
-            addSubview(star)
+            feedbackOverlay.addSubview(star)
             let angle = CGFloat(number) * .pi * 2 / 5
             UIView.animate(withDuration: 0.48, animations: {
                 star.center = CGPoint(x: cell.midX + cos(angle) * cell.width * 0.65, y: cell.midY + sin(angle) * cell.height * 0.65)
@@ -346,20 +383,24 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     }
 
     private func mistake(at index: Int) {
-        let r = rect(for: index).insetBy(dx: cellSide * 0.16, dy: cellSide * 0.16)
-        let brokenHeart = UIImageView(image: UIImage(systemName: "heart.slash.fill"))
-        brokenHeart.frame = r; brokenHeart.contentMode = .scaleAspectFit
-        brokenHeart.tintColor = UIColor(CapyPalette.life); brokenHeart.isUserInteractionEnabled = false; addSubview(brokenHeart)
-        if UIAccessibility.isReduceMotionEnabled {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { brokenHeart.removeFromSuperview() }
-            return
+        guard (0..<(size * size)).contains(index), cellSide > 0 else { return }
+        // Replace the same-cell transient effect. Rapid valid mistakes must not
+        // stack several opaque hearts over the player's latest state.
+        for view in feedbackOverlay.subviews.compactMap({ $0 as? BoardMistakeFeedbackView }) where view.cellIndex == index {
+            view.removeFromSuperview()
         }
-        let shake = CAKeyframeAnimation(keyPath: "transform.translation.x")
-        shake.values = [0, -5, 5, -4, 4, 0]; shake.duration = 0.3
-        brokenHeart.layer.add(shake, forKey: "mistake")
-        UIView.animate(withDuration: 0.2, delay: 0.3, options: .curveEaseIn, animations: {
-            brokenHeart.alpha = 0; brokenHeart.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
-        }, completion: { _ in brokenHeart.removeFromSuperview() })
+        let palette = ((region(index) % CapyPalette.regionColors.count) + CapyPalette.regionColors.count) % CapyPalette.regionColors.count
+        let gap = max(1.1, min(2, cellSide * 0.028))
+        let effect = BoardMistakeFeedbackView(cellIndex: index, frame: rect(for: index).insetBy(dx: gap, dy: gap),
+                                             tileColor: UIColor(CapyPalette.regionColors[palette]),
+                                             reduceMotion: UIAccessibility.isReduceMotionEnabled)
+        feedbackOverlay.addSubview(effect)
+        effect.play()
+    }
+
+    private func clearFeedback() {
+        feedbackOverlay.subviews.forEach { $0.removeFromSuperview() }
+        feedbackOverlay.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
     }
 
     private func drawCapy(in rect: CGRect, context: CGContext) {

@@ -1,0 +1,43 @@
+{
+  "build": "0.2.4 (7)",
+  "source": "Validation/test-runs/original-024-feedback-lifecycle-final.xcresult",
+  "scope": "Timed component captures in a test-host UIWindow using the real board/feedback views and actual AppModel actions. Not full-screen product screenshots or a frozen-reference timing match. Reduced-motion captures instantiate that explicit component path, not the system setting.",
+  "frames": [
+    {
+      "file": "mistake-reduce-motion-red-x.png",
+      "test": "GameVisualFeedbackTests/testReducedMotionShowsStaticSplitHeartThenXAndReleasesOverlay()",
+      "device": "iPhone 17 Pro",
+      "timestamp": 1790775915.885
+    },
+    {
+      "file": "mistake-reduce-motion-split-heart.png",
+      "test": "GameVisualFeedbackTests/testReducedMotionShowsStaticSplitHeartThenXAndReleasesOverlay()",
+      "device": "iPhone 17 Pro",
+      "timestamp": 1790775915.401
+    },
+    {
+      "file": "mistake-04-settled-red-x.png",
+      "test": "GameVisualFeedbackTests/testRepeatedWrongRedCellAnimatesEachActualDeductionButNotDuplicateDelivery()",
+      "device": "iPhone 17 Pro",
+      "timestamp": 1790775917.669
+    },
+    {
+      "file": "mistake-03-red-x-transition.png",
+      "test": "GameVisualFeedbackTests/testRepeatedWrongRedCellAnimatesEachActualDeductionButNotDuplicateDelivery()",
+      "device": "iPhone 17 Pro",
+      "timestamp": 1790775917.394
+    },
+    {
+      "file": "mistake-02-heart-tearing.png",
+      "test": "GameVisualFeedbackTests/testRepeatedWrongRedCellAnimatesEachActualDeductionButNotDuplicateDelivery()",
+      "device": "iPhone 17 Pro",
+      "timestamp": 1790775917.107
+    },
+    {
+      "file": "mistake-01-head-shake.png",
+      "test": "GameVisualFeedbackTests/testRepeatedWrongRedCellAnimatesEachActualDeductionButNotDuplicateDelivery()",
+      "device": "iPhone 17 Pro",
+      "timestamp": 1790775916.803
+    }
+  ]
+}
