@@ -3,6 +3,8 @@ import CapydokuCore
 
 struct RootView: View {
     @EnvironmentObject private var model: AppModel
+    // Root owns the preference so independently hosted screens also update.
+    private var language: AppLanguage { model.progress.settings.language }
     @Environment(\.accessibilityReduceMotion) private var systemReduceMotion
     // Hosted-view verification can select this branch without changing the
     // device's accessibility setting. Production callers leave it nil.
@@ -44,6 +46,7 @@ struct RootView: View {
                 case .checkIn: CheckInView(reduceMotionOverride: reduceMotionOverride)
                 }
                 }.environmentObject(model).foregroundColor(CapyPalette.ink)
+                    .environment(\.appLanguage, language)
                     .environment(\.capyAccessibilityFocus, $focusedControl)
                     .environment(\.capyButtonActivation, activate)
             }
@@ -51,6 +54,7 @@ struct RootView: View {
                 Color.black.opacity(0.78).ignoresSafeArea().accessibilityHidden(true)
                 CapyAccessibilityHost(hidden: hasCard || model.loading || model.challengePending) {
                     ResultPanel(won: model.session?.status == .won).environmentObject(model).foregroundColor(CapyPalette.ink)
+                        .environment(\.appLanguage, language)
                         .environment(\.capyAccessibilityFocus, $focusedControl)
                         .environment(\.capyButtonActivation, activate)
                 }
@@ -77,7 +81,7 @@ struct RootView: View {
                     VStack(spacing: 16) {
                         CapyMascot(size: 88)
                         ProgressView().tint(CapyPalette.orange)
-                        Text("Loading…").font(.system(size: 22, weight: .bold, design: .rounded)).capyFocus("loading_title")
+                        Text(language.text("Loading…")).font(.system(size: 22, weight: .bold, design: .rounded)).capyFocus("loading_title")
                     }.frame(maxWidth: .infinity).padding(16)
                 }.frame(maxWidth: 310).padding(26).accessibilityAddTraits(.isModal)
             }
@@ -92,11 +96,12 @@ struct RootView: View {
         .animation(reduceMotion ? nil : .easeOut(duration: 0.18), value: hasResult)
         .animation(reduceMotion ? nil : .easeOut(duration: 0.18), value: model.challengePending)
         .sheet(isPresented: Binding(get: { model.sheet == .debug }, set: { if !$0 && model.sheet == .debug { model.sheet = nil } })) {
-            DebugView().environment(\.capyAccessibilityFocus, $focusedControl).environment(\.capyButtonActivation, activate)
+            DebugView().environment(\.appLanguage, language).environment(\.capyAccessibilityFocus, $focusedControl).environment(\.capyButtonActivation, activate)
         }
         .alert("Capydoku", isPresented: Binding(get: { model.errorMessage != nil || model.notice != nil }, set: { if !$0 { model.errorMessage = nil; model.notice = nil } })) {
-            Button("OK") { model.uiTap("alert_ok"); model.errorMessage = nil; model.notice = nil }
-        } message: { Text(model.errorMessage ?? model.notice ?? "") }
+            Button(language.text("OK")) { model.uiTap("alert_ok"); model.errorMessage = nil; model.notice = nil }
+        } message: { Text(language.text(model.errorMessage ?? model.notice ?? "")) }
+        .environment(\.appLanguage, language)
     }
     private var defaultFocus: String { model.screen == .game ? "level_title" : model.screen == .checkIn ? "checkin_streak" : "play" }
     private func activate(_ id: String?) {
@@ -134,6 +139,7 @@ struct RootView: View {
 
 struct HomeView: View {
     @EnvironmentObject private var model: AppModel
+    @Environment(\.appLanguage) private var language
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var breathing = false
     var body: some View {
@@ -152,19 +158,19 @@ struct HomeView: View {
                             .offset(y: breathing ? -4 : 2)
                         (Text("Capy").foregroundColor(CapyPalette.orange) + Text("doku").foregroundColor(CapyPalette.ink))
                             .font(.system(size: min(geometry.size.width * 0.132, 57), weight: .heavy, design: .rounded))
-                            .tracking(-2).accessibilityLabel("Capydoku")
+                            .tracking(-2).accessibilityLabel(language.text("Capydoku"))
                     }
                     Spacer(minLength: 48)
                     VStack(spacing: 24) {
                         Button {} label: {
                             HStack(spacing: 12) {
                                 Image(systemName: "lock.fill").font(.system(size: 24, weight: .bold))
-                                Text("Daily Challenge").font(.system(size: 22, weight: .heavy, design: .rounded))
+                                Text(language.text("Daily Challenge")).font(.system(size: 22, weight: .heavy, design: .rounded))
                             }.frame(maxWidth: .infinity).frame(height: 60)
                                 .foregroundColor(.white).background(CapyPalette.disabled).clipShape(Capsule())
-                        }.disabled(true).accessibilityIdentifier("daily_challenge").accessibilityHint("Not available in this build")
+                        }.disabled(true).accessibilityIdentifier("daily_challenge").accessibilityHint(language.text("Not available in this build"))
                         CapyButton(id: "play", action: model.startOrContinue) {
-                            Text("Level \(model.session?.puzzle.id ?? model.progress.currentLevel)")
+                            Text(language.text("Level \(model.session?.puzzle.id ?? model.progress.currentLevel)"))
                                 .font(.system(size: 31, weight: .heavy, design: .rounded))
                                 .frame(maxWidth: .infinity).frame(height: 24)
                         }.buttonStyle(CapyButtonStyle()).accessibilityIdentifier("play")
@@ -180,6 +186,7 @@ struct HomeView: View {
 }
 
 struct IconButton: View {
+    @Environment(\.appLanguage) private var language
     let symbol: String; let label: String; let id: String
     var action: () -> Void
     var body: some View {
@@ -187,12 +194,13 @@ struct IconButton: View {
             Image(systemName: symbol).font(.system(size: 22, weight: .bold))
                 .frame(width: 44, height: 44).background(CapyPalette.paper).clipShape(Circle())
                 .shadow(color: CapyPalette.orange.opacity(0.15), radius: 1, y: 2)
-        }.buttonStyle(CapyPressStyle()).accessibilityLabel(label).accessibilityIdentifier(id)
+        }.buttonStyle(CapyPressStyle()).accessibilityLabel(language.text(label)).accessibilityIdentifier(id)
     }
 }
 
 struct GameView: View {
     @EnvironmentObject private var model: AppModel
+    @Environment(\.appLanguage) private var language
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @StateObject private var feedback = GameFeedbackPresentation()
@@ -217,10 +225,10 @@ struct GameView: View {
                             }
                         }.frame(height: 44).padding(.horizontal, 8)
                         HStack(spacing: 52) {
-                            (Text("Level\n").font(.system(size: 17, weight: .medium, design: .rounded)) + Text("\(s.puzzle.id)").font(.system(size: 25, weight: .heavy, design: .rounded)))
-                                .multilineTextAlignment(.center).accessibilityLabel("Level \(s.puzzle.id)").accessibilityIdentifier("level_title").capyFocus("level_title")
+                            (Text(language.text("Level\n")).font(.system(size: 17, weight: .medium, design: .rounded)) + Text("\(s.puzzle.id)").font(.system(size: 25, weight: .heavy, design: .rounded)))
+                                .multilineTextAlignment(.center).accessibilityLabel(language.text("Level \(s.puzzle.id)")).accessibilityIdentifier("level_title").capyFocus("level_title")
                             VStack(spacing: 0) {
-                                Text("Score").font(.system(size: 17, weight: .medium, design: .rounded))
+                                Text(language.text("Score")).font(.system(size: 17, weight: .medium, design: .rounded))
                                 Text("\(s.score)").font(.system(size: 25, weight: .heavy, design: .rounded)).accessibilityIdentifier("score")
                             }
                         }.frame(height: 56).opacity(model.hint == nil ? 1 : 0.35).accessibilityHidden(covered || model.hint != nil)
@@ -232,7 +240,7 @@ struct GameView: View {
                                         .foregroundColor(index < s.lives ? CapyPalette.life : CapyPalette.orangeLight)
                                 }
                             }.padding(.horizontal, 10).padding(.vertical, 5).background(CapyPalette.paper).clipShape(Capsule())
-                                .accessibilityElement(children: .ignore).accessibilityLabel("Lives").accessibilityValue("\(s.lives)").accessibilityIdentifier("lives")
+                                .accessibilityElement(children: .ignore).accessibilityLabel(language.text("Lives")).accessibilityValue("\(s.lives)").accessibilityIdentifier("lives")
                         }.frame(height: 40).opacity(model.hint == nil ? 1 : 0.35).accessibilityHidden(covered || model.hint != nil)
                         Group {
                             if let hint = model.hint, let useID = model.progress.activeHintUse?.id {
@@ -270,7 +278,7 @@ struct GameView: View {
                             .frame(width: boardSide, height: boardSide)
                         Spacer(minLength: 10)
                         if model.hint != nil {
-                            CapyButton(id: "hint_apply", action: model.applyHint) { Text("Apply").frame(maxWidth: .infinity) }
+                            CapyButton(id: "hint_apply", action: model.applyHint) { Text(language.text("Apply")).frame(maxWidth: .infinity) }
                                 .buttonStyle(CapyButtonStyle()).frame(maxWidth: 280).accessibilityIdentifier("hint_apply").frame(height: 130)
                         } else if let tutorial = model.tutorial {
                             TutorialPanel(step: tutorial).padding(.top, 8)
@@ -281,7 +289,7 @@ struct GameView: View {
                                         CapyButton(id: "level_start_free", action: model.levelStartFree) {
                                             HStack(spacing: 6) {
                                                 Image(systemName: "play.rectangle.fill").foregroundColor(CapyPalette.video)
-                                                Text("Free tool").font(.system(size: 13, weight: .bold, design: .rounded))
+                                                Text(language.text("Free tool")).font(.system(size: 13, weight: .bold, design: .rounded))
                                             }.padding(.horizontal, 16).frame(minHeight: 44)
                                         }.buttonStyle(CapyPressStyle()).accessibilityIdentifier("level_start_free")
                                     } else { Color.clear.accessibilityHidden(true) }
@@ -301,7 +309,7 @@ struct GameView: View {
                     }.disabled(s.status != .playing).accessibilityElement(children: covered ? .ignore : .contain).accessibilityHidden(covered).padding(.horizontal, 14).padding(.top, 4).padding(.bottom, 4)
                     if feedback.showLastLife && s.status == .playing && model.hint == nil && model.sheet == nil {
                         VStack {
-                            Text("Only one chance left!")
+                            Text(language.text("Only one chance left!"))
                                 .font(.system(size: 17, weight: .bold, design: .rounded))
                                 .padding(.horizontal, 20).padding(.vertical, 14)
                                 .background(CapyPalette.paper).clipShape(RoundedRectangle(cornerRadius: 16))
@@ -343,10 +351,10 @@ struct GameView: View {
                     .font(.system(size: 19, weight: .bold, design: .rounded))
             }
         }.padding(.horizontal, 9).padding(.vertical, 4).background(CapyPalette.paper).clipShape(Capsule())
-            .accessibilityElement(children: .ignore).accessibilityLabel(s.lives == 1 ? "One heart left. \(s.found.count) of \(s.puzzle.size) found" : "\(s.found.count) of \(s.puzzle.size) found").accessibilityIdentifier("found_count")
+            .accessibilityElement(children: .ignore).accessibilityLabel(language.text(s.lives == 1 ? "One heart left. \(s.found.count) of \(s.puzzle.size) found" : "\(s.found.count) of \(s.puzzle.size) found")).accessibilityIdentifier("found_count")
             .overlay(alignment: .top) {
                 if let combo = feedback.comboText {
-                    Text(combo).font(.system(size: 14, weight: .heavy, design: .rounded)).foregroundColor(CapyPalette.orange)
+                    Text(language.text(combo)).font(.system(size: 14, weight: .heavy, design: .rounded)).foregroundColor(CapyPalette.orange)
                         .offset(y: -18).accessibilityIdentifier("combo_feedback")
                         .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
                 }
@@ -356,6 +364,7 @@ struct GameView: View {
 }
 
 struct ToolButton: View {
+    @Environment(\.appLanguage) private var language
     let title: String
     let isDirect: Bool
     let count: Int
@@ -386,13 +395,14 @@ struct ToolButton: View {
                         }
                     }.foregroundColor(.white).offset(x: 6, y: -5)
                 }
-        }.buttonStyle(CapyPressStyle()).accessibilityLabel(title)
-            .accessibilityValue(count > 0 ? "\(count) available" : "Video reward")
+        }.buttonStyle(CapyPressStyle()).accessibilityLabel(language.text(title))
+            .accessibilityValue(language.text(count > 0 ? "\(count) available" : "Video reward"))
             .accessibilityIdentifier(id)
     }
 }
 
 struct RuleStrip: View {
+    @Environment(\.appLanguage) private var language
     var body: some View {
         HStack(spacing: 4) {
             rule(0, "1 Capy per\ncolor")
@@ -404,7 +414,7 @@ struct RuleStrip: View {
     private func rule(_ kind: Int, _ title: String) -> some View {
         HStack(spacing: 4) {
             RuleDiagram(kind: kind).frame(width: 30, height: 30)
-            Text(title).font(.system(size: 10, weight: .semibold, design: .rounded)).minimumScaleFactor(0.8)
+            Text(language.text(title)).font(.system(size: 10, weight: .semibold, design: .rounded)).minimumScaleFactor(0.8)
                 .fixedSize(horizontal: false, vertical: true)
         }.frame(maxWidth: .infinity, alignment: .leading).padding(.horizontal, 3).padding(.vertical, 8)
             .background(CapyPalette.cream).clipShape(RoundedRectangle(cornerRadius: 6))
@@ -435,19 +445,20 @@ struct RuleDiagram: View {
 
 struct TutorialPanel: View {
     @EnvironmentObject private var model: AppModel
+    @Environment(\.appLanguage) private var language
     let step: TutorialStep
     var body: some View {
         CapyCard(padding: 12) {
             VStack(alignment: .leading, spacing: 5) {
                 HStack {
-                    Text("\(model.progress.tutorialStep + 1)/\(model.tutorialCount) · \(step.title)")
+                    Text("\(model.progress.tutorialStep + 1)/\(model.tutorialCount) · \(language.text(step.title))")
                         .font(.system(size: 14, weight: .bold, design: .rounded)).accessibilityIdentifier("tutorial_title")
                     Spacer()
-                    CapyButton("Skip", id: "skip_tutorial", action: model.skipTutorial).buttonStyle(CapyPressStyle()).font(.system(size: 13, weight: .bold, design: .rounded)).frame(minWidth: 44, minHeight: 44).accessibilityIdentifier("skip_tutorial")
+                    CapyButton(language.text("Skip"), id: "skip_tutorial", action: model.skipTutorial).buttonStyle(CapyPressStyle()).font(.system(size: 13, weight: .bold, design: .rounded)).frame(minWidth: 44, minHeight: 44).accessibilityIdentifier("skip_tutorial")
                 }
-                Text(step.instruction).font(.system(size: 12, design: .rounded)).fixedSize(horizontal: false, vertical: true)
+                Text(language.text(step.instruction)).font(.system(size: 12, design: .rounded)).fixedSize(horizontal: false, vertical: true)
                 if step.action == "read" {
-                    CapyButton("Got it", id: "tutorial_next", action: model.advanceTutorial).buttonStyle(CapyButtonStyle(compact: true)).accessibilityIdentifier("tutorial_next")
+                    CapyButton(language.text("Got it"), id: "tutorial_next", action: model.advanceTutorial).buttonStyle(CapyButtonStyle(compact: true)).accessibilityIdentifier("tutorial_next")
                 }
             }.frame(maxWidth: .infinity, alignment: .leading)
         }
@@ -455,19 +466,21 @@ struct TutorialPanel: View {
 }
 
 struct HintPanel: View {
+    @Environment(\.appLanguage) private var language
     let hint: PuzzleHint
     var body: some View {
-        Text(hint.explanation).font(.system(size: 13, weight: .semibold, design: .rounded))
+        Text(language.text(hint.explanation)).font(.system(size: 13, weight: .semibold, design: .rounded))
             .fixedSize(horizontal: false, vertical: true).frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, 17).padding(.vertical, 11)
             .background(CapyPalette.paper).clipShape(RoundedRectangle(cornerRadius: 17))
-            .accessibilityLabel("Hint. \(hint.rule). \(hint.explanation)")
+            .accessibilityLabel(language.text("Hint. \(hint.rule). \(hint.explanation)"))
             .accessibilityIdentifier("hint_explanation").capyFocus("hint_explanation")
     }
 }
 
 struct ResultPanel: View {
     @EnvironmentObject private var model: AppModel
+    @Environment(\.appLanguage) private var language
     let won: Bool
     @State private var praise = ["Nice Work", "Intelligent"].randomElement() ?? "Nice Work"
     private var failure: ReferenceFailureConfiguration? { model.session?.config.referenceGameplay?.failure }
@@ -482,37 +495,37 @@ struct ResultPanel: View {
             ZStack {
                 ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 20) {
-                    Text(won ? praise : (failure?.title ?? "So Close!"))
+                    Text(language.text(won ? praise : (failure?.title ?? "So Close!")))
                         .font(.system(size: 39, weight: .heavy, design: .rounded)).foregroundColor(.white)
                         .multilineTextAlignment(.center).fixedSize(horizontal: false, vertical: true)
                         .shadow(color: CapyPalette.orange, radius: 0, x: 1, y: 2)
                         .accessibilityIdentifier(won ? "win_result" : "loss_result")
                         .accessibilityAddTraits(.isHeader).capyFocus(won ? "win_result" : "loss_result")
-                        .accessibilityValue("Level \(model.session?.puzzle.id ?? 1). Score \(model.session?.score ?? 0). \(model.session?.found.count ?? 0) of \(model.session?.puzzle.size ?? 0) found.")
+                        .accessibilityValue(language.text("Level \(model.session?.puzzle.id ?? 1). Score \(model.session?.score ?? 0). \(model.session?.found.count ?? 0) of \(model.session?.puzzle.size ?? 0) found."))
                     ZStack {
                         if won { Image(systemName: "sun.max.fill").resizable().scaledToFit().foregroundColor(CapyPalette.orange.opacity(0.28)).padding(8) }
                         CapyMascot(mood: won ? .happy : .sad, size: min(geometry.size.width * 0.65, 250))
                     }.frame(height: min(geometry.size.height * 0.34, 270))
-                    Text(won ? victoryDetail : "The next Capybara is close. Your progress is worth keeping!")
+                    Text(language.text(won ? victoryDetail : "The next Capybara is close. Your progress is worth keeping!"))
                         .font(.system(size: 20, weight: .bold, design: .rounded))
                         .foregroundColor(won ? Color(red: 1, green: 0.86, blue: 0.39) : CapyPalette.orangeLight)
                         .multilineTextAlignment(.center).fixedSize(horizontal: false, vertical: true)
                     CapyButton(id: won ? "next_level" : "revive") {
                         if won { model.next() } else { model.revive() }
                     } label: {
-                        Text(won ? "Level \((model.session?.puzzle.id ?? 1) + 1)" : (failure?.reviveButtonTitle ?? "Play On")).frame(maxWidth: .infinity)
+                        Text(language.text(won ? "Level \((model.session?.puzzle.id ?? 1) + 1)" : (failure?.reviveButtonTitle ?? "Play On"))).frame(maxWidth: .infinity)
                     }.buttonStyle(CapyButtonStyle()).disabled(!won && !model.reviveAvailable).accessibilityIdentifier(won ? "next_level" : "revive")
                         .overlay(alignment: .topTrailing) {
                             if !won && model.reviveAvailable {
                                 Group {
                                     if model.reviveNeedsVideo { Image(systemName: "play.fill").font(.system(size: 14, weight: .bold)) }
-                                    else { Text("Free").font(.system(size: 15, weight: .heavy, design: .rounded)) }
+                                    else { Text(language.text("Free")).font(.system(size: 15, weight: .heavy, design: .rounded)) }
                                 }.foregroundColor(.white).padding(.horizontal, 15).padding(.vertical, 8)
                                     .background(CapyPalette.video).clipShape(Capsule()).offset(y: -12).allowsHitTesting(false)
                             }
                         }
                     if !won {
-                        CapyButton(id: "result_restart", action: model.restart) { Text(failure?.restartButtonTitle ?? "Restart").frame(maxWidth: .infinity) }
+                        CapyButton(id: "result_restart", action: model.restart) { Text(language.text(failure?.restartButtonTitle ?? "Restart")).frame(maxWidth: .infinity) }
                             .buttonStyle(CapyButtonStyle(secondary: true, darkBackdrop: true)).accessibilityIdentifier("result_restart")
                     }
                 }.padding(.horizontal, 40).padding(.vertical, 24)
@@ -535,14 +548,15 @@ struct ResultPanel: View {
 /// The original L10 → L11 flow places this after the interstitial has closed.
 struct ChallengePanel: View {
     @EnvironmentObject private var model: AppModel
+    @Environment(\.appLanguage) private var language
     var body: some View {
         CapyCard(padding: 24) {
             VStack(spacing: 22) {
-                Text("A New Challenge!").font(.system(size: 29, weight: .heavy, design: .rounded))
+                Text(language.text("A New Challenge!")).font(.system(size: 29, weight: .heavy, design: .rounded))
                     .multilineTextAlignment(.center).accessibilityAddTraits(.isHeader)
                     .capyFocus("challenge_title").accessibilityIdentifier("challenge_title")
                 CapyMascot(mood: .happy, size: 160)
-                CapyButton(id: "challenge_continue", action: model.continueChallenge) { Text("Continue").frame(maxWidth: .infinity) }
+                CapyButton(id: "challenge_continue", action: model.continueChallenge) { Text(language.text("Continue")).frame(maxWidth: .infinity) }
                     .buttonStyle(CapyButtonStyle()).accessibilityIdentifier("challenge_continue")
             }
         }.frame(maxWidth: 350).padding(.horizontal, 24)

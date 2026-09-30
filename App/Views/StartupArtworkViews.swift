@@ -7,6 +7,7 @@ struct StartupLoadingView: View {
     // Hosted-view branch verification only; production leaves the system value intact.
     let reduceMotionOverride: Bool?
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @Environment(\.appLanguage) private var language
 
     init(isPreparing: Bool, reduceMotionOverride: Bool? = nil) {
         self.isPreparing = isPreparing
@@ -20,7 +21,7 @@ struct StartupLoadingView: View {
                                  geometry.size.height * (dynamicTypeSize.isAccessibilitySize ? 0.23 : 0.28), 224)
             VStack(spacing: 0) {
                 VStack(alignment: .leading, spacing: 18) {
-                    Text("Follow the clues.\nFind every capy.")
+                    Text(language.text("Follow the clues.\nFind every capy."))
                         .font(.system(.title, design: .rounded).weight(.bold))
                         // Accessibility sizes wrap down onto the pale sky;
                         // switch to the dark brand ink instead of losing contrast.
@@ -72,6 +73,7 @@ struct StartupBrandView: View {
     // This optional test input does not claim to exercise the real system switch.
     let reduceMotionOverride: Bool?
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @Environment(\.appLanguage) private var language
 
     init(isPreparing: Bool, reduceMotionOverride: Bool? = nil) {
         self.isPreparing = isPreparing
@@ -82,7 +84,7 @@ struct StartupBrandView: View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
                 VStack(alignment: .leading, spacing: 18) {
-                    Text("A little logic.\nA lot of capy.")
+                    Text(language.text("A little logic.\nA lot of capy."))
                         .font(.system(.title, design: .rounded).weight(.bold))
                         .lineLimit(4).minimumScaleFactor(0.65)
                         .fixedSize(horizontal: false, vertical: true)
@@ -144,6 +146,7 @@ private struct StartupBusyLine: View {
     let reduceMotionOverride: Bool?
     @Environment(\.accessibilityReduceMotion) private var systemReduceMotion
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.appLanguage) private var language
     private var reduceMotion: Bool { reduceMotionOverride ?? systemReduceMotion }
 
     var body: some View {
@@ -167,8 +170,8 @@ private struct StartupBusyLine: View {
         }
         .frame(height: 7)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Loading Capydoku")
-        .accessibilityValue(isPreparing ? "Preparing" : "Ready")
+        .accessibilityLabel(language.text("Loading Capydoku"))
+        .accessibilityValue(language.text(isPreparing ? "Preparing" : "Ready"))
     }
 }
 

@@ -3,6 +3,7 @@ import UIKit
 import CapydokuCore
 
 struct PuzzleBoardView: UIViewRepresentable {
+    @Environment(\.appLanguage) private var language
     let puzzle: Puzzle
     let found: Set<Int>
     let marks: Set<Int>
@@ -31,6 +32,7 @@ struct PuzzleBoardView: UIViewRepresentable {
                          marks: marks, errors: errors, preview: preview,
                          sessionID: sessionID, lives: lives, effectsEnabled: effectsEnabled,
                          tutorialTargets: tutorialTargets, locked: locked, hideAccessibility: hideAccessibility,
+                         language: language,
                          onToggle: onToggle, onSubmit: onSubmit, onMark: onMark,
                          onBeginSwipe: onBeginSwipe, onEndSwipe: onEndSwipe)
     }
@@ -47,6 +49,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     private var tutorialTargets = Set<Int>()
     private var locked = false
     private var hideAccessibility = false
+    private var language: AppLanguage = .simplifiedChinese
     private var onToggle: ((Int) -> Void)?
     private var onSubmit: ((Int) -> Void)?
     private var onMark: (([Int]) -> Void)?
@@ -95,6 +98,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     func configure(size: Int, regions: [Int], found: Set<Int>, marks: Set<Int>, errors: Set<Int>,
                    preview: Set<Int>, sessionID: UUID? = nil, lives: Int? = nil, effectsEnabled: Bool = true,
                    tutorialTargets: Set<Int>, locked: Bool, hideAccessibility: Bool = false,
+                   language: AppLanguage = .simplifiedChinese,
                    onToggle: @escaping (Int) -> Void, onSubmit: @escaping (Int) -> Void,
                    onMark: @escaping ([Int]) -> Void,
                    onBeginSwipe: @escaping () -> Void = {}, onEndSwipe: @escaping (Bool) -> Void = { _ in }) {
@@ -133,6 +137,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         self.tutorialTargets = tutorialTargets
         self.locked = locked
         self.hideAccessibility = hideAccessibility
+        self.language = language
         accessibilityElementsHidden = hideAccessibility
         self.onToggle = onToggle
         self.onSubmit = onSubmit
@@ -295,13 +300,17 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         accessibilityElements = hideAccessibility ? [] : cells
         for (index, element) in cells.enumerated() {
             let state = found.contains(index) ? "found" : errors.contains(index) ? "error" : marks.contains(index) ? "marked" : "empty"
-            element.accessibilityLabel = "Row \(index / size + 1), column \(index % size + 1), region \(region(index) + 1)"
+            let position = language.text("Row \(index / size + 1), column \(index % size + 1), region \(region(index) + 1)")
+            // Keep the existing machine-readable state used by UI tests. The
+            // Chinese label also speaks the state without relying on that token.
+            element.accessibilityLabel = language == .simplifiedChinese ? position + "，" + language.text(state) : position
             element.accessibilityValue = state
-            let extra = tutorialTargets.contains(index) ? " Tutorial target." : preview.contains(index) ? " Hint preview." : ""
-            element.accessibilityHint = locked ? "Read-only board preview.\(extra)" : "Activate to toggle an exclusion mark. Use the Confirm capybara custom action to submit.\(extra)"
+            let extra = tutorialTargets.contains(index) ? language.text("Tutorial target.") : preview.contains(index) ? language.text("Hint preview.") : ""
+            let instruction = language.text(locked ? "Read-only board preview." : "Activate to toggle an exclusion mark. Use the Confirm capybara custom action to submit.")
+            element.accessibilityHint = [instruction, extra].filter { !$0.isEmpty }.joined(separator: language == .simplifiedChinese ? "" : " ")
             element.accessibilityCustomActions = locked || found.contains(index) ? nil : [
-                UIAccessibilityCustomAction(name: "Confirm capybara", target: element, selector: #selector(PuzzleCellAccessibilityElement.submit)),
-                UIAccessibilityCustomAction(name: "Toggle exclusion mark", target: element, selector: #selector(PuzzleCellAccessibilityElement.toggle))
+                UIAccessibilityCustomAction(name: language.text("Confirm capybara"), target: element, selector: #selector(PuzzleCellAccessibilityElement.submit)),
+                UIAccessibilityCustomAction(name: language.text("Toggle exclusion mark"), target: element, selector: #selector(PuzzleCellAccessibilityElement.toggle))
             ]
             element.accessibilityTraits = locked || found.contains(index) ? [.button, .notEnabled] : .button
             element.accessibilityFrameInContainerSpace = rect(for: index)

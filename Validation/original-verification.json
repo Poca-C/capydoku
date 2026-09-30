@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "date": "2026-10-01",
-  "build": "0.2.11 (14)",
+  "build": "0.2.12 (15)",
   "status": "Partial original-spec alignment; remaining client, reference and release gaps open.",
   "originalSHA256": "274bbf15f031bd80bb8b360cf14c0266acff370a230d9cad1b1785461df54dd2",
   "currentPackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49",
@@ -16,12 +16,12 @@
     "minimumOSRuntime": "not tested; compile target iOS 15"
   },
   "core": {
-    "build": "0.2.10 (13)",
-    "passed": 125,
+    "build": "0.2.12 (15)",
+    "passed": 129,
     "failed": 0,
-    "seconds": 27.596,
-    "log": "Validation/test-runs/original-0210-core-ad-events-final.log",
-    "scope": "Full Swift package suite, including nine new reward observation persistence/migration/validation cases. Initial and final Core logs are copies of the same first successful run, not two runs. Production levels unchanged; not reference difficulty acceptance."
+    "seconds": 30.475,
+    "log": "Validation/test-runs/original-0212-core.log",
+    "scope": "Full Swift package suite; four new language migration/persistence tests. Original levels unchanged; not new difficulty acceptance."
   },
   "pythonImport": {
     "passed": 6,
@@ -448,6 +448,32 @@
       "failed": 0,
       "uiSeconds": 17.824,
       "scope": "Actual launch, clickable terms, Accept, permission handling according to current simulator OS state, Home, termination/relaunch without repeat consent. Before final loading text-color correction, which does not change this path. Does not cover all authorization combinations or regional Data Use."
+    },
+    {
+      "build": "0.2.12 (15)",
+      "device": "iPhone 17 Pro",
+      "bundle": "Validation/test-runs/original-0212-app-final.xcresult",
+      "appTestsPassed": 193,
+      "failed": 0,
+      "scope": "All AppTests except OriginalUIContractTests. Includes eleven new localization tests and six language-state tests; actual hosted result/startup pages now use Chinese default."
+    },
+    {
+      "build": "0.2.12 (15)",
+      "device": "iPhone 17 Pro",
+      "bundle": "Validation/test-runs/original-0212-language-ui-pro-final.xcresult",
+      "uiTestsPassed": 5,
+      "failed": 0,
+      "seconds": 100.026,
+      "scope": "Three new Chinese/default/switch/relaunch/all-size/tutorial/legal UI tests plus two explicit-English original hierarchy and first-launch acceptance regressions."
+    },
+    {
+      "build": "0.2.12 (15)",
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-0212-language-ui-17e-final.xcresult",
+      "uiTestsPassed": 3,
+      "failed": 0,
+      "seconds": 71.574,
+      "scope": "Chinese default, bilingual Settings switch and cold restore with board marks preserved; all four board sizes, tutorial and first-run legal-copy UI."
     }
   ],
   "visualEvidence": {
@@ -473,12 +499,12 @@
   ],
   "historicalFailuresRetained": "Initial UI/app runs and first full-core run failed on changed fixture assumptions or real UI issues; these are retained under Validation/test-runs. Only explicitly listed successful reruns count. Old 88-item checklist completion counts are superseded.",
   "applicationTests": {
-    "build": "0.2.11 (14)",
-    "passed": 176,
+    "build": "0.2.12 (15)",
+    "passed": 193,
     "failed": 0,
-    "seconds": 61.449,
-    "bundle": "Validation/test-runs/original-0211-startup-app-final.xcresult",
-    "scope": "All AppTests except OriginalUIContractTests, including twelve new startup lifecycle cases and two actual hosted visual cases. This run preceded the final text-color correction only; both hosted cases reran successfully on both devices after that correction. Startup/gameplay logic unchanged after the full suite."
+    "seconds": 60.157,
+    "bundle": "Validation/test-runs/original-0212-app-final.xcresult",
+    "scope": "All AppTests except OriginalUIContractTests. Includes eleven new localization tests and six language-state tests; actual hosted result/startup pages now use Chinese default."
   },
   "supersededOrInterruptedRuns": [
     "reward-readiness-final was intentionally interrupted to stop two runners targeting one simulator; not counted as success.",
@@ -521,19 +547,20 @@
     }
   ],
   "buildVerification": {
-    "bundleVersion": "0.2.11 (14)",
-    "simulatorDebug": "passed via final hosted test builds",
-    "simulatorLog": "Validation/test-runs/original-0211-pro-startup-contrast-final.log",
+    "bundleVersion": "0.2.12 (15)",
+    "simulatorDebug": "passed via app and UI test builds",
+    "simulatorLog": "Validation/test-runs/original-0212-app-final.log",
     "genericIOSReleaseUnsigned": "passed",
-    "releaseLog": "Validation/test-runs/original-0211-release-final.log",
+    "releaseLog": "Validation/test-runs/original-0212-release.log",
+    "signingAndDeviceExecution": "Unsigned Release and simulators only; physical device, minimum OS, TestFlight and App Store untested.",
+    "scope": "User-requested Chinese default, in-app English switch and safe preference migration. Gameplay rules, levels and reference audio unchanged.",
+    "sourceDocumentSHA256Unchanged": true,
     "installedOn": [
       "iPhone 17 Pro",
       "iPhone 17e"
     ],
-    "normalLaunch": "Final contrast-corrected app installed; both Info.plist values verified 0.2.11 / 14 and launched without test/reset arguments. See Validation/test-runs/original-0211-install.json.",
-    "signingAndDeviceExecution": "Unsigned Release and simulators only; physical device, minimum-OS runtime, TestFlight and App Store untested.",
-    "scope": "Two original-reference startup pages, lifecycle and permission-failure handling. No Core, level-pack, audio or formal gameplay-config changes. Core evidence remains the 125-case 0.2.10 run, not rerun or relabelled.",
-    "sourceDocumentSHA256Unchanged": true
+    "normalLaunch": "0.2.12 / 15 Info.plist verified, existing normal progress kept byte-identical through installation after resolving changed simulator data containers, launched without reset or test arguments. See Validation/test-runs/original-0212-install.json.",
+    "installEvidence": "Validation/test-runs/original-0212-install.json"
   },
   "audioContract": {
     "policyTestsPassed": 13,
@@ -695,6 +722,14 @@
       "seconds": 48.425,
       "bundle": "Validation/test-runs/original-0210-ad-events-app-final.xcresult",
       "scope": "All AppTests except OriginalUIContractTests. Includes fourteen new observed reward lifecycle durability cases. Local controlled providers, injected identity and real filesystem failures; no real SDK or analytics transport acceptance."
+    },
+    {
+      "build": "0.2.11 (14)",
+      "passed": 176,
+      "failed": 0,
+      "seconds": 61.449,
+      "bundle": "Validation/test-runs/original-0211-startup-app-final.xcresult",
+      "scope": "All AppTests except OriginalUIContractTests, including twelve new startup lifecycle cases and two actual hosted visual cases. This run preceded the final text-color correction only; both hosted cases reran successfully on both devices after that correction. Startup/gameplay logic unchanged after the full suite."
     }
   ],
   "remoteConfigurationContract": {
@@ -849,6 +884,21 @@
       "signingAndDeviceExecution": "Unsigned Release and simulators only; physical device, TestFlight and App Store untested.",
       "scope": "Reward offer/observed lifecycle persistence and metadata attribution. No artwork, levels, audio or formal reference configuration changes. After Release build only test/project registration and documentation changed.",
       "sourceDocumentSHA256Unchanged": true
+    },
+    {
+      "bundleVersion": "0.2.11 (14)",
+      "simulatorDebug": "passed via final hosted test builds",
+      "simulatorLog": "Validation/test-runs/original-0211-pro-startup-contrast-final.log",
+      "genericIOSReleaseUnsigned": "passed",
+      "releaseLog": "Validation/test-runs/original-0211-release-final.log",
+      "installedOn": [
+        "iPhone 17 Pro",
+        "iPhone 17e"
+      ],
+      "normalLaunch": "Final contrast-corrected app installed; both Info.plist values verified 0.2.11 / 14 and launched without test/reset arguments. See Validation/test-runs/original-0211-install.json.",
+      "signingAndDeviceExecution": "Unsigned Release and simulators only; physical device, minimum-OS runtime, TestFlight and App Store untested.",
+      "scope": "Two original-reference startup pages, lifecycle and permission-failure handling. No Core, level-pack, audio or formal gameplay-config changes. Core evidence remains the 125-case 0.2.10 run, not rerun or relabelled.",
+      "sourceDocumentSHA256Unchanged": true
     }
   ],
   "feedbackCorrection": {
@@ -943,6 +993,14 @@
       "seconds": 26.818,
       "log": "Validation/test-runs/original-029-core.log",
       "scope": "Full Swift package suite, including seven new hint-state migration, validation and recovery cases. Production puzzle pack unchanged; not formal difficulty acceptance."
+    },
+    {
+      "build": "0.2.10 (13)",
+      "passed": 125,
+      "failed": 0,
+      "seconds": 27.596,
+      "log": "Validation/test-runs/original-0210-core-ad-events-final.log",
+      "scope": "Full Swift package suite, including nine new reward observation persistence/migration/validation cases. Initial and final Core logs are copies of the same first successful run, not two runs. Production levels unchanged; not reference difficulty acceptance."
     }
   ],
   "levelResultCorrection": {
@@ -1303,5 +1361,44 @@
       "AppTests/StartupVisualTests.swift",
       "Docs/original-startup/manifest.json"
     ]
+  },
+  "languageUpdate": {
+    "build": "0.2.12 (15)",
+    "authority": "User explicitly requested Chinese-market UI and allowed a built-in switch on 2026-10-01. Overrides original English UI clause only. Original Word left unchanged.",
+    "default": "zh-Hans",
+    "options": [
+      "zh-Hans",
+      "en"
+    ],
+    "presentation": "218 unique keys across four bundled JSON catalogs; exact and specific dynamic templates, recursive unit/Hint translation. English source in saved hints and diagnostics remains unchanged.",
+    "persistence": "Missing/unknown language defaults to Chinese while preserving the other four settings and full save. Switch transaction flushes queued snapshots and invalidates stale error callbacks; no board reset or reward/Hint replay.",
+    "coreNewCases": 4,
+    "appNewCases": 17,
+    "initialUIRun": {
+      "bundle": "Validation/test-runs/original-0212-language-ui-pro.xcresult",
+      "passed": 2,
+      "failed": 1,
+      "reason": "Test sampled Settings entrance scale at height 43.765pt before its final 44pt. Waits for settled layout before minimum touch-size assertion; production layout unchanged. Final UI reruns recorded separately."
+    },
+    "systemPermissionText": "Debug and unsigned Release bundles verified to include en/zh-Hans InfoPlist.strings. OS chooses native permission/share dialog language independently of in-app preference.",
+    "limitations": [
+      "No physical-device or minimum-iOS-runtime verification for this version.",
+      "Full Dynamic Type and actual VoiceOver remain pending; board machine accessibility values remain English for existing test compatibility.",
+      "Imported arbitrary future config copy without a translation will retain source; frozen formal Hint copy still pending.",
+      "No Chinese voice audio invented; original audio still unavailable.",
+      "Check-in UTC policy and formal China-market release/compliance are separate unresolved requirements."
+    ],
+    "visualManifest": "Docs/chinese-language/manifest.json",
+    "finalUI": {
+      "iPhone17Pro": {
+        "passed": 5,
+        "failed": 0
+      },
+      "iPhone17e": {
+        "passed": 3,
+        "failed": 0
+      }
+    },
+    "visualReview": "28 actual screenshots individually inspected on both devices; no confirmed clipping or untranslated normal UI in sampled states."
   }
 }

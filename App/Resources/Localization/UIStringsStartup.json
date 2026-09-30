@@ -1,0 +1,23 @@
+{
+  "Welcome": "欢迎来到 Capydoku",
+  "Please read and accept our": "请阅读并同意以下内容",
+  "Terms of Service": "服务条款",
+  "and": "及",
+  "Privacy Policy": "隐私政策",
+  "Accept": "同意并继续",
+  "Internal demo": "内部测试版",
+  "legal document": "法律文件",
+  "The publisher has not supplied the final {0} for this internal build.": "发行方尚未为本内部测试版提供正式的{0}。",
+  "This build stores game progress on this device. It does not connect to live advertising or analytics services. Accept continues the internal demo only.": "本版本仅在设备上保存游戏进度，尚未接入正式广告或数据分析服务。点击“同意并继续”仅用于体验内部测试版。",
+  "Close": "关闭",
+  "Unable to continue": "暂时无法继续",
+  "Try Again": "重试",
+  "The game resources could not be loaded. Please try again.": "游戏资源加载失败，请重试。",
+  "The system permission request could not finish. Please try again.": "系统权限请求未完成，请重试。",
+  "Your preferences could not be saved. Please try again.": "设置保存失败，请重试。",
+  "Follow the clues.\nFind every capy.": "循着线索，\n找齐卡皮巴拉。",
+  "A little logic.\nA lot of capy.": "动动脑筋，\n遇见卡皮巴拉。",
+  "Loading Capydoku": "正在加载 Capydoku",
+  "Preparing": "准备中",
+  "Ready": "已就绪"
+}

@@ -1,0 +1,268 @@
+{
+  "build": "0.2.12 (15)",
+  "date": "2026-10-01",
+  "authority": "User amendment: Chinese-market default with built-in English switch.",
+  "captureMethod": "Actual simulator UI tests on both devices; two Pro result frames from actual hosted RootView AppTests.",
+  "limitations": [
+    "Screenshots are selected samples, not full dynamic-font, VoiceOver, real-device or frozen-reference acceptance.",
+    "The selected English button image may capture brief press feedback.",
+    "Chinese text replaces source English per explicit user instruction."
+  ],
+  "images": [
+    {
+      "path": "Docs/chinese-language/pro-chinese-legal-placeholder.png",
+      "device": "iPhone 17 Pro",
+      "test": "AppLanguageUITests/testChineseFirstLaunchLegalCopy()",
+      "bundle": "Validation/test-runs/original-0212-language-ui-pro-final.xcresult",
+      "source": "Validation/test-runs/original-0212-pro-attachments/A0AE2C78-919F-4D73-8CC7-C86FC3CE0604.png",
+      "sha256": "1a6b9258f29ad1ebd39811f900e1049babc5f7a78a88b56f843a9fde5b53cbfc",
+      "visualReview": "Individually inspected actual screenshot: no confirmed clipping, overlap or untranslated regular UI in this sampled state. Brand and language self-names retained."
+    },
+    {
+      "path": "Docs/chinese-language/pro-chinese-welcome.png",
+      "device": "iPhone 17 Pro",
+      "test": "AppLanguageUITests/testChineseFirstLaunchLegalCopy()",
+      "bundle": "Validation/test-runs/original-0212-language-ui-pro-final.xcresult",
+      "source": "Validation/test-runs/original-0212-pro-attachments/04443058-CAFC-4E6F-8B2C-7FFAB65833D6.png",
+      "sha256": "307554223f0a5e0418cf41f386abfa1efcd8a76a36ac8a5d48e67fd1797a1d7d",
+      "visualReview": "Individually inspected actual screenshot: no confirmed clipping, overlap or untranslated regular UI in this sampled state. Brand and language self-names retained."
+    },
+    {
+      "path": "Docs/chinese-language/pro-chinese-board-10x10.png",
+      "device": "iPhone 17 Pro",
+      "test": "AppLanguageUITests/testChineseTutorialAndAllBoardSizesRender()",
+      "bundle": "Validation/test-runs/original-0212-language-ui-pro-final.xcresult",
+      "source": "Validation/test-runs/original-0212-pro-attachments/C6F459C4-AB9A-4D07-9B7B-8637948EB8C7.png",
+      "sha256": "19e923386146f45d06a4c21608affbf43edaeb750d904ae7d67e5e7df3046097",
+      "visualReview": "Individually inspected actual screenshot: no confirmed clipping, overlap or untranslated regular UI in this sampled state. Brand and language self-names retained."
+    },
+    {
+      "path": "Docs/chinese-language/pro-chinese-board-8x8.png",
+      "device": "iPhone 17 Pro",
+      "test": "AppLanguageUITests/testChineseTutorialAndAllBoardSizesRender()",
+      "bundle": "Validation/test-runs/original-0212-language-ui-pro-final.xcresult",
+      "source": "Validation/test-runs/original-0212-pro-attachments/31B33E99-3998-4C73-BE77-932E42F11222.png",
+      "sha256": "4df92f17473fa63cceb63b2f3f26cd462903b0ccf84826091a4fc2d4f34a1187",
+      "visualReview": "Individually inspected actual screenshot: no confirmed clipping, overlap or untranslated regular UI in this sampled state. Brand and language self-names retained."
+    },
+    {
+      "path": "Docs/chinese-language/pro-chinese-board-6x6.png",
+      "device": "iPhone 17 Pro",
+      "test": "AppLanguageUITests/testChineseTutorialAndAllBoardSizesRender()",
+      "bundle": "Validation/test-runs/original-0212-language-ui-pro-final.xcresult",
+      "source": "Validation/test-runs/original-0212-pro-attachments/B7F43D76-DC5B-48F2-9752-23EC94A91AC5.png",
+      "sha256": "eb0396624e20723659ed2c722dbb8b41401ce1760296402ee5a008ecb9195211",
+      "visualReview": "Individually inspected actual screenshot: no confirmed clipping, overlap or untranslated regular UI in this sampled state. Brand and language self-names retained."
+    },
+    {
+      "path": "Docs/chinese-language/pro-chinese-board-4x4.png",
+      "device": "iPhone 17 Pro",
+      "test": "AppLanguageUITests/testChineseTutorialAndAllBoardSizesRender()",
+      "bundle": "Validation/test-runs/original-0212-language-ui-pro-final.xcresult",
+      "source": "Validation/test-runs/original-0212-pro-attachments/01037610-26BD-42B9-9CD8-214CD43FF3AF.png",
+      "sha256": "ea6d6aab0057a5b23f2f1d2ce092420f090943bbf37b90c8704de2d688acd1b2",
+      "visualReview": "Individually inspected actual screenshot: no confirmed clipping, overlap or untranslated regular UI in this sampled state. Brand and language self-names retained."
+    },
+    {
+      "path": "Docs/chinese-language/pro-chinese-tutorial.png",
+      "device": "iPhone 17 Pro",
+      "test": "AppLanguageUITests/testChineseTutorialAndAllBoardSizesRender()",
+      "bundle": "Validation/test-runs/original-0212-language-ui-pro-final.xcresult",
+      "source": "Validation/test-runs/original-0212-pro-attachments/2582F532-D2FA-44C6-8D80-3469F392E60E.png",
+      "sha256": "0d636e8f8fe77bfa910409fc3f47a4b36c2de2f2442c64f7d7070f37ecd43a71",
+      "visualReview": "Individually inspected actual screenshot: no confirmed clipping, overlap or untranslated regular UI in this sampled state. Brand and language self-names retained."
+    },
+    {
+      "path": "Docs/chinese-language/pro-chinese-checkin.png",
+      "device": "iPhone 17 Pro",
+      "test": "AppLanguageUITests/testDefaultChineseSwitchAndRelaunchPreserveBoard()",
+      "bundle": "Validation/test-runs/original-0212-language-ui-pro-final.xcresult",
+      "source": "Validation/test-runs/original-0212-pro-attachments/8B09D5C6-01F4-4E40-8A05-00770E1A9817.png",
+      "sha256": "794f449f04aa137776635bd39bdb4f237c49133a977429902ec31d2806e2dce7",
+      "visualReview": "Individually inspected actual screenshot: no confirmed clipping, overlap or untranslated regular UI in this sampled state. Brand and language self-names retained."
+    },
+    {
+      "path": "Docs/chinese-language/pro-chinese-hint.png",
+      "device": "iPhone 17 Pro",
+      "test": "AppLanguageUITests/testDefaultChineseSwitchAndRelaunchPreserveBoard()",
+      "bundle": "Validation/test-runs/original-0212-language-ui-pro-final.xcresult",
+      "source": "Validation/test-runs/original-0212-pro-attachments/4BBD10F4-EA5C-4EA7-B999-4CE4F718C88D.png",
+      "sha256": "acd45d7561f34276e99c0b004351b2b7dee1741097fc3be6fbb162b976a6504f",
+      "visualReview": "Individually inspected actual screenshot: no confirmed clipping, overlap or untranslated regular UI in this sampled state. Brand and language self-names retained."
+    },
+    {
+      "path": "Docs/chinese-language/pro-english-restored-game.png",
+      "device": "iPhone 17 Pro",
+      "test": "AppLanguageUITests/testDefaultChineseSwitchAndRelaunchPreserveBoard()",
+      "bundle": "Validation/test-runs/original-0212-language-ui-pro-final.xcresult",
+      "source": "Validation/test-runs/original-0212-pro-attachments/4A40DCDF-521D-48D1-980A-0E5EB54A23BD.png",
+      "sha256": "e280773231aed202024678f003b80bf768e9d2b6779b3509a3ad7f05001a2eef",
+      "visualReview": "Individually inspected actual screenshot: no confirmed clipping, overlap or untranslated regular UI in this sampled state. Brand and language self-names retained."
+    },
+    {
+      "path": "Docs/chinese-language/pro-english-settings.png",
+      "device": "iPhone 17 Pro",
+      "test": "AppLanguageUITests/testDefaultChineseSwitchAndRelaunchPreserveBoard()",
+      "bundle": "Validation/test-runs/original-0212-language-ui-pro-final.xcresult",
+      "source": "Validation/test-runs/original-0212-pro-attachments/2C687965-AC66-4CC7-BAE5-CA4D747966BC.png",
+      "sha256": "04daec741b7387e69812d8bdfc15c8c1960d9d484a365ef69f2423bdda54bd6b",
+      "visualReview": "Individually inspected actual screenshot: no confirmed clipping, overlap or untranslated regular UI in this sampled state. Brand and language self-names retained."
+    },
+    {
+      "path": "Docs/chinese-language/pro-chinese-settings.png",
+      "device": "iPhone 17 Pro",
+      "test": "AppLanguageUITests/testDefaultChineseSwitchAndRelaunchPreserveBoard()",
+      "bundle": "Validation/test-runs/original-0212-language-ui-pro-final.xcresult",
+      "source": "Validation/test-runs/original-0212-pro-attachments/72CE47FB-C889-423A-A44F-C02073E21A66.png",
+      "sha256": "c0e81d632be1ec7f55f6c11af2db2eb8091d9d3df9d942742cf40e9554ea717e",
+      "visualReview": "Individually inspected actual screenshot: no confirmed clipping, overlap or untranslated regular UI in this sampled state. Brand and language self-names retained."
+    },
+    {
+      "path": "Docs/chinese-language/pro-chinese-home.png",
+      "device": "iPhone 17 Pro",
+      "test": "AppLanguageUITests/testDefaultChineseSwitchAndRelaunchPreserveBoard()",
+      "bundle": "Validation/test-runs/original-0212-language-ui-pro-final.xcresult",
+      "source": "Validation/test-runs/original-0212-pro-attachments/A8B8CE54-1CA3-45D4-BF1F-707101A9CB6F.png",
+      "sha256": "97e9722aa4c92b002317dbed6db8da17f4e8c2e0ccd27880576e27760974bbb1",
+      "visualReview": "Individually inspected actual screenshot: no confirmed clipping, overlap or untranslated regular UI in this sampled state. Brand and language self-names retained."
+    },
+    {
+      "path": "Docs/chinese-language/17e-chinese-legal-placeholder.png",
+      "device": "iPhone 17e",
+      "test": "AppLanguageUITests/testChineseFirstLaunchLegalCopy()",
+      "bundle": "Validation/test-runs/original-0212-language-ui-17e-final.xcresult",
+      "source": "Validation/test-runs/original-0212-17e-attachments/3599F3D6-EBD0-4952-BC39-89E0DD42CB02.png",
+      "sha256": "c89b62531cbf1839bf9988cf7aa424e279c70d8b01e9edb3fe8eca59f33594fc",
+      "visualReview": "Individually inspected actual screenshot: no confirmed clipping, overlap or untranslated regular UI in this sampled state. Brand and language self-names retained."
+    },
+    {
+      "path": "Docs/chinese-language/17e-chinese-welcome.png",
+      "device": "iPhone 17e",
+      "test": "AppLanguageUITests/testChineseFirstLaunchLegalCopy()",
+      "bundle": "Validation/test-runs/original-0212-language-ui-17e-final.xcresult",
+      "source": "Validation/test-runs/original-0212-17e-attachments/6AFAC845-703C-4671-99BD-F00BC6D62E3F.png",
+      "sha256": "97e60c096d9ec2a9c213b1c5c52c0069de7eebd19438cc4978e5357b9d615169",
+      "visualReview": "Individually inspected actual screenshot: no confirmed clipping, overlap or untranslated regular UI in this sampled state. Brand and language self-names retained."
+    },
+    {
+      "path": "Docs/chinese-language/17e-chinese-board-10x10.png",
+      "device": "iPhone 17e",
+      "test": "AppLanguageUITests/testChineseTutorialAndAllBoardSizesRender()",
+      "bundle": "Validation/test-runs/original-0212-language-ui-17e-final.xcresult",
+      "source": "Validation/test-runs/original-0212-17e-attachments/38956684-C903-4740-B304-FD5C469B11CB.png",
+      "sha256": "f47815467b2a03be3380eb0e1701cd79d6f43a52c3706e5f065bafdefe52f37f",
+      "visualReview": "Individually inspected actual screenshot: no confirmed clipping, overlap or untranslated regular UI in this sampled state. Brand and language self-names retained."
+    },
+    {
+      "path": "Docs/chinese-language/17e-chinese-board-8x8.png",
+      "device": "iPhone 17e",
+      "test": "AppLanguageUITests/testChineseTutorialAndAllBoardSizesRender()",
+      "bundle": "Validation/test-runs/original-0212-language-ui-17e-final.xcresult",
+      "source": "Validation/test-runs/original-0212-17e-attachments/AA473C19-54CF-4449-BD34-1F8B70B0721C.png",
+      "sha256": "514914979adeb5c66376fecd1085fdefafbd5df57aff906047108f73b3dda21e",
+      "visualReview": "Individually inspected actual screenshot: no confirmed clipping, overlap or untranslated regular UI in this sampled state. Brand and language self-names retained."
+    },
+    {
+      "path": "Docs/chinese-language/17e-chinese-board-6x6.png",
+      "device": "iPhone 17e",
+      "test": "AppLanguageUITests/testChineseTutorialAndAllBoardSizesRender()",
+      "bundle": "Validation/test-runs/original-0212-language-ui-17e-final.xcresult",
+      "source": "Validation/test-runs/original-0212-17e-attachments/14279BCE-C9DD-4326-B58C-21A29DE5E80B.png",
+      "sha256": "00ef910f6fb7006400f1f84477d3e03dc3235d720dd0a9b5cdf3b1df07388440",
+      "visualReview": "Individually inspected actual screenshot: no confirmed clipping, overlap or untranslated regular UI in this sampled state. Brand and language self-names retained."
+    },
+    {
+      "path": "Docs/chinese-language/17e-chinese-board-4x4.png",
+      "device": "iPhone 17e",
+      "test": "AppLanguageUITests/testChineseTutorialAndAllBoardSizesRender()",
+      "bundle": "Validation/test-runs/original-0212-language-ui-17e-final.xcresult",
+      "source": "Validation/test-runs/original-0212-17e-attachments/D598C246-E9C3-4BE7-87D7-B98F812A772E.png",
+      "sha256": "6ef2875dadecf7349367f8cc6e3b7ca4c0a069b035efa7eb91db9d1e9fe2c606",
+      "visualReview": "Individually inspected actual screenshot: no confirmed clipping, overlap or untranslated regular UI in this sampled state. Brand and language self-names retained."
+    },
+    {
+      "path": "Docs/chinese-language/17e-chinese-tutorial.png",
+      "device": "iPhone 17e",
+      "test": "AppLanguageUITests/testChineseTutorialAndAllBoardSizesRender()",
+      "bundle": "Validation/test-runs/original-0212-language-ui-17e-final.xcresult",
+      "source": "Validation/test-runs/original-0212-17e-attachments/14971729-68E4-4D91-BA9E-7A277D6007DA.png",
+      "sha256": "02a9bbdf3f1fcbd88663153e5d1121271c10b024e2619a3c536b5ec91a469bd6",
+      "visualReview": "Individually inspected actual screenshot: no confirmed clipping, overlap or untranslated regular UI in this sampled state. Brand and language self-names retained."
+    },
+    {
+      "path": "Docs/chinese-language/17e-chinese-checkin.png",
+      "device": "iPhone 17e",
+      "test": "AppLanguageUITests/testDefaultChineseSwitchAndRelaunchPreserveBoard()",
+      "bundle": "Validation/test-runs/original-0212-language-ui-17e-final.xcresult",
+      "source": "Validation/test-runs/original-0212-17e-attachments/77334EAE-E353-4359-83AC-2E381A972885.png",
+      "sha256": "f3e7711c66a7e7e88168b15a09f44d47ca6a40b904dd27473d56cc2142196626",
+      "visualReview": "Individually inspected actual screenshot: no confirmed clipping, overlap or untranslated regular UI in this sampled state. Brand and language self-names retained."
+    },
+    {
+      "path": "Docs/chinese-language/17e-chinese-hint.png",
+      "device": "iPhone 17e",
+      "test": "AppLanguageUITests/testDefaultChineseSwitchAndRelaunchPreserveBoard()",
+      "bundle": "Validation/test-runs/original-0212-language-ui-17e-final.xcresult",
+      "source": "Validation/test-runs/original-0212-17e-attachments/C0D15BB7-0E99-4DD9-822F-DA041BDC38E2.png",
+      "sha256": "1df4c9340bed8cd89bfbfd76eff450170b6ea5896d7bf01e0a14a2fc12c7df91",
+      "visualReview": "Individually inspected actual screenshot: no confirmed clipping, overlap or untranslated regular UI in this sampled state. Brand and language self-names retained."
+    },
+    {
+      "path": "Docs/chinese-language/17e-english-restored-game.png",
+      "device": "iPhone 17e",
+      "test": "AppLanguageUITests/testDefaultChineseSwitchAndRelaunchPreserveBoard()",
+      "bundle": "Validation/test-runs/original-0212-language-ui-17e-final.xcresult",
+      "source": "Validation/test-runs/original-0212-17e-attachments/45144217-B0A2-40F7-B73A-3E1A9FDE21EA.png",
+      "sha256": "e7ae876ff30167b3b1158087a12c80d640cfe5646f397161a495476ef0a3b73c",
+      "visualReview": "Individually inspected actual screenshot: no confirmed clipping, overlap or untranslated regular UI in this sampled state. Brand and language self-names retained."
+    },
+    {
+      "path": "Docs/chinese-language/17e-english-settings.png",
+      "device": "iPhone 17e",
+      "test": "AppLanguageUITests/testDefaultChineseSwitchAndRelaunchPreserveBoard()",
+      "bundle": "Validation/test-runs/original-0212-language-ui-17e-final.xcresult",
+      "source": "Validation/test-runs/original-0212-17e-attachments/58AF1A0D-9285-4F52-B586-F9125C4D9265.png",
+      "sha256": "541bc93fa6a9fb83928526f9738c5be53b1c2b9c11cebb5ec9d556996971e7c9",
+      "visualReview": "Individually inspected actual screenshot: no confirmed clipping, overlap or untranslated regular UI in this sampled state. Brand and language self-names retained."
+    },
+    {
+      "path": "Docs/chinese-language/17e-chinese-settings.png",
+      "device": "iPhone 17e",
+      "test": "AppLanguageUITests/testDefaultChineseSwitchAndRelaunchPreserveBoard()",
+      "bundle": "Validation/test-runs/original-0212-language-ui-17e-final.xcresult",
+      "source": "Validation/test-runs/original-0212-17e-attachments/694728BC-0AFF-44CB-A8D9-3CF61FEB2F55.png",
+      "sha256": "a27ba85da8ec428c7b9f9445424a643bab295b92d9419b56df890a0fe05bbeea",
+      "visualReview": "Individually inspected actual screenshot: no confirmed clipping, overlap or untranslated regular UI in this sampled state. Brand and language self-names retained."
+    },
+    {
+      "path": "Docs/chinese-language/17e-chinese-home.png",
+      "device": "iPhone 17e",
+      "test": "AppLanguageUITests/testDefaultChineseSwitchAndRelaunchPreserveBoard()",
+      "bundle": "Validation/test-runs/original-0212-language-ui-17e-final.xcresult",
+      "source": "Validation/test-runs/original-0212-17e-attachments/A0D2B3E0-0A5E-4659-B129-AB64662E4453.png",
+      "sha256": "6d6a79bb7ea68c384a022ee169143dfdde884c863c48c8ea2aae8ac6d4b5aa0c",
+      "visualReview": "Individually inspected actual screenshot: no confirmed clipping, overlap or untranslated regular UI in this sampled state. Brand and language self-names retained."
+    },
+    {
+      "path": "Docs/chinese-language/pro-result-loss-03-settled.png",
+      "device": "iPhone 17 Pro",
+      "test": "OriginalRewardVisualTests/testWinAndLossEntrancesRenderActualRootAndKeepResultSaved()",
+      "bundle": "Validation/test-runs/original-0212-app-final.xcresult",
+      "source": "Validation/test-runs/original-0212-app-attachments/87A793B1-0CA6-4476-AB24-F1FB6CD4EC83.png",
+      "sha256": "699d19f88d5a584018aed1f2d2c7e5f3bcf5d8d8e8dbacd4eb15edaa3a5f0d80",
+      "visualReview": "Individually inspected actual screenshot: no confirmed clipping, overlap or untranslated regular UI in this sampled state. Brand and language self-names retained."
+    },
+    {
+      "path": "Docs/chinese-language/pro-result-win-03-settled.png",
+      "device": "iPhone 17 Pro",
+      "test": "OriginalRewardVisualTests/testWinAndLossEntrancesRenderActualRootAndKeepResultSaved()",
+      "bundle": "Validation/test-runs/original-0212-app-final.xcresult",
+      "source": "Validation/test-runs/original-0212-app-attachments/A8B0690A-CC14-4B6A-8AAA-F5A13DA3AA2C.png",
+      "sha256": "b09aa4e237f64171e5b6a329d305c03ff77391339bb612c506dfcc66b7dfcbcb",
+      "visualReview": "Individually inspected actual screenshot: no confirmed clipping, overlap or untranslated regular UI in this sampled state. Brand and language self-names retained."
+    }
+  ],
+  "review": "All 28 images individually opened: thirteen actual UI screenshots per device plus two Pro hosted result frames. English selected-language button may show brief press opacity; no confirmed persistent layout issue. Full accessibility/font and real-device acceptance remain open.",
+  "inspected": true,
+  "imageCount": 28
+}

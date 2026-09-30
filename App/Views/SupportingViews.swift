@@ -4,42 +4,50 @@ import CapydokuCore
 
 struct SettingsView: View {
     @EnvironmentObject private var model: AppModel
+    @Environment(\.appLanguage) private var language
     @Environment(\.capyAccessibilityFocus) private var focus
     @State private var showingFeedback = false
     var body: some View {
         VStack(spacing: 0) {
             ZStack {
-                Text("Settings").font(.system(size: 33, weight: .heavy, design: .rounded))
+                Text(language.text("Settings")).font(.system(size: 33, weight: .heavy, design: .rounded))
                     .accessibilityAddTraits(.isHeader).capyFocus("settings_title").accessibilityIdentifier("settings_title")
                     #if DEBUG
                     .onLongPressGesture(minimumDuration: 1) { model.sheet = .debug }
-                    .accessibilityAction(named: "Developer tools") { model.sheet = .debug }
+                    .accessibilityAction(named: Text(language.text("Developer tools"))) { model.sheet = .debug }
                     #endif
                 HStack {
                     Spacer()
                     CapyButton(id: "settings_done") { model.sheet = nil } label: {
                         Image(systemName: "xmark").font(.system(size: 25, weight: .bold)).frame(width: 48, height: 48)
-                    }.buttonStyle(CapyPressStyle()).accessibilityLabel("Close settings").accessibilityIdentifier("settings_done")
+                    }.buttonStyle(CapyPressStyle()).accessibilityLabel(language.text("Close settings")).accessibilityIdentifier("settings_done")
                 }
             }.padding(.horizontal, 12).frame(height: 66).background(CapyPalette.orangeLight.opacity(0.55))
-            VStack(spacing: 28) {
+            VStack(spacing: 20) {
                 HStack(spacing: 7) {
                     setting("Music", symbol: "music.note", binding: $model.progress.settings.musicEnabled, id: "music_toggle")
                     setting("Sound effects", symbol: "speaker.wave.2.fill", binding: $model.progress.settings.soundEnabled, id: "sound_toggle")
                     setting("Voice", symbol: "person.wave.2.fill", binding: $model.progress.settings.voiceEnabled, id: "voice_toggle")
                     setting("Haptics", symbol: "iphone.radiowaves.left.and.right", binding: $model.progress.settings.hapticsEnabled, id: "haptics_toggle")
                 }.padding(.top, 6)
+                HStack(spacing: 8) {
+                    Text(language.text("Language")).font(.system(size: 15, weight: .semibold, design: .rounded))
+                        .lineLimit(1).minimumScaleFactor(0.8)
+                    Spacer(minLength: 0)
+                    languageButton(.simplifiedChinese, title: "简体中文", id: "language_zh_hans")
+                    languageButton(.english, title: "English", id: "language_en")
+                }
                 VStack(spacing: 15) {
                     CapyButton(id: "feedback") {
                         model.exportDiagnostics(); showingFeedback = model.exportURL != nil
-                    } label: { Text("Feedback").frame(maxWidth: .infinity) }
+                    } label: { Text(language.text("Feedback")).frame(maxWidth: .infinity) }
                         .buttonStyle(CapyButtonStyle(secondary: true)).accessibilityIdentifier("feedback")
                     CapyButton(id: "restart") {
                         model.sheet = nil; model.restart()
-                    } label: { Text("Restart").frame(maxWidth: .infinity) }
+                    } label: { Text(language.text("Restart")).frame(maxWidth: .infinity) }
                         .buttonStyle(CapyButtonStyle()).disabled(model.session == nil).accessibilityIdentifier("restart")
                 }
-            }.padding(.horizontal, 18).padding(.top, 24).padding(.bottom, 28)
+            }.padding(.horizontal, 18).padding(.top, 20).padding(.bottom, 24)
         }
         .background(CapyPalette.paper).clipShape(RoundedRectangle(cornerRadius: 28))
         .frame(maxWidth: 365).padding(.horizontal, 24)
@@ -50,11 +58,29 @@ struct SettingsView: View {
     private func setting(_ label: String, symbol: String, binding: Binding<Bool>, id: String) -> some View {
         Toggle(isOn: binding) {
             Image(systemName: symbol).font(.system(size: 27, weight: .semibold)).frame(height: 33)
-        }.toggleStyle(IconSwitchStyle(id: id)).accessibilityLabel(label).accessibilityIdentifier(id)
+        }.toggleStyle(IconSwitchStyle(id: id)).accessibilityLabel(language.text(label)).accessibilityIdentifier(id)
+    }
+    private func languageButton(_ selectedLanguage: AppLanguage, title: String, id: String) -> some View {
+        let selected = language == selectedLanguage
+        return CapyButton(id: id) { model.setLanguage(selectedLanguage) } label: {
+            Text(language.text(title))
+                .font(.system(size: 14, weight: selected ? .bold : .medium, design: .rounded))
+                .lineLimit(1).minimumScaleFactor(0.85)
+                .padding(.horizontal, 11).frame(minHeight: 44)
+                .foregroundColor(selected ? .white : CapyPalette.ink)
+                .background(selected ? CapyPalette.actionOrange : CapyPalette.orangeLight.opacity(0.45))
+                .clipShape(Capsule())
+        }
+        .buttonStyle(CapyPressStyle())
+        .accessibilityLabel(language.text(title))
+        .accessibilityValue(language.text(selected ? "Selected" : "Not selected"))
+        .accessibilityAddTraits(selected ? [.isButton, .isSelected] : .isButton)
+        .accessibilityIdentifier(id)
     }
 }
 
 struct IconSwitchStyle: ToggleStyle {
+    @Environment(\.appLanguage) private var language
     let id: String
     func makeBody(configuration: Configuration) -> some View {
         CapyButton(id: id) { configuration.isOn.toggle() } label: {
@@ -62,7 +88,7 @@ struct IconSwitchStyle: ToggleStyle {
                 configuration.label
                 HStack(spacing: 2) {
                     if !configuration.isOn { Circle().fill(.white).frame(width: 17, height: 17) }
-                    Text(configuration.isOn ? "ON" : "OFF").font(.system(size: 12, weight: .heavy, design: .rounded))
+                    Text(language.text(configuration.isOn ? "ON" : "OFF")).font(.system(size: 12, weight: .heavy, design: .rounded))
                         .foregroundColor(.white).frame(maxWidth: .infinity)
                     if configuration.isOn { Circle().fill(.white).frame(width: 17, height: 17) }
                 }.padding(3).background(configuration.isOn ? CapyPalette.green : CapyPalette.line).clipShape(Capsule())
@@ -75,6 +101,7 @@ struct IconSwitchStyle: ToggleStyle {
 }
 
 struct CheckInView: View {
+    @Environment(\.appLanguage) private var language
     @Environment(\.capyButtonActivation) private var activate
     @EnvironmentObject private var model: AppModel
     @Environment(\.accessibilityReduceMotion) private var systemReduceMotion
@@ -113,7 +140,7 @@ struct CheckInView: View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
                 HStack {
-                    IconButton(symbol: "chevron.left", label: "Home", id: "checkin_home", action: model.home)
+                    IconButton(symbol: "chevron.left", label: language.text("Home"), id: "checkin_home", action: model.home)
                     Spacer()
                 }.padding(.top, 8)
                 Spacer(minLength: 15)
@@ -134,7 +161,7 @@ struct CheckInView: View {
                     .accessibilityHidden(true)
                 Text("\(shownStreak)").font(.system(size: 78, weight: .heavy, design: .rounded))
                     .foregroundColor(CapyPalette.orange).padding(.top, 8).accessibilityIdentifier("checkin_streak").capyFocus("checkin_streak")
-                Text("Day Streak").font(.system(size: 26, weight: .heavy, design: .rounded)).foregroundColor(CapyPalette.orange)
+                Text(language.text("Day Streak")).font(.system(size: 26, weight: .heavy, design: .rounded)).foregroundColor(CapyPalette.orange)
                 Spacer().frame(height: max(32, geometry.size.height * 0.07))
                 Group {
                     if cycleDays == 7 {
@@ -162,7 +189,7 @@ struct CheckInView: View {
         let claimed = day <= shownCycleDay
         let canClaim = model.progress.checkIn.canClaim(on: model.now) && day == shownCycleDay + 1
         return VStack(spacing: 12) {
-            Text(weekday(day)).font(.system(size: 12, weight: .heavy, design: .rounded))
+            Text(language.text(weekday(day))).font(.system(size: 12, weight: .heavy, design: .rounded))
                 .foregroundColor(claimed || canClaim ? CapyPalette.orange : Color(red: 0.61, green: 0.69, blue: 0.74))
             Button {
                 guard model.progress.checkIn.canClaim(on: model.now), day == shownCycleDay + 1 else { return }
@@ -197,7 +224,7 @@ struct CheckInView: View {
                     if canClaim { Circle().stroke(CapyPalette.orange, lineWidth: 2) }
                 }.frame(minWidth: 44, maxWidth: 48, minHeight: 44, maxHeight: 48)
             }.buttonStyle(CapyPressStyle()).disabled(!canClaim && !claimed)
-                .accessibilityLabel(canClaim ? "Claim today's reward" : "Day \(day), \(claimed ? "claimed" : "not claimed")")
+                .accessibilityLabel(language.text(canClaim ? "Claim today's reward" : "Day \(day), \(claimed ? "claimed" : "not claimed")"))
                 .accessibilityIdentifier(canClaim ? "claim_reward" : "checkin_day_\(day)")
         }.frame(maxWidth: .infinity)
     }
@@ -268,6 +295,7 @@ struct CheckInParticleBurst: View, Animatable {
 
 struct RewardView: View {
     @EnvironmentObject private var model: AppModel
+    @Environment(\.appLanguage) private var language
     var body: some View {
         CapyCard(padding: 26) {
             VStack(spacing: 22) {
@@ -275,17 +303,17 @@ struct RewardView: View {
                     Spacer()
                     CapyButton(id: "reward_close") { model.sheet = nil } label: {
                         Image(systemName: "xmark").font(.system(size: 22, weight: .bold)).frame(width: 44, height: 44)
-                    }.buttonStyle(CapyPressStyle()).disabled(model.rewardBusy || model.rewardRetryPending || model.interstitialBusy).accessibilityLabel("Close reward").accessibilityIdentifier("reward_close")
+                    }.buttonStyle(CapyPressStyle()).disabled(model.rewardBusy || model.rewardRetryPending || model.interstitialBusy).accessibilityLabel(language.text("Close reward")).accessibilityIdentifier("reward_close")
                 }
                 Image(systemName: "play.rectangle.fill").font(.system(size: 64)).foregroundColor(CapyPalette.video)
-                Text(model.interstitialBusy ? "Simulated interstitial" : "Demo Video").font(.system(size: 27, weight: .heavy, design: .rounded)).multilineTextAlignment(.center).accessibilityIdentifier("reward_title").capyFocus("reward_title")
-                Text(model.interstitialBusy ? "Internal demo · no real ad" : "Simulated reward · no real ad").font(.system(size: 13, weight: .semibold, design: .rounded)).foregroundColor(CapyPalette.muted)
+                Text(language.text(model.interstitialBusy ? "Simulated interstitial" : "Demo Video")).font(.system(size: 27, weight: .heavy, design: .rounded)).multilineTextAlignment(.center).accessibilityIdentifier("reward_title").capyFocus("reward_title")
+                Text(language.text(model.interstitialBusy ? "Internal demo · no real ad" : "Simulated reward · no real ad")).font(.system(size: 13, weight: .semibold, design: .rounded)).foregroundColor(CapyPalette.muted)
                 if model.rewardRetryPending && !model.interstitialBusy {
-                    Text("Your reward is waiting to be saved.").font(.callout).multilineTextAlignment(.center)
+                    Text(language.text("Your reward is waiting to be saved.")).font(.callout).multilineTextAlignment(.center)
                     CapyButton("Retry save", id: "run_reward", action: model.runReward).buttonStyle(CapyButtonStyle()).accessibilityIdentifier("run_reward")
                 } else {
                     ProgressView().tint(CapyPalette.orange).padding(12)
-                    Text("Loading…").font(.system(size: 16, weight: .bold, design: .rounded))
+                    Text(language.text("Loading…")).font(.system(size: 16, weight: .bold, design: .rounded))
                 }
             }
         }.frame(maxWidth: 340).padding(.horizontal, 24).accessibilityAddTraits(.isModal)
@@ -294,6 +322,7 @@ struct RewardView: View {
 
 struct DebugView: View {
     @EnvironmentObject private var model: AppModel
+    @Environment(\.appLanguage) private var language
     @Environment(\.dismiss) private var dismiss
     @Environment(\.capyButtonActivation) private var activate
     @Environment(\.capyAccessibilityFocus) private var focus
@@ -301,11 +330,11 @@ struct DebugView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Internal build · local only")) {
-                    Text("Jumping changes the active puzzle. Unfinished progress is replaced. 151+ creates a validated local board.").font(.caption)
+                Section(header: Text(language.text("Internal build · local only"))) {
+                    Text(language.text("Jumping changes the active puzzle. Unfinished progress is replaced. 151+ creates a validated local board.")).font(.caption)
                     HStack {
-                        TextField("Level number", text: $model.jumpLevel).keyboardType(.numberPad).accessibilityIdentifier("jump_level")
-                        Button("Go") {
+                        TextField(language.text("Level number"), text: $model.jumpLevel).keyboardType(.numberPad).accessibilityIdentifier("jump_level")
+                        Button(language.text("Go")) {
                             guard let level = Int(model.jumpLevel), level > 0 else { return }
                             activate("jump_go")
                             dismiss(); model.start(level: level)
@@ -313,14 +342,14 @@ struct DebugView: View {
                     }
                     CapyButton("Replay tutorial", id: "replay_tutorial", action: model.replayTutorial)
                 }
-                Section(header: Text("Reward simulation")) {
-                    Picker("Outcome", selection: $model.rewardScenario) {
-                        ForEach(RewardScenario.allCases) { Text($0.rawValue).tag($0) }
+                Section(header: Text(language.text("Reward simulation"))) {
+                    Picker(language.text("Outcome"), selection: $model.rewardScenario) {
+                        ForEach(RewardScenario.allCases) { Text(language.text($0.rawValue)).tag($0) }
                     }.pickerStyle(.menu).accessibilityIdentifier("reward_scenario")
-                    Text("Selected outcome applies to the next demo video. Real ad integration is supplied separately.").font(.caption)
+                    Text(language.text("Selected outcome applies to the next demo video. Real ad integration is supplied separately.")).font(.caption)
                 }
                 if let s = model.session {
-                    Section(header: Text("Current board snapshot")) {
+                    Section(header: Text(language.text("Current board snapshot"))) {
                         field("Level / size", "\(s.puzzle.id) / \(s.puzzle.size)×\(s.puzzle.size)")
                         field("Seed", String(s.puzzle.seed))
                         field("Generator", s.puzzle.generatorVersion)
@@ -331,26 +360,26 @@ struct DebugView: View {
                         field("Rewards logged", String(model.progress.rewardLedger.count))
                     }
                 }
-                Section(header: Text("Provisional tuning · applies to the next new game")) {
-                    Stepper("Starting lives: \(model.config.initialLives)", value: $model.config.initialLives, in: 1...5)
-                    Stepper("Free hints per new level: \(model.config.hintsPerLevel)", value: $model.config.hintsPerLevel, in: 0...5)
-                    Stepper("Free finds per new level: \(model.config.directPerLevel)", value: $model.config.directPerLevel, in: 0...5)
-                    Text("100 points per find; +20 for each consecutive find. Check-in: 1 hint daily, 1 extra find on day 7. Changes here reset at app launch.").font(.caption)
+                Section(header: Text(language.text("Provisional tuning · applies to the next new game"))) {
+                    Stepper(language.text("Starting lives: \(model.config.initialLives)"), value: $model.config.initialLives, in: 1...5)
+                    Stepper(language.text("Free hints per new level: \(model.config.hintsPerLevel)"), value: $model.config.hintsPerLevel, in: 0...5)
+                    Stepper(language.text("Free finds per new level: \(model.config.directPerLevel)"), value: $model.config.directPerLevel, in: 0...5)
+                    Text(language.text("100 points per find; +20 for each consecutive find. Check-in: 1 hint daily, 1 extra find on day 7. Changes here reset at app launch.")).font(.caption)
                     field("Generation budget", "\(model.config.generatorBudgetMilliseconds) ms / \(model.config.generatorCandidateLimit) attempts")
-                    Text("Difficulty is a temporary content label, not formal reference-product calibration.").font(.caption)
+                    Text(language.text("Difficulty is a temporary content label, not formal reference-product calibration.")).font(.caption)
                 }
-                Section(header: Text("Recovery & diagnostics")) {
+                Section(header: Text(language.text("Recovery & diagnostics"))) {
                     CapyButton("Recover save", id: "recover_save") { model.loadProgress(); model.applySettings(); dismiss() }.accessibilityIdentifier("recover_save")
                     CapyButton("Export issue report", id: "export_diagnostics") { model.exportDiagnostics(); showingExport = model.exportURL != nil }.accessibilityIdentifier("export_diagnostics")
-                    Text("The export contains the full local board, seed, settings, inventory and reward ledger. It contains the solution for debugging. No account or device identifier is collected.").font(.caption)
+                    Text(language.text("The export contains the full local board, seed, settings, inventory and reward ledger. It contains the solution for debugging. No account or device identifier is collected.")).font(.caption)
                 }
-            }.tint(CapyPalette.orange).navigationTitle("Developer tools")
+            }.tint(CapyPalette.orange).navigationTitle(language.text("Developer tools"))
                 .toolbar { ToolbarItem(placement: .confirmationAction) { CapyButton("Done", id: "debug_done") { dismiss() }.frame(minWidth: 44, minHeight: 44).accessibilityIdentifier("debug_done") } }
         }.navigationViewStyle(.stack)
             .sheet(isPresented: $showingExport, onDismiss: { focus?.wrappedValue = "export_diagnostics" }) { if let url = model.exportURL { ShareSheet(items: [url]) } }
     }
     private func field(_ name: String, _ value: String) -> some View {
-        VStack(alignment: .leading, spacing: 4) { Text(name).font(.caption).foregroundColor(.secondary); Text(value).font(.system(.footnote, design: .monospaced)).textSelection(.enabled) }
+        VStack(alignment: .leading, spacing: 4) { Text(language.text(name)).font(.caption).foregroundColor(.secondary); Text(language.text(value)).font(.system(.footnote, design: .monospaced)).textSelection(.enabled) }
     }
 }
 

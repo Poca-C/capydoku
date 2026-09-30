@@ -16,6 +16,7 @@ ui_sources = sorted((ROOT/'UITests').glob('*.swift'))
 unit_sources = sorted((ROOT/'AppTests').glob('*.swift'))
 unit_resources = sorted((ROOT/'Tests/Fixtures').glob('*.json'))
 resources = sorted((ROOT/'Resources').glob('*.json'))
+resources += sorted((ROOT/'App/Resources/Localization').glob('*.json'))
 resources += [ROOT/'App/PrivacyInfo.xcprivacy']
 asset = ROOT/'App/Resources/Assets.xcassets'
 if asset.exists(): resources.append(asset)
@@ -37,6 +38,15 @@ test_refs,test_builds=files(ui_sources,'tests')
 unit_refs,unit_builds=files(unit_sources,'unit-tests')
 unit_resource_refs,unit_resource_builds=files(unit_resources,'unit-test-resources')
 resource_refs,resource_builds=files(resources,'resources')
+for name in sorted({p.name for p in (ROOT/'Resources').glob('*.lproj/*.strings')}):
+    children=[]
+    for path in sorted((ROOT/'Resources').glob('*.lproj/'+name)):
+        language=path.parent.stem
+        children.append(obj('localized:'+str(path.relative_to(ROOT)),
+            f'isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = {q(language)}; path = {q(path.relative_to(ROOT))}; sourceTree = SOURCE_ROOT;'))
+    variant=obj('variant:'+name,f'isa = PBXVariantGroup; children = {arr(children)}; name = {q(name)}; sourceTree = "<group>";')
+    resource_refs.append(variant)
+    resource_builds.append(obj('variant-build:'+name,f'isa = PBXBuildFile; fileRef = {variant};'))
 app_product=obj('app-product','isa = PBXFileReference; explicitFileType = wrapper.application; path = Capydoku.app; sourceTree = BUILT_PRODUCTS_DIR;')
 test_product=obj('test-product','isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = CapydokuUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR;')
 unit_product=obj('unit-product','isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = CapydokuAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR;')
@@ -68,7 +78,7 @@ def configs(prefix,settings):
     return obj(prefix+'list',f'isa = XCConfigurationList; buildConfigurations = {arr(ids)}; defaultConfigurationIsVisible = 0; defaultConfigurationName = Release;')
 
 project_config=configs('project-',{'SDKROOT':'iphoneos','IPHONEOS_DEPLOYMENT_TARGET':'15.0','SWIFT_VERSION':'5.0','CLANG_ENABLE_MODULES':'YES','CLANG_ENABLE_OBJC_ARC':'YES','ENABLE_TESTABILITY':'YES','ONLY_ACTIVE_ARCH':'YES'})
-app_config=configs('app-',{'PRODUCT_NAME':'Capydoku','PRODUCT_BUNDLE_IDENTIFIER':'com.capydoku.demo','INFOPLIST_FILE':'App/Info.plist','GENERATE_INFOPLIST_FILE':'NO','TARGETED_DEVICE_FAMILY':'1','CODE_SIGN_STYLE':'Automatic','MARKETING_VERSION':'0.2.11','CURRENT_PROJECT_VERSION':'14','ASSETCATALOG_COMPILER_APPICON_NAME':'AppIcon','LD_RUNPATH_SEARCH_PATHS':'$(inherited) @executable_path/Frameworks','SUPPORTS_MACCATALYST':'NO','SWIFT_EMIT_LOC_STRINGS':'YES'})
+app_config=configs('app-',{'PRODUCT_NAME':'Capydoku','PRODUCT_BUNDLE_IDENTIFIER':'com.capydoku.demo','INFOPLIST_FILE':'App/Info.plist','GENERATE_INFOPLIST_FILE':'NO','TARGETED_DEVICE_FAMILY':'1','CODE_SIGN_STYLE':'Automatic','MARKETING_VERSION':'0.2.12','CURRENT_PROJECT_VERSION':'15','ASSETCATALOG_COMPILER_APPICON_NAME':'AppIcon','LD_RUNPATH_SEARCH_PATHS':'$(inherited) @executable_path/Frameworks','SUPPORTS_MACCATALYST':'NO','SWIFT_EMIT_LOC_STRINGS':'YES'})
 test_config=configs('uitest-',{'PRODUCT_NAME':'CapydokuUITests','PRODUCT_BUNDLE_IDENTIFIER':'com.capydoku.demo.uitests','GENERATE_INFOPLIST_FILE':'YES','TARGETED_DEVICE_FAMILY':'1','CODE_SIGN_STYLE':'Automatic','TEST_TARGET_NAME':'Capydoku','LD_RUNPATH_SEARCH_PATHS':'$(inherited) @executable_path/Frameworks @loader_path/Frameworks'})
 unit_config=configs('unit-',{'PRODUCT_NAME':'CapydokuAppTests','PRODUCT_BUNDLE_IDENTIFIER':'com.capydoku.demo.apptests','GENERATE_INFOPLIST_FILE':'YES','TARGETED_DEVICE_FAMILY':'1','CODE_SIGN_STYLE':'Automatic','BUNDLE_LOADER':'$(TEST_HOST)','TEST_HOST':'$(BUILT_PRODUCTS_DIR)/Capydoku.app/Capydoku','LD_RUNPATH_SEARCH_PATHS':'$(inherited) @executable_path/Frameworks @loader_path/Frameworks'})
 app_target=obj('app-target',f'isa = PBXNativeTarget; buildConfigurationList = {app_config}; buildPhases = {arr([app_src,app_frameworks,app_res])}; buildRules = (); dependencies = (); name = Capydoku; packageProductDependencies = {arr([product_dep])}; productName = Capydoku; productReference = {app_product}; productType = "com.apple.product-type.application";')
@@ -76,7 +86,7 @@ proxy=obj('test-proxy',f'isa = PBXContainerItemProxy; containerPortal = {ident("
 dependency=obj('test-dependency',f'isa = PBXTargetDependency; target = {app_target}; targetProxy = {proxy};')
 test_target=obj('test-target',f'isa = PBXNativeTarget; buildConfigurationList = {test_config}; buildPhases = {arr([test_src,test_frameworks,test_res])}; buildRules = (); dependencies = {arr([dependency])}; name = CapydokuUITests; productName = CapydokuUITests; productReference = {test_product}; productType = "com.apple.product-type.bundle.ui-testing";')
 unit_target=obj('unit-target',f'isa = PBXNativeTarget; buildConfigurationList = {unit_config}; buildPhases = {arr([unit_src,unit_frameworks,unit_res])}; buildRules = (); dependencies = {arr([dependency])}; name = CapydokuAppTests; productName = CapydokuAppTests; productReference = {unit_product}; productType = "com.apple.product-type.bundle.unit-test";')
-project=obj('project',f'isa = PBXProject; attributes = {{ LastUpgradeCheck = 2600; TargetAttributes = {{ {app_target} = {{ CreatedOnToolsVersion = 26.0; }}; {test_target} = {{ CreatedOnToolsVersion = 26.0; TestTargetID = {app_target}; }}; }}; }}; buildConfigurationList = {project_config}; compatibilityVersion = "Xcode 14.0"; developmentRegion = en; hasScannedForEncodings = 0; knownRegions = (en, Base); mainGroup = {main_group}; packageReferences = {arr([package])}; productRefGroup = {products}; projectDirPath = ""; projectRoot = ""; targets = {arr([app_target,test_target,unit_target])};')
+project=obj('project',f'isa = PBXProject; attributes = {{ LastUpgradeCheck = 2600; TargetAttributes = {{ {app_target} = {{ CreatedOnToolsVersion = 26.0; }}; {test_target} = {{ CreatedOnToolsVersion = 26.0; TestTargetID = {app_target}; }}; }}; }}; buildConfigurationList = {project_config}; compatibilityVersion = "Xcode 14.0"; developmentRegion = en; hasScannedForEncodings = 0; knownRegions = (en, "zh-Hans", Base); mainGroup = {main_group}; packageReferences = {arr([package])}; productRefGroup = {products}; projectDirPath = ""; projectRoot = ""; targets = {arr([app_target,test_target,unit_target])};')
 out=ROOT/'Capydoku.xcodeproj';out.mkdir(exist_ok=True)
 (out/'project.pbxproj').write_text('// !$*UTF8*$!\n{ archiveVersion = 1; classes = {}; objectVersion = 56; objects = {\n'+ '\n'.join(f'{k} = {{ {v} }};' for k,v in objects.items())+'\n}; rootObject = '+project+'; }\n')
 scheme=out/'xcshareddata/xcschemes';scheme.mkdir(parents=True,exist_ok=True)

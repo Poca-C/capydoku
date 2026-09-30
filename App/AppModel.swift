@@ -139,6 +139,15 @@ final class AppModel: ObservableObject {
         store = SaveStore(directory: self.saveDirectory, packagedPuzzle: { packagedLevels[$0] }, archivedPuzzles: { id in legacy.filter { $0.id == id } })
         let packError = errorMessage
         loadProgress()
+        #if DEBUG
+        // Historical UI regressions use English explicitly; ordinary installs
+        // and bilingual persistence tests always use the saved preference.
+        if args.contains("-ui-testing"),
+           let raw = ProcessInfo.processInfo.environment["CAPYDOKU_UI_LANGUAGE"],
+           let language = AppLanguage(rawValue: raw) {
+            progress.settings.language = language
+        }
+        #endif
         if let packError { errorMessage = packError }
         if let state = try? DurableStateFile<WinAdState>(url: self.saveDirectory.appendingPathComponent("win-ad-state.json")).load() {
             shownInterstitialWins = state.shown; eligibleWinCount = max(0, state.eligibleCount); lastInterstitialAt = state.lastShownAt
@@ -1123,6 +1132,16 @@ final class AppModel: ObservableObject {
         feedback.apply(settings: .init(sound: feedbackEnabled && s.soundEnabled, haptic: feedbackEnabled && s.hapticsEnabled, voice: feedbackEnabled && s.voiceEnabled, music: feedbackEnabled && s.musicEnabled))
     }
     func settingsChanged() { applySettings(); save() }
+    func setLanguage(_ language: AppLanguage) {
+        guard progress.settings.language != language else { return }
+        flushPendingSaves()
+        saveRevision += 1
+        do {
+            try store.transaction(progress: &progress) { $0.settings.language = language }
+        } catch {
+            errorMessage = "Your language preference could not be saved. Please try again."
+        }
+    }
     func setActive(_ value: Bool) {
         active = value; now = Date(); syncFeedbackState()
         if value { analytics.beginSession(source: "resume") } else { analytics.endSession(reason: "background") }
@@ -1256,6 +1275,6 @@ final class AppModel: ObservableObject {
             let url = FileManager.default.temporaryDirectory.appendingPathComponent("Capydoku-diagnostics.json")
             try encoder.encode(report).write(to: url, options: .atomic)
             exportURL = url
-        } catch { errorMessage = error.localizedDescription }
+        } catch { errorMessage = "The issue report could not be exported. Please try again. \(error.localizedDescription)" }
     }
 }

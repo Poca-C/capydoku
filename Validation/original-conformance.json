@@ -8,7 +8,7 @@
     "index": "Reference/Original/document.txt",
     "indexConvention": "0-based Word body-block index shown in [n], including tables; not page numbers."
   },
-  "authority": "Original Word text and supplied figures are authoritative. Later plans/checklists only verify; they cannot simplify or remove original scope.",
+  "authority": "Original Word text and supplied figures are authoritative. Later plans/checklists only verify; they cannot simplify or remove original scope. Explicit user amendment on 2026-10-01 takes precedence for language: target Chinese market, default Simplified Chinese with an in-app English switch; all other original requirements remain.",
   "overall": "PARTIAL_ORIGINAL_CONFORMANCE — playable demo plus corrected client implementation; not frozen-reference acceptance or App Store release.",
   "method": "Grouped substantive requirements across chapters 1–8. Observation-only prose, repeated illustrations and summary tables are not counted as separate acceptance items. Status is per stated evidence scope, not a completion percentage.",
   "statusDefinitions": {
@@ -25,7 +25,8 @@
     "0.2.1主页面与0.2.4反馈组件图册保留原版本；0.2.7另有25张实际宿主页面截图，两设备核对结算、礼盒和8×8进度。页面级Reduce Motion注入不代表系统全局验收，缺冻结录屏时不声称逐帧一致。",
     "真实广告SDK由外部供应；客户端入口、配置、库存、复活和奖励安全仍是本Demo责任。",
     "Daily Challenge保留锁定入口，Profile明确不做。正式原音频、真实SDK、真机及上架均待验。",
-    "0.2.11启动图册来自两设备实际宿主页面；大字与Reduce Motion为视图测试配置，14张最终截图不代表真机、系统读屏或原版逐帧时序验收。"
+    "0.2.11启动图册来自两设备实际宿主页面；大字与Reduce Motion为视图测试配置，14张最终截图不代表真机、系统读屏或原版逐帧时序验收。",
+    "2026-10-01用户明确中文市场要求，覆盖原文英文界面条款。0.2.12默认简体中文并支持英文切换；历史英文截图和88条首轮验收仍保留原版本。"
   ],
   "priorityClientFollowUps": [
     {
@@ -286,14 +287,18 @@
         34,
         36
       ],
-      "title": "原创棋盘与高还原英文主题",
+      "title": "原创棋盘与主题还原（语言按用户最新要求调整）",
       "status": "partial",
-      "implemented": "棋盘自研生成、英文 UI 已重排为原文层级，使用原创 2D 角色。",
+      "implemented": "棋盘自研生成、界面保留原文层级和原创2D角色。2026-10-01用户明确面向中文市场，0.2.12改为默认简体中文，并在设置内提供英文切换；这是用户授权的语言更新，原始文件未修改。",
       "gap": "难度、Rank 节点、弹窗节奏及冻结录屏逐项对标尚未完成。",
       "evidence": [
         "Sources/CapydokuCore/GenerationPipeline.swift",
         "App/Views/RootView.swift",
-        "App/Views/SupportingViews.swift"
+        "App/Views/SupportingViews.swift",
+        "App/Services/AppLocalization.swift",
+        "AppTests/AppLanguageStateTests.swift",
+        "UITests/AppLanguageUITests.swift",
+        "Docs/chinese-language/manifest.json"
       ]
     },
     {
@@ -1045,7 +1050,7 @@
       "title": "游戏导航、信息区、三规则卡、棋盘、工具及广告留白",
       "status": "verified",
       "implemented": "4/6/8/10棋盘的导航/Level/进度/规则/棋盘/工具层级及正方形尺寸有UI验证；0.2.7在17e复验。8×8按原图改为八头像，17Pro及17e实际页面截图均完整。",
-      "gap": "真机、长英文和全部动态字体档位仍待完整验收。",
+      "gap": "真机、双语长文案和全部动态字体档位仍待完整验收。",
       "evidence": [
         "App/Views/RootView.swift",
         "UITests/OriginalReferenceUITests.swift",
@@ -1633,7 +1638,7 @@
       ],
       "title": "iOS技术验收与SDK升级兼容",
       "status": "partial",
-      "implemented": "0.2.11通过17Pro176项App（不含OriginalUIContractTests）；17e14项启动专项及首次启动1条实际UI。最后文字对比修正后，两设备各2项真实宿主复验、Release无签名构建和正常安装启动通过。Core未改，125项核心证据保留0.2.10版本；历史重装/关卡/非启动图册未重标。",
+      "implemented": "0.2.12通过129项Core及17Pro193项App（不含OriginalUIContractTests）。新增中英切换/冷启动/同盘恢复UI在17Pro和17e均通过；17Pro另复验英文首页层级和首次同意流程，实际UI共5+3项通过。28张当前双语实际截图逐张检查，Release无签名构建及两模拟器正常安装启动完成。历史重装、正式难度和真机状态不重标。",
       "gap": "这不是全部设备/全部场景通过。真机、最低系统、真实SDK升级及远程关闭尚未验证；组合UI运行的启动冲突及成功单独重验已如实记录。",
       "evidence": [
         "Validation/original-verification.json",
@@ -1651,7 +1656,12 @@
         "App/Views/StartupArtworkViews.swift",
         "AppTests/StartupPreparationTests.swift",
         "AppTests/StartupVisualTests.swift",
-        "Docs/original-startup/manifest.json"
+        "Docs/original-startup/manifest.json",
+        "AppTests/AppLocalizationTests.swift",
+        "AppTests/AppLanguageStateTests.swift",
+        "Tests/CapydokuCoreTests/AppLanguagePersistenceTests.swift",
+        "UITests/AppLanguageUITests.swift",
+        "Docs/chinese-language/manifest.json"
       ]
     },
     {
@@ -1952,5 +1962,5 @@
       ]
     }
   ],
-  "currentBuild": "0.2.11 (14)"
+  "currentBuild": "0.2.12 (15)"
 }

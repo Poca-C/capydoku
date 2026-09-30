@@ -51,12 +51,31 @@ public struct GameSettings: Codable, Equatable, Sendable {
     public var soundEnabled: Bool
     public var voiceEnabled: Bool
     public var hapticsEnabled: Bool
+    public var language: AppLanguage
 
     public init(musicEnabled: Bool = true, soundEnabled: Bool = true,
-                voiceEnabled: Bool = true, hapticsEnabled: Bool = true) {
+                voiceEnabled: Bool = true, hapticsEnabled: Bool = true,
+                language: AppLanguage = .simplifiedChinese) {
         self.musicEnabled = musicEnabled
         self.soundEnabled = soundEnabled
         self.voiceEnabled = voiceEnabled
         self.hapticsEnabled = hapticsEnabled
+        self.language = language
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case musicEnabled, soundEnabled, voiceEnabled, hapticsEnabled, language
+    }
+
+    public init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        musicEnabled = try values.decode(Bool.self, forKey: .musicEnabled)
+        soundEnabled = try values.decode(Bool.self, forKey: .soundEnabled)
+        voiceEnabled = try values.decode(Bool.self, forKey: .voiceEnabled)
+        hapticsEnabled = try values.decode(Bool.self, forKey: .hapticsEnabled)
+        // Older saves have no language; an unknown future language should not
+        // discard a valid board, inventory or the other four preferences.
+        let value = try values.decodeIfPresent(String.self, forKey: .language)
+        language = value.flatMap(AppLanguage.init(rawValue:)) ?? .simplifiedChinese
     }
 }

@@ -3,7 +3,7 @@ import XCTest
 /// Runs against the CURRENT pack, independent of the archived interaction fixture.
 final class OriginalReferenceUITests: XCTestCase {
     private var app: XCUIApplication!
-    override func setUpWithError() throws { continueAfterFailure = false; app = XCUIApplication() }
+    override func setUpWithError() throws { continueAfterFailure = false; app = XCUIApplication(); app.launchEnvironment["CAPYDOKU_UI_LANGUAGE"] = "en" }
     private func launch(_ extra: [String] = []) {
         app.launchArguments = ["-ui-testing", "-reset-demo", "-skip-tutorial"] + extra
         app.launch()

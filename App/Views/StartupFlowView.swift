@@ -34,16 +34,16 @@ struct StartupFlowView: View {
                 if controller.stage == .welcome {
                     Color.black.opacity(0.65).ignoresSafeArea()
                     VStack(spacing: 0) {
-                        Text("Welcome").font(.system(size: 26, weight: .bold, design: .rounded))
+                        Text(model.progress.settings.language.text("Welcome")).font(.system(size: 26, weight: .bold, design: .rounded))
                             .frame(maxWidth: .infinity).padding(14).background(Color.orange.opacity(0.10))
                         VStack(spacing: 6) {
-                            Text("Please read and accept our")
-                            Button { legalTitle = "Terms of Service" } label: { Text("Terms of Service").underline() }
-                            Text("and")
-                            Button { legalTitle = "Privacy Policy" } label: { Text("Privacy Policy").underline() }
+                            Text(model.progress.settings.language.text("Please read and accept our"))
+                            Button { legalTitle = "Terms of Service" } label: { Text(model.progress.settings.language.text("Terms of Service")).underline() }
+                            Text(model.progress.settings.language.text("and"))
+                            Button { legalTitle = "Privacy Policy" } label: { Text(model.progress.settings.language.text("Privacy Policy")).underline() }
                         }.font(.system(size: 18, weight: .medium, design: .rounded)).padding(24)
                         Button { Task { await controller.accept() } } label: {
-                            Text("Accept").font(.system(size: 22, weight: .bold, design: .rounded))
+                            Text(model.progress.settings.language.text("Accept")).font(.system(size: 22, weight: .bold, design: .rounded))
                                 .foregroundColor(.white).frame(maxWidth: .infinity).frame(height: 52)
                                 .background(Capsule().fill(Color.orange))
                         }.accessibilityIdentifier("accept_terms").padding([.horizontal, .bottom], 24)
@@ -71,19 +71,21 @@ struct StartupFlowView: View {
             NavigationView {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {
-                        Text("Internal demo").font(.title2.bold())
-                        Text("The publisher has not supplied the final \(legalTitle ?? "legal document") for this internal build.")
-                        Text("This build stores game progress on this device. It does not connect to live advertising or analytics services. Accept continues the internal demo only.")
+                        Text(model.progress.settings.language.text("Internal demo")).font(.title2.bold())
+                        Text(model.progress.settings.language.text("The publisher has not supplied the final \(legalTitle ?? "legal document") for this internal build."))
+                        Text(model.progress.settings.language.text("This build stores game progress on this device. It does not connect to live advertising or analytics services. Accept continues the internal demo only."))
                     }.padding(24)
-                }.navigationTitle(legalTitle ?? "").navigationBarTitleDisplayMode(.inline)
-                    .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Close") { legalTitle = nil } } }
+                }.navigationTitle(model.progress.settings.language.text(legalTitle ?? "")).navigationBarTitleDisplayMode(.inline)
+                    .toolbar { ToolbarItem(placement: .confirmationAction) { Button(model.progress.settings.language.text("Close")) { legalTitle = nil } } }
             }
         }
-        .alert("Unable to continue", isPresented: Binding(get: { controller.errorMessage != nil }, set: { if !$0 { controller.errorMessage = nil } })) {
-            Button("Try Again") {
+        .alert(model.progress.settings.language.text("Unable to continue"), isPresented: Binding(get: { controller.errorMessage != nil }, set: { if !$0 { controller.errorMessage = nil } })) {
+            Button(model.progress.settings.language.text("Try Again")) {
                 controller.errorMessage = nil
                 Task { await controller.begin() }
             }
-        } message: { Text(controller.errorMessage ?? "") }
+        } message: { Text(model.progress.settings.language.text(controller.errorMessage ?? "")) }
+        .environment(\.appLanguage, model.progress.settings.language)
+        .environment(\.locale, Locale(identifier: model.progress.settings.language.localeIdentifier))
     }
 }

@@ -174,9 +174,17 @@ struct CapyButton<Label: View>: View {
     }
 }
 
-extension CapyButton where Label == Text {
+/// Resolve the title in the live view environment so an open sheet or a cached
+/// button label responds immediately when the app language changes.
+struct CapyButtonLabel: View {
+    @Environment(\.appLanguage) private var language
+    let title: String
+    var body: some View { Text(language.text(title)) }
+}
+
+extension CapyButton where Label == CapyButtonLabel {
     init(_ title: String, id: String? = nil, action: @escaping () -> Void) {
-        self.id = id; self.action = action; self.label = { Text(title) }
+        self.id = id; self.action = action; self.label = { CapyButtonLabel(title: title) }
     }
 }
 
@@ -247,12 +255,13 @@ struct PawBackground: View {
 }
 
 struct CapySectionLabel: View {
+    @Environment(\.appLanguage) private var language
     let eyebrow: String
     let title: String
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
-            Text(eyebrow).font(.system(size: 11, weight: .bold, design: .rounded)).tracking(2).foregroundColor(CapyPalette.orange)
-            Text(title).font(.system(size: 25, weight: .bold, design: .rounded)).foregroundColor(CapyPalette.ink)
+            Text(language.text(eyebrow)).font(.system(size: 11, weight: .bold, design: .rounded)).tracking(2).foregroundColor(CapyPalette.orange)
+            Text(language.text(title)).font(.system(size: 25, weight: .bold, design: .rounded)).foregroundColor(CapyPalette.ink)
         }
     }
 }

@@ -10,7 +10,7 @@ final class CapydokuUITests: XCTestCase {
 
     override func setUpWithError() throws {
         continueAfterFailure = false
-        app = XCUIApplication()
+        app = XCUIApplication(); app.launchEnvironment["CAPYDOKU_UI_LANGUAGE"] = "en"
     }
 
     private func launchGame() {
