@@ -19,7 +19,7 @@
 
 想快速看大棋盘或持续生成，在 Developer tools 输入 150 或 151。发现问题时选 Export issue report，把导出的 JSON 连同操作步骤保留给后续修复；无需手抄 seed。
 
-界面预览：[首页](Docs/preview-home.png) · [游戏页](Docs/preview-game.png)。
+界面预览：[首页](Docs/preview-home.png) · [游戏页](Docs/preview-game.png) · [150 关大棋盘](Docs/preview-level-150.png) · [151 关本地生成](Docs/preview-generated-151.png)。
 
 ## 已实现的范围
 
