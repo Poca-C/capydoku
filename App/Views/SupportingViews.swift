@@ -77,10 +77,20 @@ struct IconSwitchStyle: ToggleStyle {
 struct CheckInView: View {
     @Environment(\.capyButtonActivation) private var activate
     @EnvironmentObject private var model: AppModel
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.accessibilityReduceMotion) private var systemReduceMotion
+    // Only hosted-view verification passes an override; normal use follows
+    // the system accessibility preference.
+    var reduceMotionOverride: Bool? = nil
+    private var reduceMotion: Bool { reduceMotionOverride ?? systemReduceMotion }
+    @Environment(\.scenePhase) private var scenePhase
     @State private var rewardBounce = false
     @State private var showRewardBurst = false
     @State private var burstProgress: CGFloat = 0
+    @State private var giftBounce = false
+    @State private var showGiftBurst = false
+    @State private var giftBurstProgress: CGFloat = 0
+    @State private var giftCelebrationToken = UUID()
+    @State private var celebratedGiftDay: Int?
     private var cycleDays: Int { max(1, model.config.checkInCycleDays) }
     private var shownCycleDay: Int {
         let checkIn = model.progress.checkIn
@@ -95,6 +105,9 @@ struct CheckInView: View {
     private var cycleStart: Int {
         if shownCycleDay == 0 { return CheckInState.utcDay(for: model.now) }
         return (model.progress.checkIn.lastClaimedDay ?? CheckInState.utcDay(for: model.now)) - shownCycleDay + 1
+    }
+    private var giftRewardAvailable: Bool {
+        model.progress.checkIn.canClaim(on: model.now) && shownCycleDay + 1 == cycleDays
     }
     var body: some View {
         GeometryReader { geometry in
@@ -139,6 +152,11 @@ struct CheckInView: View {
                 Spacer(minLength: 30)
             }.padding(.horizontal, 18)
         }
+        .onAppear { updateGiftCelebration() }
+        .onChange(of: giftRewardAvailable) { _ in updateGiftCelebration() }
+        .onChange(of: scenePhase) { _ in updateGiftCelebration() }
+        .onChange(of: reduceMotion) { _ in updateGiftCelebration() }
+        .onDisappear { stopGiftCelebration() }
     }
     private func dayView(_ day: Int) -> some View {
         let claimed = day <= shownCycleDay
@@ -165,6 +183,14 @@ struct CheckInView: View {
                     Circle().fill(claimed ? CapyPalette.orange : Color(red: 0.82, green: 0.89, blue: 0.92))
                     if day == cycleDays {
                         Image(systemName: "gift.fill").font(.system(size: 28)).foregroundColor(claimed ? .white : CapyPalette.orange)
+                            .scaleEffect(giftBounce ? 1.06 : 1)
+                            .overlay {
+                                if showGiftBurst {
+                                    CheckInParticleBurst(progress: giftBurstProgress)
+                                        .frame(width: 80, height: 80)
+                                        .allowsHitTesting(false).accessibilityHidden(true)
+                                }
+                            }
                     } else if claimed {
                         Image(systemName: "checkmark").font(.system(size: 22, weight: .heavy)).foregroundColor(.white)
                     }
@@ -174,6 +200,40 @@ struct CheckInView: View {
                 .accessibilityLabel(canClaim ? "Claim today's reward" : "Day \(day), \(claimed ? "claimed" : "not claimed")")
                 .accessibilityIdentifier(canClaim ? "claim_reward" : "checkin_day_\(day)")
         }.frame(maxWidth: .infinity)
+    }
+    private func updateGiftCelebration() {
+        guard giftRewardAvailable, scenePhase == .active, !reduceMotion else {
+            stopGiftCelebration(); return
+        }
+        let day = CheckInState.utcDay(for: model.now)
+        guard celebratedGiftDay != day else { return }
+        celebratedGiftDay = day
+        let token = UUID()
+        giftCelebrationToken = token
+        giftBurstProgress = 0
+        showGiftBurst = true
+        // Original [298] requires a brief gift bounce and particles when the
+        // cycle reward becomes claimable. Reuse the provisional Demo timings
+        // from daily claim feedback; eligibility and rewards are unchanged.
+        withAnimation(.spring(response: 0.25, dampingFraction: 0.4)) { giftBounce = true }
+        DispatchQueue.main.async {
+            guard giftCelebrationToken == token else { return }
+            withAnimation(.easeOut(duration: 0.7)) { giftBurstProgress = 1 }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+            guard giftCelebrationToken == token else { return }
+            withAnimation(.spring(response: 0.25, dampingFraction: 0.4)) { giftBounce = false }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+            guard giftCelebrationToken == token else { return }
+            showGiftBurst = false
+        }
+    }
+    private func stopGiftCelebration() {
+        giftCelebrationToken = UUID()
+        giftBounce = false
+        showGiftBurst = false
+        giftBurstProgress = 0
     }
     private func weekday(_ day: Int) -> String {
         let date = Date(timeIntervalSince1970: Double(cycleStart + day - 1) * 86_400)

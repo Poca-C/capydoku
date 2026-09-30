@@ -67,7 +67,7 @@ final class AnalyticsRecorder {
         let environment: String
         let levelID: Int?
         let pawdokuConfigVersion: String?
-        let parameters: [String: Value]
+        var parameters: [String: Value]
         enum CodingKeys: String, CodingKey {
             case eventID = "event_id", eventName = "event_name", eventTime = "event_time", userID = "user_id", sessionID = "session_id"
             case platform, appVersion = "app_version", country, installDate = "install_date", environment
@@ -78,7 +78,7 @@ final class AnalyticsRecorder {
     /// original event, user, analytics session and occurrence time.
     struct PreparedEvent: Codable {
         let key: String
-        let event: Event
+        var event: Event
     }
     private struct Cache: Codable {
         var events: [Event] = []
@@ -216,6 +216,21 @@ final class AnalyticsRecorder {
         }
         hasPendingWrite = true
         return retryPendingWrites()
+    }
+
+    /// Complete an offer using its frozen attribution even if the foreground
+    /// session or current board changed while the SDK was showing the ad.
+    func prepareRelated(_ name: String, key: String, to original: Event,
+                        parameters: [String: String], at date: Date = Date()) -> PreparedEvent? {
+        guard enabled, identity?.userID == original.userID, !key.isEmpty,
+              name == "ad_result",
+              let typed = Self.validateParameters(name: name, parameters: parameters) else { return nil }
+        let event = Event(eventID: UUID().uuidString, eventName: name, eventTime: date,
+            userID: original.userID, sessionID: original.sessionID, platform: original.platform,
+            appVersion: original.appVersion, country: original.country, installDate: original.installDate,
+            environment: original.environment, levelID: original.levelID,
+            pawdokuConfigVersion: original.pawdokuConfigVersion, parameters: typed)
+        return PreparedEvent(key: name + ":" + key, event: event)
     }
 
     /// Retains failed writes in memory with original IDs/timestamps; a later lifecycle/event retries them.

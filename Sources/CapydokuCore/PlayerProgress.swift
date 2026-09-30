@@ -20,10 +20,15 @@ public struct RewardRecord: Codable, Equatable, Identifiable, Sendable {
     public var inventoryCarry: ReferenceInventoryCarry?
     public var quotaKey: String?
     public var levelID: Int?
+    /// Opaque application event context frozen before the advertisement is requested.
+    public var analyticsOffer: Data?
+    /// Opaque completion event frozen with the durable reward receipt, before its effect.
+    public var completionEvent: Data?
 
     public init(id: String, kind: RewardKind, state: RewardState = .offered,
                 sessionID: UUID?, createdAt: Date = Date(), inventoryTool: ReferenceToolKind? = nil,
-                inventoryCount: Int? = nil, inventoryCarry: ReferenceInventoryCarry? = nil, quotaKey: String? = nil, levelID: Int? = nil) {
+                inventoryCount: Int? = nil, inventoryCarry: ReferenceInventoryCarry? = nil, quotaKey: String? = nil, levelID: Int? = nil,
+                analyticsOffer: Data? = nil, completionEvent: Data? = nil) {
         self.id = id
         self.kind = kind
         self.state = state
@@ -34,6 +39,8 @@ public struct RewardRecord: Codable, Equatable, Identifiable, Sendable {
         self.inventoryCarry = inventoryCarry
         self.quotaKey = quotaKey
         self.levelID = levelID
+        self.analyticsOffer = analyticsOffer
+        self.completionEvent = completionEvent
     }
 }
 

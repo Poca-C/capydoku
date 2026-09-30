@@ -3,7 +3,11 @@ import CapydokuCore
 
 struct RootView: View {
     @EnvironmentObject private var model: AppModel
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.accessibilityReduceMotion) private var systemReduceMotion
+    // Hosted-view verification can select this branch without changing the
+    // device's accessibility setting. Production callers leave it nil.
+    var reduceMotionOverride: Bool? = nil
+    private var reduceMotion: Bool { reduceMotionOverride ?? systemReduceMotion }
     @Environment(\.scenePhase) private var scenePhase
     @AccessibilityFocusState private var focusedControl: String?
     @State private var lastActivatedControl: String?
@@ -37,7 +41,7 @@ struct RootView: View {
                 switch model.screen {
                 case .home: HomeView()
                 case .game: GameView()
-                case .checkIn: CheckInView()
+                case .checkIn: CheckInView(reduceMotionOverride: reduceMotionOverride)
                 }
                 }.environmentObject(model).foregroundColor(CapyPalette.ink)
                     .environment(\.capyAccessibilityFocus, $focusedControl)
@@ -50,6 +54,9 @@ struct RootView: View {
                         .environment(\.capyAccessibilityFocus, $focusedControl)
                         .environment(\.capyButtonActivation, activate)
                 }
+                // Original [253]: result overlays use the same centered entrance
+                // and exit as the other cards. Timing remains a Demo value.
+                .transition(reduceMotion ? .opacity : .scale(scale: 0.88).combined(with: .opacity))
             }
             if hasCard {
                 Color.black.opacity(0.68).ignoresSafeArea().contentShape(Rectangle())
@@ -82,6 +89,7 @@ struct RootView: View {
         .onChange(of: scenePhase) { phase in if phase == .active { requestFocus(modalHeading ?? focusedControl ?? defaultFocus) } }
         .foregroundColor(CapyPalette.ink)
         .animation(reduceMotion ? nil : .easeOut(duration: 0.18), value: hasCard)
+        .animation(reduceMotion ? nil : .easeOut(duration: 0.18), value: hasResult)
         .animation(reduceMotion ? nil : .easeOut(duration: 0.18), value: model.challengePending)
         .sheet(isPresented: Binding(get: { model.sheet == .debug }, set: { if !$0 && model.sheet == .debug { model.sheet = nil } })) {
             DebugView().environment(\.capyAccessibilityFocus, $focusedControl).environment(\.capyButtonActivation, activate)
@@ -304,7 +312,9 @@ struct GameView: View {
 
     private func progress(_ s: GameSession) -> some View {
         HStack(spacing: 3) {
-            if s.puzzle.size <= 6 {
+            // Original image24 retains one animal slot through the 8x8 example;
+            // the 10x10 example switches to the compact found/total display.
+            if s.puzzle.size <= 8 {
                 ForEach(0..<s.puzzle.size, id: \.self) { index in
                     CapyMascot(mood: .happy, size: 23).opacity(index < s.found.count ? 1 : 0.17)
                 }

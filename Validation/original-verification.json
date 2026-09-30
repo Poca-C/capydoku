@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "date": "2026-09-30",
-  "build": "0.2.6 (9)",
+  "build": "0.2.7 (10)",
   "status": "Partial original-spec alignment; remaining client, reference and release gaps open.",
   "originalSHA256": "274bbf15f031bd80bb8b360cf14c0266acff370a230d9cad1b1785461df54dd2",
   "currentPackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49",
@@ -16,12 +16,12 @@
     "minimumOSRuntime": "not tested; compile target iOS 15"
   },
   "core": {
-    "build": "0.2.6 (9)",
-    "passed": 103,
+    "build": "0.2.7 (10)",
+    "passed": 109,
     "failed": 0,
-    "seconds": 27.492,
-    "log": "Validation/test-runs/original-026-core-atomic-final.log",
-    "scope": "Full Swift package suite after reward-finalizer change, including 11 result-phase/persistence cases. Production pack unchanged; no frozen difficulty parity claim."
+    "seconds": 25.983,
+    "log": "Validation/test-runs/original-027-core.log",
+    "scope": "Full Swift package suite, including six new opaque receipt-context durability/migration tests. Production pack unchanged; frozen difficulty parity remains unverified."
   },
   "pythonImport": {
     "passed": 6,
@@ -263,6 +263,25 @@
       "uiSeconds": 67.103,
       "failed": 0,
       "scope": "10 result/outbox, 7 recorder, 4 reward presentation, 2 feedback routing. UI: lose/revive, background/relaunch, daily claim, hint Apply. Uses archived gesture fixture where configured; hint uses current pack. Not full UI."
+    },
+    {
+      "build": "0.2.7 (10)",
+      "device": "iPhone 17 Pro",
+      "bundle": "Validation/test-runs/original-027-receipt-visual-final.xcresult",
+      "appTestsPassed": 114,
+      "failed": 0,
+      "scope": "All AppTests except OriginalUIContractTests. Includes six new completion recovery tests and six real hosted-view tests. Injected identity store, scene phase and Reduced Motion fixtures; no real SDK, OS Reduce Motion or Keychain acceptance claim."
+    },
+    {
+      "build": "0.2.7 (10)",
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-027-17e-receipt-visual.xcresult",
+      "appTestsPassed": 12,
+      "appSeconds": 20.918,
+      "uiTestsPassed": 4,
+      "uiSeconds": 63.62,
+      "failed": 0,
+      "scope": "Six receipt recovery and six hosted visual tests. UI: four current-pack board sizes; home/settings/check-in hierarchy; lose/revive; complete puzzle/advance. UI gameplay uses archived gesture fixture where configured. Not a full UI sweep."
     }
   ],
   "visualEvidence": {
@@ -281,17 +300,19 @@
     "VoiceOver actual focus navigation and full Dynamic Type/readability verification on physical devices",
     "Frozen correct/wrong/Combo animation frames and timing, found-count/star motion synchronization and physical-device Reduce Motion/feedback review",
     "Client: free-ad triggerOrder execution and alternate-board restart are not implemented; frozen specifics separately missing.",
-    "Client: interrupted reward compensation lacks durable completed ad_result recovery; interstitial offer/result events still missing.",
-    "Formal revive/continue attempt/duration definitions pending; result fix preserves existing attempt and cumulative duration."
+    "Formal revive/continue attempt/duration definitions pending; result fix preserves existing attempt and cumulative duration.",
+    "Client: interstitial offer/result events are missing; present() request is still treated as visible rather than a provider-confirmed started callback.",
+    "Client: buff_use is not durably committed with every tool effect; a kill after effect commit and before event recording can lose this event. Other ad states do not have full first-write-failure/process-death recovery.",
+    "Actual system Reduce Motion and full animation timing remain unverified; 0.2.7 uses scoped RootView/CheckInView test overrides."
   ],
   "historicalFailuresRetained": "Initial UI/app runs and first full-core run failed on changed fixture assumptions or real UI issues; these are retained under Validation/test-runs. Only explicitly listed successful reruns count. Old 88-item checklist completion counts are superseded.",
   "applicationTests": {
-    "build": "0.2.6 (9)",
-    "passed": 102,
+    "build": "0.2.7 (10)",
+    "passed": 114,
     "failed": 0,
-    "seconds": 17.662,
-    "bundle": "Validation/test-runs/original-026-results-complete-final.xcresult",
-    "scope": "All AppTests except OriginalUIContractTests. Includes 10 level-result/outbox, 4 reward presentation and 7 recorder tests. Actual file-write failures, frozen cold recovery, lost acknowledgement, reward transaction boundary and real callback covered."
+    "seconds": 40.699,
+    "bundle": "Validation/test-runs/original-027-receipt-visual-final.xcresult",
+    "scope": "All AppTests except OriginalUIContractTests. Includes six new completion recovery tests and six real hosted-view tests. Injected identity store, scene phase and Reduced Motion fixtures; no real SDK, OS Reduce Motion or Keychain acceptance claim."
   },
   "supersededOrInterruptedRuns": [
     "reward-readiness-final was intentionally interrupted to stop two runners targeting one simulator; not counted as success.",
@@ -334,18 +355,18 @@
     }
   ],
   "buildVerification": {
-    "bundleVersion": "0.2.6 (9)",
+    "bundleVersion": "0.2.7 (10)",
     "simulatorDebug": "passed via test build",
-    "simulatorLog": "Validation/test-runs/original-026-results-complete-final.log",
+    "simulatorLog": "Validation/test-runs/original-027-receipt-visual-final.log",
     "genericIOSReleaseUnsigned": "passed",
-    "releaseLog": "Validation/test-runs/original-026-release-build.log",
+    "releaseLog": "Validation/test-runs/original-027-release-build.log",
     "installedOn": [
       "iPhone 17 Pro",
       "iPhone 17e"
     ],
-    "normalLaunch": "iPhone 17 Pro simctl normal launch process 70702; no test/reset flags. Both installed Info.plist values verified 0.2.6 / 9.",
+    "normalLaunch": "com.capydoku.demo: 77221; no test/reset flags. Both installed Info.plist values verified 0.2.7 / 10.",
     "signingAndDeviceExecution": "Unsigned compilation only; physical device and App Store untested.",
-    "scope": "Result phases and persisted result events; atomic reward win; genuine gameplay quit; rewarded presentation confirmation; session file-write failure. UI art and level package unchanged.",
+    "scope": "Persisted rewarded completion metadata and recovery; result entrance/gift lifecycle; eight-slot 8x8 progress layout. No new reinstall run; 0.2.6 reinstall evidence retains its original version.",
     "sourceDocumentSHA256Unchanged": true
   },
   "audioContract": {
@@ -468,6 +489,14 @@
       "seconds": 14.869,
       "bundle": "Validation/test-runs/original-024-feedback-lifecycle-final.xcresult",
       "scope": "All AppTests except OriginalUIContractTests. Includes 8 new AppModel-to-player Combo/reward tests, 3 real-board visual/lifecycle tests and 4 deterministic text lifecycle tests. No original audio assets, device listening or frozen animation match claimed."
+    },
+    {
+      "build": "0.2.6 (9)",
+      "passed": 102,
+      "failed": 0,
+      "seconds": 17.662,
+      "bundle": "Validation/test-runs/original-026-results-complete-final.xcresult",
+      "scope": "All AppTests except OriginalUIContractTests. Includes 10 level-result/outbox, 4 reward presentation and 7 recorder tests. Actual file-write failures, frozen cold recovery, lost acknowledgement, reward transaction boundary and real callback covered."
     }
   ],
   "remoteConfigurationContract": {
@@ -547,6 +576,21 @@
       "signingAndDeviceExecution": "Unsigned compilation only; no physical-device or App Store claim",
       "scope": "Gameplay feedback, session-specific gesture debounce, Combo/audio routing and transient lifecycle. Core package and level pack unchanged; no new core-generation acceptance claim.",
       "sourceDocumentSHA256Unchanged": true
+    },
+    {
+      "bundleVersion": "0.2.6 (9)",
+      "simulatorDebug": "passed via test build",
+      "simulatorLog": "Validation/test-runs/original-026-results-complete-final.log",
+      "genericIOSReleaseUnsigned": "passed",
+      "releaseLog": "Validation/test-runs/original-026-release-build.log",
+      "installedOn": [
+        "iPhone 17 Pro",
+        "iPhone 17e"
+      ],
+      "normalLaunch": "iPhone 17 Pro simctl normal launch process 70702; no test/reset flags. Both installed Info.plist values verified 0.2.6 / 9.",
+      "signingAndDeviceExecution": "Unsigned compilation only; physical device and App Store untested.",
+      "scope": "Result phases and persisted result events; atomic reward win; genuine gameplay quit; rewarded presentation confirmation; session file-write failure. UI art and level package unchanged.",
+      "sourceDocumentSHA256Unchanged": true
     }
   ],
   "feedbackCorrection": {
@@ -616,6 +660,14 @@
         "scope": "GameSession, reference configuration execution, original storage, persistence and save-hardening tests after tutorial restart change. Generation code/pack unchanged; original generation evidence retained."
       },
       "notRerunForBuild": "0.2.3 (6); core sources and level package unchanged from0.2.2. Configuration parsing is exercised through current application tests."
+    },
+    {
+      "build": "0.2.6 (9)",
+      "passed": 103,
+      "failed": 0,
+      "seconds": 27.492,
+      "log": "Validation/test-runs/original-026-core-atomic-final.log",
+      "scope": "Full Swift package suite after reward-finalizer change, including 11 result-phase/persistence cases. Production pack unchanged; no frozen difficulty parity claim."
     }
   ],
   "levelResultCorrection": {
@@ -695,5 +747,67 @@
       "result": "101 tests; new reward fixture rejected at entry",
       "cause": "Free direct inventory correctly blocked rewarded offer. Set zero initial direct and add actual callback coverage; final102 passed."
     }
-  ]
+  ],
+  "rewardCompletionRecovery": {
+    "build": "0.2.7 (10)",
+    "originalParagraphs": [
+      364,
+      379,
+      380,
+      381,
+      435,
+      448,
+      450,
+      455
+    ],
+    "coreCases": 6,
+    "applicationCases": 6,
+    "behavior": "Freeze offer attribution before request and completion template with the first durable confirmed receipt. Emit completed only after the executed/compensated/cancelled outcome is durably saved. Queue commit precedes acknowledgement; retry uses the same event ID/time/user/session/offer/level/config.",
+    "cases": [
+      "direct/hint interrupted receipt compensates inventory once without replaying board action or buff_use",
+      "interrupted revive is not compensated; completed has reward_granted=false",
+      "changed level and cold analytics session retain original attribution",
+      "queue failure and lost acknowledgement do not duplicate reward or event",
+      "first receipt write failure retries frozen in-memory time without premature success",
+      "legacy/pre-consent receipts fabricate no retrospective events",
+      "production asynchronous acknowledgement and immediate navigation/relaunch"
+    ],
+    "limits": [
+      "Tests exercise explicit persistence boundaries, not a real OS kill at a specific instruction.",
+      "If the first receipt cannot be durably written before process death, it cannot be recovered locally.",
+      "Real SDK/network delivery and server deduplication are unverified.",
+      "Other ad states and buff_use do not yet have the same full crash-boundary journal.",
+      "Interstitial offer/result events and actual-presentation signal remain missing."
+    ],
+    "evidence": [
+      "Tests/CapydokuCoreTests/RewardAnalyticsReceiptTests.swift",
+      "AppTests/RewardCompletionRecoveryTests.swift"
+    ]
+  },
+  "rewardVisualCorrection": {
+    "build": "0.2.7 (10)",
+    "originalParagraphs": [
+      253,
+      298
+    ],
+    "originalFigure": "Reference/Original/image24.png",
+    "behavior": [
+      "Result foreground enters with centered scale and fade; dark backdrop retained.",
+      "Claimable cycle-end gift gets one short bounce/particle burst; background, exit, claim or eligibility change invalidates pending effects.",
+      "8x8 found progress uses eight animal slots; 10x10 retains numeric count."
+    ],
+    "hostTests": 6,
+    "reviewedScreenshots": 25,
+    "manifest": "Docs/original-rewards/manifest.json",
+    "scope": "Actual RootView in test-host UIWindow. Six prior claim dates, scene phase and Reduced Motion are explicit fixtures. Reduced Motion uses a view override, not the system setting. Sampled frames do not prove frozen-reference timing. Claim screenshots use model.claim business action, not a UI tap.",
+    "limitations": [
+      "Reduced Motion overrides cover RootView/CheckInView branches only. Board/Combo background frames still differ; this is not OS-level or global no-animation acceptance.",
+      "Sampled frames do not prove the full bounce trajectory, precise timing or frozen-reference parity."
+    ]
+  },
+  "rewardVisualInitialFailure": {
+    "bundle": "Validation/test-runs/original-027-receipt-visual-app.xcresult",
+    "result": "Compile failed before tests",
+    "cause": "Test attempted to write the read-only accessibilityReduceMotion environment property in this SDK. Replaced with optional view override; production default continues to use system environment. Final 114 tests passed."
+  }
 }

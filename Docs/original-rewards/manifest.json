@@ -1,0 +1,168 @@
+{
+  "build": "0.2.7 (10)",
+  "source": "Validation/test-runs/original-027-receipt-visual-final.xcresult",
+  "scope": "Actual RootView in test-host UIWindow. Six prior claim dates, scene phase and Reduced Motion are explicit fixtures. Reduced Motion uses a view override, not the system setting. Sampled frames do not prove frozen-reference timing. Claim screenshots use model.claim business action, not a UI tap.",
+  "review": "All 22 iPhone 17 Pro images opened and visually reviewed; three additional iPhone 17e images reviewed by the primary agent.",
+  "frames": [
+    {
+      "file": "gameplay-current-pack-eight-by-eight-progress.png",
+      "test": "OriginalRewardVisualTests/testCurrentPackEightByEightProgressLayoutIsCapturedWithoutChangingTheBoard()",
+      "device": "iPhone 17 Pro",
+      "timestamp": 1790779005.661
+    },
+    {
+      "file": "checkin-lifecycle-04-home-after-exit.png",
+      "test": "OriginalRewardVisualTests/testCycleGiftBackgroundAndPageExitLeaveNoLateVisibleEffects()",
+      "device": "iPhone 17 Pro",
+      "timestamp": 1790779011.076
+    },
+    {
+      "file": "checkin-lifecycle-03-return-after-expiry.png",
+      "test": "OriginalRewardVisualTests/testCycleGiftBackgroundAndPageExitLeaveNoLateVisibleEffects()",
+      "device": "iPhone 17 Pro",
+      "timestamp": 1790779009.38
+    },
+    {
+      "file": "checkin-lifecycle-02-background-environment.png",
+      "test": "OriginalRewardVisualTests/testCycleGiftBackgroundAndPageExitLeaveNoLateVisibleEffects()",
+      "device": "iPhone 17 Pro",
+      "timestamp": 1790779007.64
+    },
+    {
+      "file": "checkin-lifecycle-01-before-background.png",
+      "test": "OriginalRewardVisualTests/testCycleGiftBackgroundAndPageExitLeaveNoLateVisibleEffects()",
+      "device": "iPhone 17 Pro",
+      "timestamp": 1790779006.766
+    },
+    {
+      "file": "checkin-cycle-04-claimed-reentry.png",
+      "test": "OriginalRewardVisualTests/testCycleGiftReadyAndClaimedScreensDoNotGrantRewardsByRendering()",
+      "device": "iPhone 17 Pro",
+      "timestamp": 1790779015.707
+    },
+    {
+      "file": "checkin-cycle-03-claimed-after-business-action.png",
+      "test": "OriginalRewardVisualTests/testCycleGiftReadyAndClaimedScreensDoNotGrantRewardsByRendering()",
+      "device": "iPhone 17 Pro",
+      "timestamp": 1790779014.162
+    },
+    {
+      "file": "checkin-cycle-02-ready-settled.png",
+      "test": "OriginalRewardVisualTests/testCycleGiftReadyAndClaimedScreensDoNotGrantRewardsByRendering()",
+      "device": "iPhone 17 Pro",
+      "timestamp": 1790779013.427
+    },
+    {
+      "file": "checkin-cycle-01-ready-early-sample.png",
+      "test": "OriginalRewardVisualTests/testCycleGiftReadyAndClaimedScreensDoNotGrantRewardsByRendering()",
+      "device": "iPhone 17 Pro",
+      "timestamp": 1790779011.884
+    },
+    {
+      "file": "checkin-reduce-motion-03-claimed-view-override-not-system-setting.png",
+      "test": "OriginalRewardVisualTests/testReducedMotionGiftReadyAndClaimedStatesRemainOperable()",
+      "device": "iPhone 17 Pro",
+      "timestamp": 1790779018.739
+    },
+    {
+      "file": "checkin-reduce-motion-02-ready-after-expiry-view-override-not-system-setting.png",
+      "test": "OriginalRewardVisualTests/testReducedMotionGiftReadyAndClaimedStatesRemainOperable()",
+      "device": "iPhone 17 Pro",
+      "timestamp": 1790779018.022
+    },
+    {
+      "file": "checkin-reduce-motion-01-ready-view-override-not-system-setting.png",
+      "test": "OriginalRewardVisualTests/testReducedMotionGiftReadyAndClaimedStatesRemainOperable()",
+      "device": "iPhone 17 Pro",
+      "timestamp": 1790779016.504
+    },
+    {
+      "file": "result-reduce-motion-loss-settled-view-override-not-system-setting.png",
+      "test": "OriginalRewardVisualTests/testReducedMotionWinAndLossUseTheActualResultViews()",
+      "device": "iPhone 17 Pro",
+      "timestamp": 1790779022.16
+    },
+    {
+      "file": "result-reduce-motion-loss-early-sample-view-override-not-system-setting.png",
+      "test": "OriginalRewardVisualTests/testReducedMotionWinAndLossUseTheActualResultViews()",
+      "device": "iPhone 17 Pro",
+      "timestamp": 1790779021.241
+    },
+    {
+      "file": "result-reduce-motion-win-settled-view-override-not-system-setting.png",
+      "test": "OriginalRewardVisualTests/testReducedMotionWinAndLossUseTheActualResultViews()",
+      "device": "iPhone 17 Pro",
+      "timestamp": 1790779020.435
+    },
+    {
+      "file": "result-reduce-motion-win-early-sample-view-override-not-system-setting.png",
+      "test": "OriginalRewardVisualTests/testReducedMotionWinAndLossUseTheActualResultViews()",
+      "device": "iPhone 17 Pro",
+      "timestamp": 1790779019.547
+    },
+    {
+      "file": "result-loss-03-settled.png",
+      "test": "OriginalRewardVisualTests/testWinAndLossEntrancesRenderActualRootAndKeepResultSaved()",
+      "device": "iPhone 17 Pro",
+      "timestamp": 1790779026.906
+    },
+    {
+      "file": "result-loss-02-early-sample.png",
+      "test": "OriginalRewardVisualTests/testWinAndLossEntrancesRenderActualRootAndKeepResultSaved()",
+      "device": "iPhone 17 Pro",
+      "timestamp": 1790779025.96
+    },
+    {
+      "file": "result-loss-01-before.png",
+      "test": "OriginalRewardVisualTests/testWinAndLossEntrancesRenderActualRootAndKeepResultSaved()",
+      "device": "iPhone 17 Pro",
+      "timestamp": 1790779025.265
+    },
+    {
+      "file": "result-win-03-settled.png",
+      "test": "OriginalRewardVisualTests/testWinAndLossEntrancesRenderActualRootAndKeepResultSaved()",
+      "device": "iPhone 17 Pro",
+      "timestamp": 1790779024.528
+    },
+    {
+      "file": "result-win-02-early-sample.png",
+      "test": "OriginalRewardVisualTests/testWinAndLossEntrancesRenderActualRootAndKeepResultSaved()",
+      "device": "iPhone 17 Pro",
+      "timestamp": 1790779023.597
+    },
+    {
+      "file": "result-win-01-before.png",
+      "test": "OriginalRewardVisualTests/testWinAndLossEntrancesRenderActualRootAndKeepResultSaved()",
+      "device": "iPhone 17 Pro",
+      "timestamp": 1790779022.899
+    },
+    {
+      "file": "17e-gameplay-current-pack-eight-by-eight-progress.png",
+      "test": "OriginalRewardVisualTests/testCurrentPackEightByEightProgressLayoutIsCapturedWithoutChangingTheBoard()",
+      "device": "iPhone 17e",
+      "timestamp": 1790779129.741,
+      "source": "Validation/test-runs/original-027-17e-receipt-visual.xcresult"
+    },
+    {
+      "file": "17e-checkin-cycle-01-ready-early-sample.png",
+      "test": "OriginalRewardVisualTests/testCycleGiftReadyAndClaimedScreensDoNotGrantRewardsByRendering()",
+      "device": "iPhone 17e",
+      "timestamp": 1790779135.083,
+      "source": "Validation/test-runs/original-027-17e-receipt-visual.xcresult"
+    },
+    {
+      "file": "17e-result-win-03-settled.png",
+      "test": "OriginalRewardVisualTests/testWinAndLossEntrancesRenderActualRootAndKeepResultSaved()",
+      "device": "iPhone 17e",
+      "timestamp": 1790779147.186,
+      "source": "Validation/test-runs/original-027-17e-receipt-visual.xcresult"
+    }
+  ],
+  "findings": [
+    "Normal win/loss early samples are smaller and translucent; settled foregrounds are centered and unclipped.",
+    "Ready gift early sample shows local particles; settled/background/return/claimed/reentry and home-after-exit samples show no persistent burst.",
+    "Eight animal slots and three lives fit in the current-pack 8x8 layout on both devices; rules, board and tools remain visible.",
+    "Reduced Motion overrides cover RootView/CheckInView branches only. Board/Combo background frames still differ; this is not OS-level or global no-animation acceptance.",
+    "Sampled frames do not prove the full bounce trajectory, precise timing or frozen-reference parity."
+  ]
+}

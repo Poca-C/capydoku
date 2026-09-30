@@ -142,7 +142,7 @@ public final class SaveStore: @unchecked Sendable {
 
     @discardableResult
     public func prepareReward(offerID: String, kind: RewardKind,
-                              progress: inout PlayerProgress) throws -> Bool {
+                              progress: inout PlayerProgress, analyticsOffer: Data? = nil) throws -> Bool {
         lock.lock(); defer { lock.unlock() }
         guard !offerID.isEmpty, progress.rewardLedger[offerID] == nil,
               progress.canReceiveReward(kind) else { return false }
@@ -151,31 +151,37 @@ public final class SaveStore: @unchecked Sendable {
             candidate.rewardLedger[offerID] = RewardRecord(id: offerID, kind: kind,
                 sessionID: candidate.session?.id, inventoryTool: free?.reward, inventoryCount: free?.rewardCount,
                 inventoryCarry: free?.inventoryAcrossLevels, quotaKey: kind == .levelStartFree ? candidate.levelStartFreeQuotaKey : nil,
-                levelID: kind == .levelStartFree ? candidate.session?.puzzle.id : nil)
+                levelID: kind == .levelStartFree ? candidate.session?.puzzle.id : nil,
+                analyticsOffer: analyticsOffer)
             return true
         }
     }
 
     /// Separate receipt phase enables testing a kill between callback and effect execution.
     @discardableResult
-    public func markRewardReceived(offerID: String, progress: inout PlayerProgress) throws -> Bool {
+    public func markRewardReceived(offerID: String, progress: inout PlayerProgress,
+                                   completionEvent: Data? = nil) throws -> Bool {
         lock.lock(); defer { lock.unlock() }
         guard let record = progress.rewardLedger[offerID] else { throw SaveStoreError.missingOffer }
         guard record.state == .offered else { return false }
         return try transaction(progress: &progress) { candidate in
             candidate.rewardLedger[offerID]?.state = .rewarded
+            candidate.rewardLedger[offerID]?.completionEvent = completionEvent
             return true
         }
     }
 
     @discardableResult
     public func grantReward(offerID: String, progress: inout PlayerProgress,
+                            completionEvent: Data? = nil,
                             finalize: ((inout PlayerProgress, RewardOutcome) -> Void)? = nil) throws -> RewardOutcome {
         lock.lock(); defer { lock.unlock() }
         guard let record = progress.rewardLedger[offerID] else { throw SaveStoreError.missingOffer }
         if record.state == .executed || record.state == .compensated { return .duplicate }
         guard record.state == .offered || record.state == .rewarded else { return .ignored }
-        if record.state == .offered { _ = try markRewardReceived(offerID: offerID, progress: &progress) }
+        if record.state == .offered {
+            _ = try markRewardReceived(offerID: offerID, progress: &progress, completionEvent: completionEvent)
+        }
         return try transaction(progress: &progress) { candidate in
             let outcome = candidate.executeReward(offerID: offerID)
             // A reward can finish a level. Its completion and pending business
@@ -289,7 +295,9 @@ public final class SaveStore: @unchecked Sendable {
               progress.freeToolGrantedLevels.allSatisfy(positive),
               progress.attemptCounts.allSatisfy({ Int($0.key).map(positive) == true && positive($0.value) }),
               progress.levelToolBalances.allSatisfy({ Int($0.key).map(positive) == true && counter($0.value.hints) && counter($0.value.direct) }),
-              progress.rewardLedger.allSatisfy({ !$0.key.isEmpty && $0.key == $0.value.id }) else {
+              progress.rewardLedger.allSatisfy({ !$0.key.isEmpty && $0.key == $0.value.id
+                  && ($0.value.analyticsOffer?.count ?? 0) <= 32_768
+                  && ($0.value.completionEvent?.count ?? 0) <= 32_768 }) else {
             throw SaveStoreError.invalidState("progress, inventory or reward records are out of range")
         }
         for record in progress.rewardLedger.values where record.kind == .levelStartFree {

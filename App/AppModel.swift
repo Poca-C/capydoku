@@ -52,6 +52,7 @@ final class AppModel: ObservableObject {
     private var activeOfferID: String?
     private var rewardDeadline: DispatchWorkItem?
     private var pendingRewardSignal: RewardSignal?
+    private var pendingRewardCompletion: Data?
     private var deferredRewardHintSessionID: UUID?
     private let rewardProvider: RewardProvider?
     private var activeRewardProvider: RewardProvider?
@@ -217,12 +218,13 @@ final class AppModel: ObservableObject {
         rewardDisplayActive = false
         hint = nil; activeOfferID = nil; rewardBusy = false
         activeRewardProvider = nil; rewardIsReady = false; rewardPresentationRequested = false; rewardWasReplenished = false
-        rewardRetryPending = false; pendingRewardSignal = nil
+        rewardRetryPending = false; pendingRewardSignal = nil; pendingRewardCompletion = nil
         deferredRewardHintSessionID = nil
         if sheet == .reward { sheet = nil }
         notice = nil; errorMessage = nil
         progress = loaded.progress
         deliverSavedLevelResults(progress.pendingLevelResultEvents)
+        if analytics.enabled && progress.rewardLedger.values.contains(where: { $0.completionEvent != nil }) { save(force: true) }
         syncFeedbackState()
         applySettings()
         if progress.session == nil { screen = .home }
@@ -242,13 +244,17 @@ final class AppModel: ObservableObject {
             do {
                 try saveQueue.sync { try store.save(snapshot) }
                 deliverSavedLevelResults(snapshot.pendingLevelResultEvents)
+                deliverSavedRewardResults(snapshot.rewardLedger)
             }
             catch { errorMessage = "Progress could not be saved: \(error.localizedDescription)" }
         } else {
             saveQueue.async { [weak self] in
                 do {
                     try store.save(snapshot)
-                    DispatchQueue.main.async { self?.deliverSavedLevelResults(snapshot.pendingLevelResultEvents) }
+                    DispatchQueue.main.async {
+                        self?.deliverSavedLevelResults(snapshot.pendingLevelResultEvents)
+                        self?.deliverSavedRewardResults(snapshot.rewardLedger)
+                    }
                 }
                 catch {
                     let message = "Progress could not be saved: \(error.localizedDescription)"
@@ -275,6 +281,31 @@ final class AppModel: ObservableObject {
         }
         // The queue is already durable. A crash before this acknowledgement is
         // saved merely re-delivers the original event through the same dedup key.
+        if acknowledged { save() }
+    }
+
+    private func deliverSavedRewardResults(_ saved: [String: RewardRecord]) {
+        guard analytics.enabled else { return }
+        var acknowledged = false
+        for (id, record) in saved.filter({ $0.value.completionEvent != nil }).sorted(by: { $0.value.createdAt < $1.value.createdAt }) {
+            guard [.executed, .compensated, .cancelled].contains(record.state),
+                  let data = record.completionEvent,
+                  progress.rewardLedger[id]?.completionEvent == data,
+                  progress.rewardLedger[id]?.state == record.state,
+                  var completed = try? JSONDecoder().decode(AnalyticsRecorder.PreparedEvent.self, from: data),
+                  completed.event.eventName == "ad_result",
+                  completed.event.parameters["offer_id"] == .text(id),
+                  completed.event.parameters["status"] == .text("completed") else { continue }
+            // Receipt proves completion; actual execution/compensation decides
+            // reward_granted. A killed revive is never compensated or reported granted.
+            completed.event.parameters["reward_granted"] = .flag(record.state == .executed || record.state == .compensated)
+            if let offerData = record.analyticsOffer,
+               let offer = try? JSONDecoder().decode(AnalyticsRecorder.PreparedEvent.self, from: offerData),
+               !analytics.commit(offer) { continue }
+            guard analytics.commit(completed) else { continue }
+            progress.rewardLedger[id]?.completionEvent = nil
+            acknowledged = true
+        }
         if acknowledged { save() }
     }
 
@@ -549,16 +580,20 @@ final class AppModel: ObservableObject {
         let offerID = UUID().uuidString
         do {
             flushPendingSaves()
-            guard try store.prepareReward(offerID: offerID, kind: rewardKind, progress: &progress) else {
+            let placement = rewardKind == .direct ? "direct_find" : rewardKind == .levelStartFree ? "level_start_free" : rewardKind.rawValue
+            let rewardType = rewardKind == .levelStartFree ? (session?.config.referenceGameplay?.levelStartFreeAd.reward.rawValue ?? "") : placement
+            let offered = session.flatMap { analytics.prepare("ad_offer_shown", key: offerID, level: $0.puzzle.id, config: $0.config.version,
+                parameters: ["offer_id": offerID, "placement_id": placement, "reward_type": rewardType, "buff_type": rewardKind == .revive ? "" : rewardType, "reward_amount": "\(rewardKind == .levelStartFree ? ($0.config.referenceGameplay?.levelStartFreeAd.rewardCount ?? 0) : 1)", "ad_type": "rewarded", "network": "simulation", "ad_unit_id": "internal-demo"]) }
+            let offerData = offered.flatMap { try? JSONEncoder().encode($0) }
+            guard try store.prepareReward(offerID: offerID, kind: rewardKind, progress: &progress, analyticsOffer: offerData) else {
                 notice = "This reward is not available right now."; sheet = nil; return
             }
             activeOfferID = offerID
             let provider = rewardProvider ?? MockRewardProvider(scenario: rewardScenario)
             activeRewardProvider = provider
+            pendingRewardCompletion = nil
             rewardIsReady = false; rewardPresentationRequested = false; rewardWasReplenished = false
-            let placement = rewardKind == .direct ? "direct_find" : rewardKind == .levelStartFree ? "level_start_free" : rewardKind.rawValue
-            let rewardType = rewardKind == .levelStartFree ? (session?.config.referenceGameplay?.levelStartFreeAd.reward.rawValue ?? "") : placement
-            track("ad_offer_shown", key: offerID, parameters: ["offer_id": offerID, "placement_id": placement, "reward_type": rewardType, "buff_type": rewardKind == .revive ? "" : rewardType, "reward_amount": "\(rewardKind == .levelStartFree ? (session?.config.referenceGameplay?.levelStartFreeAd.rewardCount ?? 0) : 1)", "ad_type": "rewarded", "network": "simulation", "ad_unit_id": "internal-demo"])
+            if let offered { analytics.commit(offered) }
             rewardBusy = true
             let deadline = DispatchWorkItem { [weak self] in self?.receive(.timedOut, offerID: offerID) }
             rewardDeadline = deadline
@@ -620,15 +655,18 @@ final class AppModel: ObservableObject {
         rewardDeadline?.cancel(); rewardDeadline = nil
         rewardBusy = false
         pendingRewardSignal = signal
+        if (signal == .earned || signal == .interrupted), pendingRewardCompletion == nil {
+            pendingRewardCompletion = record.completionEvent ?? prepareRewardCompletion(record)
+        }
         flushPendingSaves()
         do {
             switch signal {
             case .started: return // Nonterminal presentation signals are handled above.
             case .earned:
-                let result = try store.grantReward(offerID: offerID, progress: &progress) { candidate, outcome in
+                let result = try store.grantReward(offerID: offerID, progress: &progress, completionEvent: pendingRewardCompletion) { candidate, outcome in
                     self.finalizeRewardResult(outcome, in: &candidate)
                 }
-                trackAdResult(offerID, status: "completed", granted: result != .ignored && result != .duplicate)
+                deliverSavedRewardResults(progress.rewardLedger)
                 sheet = nil
                 switch result {
                 case .hintReady:
@@ -656,11 +694,11 @@ final class AppModel: ObservableObject {
                 default: notice = "Video unavailable. Please try again."
                 }
             case .interrupted:
-                try store.markRewardReceived(offerID: offerID, progress: &progress)
+                try store.markRewardReceived(offerID: offerID, progress: &progress, completionEvent: pendingRewardCompletion)
                 sheet = nil
                 notice = "Reward receipt saved. Use Recover save in Developer tools, or relaunch, to test interruption recovery."
             }
-            activeOfferID = nil; pendingRewardSignal = nil; rewardRetryPending = false
+            activeOfferID = nil; pendingRewardSignal = nil; pendingRewardCompletion = nil; rewardRetryPending = false
             activeRewardProvider = nil; rewardIsReady = false
         } catch {
             rewardRetryPending = true
@@ -747,7 +785,7 @@ final class AppModel: ObservableObject {
     }
     func consentAccepted() {
         analytics.acceptConsent()
-        if !progress.pendingLevelResultEvents.isEmpty { save(force: true) }
+        if !progress.pendingLevelResultEvents.isEmpty || progress.rewardLedger.values.contains(where: { $0.completionEvent != nil }) { save(force: true) }
     }
     /// Called only after the startup view reaches Home, including optional permission completion.
     /// This permits local adapter use; it does not claim a real SDK/CMP has been initialized.
@@ -814,6 +852,15 @@ final class AppModel: ObservableObject {
     private func trackAdResult(_ id: String, status: String, granted: Bool) {
         let placement = rewardKind == .direct ? "direct_find" : rewardKind == .levelStartFree ? "level_start_free" : rewardKind.rawValue
         track("ad_result", key: id + ":" + status, parameters: ["offer_id": id, "placement_id": placement, "status": status, "reward_granted": "\(granted)", "ad_type": "rewarded", "network": "simulation", "ad_unit_id": "internal-demo", "error_code": status == "failed" ? "simulation_failed" : ""])
+    }
+    private func prepareRewardCompletion(_ record: RewardRecord) -> Data? {
+        // No retrospective fabrication for old/pre-consent receipts without context.
+        guard let data = record.analyticsOffer,
+              let offer = try? JSONDecoder().decode(AnalyticsRecorder.PreparedEvent.self, from: data) else { return nil }
+        let placement = record.kind == .direct ? "direct_find" : record.kind == .levelStartFree ? "level_start_free" : record.kind.rawValue
+        guard let event = analytics.prepareRelated("ad_result", key: record.id + ":completed", to: offer.event,
+            parameters: ["offer_id": record.id, "placement_id": placement, "status": "completed", "reward_granted": "false", "ad_type": "rewarded", "network": "simulation", "ad_unit_id": "internal-demo", "error_code": ""]) else { return nil }
+        return try? JSONEncoder().encode(event)
     }
     func exportDiagnostics() {
         struct Report: Encodable {
