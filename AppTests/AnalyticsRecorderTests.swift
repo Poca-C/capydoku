@@ -91,6 +91,28 @@ final class AnalyticsRecorderTests: XCTestCase {
         XCTAssertEqual(recorder.events.last?.parameters["reward_granted"], .flag(true))
     }
 
+    @MainActor func testInterstitialContractRequiresSeparatePlacementAndRejectsAnyGameReward() throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let recorder = AnalyticsRecorder(directory: directory, identityStore: MemoryIdentity())
+        recorder.acceptConsent()
+        let offered = ["offer_id": "one", "placement_id": "demo_interstitial_win_v1", "reward_type": "", "buff_type": "", "reward_amount": "0", "ad_type": "interstitial", "network": "simulation", "ad_unit_id": "internal-demo"]
+        let result = ["offer_id": "one", "placement_id": "demo_interstitial_win_v1", "status": "completed", "reward_granted": "false", "error_code": "", "ad_type": "interstitial", "network": "simulation", "ad_unit_id": "internal-demo"]
+        XCTAssertTrue(recorder.record("ad_offer_shown", key: "one", level: 2, config: "demo", parameters: offered))
+        XCTAssertTrue(recorder.record("ad_result", key: "one:completed", level: 2, config: "demo", parameters: result))
+        for (field, value) in [("reward_amount", "1"), ("reward_type", "hint"), ("buff_type", "hint"), ("placement_id", "hint"), ("placement_id", "  ")] {
+            var invalid = offered; invalid[field] = value
+            XCTAssertFalse(recorder.record("ad_offer_shown", key: UUID().uuidString, level: 2, config: "demo", parameters: invalid))
+        }
+        var awarded = result; awarded["reward_granted"] = "true"
+        XCTAssertFalse(recorder.record("ad_result", key: "invalid-grant", level: 2, config: "demo", parameters: awarded))
+        var borrowed = result; borrowed["ad_type"] = "rewarded"
+        XCTAssertFalse(recorder.record("ad_result", key: "invalid-rewarded-placement", level: 2, config: "demo", parameters: borrowed))
+        var inventedRevenue = result; inventedRevenue["revenue"] = "1"
+        XCTAssertFalse(recorder.record("ad_result", key: "invalid-revenue", level: 2, config: "demo", parameters: inventedRevenue))
+        XCTAssertEqual(recorder.events.filter { $0.eventName.hasPrefix("ad_") }.count, 2)
+    }
+
     @MainActor func testFailedWritesRetainOriginalEventsAndRetryAfterStorageRecovers() throws {
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         defer { try? FileManager.default.removeItem(at: directory) }

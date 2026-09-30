@@ -264,8 +264,8 @@ final class AnalyticsRecorder {
             "level_start": ["attempt_no": integer, "grid_size": string, "is_tutorial": boolean, "direct_find_visible": boolean, "direct_find_inventory": integer, "hint_inventory": integer, "level_start_free_available": boolean],
             "level_end": ["result": .choice(["win", "lose", "quit"]), "duration_sec": integer, "attempt_no": integer, "fail_reason": .choice(["", "life_zero", "quit", "unknown"]), "life_remaining": integer],
             "level_restart": ["restart_reason": .choice(["after_fail", "manual"]), "previous_fail_reason": .choice(["", "life_zero", "quit", "unknown"]), "next_attempt_no": integer],
-            "ad_offer_shown": ["offer_id": string, "placement_id": .choice(placement), "reward_type": string, "buff_type": .choice(tool.union([""])), "reward_amount": integer, "ad_type": .choice(["rewarded", "interstitial"]), "network": string, "ad_unit_id": string],
-            "ad_result": ["offer_id": string, "placement_id": .choice(placement), "status": .choice(["started", "completed", "skipped", "failed"]), "reward_granted": boolean, "error_code": string, "ad_type": .choice(["rewarded", "interstitial"]), "network": string, "ad_unit_id": string],
+            "ad_offer_shown": ["offer_id": string, "placement_id": string, "reward_type": string, "buff_type": .choice(tool.union([""])), "reward_amount": integer, "ad_type": .choice(["rewarded", "interstitial"]), "network": string, "ad_unit_id": string],
+            "ad_result": ["offer_id": string, "placement_id": string, "status": .choice(["started", "completed", "skipped", "failed"]), "reward_granted": boolean, "error_code": string, "ad_type": .choice(["rewarded", "interstitial"]), "network": string, "ad_unit_id": string],
             "buff_use": ["buff_type": .choice(tool), "source": .choice(["initial_free", "level_config_free", "rewarded_ad"]), "applied": boolean, "inventory_before": integer, "inventory_after": integer]
         ]
         guard let schema = schemas[name], Set(parameters.keys) == Set(schema.keys) else { return nil }
@@ -289,6 +289,22 @@ final class AnalyticsRecorder {
         if let attempt = parameters["next_attempt_no"], (Int(attempt) ?? 0) < 1 { return nil }
         if let offer = parameters["offer_id"], offer.isEmpty { return nil }
         if let tutorial = parameters["tutorial_id"], tutorial.isEmpty { return nil }
+        if let adType = parameters["ad_type"] {
+            if adType == "rewarded" {
+                guard placement.contains(parameters["placement_id"] ?? "") else { return nil }
+            } else {
+                // Original [448] requires interstitial events but never names
+                // their placement enum. Accept an explicit adapter mapping;
+                // never borrow a rewarded placement or invent a game reward.
+                let identifier = parameters["placement_id"] ?? ""
+                guard !identifier.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+                      identifier.count <= 128, !placement.contains(identifier) else { return nil }
+                if name == "ad_offer_shown" {
+                    guard parameters["reward_amount"] == "0", parameters["reward_type"] == "",
+                          parameters["buff_type"] == "" else { return nil }
+                } else if parameters["reward_granted"] != "false" { return nil }
+            }
+        }
         if name == "ad_result", parameters["reward_granted"] == "true", parameters["status"] != "completed" { return nil }
         if name == "level_end", parameters["result"] == "win", parameters["fail_reason"] != "" { return nil }
         if name == "buff_use", parameters["buff_type"] == "direct_find", parameters["applied"] != "true" { return nil }

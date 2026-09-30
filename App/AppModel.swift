@@ -26,10 +26,21 @@ final class AppModel: ObservableObject {
     private var lastInterstitialAt: Date?
     private var challengeSeen = false
     private var transitionToHome = false
+    private var pendingInterstitialEvents: [AnalyticsRecorder.PreparedEvent] = []
+    private var activeInterstitialOffer: AnalyticsRecorder.PreparedEvent?
+    private struct WinContinuation: Codable {
+        let winID: UUID
+        let toHome: Bool
+    }
+    private var pendingWinContinuation: WinContinuation?
+    private var winAdStateNeedsWrite = false
+    private(set) var interstitialRecordingError: String?
     private struct WinAdState: Codable {
         var shown: Set<UUID>
         var eligibleCount: Int
         var lastShownAt: Date?
+        var pendingEvents: [AnalyticsRecorder.PreparedEvent]?
+        var pendingContinuation: WinContinuation?
     }
     @Published private(set) var rewardRetryPending = false
     @Published var config = DemoConfig.default
@@ -66,7 +77,8 @@ final class AppModel: ObservableObject {
     private let interstitialProvider: InterstitialProvider?
     private var activeInterstitialProvider: InterstitialProvider?
     private var interstitialIsReady = false
-    private var interstitialWasPresented = false { didSet { syncFeedbackState() } }
+    private var interstitialPresentationRequested = false
+    private var interstitialDisplayActive = false { didSet { syncFeedbackState() } }
     private var interstitialDeadline: DispatchWorkItem?
     private let rewardTimeout: TimeInterval
     private let feedbackEnabled: Bool
@@ -124,6 +136,16 @@ final class AppModel: ObservableObject {
         if let packError { errorMessage = packError }
         if let state = try? DurableStateFile<WinAdState>(url: self.saveDirectory.appendingPathComponent("win-ad-state.json")).load() {
             shownInterstitialWins = state.shown; eligibleWinCount = max(0, state.eligibleCount); lastInterstitialAt = state.lastShownAt
+            pendingInterstitialEvents = state.pendingEvents ?? []
+            if let continuation = state.pendingContinuation,
+               continuation.winID == session?.id, session?.status == .won, !continuation.toHome {
+                pendingWinContinuation = continuation
+                winTransitionID = continuation.winID; transitionToHome = false
+            } else if state.pendingContinuation != nil {
+                // Cold startup already fulfills Home; a saved later board also
+                // proves this old transition was consumed. Clear without replay.
+                winAdStateNeedsWrite = true
+            }
         }
         let challengeFile = DurableStateFile<Bool>(url: self.saveDirectory.appendingPathComponent("challenge-state.json"))
         challengeSeen = (try? challengeFile.load()) ?? false
@@ -238,11 +260,13 @@ final class AppModel: ObservableObject {
         progress.captureSessionBalance()
         syncFeedbackState()
         let snapshot = progress
+        let continuationAtSave = pendingWinContinuation?.winID
         saveRevision += 1; let revision = saveRevision
         let store = store
         if force || synchronousSaves {
             do {
                 try saveQueue.sync { try store.save(snapshot) }
+                acknowledgeSavedWinContinuation(snapshot, winID: continuationAtSave)
                 deliverSavedLevelResults(snapshot.pendingLevelResultEvents)
                 deliverSavedRewardResults(snapshot.rewardLedger)
             }
@@ -252,6 +276,7 @@ final class AppModel: ObservableObject {
                 do {
                     try store.save(snapshot)
                     DispatchQueue.main.async {
+                        self?.acknowledgeSavedWinContinuation(snapshot, winID: continuationAtSave)
                         self?.deliverSavedLevelResults(snapshot.pendingLevelResultEvents)
                         self?.deliverSavedRewardResults(snapshot.rewardLedger)
                     }
@@ -312,7 +337,11 @@ final class AppModel: ObservableObject {
     func startOrContinue() {
         if session != nil {
             if progress.session?.resumeAfterQuit() == true { save() }
-            screen = .game; trackLevelStart(); preloadRewardPlacementsIfNeeded()
+            screen = .game
+            if pendingWinContinuation?.winID == session?.id, winTransitionID != nil {
+                completeWinTransition(); return
+            }
+            trackLevelStart(); preloadRewardPlacementsIfNeeded()
         }
         else { start(level: progress.currentLevel) }
     }
@@ -370,24 +399,38 @@ final class AppModel: ObservableObject {
     }
     func next() { transitionAfterWin(toHome: false) }
     private func transitionAfterWin(toHome: Bool) {
-        guard startupFlowCompleted, let s = session, s.status == .won, !interstitialBusy, !challengePending, winTransitionID == nil else { return }
+        guard active, startupFlowCompleted, sheet == nil, hint == nil, notice == nil, errorMessage == nil,
+              let s = session, s.status == .won, !interstitialBusy, !challengePending, winTransitionID == nil else { return }
+        // The durable ad reservation must refer to a durable winning board,
+        // including when the last gesture's normal save is still queued.
+        save(force: true)
+        guard errorMessage == nil else { return }
         transitionToHome = toHome; winTransitionID = s.id
         if let row = s.config.referenceGameplay, row.adsEnabled, row.interstitial.enabled,
            s.puzzle.id >= row.interstitial.startLevel, !shownInterstitialWins.contains(s.id),
            toHome ? row.interstitial.onReturnHome : row.interstitial.onNextLevel {
-            let previous = WinAdState(shown: shownInterstitialWins, eligibleCount: eligibleWinCount, lastShownAt: lastInterstitialAt)
+            let previous = winAdState
             shownInterstitialWins.insert(s.id); eligibleWinCount += 1
             let cooled = Date().timeIntervalSince(lastInterstitialAt ?? .distantPast) >= Double(row.interstitial.cooldownSeconds)
             if eligibleWinCount % max(1, row.interstitial.frequency) == 0 && cooled {
+                let provider = interstitialProvider ?? MockInterstitialProvider(scenario: rewardScenario)
+                let metadata = provider.analyticsMetadata
+                let offerID = UUID().uuidString
+                activeInterstitialOffer = analytics.prepare("ad_offer_shown", key: offerID, level: s.puzzle.id, config: s.config.version,
+                    parameters: ["offer_id": offerID, "placement_id": metadata.placementID, "reward_type": "", "buff_type": "", "reward_amount": "0",
+                                 "ad_type": "interstitial", "network": metadata.network, "ad_unit_id": metadata.adUnitID])
+                if let offer = activeInterstitialOffer { pendingInterstitialEvents.append(offer) }
                 lastInterstitialAt = Date()
-                guard persistWinAdState(previous: previous) else { winTransitionID = nil; return }
+                // Reserve the winning result and freeze its offer together before
+                // requesting the provider. A failed load still consumes this win.
+                guard persistWinAdState(previous: previous) else { winTransitionID = nil; activeInterstitialOffer = nil; return }
+                flushInterstitialEvents()
                 interstitialBusy = true; sheet = .reward
-                let deadline = DispatchWorkItem { [weak self] in self?.finishInterstitial(winID: s.id) }
+                let deadline = DispatchWorkItem { [weak self] in self?.receiveInterstitial(.timedOut, winID: s.id, errorCode: "loading_timeout") }
                 interstitialDeadline = deadline
                 DispatchQueue.main.asyncAfter(deadline: .now() + Double(row.interstitial.adTimeoutSeconds), execute: deadline)
-                let provider = interstitialProvider ?? MockInterstitialProvider(scenario: rewardScenario)
                 activeInterstitialProvider = provider
-                interstitialIsReady = false; interstitialWasPresented = false
+                interstitialIsReady = false; interstitialPresentationRequested = false; interstitialDisplayActive = false
                 provider.load { [weak self] readiness in
                     DispatchQueue.main.async { self?.receiveInterstitialReadiness(readiness, winID: s.id) }
                 }
@@ -399,9 +442,9 @@ final class AppModel: ObservableObject {
         completeWinTransition()
     }
     private func receiveInterstitialReadiness(_ readiness: RewardReadiness, winID: UUID) {
-        guard interstitialBusy, winTransitionID == winID, !interstitialWasPresented else { return }
+        guard interstitialBusy, winTransitionID == winID, !interstitialPresentationRequested else { return }
         switch readiness {
-        case .unavailable: finishInterstitial(winID: winID)
+        case .unavailable: receiveInterstitial(.failed, winID: winID, errorCode: "load_unavailable")
         case .ready:
             // Original §8.2 limits loading, not the duration of an ad already ready to show.
             interstitialDeadline?.cancel(); interstitialDeadline = nil
@@ -411,32 +454,110 @@ final class AppModel: ObservableObject {
     }
     private func displayReadyInterstitial() {
         guard active, startupFlowCompleted, interstitialBusy, interstitialIsReady,
-              !interstitialWasPresented, let winID = winTransitionID,
+              !interstitialPresentationRequested, let winID = winTransitionID,
               let provider = activeInterstitialProvider else { return }
-        interstitialWasPresented = true
-        provider.present { [weak self] _ in
-            DispatchQueue.main.async { self?.finishInterstitial(winID: winID) }
+        interstitialPresentationRequested = true
+        provider.present { [weak self] signal in
+            DispatchQueue.main.async { self?.receiveInterstitial(signal, winID: winID) }
         }
     }
-    private func finishInterstitial(winID: UUID) {
+    private func receiveInterstitial(_ signal: InterstitialSignal, winID: UUID, errorCode: String = "") {
         guard interstitialBusy, winTransitionID == winID else { return }
+        if signal == .started {
+            guard interstitialPresentationRequested, !interstitialDisplayActive else { return }
+            interstitialDisplayActive = true
+            recordInterstitialResult(status: "started")
+            return
+        }
+        if signal == .closed || signal == .skipped {
+            guard interstitialPresentationRequested else { return }
+        }
+        pendingWinContinuation = WinContinuation(winID: winID, toHome: transitionToHome)
+        winAdStateNeedsWrite = true
+        switch signal {
+        case .closed:
+            // Internal mapping v1: normally closed display, not proof that a
+            // whole video was watched. The frozen production mapping is pending.
+            recordInterstitialResult(status: "completed")
+        case .skipped:
+            recordInterstitialResult(status: "skipped")
+        case .failed: recordInterstitialResult(status: "failed", errorCode: errorCode.isEmpty ? "presentation_failed" : errorCode)
+        case .timedOut: recordInterstitialResult(status: "failed", errorCode: errorCode.isEmpty ? "provider_timeout" : errorCode)
+        case .started: return
+        }
+        flushInterstitialEvents()
         interstitialDeadline?.cancel(); interstitialDeadline = nil
-        activeInterstitialProvider = nil; interstitialIsReady = false; interstitialWasPresented = false
+        activeInterstitialProvider = nil; activeInterstitialOffer = nil
+        interstitialIsReady = false; interstitialPresentationRequested = false; interstitialDisplayActive = false
         interstitialBusy = false; sheet = nil; completeWinTransition()
+    }
+    private func recordInterstitialResult(status: String, errorCode: String = "") {
+        guard let offer = activeInterstitialOffer,
+              case .text(let offerID) = offer.event.parameters["offer_id"],
+              case .text(let placement) = offer.event.parameters["placement_id"],
+              case .text(let network) = offer.event.parameters["network"],
+              case .text(let unit) = offer.event.parameters["ad_unit_id"],
+              let event = analytics.prepareRelated("ad_result", key: offerID + ":" + status, to: offer.event,
+                 parameters: ["offer_id": offerID, "placement_id": placement, "status": status, "reward_granted": "false",
+                              "error_code": errorCode, "ad_type": "interstitial", "network": network, "ad_unit_id": unit]) else { return }
+        pendingInterstitialEvents.append(event)
+        flushInterstitialEvents()
+    }
+    private var winAdState: WinAdState {
+        WinAdState(shown: shownInterstitialWins, eligibleCount: eligibleWinCount, lastShownAt: lastInterstitialAt,
+                   pendingEvents: pendingInterstitialEvents, pendingContinuation: pendingWinContinuation)
+    }
+    /// Retry the same frozen events. Never invent a terminal outcome after a
+    /// crash, and never replay an ad merely because analytics delivery failed.
+    private func flushInterstitialEvents() {
+        guard !pendingInterstitialEvents.isEmpty || pendingWinContinuation != nil || winAdStateNeedsWrite else { return }
+        let file = DurableStateFile<WinAdState>(url: saveDirectory.appendingPathComponent("win-ad-state.json"))
+        do { try file.save(winAdState); winAdStateNeedsWrite = false; interstitialRecordingError = nil }
+        catch { interstitialRecordingError = "Interstitial events await a storage retry: \(error.localizedDescription)"; return }
+        guard analytics.enabled else { return }
+        var acknowledged = Set<String>()
+        for event in pendingInterstitialEvents {
+            guard analytics.commit(event) else { break }
+            acknowledged.insert(event.key)
+        }
+        guard !acknowledged.isEmpty else { return }
+        let previous = pendingInterstitialEvents
+        pendingInterstitialEvents.removeAll { acknowledged.contains($0.key) }
+        do { try file.save(winAdState) }
+        catch {
+            pendingInterstitialEvents = previous
+            interstitialRecordingError = "Interstitial acknowledgement awaits a storage retry: \(error.localizedDescription)"
+        }
+    }
+    private func acknowledgeSavedWinContinuation(_ saved: PlayerProgress, winID: UUID?) {
+        guard let continuation = pendingWinContinuation, saved.session != nil,
+              continuation.winID == winID, saved.session?.id != continuation.winID else { return }
+        if winTransitionID == continuation.winID { winTransitionID = nil }
+        pendingWinContinuation = nil; winAdStateNeedsWrite = true
+        flushInterstitialEvents()
     }
     private func persistWinAdState(previous: WinAdState) -> Bool {
         do {
-            let state = WinAdState(shown: shownInterstitialWins, eligibleCount: eligibleWinCount, lastShownAt: lastInterstitialAt)
-            try DurableStateFile<WinAdState>(url: saveDirectory.appendingPathComponent("win-ad-state.json")).save(state)
+            try DurableStateFile<WinAdState>(url: saveDirectory.appendingPathComponent("win-ad-state.json")).save(winAdState)
+            winAdStateNeedsWrite = false
             return true
         } catch {
             shownInterstitialWins = previous.shown; eligibleWinCount = previous.eligibleCount; lastInterstitialAt = previous.lastShownAt
+            pendingInterstitialEvents = previous.pendingEvents ?? []
+            pendingWinContinuation = previous.pendingContinuation
             errorMessage = "The level transition could not be saved. Please try again."; return false
         }
     }
     private func completeWinTransition() {
+        // A final SDK callback may arrive in the background. Preserve the
+        // original destination and do not create an unplayable level_start.
+        guard active else { return }
         guard let s = session, s.id == winTransitionID else { winTransitionID = nil; return }
-        if transitionToHome { winTransitionID = nil; hint = nil; screen = .home; save(); return }
+        if transitionToHome {
+            winTransitionID = nil; hint = nil; screen = .home
+            pendingWinContinuation = nil; winAdStateNeedsWrite = true; flushInterstitialEvents()
+            save(); return
+        }
         if s.puzzle.id == 10 && !challengeSeen { challengePending = true; return }
         winTransitionID = nil; start(level: s.puzzle.id + 1)
     }
@@ -750,7 +871,7 @@ final class AppModel: ObservableObject {
         if errorMessage != nil { overlay = .error }
         else if notice != nil { overlay = .notice }
         else if loading { overlay = .loading }
-        else if sheet == .reward { overlay = rewardDisplayActive || interstitialWasPresented ? .none : .loading }
+        else if sheet == .reward { overlay = rewardDisplayActive || interstitialDisplayActive ? .none : .loading }
         else if challengePending { overlay = .challenge }
         else if sheet == .settings { page = .settings; overlay = .settings }
         else if sheet == .debug { overlay = .debug }
@@ -762,7 +883,7 @@ final class AppModel: ObservableObject {
         }
         var blocks = Set<FeedbackAudioBlock>()
         if !active { blocks.insert(.background) }
-        if sheet == .reward && (rewardDisplayActive || interstitialWasPresented) { blocks.insert(.advertisement) }
+        if sheet == .reward && (rewardDisplayActive || interstitialDisplayActive) { blocks.insert(.advertisement) }
         if !startupFlowCompleted || (screen == .game && (!canTouchBoard || notice != nil || errorMessage != nil)) { blocks.insert(.inputLocked) }
         if !startupFlowCompleted { page = .startup; overlay = .none }
         feedback.setEnvironment(FeedbackEnvironment(page: page, level: screen == .game ? session?.puzzle.id : nil, overlay: overlay, blocks: blocks))
@@ -775,16 +896,19 @@ final class AppModel: ObservableObject {
     func setActive(_ value: Bool) {
         active = value; now = Date(); syncFeedbackState()
         if value { analytics.beginSession(source: "resume") } else { analytics.endSession(reason: "background") }
+        flushInterstitialEvents()
         if !value { save(force: true) }
         else {
             if let offerID = activeOfferID { displayReadyReward(offerID: offerID) }
             displayReadyInterstitial()
+            if screen == .game && winTransitionID != nil && !interstitialBusy && !challengePending { completeWinTransition() }
             resumeConfirmedRewardHint()
             refreshGameplayConfiguration()
         }
     }
     func consentAccepted() {
         analytics.acceptConsent()
+        flushInterstitialEvents()
         if !progress.pendingLevelResultEvents.isEmpty || progress.rewardLedger.values.contains(where: { $0.completionEvent != nil }) { save(force: true) }
     }
     /// Called only after the startup view reaches Home, including optional permission completion.
@@ -868,12 +992,13 @@ final class AppModel: ObservableObject {
             let progress: PlayerProgress; let levelPackCount: Int
             let referenceGameplay: ReferenceGameplayConfiguration?; let generationReport: GenerationPipelineReport?
             let unattributedToolUsesSinceLaunch: Int
+            let interstitialRecordingError: String?
             let gameplayConfiguration: GameplayConfigurationDiagnostics
         }
         do {
             let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "unknown"
             let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "unknown"
-            let report = Report(generatedAt: Date(), build: "\(version) (\(build))", demoConfig: config, progress: progress, levelPackCount: levels.count, referenceGameplay: referenceConfiguration, generationReport: lastGenerationReport, unattributedToolUsesSinceLaunch: unattributedToolUseCount, gameplayConfiguration: gameplayConfigurationDiagnostics)
+            let report = Report(generatedAt: Date(), build: "\(version) (\(build))", demoConfig: config, progress: progress, levelPackCount: levels.count, referenceGameplay: referenceConfiguration, generationReport: lastGenerationReport, unattributedToolUsesSinceLaunch: unattributedToolUseCount, interstitialRecordingError: interstitialRecordingError, gameplayConfiguration: gameplayConfigurationDiagnostics)
             let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
             let url = FileManager.default.temporaryDirectory.appendingPathComponent("Capydoku-diagnostics.json")
             try encoder.encode(report).write(to: url, options: .atomic)

@@ -62,28 +62,46 @@ struct MockRewardProvider: RewardProvider {
     }
 }
 
-enum InterstitialSignal { case closed, failed, timedOut }
+enum InterstitialSignal: Equatable { case started, closed, skipped, failed, timedOut }
+struct InterstitialAnalyticsMetadata {
+    let placementID: String
+    let network: String
+    let adUnitID: String
+    // Versioned internal mapping only. The original specifies no interstitial
+    // placement enum; a live adapter must supply its reviewed mapping and IDs.
+    static let simulation = Self(placementID: "demo_interstitial_win_v1", network: "simulation", adUnitID: "internal-demo")
+}
+/// `started` means confirmed presentation, not readiness or a present request.
+/// `closed` is a normally ended display; the local v1 event mapping calls this
+/// completed, not a claim of full video viewing. An early dismissal uses skipped.
 protocol InterstitialProvider {
+    var analyticsMetadata: InterstitialAnalyticsMetadata { get }
     func load(completion: @escaping (RewardReadiness) -> Void)
     var isReady: Bool { get }
     func present(completion: @escaping (InterstitialSignal) -> Void)
 }
 extension InterstitialProvider {
+    var analyticsMetadata: InterstitialAnalyticsMetadata {
+        .init(placementID: "demo_interstitial_win_v1", network: "unconfigured", adUnitID: "unconfigured")
+    }
     func load(completion: @escaping (RewardReadiness) -> Void) { completion(.ready) }
     var isReady: Bool { true }
 }
 struct MockInterstitialProvider: InterstitialProvider {
     let scenario: RewardScenario
+    var analyticsMetadata: InterstitialAnalyticsMetadata { .simulation }
     func load(completion: @escaping (RewardReadiness) -> Void) {
         if scenario != .timeout { completion(.ready) }
     }
     var isReady: Bool { scenario != .timeout }
     func present(completion: @escaping (InterstitialSignal) -> Void) {
+        if scenario != .failure && scenario != .timeout { completion(.started) }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             switch scenario {
             case .timeout: break
             case .failure, .interrupted: completion(.failed)
-            case .success, .cancel: completion(.closed)
+            case .success: completion(.closed)
+            case .cancel: completion(.skipped)
             case .duplicate: completion(.closed); completion(.closed)
             }
         }

@@ -46,15 +46,17 @@ final class RewardReadinessTests: XCTestCase {
         let app = AppModel(saveDirectory: root, rewardProvider: provider, runsTimer: false, feedbackEnabled: false,
                            interstitialProvider: interstitial, startupBypassForTesting: false)
         var row = try referenceRow(); row.adsEnabled = true
-        row.directFind.visible = false; row.revive.enabled = false
+        row.directFind.visible = false; row.directFind.buttonState = .hidden; row.revive.enabled = false
         row.hint.initialFreeCount = 0
         row.interstitial.enabled = true; row.interstitial.frequency = 1
         row.interstitial.onNextLevel = true; row.interstitial.startLevel = 1
         app.config = DemoConfig(referenceGameplay: row); app.progress.tutorialCompleted = true
         app.start(level: 1) // Same path that a DEBUG -level argument can invoke before Welcome.
+        XCTAssertNil(app.errorMessage, "The startup-gate fixture must also be a valid persistable configuration.")
         app.offer(.hint); app.sheet = .reward; app.runReward(); app.sheet = nil
         XCTAssertTrue(provider.loads.isEmpty); XCTAssertTrue(provider.displays.isEmpty)
         XCTAssertTrue(app.progress.rewardLedger.isEmpty)
+        XCTAssertNil(app.notice)
         for cell in try XCTUnwrap(app.session).puzzle.solution { app.submit(cell) }
         app.next()
         XCTAssertEqual(app.session?.puzzle.id, 1); XCTAssertTrue(interstitial.callbacks.isEmpty)
@@ -64,7 +66,7 @@ final class RewardReadinessTests: XCTestCase {
         XCTAssertTrue(provider.displays.isEmpty, "Speculative preload must never present an ad or create an offer")
         XCTAssertTrue(app.progress.rewardLedger.isEmpty)
         app.next(); XCTAssertEqual(interstitial.callbacks.count, 1)
-        interstitial.callbacks[0](.closed); await drain()
+        try XCTUnwrap(interstitial.callbacks.first)(.closed); await drain()
     }
     @MainActor func testPendingReadinessPreservesBoardThenDisplaysOnceAndReplenishesOnce() async throws {
         let root = directory(); defer { try? FileManager.default.removeItem(at: root) }
