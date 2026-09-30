@@ -1,0 +1,51 @@
+{
+  "attemptCounts": {},
+  "bonusDirect": 0,
+  "bonusHints": 0,
+  "bonusToolSources": {
+    "direct": {
+      "batches": []
+    },
+    "hints": {
+      "batches": []
+    }
+  },
+  "carriedToolBalance": {
+    "direct": 0,
+    "hints": 0
+  },
+  "carriedToolSources": {
+    "direct": {
+      "batches": []
+    },
+    "hints": {
+      "batches": []
+    }
+  },
+  "checkIn": {
+    "completedCycles": 0,
+    "cycleDay": 0,
+    "streak": 0
+  },
+  "completedLevels": [],
+  "currentLevel": 1,
+  "freeReviveUsage": {},
+  "freeToolGrantedLevels": [],
+  "levelStartLocalBalances": {},
+  "levelToolBalances": {},
+  "levelToolSources": {},
+  "pendingBuffEvents": {},
+  "pendingLevelResultEvents": {},
+  "referenceToolGrantKeys": [],
+  "rewardLedger": {},
+  "settings": {
+    "hapticsEnabled": true,
+    "language": "zh-Hans",
+    "musicEnabled": true,
+    "soundEnabled": true,
+    "voiceEnabled": true
+  },
+  "tutorialCompleted": false,
+  "tutorialStep": 0,
+  "unlockedLevel": 1
+}

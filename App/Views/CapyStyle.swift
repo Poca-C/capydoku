@@ -6,6 +6,8 @@ enum CapyPalette {
     static let cream = Color(red: 0.97, green: 0.95, blue: 0.93)
     static let paper = Color(red: 1.00, green: 0.99, blue: 0.97)
     static let ink = Color(red: 0.49, green: 0.31, blue: 0.29)
+    // A thin warm outline preserves white marks on the lightest board regions.
+    static let markOutline = Color(red: 0.22, green: 0.14, blue: 0.12)
     static let orange = Color(red: 0.97, green: 0.56, blue: 0.08)
     // Functional labels/buttons need contrast; decorative artwork keeps the reference orange.
     static let actionOrange = Color(red: 0.72, green: 0.30, blue: 0.015)
@@ -20,6 +22,8 @@ enum CapyPalette {
     static let muted = Color(red: 0.62, green: 0.45, blue: 0.41)
     static let green = Color(red: 0.24, green: 0.64, blue: 0.31)
     static let video = Color(red: 0.03, green: 0.73, blue: 0.32)
+    // Functional 15pt "Free" text needs a darker green than decorative video icons.
+    static let rewardTextGreen = Color(red: 0.03, green: 0.46, blue: 0.20)
     static let life = Color(red: 0.94, green: 0.24, blue: 0.22)
     static let disabled = Color(red: 0.65, green: 0.68, blue: 0.67)
     static let line = Color(red: 0.88, green: 0.78, blue: 0.70)

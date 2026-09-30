@@ -921,14 +921,16 @@
       ],
       "title": "2D 卡皮巴拉主题、颜色、字体与资产",
       "status": "partial",
-      "implemented": "奶油/橙/棕圆润 UI、白 X、多色棋盘和卡皮巴拉资源已替换；核心界面非3D。",
+      "implemented": "奶油/橙/棕圆润 UI、白 X、多色棋盘和卡皮巴拉资源已替换；核心界面非3D。 0.2.17按[244]为白X/空心预览与红错误X补细暖棕边界，10种区域色及190/340pt棋盘实际像素核验通过；角色与区域配色未改。",
       "gap": "已对照原文附图目视核对7张当前主题截图，资源来源有记录；冻结录屏逐帧/全部尺寸与真机仍待验。",
       "evidence": [
         "App/Views/CapyStyle.swift",
         "App/Views/PuzzleBoardView.swift",
         "App/Resources/Assets.xcassets",
         "Reference/art-provenance.json",
-        "Docs/original-reference/manifest.json"
+        "Docs/original-reference/manifest.json",
+        "AppTests/BoardMarkContrastTests.swift",
+        "Docs/original-contrast-0217/manifest.json"
       ]
     },
     {
@@ -1142,7 +1144,7 @@
       ],
       "title": "44pt、状态、焦点恢复与可读性",
       "status": "partial",
-      "implemented": "17e已验证Settings/模拟广告/结算底层控件隔离、关闭后恢复原盘、主要按钮44×44及长文案自然增高；有效Button动作发反馈，明暗背景分别配文字色。Hint保留只读棋盘并路由解释焦点。 0.2.13补开关与签到功能文字对比，按下开关文字仍大于4.5:1；装饰色保留。 0.2.14补Welcome功能文字可读色；真实UI发现新增容器标识覆盖同意按钮标识，删除后两设备首启与重启复验通过。 0.2.15复现并修复长提示从固定66pt区域向上覆盖关闭X；正文独立滚动、视口高度有上限、棋盘保持方形。中英提示正文12档动态字号、最大字号关闭/Apply至少44pt及不遮挡已验证，普通字号布局保留。 0.2.16实际布局测量验证小屏主要控件44pt、信息顺序和可达性，包含教学、AX5提示及合成免费入口；普通尺寸真实UI回归通过。",
+      "implemented": "17e已验证Settings/模拟广告/结算底层控件隔离、关闭后恢复原盘、主要按钮44×44及长文案自然增高；有效Button动作发反馈，明暗背景分别配文字色。Hint保留只读棋盘并路由解释焦点。 0.2.13补开关与签到功能文字对比，按下开关文字仍大于4.5:1；装饰色保留。 0.2.14补Welcome功能文字可读色；真实UI发现新增容器标识覆盖同意按钮标识，删除后两设备首启与重启复验通过。 0.2.15复现并修复长提示从固定66pt区域向上覆盖关闭X；正文独立滚动、视口高度有上限、棋盘保持方形。中英提示正文12档动态字号、最大字号关闭/Apply至少44pt及不遮挡已验证，普通字号布局保留。 0.2.16实际布局测量验证小屏主要控件44pt、信息顺序和可达性，包含教学、AX5提示及合成免费入口；普通尺寸真实UI回归通过。 0.2.17修复免费复活角标15pt白字对比偏弱，实际中英文Root宿主测得5.83:1；数值是本地可读性指标，原文未给阈值。",
       "gap": "Hint的XCTest语义树仍可包含禁用背景内容，不据此宣称VoiceOver可达或不可达；真实VoiceOver焦点顺序、所有动态字体档位、最低系统和真机仍待验。",
       "evidence": [
         "App/Views/RootView.swift",
@@ -1159,7 +1161,9 @@
         "AppTests/FunctionalContrastTests.swift",
         "Docs/original-welcome-0214/manifest.json",
         "Docs/original-hint-0215/manifest.json",
-        "Docs/original-compact-0216/manifest.json"
+        "Docs/original-compact-0216/manifest.json",
+        "AppTests/BoardMarkContrastTests.swift",
+        "Docs/original-contrast-0217/manifest.json"
       ]
     },
     {
@@ -1485,8 +1489,8 @@
       ],
       "title": "Xcode26/iOS26构建及正式发布",
       "status": "external_pending",
-      "implemented": "0.2.16(19)通过Xcode26.6的Simulator Debug及通用iOS Release无签名构建；17Pro与17e均正常覆盖安装、核对版本并无测试/重置参数启动。",
-      "gap": "未签名Release构建不是可分发安装包；真机签名运行、TestFlight、App Store审核及上架均未完成。",
+      "implemented": "0.2.17(20)通过Xcode26.6的Simulator Debug及通用iOS Release无签名构建；17Pro与17e均正常覆盖安装、核对版本并无测试/重置参数启动。",
+      "gap": "当前仅Debug/Release两套编译配置，均为同一internal Demo；尚无独立TestFlight、预发布和正式构建配置。未签名Release构建不是可分发安装包；真机签名运行、TestFlight、App Store审核及上架均未完成。",
       "evidence": [
         "Capydoku.xcodeproj/project.pbxproj",
         "Validation/verification-summary.json",
@@ -1496,7 +1500,9 @@
         "AppTests/AnalyticsRecorderTests.swift",
         "Reference/interstitial-analytics-contract.md",
         "Validation/original-0215-install-audit.json",
-        "Validation/original-0216-install-audit.json"
+        "Validation/original-0216-install-audit.json",
+        "scripts/generate_project.py",
+        "Capydoku.xcodeproj/xcshareddata/xcschemes/Capydoku.xcscheme"
       ]
     },
     {
@@ -1563,7 +1569,7 @@
       "title": "环境隔离与SDK隐私清单",
       "status": "external_pending",
       "implemented": "当前明确内部离线环境，App有隐私清单占位配置。",
-      "gap": "没有最终SDK名称/版本/采集字段/政策/关闭方式清单及三环境AppID；实际App Privacy、年龄分级需随正式接入填写。",
+      "gap": "Debug/Release共用com.capydoku.demo，均记录internal-demo-offline并无线上上报；不能当作测试/预发布/正式三环境已经隔离。UI与宿主测试存储目录已隔离，配置缓存按完整目标隔离。最终三环境AppID/构建配置、SDK名称/版本/采集字段/政策/关闭方式清单及实际App Privacy、年龄分级仍需随正式接入完成。",
       "evidence": [
         "App/PrivacyInfo.xcprivacy",
         "App/Info.plist",
@@ -1662,13 +1668,16 @@
       ],
       "title": "重装重置、签到防刷与隐私",
       "status": "partial",
-      "implemented": "0.2.6在临时模拟器实测非空保存/恢复及卸载重装；进度、库存、签到、设置、奖励台账恢复默认。玩家保存只引用包内棋盘，临时设备已删除。UTC自然日幂等与回拨保护已实现。",
-      "gap": "非空数据为校验正确的人工夹具，不替代实际签到/发奖操作。正式时区、服务器时间、实际系统时钟与真机重装仍待验。",
+      "implemented": "0.2.17在新建临时17e模拟器上，通过真实UI完成同意/权限流程、设置与语言修改、签到、九步教学、库存直找、一次模拟广告直找和错误扣血；正常后台保存后冷启动，完整玩家字段精确保持，仅游玩时间递增及一次Continue→Home的resultPhase+1。真实卸载确认旧存档消失，再安装同一冻结构建，UI与保存数据共同核验关卡/库存/签到/设置/奖励台账回初始；3阶段各1项UI通过且无跳过，临时设备已删除。旧0.2.6人工夹具证据保留为历史。",
+      "gap": "本轮使用测试隔离目录与模拟广告，不代表真实SDK、真机、系统备份或App Store重装验收；正常后台保存后冷恢复不等同前台任意指令点强退。正式时区/服务器时间和实际系统时钟变化仍待验。 本轮未通关L1，通关列表与高关解锁未先变为非空；其重装后默认值已核对，非空清除仅有旧版人工夹具证据。",
       "evidence": [
         "scripts/verify_reinstall.py",
         "Validation/reinstall-original-025-audit.json",
         "Validation/reinstall-original-026-audit.json",
-        "Sources/CapydokuCore/PlayerProgress.swift"
+        "Sources/CapydokuCore/PlayerProgress.swift",
+        "UITests/OperationReinstallUITests.swift",
+        "scripts/verify_operation_reinstall.py",
+        "Validation/original-0217-operation-reinstall.json"
       ]
     },
     {
@@ -1683,7 +1692,7 @@
       ],
       "title": "iOS技术验收与SDK升级兼容",
       "status": "partial",
-      "implemented": "0.2.16通过156项Core与17e全量267项App（无排除项）；两设备选定UI共6次执行通过（Pro 4次、17e 2次）。生成报告冷恢复/写入失败、首页重开和小屏宿主布局已验证。未签名设备Release编译通过，两模拟器正常覆盖安装与启动，全部玩家数据保留；首次编译/小屏失败及修正记录保留。",
+      "implemented": "0.2.17在Pro全量269项App（无排除）及2项选定真实UI通过；17e两项实际渲染专项通过。未修改核心/150关包，156项Core保留0.2.16的证据，不标本轮重跑。未签名设备Release编译通过，两正常模拟器覆盖安装启动并核对全部玩家数据保留。修复前62条对比断言失败和修复后证据分开归档。 独立临时17e另通过实际操作建档→冷恢复→卸载重装的3阶段UI核验，均1 passed/0 skipped。",
       "gap": "这不是全部设备/全部场景通过。真机、最低系统、真实SDK升级及远程关闭尚未验证；组合UI运行的启动冲突及成功单独重验已如实记录。",
       "evidence": [
         "Validation/original-verification.json",
@@ -1724,7 +1733,11 @@
         "Docs/original-compact-0216/manifest.json",
         "AppTests/GenerationAuditIntegrationTests.swift",
         "AppTests/RestartNavigationTests.swift",
-        "AppTests/CompactLayoutTests.swift"
+        "AppTests/CompactLayoutTests.swift",
+        "AppTests/BoardMarkContrastTests.swift",
+        "Validation/original-0217-install-audit.json",
+        "Docs/original-contrast-0217/manifest.json",
+        "Validation/original-0217-operation-reinstall.json"
       ]
     },
     {
@@ -2025,5 +2038,5 @@
       ]
     }
   ],
-  "currentBuild": "0.2.16 (19)"
+  "currentBuild": "0.2.17 (20)"
 }

@@ -1,0 +1,260 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "startedAt": "2026-09-30T18:51:12.292192+00:00",
+  "finishedAt": "2026-09-30T18:54:50.294189+00:00",
+  "requirements": {
+    "408": "真实操作形成的本地关内进度、库存、签到、设置与奖励台账在卸载重装后回初始，补足 SAVE-05 先前仅注入夹具的证据缺口。",
+    "415": "本轮仅验证正常后台保存后终止并冷启恢复；不把本轮当作前台强退、损坏回退、旧版本迁移或时钟修改证据。"
+  },
+  "scope": "0.2.17 (20) 单一模拟器构建；全程真实 UI 产生状态→返回首页→进入系统后台并完成正常保存→终止→冷启并查看→真正卸载→重装同一构建→初始状态核验。",
+  "excluded": [
+    "前台直接强退场景",
+    "真机签名、安装与设备行为",
+    "App Store 审核、投放或安装",
+    "iCloud/设备备份恢复",
+    "真实广告 SDK 或网络接入",
+    "正式匿名身份重装口径",
+    "高关卡与已通关多关记录的重装覆盖"
+  ],
+  "noSaveInjection": true,
+  "appContainerAccess": "只读获取与复制；未注入、编辑或恢复任何应用存档。",
+  "appLaunchArguments": [
+    "-ui-testing",
+    "-test-first-launch"
+  ],
+  "launchArgumentScope": {
+    "-ui-testing": "仅使用隔离的 CapydokuUITesting 数据目录。",
+    "-test-first-launch": "使测试通过真实首次同意页；未使用跳关、跳过教学、重置或语言覆盖参数。"
+  },
+  "testOptIn": "CAPYDOKU_OPERATION_REINSTALL_AUDIT=1 仅放在本次独立 xctestrun 的 UI 测试宿主环境；每阶段核验实际方法名、1 passed、0 failed、0 skipped。",
+  "temporaryDevice": {
+    "name": "Capydoku-Operation-Reinstall-Audit-bd2a3823aa9c",
+    "udid": "C075C30F-EE38-4387-826A-AAC20438B921",
+    "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-5",
+    "deviceType": "com.apple.CoreSimulator.SimDeviceType.iPhone-17e"
+  },
+  "build": {
+    "appVersion": "0.2.17",
+    "appBuild": "20",
+    "bundleID": "com.capydoku.demo",
+    "appTreeSHA256": "36226064d5adb6b421a26a83de3c3822bb284e1f661745fafb8448da7f3af2cf",
+    "levelPackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49",
+    "signing": "simulator ad hoc only"
+  },
+  "sourceFiles": [
+    {
+      "path": "UITests/OperationReinstallUITests.swift",
+      "sha256": "5e4488536bb4d451d4e1bb416a39405d8062c4af1280164b2305842f1c5f7b88",
+      "unchangedSinceRun": true
+    },
+    {
+      "path": "scripts/verify_operation_reinstall.py",
+      "sha256": "93ae3c851903f6041d102f068d3bd9d25b432634c4ae5c1633651b596fb005e5",
+      "unchangedSinceRun": true
+    }
+  ],
+  "uiStages": [
+    {
+      "stage": "01-real-ui-state",
+      "expectedMethod": "test01CreatePersistentStateThroughUI",
+      "observedMethod": "test01CreatePersistentStateThroughUI()",
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "resultBundle": "Validation/test-runs/original-0217-operation-reinstall-01/01-real-ui-state.xcresult"
+    },
+    {
+      "stage": "02-cold-ui-restore",
+      "expectedMethod": "test02VerifyColdRestoreThroughUI",
+      "observedMethod": "test02VerifyColdRestoreThroughUI()",
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "resultBundle": "Validation/test-runs/original-0217-operation-reinstall-01/02-cold-ui-restore.xcresult"
+    },
+    {
+      "stage": "03-reinstalled-ui-defaults",
+      "expectedMethod": "test03VerifyInitialStateAfterReinstallThroughUI",
+      "observedMethod": "test03VerifyInitialStateAfterReinstallThroughUI()",
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "resultBundle": "Validation/test-runs/original-0217-operation-reinstall-01/03-reinstalled-ui-defaults.xcresult"
+    }
+  ],
+  "actualActions": [
+    "首次中文欢迎页点击同意；系统权限弹窗点击“不允许”。",
+    "四项设置关闭并切换英文；真实领取一次签到。",
+    "完成当前关卡包第 1 关九步教学；使用免费直接寻找，再点击视频奖励入口完成一次本地模拟激励奖励；提交一次错误答案。",
+    "两次观察均返回首页并进入系统后台后终止；冷启阶段实际进入游戏再返回首页，因此 resultPhase 合法增加 1。",
+    "真实 simctl uninstall 后查询应用容器失败且旧存档不存在；重装同一应用后隔离数据目录仍不存在；通过 UI 再同意、只查看初始设置与签到。"
+  ],
+  "tutorialScope": "当前安装关卡包 L1 明确操作路径；已核对关卡包 SHA、教学目标及排除格，不声称任意生成盘动态目标 UI 全覆盖。",
+  "beforeColdRestore": {
+    "dataContainer": "/Users/poca/Library/Developer/CoreSimulator/Devices/C075C30F-EE38-4387-826A-AAC20438B921/data/Containers/Data/Application/87BC8F8A-5071-4289-AF04-88C71A9D2E89",
+    "saveSHA256": "3af150e4d6e4cc919ac1f4f92843ca79e570ef830d4b321031bfd39f1697466d",
+    "saveBytes": 3950,
+    "checksumValid": true,
+    "eventCount": 11,
+    "rewardCount": 1
+  },
+  "afterColdRestore": {
+    "dataContainer": "/Users/poca/Library/Developer/CoreSimulator/Devices/C075C30F-EE38-4387-826A-AAC20438B921/data/Containers/Data/Application/DF2CD160-09A8-42A7-9EA0-BE9BDA3B2F0F",
+    "saveSHA256": "0aee9f5526d012a008a9454f01686ac0778789d2cf0cc93a5436a97882103a96",
+    "saveBytes": 3950,
+    "checksumValid": true,
+    "eventCount": 14,
+    "rewardCount": 1
+  },
+  "coldRestoreComparison": {
+    "session.elapsedSeconds": {
+      "before": 33,
+      "after": 41
+    },
+    "session.resultPhase": {
+      "before": 0,
+      "after": 1
+    },
+    "allOtherPlayerPayloadFieldsExactlyEqual": true,
+    "unorderedSetFieldsNormalizedOnly": [
+      "completedLevels",
+      "freeToolGrantedLevels",
+      "referenceToolGrantKeys",
+      "session.found",
+      "session.marks",
+      "session.errors"
+    ],
+    "comparisonPassed": true,
+    "playerPayloadRule": "除列出的 elapsedSeconds 和 resultPhase 外，完整玩家 payload 严格相等；仅归一声明的 Set 数组顺序。",
+    "exactStableExamples": {
+      "score": 360,
+      "lives": 2,
+      "found": [
+        1,
+        8,
+        14
+      ],
+      "marks": [
+        4,
+        5,
+        9,
+        13
+      ],
+      "errors": [
+        4
+      ],
+      "puzzleReference": {
+        "checksum": "7bc131c9fcb5d033827f12e19b408e177f04ffc8760c96a9fa65cfd172aebd4f",
+        "levelID": 1,
+        "source": "bundle"
+      },
+      "tutorialStep": 9,
+      "checkIn": {
+        "completedCycles": 0,
+        "cycleDay": 1,
+        "lastClaimedDay": 20726,
+        "streak": 1
+      },
+      "settings": {
+        "hapticsEnabled": false,
+        "language": "en",
+        "musicEnabled": false,
+        "soundEnabled": false,
+        "voiceEnabled": false
+      }
+    },
+    "analytics": "旧事件完整前缀不变，11→14 为真实冷启/会话/退出追加；模拟奖励事件与已执行台账保持不变。",
+    "uiAssertionLimit": "UI 自动断言使用计数、生命、库存、签到、开关与 score>0；精确 score=360、格子集合、puzzleReference、全部库存来源及台账的一致性由完整文件比较补足。"
+  },
+  "simulatedReward": {
+    "provider": "默认本地 MockRewardProvider",
+    "network": "simulation",
+    "eventNames": [
+      "ad_offer_shown",
+      "ad_result",
+      "ad_result"
+    ],
+    "statuses": [
+      "started",
+      "completed"
+    ],
+    "rewardGranted": true,
+    "executedLedgerBeforeAndAfterCold": 1,
+    "executedLedgerAfterReinstall": 0,
+    "realAdvertisingVerified": false
+  },
+  "uninstall": {
+    "containerLookupFails": true,
+    "oldSaveAbsent": true
+  },
+  "freshInstallDataDirectoryAbsentBeforeFirstLaunch": true,
+  "afterReinstall": {
+    "dataContainer": "/Users/poca/Library/Developer/CoreSimulator/Devices/C075C30F-EE38-4387-826A-AAC20438B921/data/Containers/Data/Application/556CEB82-3BC1-4D4B-8448-376A9F9BB3D2",
+    "saveSHA256": "7e8827414371c98c312b7dba72169b67c1bd64c7ef0e305a4541d40b0e7231e4",
+    "saveBytes": 1078,
+    "checksumValid": true,
+    "eventCount": 2,
+    "rewardCount": 0
+  },
+  "resetAssertions": {
+    "passed": true,
+    "currentLevel": 1,
+    "unlockedLevel": 1,
+    "session": null,
+    "completedLevels": [],
+    "attemptCounts": {},
+    "tutorialCompleted": false,
+    "tutorialStep": 0,
+    "bonusHints": 0,
+    "bonusDirect": 0,
+    "checkIn": {
+      "completedCycles": 0,
+      "cycleDay": 0,
+      "streak": 0
+    },
+    "settings": {
+      "hapticsEnabled": true,
+      "language": "zh-Hans",
+      "musicEnabled": true,
+      "soundEnabled": true,
+      "voiceEnabled": true
+    },
+    "rewardLedger": {},
+    "pendingBuffEvents": {},
+    "pendingLevelResultEvents": {},
+    "freeAndReferenceGrantKeys": [],
+    "carriedToolBalance": {
+      "direct": 0,
+      "hints": 0
+    },
+    "simulatedRewardEvents": 0
+  },
+  "cleanup": {
+    "deleted": true,
+    "onlyCreatedDeviceTargeted": "C075C30F-EE38-4387-826A-AAC20438B921",
+    "independentlyAbsentFromDeviceInventory": true,
+    "verifiedAt": "2026-09-30T19:00:52.288935+00:00",
+    "command": "xcrun simctl list devices --json (only the disposable UDID checked; no normal device data accessed)"
+  },
+  "activeSessions": [],
+  "evidenceManifest": {
+    "path": "Docs/original-reinstall-0217/manifest.json",
+    "sha256": "62385302c404c0ab6a21015cc48f30454e5a5b0b484515011d80768bf1a120cb",
+    "screenshots": 9,
+    "snapshotFiles": 12,
+    "testResultFiles": 6
+  },
+  "rawAudit": {
+    "path": "Validation/test-runs/original-0217-operation-reinstall-01/audit.json",
+    "sha256": "7e8618247c62f1b298154552fb46ecbce60b45d418c8ec587f7b388605cb128d",
+    "logsAndXCResultsRemainLocalIgnored": true
+  },
+  "reproduce": "python3 scripts/verify_operation_reinstall.py --output-dir <新的证据目录>",
+  "limitations": [
+    "本轮未通关 L1，仅找到 3/4；操作前后的 completedLevels 本来均为空，unlockedLevel 本来均为 1。",
+    "本轮直接证明已有当前对局、attemptCounts、库存、签到、设置与奖励台账在重装后清除/回默认；completedLevels/unlockedLevel 仅核对重装后默认值，未直接证明非空通关表或高关解锁清除。旧人工夹具的历史证据应单独引用，不与本轮混称真实 UI 覆盖。",
+    "冷恢复前已返回首页并进入系统后台正常保存；未直接验证前台强退。",
+    "模拟器采用 ad hoc 签名；未验证签名真机、App Store、真实广告或外部分析接入。"
+  ]
+}

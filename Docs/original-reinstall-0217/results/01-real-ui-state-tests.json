@@ -1,0 +1,53 @@
+{
+  "devices": [
+    {
+      "architecture": "arm64",
+      "deviceId": "C075C30F-EE38-4387-826A-AAC20438B921",
+      "deviceName": "Capydoku-Operation-Reinstall-Audit-bd2a3823aa9c",
+      "modelName": "iPhone 17e",
+      "osBuildNumber": "23F77",
+      "osVersion": "26.5",
+      "platform": "iOS Simulator"
+    }
+  ],
+  "testNodes": [
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "duration": "1\u5206\u949f14\u79d2",
+                  "durationInSeconds": 74.72893905639648,
+                  "name": "test01CreatePersistentStateThroughUI()",
+                  "nodeIdentifier": "OperationReinstallUITests/test01CreatePersistentStateThroughUI()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/Capydoku/CapydokuUITests/OperationReinstallUITests/test01CreatePersistentStateThroughUI",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                }
+              ],
+              "name": "OperationReinstallUITests",
+              "nodeIdentifierURL": "test://com.apple.xcode/Capydoku/CapydokuUITests/OperationReinstallUITests",
+              "nodeType": "Test Suite",
+              "result": "Passed"
+            }
+          ],
+          "name": "CapydokuUITests",
+          "nodeIdentifierURL": "test://com.apple.xcode/Capydoku/CapydokuUITests",
+          "nodeType": "UI test bundle",
+          "result": "Passed"
+        }
+      ],
+      "name": "Capydoku",
+      "nodeType": "Test Plan",
+      "result": "Passed"
+    }
+  ],
+  "testPlanConfigurations": [
+    {
+      "configurationId": "1",
+      "configurationName": "Test Scheme Action"
+    }
+  ]
+}

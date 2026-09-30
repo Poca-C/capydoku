@@ -1,0 +1,250 @@
+{
+  "activeSession": {
+    "backgroundAt": 812487230.230219,
+    "id": "FA12FCD5-6E01-42D6-8375-B6F4110F875F",
+    "activePeriodStartedAt": 812487169.128246,
+    "lastActiveAt": 812487230.230219,
+    "startedAt": 812487163.571414,
+    "activeSeconds": 61.482858061790466
+  },
+  "events": [
+    {
+      "user_id": "02B198F5-CA28-4319-BA18-1A1ECA318EDA",
+      "session_id": "FA12FCD5-6E01-42D6-8375-B6F4110F875F",
+      "platform": "iOS",
+      "parameters": {
+        "install_source": "internal_demo",
+        "is_reinstall": false
+      },
+      "event_name": "first_open",
+      "event_time": 812487163.571414,
+      "event_id": "9E6E56E7-86E4-4C0B-ACFD-B9036D300C04",
+      "country": "AU",
+      "install_date": "2026-09-30",
+      "environment": "internal-demo-offline",
+      "app_version": "0.2.17"
+    },
+    {
+      "user_id": "02B198F5-CA28-4319-BA18-1A1ECA318EDA",
+      "session_id": "FA12FCD5-6E01-42D6-8375-B6F4110F875F",
+      "platform": "iOS",
+      "parameters": {
+        "entry_source": "cold_start"
+      },
+      "event_name": "session_start",
+      "event_time": 812487163.571414,
+      "event_id": "C2A0592A-B5F6-40ED-AE12-D1B28F863D80",
+      "country": "AU",
+      "install_date": "2026-09-30",
+      "environment": "internal-demo-offline",
+      "app_version": "0.2.17"
+    },
+    {
+      "app_version": "0.2.17",
+      "user_id": "02B198F5-CA28-4319-BA18-1A1ECA318EDA",
+      "country": "AU",
+      "environment": "internal-demo-offline",
+      "event_time": 812487195.872492,
+      "event_id": "2D3020E6-C5D6-4B50-B055-1A4A46AA3496",
+      "session_id": "FA12FCD5-6E01-42D6-8375-B6F4110F875F",
+      "platform": "iOS",
+      "level_id": 1,
+      "install_date": "2026-09-30",
+      "parameters": {
+        "hint_inventory": 2,
+        "grid_size": "4x4",
+        "direct_find_inventory": 1,
+        "attempt_no": 1,
+        "level_start_free_available": false,
+        "direct_find_visible": true,
+        "is_tutorial": true
+      },
+      "event_name": "level_start",
+      "pawdoku_config_version": "original-demo-unverified-v3"
+    },
+    {
+      "app_version": "0.2.17",
+      "user_id": "02B198F5-CA28-4319-BA18-1A1ECA318EDA",
+      "country": "AU",
+      "environment": "internal-demo-offline",
+      "event_time": 812487195.873821,
+      "event_id": "004B9112-B6E8-44DA-803A-792C3B5C37FD",
+      "session_id": "FA12FCD5-6E01-42D6-8375-B6F4110F875F",
+      "platform": "iOS",
+      "level_id": 1,
+      "install_date": "2026-09-30",
+      "parameters": {
+        "tutorial_id": "level-1-dynamic"
+      },
+      "event_name": "tutorial_start",
+      "pawdoku_config_version": "original-demo-unverified-v3"
+    },
+    {
+      "app_version": "0.2.17",
+      "user_id": "02B198F5-CA28-4319-BA18-1A1ECA318EDA",
+      "country": "AU",
+      "environment": "internal-demo-offline",
+      "event_time": 812487214.200684,
+      "event_id": "87B6E74D-0136-4F35-B796-48E921E6D820",
+      "session_id": "FA12FCD5-6E01-42D6-8375-B6F4110F875F",
+      "platform": "iOS",
+      "level_id": 1,
+      "install_date": "2026-09-30",
+      "parameters": {
+        "result": "complete",
+        "duration_sec": 18,
+        "tutorial_id": "level-1-dynamic"
+      },
+      "event_name": "tutorial_end",
+      "pawdoku_config_version": "original-demo-unverified-v3"
+    },
+    {
+      "app_version": "0.2.17",
+      "user_id": "02B198F5-CA28-4319-BA18-1A1ECA318EDA",
+      "country": "AU",
+      "environment": "internal-demo-offline",
+      "event_time": 812487217.620171,
+      "event_id": "361BB611-1464-40FE-B7D8-C5BF588FB414",
+      "session_id": "FA12FCD5-6E01-42D6-8375-B6F4110F875F",
+      "platform": "iOS",
+      "level_id": 1,
+      "install_date": "2026-09-30",
+      "parameters": {
+        "applied": true,
+        "inventory_after": 0,
+        "inventory_before": 1,
+        "buff_type": "direct_find",
+        "source": "level_config_free"
+      },
+      "event_name": "buff_use",
+      "pawdoku_config_version": "original-demo-unverified-v3"
+    },
+    {
+      "app_version": "0.2.17",
+      "user_id": "02B198F5-CA28-4319-BA18-1A1ECA318EDA",
+      "country": "AU",
+      "environment": "internal-demo-offline",
+      "event_time": 812487222.050795,
+      "event_id": "706A2536-6640-469D-9959-C173FC42DB42",
+      "session_id": "FA12FCD5-6E01-42D6-8375-B6F4110F875F",
+      "platform": "iOS",
+      "level_id": 1,
+      "install_date": "2026-09-30",
+      "parameters": {
+        "placement_id": "direct_find",
+        "reward_amount": 1,
+        "reward_type": "direct_find",
+        "ad_type": "rewarded",
+        "buff_type": "direct_find",
+        "ad_unit_id": "internal-demo",
+        "offer_id": "459040D3-4D65-45A1-B04C-B9157752CBC4",
+        "network": "simulation"
+      },
+      "event_name": "ad_offer_shown",
+      "pawdoku_config_version": "original-demo-unverified-v3"
+    },
+    {
+      "event_time": 812487222.078129,
+      "event_name": "ad_result",
+      "platform": "iOS",
+      "app_version": "0.2.17",
+      "environment": "internal-demo-offline",
+      "install_date": "2026-09-30",
+      "user_id": "02B198F5-CA28-4319-BA18-1A1ECA318EDA",
+      "session_id": "FA12FCD5-6E01-42D6-8375-B6F4110F875F",
+      "country": "AU",
+      "parameters": {
+        "reward_granted": false,
+        "error_code": "",
+        "placement_id": "direct_find",
+        "network": "simulation",
+        "ad_unit_id": "internal-demo",
+        "ad_type": "rewarded",
+        "offer_id": "459040D3-4D65-45A1-B04C-B9157752CBC4",
+        "status": "started"
+      },
+      "pawdoku_config_version": "original-demo-unverified-v3",
+      "event_id": "61FC0A36-5D83-4B69-89F8-2BA72A5F38DB",
+      "level_id": 1
+    },
+    {
+      "event_time": 812487222.580198,
+      "platform": "iOS",
+      "event_name": "ad_result",
+      "session_id": "FA12FCD5-6E01-42D6-8375-B6F4110F875F",
+      "app_version": "0.2.17",
+      "environment": "internal-demo-offline",
+      "install_date": "2026-09-30",
+      "user_id": "02B198F5-CA28-4319-BA18-1A1ECA318EDA",
+      "country": "AU",
+      "parameters": {
+        "ad_unit_id": "internal-demo",
+        "status": "completed",
+        "reward_granted": true,
+        "placement_id": "direct_find",
+        "offer_id": "459040D3-4D65-45A1-B04C-B9157752CBC4",
+        "network": "simulation",
+        "error_code": "",
+        "ad_type": "rewarded"
+      },
+      "pawdoku_config_version": "original-demo-unverified-v3",
+      "event_id": "4B516E8F-4135-4C19-9E45-B722B1424A63",
+      "level_id": 1
+    },
+    {
+      "event_time": 812487222.58706,
+      "event_name": "buff_use",
+      "platform": "iOS",
+      "app_version": "0.2.17",
+      "environment": "internal-demo-offline",
+      "install_date": "2026-09-30",
+      "user_id": "02B198F5-CA28-4319-BA18-1A1ECA318EDA",
+      "session_id": "FA12FCD5-6E01-42D6-8375-B6F4110F875F",
+      "country": "AU",
+      "parameters": {
+        "applied": true,
+        "inventory_before": 0,
+        "inventory_after": 0,
+        "buff_type": "direct_find",
+        "source": "rewarded_ad"
+      },
+      "pawdoku_config_version": "original-demo-unverified-v3",
+      "event_id": "ECFF4723-8808-43F8-BAFB-C7E2735A62AF",
+      "level_id": 1
+    },
+    {
+      "event_time": 812487229.733563,
+      "event_name": "level_end",
+      "platform": "iOS",
+      "app_version": "0.2.17",
+      "environment": "internal-demo-offline",
+      "install_date": "2026-09-30",
+      "user_id": "02B198F5-CA28-4319-BA18-1A1ECA318EDA",
+      "session_id": "FA12FCD5-6E01-42D6-8375-B6F4110F875F",
+      "country": "AU",
+      "parameters": {
+        "attempt_no": 1,
+        "result": "quit",
+        "fail_reason": "quit",
+        "life_remaining": 2,
+        "duration_sec": 33
+      },
+      "pawdoku_config_version": "original-demo-unverified-v3",
+      "event_id": "59C4201C-7D81-4D1C-BB41-96A19D86AAD9",
+      "level_id": 1
+    }
+  ],
+  "keys": [
+    "tutorial_start:F2D89F0C-328B-43C6-A428-D9ACD0EF74D2",
+    "ad_result:459040D3-4D65-45A1-B04C-B9157752CBC4:completed",
+    "level_start:F2D89F0C-328B-43C6-A428-D9ACD0EF74D2",
+    "ad_result:459040D3-4D65-45A1-B04C-B9157752CBC4:started",
+    "level_end:F2D89F0C-328B-43C6-A428-D9ACD0EF74D2:result:0",
+    "first_open:02B198F5-CA28-4319-BA18-1A1ECA318EDA",
+    "tutorial_end:F2D89F0C-328B-43C6-A428-D9ACD0EF74D2:complete",
+    "buff_use:D4F4BF7C-D245-4A43-AC8D-24D0E668943F",
+    "session_start:FA12FCD5-6E01-42D6-8375-B6F4110F875F",
+    "ad_offer_shown:459040D3-4D65-45A1-B04C-B9157752CBC4",
+    "buff_use:459040D3-4D65-45A1-B04C-B9157752CBC4:direct"
+  ]
+}

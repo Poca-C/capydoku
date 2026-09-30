@@ -1,0 +1,386 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-01",
+  "scope": "原文[244]棋盘高对比白X及[306]功能文字可读性修复的真实渲染证据。",
+  "sourceParagraphs": [
+    244,
+    306
+  ],
+  "builds": {
+    "before": "0.2.16 (19)",
+    "after": "0.2.17 (20)",
+    "verification": "分别在修复前/后专项完成时，直接读取 .build/Contrast0217/Build/Products/Debug-iphonesimulator/Capydoku.app/Info.plist 核对版本；旧图不重标签为新版本。"
+  },
+  "changes": [
+    "普通白色X、空心白色预览X和红色错误X增加1pt暖棕外边界，原中心形态和区域颜色不变。",
+    "仅失败弹层免费复活文字角标使用更深的功能绿色；视频图标绿色、位置和业务流程不变。"
+  ],
+  "verification": {
+    "device": "iPhone 17e simulator",
+    "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+    "derivedData": ".build/Contrast0217",
+    "beforeBundle": "Validation/test-runs/original-0217-contrast-before.xcresult",
+    "afterBundle": "Validation/test-runs/original-0217-contrast-after.xcresult",
+    "before": "2个专项按预期失败，共62个采样断言（60个边界样本和2个免费角标）；不是62个独立缺陷。中心语义、有效截图及对局状态不变检查通过。",
+    "after": "同2个专项通过，0失败，4.468秒。",
+    "rendering": "UIGraphicsImageRenderer + drawHierarchy(afterScreenUpdates:true)，读取真实绘制图的sRGB RGBA像素。",
+    "boardSamples": 60,
+    "minimumAfterDarkBoundaryContrast": 3.5781857493555003,
+    "minimumAfterDarkBoundaryPixelsMeeting3": 126,
+    "beforeLightYellowWhiteContrast": 1.4019104010155414,
+    "beforeLightBlueWhiteContrast": 1.976355060533671,
+    "beforeFreeBadgeContrast": 2.5748779853136656,
+    "afterFreeBadgeContrast": 5.829052284603435,
+    "localCriteria": "原文未给对比数值。本轮采用边界3:1与15pt功能小字4.5:1作为本地可读性指标，不声称是冻结参考或完整无障碍认证。",
+    "finalActualUISupplement": {
+      "bundle": "Validation/test-runs/original-0217-ui-pro.xcresult",
+      "test": "OriginalReferenceUITests/testHintIsAnOverlayAndOnlyApplyWritesMarks()",
+      "capturedBuild": "0.2.17 (20)",
+      "imageCount": 1,
+      "note": "补入根任务最终Pro完整App UI测试的实际Hint预览图；与前12张原生绘制夹具/Root宿主图分开标注。"
+    }
+  },
+  "limitations": [
+    "前后色板棋盘图片来自实际PuzzleGridUIView，但每列一个颜色、全盘同种X是测试用绘制夹具，不是通过Solver的合法关卡，也不是实际用户操作后的存档；末张final-pro-ui-hint-preview.png单独标注为完整App实际UI。",
+    "190pt/340pt指棋盘自身边长；它们不代表小屏设备完整页面、真机操作或iOS15验收。",
+    "截图与采样覆盖10种区域色、10×10棋盘和三类X；没有把局部边界像素阈值说成全部抗锯齿像素都达到3:1。",
+    "失败页来自完整RootView宿主，导入测试配置提供免费复活；TEST failure/revive/restart不是正式文案，也不是冻结参考参数。",
+    "中英文免费角标已采集和测量，渲染后对局仍为同一个失败状态；本轮不证明真实广告SDK、实际奖励资格或完整复活流程。",
+    "本轮未扩大到全应用动态字号、VoiceOver真实焦点或系统设置开关验证。",
+    "普通玩家存档未重置；测试使用临时目录，退出后清理。全量App、真实UI和Release由根任务另行记录。"
+  ],
+  "images": [
+    {
+      "path": "Docs/original-contrast-0217/before-190-solid.png",
+      "title": "修复前190pt棋盘：白色实心X",
+      "stage": "before",
+      "capturedBuild": "0.2.16 (19)",
+      "source": "Validation/test-runs/original-0217-contrast-before-attachments/5F759E72-4BD3-47F3-94E9-290498B8124E.png",
+      "sourceManifest": "Validation/test-runs/original-0217-contrast-before-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0217-contrast-before.xcresult",
+      "test": "BoardMarkContrastTests/testActualTenByTenMarksKeepReadableEdgesAndDistinctCentersAcrossEveryRegionColor()",
+      "device": "iPhone 17e",
+      "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+      "attachmentName": "palette-10x10-190pt-solid_0_69577349-0838-4D75-AD8C-22C75BB6E9A0.png",
+      "attachmentTimestamp": 1790794071.688,
+      "dimensions": [
+        570,
+        570
+      ],
+      "sha256": "ee1762ce5710236d34f0dd161ef35baf8c6450bb7c621e6bf41178cc1cfd8880",
+      "hostScope": "Actual PuzzleGridUIView drawing fixture",
+      "individuallyViewed": true,
+      "visualReview": "浅黄、浅蓝区域上的白X缺少深色边界；虽能看到X形状，但浅黄实测仅1.4019:1，未满足本轮本地边界可读性指标。"
+    },
+    {
+      "path": "Docs/original-contrast-0217/before-190-preview.png",
+      "title": "修复前190pt棋盘：空心预览X",
+      "stage": "before",
+      "capturedBuild": "0.2.16 (19)",
+      "source": "Validation/test-runs/original-0217-contrast-before-attachments/00D5766C-0178-434F-B04C-76AEB8C866CE.png",
+      "sourceManifest": "Validation/test-runs/original-0217-contrast-before-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0217-contrast-before.xcresult",
+      "test": "BoardMarkContrastTests/testActualTenByTenMarksKeepReadableEdgesAndDistinctCentersAcrossEveryRegionColor()",
+      "device": "iPhone 17e",
+      "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+      "attachmentName": "palette-10x10-190pt-preview_0_CBE1D1C2-6859-4569-8CBF-BABA936E07C8.png",
+      "attachmentTimestamp": 1790794071.84,
+      "dimensions": [
+        570,
+        570
+      ],
+      "sha256": "e11763e2241b47202f84e17acc78fc6023117cb76e32633ab243f57625d95ea0",
+      "hostScope": "Actual PuzzleGridUIView drawing fixture",
+      "individuallyViewed": true,
+      "visualReview": "预览中心保留区域色，但白色细轮廓在浅色区域缺少清晰边界。"
+    },
+    {
+      "path": "Docs/original-contrast-0217/before-190-error.png",
+      "title": "修复前190pt棋盘：红色错误X",
+      "stage": "before",
+      "capturedBuild": "0.2.16 (19)",
+      "source": "Validation/test-runs/original-0217-contrast-before-attachments/5BD9048E-3EF2-4EBA-A55F-AB723B5700E6.png",
+      "sourceManifest": "Validation/test-runs/original-0217-contrast-before-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0217-contrast-before.xcresult",
+      "test": "BoardMarkContrastTests/testActualTenByTenMarksKeepReadableEdgesAndDistinctCentersAcrossEveryRegionColor()",
+      "device": "iPhone 17e",
+      "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+      "attachmentName": "palette-10x10-190pt-error_0_234BC4AF-981B-457C-ACFB-7199E67B406F.png",
+      "attachmentTimestamp": 1790794072.001,
+      "dimensions": [
+        570,
+        570
+      ],
+      "sha256": "73ddb363157df720e23349437d92d7741753ce5e017cf86e5fb38ecaab0a1a0a",
+      "hostScope": "Actual PuzzleGridUIView drawing fixture",
+      "individuallyViewed": true,
+      "visualReview": "红X颜色与白X不同，但部分区域色上的红X轮廓对比不足；没有深色外边界。"
+    },
+    {
+      "path": "Docs/original-contrast-0217/before-free-revive-chinese.png",
+      "title": "修复前：中文免费复活角标",
+      "stage": "before",
+      "capturedBuild": "0.2.16 (19)",
+      "source": "Validation/test-runs/original-0217-contrast-before-attachments/E8478309-38BD-48F6-A90A-828F04C61F1F.png",
+      "sourceManifest": "Validation/test-runs/original-0217-contrast-before-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0217-contrast-before.xcresult",
+      "test": "BoardMarkContrastTests/testActualFreeReviveBadgeTextIsReadableInBothLanguagesWithoutChangingTheLostGame()",
+      "device": "iPhone 17e",
+      "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+      "attachmentName": "actual-free-revive-zh-Hans_0_0B1C2E99-EC59-4919-8664-ADABE5D58C73.png",
+      "attachmentTimestamp": 1790794070.966,
+      "dimensions": [
+        1170,
+        2532
+      ],
+      "sha256": "78dfb54dc0a0311bccd048a4a87ffa065face8ba6fcefc1257c62fc93e8543f3",
+      "hostScope": "Actual RootView hosted result with synthetic imported configuration",
+      "individuallyViewed": true,
+      "visualReview": "实际Root失败页中的15pt免费白字使用亮绿底，实测对比2.57488:1。页面采用测试导入配置，所以TEST failure/revive/restart是明确夹具文案，不是正式中文内容。"
+    },
+    {
+      "path": "Docs/original-contrast-0217/after-190-solid.png",
+      "title": "修复后190pt棋盘：白色实心X",
+      "stage": "after",
+      "capturedBuild": "0.2.17 (20)",
+      "source": "Validation/test-runs/original-0217-contrast-after-attachments/CE2B2AF4-0528-431E-AE0F-AB8A3EAD878A.png",
+      "sourceManifest": "Validation/test-runs/original-0217-contrast-after-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0217-contrast-after.xcresult",
+      "test": "BoardMarkContrastTests/testActualTenByTenMarksKeepReadableEdgesAndDistinctCentersAcrossEveryRegionColor()",
+      "device": "iPhone 17e",
+      "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+      "attachmentName": "palette-10x10-190pt-solid_0_4300FEC1-A426-4B09-82D5-6B680142A3E2.png",
+      "attachmentTimestamp": 1790794151.595,
+      "dimensions": [
+        570,
+        570
+      ],
+      "sha256": "3d3f1c0d65ce9342bc4927d5c07d7968153a12dcef2ca7732c93fa1972b6a580",
+      "hostScope": "Actual PuzzleGridUIView drawing fixture",
+      "individuallyViewed": true,
+      "visualReview": "逐张检查全部10种颜色列，暖棕细边界完整，中心仍为实心白色；最小190pt棋盘未出现邻格描边相连或被边界裁掉。"
+    },
+    {
+      "path": "Docs/original-contrast-0217/after-190-preview.png",
+      "title": "修复后190pt棋盘：空心预览X",
+      "stage": "after",
+      "capturedBuild": "0.2.17 (20)",
+      "source": "Validation/test-runs/original-0217-contrast-after-attachments/A42CC0C1-565E-45A9-B367-D8046B8FA9AC.png",
+      "sourceManifest": "Validation/test-runs/original-0217-contrast-after-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0217-contrast-after.xcresult",
+      "test": "BoardMarkContrastTests/testActualTenByTenMarksKeepReadableEdgesAndDistinctCentersAcrossEveryRegionColor()",
+      "device": "iPhone 17e",
+      "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+      "attachmentName": "palette-10x10-190pt-preview_0_E1A1F288-C310-4803-8575-5573EDD9271E.png",
+      "attachmentTimestamp": 1790794151.749,
+      "dimensions": [
+        570,
+        570
+      ],
+      "sha256": "3abafb4bcb84a455a28475a3c8812894eb69559128c8211ea04ee02b432813e9",
+      "hostScope": "Actual PuzzleGridUIView drawing fixture",
+      "individuallyViewed": true,
+      "visualReview": "白色轮廓外增加暖棕边界，预览中间仍为空心区域色，与实心标记明确不同。"
+    },
+    {
+      "path": "Docs/original-contrast-0217/after-190-error.png",
+      "title": "修复后190pt棋盘：红色错误X",
+      "stage": "after",
+      "capturedBuild": "0.2.17 (20)",
+      "source": "Validation/test-runs/original-0217-contrast-after-attachments/340D01A4-3B32-42FF-AD9C-E609CCD4DE89.png",
+      "sourceManifest": "Validation/test-runs/original-0217-contrast-after-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0217-contrast-after.xcresult",
+      "test": "BoardMarkContrastTests/testActualTenByTenMarksKeepReadableEdgesAndDistinctCentersAcrossEveryRegionColor()",
+      "device": "iPhone 17e",
+      "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+      "attachmentName": "palette-10x10-190pt-error_0_997C451A-D796-4813-9C93-CFB94C65662E.png",
+      "attachmentTimestamp": 1790794151.903,
+      "dimensions": [
+        570,
+        570
+      ],
+      "sha256": "23181b6b47aec7a0a7be70f0a86068abf301b04ed2c991e37fcee4f64bf16e9a",
+      "hostScope": "Actual PuzzleGridUIView drawing fixture",
+      "individuallyViewed": true,
+      "visualReview": "红X外边界清楚，内芯保持红色；与白实心X和空心预览X保留区分。"
+    },
+    {
+      "path": "Docs/original-contrast-0217/after-340-solid.png",
+      "title": "修复后340pt棋盘：白色实心X",
+      "stage": "after",
+      "capturedBuild": "0.2.17 (20)",
+      "source": "Validation/test-runs/original-0217-contrast-after-attachments/A0A16C99-F998-4B1F-BCC4-0BCC492FBC08.png",
+      "sourceManifest": "Validation/test-runs/original-0217-contrast-after-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0217-contrast-after.xcresult",
+      "test": "BoardMarkContrastTests/testActualTenByTenMarksKeepReadableEdgesAndDistinctCentersAcrossEveryRegionColor()",
+      "device": "iPhone 17e",
+      "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+      "attachmentName": "palette-10x10-340pt-solid_0_52835860-7928-42FB-BC7C-697B25E7A806.png",
+      "attachmentTimestamp": 1790794152.528,
+      "dimensions": [
+        1020,
+        1020
+      ],
+      "sha256": "541889e2b756f9f64525cc74bd3e893238a6d9cc65ccee8874f6dfe834a7ecd7",
+      "hostScope": "Actual PuzzleGridUIView drawing fixture",
+      "individuallyViewed": true,
+      "visualReview": "正常尺寸下10列区域色上的白X均有连续细边界，仍以白色为主体，格间留白完整。"
+    },
+    {
+      "path": "Docs/original-contrast-0217/after-340-preview.png",
+      "title": "修复后340pt棋盘：空心预览X",
+      "stage": "after",
+      "capturedBuild": "0.2.17 (20)",
+      "source": "Validation/test-runs/original-0217-contrast-after-attachments/22D871C3-FB55-4D8F-9753-CB04573C2BBB.png",
+      "sourceManifest": "Validation/test-runs/original-0217-contrast-after-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0217-contrast-after.xcresult",
+      "test": "BoardMarkContrastTests/testActualTenByTenMarksKeepReadableEdgesAndDistinctCentersAcrossEveryRegionColor()",
+      "device": "iPhone 17e",
+      "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+      "attachmentName": "palette-10x10-340pt-preview_0_9258103E-4EBE-4C92-BBD6-2C31A27B1CBF.png",
+      "attachmentTimestamp": 1790794152.866,
+      "dimensions": [
+        1020,
+        1020
+      ],
+      "sha256": "c96a8fcc874d31ff05054a4c9b96bc7e03b60b9721b47017bfd60eb45792d527",
+      "hostScope": "Actual PuzzleGridUIView drawing fixture",
+      "individuallyViewed": true,
+      "visualReview": "正常尺寸预览仍为空心，外边界未把预览填成已提交标记；每种区域底色保持不变。"
+    },
+    {
+      "path": "Docs/original-contrast-0217/after-340-error.png",
+      "title": "修复后340pt棋盘：红色错误X",
+      "stage": "after",
+      "capturedBuild": "0.2.17 (20)",
+      "source": "Validation/test-runs/original-0217-contrast-after-attachments/69C20E1C-0720-453A-818E-753E021B7C44.png",
+      "sourceManifest": "Validation/test-runs/original-0217-contrast-after-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0217-contrast-after.xcresult",
+      "test": "BoardMarkContrastTests/testActualTenByTenMarksKeepReadableEdgesAndDistinctCentersAcrossEveryRegionColor()",
+      "device": "iPhone 17e",
+      "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+      "attachmentName": "palette-10x10-340pt-error_0_933AFE54-AD72-45E9-8404-99D482EE1E72.png",
+      "attachmentTimestamp": 1790794153.198,
+      "dimensions": [
+        1020,
+        1020
+      ],
+      "sha256": "bacaa122cc66a92031364cc809b07bd3f01970a4df15487ea39e9b1de75b83cf",
+      "hostScope": "Actual PuzzleGridUIView drawing fixture",
+      "individuallyViewed": true,
+      "visualReview": "正常尺寸红色错误X有连续边界，未被改成白色标记。"
+    },
+    {
+      "path": "Docs/original-contrast-0217/after-free-revive-chinese.png",
+      "title": "修复后：中文免费复活角标",
+      "stage": "after",
+      "capturedBuild": "0.2.17 (20)",
+      "source": "Validation/test-runs/original-0217-contrast-after-attachments/2B21C104-4C23-4A73-94E5-CC794DF8049E.png",
+      "sourceManifest": "Validation/test-runs/original-0217-contrast-after-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0217-contrast-after.xcresult",
+      "test": "BoardMarkContrastTests/testActualFreeReviveBadgeTextIsReadableInBothLanguagesWithoutChangingTheLostGame()",
+      "device": "iPhone 17e",
+      "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+      "attachmentName": "actual-free-revive-zh-Hans_0_A0C591D9-A1FA-4790-A457-288988F55F31.png",
+      "attachmentTimestamp": 1790794150.855,
+      "dimensions": [
+        1170,
+        2532
+      ],
+      "sha256": "209480f169f1e71b90941e857ff5bc3ecd6d2b13b9a43f6f3c218fb3604620b8",
+      "hostScope": "Actual RootView hosted result with synthetic imported configuration",
+      "individuallyViewed": true,
+      "visualReview": "免费白字在调深后的绿色上清楚，实测5.82905:1；角标位置和按钮结构保持。TEST前缀来自测试导入配置。"
+    },
+    {
+      "path": "Docs/original-contrast-0217/after-free-revive-english.png",
+      "title": "修复后：英文免费复活角标",
+      "stage": "after",
+      "capturedBuild": "0.2.17 (20)",
+      "source": "Validation/test-runs/original-0217-contrast-after-attachments/8FFCEBA7-458E-4076-B928-2BB143AE0431.png",
+      "sourceManifest": "Validation/test-runs/original-0217-contrast-after-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0217-contrast-after.xcresult",
+      "test": "BoardMarkContrastTests/testActualFreeReviveBadgeTextIsReadableInBothLanguagesWithoutChangingTheLostGame()",
+      "device": "iPhone 17e",
+      "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+      "attachmentName": "actual-free-revive-en_0_CE0CB40E-F3B1-4EF4-B604-E95C197A0DCB.png",
+      "attachmentTimestamp": 1790794149.625,
+      "dimensions": [
+        1170,
+        2532
+      ],
+      "sha256": "48230c9b9b96c3ea1e15d734355e540a7a45a1ebb44c648fb3f86445e95e6b2f",
+      "hostScope": "Actual RootView hosted result with synthetic imported configuration",
+      "individuallyViewed": true,
+      "visualReview": "Free白字在调深后的绿色上清楚，实测5.82905:1；背景对局仍为失败状态，未因渲染复活或重开。"
+    },
+    {
+      "path": "Docs/original-contrast-0217/final-pro-ui-hint-preview.png",
+      "title": "最终Pro完整应用UI：实际Hint预览",
+      "stage": "after-final-ui",
+      "capturedBuild": "0.2.17 (20)",
+      "source": "Validation/test-runs/original-0217-ui-pro-attachments/57C81C7D-4831-4575-BFF5-D64DFE3EDFC5.png",
+      "sourceManifest": "Validation/test-runs/original-0217-ui-pro-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0217-ui-pro.xcresult",
+      "test": "OriginalReferenceUITests/testHintIsAnOverlayAndOnlyApplyWritesMarks()",
+      "device": "iPhone 17 Pro",
+      "deviceID": "3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3",
+      "attachmentName": "original-hint-preview_0_70D1E76B-104C-4F92-B721-B37F548226EA.png",
+      "attachmentTimestamp": 1790794370.289,
+      "dimensions": [
+        1206,
+        2622
+      ],
+      "sha256": "c9ad012530aab0e9682e5c81fb19342085e8d940e9a9de3e04e324491658a281",
+      "hostScope": "iPhone 17 Pro模拟器中完整App的XCUITest截图；不是合成色板，也不是RootView独立宿主",
+      "individuallyViewed": true,
+      "reviewedBy": [
+        "root",
+        "original_remaining_visual"
+      ],
+      "visualReview": "根任务已目视，本任务再次逐张view_image核对。真实第1关Hint说明、右上关闭、正方棋盘与底部Apply完整可见；建议格显示带暖棕边界的空心白X，非建议格保持遮暗。此图证明当前完整页面上的实际预览表现；OnlyApplyWritesMarks流程结果由所属UI测试验证，不能仅凭静态图推断写盘行为。不是物理真机或VoiceOver验收。"
+    }
+  ],
+  "measurements": [
+    {
+      "path": "Docs/original-contrast-0217/before-free-badge-measurements.json",
+      "stage": "before",
+      "capturedBuild": "0.2.16 (19)",
+      "source": "Validation/test-runs/original-0217-contrast-before-attachments/B816904C-A731-40B7-AAE3-01FB8F89C60C.json",
+      "sourceManifest": "Validation/test-runs/original-0217-contrast-before-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0217-contrast-before.xcresult",
+      "test": "BoardMarkContrastTests/testActualFreeReviveBadgeTextIsReadableInBothLanguagesWithoutChangingTheLostGame()",
+      "sha256": "8a4da3a533ae1a223fb5e423d7f6e8e44c5bf3fda0a7a80eb4799cc3d4b4f72c"
+    },
+    {
+      "path": "Docs/original-contrast-0217/before-board-measurements.json",
+      "stage": "before",
+      "capturedBuild": "0.2.16 (19)",
+      "source": "Validation/test-runs/original-0217-contrast-before-attachments/2D0DA77F-9320-452A-AD88-D452443AB3EE.json",
+      "sourceManifest": "Validation/test-runs/original-0217-contrast-before-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0217-contrast-before.xcresult",
+      "test": "BoardMarkContrastTests/testActualTenByTenMarksKeepReadableEdgesAndDistinctCentersAcrossEveryRegionColor()",
+      "sha256": "3c7933ede260b4e068d4f18659dbd2d0de57bf4d3e233888b5a68c797b1667d6"
+    },
+    {
+      "path": "Docs/original-contrast-0217/after-free-badge-measurements.json",
+      "stage": "after",
+      "capturedBuild": "0.2.17 (20)",
+      "source": "Validation/test-runs/original-0217-contrast-after-attachments/709347BB-2A7E-4660-B336-DC9B5DC51588.json",
+      "sourceManifest": "Validation/test-runs/original-0217-contrast-after-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0217-contrast-after.xcresult",
+      "test": "BoardMarkContrastTests/testActualFreeReviveBadgeTextIsReadableInBothLanguagesWithoutChangingTheLostGame()",
+      "sha256": "a5d847b00ba345b1537f1601f5546701fa5f79fb170dc7c869bb55a854f869c0"
+    },
+    {
+      "path": "Docs/original-contrast-0217/after-board-measurements.json",
+      "stage": "after",
+      "capturedBuild": "0.2.17 (20)",
+      "source": "Validation/test-runs/original-0217-contrast-after-attachments/DA1C78BC-E92C-4B79-ABFF-E4099B12DECB.json",
+      "sourceManifest": "Validation/test-runs/original-0217-contrast-after-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0217-contrast-after.xcresult",
+      "test": "BoardMarkContrastTests/testActualTenByTenMarksKeepReadableEdgesAndDistinctCentersAcrossEveryRegionColor()",
+      "sha256": "8135c4241bea2a04a8a976e73b50d798a70b6a5cae85521795d949c317b3c885"
+    }
+  ]
+}

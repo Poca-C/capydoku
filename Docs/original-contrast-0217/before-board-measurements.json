@@ -1,0 +1,1022 @@
+[
+  {
+    "backgroundRGB" : [
+      0.23137254901960785,
+      0.6588235294117647,
+      0.74117647058823533
+    ],
+    "boardSidePt" : 190,
+    "centerRGB" : [
+      1,
+      1,
+      1
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "solid",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 0
+  },
+  {
+    "backgroundRGB" : [
+      0.81176470588235294,
+      0.4392156862745098,
+      0.56862745098039214
+    ],
+    "boardSidePt" : 190,
+    "centerRGB" : [
+      1,
+      1,
+      1
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "solid",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 1
+  },
+  {
+    "backgroundRGB" : [
+      0.98039215686274506,
+      0.83921568627450982,
+      0.49019607843137253
+    ],
+    "boardSidePt" : 190,
+    "centerRGB" : [
+      1,
+      1,
+      1
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "solid",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 2
+  },
+  {
+    "backgroundRGB" : [
+      0.76078431372549016,
+      0.63137254901960782,
+      0.070588235294117646
+    ],
+    "boardSidePt" : 190,
+    "centerRGB" : [
+      1,
+      1,
+      1
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "solid",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 3
+  },
+  {
+    "backgroundRGB" : [
+      0.52941176470588236,
+      0.74901960784313726,
+      0.45098039215686275
+    ],
+    "boardSidePt" : 190,
+    "centerRGB" : [
+      1,
+      1,
+      1
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "solid",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 4
+  },
+  {
+    "backgroundRGB" : [
+      0.54117647058823526,
+      0.47058823529411764,
+      0.83137254901960789
+    ],
+    "boardSidePt" : 190,
+    "centerRGB" : [
+      1,
+      1,
+      1
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "solid",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 5
+  },
+  {
+    "backgroundRGB" : [
+      0.23921568627450981,
+      0.56862745098039214,
+      0.36862745098039218
+    ],
+    "boardSidePt" : 190,
+    "centerRGB" : [
+      1,
+      1,
+      1
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "solid",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 6
+  },
+  {
+    "backgroundRGB" : [
+      0.6705882352941176,
+      0.4392156862745098,
+      0.29803921568627451
+    ],
+    "boardSidePt" : 190,
+    "centerRGB" : [
+      1,
+      1,
+      1
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "solid",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 7
+  },
+  {
+    "backgroundRGB" : [
+      0.56862745098039214,
+      0.74117647058823533,
+      0.90196078431372551
+    ],
+    "boardSidePt" : 190,
+    "centerRGB" : [
+      1,
+      1,
+      1
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "solid",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 8
+  },
+  {
+    "backgroundRGB" : [
+      0.90980392156862744,
+      0.56862745098039214,
+      0.83137254901960789
+    ],
+    "boardSidePt" : 190,
+    "centerRGB" : [
+      1,
+      1,
+      1
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "solid",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 9
+  },
+  {
+    "backgroundRGB" : [
+      0.23137254901960785,
+      0.6588235294117647,
+      0.74117647058823533
+    ],
+    "boardSidePt" : 190,
+    "centerRGB" : [
+      0.23137254901960785,
+      0.6588235294117647,
+      0.74117647058823533
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "preview",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 0
+  },
+  {
+    "backgroundRGB" : [
+      0.81176470588235294,
+      0.4392156862745098,
+      0.56862745098039214
+    ],
+    "boardSidePt" : 190,
+    "centerRGB" : [
+      0.81176470588235294,
+      0.4392156862745098,
+      0.56862745098039214
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "preview",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 1
+  },
+  {
+    "backgroundRGB" : [
+      0.98039215686274506,
+      0.83921568627450982,
+      0.49019607843137253
+    ],
+    "boardSidePt" : 190,
+    "centerRGB" : [
+      0.98039215686274506,
+      0.83921568627450982,
+      0.49019607843137253
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "preview",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 2
+  },
+  {
+    "backgroundRGB" : [
+      0.76078431372549016,
+      0.63137254901960782,
+      0.070588235294117646
+    ],
+    "boardSidePt" : 190,
+    "centerRGB" : [
+      0.76078431372549016,
+      0.63137254901960782,
+      0.070588235294117646
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "preview",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 3
+  },
+  {
+    "backgroundRGB" : [
+      0.52941176470588236,
+      0.74901960784313726,
+      0.45098039215686275
+    ],
+    "boardSidePt" : 190,
+    "centerRGB" : [
+      0.52941176470588236,
+      0.74901960784313726,
+      0.45098039215686275
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "preview",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 4
+  },
+  {
+    "backgroundRGB" : [
+      0.54117647058823526,
+      0.47058823529411764,
+      0.83137254901960789
+    ],
+    "boardSidePt" : 190,
+    "centerRGB" : [
+      0.54117647058823526,
+      0.47058823529411764,
+      0.83137254901960789
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "preview",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 5
+  },
+  {
+    "backgroundRGB" : [
+      0.23921568627450981,
+      0.56862745098039214,
+      0.36862745098039218
+    ],
+    "boardSidePt" : 190,
+    "centerRGB" : [
+      0.23921568627450981,
+      0.56862745098039214,
+      0.36862745098039218
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "preview",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 6
+  },
+  {
+    "backgroundRGB" : [
+      0.6705882352941176,
+      0.4392156862745098,
+      0.29803921568627451
+    ],
+    "boardSidePt" : 190,
+    "centerRGB" : [
+      0.6705882352941176,
+      0.4392156862745098,
+      0.29803921568627451
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "preview",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 7
+  },
+  {
+    "backgroundRGB" : [
+      0.56862745098039214,
+      0.74117647058823533,
+      0.90196078431372551
+    ],
+    "boardSidePt" : 190,
+    "centerRGB" : [
+      0.56862745098039214,
+      0.74117647058823533,
+      0.90196078431372551
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "preview",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 8
+  },
+  {
+    "backgroundRGB" : [
+      0.90980392156862744,
+      0.56862745098039214,
+      0.83137254901960789
+    ],
+    "boardSidePt" : 190,
+    "centerRGB" : [
+      0.90980392156862744,
+      0.56862745098039214,
+      0.83137254901960789
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "preview",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 9
+  },
+  {
+    "backgroundRGB" : [
+      0.23137254901960785,
+      0.6588235294117647,
+      0.74117647058823533
+    ],
+    "boardSidePt" : 190,
+    "centerRGB" : [
+      0.94117647058823528,
+      0.23921568627450981,
+      0.2196078431372549
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "error",
+    "maxDarkBoundaryContrast" : 1.5719765264677625,
+    "region" : 0
+  },
+  {
+    "backgroundRGB" : [
+      0.81176470588235294,
+      0.4392156862745098,
+      0.56862745098039214
+    ],
+    "boardSidePt" : 190,
+    "centerRGB" : [
+      0.94117647058823528,
+      0.23921568627450981,
+      0.2196078431372549
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "error",
+    "maxDarkBoundaryContrast" : 1.1751426846875352,
+    "region" : 1
+  },
+  {
+    "backgroundRGB" : [
+      0.98039215686274506,
+      0.83921568627450982,
+      0.49019607843137253
+    ],
+    "boardSidePt" : 190,
+    "centerRGB" : [
+      0.94117647058823528,
+      0.23921568627450981,
+      0.2196078431372549
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "error",
+    "maxDarkBoundaryContrast" : 2.758841749234755,
+    "region" : 2
+  },
+  {
+    "backgroundRGB" : [
+      0.76078431372549016,
+      0.63137254901960782,
+      0.070588235294117646
+    ],
+    "boardSidePt" : 190,
+    "centerRGB" : [
+      0.94117647058823528,
+      0.23921568627450981,
+      0.2196078431372549
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "error",
+    "maxDarkBoundaryContrast" : 1.5471606819719537,
+    "region" : 3
+  },
+  {
+    "backgroundRGB" : [
+      0.52941176470588236,
+      0.74901960784313726,
+      0.45098039215686275
+    ],
+    "boardSidePt" : 190,
+    "centerRGB" : [
+      0.94117647058823528,
+      0.23921568627450981,
+      0.2196078431372549
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "error",
+    "maxDarkBoundaryContrast" : 1.8138449257085905,
+    "region" : 4
+  },
+  {
+    "backgroundRGB" : [
+      0.54117647058823526,
+      0.47058823529411764,
+      0.83137254901960789
+    ],
+    "boardSidePt" : 190,
+    "centerRGB" : [
+      0.94117647058823528,
+      0.23921568627450981,
+      0.2196078431372549
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "error",
+    "maxDarkBoundaryContrast" : 1.1505819864429327,
+    "region" : 5
+  },
+  {
+    "backgroundRGB" : [
+      0.23921568627450981,
+      0.56862745098039214,
+      0.36862745098039218
+    ],
+    "boardSidePt" : 190,
+    "centerRGB" : [
+      0.94117647058823528,
+      0.23921568627450981,
+      0.2196078431372549
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "error",
+    "maxDarkBoundaryContrast" : 1.2579312018149273,
+    "region" : 6
+  },
+  {
+    "backgroundRGB" : [
+      0.6705882352941176,
+      0.4392156862745098,
+      0.29803921568627451
+    ],
+    "boardSidePt" : 190,
+    "centerRGB" : [
+      0.94117647058823528,
+      0.23921568627450981,
+      0.2196078431372549
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "error",
+    "maxDarkBoundaryContrast" : 1.0162147732405786,
+    "region" : 7
+  },
+  {
+    "backgroundRGB" : [
+      0.56862745098039214,
+      0.74117647058823533,
+      0.90196078431372551
+    ],
+    "boardSidePt" : 190,
+    "centerRGB" : [
+      0.94117647058823528,
+      0.23921568627450981,
+      0.2196078431372549
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "error",
+    "maxDarkBoundaryContrast" : 1.9601228060126252,
+    "region" : 8
+  },
+  {
+    "backgroundRGB" : [
+      0.90980392156862744,
+      0.56862745098039214,
+      0.83137254901960789
+    ],
+    "boardSidePt" : 190,
+    "centerRGB" : [
+      0.94117647058823528,
+      0.23921568627450981,
+      0.2196078431372549
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "error",
+    "maxDarkBoundaryContrast" : 1.7394705147398719,
+    "region" : 9
+  },
+  {
+    "backgroundRGB" : [
+      0.23137254901960785,
+      0.6588235294117647,
+      0.74117647058823533
+    ],
+    "boardSidePt" : 340,
+    "centerRGB" : [
+      1,
+      1,
+      1
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "solid",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 0
+  },
+  {
+    "backgroundRGB" : [
+      0.81176470588235294,
+      0.4392156862745098,
+      0.56862745098039214
+    ],
+    "boardSidePt" : 340,
+    "centerRGB" : [
+      1,
+      1,
+      1
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "solid",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 1
+  },
+  {
+    "backgroundRGB" : [
+      0.98039215686274506,
+      0.83921568627450982,
+      0.49019607843137253
+    ],
+    "boardSidePt" : 340,
+    "centerRGB" : [
+      1,
+      1,
+      1
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "solid",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 2
+  },
+  {
+    "backgroundRGB" : [
+      0.76078431372549016,
+      0.63137254901960782,
+      0.070588235294117646
+    ],
+    "boardSidePt" : 340,
+    "centerRGB" : [
+      1,
+      1,
+      1
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "solid",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 3
+  },
+  {
+    "backgroundRGB" : [
+      0.52941176470588236,
+      0.74901960784313726,
+      0.45098039215686275
+    ],
+    "boardSidePt" : 340,
+    "centerRGB" : [
+      1,
+      1,
+      1
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "solid",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 4
+  },
+  {
+    "backgroundRGB" : [
+      0.54117647058823526,
+      0.47058823529411764,
+      0.83137254901960789
+    ],
+    "boardSidePt" : 340,
+    "centerRGB" : [
+      1,
+      1,
+      1
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "solid",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 5
+  },
+  {
+    "backgroundRGB" : [
+      0.23921568627450981,
+      0.56862745098039214,
+      0.36862745098039218
+    ],
+    "boardSidePt" : 340,
+    "centerRGB" : [
+      1,
+      1,
+      1
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "solid",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 6
+  },
+  {
+    "backgroundRGB" : [
+      0.6705882352941176,
+      0.4392156862745098,
+      0.29803921568627451
+    ],
+    "boardSidePt" : 340,
+    "centerRGB" : [
+      1,
+      1,
+      1
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "solid",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 7
+  },
+  {
+    "backgroundRGB" : [
+      0.56862745098039214,
+      0.74117647058823533,
+      0.90196078431372551
+    ],
+    "boardSidePt" : 340,
+    "centerRGB" : [
+      1,
+      1,
+      1
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "solid",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 8
+  },
+  {
+    "backgroundRGB" : [
+      0.90980392156862744,
+      0.56862745098039214,
+      0.83137254901960789
+    ],
+    "boardSidePt" : 340,
+    "centerRGB" : [
+      1,
+      1,
+      1
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "solid",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 9
+  },
+  {
+    "backgroundRGB" : [
+      0.23137254901960785,
+      0.6588235294117647,
+      0.74117647058823533
+    ],
+    "boardSidePt" : 340,
+    "centerRGB" : [
+      0.23137254901960785,
+      0.6588235294117647,
+      0.74117647058823533
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "preview",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 0
+  },
+  {
+    "backgroundRGB" : [
+      0.81176470588235294,
+      0.4392156862745098,
+      0.56862745098039214
+    ],
+    "boardSidePt" : 340,
+    "centerRGB" : [
+      0.81176470588235294,
+      0.4392156862745098,
+      0.56862745098039214
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "preview",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 1
+  },
+  {
+    "backgroundRGB" : [
+      0.98039215686274506,
+      0.83921568627450982,
+      0.49019607843137253
+    ],
+    "boardSidePt" : 340,
+    "centerRGB" : [
+      0.98039215686274506,
+      0.83921568627450982,
+      0.49019607843137253
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "preview",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 2
+  },
+  {
+    "backgroundRGB" : [
+      0.76078431372549016,
+      0.63137254901960782,
+      0.070588235294117646
+    ],
+    "boardSidePt" : 340,
+    "centerRGB" : [
+      0.76078431372549016,
+      0.63137254901960782,
+      0.070588235294117646
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "preview",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 3
+  },
+  {
+    "backgroundRGB" : [
+      0.52941176470588236,
+      0.74901960784313726,
+      0.45098039215686275
+    ],
+    "boardSidePt" : 340,
+    "centerRGB" : [
+      0.52941176470588236,
+      0.74901960784313726,
+      0.45098039215686275
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "preview",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 4
+  },
+  {
+    "backgroundRGB" : [
+      0.54117647058823526,
+      0.47058823529411764,
+      0.83137254901960789
+    ],
+    "boardSidePt" : 340,
+    "centerRGB" : [
+      0.54117647058823526,
+      0.47058823529411764,
+      0.83137254901960789
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "preview",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 5
+  },
+  {
+    "backgroundRGB" : [
+      0.23921568627450981,
+      0.56862745098039214,
+      0.36862745098039218
+    ],
+    "boardSidePt" : 340,
+    "centerRGB" : [
+      0.23921568627450981,
+      0.56862745098039214,
+      0.36862745098039218
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "preview",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 6
+  },
+  {
+    "backgroundRGB" : [
+      0.6705882352941176,
+      0.4392156862745098,
+      0.29803921568627451
+    ],
+    "boardSidePt" : 340,
+    "centerRGB" : [
+      0.6705882352941176,
+      0.4392156862745098,
+      0.29803921568627451
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "preview",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 7
+  },
+  {
+    "backgroundRGB" : [
+      0.56862745098039214,
+      0.74117647058823533,
+      0.90196078431372551
+    ],
+    "boardSidePt" : 340,
+    "centerRGB" : [
+      0.56862745098039214,
+      0.74117647058823533,
+      0.90196078431372551
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "preview",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 8
+  },
+  {
+    "backgroundRGB" : [
+      0.90980392156862744,
+      0.56862745098039214,
+      0.83137254901960789
+    ],
+    "boardSidePt" : 340,
+    "centerRGB" : [
+      0.90980392156862744,
+      0.56862745098039214,
+      0.83137254901960789
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "preview",
+    "maxDarkBoundaryContrast" : 1,
+    "region" : 9
+  },
+  {
+    "backgroundRGB" : [
+      0.23137254901960785,
+      0.6588235294117647,
+      0.74117647058823533
+    ],
+    "boardSidePt" : 340,
+    "centerRGB" : [
+      0.94117647058823528,
+      0.23921568627450981,
+      0.2196078431372549
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "error",
+    "maxDarkBoundaryContrast" : 1.5657376190178258,
+    "region" : 0
+  },
+  {
+    "backgroundRGB" : [
+      0.81176470588235294,
+      0.4392156862745098,
+      0.56862745098039214
+    ],
+    "boardSidePt" : 340,
+    "centerRGB" : [
+      0.94117647058823528,
+      0.23921568627450981,
+      0.2196078431372549
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "error",
+    "maxDarkBoundaryContrast" : 1.1841222415508594,
+    "region" : 1
+  },
+  {
+    "backgroundRGB" : [
+      0.98039215686274506,
+      0.83921568627450982,
+      0.49019607843137253
+    ],
+    "boardSidePt" : 340,
+    "centerRGB" : [
+      0.94117647058823528,
+      0.23921568627450981,
+      0.2196078431372549
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "error",
+    "maxDarkBoundaryContrast" : 2.758841749234755,
+    "region" : 2
+  },
+  {
+    "backgroundRGB" : [
+      0.76078431372549016,
+      0.63137254901960782,
+      0.070588235294117646
+    ],
+    "boardSidePt" : 340,
+    "centerRGB" : [
+      0.94117647058823528,
+      0.23921568627450981,
+      0.2196078431372549
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "error",
+    "maxDarkBoundaryContrast" : 1.5577316008228164,
+    "region" : 3
+  },
+  {
+    "backgroundRGB" : [
+      0.52941176470588236,
+      0.74901960784313726,
+      0.45098039215686275
+    ],
+    "boardSidePt" : 340,
+    "centerRGB" : [
+      0.94117647058823528,
+      0.23921568627450981,
+      0.2196078431372549
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "error",
+    "maxDarkBoundaryContrast" : 1.8036177837584892,
+    "region" : 4
+  },
+  {
+    "backgroundRGB" : [
+      0.54117647058823526,
+      0.47058823529411764,
+      0.83137254901960789
+    ],
+    "boardSidePt" : 340,
+    "centerRGB" : [
+      0.94117647058823528,
+      0.23921568627450981,
+      0.2196078431372549
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "error",
+    "maxDarkBoundaryContrast" : 1.1584936562710033,
+    "region" : 5
+  },
+  {
+    "backgroundRGB" : [
+      0.23921568627450981,
+      0.56862745098039214,
+      0.36862745098039218
+    ],
+    "boardSidePt" : 340,
+    "centerRGB" : [
+      0.94117647058823528,
+      0.23921568627450981,
+      0.2196078431372549
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "error",
+    "maxDarkBoundaryContrast" : 1.2463320551526931,
+    "region" : 6
+  },
+  {
+    "backgroundRGB" : [
+      0.6705882352941176,
+      0.4392156862745098,
+      0.29803921568627451
+    ],
+    "boardSidePt" : 340,
+    "centerRGB" : [
+      0.94117647058823528,
+      0.23921568627450981,
+      0.2196078431372549
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "error",
+    "maxDarkBoundaryContrast" : 1.0330613367599923,
+    "region" : 7
+  },
+  {
+    "backgroundRGB" : [
+      0.56862745098039214,
+      0.74117647058823533,
+      0.90196078431372551
+    ],
+    "boardSidePt" : 340,
+    "centerRGB" : [
+      0.94117647058823528,
+      0.23921568627450981,
+      0.2196078431372549
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "error",
+    "maxDarkBoundaryContrast" : 1.9737400625752448,
+    "region" : 8
+  },
+  {
+    "backgroundRGB" : [
+      0.90980392156862744,
+      0.56862745098039214,
+      0.83137254901960789
+    ],
+    "boardSidePt" : 340,
+    "centerRGB" : [
+      0.94117647058823528,
+      0.23921568627450981,
+      0.2196078431372549
+    ],
+    "darkBoundaryPixelsAtLeast3" : 0,
+    "kind" : "error",
+    "maxDarkBoundaryContrast" : 1.7483701210136777,
+    "region" : 9
+  }
+]

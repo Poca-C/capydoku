@@ -629,7 +629,8 @@ struct ResultPanel: View {
                                     if model.reviveNeedsVideo { Image(systemName: "play.fill").font(.system(size: 14, weight: .bold)) }
                                     else { Text(language.text("Free")).font(.system(size: 15, weight: .heavy, design: .rounded)) }
                                 }.foregroundColor(.white).padding(.horizontal, 15).padding(.vertical, 8)
-                                    .background(CapyPalette.video).clipShape(Capsule()).offset(y: -12).allowsHitTesting(false)
+                                    .background(model.reviveNeedsVideo ? CapyPalette.video : CapyPalette.rewardTextGreen)
+                                    .clipShape(Capsule()).offset(y: -12).allowsHitTesting(false)
                             }
                         }
                     if !won {

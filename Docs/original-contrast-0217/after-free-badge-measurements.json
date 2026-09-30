@@ -1,0 +1,34 @@
+[
+  {
+    "badgePixelBounds" : [
+      861,
+      1739,
+      1048,
+      1840
+    ],
+    "contrast" : 5.8290522846034349,
+    "language" : "en",
+    "renderedFillRGB" : [
+      0.031372549019607843,
+      0.45882352941176469,
+      0.20000000000000001
+    ],
+    "whiteGlyphPixels" : 1204
+  },
+  {
+    "badgePixelBounds" : [
+      871,
+      1739,
+      1048,
+      1840
+    ],
+    "contrast" : 5.8290522846034349,
+    "language" : "zh-Hans",
+    "renderedFillRGB" : [
+      0.031372549019607843,
+      0.45882352941176469,
+      0.20000000000000001
+    ],
+    "whiteGlyphPixels" : 1613
+  }
+]

@@ -1,0 +1,194 @@
+{
+  "schemaVersion": 1,
+  "scope": "实际 UI 操作、正常后台保存后冷启动恢复、真正卸载再安装同一模拟器构建；不包含前台强退。",
+  "rawRun": "Validation/test-runs/original-0217-operation-reinstall-01",
+  "screenshots": [
+    {
+      "path": "Docs/original-reinstall-0217/screenshots/01-first-chinese-welcome.png",
+      "sha256": "787efc30b9076df44465e45cab4f00631e9eb72e3368e9dfc52bd8a7064d79b1",
+      "source": "Validation/test-runs/original-0217-operation-reinstall-01/01-real-ui-state-attachments/F59231E3-D55F-4637-9675-720966379D4B.png",
+      "stage": "01-real-ui-state",
+      "testMethod": "test01CreatePersistentStateThroughUI()",
+      "visuallyReviewed": true,
+      "review": "首次真实欢迎页；中文同意按钮与条款入口可见。"
+    },
+    {
+      "path": "Docs/original-reinstall-0217/screenshots/02-changed-settings.png",
+      "sha256": "2d9c040148470727dd6eb51db91840babe5bec5cc12b0c9e5e48457b9c94415c",
+      "source": "Validation/test-runs/original-0217-operation-reinstall-01/01-real-ui-state-attachments/DBE7E7D8-5C9F-4D84-B722-3C57EAC456B3.png",
+      "stage": "01-real-ui-state",
+      "testMethod": "test01CreatePersistentStateThroughUI()",
+      "visuallyReviewed": true,
+      "review": "实际切至英文，音乐、音效、语音、震动四项显示 OFF。"
+    },
+    {
+      "path": "Docs/original-reinstall-0217/screenshots/03-claimed-checkin.png",
+      "sha256": "9f995a0be8bf1a2efce222718f27ddffafa7f3eaa8cafff616e538233692c795",
+      "source": "Validation/test-runs/original-0217-operation-reinstall-01/01-real-ui-state-attachments/97149363-E410-4E80-A0C2-B7DE38B5E73B.png",
+      "stage": "01-real-ui-state",
+      "testMethod": "test01CreatePersistentStateThroughUI()",
+      "visuallyReviewed": true,
+      "review": "实际领取后连续签到 1 天，首日呈已领勾选。"
+    },
+    {
+      "path": "Docs/original-reinstall-0217/screenshots/04-local-reward-offer.png",
+      "sha256": "67084d83f941502867cb869994084d3542ea0d68a24871e8abe5c50ccd16e0ee",
+      "source": "Validation/test-runs/original-0217-operation-reinstall-01/01-real-ui-state-attachments/62C0A9B6-6527-4874-88ED-C54B9D54F5ED.png",
+      "stage": "01-real-ui-state",
+      "testMethod": "test01CreatePersistentStateThroughUI()",
+      "visuallyReviewed": true,
+      "review": "免费直接寻找已用完，显示视频奖励入口；本轮实际调用本地模拟奖励，无真实广告 SDK。"
+    },
+    {
+      "path": "Docs/original-reinstall-0217/screenshots/05-real-play-before-cold.png",
+      "sha256": "f838ce453e6f9d9efadf32c73a29ec2607d0c9b586a13fbb32b23490109546b4",
+      "source": "Validation/test-runs/original-0217-operation-reinstall-01/01-real-ui-state-attachments/F04DD474-0329-4237-8A6F-613E7196A4F3.png",
+      "stage": "01-real-ui-state",
+      "testMethod": "test01CreatePersistentStateThroughUI()",
+      "visuallyReviewed": true,
+      "review": "第 1 关 360 分、2 生命、3 个已找出目标、保留标记及红色错误格；奖励来源由台账与本地事件核验。"
+    },
+    {
+      "path": "Docs/original-reinstall-0217/screenshots/06-cold-restored-play.png",
+      "sha256": "15f9f4bb65aa33faa7d66812cbaa560200926d9b4eea7cac89f587ed0c60523f",
+      "source": "Validation/test-runs/original-0217-operation-reinstall-01/02-cold-ui-restore-attachments/D9CB7BA6-5DA4-44ED-BB35-4947B87912F1.png",
+      "stage": "02-cold-ui-restore",
+      "testMethod": "test02VerifyColdRestoreThroughUI()",
+      "visuallyReviewed": true,
+      "review": "冷启后第 1 关同样显示 360 分、2 生命及相同棋盘状态；精确字段一致性以完整快照比较为证据。"
+    },
+    {
+      "path": "Docs/original-reinstall-0217/screenshots/07-reinstalled-chinese-welcome.png",
+      "sha256": "ed4d2f6b45b4661a51fabca6fd41f5b7a16dcf17ba5abec9c1b54e604b1cbc6c",
+      "source": "Validation/test-runs/original-0217-operation-reinstall-01/03-reinstalled-ui-defaults-attachments/8FA632F7-6FB2-4796-AEA5-48CC691481FF.png",
+      "stage": "03-reinstalled-ui-defaults",
+      "testMethod": "test03VerifyInitialStateAfterReinstallThroughUI()",
+      "visuallyReviewed": true,
+      "review": "真正卸载重装后再次呈现中文首次欢迎页。"
+    },
+    {
+      "path": "Docs/original-reinstall-0217/screenshots/08-reinstalled-default-settings.png",
+      "sha256": "49324acff45fd393c6a0ea67a37a7bb39255a96fdef2f4f0cfde0d94e49eb473",
+      "source": "Validation/test-runs/original-0217-operation-reinstall-01/03-reinstalled-ui-defaults-attachments/E6438A0F-31B1-4CFF-A356-489B4B928338.png",
+      "stage": "03-reinstalled-ui-defaults",
+      "testMethod": "test03VerifyInitialStateAfterReinstallThroughUI()",
+      "visuallyReviewed": true,
+      "review": "重装后恢复简体中文与四项开关开启。"
+    },
+    {
+      "path": "Docs/original-reinstall-0217/screenshots/09-reinstalled-unclaimed-checkin.png",
+      "sha256": "540755764b8b352907ef34d78c1312e2e26957d1953a4b3bb020e522a3f375b8",
+      "source": "Validation/test-runs/original-0217-operation-reinstall-01/03-reinstalled-ui-defaults-attachments/7298F625-FAE5-4CA3-BFAB-E02A093AE36C.png",
+      "stage": "03-reinstalled-ui-defaults",
+      "testMethod": "test03VerifyInitialStateAfterReinstallThroughUI()",
+      "visuallyReviewed": true,
+      "review": "重装后签到 0 天、首日尚未领取。"
+    }
+  ],
+  "snapshots": [
+    {
+      "path": "Docs/original-reinstall-0217/snapshots/beforeColdRestore-progress-envelope.json",
+      "sha256": "3af150e4d6e4cc919ac1f4f92843ca79e570ef830d4b321031bfd39f1697466d",
+      "bytes": 3950,
+      "source": "Validation/test-runs/original-0217-operation-reinstall-01/beforeColdRestore-progress-envelope.json"
+    },
+    {
+      "path": "Docs/original-reinstall-0217/snapshots/beforeColdRestore-progress.json",
+      "sha256": "f814f3bc52db98943a827d486af3a42c6273c60fa7001aa09a58b392206c91bf",
+      "bytes": 3778,
+      "source": "Validation/test-runs/original-0217-operation-reinstall-01/beforeColdRestore-progress.json"
+    },
+    {
+      "path": "Docs/original-reinstall-0217/snapshots/beforeColdRestore-analytics.json",
+      "sha256": "a913997f66126aa4d256054190a1fae4017d1685d3ef0afdf5ab7e13428b00b4",
+      "bytes": 8501,
+      "source": "Validation/test-runs/original-0217-operation-reinstall-01/beforeColdRestore-analytics.json"
+    },
+    {
+      "path": "Docs/original-reinstall-0217/snapshots/beforeColdRestore-consent.json",
+      "sha256": "82ba17f57838ad8839130bb070cc0728b5916399a3627ff01f59b0dd2b3d99dc",
+      "bytes": 316,
+      "source": "Validation/test-runs/original-0217-operation-reinstall-01/beforeColdRestore-consent.json"
+    },
+    {
+      "path": "Docs/original-reinstall-0217/snapshots/afterColdRestore-progress-envelope.json",
+      "sha256": "0aee9f5526d012a008a9454f01686ac0778789d2cf0cc93a5436a97882103a96",
+      "bytes": 3950,
+      "source": "Validation/test-runs/original-0217-operation-reinstall-01/afterColdRestore-progress-envelope.json"
+    },
+    {
+      "path": "Docs/original-reinstall-0217/snapshots/afterColdRestore-progress.json",
+      "sha256": "55dc8b088245e97db0b76b72e1e94d0a25791e41063b892cb0433495f0ef5a02",
+      "bytes": 3778,
+      "source": "Validation/test-runs/original-0217-operation-reinstall-01/afterColdRestore-progress.json"
+    },
+    {
+      "path": "Docs/original-reinstall-0217/snapshots/afterColdRestore-analytics.json",
+      "sha256": "a62140283616225d78325a2e8f4e67a1d181288f0770b7d21e47699845cbd047",
+      "bytes": 10356,
+      "source": "Validation/test-runs/original-0217-operation-reinstall-01/afterColdRestore-analytics.json"
+    },
+    {
+      "path": "Docs/original-reinstall-0217/snapshots/afterColdRestore-consent.json",
+      "sha256": "82ba17f57838ad8839130bb070cc0728b5916399a3627ff01f59b0dd2b3d99dc",
+      "bytes": 316,
+      "source": "Validation/test-runs/original-0217-operation-reinstall-01/afterColdRestore-consent.json"
+    },
+    {
+      "path": "Docs/original-reinstall-0217/snapshots/afterReinstall-progress-envelope.json",
+      "sha256": "7e8827414371c98c312b7dba72169b67c1bd64c7ef0e305a4541d40b0e7231e4",
+      "bytes": 1078,
+      "source": "Validation/test-runs/original-0217-operation-reinstall-01/afterReinstall-progress-envelope.json"
+    },
+    {
+      "path": "Docs/original-reinstall-0217/snapshots/afterReinstall-progress.json",
+      "sha256": "c361a6611f6f522120dc812786ef1101e59a93ec08d30eb215bddb10b12ca906",
+      "bytes": 966,
+      "source": "Validation/test-runs/original-0217-operation-reinstall-01/afterReinstall-progress.json"
+    },
+    {
+      "path": "Docs/original-reinstall-0217/snapshots/afterReinstall-analytics.json",
+      "sha256": "6fa33882c05c7ecad3e223a4e10600e957507cd22a686ddab093b43820db1265",
+      "bytes": 1433,
+      "source": "Validation/test-runs/original-0217-operation-reinstall-01/afterReinstall-analytics.json"
+    },
+    {
+      "path": "Docs/original-reinstall-0217/snapshots/afterReinstall-consent.json",
+      "sha256": "627e5577b7fca43b0126d501154c9a488936cd12f2bb8e0e702639b07befd67d",
+      "bytes": 316,
+      "source": "Validation/test-runs/original-0217-operation-reinstall-01/afterReinstall-consent.json"
+    }
+  ],
+  "testResults": [
+    {
+      "path": "Docs/original-reinstall-0217/results/01-real-ui-state-summary.json",
+      "sha256": "b7974c78cb350c6e2dad2eb9eee2715fb1d4be2082ffeb7149e2455573b86aff",
+      "source": "Validation/test-runs/original-0217-operation-reinstall-01/01-real-ui-state-summary.json"
+    },
+    {
+      "path": "Docs/original-reinstall-0217/results/01-real-ui-state-tests.json",
+      "sha256": "baabc84ac4a8997767b560770ee2117e6c548647b472860e148d667bc51201fc",
+      "source": "Validation/test-runs/original-0217-operation-reinstall-01/01-real-ui-state-tests.json"
+    },
+    {
+      "path": "Docs/original-reinstall-0217/results/02-cold-ui-restore-summary.json",
+      "sha256": "4438049959fc965d9259f1ed89931cfb9b56adfc4104e83d8ebb0b5c58af8317",
+      "source": "Validation/test-runs/original-0217-operation-reinstall-01/02-cold-ui-restore-summary.json"
+    },
+    {
+      "path": "Docs/original-reinstall-0217/results/02-cold-ui-restore-tests.json",
+      "sha256": "8dac8d04b55f30df18292a5d7c0e129435b34d80d96fb3cdcee2aba2b2c1a018",
+      "source": "Validation/test-runs/original-0217-operation-reinstall-01/02-cold-ui-restore-tests.json"
+    },
+    {
+      "path": "Docs/original-reinstall-0217/results/03-reinstalled-ui-defaults-summary.json",
+      "sha256": "f9716557e7ac56222c5ba70f51e47905668cd121367ac1300924e7913580501f",
+      "source": "Validation/test-runs/original-0217-operation-reinstall-01/03-reinstalled-ui-defaults-summary.json"
+    },
+    {
+      "path": "Docs/original-reinstall-0217/results/03-reinstalled-ui-defaults-tests.json",
+      "sha256": "7a433f228c7cbe802df20eb4492e277d910ab0605f250cce95cec74bf3238830",
+      "source": "Validation/test-runs/original-0217-operation-reinstall-01/03-reinstalled-ui-defaults-tests.json"
+    }
+  ]
+}

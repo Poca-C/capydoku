@@ -1,0 +1,144 @@
+{
+  "attemptCounts": {
+    "1": 1
+  },
+  "bonusDirect": 0,
+  "bonusHints": 1,
+  "bonusToolSources": {
+    "direct": {
+      "batches": []
+    },
+    "hints": {
+      "batches": [
+        {
+          "count": 1,
+          "source": "initial_free"
+        }
+      ]
+    }
+  },
+  "carriedToolBalance": {
+    "direct": 0,
+    "hints": 0
+  },
+  "carriedToolSources": {
+    "direct": {
+      "batches": []
+    },
+    "hints": {
+      "batches": []
+    }
+  },
+  "checkIn": {
+    "completedCycles": 0,
+    "cycleDay": 1,
+    "lastClaimedDay": 20726,
+    "streak": 1
+  },
+  "completedLevels": [],
+  "currentLevel": 1,
+  "freeReviveUsage": {},
+  "freeToolGrantedLevels": [
+    1
+  ],
+  "levelStartLocalBalances": {},
+  "levelToolBalances": {
+    "1": {
+      "direct": 0,
+      "hints": 1
+    }
+  },
+  "levelToolSources": {
+    "1": {
+      "direct": {
+        "batches": []
+      },
+      "hints": {
+        "batches": [
+          {
+            "count": 1,
+            "source": "level_config_free"
+          }
+        ]
+      }
+    }
+  },
+  "pendingBuffEvents": {},
+  "pendingLevelResultEvents": {},
+  "referenceToolGrantKeys": [],
+  "rewardLedger": {
+    "459040D3-4D65-45A1-B04C-B9157752CBC4": {
+      "analyticsOffer": "eyJrZXkiOiJhZF9vZmZlcl9zaG93bjo0NTkwNDBEMy00RDY1LTQ1QTEtQjA0Qy1COTE1Nzc1MkNCQzQiLCJldmVudCI6eyJlbnZpcm9ubWVudCI6ImludGVybmFsLWRlbW8tb2ZmbGluZSIsInNlc3Npb25faWQiOiJGQTEyRkNENS02RTAxLTQyRDYtODM3NS1CNkY0MTEwRjg3NUYiLCJpbnN0YWxsX2RhdGUiOiIyMDI2LTA5LTMwIiwiZXZlbnRfbmFtZSI6ImFkX29mZmVyX3Nob3duIiwiZXZlbnRfaWQiOiI3MDZBMjUzNi02NjQwLTQ2OUQtOTk1OS1DMTczRkM0MkRCNDIiLCJjb3VudHJ5IjoiQVUiLCJwYXJhbWV0ZXJzIjp7InJld2FyZF90eXBlIjoiZGlyZWN0X2ZpbmQiLCJhZF90eXBlIjoicmV3YXJkZWQiLCJyZXdhcmRfYW1vdW50IjoxLCJhZF91bml0X2lkIjoiaW50ZXJuYWwtZGVtbyIsImJ1ZmZfdHlwZSI6ImRpcmVjdF9maW5kIiwibmV0d29yayI6InNpbXVsYXRpb24iLCJvZmZlcl9pZCI6IjQ1OTA0MEQzLTRENjUtNDVBMS1CMDRDLUI5MTU3NzUyQ0JDNCIsInBsYWNlbWVudF9pZCI6ImRpcmVjdF9maW5kIn0sInBhd2Rva3VfY29uZmlnX3ZlcnNpb24iOiJvcmlnaW5hbC1kZW1vLXVudmVyaWZpZWQtdjMiLCJldmVudF90aW1lIjo4MTI0ODcyMjIuMDUwNzk1LCJwbGF0Zm9ybSI6ImlPUyIsImFwcF92ZXJzaW9uIjoiMC4yLjE3IiwibGV2ZWxfaWQiOjEsInVzZXJfaWQiOiIwMkIxOThGNS1DQTI4LTQzMTktQkExOC0xQTFFQ0EzMThFREEifX0=",
+      "analyticsOfferPending": false,
+      "createdAt": 812487222.050906,
+      "id": "459040D3-4D65-45A1-B04C-B9157752CBC4",
+      "kind": "direct",
+      "pendingAdEvents": {},
+      "sessionID": "F2D89F0C-328B-43C6-A428-D9ACD0EF74D2",
+      "state": "executed"
+    }
+  },
+  "session": {
+    "attempt": 1,
+    "combo": 0,
+    "config": {
+      "baseScore": 100,
+      "checkInCycleDays": 7,
+      "comboBonus": 20,
+      "comboThresholds": [
+        2,
+        3,
+        4
+      ],
+      "cycleDirectReward": 1,
+      "dailyHintReward": 1,
+      "directPerLevel": 1,
+      "generatorBudgetMilliseconds": 4000,
+      "generatorCandidateLimit": 150,
+      "hintsPerLevel": 1,
+      "initialLives": 3,
+      "maximumBoardSize": 10,
+      "version": "original-demo-unverified-v3"
+    },
+    "directRemaining": 0,
+    "elapsedSeconds": 33,
+    "errors": [
+      4
+    ],
+    "found": [
+      1,
+      14,
+      8
+    ],
+    "hasRevived": false,
+    "hintsRemaining": 1,
+    "id": "F2D89F0C-328B-43C6-A428-D9ACD0EF74D2",
+    "lives": 2,
+    "marks": [
+      4,
+      5,
+      13,
+      9
+    ],
+    "pendingRewardHint": false,
+    "puzzleReference": {
+      "checksum": "7bc131c9fcb5d033827f12e19b408e177f04ffc8760c96a9fa65cfd172aebd4f",
+      "levelID": 1,
+      "source": "bundle"
+    },
+    "resultPhase": 0,
+    "resultPhaseEnd": "quit",
+    "score": 360,
+    "status": "playing"
+  },
+  "settings": {
+    "hapticsEnabled": false,
+    "language": "en",
+    "musicEnabled": false,
+    "soundEnabled": false,
+    "voiceEnabled": false
+  },
+  "tutorialCompleted": true,
+  "tutorialStep": 9,
+  "unlockedLevel": 1
+}

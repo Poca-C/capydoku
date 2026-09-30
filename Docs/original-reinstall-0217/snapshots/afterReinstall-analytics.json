@@ -1,0 +1,47 @@
+{
+  "events": [
+    {
+      "install_date": "2026-09-30",
+      "event_time": 812487268.684465,
+      "user_id": "F65BC1F3-0DA2-46F2-80D6-5AE24AE96085",
+      "platform": "iOS",
+      "app_version": "0.2.17",
+      "parameters": {
+        "is_reinstall": false,
+        "install_source": "internal_demo"
+      },
+      "country": "AU",
+      "session_id": "ED0C3EAA-82A9-482E-8A20-9BEA578F225A",
+      "event_name": "first_open",
+      "event_id": "AB7D52EB-DE49-45B1-B640-055F8D036C6B",
+      "environment": "internal-demo-offline"
+    },
+    {
+      "install_date": "2026-09-30",
+      "event_time": 812487268.684465,
+      "user_id": "F65BC1F3-0DA2-46F2-80D6-5AE24AE96085",
+      "platform": "iOS",
+      "app_version": "0.2.17",
+      "parameters": {
+        "entry_source": "cold_start"
+      },
+      "country": "AU",
+      "session_id": "ED0C3EAA-82A9-482E-8A20-9BEA578F225A",
+      "event_name": "session_start",
+      "event_id": "3BDB02AC-BD6A-4468-A539-D30BB0D7CDAA",
+      "environment": "internal-demo-offline"
+    }
+  ],
+  "activeSession": {
+    "lastActiveAt": 812487287.02801,
+    "activeSeconds": 12.97795295715332,
+    "backgroundAt": 812487287.02801,
+    "startedAt": 812487268.684465,
+    "activePeriodStartedAt": 812487274.159,
+    "id": "ED0C3EAA-82A9-482E-8A20-9BEA578F225A"
+  },
+  "keys": [
+    "session_start:ED0C3EAA-82A9-482E-8A20-9BEA578F225A",
+    "first_open:F65BC1F3-0DA2-46F2-80D6-5AE24AE96085"
+  ]
+}

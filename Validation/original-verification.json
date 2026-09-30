@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "date": "2026-10-01",
-  "build": "0.2.16 (19)",
+  "build": "0.2.17 (20)",
   "status": "Partial original-spec alignment; remaining client, reference and release gaps open.",
   "originalSHA256": "274bbf15f031bd80bb8b360cf14c0266acff370a230d9cad1b1785461df54dd2",
   "currentPackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49",
@@ -600,6 +600,25 @@
       "failed": 0,
       "seconds": 63.173,
       "scope": "Chinese Home Settings Restart/reset/play/cold restore;150→151 full board cold restore."
+    },
+    {
+      "build": "0.2.17 (20)",
+      "passed": 269,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 105.074,
+      "bundle": "Validation/test-runs/original-0217-app-final.xcresult",
+      "scope": "Complete AppTests on iPhone17Pro, no exclusions. Two added actual-rendering contrast cases cover white/hollow/red Xs across10 palette colors and two board widths, and bilingual free-revive badges. Synthetic palette and reference-row fixtures are explicitly labeled.",
+      "device": "iPhone 17 Pro"
+    },
+    {
+      "build": "0.2.17 (20)",
+      "device": "iPhone 17 Pro",
+      "bundle": "Validation/test-runs/original-0217-ui-pro.xcresult",
+      "uiTestsPassed": 2,
+      "failed": 0,
+      "seconds": 34.657,
+      "scope": "Four current-pack board sizes retain layout; Hint preview/close does not mark, simulated reward permits next preview, Apply alone adds marks. Selected UI tests only."
     }
   ],
   "visualEvidence": {
@@ -625,13 +644,13 @@
   ],
   "historicalFailuresRetained": "Initial UI/app runs and first full-core run failed on changed fixture assumptions or real UI issues; these are retained under Validation/test-runs. Only explicitly listed successful reruns count. Old 88-item checklist completion counts are superseded.",
   "applicationTests": {
-    "build": "0.2.16 (19)",
-    "passed": 267,
+    "build": "0.2.17 (20)",
+    "passed": 269,
     "failed": 0,
     "skipped": 0,
-    "seconds": 104.418,
-    "bundle": "Validation/test-runs/original-0216-app-final.xcresult",
-    "scope": "Complete AppTests with no exclusions. Adds4 runtime generation-report/file/cold-export integrations,3 restart navigation/event cases and4 actual hosted compact-layout cases. Scoped synthetic configuration/font/lifecycle fixtures remain explicitly labeled; not physical-device or external-service acceptance."
+    "seconds": 105.074,
+    "bundle": "Validation/test-runs/original-0217-app-final.xcresult",
+    "scope": "Complete AppTests on iPhone17Pro, no exclusions. Two added actual-rendering contrast cases cover white/hollow/red Xs across10 palette colors and two board widths, and bilingual free-revive badges. Synthetic palette and reference-row fixtures are explicitly labeled."
   },
   "supersededOrInterruptedRuns": [
     "reward-readiness-final was intentionally interrupted to stop two runners targeting one simulator; not counted as success.",
@@ -674,21 +693,21 @@
     }
   ],
   "buildVerification": {
-    "bundleVersion": "0.2.16 (19)",
-    "simulatorDebug": "passed with local signing and simulator Keychain entitlements",
-    "simulatorLog": "Validation/test-runs/original-0216-app-final.log",
+    "bundleVersion": "0.2.17 (20)",
+    "simulatorDebug": "passed with local simulator signing",
+    "simulatorLog": "Validation/test-runs/original-0217-app-final.log",
     "genericIOSReleaseUnsigned": "passed",
-    "releaseLog": "Validation/test-runs/original-0216-release.log",
-    "signingAndDeviceExecution": "Simulator locally signed; device Release compiled unsigned. Physical device, minimum runtime, TestFlight and App Store remain unverified.",
+    "releaseLog": "Validation/test-runs/original-0217-release.log",
+    "signingAndDeviceExecution": "Simulator locally signed; device Release compilation unsigned. No physical-device, minimum-runtime, TestFlight or App Store acceptance. Debug/Release are both the same internal Demo environment.",
     "sourceDocumentSHA256Unchanged": true,
-    "normalInstallEvidence": "Validation/original-0216-install-audit.json",
+    "normalInstallEvidence": "Validation/original-0217-install-audit.json",
     "normalInstallDevices": [
       {
         "device": "iPhone 17 Pro",
         "deviceID": "3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3",
-        "version": "0.2.16 (19)",
+        "version": "0.2.17 (20)",
         "dataContainerChanged": true,
-        "launch": "com.capydoku.demo: 44000",
+        "launch": "com.capydoku.demo: 49984",
         "installBytesUnchanged": true,
         "launchPlayerStateUnchanged": true,
         "allEnvelopeChecksumsValid": true,
@@ -696,30 +715,30 @@
         "before": {
           "progress.json": {
             "bytes": 3746,
-            "sha256": "6862725d547dc78a71fadaabd97047b2e4859be97e76718440d1a1bb90098ba0"
+            "sha256": "caea64edb451cb8f9d1036598b6177b91ff439d450a9377e5bc760c5ce2e6566"
           },
           "progress.backup.json": {
             "bytes": 3746,
-            "sha256": "caea64edb451cb8f9d1036598b6177b91ff439d450a9377e5bc760c5ce2e6566"
+            "sha256": "6862725d547dc78a71fadaabd97047b2e4859be97e76718440d1a1bb90098ba0"
           }
         },
         "afterLaunch": {
           "progress.json": {
             "bytes": 3746,
-            "sha256": "caea64edb451cb8f9d1036598b6177b91ff439d450a9377e5bc760c5ce2e6566"
+            "sha256": "ad7f88ed4c19a7336d82dae94d21fbdd662b209b019a6eaaaf23cef175485139"
           },
           "progress.backup.json": {
             "bytes": 3746,
-            "sha256": "6862725d547dc78a71fadaabd97047b2e4859be97e76718440d1a1bb90098ba0"
+            "sha256": "caea64edb451cb8f9d1036598b6177b91ff439d450a9377e5bc760c5ce2e6566"
           }
         }
       },
       {
         "device": "iPhone 17e",
         "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
-        "version": "0.2.16 (19)",
+        "version": "0.2.17 (20)",
         "dataContainerChanged": true,
-        "launch": "com.capydoku.demo: 44033",
+        "launch": "com.capydoku.demo: 50033",
         "installBytesUnchanged": true,
         "launchPlayerStateUnchanged": true,
         "allEnvelopeChecksumsValid": true,
@@ -948,6 +967,15 @@
       "seconds": 84.105,
       "bundle": "Validation/test-runs/original-0215-app-final.xcresult",
       "scope": "Complete AppTests, including all four OriginalUIContractTests (no exclusions), five actual generator/history/save/cold-restore integrations and complete local event-chain test. Simulator locally signed. Final full rerun follows precise Welcome rendering comparison correction; production Welcome unchanged."
+    },
+    {
+      "build": "0.2.16 (19)",
+      "passed": 267,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 104.418,
+      "bundle": "Validation/test-runs/original-0216-app-final.xcresult",
+      "scope": "Complete AppTests with no exclusions. Adds4 runtime generation-report/file/cold-export integrations,3 restart navigation/event cases and4 actual hosted compact-layout cases. Scoped synthetic configuration/font/lifecycle fixtures remain explicitly labeled; not physical-device or external-service acceptance."
     }
   ],
   "remoteConfigurationContract": {
@@ -1224,6 +1252,80 @@
           "launchPlayerStateUnchanged": true,
           "primaryMatchesPrevious0214State": true,
           "launch": "com.capydoku.demo: 35512"
+        }
+      ]
+    },
+    {
+      "bundleVersion": "0.2.16 (19)",
+      "simulatorDebug": "passed with local signing and simulator Keychain entitlements",
+      "simulatorLog": "Validation/test-runs/original-0216-app-final.log",
+      "genericIOSReleaseUnsigned": "passed",
+      "releaseLog": "Validation/test-runs/original-0216-release.log",
+      "signingAndDeviceExecution": "Simulator locally signed; device Release compiled unsigned. Physical device, minimum runtime, TestFlight and App Store remain unverified.",
+      "sourceDocumentSHA256Unchanged": true,
+      "normalInstallEvidence": "Validation/original-0216-install-audit.json",
+      "normalInstallDevices": [
+        {
+          "device": "iPhone 17 Pro",
+          "deviceID": "3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3",
+          "version": "0.2.16 (19)",
+          "dataContainerChanged": true,
+          "launch": "com.capydoku.demo: 44000",
+          "installBytesUnchanged": true,
+          "launchPlayerStateUnchanged": true,
+          "allEnvelopeChecksumsValid": true,
+          "launchBytesUnchanged": false,
+          "before": {
+            "progress.json": {
+              "bytes": 3746,
+              "sha256": "6862725d547dc78a71fadaabd97047b2e4859be97e76718440d1a1bb90098ba0"
+            },
+            "progress.backup.json": {
+              "bytes": 3746,
+              "sha256": "caea64edb451cb8f9d1036598b6177b91ff439d450a9377e5bc760c5ce2e6566"
+            }
+          },
+          "afterLaunch": {
+            "progress.json": {
+              "bytes": 3746,
+              "sha256": "caea64edb451cb8f9d1036598b6177b91ff439d450a9377e5bc760c5ce2e6566"
+            },
+            "progress.backup.json": {
+              "bytes": 3746,
+              "sha256": "6862725d547dc78a71fadaabd97047b2e4859be97e76718440d1a1bb90098ba0"
+            }
+          }
+        },
+        {
+          "device": "iPhone 17e",
+          "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+          "version": "0.2.16 (19)",
+          "dataContainerChanged": true,
+          "launch": "com.capydoku.demo: 44033",
+          "installBytesUnchanged": true,
+          "launchPlayerStateUnchanged": true,
+          "allEnvelopeChecksumsValid": true,
+          "launchBytesUnchanged": true,
+          "before": {
+            "progress.json": {
+              "bytes": 1078,
+              "sha256": "7e8827414371c98c312b7dba72169b67c1bd64c7ef0e305a4541d40b0e7231e4"
+            },
+            "progress.backup.json": {
+              "bytes": 1078,
+              "sha256": "7e8827414371c98c312b7dba72169b67c1bd64c7ef0e305a4541d40b0e7231e4"
+            }
+          },
+          "afterLaunch": {
+            "progress.json": {
+              "bytes": 1078,
+              "sha256": "7e8827414371c98c312b7dba72169b67c1bd64c7ef0e305a4541d40b0e7231e4"
+            },
+            "progress.backup.json": {
+              "bytes": 1078,
+              "sha256": "7e8827414371c98c312b7dba72169b67c1bd64c7ef0e305a4541d40b0e7231e4"
+            }
+          }
         }
       ]
     }
@@ -2022,5 +2124,84 @@
       "Old runtime batches were never retained and cannot be backfilled honestly. Reports prove generation, not player activation, formal difficulty, cross-product comparison or indefinite storage capacity.",
       "Original source,150-level pack, original audio availability and external service/reference/release gaps remain unchanged."
     ]
+  },
+  "corrections0217": {
+    "sourceParagraphs": [
+      244,
+      303,
+      306,
+      390,
+      398
+    ],
+    "changes": [
+      "White and hollow-preview Xs gain a1pt warm dark boundary; red errors retain their distinct core.",
+      "Only the Free text badge uses darker functional green; video symbols keep the original decorative green.",
+      "Release records explicitly retain missing TestFlight/staging/production configurations; no actual production service claimed."
+    ],
+    "visualManifest": "Docs/original-contrast-0217/manifest.json",
+    "before": {
+      "build": "0.2.16 (19)",
+      "bundle": "Validation/test-runs/original-0217-contrast-before.xcresult",
+      "tests": 2,
+      "assertionFailures": 62,
+      "scope": "60 missing mark-boundary and2 free-badge contrast assertions reproduced. Center appearance and unchanged model assertions passed."
+    },
+    "after": {
+      "build": "0.2.17 (20)",
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-0217-contrast-after.xcresult",
+      "passed": 2,
+      "failed": 0,
+      "seconds": 4.468,
+      "minimumSampledMarkBoundaryContrast": 3.578,
+      "freeTextContrastBefore": 2.57488,
+      "freeTextContrastAfter": 5.82905
+    },
+    "applicationRegression": {
+      "build": "0.2.17 (20)",
+      "passed": 269,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 105.074,
+      "bundle": "Validation/test-runs/original-0217-app-final.xcresult",
+      "scope": "Complete AppTests on iPhone17Pro, no exclusions. Two added actual-rendering contrast cases cover white/hollow/red Xs across10 palette colors and two board widths, and bilingual free-revive badges. Synthetic palette and reference-row fixtures are explicitly labeled."
+    },
+    "coreAndPackScope": "Core engine and production150-level pack are unchanged.156 Core tests remain evidence from0.2.16, not a0.2.17 rerun.",
+    "normalInstallEvidence": "Validation/original-0217-install-audit.json",
+    "limitations": [
+      "Numerical3:1 boundary and4.5:1 small-text thresholds are local readability checks, not numbers specified by the original Word.",
+      "Synthetic board palette is not an accepted puzzle; free-revive uses a TEST imported row. Actual UI Hint supplements hosted screenshots.",
+      "No frozen-reference timing/difficulty/cross-product, original audio, physical-device or release acceptance is implied."
+    ],
+    "operationReinstall": {
+      "build": "0.2.17 (20)",
+      "status": "passed",
+      "report": "Validation/original-0217-operation-reinstall.json",
+      "fullRun": "Validation/test-runs/original-0217-operation-reinstall-01/audit.json",
+      "uiStages": 3,
+      "failed": 0,
+      "skipped": 0,
+      "scope": "Real user-interface actions created nonempty state in the existing UI-test storage directory. Normal background save then cold UI restore; real uninstall/reinstall of one frozen simulator build. Exact player comparison allows only declared Set ordering, elapsed advancement and precisely one resultPhase increment. Simulated advertising only; no fixture save injection or force-quit instruction-boundary claim.",
+      "cleanup": "Temporary device deletion reported successful and independently confirmed absent from simctl device inventory by root.",
+      "historicalFixtureAudit": "reinstallAudit remains the0.2.6 artificial-fixture run; not relabeled as this operation-based run.",
+      "unexercisedNonemptyFields": "This run stopped at3/4 found inL1. completedLevels was already empty and unlockedLevel already1; post-reinstall defaults were checked, but resetting nonempty completion/high-unlock data is not proven by this run. The prior artificial-fixture audit remains separately versioned.",
+      "evidenceManifest": "Docs/original-reinstall-0217/manifest.json",
+      "reportSHA256": "36fbe8405914c74217b200604fe87b280e45d38fb8686518ac80e3e37690b05f"
+    }
+  },
+  "operationReinstall0217": {
+    "build": "0.2.17 (20)",
+    "status": "passed",
+    "report": "Validation/original-0217-operation-reinstall.json",
+    "fullRun": "Validation/test-runs/original-0217-operation-reinstall-01/audit.json",
+    "uiStages": 3,
+    "failed": 0,
+    "skipped": 0,
+    "scope": "Real user-interface actions created nonempty state in the existing UI-test storage directory. Normal background save then cold UI restore; real uninstall/reinstall of one frozen simulator build. Exact player comparison allows only declared Set ordering, elapsed advancement and precisely one resultPhase increment. Simulated advertising only; no fixture save injection or force-quit instruction-boundary claim.",
+    "cleanup": "Temporary device deletion reported successful and independently confirmed absent from simctl device inventory by root.",
+    "historicalFixtureAudit": "reinstallAudit remains the0.2.6 artificial-fixture run; not relabeled as this operation-based run.",
+    "unexercisedNonemptyFields": "This run stopped at3/4 found inL1. completedLevels was already empty and unlockedLevel already1; post-reinstall defaults were checked, but resetting nonempty completion/high-unlock data is not proven by this run. The prior artificial-fixture audit remains separately versioned.",
+    "evidenceManifest": "Docs/original-reinstall-0217/manifest.json",
+    "reportSHA256": "36fbe8405914c74217b200604fe87b280e45d38fb8686518ac80e3e37690b05f"
   }
 }

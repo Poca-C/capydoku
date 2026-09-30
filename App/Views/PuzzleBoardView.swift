@@ -451,6 +451,10 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
             context.strokePath()
         }
         let width = max(3.2, rect.width * 0.11)
+        // Original [244]: keep the white X while giving light region colors a
+        // readable boundary. The same 1pt edge protects the red error marker;
+        // the preview's colored center remains hollow and unapplied.
+        stroke(UIColor(CapyPalette.markOutline), width: width + 2)
         stroke(error ? UIColor(CapyPalette.life) : .white, width: width)
         if let previewFill { stroke(previewFill, width: max(1, width - 2.6)) }
     }
