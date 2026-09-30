@@ -1076,7 +1076,7 @@
       ],
       "title": "首次启动顺序与权限恢复",
       "status": "partial",
-      "implemented": "首次Welcome法律链接、Accept、通知/Tracking顺序及重启不重复同意在模拟器通过；5项启动App测试通过含取消恢复与损坏回退。 0.2.11补独立Loading→Brand Loading→Welcome/权限；保留原图构图并替换卡皮巴拉原创内容。前台时间控制、后台停留、权限异常/取消/持久化失败及重入经过12项新增逻辑测试；两实际宿主测试覆盖流程和大字视图，17e首次启动UI通过。两设备最终截图留档，修复目视发现的浅色天空文字对比不足。 0.2.14补Welcome独立居中缩放/淡入淡出，后台和减少动态效果清理视觉过渡；Accept写失败仍停Welcome，权限调用不因动画被延迟。加深正文/法律链接与同意按钮功能色。",
+      "implemented": "首次Welcome法律链接、Accept、通知/Tracking顺序及重启不重复同意在模拟器通过；5项启动App测试通过含取消恢复与损坏回退。 0.2.11补独立Loading→Brand Loading→Welcome/权限；保留原图构图并替换卡皮巴拉原创内容。前台时间控制、后台停留、权限异常/取消/持久化失败及重入经过12项新增逻辑测试；两实际宿主测试覆盖流程和大字视图，17e首次启动UI通过。两设备最终截图留档，修复目视发现的浅色天空文字对比不足。 0.2.14补Welcome独立居中缩放/淡入淡出，后台和减少动态效果清理视觉过渡；Accept写失败仍停Welcome，权限调用不因动画被延迟。加深正文/法律链接与同意按钮功能色。 0.2.21三个优化候选在17 Pro正常目录通过中文Welcome、实际通知/Tracking拒绝、九步教学、英中切换、签到和两次冷启动同盘恢复；无调试参数或存档注入，各包本地身份独立，原Demo玩家状态和历史事件保留。",
       "gap": "加载停留和忙碌指示采用明确临时值，尚无冻结时序；正式条款链接、地区Data Use/CMP、全部授权组合、真实系统减少动态效果/读屏及真机验收仍缺。当前不能强制展示或仿造系统不提供调用API的地区网络权限。",
       "evidence": [
         "App/Services/StartupController.swift",
@@ -1088,7 +1088,10 @@
         "AppTests/StartupPreparationTests.swift",
         "AppTests/StartupVisualTests.swift",
         "Docs/original-startup/manifest.json",
-        "AppTests/FunctionalContrastTests.swift"
+        "AppTests/FunctionalContrastTests.swift",
+        "UITests/EnvironmentCandidateUITests.swift",
+        "Validation/original-0221-candidate-playthrough.json",
+        "Docs/original-candidates-0221/manifest.json"
       ]
     },
     {
@@ -1149,7 +1152,7 @@
       ],
       "title": "签到页面、周期礼盒和自然日状态",
       "status": "partial",
-      "implemented": "左上返回、抱牌角色、Day Streak及横向状态按附图布局；0.2.7补周期末达到领取条件时的短弹跳/粒子，后台/离页/领取后清理。当前配置下领取幂等、重入及保存通过；测试预置前六日实际签到业务记录。 0.2.13已领取/未来日期变为只读禁用状态；领取按钮补焦点绑定，关闭失败提示的路由有实际目标，避免重复按钮反馈。 0.2.16窄屏七日条按44pt热区预算启用横向滚动，礼盒可达；紧凑尺寸压缩上部装饰留白，不改变领取状态和奖励。 0.2.21拒绝签到越界日期，合法checksum异常主档回退正常备份/无备份安全复位并保留原bytes；正常负日期、合法边界与nil不变。5项核心专项及2项真实AppModel恢复/签到组件绘制通过，回退后不重复领取。技术日期范围不改变当前UTC临时规则。",
+      "implemented": "左上返回、抱牌角色、Day Streak及横向状态按附图布局；0.2.7补周期末达到领取条件时的短弹跳/粒子，后台/离页/领取后清理。当前配置下领取幂等、重入及保存通过；测试预置前六日实际签到业务记录。 0.2.13已领取/未来日期变为只读禁用状态；领取按钮补焦点绑定，关闭失败提示的路由有实际目标，避免重复按钮反馈。 0.2.16窄屏七日条按44pt热区预算启用横向滚动，礼盒可达；紧凑尺寸压缩上部装饰留白，不改变领取状态和奖励。 0.2.21拒绝签到越界日期，合法checksum异常主档回退正常备份/无备份安全复位并保留原bytes；正常负日期、合法边界与nil不变。5项核心专项及2项真实AppModel恢复/签到组件绘制通过，回退后不重复领取。技术日期范围不改变当前UTC临时规则。 0.2.21三个优化候选在17 Pro正常目录通过中文Welcome、实际通知/Tracking拒绝、九步教学、英中切换、签到和两次冷启动同盘恢复；无调试参数或存档注入，各包本地身份独立，原Demo玩家状态和历史事件保留。",
       "gap": "真实奖励/补签条件、正式项目时区和服务器时间未冻结，正式签到对标待验。",
       "evidence": [
         "App/Views/SupportingViews.swift",
@@ -1163,7 +1166,10 @@
         "Validation/original-0221-date-before.json",
         "Docs/original-checkin-0221/manifest.json",
         "Validation/original-0221-install-audit.json",
-        "Validation/test-runs/original-0221-checkin-app-final.xcresult"
+        "Validation/test-runs/original-0221-checkin-app-final.xcresult",
+        "UITests/EnvironmentCandidateUITests.swift",
+        "Validation/original-0221-candidate-playthrough.json",
+        "Docs/original-candidates-0221/manifest.json"
       ]
     },
     {
@@ -1621,8 +1627,8 @@
       ],
       "title": "环境隔离与SDK隐私清单",
       "status": "partial",
-      "implemented": "0.2.20将原Demo与测试/预发布/正式候选的Bundle ID、存储目录、Keychain前缀、统计环境及配置目标分开；未知环境和错环境远程地址不启用服务，跨环境队列和待交付事件拒绝。三个优化候选同原Demo四容器并存，首次欢迎页无同意前统计；原Demo文件不被覆盖。12项新增隔离/真实Keychain测试包含在全量293项通过中。",
-      "gap": "实际发行AppID、广告位、线上数据源、SDK版本/采集字段/政策/关闭方式清单与App Privacy、年龄分级仍待真实接入；当前无第三方SDK和上报，不能据离线隔离宣称正式线上三环境验收完成。三候选仅实际验证到首次欢迎页，完整权限和游玩流待验。",
+      "implemented": "0.2.20将原Demo与测试/预发布/正式候选的Bundle ID、存储目录、Keychain前缀、统计环境及配置目标分开；未知环境和错环境远程地址不启用服务，跨环境队列和待交付事件拒绝。三个优化候选同原Demo四容器并存，首次欢迎页无同意前统计；原Demo文件不被覆盖。12项新增隔离/真实Keychain测试包含在全量293项通过中。 0.2.21三个优化候选在17 Pro正常目录通过中文Welcome、实际通知/Tracking拒绝、九步教学、英中切换、签到和两次冷启动同盘恢复；无调试参数或存档注入，各包本地身份独立，原Demo玩家状态和历史事件保留。",
+      "gap": "实际发行AppID、广告位、线上数据源、SDK版本/采集字段/政策/关闭方式清单与App Privacy、年龄分级仍待真实接入；当前无第三方SDK和上报，不能据离线隔离宣称正式线上三环境验收完成。三候选已完成所记录的L1正常路径；全部权限组合、胜负/广告/高关/持续生成在优化候选上的完整回归仍待验。",
       "evidence": [
         "App/PrivacyInfo.xcprivacy",
         "App/Info.plist",
@@ -1637,7 +1643,10 @@
         "Validation/original-0220-coinstall-audit.json",
         "Validation/original-0220-install-audit.json",
         "Docs/original-environments-0220/manifest.json",
-        "Validation/test-runs/original-0220-app.xcresult"
+        "Validation/test-runs/original-0220-app.xcresult",
+        "UITests/EnvironmentCandidateUITests.swift",
+        "Validation/original-0221-candidate-playthrough.json",
+        "Docs/original-candidates-0221/manifest.json"
       ]
     },
     {
@@ -1773,8 +1782,8 @@
       ],
       "title": "iOS技术验收与SDK升级兼容",
       "status": "partial",
-      "implemented": "0.2.21全量169项Core与9项签到/奖励定向AppTests通过，含异常存档实际AppModel加载后的签到组件绘制；Demo Debug及通用iOS无签名Release编译通过，正常保留数据覆盖安装两模拟器。上轮0.2.20全量293项App及17e两项UI记录保留原版本；三候选并存仍是0.2.20证据，不重标本轮。",
-      "gap": "这不是全部设备/场景通过；17e升级前无正常统计队列，不能声称该设备历史统计迁移已验证。真机、最低系统、候选包完整权限/游玩、真实SDK升级及正式远程关闭仍待验。",
+      "implemented": "0.2.21全量169项Core与9项签到/奖励定向AppTests通过，含异常存档实际AppModel加载后的签到组件绘制；Demo Debug及通用iOS无签名Release编译通过，正常保留数据覆盖安装两模拟器。上轮0.2.20全量293项App及17e两项UI记录保留原版本；三候选并存仍是0.2.20证据，不重标本轮。 0.2.21三个优化候选在17 Pro正常目录通过中文Welcome、实际通知/Tracking拒绝、九步教学、英中切换、签到和两次冷启动同盘恢复；无调试参数或存档注入，各包本地身份独立，原Demo玩家状态和历史事件保留。",
+      "gap": "这不是全部设备/场景通过；17e升级前无正常统计队列，不能声称该设备历史统计迁移已验证。真机、最低系统、候选包其余权限组合与胜负/广告/高关/持续生成、真实SDK升级及正式远程关闭仍待验。",
       "evidence": [
         "Validation/original-verification.json",
         "Validation/test-runs/original-026-core-atomic-final.log",
@@ -1843,7 +1852,10 @@
         "Docs/original-checkin-0221/manifest.json",
         "Validation/original-0221-install-audit.json",
         "Validation/test-runs/original-0221-checkin-app-final.xcresult",
-        "Validation/original-0221-build-settings.json"
+        "Validation/original-0221-build-settings.json",
+        "UITests/EnvironmentCandidateUITests.swift",
+        "Validation/original-0221-candidate-playthrough.json",
+        "Docs/original-candidates-0221/manifest.json"
       ]
     },
     {

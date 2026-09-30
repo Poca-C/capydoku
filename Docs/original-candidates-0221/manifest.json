@@ -1,0 +1,117 @@
+{
+  "build": "0.2.21 (24)",
+  "sourceResultBundle": "Validation/test-runs/original-0221-candidate-ui.xcresult",
+  "scope": "Unedited screenshots and observed path reports from three installed optimized candidates, normal application storage and no app launch overrides. Internal placeholder identities; not TestFlight distribution.",
+  "artifacts": [
+    {
+      "path": "Docs/original-candidates-0221/production-actual-path-observations.txt",
+      "source": "Validation/test-runs/original-0221-candidate-attachments-final/7B4A04A2-2DD7-4619-8ADE-BEB14E729624.txt",
+      "sha256": "d8a27f999a7d62e980d7732108249aa9df89cf68747d9bc7869d986ac6e8bd94",
+      "test": "EnvironmentCandidateUITests/testProductionCandidateNormalChinesePlayAndColdRestore()",
+      "device": "iPhone 17 Pro"
+    },
+    {
+      "path": "Docs/original-candidates-0221/production-cold-restored-chinese-same-board-and-inventory.png",
+      "source": "Validation/test-runs/original-0221-candidate-attachments-final/2BF09A2A-A0EB-4DE8-BE46-D82965519D86.png",
+      "sha256": "7f19fe0ecbc39dda4aa139de587162691c467885eac6fdadb4880c520bc0fc3b",
+      "test": "EnvironmentCandidateUITests/testProductionCandidateNormalChinesePlayAndColdRestore()",
+      "device": "iPhone 17 Pro"
+    },
+    {
+      "path": "Docs/original-candidates-0221/production-cold-restored-chinese-checkin-no-repeat.png",
+      "source": "Validation/test-runs/original-0221-candidate-attachments-final/B788A439-4766-40BC-9500-F9D833390E7F.png",
+      "sha256": "55b5d166de312197baf3ddc51b335bd5b0beca04925a67c4c70c6331d53a3468",
+      "test": "EnvironmentCandidateUITests/testProductionCandidateNormalChinesePlayAndColdRestore()",
+      "device": "iPhone 17 Pro"
+    },
+    {
+      "path": "Docs/original-candidates-0221/production-english-settings.png",
+      "source": "Validation/test-runs/original-0221-candidate-attachments-final/0F4722A4-F1E7-4348-9389-9C972F7F0020.png",
+      "sha256": "bcec2e6fccc90b658c3ec2e91de8cbf8f1c0ba7847329e2ed2b11fb0c375ab95",
+      "test": "EnvironmentCandidateUITests/testProductionCandidateNormalChinesePlayAndColdRestore()",
+      "device": "iPhone 17 Pro"
+    },
+    {
+      "path": "Docs/original-candidates-0221/production-current-pack-chinese-tutorial.png",
+      "source": "Validation/test-runs/original-0221-candidate-attachments-final/6D155076-33B8-44E3-840C-463F8E906935.png",
+      "sha256": "3b000004ff1c774757aa1d49ac401eec06cfc7d0e258c05dfa17e65c1e23250d",
+      "test": "EnvironmentCandidateUITests/testProductionCandidateNormalChinesePlayAndColdRestore()",
+      "device": "iPhone 17 Pro"
+    },
+    {
+      "path": "Docs/original-candidates-0221/production-normal-chinese-home.png",
+      "source": "Validation/test-runs/original-0221-candidate-attachments-final/95B5BD35-0CEA-46DA-9D2C-0177BEAF0044.png",
+      "sha256": "04e3a7999ce1630ea4c4a94840bee79b12de87f4cebfb8946faace04e7996697",
+      "test": "EnvironmentCandidateUITests/testProductionCandidateNormalChinesePlayAndColdRestore()",
+      "device": "iPhone 17 Pro"
+    },
+    {
+      "path": "Docs/original-candidates-0221/production-system-permission-before-denial-4.png",
+      "source": "Validation/test-runs/original-0221-candidate-attachments-final/7B4F7B40-03E5-417B-AE4F-64D925CF028F.png",
+      "sha256": "be97c4df7d47d29e62b2b2f9aeb8401019c201324fb3e6d60911b470add7e919",
+      "test": "EnvironmentCandidateUITests/testProductionCandidateNormalChinesePlayAndColdRestore()",
+      "device": "iPhone 17 Pro"
+    },
+    {
+      "path": "Docs/original-candidates-0221/production-system-permission-before-denial-3.png",
+      "source": "Validation/test-runs/original-0221-candidate-attachments-final/4FEB8D4F-AA06-40F5-9899-E790EEFFA425.png",
+      "sha256": "584fa78537c3201c7d9a28859ab93654708efe7aabe699e3d10f6d6f074a5185",
+      "test": "EnvironmentCandidateUITests/testProductionCandidateNormalChinesePlayAndColdRestore()",
+      "device": "iPhone 17 Pro"
+    },
+    {
+      "path": "Docs/original-candidates-0221/production-normal-welcome.png",
+      "source": "Validation/test-runs/original-0221-candidate-attachments-final/F44C8762-4283-4DA0-9C83-3E766A31321A.png",
+      "sha256": "8f64f25eef30da2182e0e80acd98a86d42ba7b8971a51656b4666d8cf316b457",
+      "test": "EnvironmentCandidateUITests/testProductionCandidateNormalChinesePlayAndColdRestore()",
+      "device": "iPhone 17 Pro"
+    },
+    {
+      "path": "Docs/original-candidates-0221/staging-actual-path-observations.txt",
+      "source": "Validation/test-runs/original-0221-candidate-attachments-final/3FB7C49C-A530-48D6-992F-18D3E423E7E7.txt",
+      "sha256": "6a945021603668a4cfab24f6ed41d2bfc86780315cb584cf7c2fc5ac609e5ab8",
+      "test": "EnvironmentCandidateUITests/testStagingCandidateNormalChinesePlayAndColdRestore()",
+      "device": "iPhone 17 Pro"
+    },
+    {
+      "path": "Docs/original-candidates-0221/staging-cold-restored-chinese-same-board-and-inventory.png",
+      "source": "Validation/test-runs/original-0221-candidate-attachments-final/0EB2D4A0-C8F8-4CF1-A540-C9226A4DB503.png",
+      "sha256": "e3d5182f696e6818d895a10510fe673e86800caae7659ef0437af632ecf54f45",
+      "test": "EnvironmentCandidateUITests/testStagingCandidateNormalChinesePlayAndColdRestore()",
+      "device": "iPhone 17 Pro"
+    },
+    {
+      "path": "Docs/original-candidates-0221/staging-cold-restored-chinese-checkin-no-repeat.png",
+      "source": "Validation/test-runs/original-0221-candidate-attachments-final/8079F9AB-9741-40E0-B763-7CE12E198CE2.png",
+      "sha256": "175d389e481d2b1b41cc4dd8b69301431ff5ca49b776bf093eb6ca3eb750a220",
+      "test": "EnvironmentCandidateUITests/testStagingCandidateNormalChinesePlayAndColdRestore()",
+      "device": "iPhone 17 Pro"
+    },
+    {
+      "path": "Docs/original-candidates-0221/testing-actual-path-observations.txt",
+      "source": "Validation/test-runs/original-0221-candidate-attachments-final/4FC8EE2B-08C3-402F-AA86-71F417D8910B.txt",
+      "sha256": "e82cb29f1d38b1f9faeae871d33b947ede892390804e42c13f44837169bdc380",
+      "test": "EnvironmentCandidateUITests/testTestingCandidateNormalChinesePlayAndColdRestore()",
+      "device": "iPhone 17 Pro"
+    },
+    {
+      "path": "Docs/original-candidates-0221/testing-cold-restored-chinese-same-board-and-inventory.png",
+      "source": "Validation/test-runs/original-0221-candidate-attachments-final/D66824B0-ED93-4833-BEE2-A87DF2097EF7.png",
+      "sha256": "a8089b53218736fe8edae6d829ab9c1e8218a0cdbae3b81fcd3591cd1f1cef90",
+      "test": "EnvironmentCandidateUITests/testTestingCandidateNormalChinesePlayAndColdRestore()",
+      "device": "iPhone 17 Pro"
+    },
+    {
+      "path": "Docs/original-candidates-0221/testing-cold-restored-chinese-checkin-no-repeat.png",
+      "source": "Validation/test-runs/original-0221-candidate-attachments-final/CACC3F08-F86A-47EB-93C6-AB53E6C1F3D0.png",
+      "sha256": "b03d9df574604c3c2ba2918890e297c660c5797f4843405bd1e806dd1c0b6686",
+      "test": "EnvironmentCandidateUITests/testTestingCandidateNormalChinesePlayAndColdRestore()",
+      "device": "iPhone 17 Pro"
+    }
+  ],
+  "visualReview": {
+    "reviewedImages": 12,
+    "scope": "All 12 retained PNGs individually viewed. Chinese Home/tutorial/board/calendar, English settings and board state controls are visible without clipping. Three candidates share the expected layout and inventory state. Compared with original image22/24 hierarchy, with required capybara/orange theme and user-requested Chinese. Not a frozen recording/timing or all-screen fidelity acceptance.",
+    "systemAlertNote": "The production ATT capture caught the system entrance fade, so it is not a settled-opacity or contrast measurement. The actual refusal is independently recorded by the XCTest interaction and observation text."
+  }
+}

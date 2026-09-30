@@ -804,7 +804,8 @@
         }
       }
     ],
-    "signingAndDeviceExecution": "Demo Debug locally signed and normally updated on both simulators; device Release unsigned compile. Candidate coinstallation remains 0.2.20 evidence, not rerun for this stored-date-only change. No device signing, minimum runtime, TestFlight or App Store acceptance."
+    "signingAndDeviceExecution": "Demo Debug locally signed and normally updated on both simulators; device Release unsigned compile. Three optimized 0.2.21 candidates normally installed and exercised on Pro in the separately scoped candidatePlaythrough0221 audit. No device signing, minimum runtime, actual TestFlight distribution or App Store acceptance.",
+    "candidateSupplement": "0.2.21 optimized three-candidate rebuild/normal-install and recorded L1 playthrough verified separately in candidatePlaythrough0221; previous device Production build remains 0.2.20."
   },
   "audioContract": {
     "policyTestsPassed": 13,
@@ -2868,7 +2869,113 @@
     "remaining": [
       "Formal timezone/reward/makeup rules and trusted server-time source remain unfrozen. No server endpoint invented.",
       "Actual system-clock changes, foreground midnight UI crossing and physical-device corrupted-storage cases remain unverified.",
-      "The complete App and two UI-navigation tests remain 0.2.20 evidence; candidate packages also retain their 0.2.20 coinstall evidence."
+      "The complete App suite and two Demo UI-navigation tests remain 0.2.20 evidence. New 0.2.21 candidate L1 UI evidence is recorded separately in candidatePlaythrough0221."
     ]
+  },
+  "candidatePlaythrough0221": {
+    "build": "0.2.21 (24)",
+    "sourceParagraphs": [
+      264,
+      274,
+      275,
+      276,
+      281,
+      288,
+      289,
+      295,
+      299,
+      390,
+      398,
+      402,
+      414,
+      415
+    ],
+    "ui": {
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 329.666,
+      "bundle": "Validation/test-runs/original-0221-candidate-ui.xcresult"
+    },
+    "scope": "All three independently installed optimized candidate applications on Pro, actual first Welcome/notification refusal/ATT refusal, complete nine-step tutorial, two language-preserving cold restores and real daily claim. No application launch override or injected state. Not full candidate gameplay or all permission combinations.",
+    "storageAudit": "Validation/original-0221-candidate-playthrough.json",
+    "visualManifest": "Docs/original-candidates-0221/manifest.json",
+    "initialAuditCorrections": [
+      "Build metadata initially checked as native Boolean; actual documented xcconfig Info.plist value is the string NO. No application change was needed.",
+      "Initial byte-for-byte Demo comparison detected its normal foreground-to-background timing update and save backup rotation. Rechecked identical primary progress, full decoded backup state, consent and namespace bytes, same session ID and all 18 prior event records; no event or identity mixing.",
+      "First concurrent xcresult summary/export raced the result database. Summary succeeded; export rerun sequentially succeeded. These tool audit issues were not app test failures."
+    ],
+    "remaining": [
+      "Publisher frozen reference/config/audio still unavailable.",
+      "Actual services/registered identities/physical devices/distribution not completed.",
+      "Candidate loss/win/ad/high-level/generation and other permission combinations not part of this run."
+    ],
+    "runnerOptInVerification": {
+      "flag": "TEST_RUNNER_CAPYDOKU_CANDIDATE_UI=1",
+      "authority": "Installed Xcode xcodebuild.1 ENVIRONMENT section documents passing TEST_RUNNER_ variables only to test runners. Applications receive no launchEnvironment entries from the test.",
+      "defaultWithoutFlag": {
+        "result": "Skipped",
+        "passedTests": 0,
+        "failedTests": 0,
+        "skippedTests": 3,
+        "totalTestCount": 3
+      },
+      "defaultBundle": "Validation/test-runs/original-0221-candidate-default-skips.xcresult",
+      "explicitProductionRepeat": {
+        "result": "Passed",
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0,
+        "totalTestCount": 1
+      },
+      "repeatBundle": "Validation/test-runs/original-0221-candidate-opt-in.xcresult",
+      "sourceBeforeGateSHA256": "5e1511864a676b5094309b2b9a7c3513346e7cbc35241b39e978fc6aeb32e3bd",
+      "finalTestSourceSHA256": "638872d1890b4743b7637e26cf4f719f46c2bb81dbc5c4359bbb172fd639db28",
+      "scope": "Three first-entry cases ran before adding runner opt-in. The only later test change was setUp opt-in. Without the flag all 3 deliberately skip on 17e; with the flag production rerun passed on existing consent/tutorial/claim state. The repeat is not a second fresh permission/tutorial/claim acceptance."
+    },
+    "boundedOriginalReaudit": {
+      "scope": "Read-only independent audit of explicit main-screen/startup/gameplay/check-in requirements against current source; visual review used original screenshots and actual candidate captures. No additional confirmed major client omission independent of reference/service inputs found in this bounded review. Not a proof of complete conformance.",
+      "sourceParagraphs": [
+        7,
+        8,
+        9,
+        69,
+        70,
+        71,
+        88,
+        89,
+        113,
+        264,
+        265,
+        266,
+        267,
+        272,
+        273,
+        274,
+        275,
+        276,
+        277,
+        281,
+        282,
+        283,
+        284,
+        285,
+        288,
+        289,
+        290,
+        291,
+        292,
+        295,
+        296,
+        297,
+        298,
+        299
+      ],
+      "unresolved": [
+        "Frozen Pawdoku version/configuration/captures are required to finish free-ad trigger sequencing, restart/confirmation paths, detailed hints, L1–150 calibrated difficulty and formal tool/check-in values.",
+        "Original audio files and policies remain unavailable; no invented replacement was introduced.",
+        "Publisher legal/feedback/time sources, actual services, cross-product puzzle corpus and physical/distribution conditions remain outstanding."
+      ]
+    }
   }
 }

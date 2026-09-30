@@ -1,0 +1,11 @@
+Candidate: com.capydoku.demo.production
+Normal launch; no app arguments/environment overrides; no save injection or reset.
+Observed and accepted actual Chinese Welcome.
+Observed system alert: “Capydoku 正式候选”想给你发送通知; tapped denial: 不允许
+Observed system alert: 允许“Capydoku 正式候选”跟踪你在其他公司的App和网站上的活动吗？; tapped denial: 要求App不跟踪
+This launch traversed Welcome and the available OS permission flow.
+Completed all nine current-pack teaching steps through real UI gestures.
+This launch used existing acceptance; absent permission dialogs are not new permission coverage.
+Claimed one available reward through the normal Chinese calendar.
+This launch used existing acceptance; absent permission dialogs are not new permission coverage.
+English and Chinese cold launches preserved the actual board, score, lives and tool stock; same-day check-in stayed unclaimable.

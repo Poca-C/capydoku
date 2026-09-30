@@ -1,6 +1,6 @@
 # 构建环境
 
-当前源码版本 0.2.21 (24)。原 `Capydoku` scheme 保留 Debug / Release 和 `com.capydoku.demo`，继续使用原 Demo 的应用容器。额外提供三套优化构建；它们不包含 `DEBUG` 条件编译代码。三候选包并存安装的验证记录仍属于0.2.20，不能当作每次源码更新均已重新安装验证。
+当前源码版本 0.2.21 (24)。原 `Capydoku` scheme 保留 Debug / Release 和 `com.capydoku.demo`，继续使用原 Demo 的应用容器。额外提供三套优化构建；它们不包含 `DEBUG` 条件编译代码。0.2.21三个候选已在17 Pro正常安装，完成实际权限拒绝、中文教学、语言切换、签到及冷启动恢复；证据见 `Validation/original-0221-candidate-playthrough.json`。不据此推定其他设备、全部游玩或正式发行通过。
 
 | Scheme | 构建配置 | 环境 | Bundle ID | 桌面名称 |
 | --- | --- | --- | --- | --- |
@@ -12,6 +12,19 @@
 后三个 Bundle ID 是项目内部占位身份，允许候选包与原 Demo 分别保存本地数据。它们尚未由发布方注册或配置签名。Scheme 名称 TestFlight / Production 不表示已经上传 TestFlight、连接生产服务或具备上架资格。
 
 功能回归测试仅使用原 `Capydoku` scheme 的 Debug 配置。三套候选 scheme 不挂载测试套件；它们通过各自配置的构建、正常启动与环境隔离检查验证，避免把依赖 Debug 测试入口的测试误用于候选包。
+
+候选正常流程另由 `EnvironmentCandidateUITests` 从外部操作三个已安装应用，不传入调试参数、不注入存档。普通测试默认跳过此组；在专用模拟器上先构建并安装三候选，再显式启用。此流程会实际接受内部测试条款、拒绝可选系统权限、完成教学和领取当天签到，仅用于候选测试数据。不要用于真实玩家存档。重跑时已保存的权限、教学和签到只核对恢复，不冒充全新路径。
+
+```sh
+TEST_RUNNER_CAPYDOKU_CANDIDATE_UI=1 xcodebuild \
+  -project Capydoku.xcodeproj -scheme Capydoku -configuration Debug \
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro' \
+  -parallel-testing-enabled NO \
+  -only-testing:CapydokuUITests/EnvironmentCandidateUITests \
+  CODE_SIGNING_ALLOWED=YES test
+```
+
+`TEST_RUNNER_` 是 Xcode 提供的测试进程环境变量前缀，不设置到应用的 `launchEnvironment`。此处Debug仅构建测试执行器；被操作的三个应用来自事先安装的优化候选产物。首次状态不符合当前L1夹具时测试直接报错，不清空或覆盖它。
 
 `Common.xcconfig` 仅保存版本；各环境文件分别保存环境名称、Bundle ID、显示名及独立能力开关，避免修改公共文件时同时开启全部环境的服务。项目生成器在项目级引用这些文件，App 和测试 target 自动继承对应配置；测试 Bundle ID 使用环境 App ID 加后缀。不要直接修改生成的 `project.pbxproj`，新增 Swift 文件后运行 `python3 scripts/generate_project.py`。
 

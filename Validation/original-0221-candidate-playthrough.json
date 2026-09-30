@@ -1,0 +1,301 @@
+{
+  "build": "0.2.21 (24)",
+  "device": "iPhone 17 Pro / iOS 26.5",
+  "scope": "Normal optimized candidate processes launched only by bundle ID, without test/reset/skip arguments or injected state. Includes first welcome acceptance, observed system permissions, board-derived tutorial, language changes, check-in and two cold relaunches. Exact visible permission observations and interactions are retained in XCTest attachments. Not full-game, TestFlight distribution, all permission combinations, real services or physical-device acceptance.",
+  "builds": [
+    {
+      "configuration": "TestFlight",
+      "bundle": "com.capydoku.demo.testing",
+      "environment": "testing",
+      "version": "0.2.21 (24)",
+      "app": ".build/Environments/Build/Products/TestFlight-iphonesimulator/Capydoku.app",
+      "buildLog": "Validation/test-runs/original-0221-testflight-sim.log",
+      "installSucceeded": true,
+      "preexistingBytesPreserved": true,
+      "remoteEnabled": false
+    },
+    {
+      "configuration": "Staging",
+      "bundle": "com.capydoku.demo.staging",
+      "environment": "staging",
+      "version": "0.2.21 (24)",
+      "app": ".build/Environments/Build/Products/Staging-iphonesimulator/Capydoku.app",
+      "buildLog": "Validation/test-runs/original-0221-staging-sim.log",
+      "installSucceeded": true,
+      "preexistingBytesPreserved": true,
+      "remoteEnabled": false
+    },
+    {
+      "configuration": "Production",
+      "bundle": "com.capydoku.demo.production",
+      "environment": "production",
+      "version": "0.2.21 (24)",
+      "app": ".build/Environments/Build/Products/Production-iphonesimulator/Capydoku.app",
+      "buildLog": "Validation/test-runs/original-0221-production-sim.log",
+      "installSucceeded": true,
+      "preexistingBytesPreserved": true,
+      "remoteEnabled": false
+    }
+  ],
+  "uiBundle": "Validation/test-runs/original-0221-candidate-ui.xcresult",
+  "rows": [
+    {
+      "bundle": "com.capydoku.demo.testing",
+      "environment": "testing",
+      "installedVersion": "0.2.21 (24)",
+      "normalStorageDirectory": "Capydoku-testing",
+      "testStorageDirectoriesAbsent": true,
+      "consentStagesPersisted": true,
+      "language": "zh-Hans",
+      "tutorialCompleted": true,
+      "found": [
+        8
+      ],
+      "marks": [
+        4,
+        5,
+        9,
+        13
+      ],
+      "lives": 3,
+      "score": 100,
+      "checkIn": {
+        "completedCycles": 0,
+        "cycleDay": 1,
+        "lastClaimedDay": 20726,
+        "streak": 1
+      },
+      "bonusHints": 1,
+      "eventNames": [
+        "first_open",
+        "session_start",
+        "level_start",
+        "tutorial_start",
+        "tutorial_end",
+        "level_end",
+        "session_end",
+        "session_start",
+        "level_end",
+        "level_end",
+        "session_end",
+        "session_start",
+        "level_end"
+      ],
+      "firstOpenCount": 1,
+      "onlyOwnEnvironmentAndCurrentVersion": true,
+      "identitySHA256": "bebdb6d66a282d611f5b64b997edbb474333c32bf32fd7482cdeaa9c21c1623f",
+      "namespaceSHA256": "ccdb377d91bc907880c96b3834467050e13eb64c5ba059ae31fd7e2b02b904e6",
+      "progressFileSHA256": "5cb8966ff66cc06494a9d0764978286840e0ee88c75199dca6c074b687180135",
+      "analyticsFileSHA256": "eaefec2a2caafb7b895c7fe6df927229b112c75b8098d75dae4571f3c71f035b"
+    },
+    {
+      "bundle": "com.capydoku.demo.staging",
+      "environment": "staging",
+      "installedVersion": "0.2.21 (24)",
+      "normalStorageDirectory": "Capydoku-staging",
+      "testStorageDirectoriesAbsent": true,
+      "consentStagesPersisted": true,
+      "language": "zh-Hans",
+      "tutorialCompleted": true,
+      "found": [
+        8
+      ],
+      "marks": [
+        4,
+        5,
+        9,
+        13
+      ],
+      "lives": 3,
+      "score": 100,
+      "checkIn": {
+        "completedCycles": 0,
+        "cycleDay": 1,
+        "lastClaimedDay": 20726,
+        "streak": 1
+      },
+      "bonusHints": 1,
+      "eventNames": [
+        "first_open",
+        "session_start",
+        "level_start",
+        "tutorial_start",
+        "tutorial_end",
+        "level_end",
+        "session_end",
+        "session_start",
+        "level_end",
+        "level_end",
+        "session_end",
+        "session_start",
+        "level_end"
+      ],
+      "firstOpenCount": 1,
+      "onlyOwnEnvironmentAndCurrentVersion": true,
+      "identitySHA256": "88f0ee3d6322e8224d244f6f67f4a78b7e6bc73834ec3b27353b2234614d060f",
+      "namespaceSHA256": "3aa5846f612bbb143f42c21d4453565bd54304f081cfbd8bdb7d8969a507d1ad",
+      "progressFileSHA256": "85b41e410d5ceb7e9de33043c117e799afc086d7dbe1a733feb390dcd08c0ea4",
+      "analyticsFileSHA256": "3bd7a47bb180a3dc6d8ce5f128a1b53d71bd1e6117d9677699f17c48ea2ec8b9"
+    },
+    {
+      "bundle": "com.capydoku.demo.production",
+      "environment": "production",
+      "installedVersion": "0.2.21 (24)",
+      "normalStorageDirectory": "Capydoku-production",
+      "testStorageDirectoriesAbsent": true,
+      "consentStagesPersisted": true,
+      "language": "zh-Hans",
+      "tutorialCompleted": true,
+      "found": [
+        8
+      ],
+      "marks": [
+        4,
+        5,
+        9,
+        13
+      ],
+      "lives": 3,
+      "score": 100,
+      "checkIn": {
+        "completedCycles": 0,
+        "cycleDay": 1,
+        "lastClaimedDay": 20726,
+        "streak": 1
+      },
+      "bonusHints": 1,
+      "eventNames": [
+        "first_open",
+        "session_start",
+        "level_start",
+        "tutorial_start",
+        "tutorial_end",
+        "level_end",
+        "session_end",
+        "session_start",
+        "level_end",
+        "level_end",
+        "session_end",
+        "session_start",
+        "level_end"
+      ],
+      "firstOpenCount": 1,
+      "onlyOwnEnvironmentAndCurrentVersion": true,
+      "identitySHA256": "2b4e111894001b502b39652dec8db081691cdd82911a2ebd080a39687b398ebb",
+      "namespaceSHA256": "ad64db8c0a6df00b5fd6fb485295acd7584b648223e0a1b46559818552733387",
+      "progressFileSHA256": "cb23d18c3307e3d3c3785feb1f6c96791c303c10e2a9cd35544c6733b2a5c4cd",
+      "analyticsFileSHA256": "3b128d34bd166c1e3e237d02d7c40445d08d3e46f84c3fc8f0c7548710764418"
+    }
+  ],
+  "threeDistinctAnalyticsOwnersAndNamespaces": true,
+  "noDemoIdentityReuse": true,
+  "originalDemoPlayerStateAndIdentityUnchanged": true,
+  "originalDemoHistoricalEventsUnchanged": true,
+  "originalDemoBackgroundSaveObserved": "The Demo was foreground before the run. Its normal move to background updated activeSession timing and rotated the progress backup; primary progress bytes, complete 18 historical events, event keys, session ID, consent and namespace stayed unchanged. These expected lifecycle writes mean not all raw files were byte-identical.",
+  "originalDemoNormalFileCount": 8,
+  "limitations": [
+    "Only the observed permission responses are verified; system-skipped ATT is not an observed refusal.",
+    "No candidate win/loss, reward ad, high-level or generation path in this run.",
+    "Remote services remain disabled, all analytics remain local and app identifiers are unregistered internal placeholders."
+  ],
+  "uiResult": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "deviceId": "3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3",
+          "deviceName": "iPhone 17 Pro",
+          "modelName": "iPhone 17 Pro",
+          "osBuildNumber": "23F77",
+          "osVersion": "26.5",
+          "platform": "iOS Simulator"
+        },
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "passedTests": 3,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "Capydoku · Built with macOS 26.5.1",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1790800268.75,
+    "passedTests": 3,
+    "result": "Passed",
+    "skippedTests": 0,
+    "startTime": 1790799935.874,
+    "statistics": [],
+    "testFailures": [],
+    "title": "Test - Capydoku",
+    "topInsights": [],
+    "totalTestCount": 3
+  },
+  "runnerOptIn": {
+    "flag": "TEST_RUNNER_CAPYDOKU_CANDIDATE_UI=1",
+    "authority": "Installed Xcode xcodebuild.1 ENVIRONMENT section documents passing TEST_RUNNER_ variables only to test runners. Applications receive no launchEnvironment entries from the test.",
+    "defaultWithoutFlag": {
+      "result": "Skipped",
+      "passedTests": 0,
+      "failedTests": 0,
+      "skippedTests": 3,
+      "totalTestCount": 3
+    },
+    "defaultBundle": "Validation/test-runs/original-0221-candidate-default-skips.xcresult",
+    "explicitProductionRepeat": {
+      "result": "Passed",
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 1
+    },
+    "repeatBundle": "Validation/test-runs/original-0221-candidate-opt-in.xcresult",
+    "sourceBeforeGateSHA256": "5e1511864a676b5094309b2b9a7c3513346e7cbc35241b39e978fc6aeb32e3bd",
+    "finalTestSourceSHA256": "638872d1890b4743b7637e26cf4f719f46c2bb81dbc5c4359bbb172fd639db28",
+    "scope": "Three first-entry cases ran before adding runner opt-in. The only later test change was setUp opt-in. Without the flag all 3 deliberately skip on 17e; with the flag production rerun passed on existing consent/tutorial/claim state. The repeat is not a second fresh permission/tutorial/claim acceptance."
+  },
+  "postOptInStorageCheck": [
+    {
+      "environment": "testing",
+      "firstOpen": 1,
+      "completedTutorial": 1,
+      "dailyBonusHints": 1,
+      "currentLanguage": "zh-Hans",
+      "eventCount": 13
+    },
+    {
+      "environment": "staging",
+      "firstOpen": 1,
+      "completedTutorial": 1,
+      "dailyBonusHints": 1,
+      "currentLanguage": "zh-Hans",
+      "eventCount": 13
+    },
+    {
+      "environment": "production",
+      "firstOpen": 1,
+      "completedTutorial": 1,
+      "dailyBonusHints": 1,
+      "currentLanguage": "zh-Hans",
+      "eventCount": 23
+    }
+  ],
+  "observedPermissions": {
+    "testing": [
+      "notifications denied",
+      "ATT denied"
+    ],
+    "staging": [
+      "notifications denied",
+      "ATT denied"
+    ],
+    "production": [
+      "notifications denied",
+      "ATT denied"
+    ]
+  },
+  "visualManifest": "Docs/original-candidates-0221/manifest.json"
+}
