@@ -39,6 +39,7 @@ final class AppModel: ObservableObject {
     let saveDirectory: URL
     let analytics: AnalyticsRecorder
     private let store: SaveStore
+    private let gameplayConfigurations: GameplayConfigurationStore
     private let saveQueue = DispatchQueue(label: "com.capydoku.progress-writes", qos: .utility)
     private let synchronousSaves: Bool
     private var saveRevision = 0
@@ -77,7 +78,7 @@ final class AppModel: ObservableObject {
     private let feedback = FeedbackPlayer()
 
     init(saveDirectory: URL? = nil, rewardProvider: RewardProvider? = nil,
-         rewardTimeout: TimeInterval = 5, runsTimer: Bool = true, feedbackEnabled: Bool = true, bundledPuzzles: [Puzzle]? = nil, interstitialProvider: InterstitialProvider? = nil, startupBypassForTesting: Bool = true, analyticsIdentityStore: AnalyticsIdentityStore? = nil) {
+         rewardTimeout: TimeInterval = 5, runsTimer: Bool = true, feedbackEnabled: Bool = true, bundledPuzzles: [Puzzle]? = nil, interstitialProvider: InterstitialProvider? = nil, startupBypassForTesting: Bool = true, analyticsIdentityStore: AnalyticsIdentityStore? = nil, gameplayConfigurationStore: GameplayConfigurationStore? = nil) {
         #if DEBUG
         let args = ProcessInfo.processInfo.arguments
         #else
@@ -98,6 +99,11 @@ final class AppModel: ObservableObject {
         self.feedbackEnabled = feedbackEnabled && !testHost
         if args.contains("-reset-demo") { try? FileManager.default.removeItem(at: self.saveDirectory) }
         self.analytics = AnalyticsRecorder(directory: self.saveDirectory, identityStore: analyticsIdentityStore)
+        let bundledConfiguration = Bundle.main.url(forResource: "reference-gameplay", withExtension: "json")
+            .flatMap { try? Data(contentsOf: $0) }
+        self.gameplayConfigurations = gameplayConfigurationStore ?? GameplayConfigurationStore(
+            directory: self.saveDirectory, target: .current, bundledData: bundledConfiguration,
+            provider: HTTPGameplayConfigurationProvider.configured())
         let packName = args.contains("-legacy-fixture") ? "levels-legacy-v2" : "levels"
         if let bundledPuzzles { levels = Dictionary(uniqueKeysWithValues: bundledPuzzles.map { ($0.id, $0) }) }
         else if let url = Bundle.main.url(forResource: packName, withExtension: "json") {
@@ -122,10 +128,11 @@ final class AppModel: ObservableObject {
             challengeSeen = true
             try? challengeFile.save(true)
         }
-        if let url = Bundle.main.url(forResource: "reference-gameplay", withExtension: "json"),
-           let data = try? Data(contentsOf: url) {
-            do { referenceConfiguration = try ReferenceGameplayConfiguration.load(data: data) }
-            catch { errorMessage = "The imported reference configuration is invalid. \(error.localizedDescription)" }
+        referenceConfiguration = gameplayConfigurations.configuration
+        gameplayConfigurations.onChange = { [weak self] candidate in
+            // This is only the candidate for start(level:). Existing sessions and
+            // in-flight ad receipts continue to use their saved configuration.
+            self?.referenceConfiguration = candidate
         }
         applySettings()
         if runsTimer { timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
@@ -145,11 +152,14 @@ final class AppModel: ObservableObject {
         if let i = args.firstIndex(of: "-level"), args.indices.contains(i + 1), let level = Int(args[i + 1]) {
             start(level: level)
         }
+        refreshGameplayConfiguration()
     }
 
     deinit { timer?.invalidate(); rewardDeadline?.cancel(); interstitialDeadline?.cancel() }
 
     var session: GameSession? { progress.session }
+    var gameplayConfigurationDiagnostics: GameplayConfigurationDiagnostics { gameplayConfigurations.diagnostics }
+    func refreshGameplayConfiguration(force: Bool = false) { gameplayConfigurations.refresh(force: force) }
     var directVisible: Bool { session?.config.referenceGameplay?.directFind.visible ?? true }
     var directEnabled: Bool {
         guard let row = session?.config.referenceGameplay else { return true }
@@ -674,6 +684,7 @@ final class AppModel: ObservableObject {
             if let offerID = activeOfferID { displayReadyReward(offerID: offerID) }
             displayReadyInterstitial()
             resumeConfirmedRewardHint()
+            refreshGameplayConfiguration()
         }
     }
     func consentAccepted() { analytics.acceptConsent() }
@@ -737,11 +748,12 @@ final class AppModel: ObservableObject {
             let progress: PlayerProgress; let levelPackCount: Int
             let referenceGameplay: ReferenceGameplayConfiguration?; let generationReport: GenerationPipelineReport?
             let unattributedToolUsesSinceLaunch: Int
+            let gameplayConfiguration: GameplayConfigurationDiagnostics
         }
         do {
             let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "unknown"
             let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "unknown"
-            let report = Report(generatedAt: Date(), build: "\(version) (\(build))", demoConfig: config, progress: progress, levelPackCount: levels.count, referenceGameplay: referenceConfiguration, generationReport: lastGenerationReport, unattributedToolUsesSinceLaunch: unattributedToolUseCount)
+            let report = Report(generatedAt: Date(), build: "\(version) (\(build))", demoConfig: config, progress: progress, levelPackCount: levels.count, referenceGameplay: referenceConfiguration, generationReport: lastGenerationReport, unattributedToolUsesSinceLaunch: unattributedToolUseCount, gameplayConfiguration: gameplayConfigurationDiagnostics)
             let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
             let url = FileManager.default.temporaryDirectory.appendingPathComponent("Capydoku-diagnostics.json")
             try encoder.encode(report).write(to: url, options: .atomic)

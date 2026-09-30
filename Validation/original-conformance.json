@@ -22,7 +22,7 @@
     "旧88项Checklist的完成数字与originalRequirementsPreserved标志不作为原文符合性证据；旧版报告只保留历史。",
     "当前150+30严格生产完成，180唯一答案及不同区域结构，无相似性豁免；数值Profile仍未经Pawdoku校准，跨产品语料缺失。",
     "原文只固定L1为4×4；本地早期尺寸安排不能覆盖原文的去重要求。",
-    "0.2.1截图、页面及手势证据保留其原构建标识；0.2.2未改页面，只补道具来源与相关应用回归，不声称已与缺失的冻结录屏逐帧对齐。",
+    "0.2.1页面截图保留原构建标识；0.2.3补配置客户端、应用回归及首次启动／四种棋盘UI验证，未重跑全部手势／视觉项目，不声称已与缺失的冻结录屏逐帧对齐。",
     "真实广告SDK由外部供应；客户端入口、配置、库存、复活和奖励安全仍是本Demo责任。",
     "Daily Challenge保留锁定入口，Profile明确不做。正式原音频、真实SDK、真机及上架均待验。"
   ],
@@ -132,6 +132,25 @@
         "AppTests/ToolSourceAnalyticsTests.swift"
       ],
       "next": "旧库存无法可靠追溯时保留数量并标未知；正式钥匙串、SDK及完整统计路径仍待签名环境验收。"
+    },
+    {
+      "id": "CLIENT-07",
+      "sourceParagraphs": [
+        392,
+        395,
+        402,
+        446,
+        456
+      ],
+      "priority": "客户端回退已验证，真实接入待验",
+      "topic": "配置拉取、缓存和生效范围",
+      "finding": "补异步拉取与原子缓存、坏主缓存回退、目标隔离、版本历史和单调重试；新配置不改当前对局／奖励。",
+      "evidence": [
+        "App/Services/GameplayConfigurationStore.swift",
+        "AppTests/GameplayConfigurationStoreTests.swift",
+        "AppTests/GameplayConfigurationIntegrationTests.swift"
+      ],
+      "next": "获取冻结配置及真实服务／SDK合同，定义151+实验广告配置；现有实现与测试不能替代真实联调。"
     }
   ],
   "rows": [
@@ -1340,12 +1359,14 @@
       ],
       "title": "崩溃/性能、远程配置、推送与CMP",
       "status": "external_pending",
-      "implemented": "本地存档/包内配置、通知权限、ATT基础调用存在。",
-      "gap": "没有实际崩溃监控、远程拉取及缓存降级、推送注册、地区CMP和SKAdNetwork清单；SDK/供应方资料待提供。",
+      "implemented": "本地存档、通知权限、ATT基础调用存在；0.2.3补配置缓存回退及可替换拉取客户端，HTTPS内部合同经过模拟传输验证。",
+      "gap": "没有实际崩溃监控、推送注册、地区CMP和SKAdNetwork清单；远程配置真实地址、冻结数据与供应商SDK合同仍待提供，正式环境联调未完成。",
       "evidence": [
         "App/Services/StartupController.swift",
         "App/AppModel.swift",
-        "App/Info.plist"
+        "App/Info.plist",
+        "App/Services/GameplayConfigurationStore.swift",
+        "Reference/gameplay-import.md"
       ]
     },
     {
@@ -1517,8 +1538,8 @@
       ],
       "title": "广告配置映射与远程控制",
       "status": "partial",
-      "implemented": "逐关结构已覆盖开关/初始次数/免费广告/失败及插页配置，本局保存配置快照。",
-      "gap": "真实冻结值未到，远程配置拉取/缓存/包内同版本降级与部分字段消费尚不完整。",
+      "implemented": "逐关结构已覆盖开关/初始次数/免费广告/失败及插页配置，本局保存配置快照。 0.2.3已接配置拉取／缓存回退，并冻结进行中的局与奖励。",
+      "gap": "真实冻结值未到；triggerOrder等部分字段执行、151+广告配置、正式广告SDK及真实配置服务尚未完成。",
       "evidence": [
         "Sources/CapydokuCore/ReferenceGameplayConfiguration.swift",
         "App/AppModel.swift",
@@ -1699,12 +1720,17 @@
       ],
       "title": "新关生效与缓存默认配置降级",
       "status": "partial",
-      "implemented": "DemoConfig随session保存，新关读取导入配置，不更改进行中局。",
-      "gap": "客户端尚未实现联网拉取、最近成功缓存及包内默认值的完整回退链。这属于实现缺口；真实服务、同冻结版本配置及联调资料也尚缺，不能合并写成仅待外部交付。",
+      "implemented": "0.2.3补客户端后台拉取、最近有效缓存／备份／包内默认回退；严格基线、目标环境、版本与校验；保存成功后供下一次start新局。继续、Restart、恢复和已发起广告保留旧快照。11项服务测试与6项应用集成已验证，HTTP测试使用本地URLProtocol。",
+      "gap": "真实冻结包内默认文件、服务地址和SDK尚缺，当前没有真实远程联调。现有配置结构仅覆盖L1–150，151+实验广告配置及全范围总开关仍未定义；不能据模拟验证声明全部线上配置完成。",
       "evidence": [
         "Sources/CapydokuCore/DemoConfig.swift",
         "App/AppModel.swift",
-        "Sources/CapydokuCore/SaveStore.swift"
+        "Sources/CapydokuCore/SaveStore.swift",
+        "App/Services/GameplayConfigurationStore.swift",
+        "AppTests/GameplayConfigurationStoreTests.swift",
+        "AppTests/GameplayConfigurationIntegrationTests.swift",
+        "Reference/gameplay-import.md",
+        "Validation/test-runs/original-023-configuration-app-final.xcresult"
       ]
     },
     {
@@ -1748,5 +1774,5 @@
       ]
     }
   ],
-  "currentBuild": "0.2.2 (5)"
+  "currentBuild": "0.2.3 (6)"
 }

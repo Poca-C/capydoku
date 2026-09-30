@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "date": "2026-09-30",
-  "build": "0.2.2 (5)",
+  "build": "0.2.3 (6)",
   "status": "PLAYABLE_ORIGINAL_ALIGNMENT_DEMO_WITH_REFERENCE_AND_EXTERNAL_GAPS",
   "originalSHA256": "274bbf15f031bd80bb8b360cf14c0266acff370a230d9cad1b1785461df54dd2",
   "currentPackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49",
@@ -41,7 +41,8 @@
       "seconds": 4.822,
       "log": "Validation/test-runs/original-state-followup-core.log",
       "scope": "GameSession, reference configuration execution, original storage, persistence and save-hardening tests after tutorial restart change. Generation code/pack unchanged; original generation evidence retained."
-    }
+    },
+    "notRerunForBuild": "0.2.3 (6); core sources and level package unchanged from0.2.2. Configuration parsing is exercised through current application tests."
   },
   "pythonImport": {
     "passed": 6,
@@ -204,6 +205,23 @@
       "failed": 0,
       "seconds": 0.19,
       "scope": "All6 new source integration cases; same source code as the54-test17 Pro run. No new full UI sweep."
+    },
+    {
+      "build": "0.2.3 (6)",
+      "device": "iPhone 17 Pro",
+      "bundle": "Validation/test-runs/original-023-configuration-app-final.xcresult",
+      "appTestsPassed": 71,
+      "failed": 0,
+      "scope": "All AppTests except OriginalUIContractTests. Includes11 new store/HTTP transport tests and6 new AppModel integration tests; uses synthetic reference data and URLProtocol, not a live remote service."
+    },
+    {
+      "build": "0.2.3 (6)",
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-023-17e-startup-configuration.xcresult",
+      "appTestsPassed": 6,
+      "uiTestsPassed": 2,
+      "failed": 0,
+      "scope": "Configuration integration plus first-launch legal/permission persistence and4/6/8/10 board layout. No full UI sweep."
     }
   ],
   "visualEvidence": {
@@ -224,12 +242,12 @@
   ],
   "historicalFailuresRetained": "Initial UI/app runs and first full-core run failed on changed fixture assumptions or real UI issues; these are retained under Validation/test-runs. Only explicitly listed successful reruns count. Old 88-item checklist completion counts are superseded.",
   "applicationTests": {
-    "build": "0.2.2 (5)",
-    "passed": 54,
+    "build": "0.2.3 (6)",
+    "passed": 71,
     "failed": 0,
-    "seconds": 10.598,
-    "bundle": "Validation/test-runs/original-022-tool-sources-app-final.xcresult",
-    "scope": "All AppTests except OriginalUIContractTests, whose UI evidence remains 0.2.1. Includes6 new source tests with injected identity store; signed production Keychain not verified."
+    "seconds": 11.997,
+    "bundle": "Validation/test-runs/original-023-configuration-app-final.xcresult",
+    "scope": "All AppTests except OriginalUIContractTests. Includes11 new store/HTTP transport tests and6 new AppModel integration tests; uses synthetic reference data and URLProtocol, not a live remote service."
   },
   "supersededOrInterruptedRuns": [
     "reward-readiness-final was intentionally interrupted to stop two runners targeting one simulator; not counted as success.",
@@ -247,22 +265,27 @@
       "tests": 1,
       "failedTestCases": 1,
       "reason": "Explicit enabled assertion confirmed Anonymous analytics identity could not be saved. Corrected test dependency injection, not the production privacy gate."
+    },
+    {
+      "build": "0.2.3 (6)",
+      "bundle": "Validation/test-runs/original-023-configuration-app.xcresult",
+      "status": "build failed; no tests executed",
+      "reason": "New integration test referenced private canTouchBoard. Replaced with an actual toggle action assertion without exposing production internals; subsequent71-test and17e8-test runs passed."
     }
   ],
   "buildVerification": {
-    "bundleVersion": "0.2.2 (5)",
+    "bundleVersion": "0.2.3 (6)",
     "simulatorDebug": "passed via test build",
-    "simulatorLog": "Validation/test-runs/original-022-tool-sources-app-final.log",
+    "simulatorLog": "Validation/test-runs/original-023-configuration-app-final.log",
     "genericIOSReleaseUnsigned": "passed",
-    "releaseLog": "Validation/test-runs/original-022-release-build.log",
+    "releaseLog": "Validation/test-runs/original-023-release-build.log",
     "installedOn": [
       "iPhone 17 Pro",
       "iPhone 17e"
     ],
-    "normalLaunch": "iPhone17 Pro launched without test/reset flags; Welcome visually verified; normal user data preserved",
-    "normalLaunchScreenshot": "Validation/test-runs/original-022-normal-launch.png",
-    "signingAndDeviceExecution": "Unsigned compilation only; no physical-device, Keychain or App Store claim",
-    "scope": "Inventory source ledger, AppModel analytics routing and test identity injection; UI and level generation unchanged.",
+    "normalLaunch": "simctl normal launch returned a process on17 Pro without test/reset flags; no separate current normal-launch screenshot claimed",
+    "signingAndDeviceExecution": "Unsigned compilation only; no physical-device or App Store claim",
+    "scope": "Configuration store/HTTP provider and AppModel integration; current app tests and scoped startup/board UI tests passed. Main artwork/gallery unchanged.",
     "sourceDocumentSHA256Unchanged": true
   },
   "audioContract": {
@@ -358,5 +381,64 @@
     "signingAndDeviceExecution": "Unsigned compilation only; no physical-device or App Store claim",
     "sourceDocumentSHA256Unchanged": true,
     "scope": "Final production sources including native accessibility isolation, explicit hosted text color and full-screen Root scrims; unsigned compilation only."
-  }
+  },
+  "applicationTestsHistory": [
+    {
+      "build": "0.2.2 (5)",
+      "passed": 54,
+      "failed": 0,
+      "seconds": 10.598,
+      "bundle": "Validation/test-runs/original-022-tool-sources-app-final.xcresult",
+      "scope": "All AppTests except OriginalUIContractTests, whose UI evidence remains 0.2.1. Includes6 new source tests with injected identity store; signed production Keychain not verified."
+    }
+  ],
+  "remoteConfigurationContract": {
+    "sourceParagraphs": [
+      392,
+      395,
+      402,
+      446,
+      456
+    ],
+    "build": "0.2.3 (6)",
+    "storeTests": 11,
+    "integrationTests": 6,
+    "liveNetworkOrSDKVerified": false,
+    "frozenInputAvailable": false,
+    "endpointConfigured": false,
+    "verified": [
+      "asynchronous request without blocking home or board input",
+      "last-success cache with integrity/semantic validation, backup and bundled fallback",
+      "failure, timeout, duplicate and stale callbacks",
+      "platform, app-version and environment isolation",
+      "reject foreign baseline, competitor board data, checksum mismatch and changed reused versions",
+      "monotonic retry cooldown",
+      "atomic cache before publishing, recoverable disk failure",
+      "ongoing session, restart, restore and in-flight reward keep captured config"
+    ],
+    "limits": [
+      "Internal HTTP adapter contract is not supplier-approved wire format.",
+      "Exact-target cache isolation does not implement cross-app-version cache migration.",
+      "Current reference schema has150 rows; no151+ advertising configuration or all-level switch claim.",
+      "Missing bundled baseline disables fetch and preserves explicitly provisional Demo config."
+    ]
+  },
+  "buildVerificationHistory": [
+    {
+      "bundleVersion": "0.2.2 (5)",
+      "simulatorDebug": "passed via test build",
+      "simulatorLog": "Validation/test-runs/original-022-tool-sources-app-final.log",
+      "genericIOSReleaseUnsigned": "passed",
+      "releaseLog": "Validation/test-runs/original-022-release-build.log",
+      "installedOn": [
+        "iPhone 17 Pro",
+        "iPhone 17e"
+      ],
+      "normalLaunch": "iPhone17 Pro launched without test/reset flags; Welcome visually verified; normal user data preserved",
+      "normalLaunchScreenshot": "Validation/test-runs/original-022-normal-launch.png",
+      "signingAndDeviceExecution": "Unsigned compilation only; no physical-device, Keychain or App Store claim",
+      "scope": "Inventory source ledger, AppModel analytics routing and test identity injection; UI and level generation unchanged.",
+      "sourceDocumentSHA256Unchanged": true
+    }
+  ]
 }
