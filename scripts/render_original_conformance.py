@@ -25,13 +25,16 @@ lines += ['- ' + item for item in data['evidenceLimitations']]
 lines += ['', '## 后续处理项', '']
 for item in data['priorityClientFollowUps']:
     lines.append(f"- **{item['id']} · {item['priority']} · {item['topic']}**：{item['finding']} {item['next']}")
+rendered_ids = []
 for section, title in sections.items():
     lines += ['', f'## {section} · {title}', '', '| ID／原文索引 | 要求与状态 | 实现和证据／仍缺内容 |', '|---|---|---|']
     for row in data['rows']:
-        if row['section'] != section:
+        if row['section'].split('.')[0] != section:
             continue
+        rendered_ids.append(row['id'])
         paragraphs = ' '.join(f'[{number}]' for number in row['sourceParagraphs'])
         links = ' · '.join(f'[{Path(path).name}](../{path})' for path in row['evidence'])
         lines.append(f"| {row['id']}<br>{paragraphs} | {escape(row['title'])}<br>`{row['status']}` | {escape(row['implemented'])}<br>**缺口：**{escape(row['gap'])}<br>{links} |")
+assert len(rendered_ids) == len(data['rows']) == len(set(rendered_ids)), 'Every source requirement must appear once in the readable report.'
 lines += ['', '本表与 [本轮验证记录](original-verification.json) 配合阅读；历史测试失败保留，仅明确标注的通过重验计入证据。', '']
 (ROOT / 'Validation/original-conformance.md').write_text('\n'.join(lines))
