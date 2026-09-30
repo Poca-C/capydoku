@@ -1,0 +1,909 @@
+{
+  "method": "Independent Python row-order exhaustive solver; no Swift solver calls.",
+  "levelPackSHA256": "8d2bf5bacd29a29ae70fa7879eaf8df50375316414d636c971b6711c3dd6a990",
+  "allValid": true,
+  "count": 150,
+  "distinctGeometries": 150,
+  "levels": [
+    {
+      "level": 1,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 2,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 3,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 4,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 5,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 6,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 7,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 8,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 9,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 10,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 11,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 12,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 13,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 14,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 15,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 16,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 17,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 18,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 19,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 20,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 21,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 22,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 23,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 24,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 25,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 26,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 27,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 28,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 29,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 30,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 31,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 32,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 33,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 34,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 35,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 36,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 37,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 38,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 39,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 40,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 41,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 42,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 43,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 44,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 45,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 46,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 47,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 48,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 49,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 50,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 51,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 52,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 53,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 54,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 55,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 56,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 57,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 58,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 59,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 60,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 61,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 62,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 63,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 64,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 65,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 66,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 67,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 68,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 69,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 70,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 71,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 72,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 73,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 74,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 75,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 76,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 77,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 78,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 79,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 80,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 81,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 82,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 83,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 84,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 85,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 86,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 87,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 88,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 89,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 90,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 91,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 92,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 93,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 94,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 95,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 96,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 97,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 98,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 99,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 100,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 101,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 102,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 103,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 104,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 105,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 106,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 107,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 108,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 109,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 110,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 111,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 112,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 113,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 114,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 115,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 116,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 117,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 118,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 119,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 120,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 121,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 122,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 123,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 124,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 125,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 126,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 127,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 128,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 129,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 130,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 131,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 132,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 133,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 134,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 135,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 136,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 137,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 138,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 139,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 140,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 141,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 142,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 143,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 144,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 145,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 146,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 147,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 148,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 149,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    },
+    {
+      "level": 150,
+      "valid": true,
+      "solutionCount": 1,
+      "connected": true
+    }
+  ]
+}

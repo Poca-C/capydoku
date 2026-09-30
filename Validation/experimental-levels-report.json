@@ -1,0 +1,970 @@
+{
+  "allValid" : true,
+  "count" : 30,
+  "generatorVersion" : "demo-connected-v2",
+  "levels" : [
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 3,
+        "found" : 6,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 6,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Flow",
+      "fingerprint" : "44e60096b5e1488b",
+      "generationMilliseconds" : 6,
+      "level" : 151,
+      "seed" : 5960738863027126563,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 1,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 5,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 6,
+        "found" : 6,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 5,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Flow",
+      "fingerprint" : "ee97521b98d94268",
+      "generationMilliseconds" : 1,
+      "level" : 152,
+      "seed" : 17361453682350325048,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 0,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 6,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 4,
+        "found" : 8,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 11,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Medium",
+      "fingerprint" : "db061cc84b5f9a93",
+      "generationMilliseconds" : 4,
+      "level" : 153,
+      "seed" : 10315424427963971917,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 4,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 7,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 3,
+        "found" : 8,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 9,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Medium",
+      "fingerprint" : "03e2e1d079611a2f",
+      "generationMilliseconds" : 3,
+      "level" : 154,
+      "seed" : 3269395173577618786,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 3,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 6,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 0,
+        "found" : 8,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 7,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Challenge",
+      "fingerprint" : "7b72a5ce07f98be7",
+      "generationMilliseconds" : 1,
+      "level" : 155,
+      "seed" : 14670109992900817271,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 8,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 1,
+        "found" : 6,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 7,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Recovery",
+      "fingerprint" : "cd9084ef11d9439b",
+      "generationMilliseconds" : 2,
+      "level" : 156,
+      "seed" : 7624080738514464140,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 3,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 5,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 13,
+        "found" : 8,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 8,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Medium",
+      "fingerprint" : "8b84abbb45f27978",
+      "generationMilliseconds" : 2,
+      "level" : 157,
+      "seed" : 578051484128111009,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 0,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 8,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 2,
+        "found" : 10,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 12,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Challenge",
+      "fingerprint" : "bbc2cec14fdc3683",
+      "generationMilliseconds" : 3,
+      "level" : 158,
+      "seed" : 11978766303451309494,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 10,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 3,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 9,
+        "found" : 10,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 11,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Pre-Hard",
+      "fingerprint" : "94d7226a9f9f8b3a",
+      "generationMilliseconds" : 15,
+      "level" : 159,
+      "seed" : 4932737049064956363,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 3,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 8,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 0,
+        "found" : 10,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 12,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Hard",
+      "fingerprint" : "c7d46a0a6cc4cc8e",
+      "generationMilliseconds" : 39,
+      "level" : 160,
+      "seed" : 16333451868388154848,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 13,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 5,
+        "found" : 6,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 5,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Flow",
+      "fingerprint" : "96134262b9c4e416",
+      "generationMilliseconds" : 1,
+      "level" : 161,
+      "seed" : 9287422614001801717,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 1,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 6,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 0,
+        "found" : 6,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 6,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Flow",
+      "fingerprint" : "7875b15e3b89b026",
+      "generationMilliseconds" : 1,
+      "level" : 162,
+      "seed" : 2241393359615448586,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 7,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 9,
+        "found" : 8,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 8,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Medium",
+      "fingerprint" : "7fd85c685e8c3060",
+      "generationMilliseconds" : 4,
+      "level" : 163,
+      "seed" : 13642108178938647071,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 2,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 6,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 0,
+        "found" : 8,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 7,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Medium",
+      "fingerprint" : "84e342d7eb1141bc",
+      "generationMilliseconds" : 8,
+      "level" : 164,
+      "seed" : 6596078924552293940,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 8,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 2,
+        "found" : 8,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 10,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Challenge",
+      "fingerprint" : "6b433c592f38cd18",
+      "generationMilliseconds" : 2,
+      "level" : 165,
+      "seed" : 17996793743875492425,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 2,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 8,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 0,
+        "found" : 6,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 6,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Recovery",
+      "fingerprint" : "ea4bd189520e4db3",
+      "generationMilliseconds" : 1,
+      "level" : 166,
+      "seed" : 10950764489489139294,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 7,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 5,
+        "found" : 8,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 11,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Medium",
+      "fingerprint" : "0d901b3b1292e2f0",
+      "generationMilliseconds" : 5,
+      "level" : 167,
+      "seed" : 3904735235102786163,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 4,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 7,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 7,
+        "found" : 10,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 12,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Challenge",
+      "fingerprint" : "48b4421ba38e453d",
+      "generationMilliseconds" : 9,
+      "level" : 168,
+      "seed" : 15305450054425984648,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 6,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 7,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 8,
+        "found" : 10,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 9,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Pre-Hard",
+      "fingerprint" : "d735cbd7b7bc6075",
+      "generationMilliseconds" : 55,
+      "level" : 169,
+      "seed" : 8259420800039631517,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 3,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 7,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 13,
+        "found" : 10,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 12,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Hard",
+      "fingerprint" : "9e353b243843d667",
+      "generationMilliseconds" : 13,
+      "level" : 170,
+      "seed" : 1213391545653278386,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 5,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 8,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 0,
+        "found" : 6,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 4,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Flow",
+      "fingerprint" : "215533f43a641694",
+      "generationMilliseconds" : 3,
+      "level" : 171,
+      "seed" : 12614106364976476871,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 6,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 1,
+        "found" : 6,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 7,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Flow",
+      "fingerprint" : "9750ea7e44ffc956",
+      "generationMilliseconds" : 0,
+      "level" : 172,
+      "seed" : 5568077110590123740,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 3,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 5,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 4,
+        "found" : 8,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 7,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Medium",
+      "fingerprint" : "3a376bfb01887f30",
+      "generationMilliseconds" : 2,
+      "level" : 173,
+      "seed" : 16968791929913322225,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 3,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 6,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 1,
+        "found" : 8,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 10,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Medium",
+      "fingerprint" : "248287e538654df7",
+      "generationMilliseconds" : 11,
+      "level" : 174,
+      "seed" : 9922762675526969094,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 4,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 7,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 11,
+        "found" : 8,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 9,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Challenge",
+      "fingerprint" : "10132964c1e6a2c2",
+      "generationMilliseconds" : 4,
+      "level" : 175,
+      "seed" : 2876733421140615963,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 1,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 7,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 0,
+        "found" : 6,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 6,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Recovery",
+      "fingerprint" : "c0c174909710dc67",
+      "generationMilliseconds" : 0,
+      "level" : 176,
+      "seed" : 14277448240463814448,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 7,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 4,
+        "found" : 8,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 9,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Medium",
+      "fingerprint" : "67f769e2b14e3c11",
+      "generationMilliseconds" : 4,
+      "level" : 177,
+      "seed" : 7231418986077461317,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 5,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 5,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 6,
+        "found" : 10,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 12,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Challenge",
+      "fingerprint" : "09591fc6a5431cc2",
+      "generationMilliseconds" : 8,
+      "level" : 178,
+      "seed" : 185389731691108186,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 5,
+          "initialForcedCells" : 3,
+          "remainingUnresolved" : 7,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 0,
+        "found" : 10,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 10,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Pre-Hard",
+      "fingerprint" : "3dfc1e83b70c691c",
+      "generationMilliseconds" : 2,
+      "level" : 179,
+      "seed" : 11586104551014306671,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 12,
+          "initialForcedCells" : 3,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 10,
+        "found" : 10,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 11,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Hard",
+      "fingerprint" : "c907d69a82625297",
+      "generationMilliseconds" : 9,
+      "level" : 180,
+      "seed" : 4540075296627953540,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 3,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 7,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    }
+  ],
+  "profileVersion" : "demo-provisional-v1",
+  "status" : "Internal demo only. Exact geometry duplicates rejected; Pawdoku difficulty mirroring and cross-product similarity acceptance pending reference data.",
+  "uniqueFingerprints" : 30
+}

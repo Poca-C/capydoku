@@ -1,0 +1,3770 @@
+{
+  "allValid" : true,
+  "count" : 150,
+  "generatorVersion" : "demo-connected-v2",
+  "levels" : [
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 0,
+        "found" : 4,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 3,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Tutorial",
+      "fingerprint" : "865bb0b4d0be0c67",
+      "generationMilliseconds" : 3,
+      "level" : 1,
+      "seed" : 11400714819535654101,
+      "size" : 4,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 4,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 3,
+        "found" : 4,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 4,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Flow",
+      "fingerprint" : "5936f4ab8d223757",
+      "generationMilliseconds" : 0,
+      "level" : 2,
+      "seed" : 4354685565149300970,
+      "size" : 4,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 1,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 4,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 0,
+        "found" : 4,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 4,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Medium",
+      "fingerprint" : "60b734982064fbc2",
+      "generationMilliseconds" : 0,
+      "level" : 3,
+      "seed" : 15755400384472499455,
+      "size" : 4,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 5,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 3,
+        "found" : 4,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 5,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Medium",
+      "fingerprint" : "264486d0f1f5f48c",
+      "generationMilliseconds" : 2,
+      "level" : 4,
+      "seed" : 8709371130086146324,
+      "size" : 4,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 3,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 4,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 3,
+        "found" : 4,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 4,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Challenge",
+      "fingerprint" : "13948bb51205b222",
+      "generationMilliseconds" : 0,
+      "level" : 5,
+      "seed" : 1663341875699793193,
+      "size" : 4,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 1,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 4,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 3,
+        "found" : 4,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 3,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Recovery",
+      "fingerprint" : "3ceea64473776972",
+      "generationMilliseconds" : 0,
+      "level" : 6,
+      "seed" : 13064056695022991678,
+      "size" : 4,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 0,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 4,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 3,
+        "found" : 4,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 4,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Medium",
+      "fingerprint" : "9ca36f591a6115ff",
+      "generationMilliseconds" : 0,
+      "level" : 7,
+      "seed" : 6018027440636638547,
+      "size" : 4,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 1,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 4,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 2,
+        "found" : 4,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 4,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Challenge",
+      "fingerprint" : "bbe442e695a1633f",
+      "generationMilliseconds" : 0,
+      "level" : 8,
+      "seed" : 17418742259959837032,
+      "size" : 4,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 2,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 4,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 0,
+        "found" : 4,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 3,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Pre-Hard",
+      "fingerprint" : "d58f636fc115b2ed",
+      "generationMilliseconds" : 0,
+      "level" : 9,
+      "seed" : 10372713005573483901,
+      "size" : 4,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 4,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 3,
+        "found" : 4,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 3,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Hard",
+      "fingerprint" : "855d357a5443ca84",
+      "generationMilliseconds" : 1,
+      "level" : 10,
+      "seed" : 3326683751187130770,
+      "size" : 4,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 1,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 4,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 0,
+        "found" : 6,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 6,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Flow",
+      "fingerprint" : "279a6daf52fd0d3c",
+      "generationMilliseconds" : 1,
+      "level" : 11,
+      "seed" : 14727398570510329255,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 8,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 3,
+        "found" : 6,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 7,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Flow",
+      "fingerprint" : "599d9342ed94316f",
+      "generationMilliseconds" : 1,
+      "level" : 12,
+      "seed" : 7681369316123976124,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 2,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 6,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 0,
+        "found" : 6,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 5,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Medium",
+      "fingerprint" : "284a0d4dbd160376",
+      "generationMilliseconds" : 1,
+      "level" : 13,
+      "seed" : 635340061737622993,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 6,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 2,
+        "found" : 6,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 9,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Medium",
+      "fingerprint" : "a53f55cfb9e12ad4",
+      "generationMilliseconds" : 1,
+      "level" : 14,
+      "seed" : 12036054881060821478,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 4,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 6,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 6,
+        "found" : 6,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 7,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Challenge",
+      "fingerprint" : "5cf9b837494e694a",
+      "generationMilliseconds" : 1,
+      "level" : 15,
+      "seed" : 4990025626674468347,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 3,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 5,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 4,
+        "found" : 6,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 6,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Recovery",
+      "fingerprint" : "48dce45d940ac4c8",
+      "generationMilliseconds" : 1,
+      "level" : 16,
+      "seed" : 16390740445997666832,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 2,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 5,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 0,
+        "found" : 6,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 6,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Recovery",
+      "fingerprint" : "1b2609ec99549a00",
+      "generationMilliseconds" : 0,
+      "level" : 17,
+      "seed" : 9344711191611313701,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 7,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 5,
+        "found" : 6,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 5,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Challenge",
+      "fingerprint" : "f2722f550912c09a",
+      "generationMilliseconds" : 0,
+      "level" : 18,
+      "seed" : 2298681937224960570,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 0,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 6,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 6,
+        "found" : 6,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 5,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Pre-Hard",
+      "fingerprint" : "9651f59c4b4bc4d5",
+      "generationMilliseconds" : 1,
+      "level" : 19,
+      "seed" : 13699396756548159055,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 2,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 5,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 1,
+        "found" : 6,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 7,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Hard",
+      "fingerprint" : "c60e159a1932a1ee",
+      "generationMilliseconds" : 1,
+      "level" : 20,
+      "seed" : 6653367502161805924,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 6,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 3,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Flow",
+      "fingerprint" : "00917034afdd6665",
+      "generationMilliseconds" : 0,
+      "level" : 21,
+      "seed" : 18054082321485004409,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 4,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 3,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Flow",
+      "fingerprint" : "a4f23cb62cd17f5a",
+      "generationMilliseconds" : 0,
+      "level" : 22,
+      "seed" : 11008053067098651278,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 7,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "77e11814286bfa11",
+      "generationMilliseconds" : 0,
+      "level" : 23,
+      "seed" : 3962023812712298147,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 1,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 6,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "2a57aa51b377716f",
+      "generationMilliseconds" : 0,
+      "level" : 24,
+      "seed" : 15362738632035496632,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 2,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 6,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Challenge",
+      "fingerprint" : "c3420486290628fa",
+      "generationMilliseconds" : 0,
+      "level" : 25,
+      "seed" : 8316709377649143501,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 9,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 4,
+        "found" : 6,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 6,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Recovery",
+      "fingerprint" : "a5a0f8a5736a7927",
+      "generationMilliseconds" : 1,
+      "level" : 26,
+      "seed" : 1270680123262790370,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 2,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 5,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "760c9bae91ae5b95",
+      "generationMilliseconds" : 0,
+      "level" : 27,
+      "seed" : 12671394942585988855,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 4,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 4,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Challenge",
+      "fingerprint" : "d44e0510404885aa",
+      "generationMilliseconds" : 0,
+      "level" : 28,
+      "seed" : 5625365688199635724,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 4,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 5,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Pre-Hard",
+      "fingerprint" : "fb1a7b5e3368f909",
+      "generationMilliseconds" : 0,
+      "level" : 29,
+      "seed" : 17026080507522834209,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 3,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 6,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 6,
+        "found" : 6,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 6,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Hard",
+      "fingerprint" : "7786bd8285279d17",
+      "generationMilliseconds" : 1,
+      "level" : 30,
+      "seed" : 9980051253136481078,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 1,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 6,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Flow",
+      "fingerprint" : "0002608088162936",
+      "generationMilliseconds" : 0,
+      "level" : 31,
+      "seed" : 2934021998750127947,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 2,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 5,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Flow",
+      "fingerprint" : "729205974a3a965e",
+      "generationMilliseconds" : 0,
+      "level" : 32,
+      "seed" : 14334736818073326432,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 7,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "258296e5136f4a3b",
+      "generationMilliseconds" : 0,
+      "level" : 33,
+      "seed" : 7288707563686973301,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 6,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "43f6311fb5248c13",
+      "generationMilliseconds" : 0,
+      "level" : 34,
+      "seed" : 242678309300620170,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 2,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 6,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Challenge",
+      "fingerprint" : "f139815c341cd4cc",
+      "generationMilliseconds" : 0,
+      "level" : 35,
+      "seed" : 11643393128623818655,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 4,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 4,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 5,
+        "found" : 6,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 7,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Recovery",
+      "fingerprint" : "15fe48b55a1b433b",
+      "generationMilliseconds" : 1,
+      "level" : 36,
+      "seed" : 4597363874237465524,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 2,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 6,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "813c74a1abe97e86",
+      "generationMilliseconds" : 0,
+      "level" : 37,
+      "seed" : 15998078693560664009,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 7,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Challenge",
+      "fingerprint" : "63613c451e159843",
+      "generationMilliseconds" : 0,
+      "level" : 38,
+      "seed" : 8952049439174310878,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 1,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 5,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Pre-Hard",
+      "fingerprint" : "b346505be2b0cc0b",
+      "generationMilliseconds" : 0,
+      "level" : 39,
+      "seed" : 1906020184787957747,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 6,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 3,
+        "found" : 6,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 7,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Hard",
+      "fingerprint" : "de2ddfbae58c1d0a",
+      "generationMilliseconds" : 1,
+      "level" : 40,
+      "seed" : 13306735004111156232,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 3,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 5,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Flow",
+      "fingerprint" : "c3ab91d999ed9fd0",
+      "generationMilliseconds" : 0,
+      "level" : 41,
+      "seed" : 6260705749724803101,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 1,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 6,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Flow",
+      "fingerprint" : "e1064fc16b9dde59",
+      "generationMilliseconds" : 0,
+      "level" : 42,
+      "seed" : 17661420569048001586,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 5,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 3,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "92b90c1648b15312",
+      "generationMilliseconds" : 0,
+      "level" : 43,
+      "seed" : 10615391314661648455,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 2,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 6,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "b616988b2e5546c5",
+      "generationMilliseconds" : 0,
+      "level" : 44,
+      "seed" : 3569362060275295324,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 4,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 6,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Challenge",
+      "fingerprint" : "fe872a47dd1938ef",
+      "generationMilliseconds" : 0,
+      "level" : 45,
+      "seed" : 14970076879598493809,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 2,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 6,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 4,
+        "found" : 6,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 5,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Recovery",
+      "fingerprint" : "08b711aba45a1edb",
+      "generationMilliseconds" : 1,
+      "level" : 46,
+      "seed" : 7924047625212140678,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 2,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 5,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "bf2c8577bcf5779f",
+      "generationMilliseconds" : 0,
+      "level" : 47,
+      "seed" : 878018370825787547,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 7,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Challenge",
+      "fingerprint" : "03a94ebe23aeced9",
+      "generationMilliseconds" : 0,
+      "level" : 48,
+      "seed" : 12278733190148986032,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 3,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 6,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Pre-Hard",
+      "fingerprint" : "7fcc1790f76fc62c",
+      "generationMilliseconds" : 1,
+      "level" : 49,
+      "seed" : 5232703935762632901,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 3,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 4,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 3,
+        "found" : 6,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 8,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Hard",
+      "fingerprint" : "8ab33a8b41d43422",
+      "generationMilliseconds" : 1,
+      "level" : 50,
+      "seed" : 16633418755085831386,
+      "size" : 6,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 3,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 6,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Flow",
+      "fingerprint" : "c552af56ed4a7596",
+      "generationMilliseconds" : 0,
+      "level" : 51,
+      "seed" : 9587389500699478255,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 11,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Flow",
+      "fingerprint" : "4615eef265ca9330",
+      "generationMilliseconds" : 1,
+      "level" : 52,
+      "seed" : 2541360246313125124,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 5,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 5,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "2555caa65930578a",
+      "generationMilliseconds" : 1,
+      "level" : 53,
+      "seed" : 13942075065636323609,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 0,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 8,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "050617dc3737e602",
+      "generationMilliseconds" : 3,
+      "level" : 54,
+      "seed" : 6896045811249970478,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 7,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 3,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Challenge",
+      "fingerprint" : "cb841318b8633fe9",
+      "generationMilliseconds" : 1,
+      "level" : 55,
+      "seed" : 18296760630573168963,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 6,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 4,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 0,
+        "found" : 8,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 7,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Recovery",
+      "fingerprint" : "a5f7c56357df7e96",
+      "generationMilliseconds" : 2,
+      "level" : 56,
+      "seed" : 11250731376186815832,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 8,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "d5f27df220adf57b",
+      "generationMilliseconds" : 0,
+      "level" : 57,
+      "seed" : 4204702121800462701,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 4,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 6,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Challenge",
+      "fingerprint" : "4e4bc4be360e477d",
+      "generationMilliseconds" : 1,
+      "level" : 58,
+      "seed" : 15605416941123661186,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 2,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 7,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Pre-Hard",
+      "fingerprint" : "43c852c3d012d12a",
+      "generationMilliseconds" : 1,
+      "level" : 59,
+      "seed" : 8559387686737308055,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 10,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 7,
+        "found" : 8,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 10,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Hard",
+      "fingerprint" : "bde53b36f1775648",
+      "generationMilliseconds" : 5,
+      "level" : 60,
+      "seed" : 1513358432350954924,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 2,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 7,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Flow",
+      "fingerprint" : "ec58c4abef572189",
+      "generationMilliseconds" : 1,
+      "level" : 61,
+      "seed" : 12914073251674153409,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 9,
+          "initialForcedCells" : 3,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Flow",
+      "fingerprint" : "772971354a8a34d8",
+      "generationMilliseconds" : 1,
+      "level" : 62,
+      "seed" : 5868043997287800278,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 2,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 7,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "7d88d3a84cc45e76",
+      "generationMilliseconds" : 0,
+      "level" : 63,
+      "seed" : 17268758816610998763,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 4,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 5,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "5c5e34ea0d47ba3a",
+      "generationMilliseconds" : 2,
+      "level" : 64,
+      "seed" : 10222729562224645632,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 11,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Challenge",
+      "fingerprint" : "ca867c82df62ffd2",
+      "generationMilliseconds" : 2,
+      "level" : 65,
+      "seed" : 3176700307838292501,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 1,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 8,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 9,
+        "found" : 8,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 7,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Recovery",
+      "fingerprint" : "46ebe3e229f1ad66",
+      "generationMilliseconds" : 2,
+      "level" : 66,
+      "seed" : 14577415127161490986,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 3,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 6,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "f8e8e6f4a86c6547",
+      "generationMilliseconds" : 5,
+      "level" : 67,
+      "seed" : 7531385872775137855,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 2,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 7,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Challenge",
+      "fingerprint" : "6bcf43283141363e",
+      "generationMilliseconds" : 0,
+      "level" : 68,
+      "seed" : 485356618388784724,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 9,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 3,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Pre-Hard",
+      "fingerprint" : "8ef928743f61a7fc",
+      "generationMilliseconds" : 4,
+      "level" : 69,
+      "seed" : 11886071437711983209,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 3,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 6,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 0,
+        "found" : 8,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 9,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Hard",
+      "fingerprint" : "d56ab9fbd661cc39",
+      "generationMilliseconds" : 1,
+      "level" : 70,
+      "seed" : 4840042183325630078,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 10,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Flow",
+      "fingerprint" : "883c81168656fcf8",
+      "generationMilliseconds" : 2,
+      "level" : 71,
+      "seed" : 16240757002648828563,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 2,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 8,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Flow",
+      "fingerprint" : "71c95ecaf59a5bf4",
+      "generationMilliseconds" : 3,
+      "level" : 72,
+      "seed" : 9194727748262475432,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 4,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 7,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "062a55ac61ff20fd",
+      "generationMilliseconds" : 1,
+      "level" : 73,
+      "seed" : 2148698493876122301,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 13,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "b886e2381dd784a5",
+      "generationMilliseconds" : 1,
+      "level" : 74,
+      "seed" : 13549413313199320786,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 9,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Challenge",
+      "fingerprint" : "dade5a01bb59185b",
+      "generationMilliseconds" : 0,
+      "level" : 75,
+      "seed" : 6503384058812967655,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 3,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 5,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 1,
+        "found" : 8,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 10,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Recovery",
+      "fingerprint" : "1db9c38696169104",
+      "generationMilliseconds" : 4,
+      "level" : 76,
+      "seed" : 17904098878136166140,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 6,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 5,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "1f1c3f0345fa6ed5",
+      "generationMilliseconds" : 1,
+      "level" : 77,
+      "seed" : 10858069623749813009,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 3,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 7,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Challenge",
+      "fingerprint" : "f0938e977a0cb989",
+      "generationMilliseconds" : 2,
+      "level" : 78,
+      "seed" : 3812040369363459878,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 2,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 8,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Pre-Hard",
+      "fingerprint" : "3344bec3bee64e25",
+      "generationMilliseconds" : 2,
+      "level" : 79,
+      "seed" : 15212755188686658363,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 7,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 3,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 0,
+        "found" : 8,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 9,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Hard",
+      "fingerprint" : "011fbbf1f96baf63",
+      "generationMilliseconds" : 4,
+      "level" : 80,
+      "seed" : 8166725934300305232,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 10,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Flow",
+      "fingerprint" : "d9d0ae5ce30a57f8",
+      "generationMilliseconds" : 1,
+      "level" : 81,
+      "seed" : 1120696679913952101,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 5,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 6,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Flow",
+      "fingerprint" : "852a47bb7b7443fa",
+      "generationMilliseconds" : 2,
+      "level" : 82,
+      "seed" : 12521411499237150586,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 9,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "079840dc5d8442cb",
+      "generationMilliseconds" : 3,
+      "level" : 83,
+      "seed" : 5475382244850797455,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 11,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "e3def97c012bb4b8",
+      "generationMilliseconds" : 1,
+      "level" : 84,
+      "seed" : 16876097064173995940,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 2,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 8,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Challenge",
+      "fingerprint" : "bf3709118dee9722",
+      "generationMilliseconds" : 1,
+      "level" : 85,
+      "seed" : 9830067809787642809,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 2,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 7,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 1,
+        "found" : 8,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 10,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Recovery",
+      "fingerprint" : "6e2bb968d1c92712",
+      "generationMilliseconds" : 3,
+      "level" : 86,
+      "seed" : 2784038555401289678,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 8,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 3,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "3abb240c96421a31",
+      "generationMilliseconds" : 0,
+      "level" : 87,
+      "seed" : 14184753374724488163,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 2,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 6,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Challenge",
+      "fingerprint" : "5b4e7b029e2ff3b9",
+      "generationMilliseconds" : 1,
+      "level" : 88,
+      "seed" : 7138724120338135032,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 3,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 6,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Pre-Hard",
+      "fingerprint" : "5baf3f56e6292815",
+      "generationMilliseconds" : 2,
+      "level" : 89,
+      "seed" : 92694865951781901,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 2,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 8,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 5,
+        "found" : 8,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 8,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Hard",
+      "fingerprint" : "da221bb9c4ad7288",
+      "generationMilliseconds" : 2,
+      "level" : 90,
+      "seed" : 11493409685274980386,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 3,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 6,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Flow",
+      "fingerprint" : "27600d20f88a3dc2",
+      "generationMilliseconds" : 1,
+      "level" : 91,
+      "seed" : 4447380430888627255,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 4,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 7,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Flow",
+      "fingerprint" : "d22fc28dbafb332f",
+      "generationMilliseconds" : 0,
+      "level" : 92,
+      "seed" : 15848095250211825740,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 11,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "e05ead006e1a3175",
+      "generationMilliseconds" : 0,
+      "level" : 93,
+      "seed" : 8802065995825472609,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 5,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 3,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "efdbf2464512c56d",
+      "generationMilliseconds" : 1,
+      "level" : 94,
+      "seed" : 1756036741439119478,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 4,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 6,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Challenge",
+      "fingerprint" : "5e9c60776a0dd1fb",
+      "generationMilliseconds" : 0,
+      "level" : 95,
+      "seed" : 13156751560762317963,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 2,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 8,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 4,
+        "found" : 8,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 10,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Recovery",
+      "fingerprint" : "77ec1f92fbbbd9a8",
+      "generationMilliseconds" : 6,
+      "level" : 96,
+      "seed" : 6110722306375964832,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 5,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 7,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "895ba6a66ba6c82d",
+      "generationMilliseconds" : 1,
+      "level" : 97,
+      "seed" : 17511437125699163317,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 6,
+          "initialForcedCells" : 1,
+          "remainingUnresolved" : 4,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Challenge",
+      "fingerprint" : "3894a490edbec64d",
+      "generationMilliseconds" : 0,
+      "level" : 98,
+      "seed" : 10465407871312810186,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 0,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 8,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Pre-Hard",
+      "fingerprint" : "765555acd098de45",
+      "generationMilliseconds" : 1,
+      "level" : 99,
+      "seed" : 3419378616926457055,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 6,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 5,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 9,
+        "found" : 8,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 9,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Hard",
+      "fingerprint" : "c75d4fa26efe4b37",
+      "generationMilliseconds" : 2,
+      "level" : 100,
+      "seed" : 14820093436249655540,
+      "size" : 8,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 2,
+          "initialForcedCells" : 0,
+          "remainingUnresolved" : 8,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Flow",
+      "fingerprint" : "fb8c6ea96f6fccf5",
+      "generationMilliseconds" : 8,
+      "level" : 101,
+      "seed" : 7774064181863302409,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 8,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 4,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Flow",
+      "fingerprint" : "99adc2ece757a71b",
+      "generationMilliseconds" : 76,
+      "level" : 102,
+      "seed" : 728034927476949278,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 13,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "4efda75fdf8e36f7",
+      "generationMilliseconds" : 6,
+      "level" : 103,
+      "seed" : 12128749746800147763,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 4,
+          "initialForcedCells" : 3,
+          "remainingUnresolved" : 7,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "98d72a0c0b2afc09",
+      "generationMilliseconds" : 11,
+      "level" : 104,
+      "seed" : 5082720492413794632,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 11,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 3,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Challenge",
+      "fingerprint" : "34aeb6d12d6a06b5",
+      "generationMilliseconds" : 13,
+      "level" : 105,
+      "seed" : 16483435311736993117,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 7,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 6,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 2,
+        "found" : 10,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 12,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Recovery",
+      "fingerprint" : "5046849f67b8c835",
+      "generationMilliseconds" : 16,
+      "level" : 106,
+      "seed" : 9437406057350639986,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 9,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 4,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "21c91d1ecea3b32c",
+      "generationMilliseconds" : 212,
+      "level" : 107,
+      "seed" : 2391376802964286855,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 4,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 6,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Challenge",
+      "fingerprint" : "3bd49a01a9d07361",
+      "generationMilliseconds" : 9,
+      "level" : 108,
+      "seed" : 13792091622287485340,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 2,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 8,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Pre-Hard",
+      "fingerprint" : "29cb2912de2b803c",
+      "generationMilliseconds" : 9,
+      "level" : 109,
+      "seed" : 6746062367901132209,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 3,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 7,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 8,
+        "found" : 10,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 12,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Hard",
+      "fingerprint" : "3f5c23176fd90a79",
+      "generationMilliseconds" : 25,
+      "level" : 110,
+      "seed" : 18146777187224330694,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 2,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 8,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Flow",
+      "fingerprint" : "ac19da33a68fd584",
+      "generationMilliseconds" : 2,
+      "level" : 111,
+      "seed" : 11100747932837977563,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 11,
+          "initialForcedCells" : 3,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Flow",
+      "fingerprint" : "2f432b01ddadb1b5",
+      "generationMilliseconds" : 2,
+      "level" : 112,
+      "seed" : 4054718678451624432,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 5,
+          "initialForcedCells" : 3,
+          "remainingUnresolved" : 7,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "9a90ec822ffcbe42",
+      "generationMilliseconds" : 12,
+      "level" : 113,
+      "seed" : 15455433497774822917,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 8,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 5,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "e946513064e9a5df",
+      "generationMilliseconds" : 6,
+      "level" : 114,
+      "seed" : 8409404243388469786,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 3,
+          "initialForcedCells" : 3,
+          "remainingUnresolved" : 7,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Challenge",
+      "fingerprint" : "8c8efce335f1c92a",
+      "generationMilliseconds" : 11,
+      "level" : 115,
+      "seed" : 1363374989002116655,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 3,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 8,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 11,
+        "found" : 10,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 11,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Recovery",
+      "fingerprint" : "b7be1b1c42e85c4e",
+      "generationMilliseconds" : 5,
+      "level" : 116,
+      "seed" : 12764089808325315140,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 4,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 7,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "544d9d2d8b30f45f",
+      "generationMilliseconds" : 28,
+      "level" : 117,
+      "seed" : 5718060553938962009,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 5,
+          "initialForcedCells" : 3,
+          "remainingUnresolved" : 6,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Challenge",
+      "fingerprint" : "d838eb7104589c9c",
+      "generationMilliseconds" : 7,
+      "level" : 118,
+      "seed" : 17118775373262160494,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 11,
+          "initialForcedCells" : 3,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Pre-Hard",
+      "fingerprint" : "85a2a295204af73c",
+      "generationMilliseconds" : 4,
+      "level" : 119,
+      "seed" : 10072746118875807363,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 6,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 7,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 0,
+        "found" : 10,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 9,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Hard",
+      "fingerprint" : "069a6f3dfacc262b",
+      "generationMilliseconds" : 3,
+      "level" : 120,
+      "seed" : 3026716864489454232,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 11,
+          "initialForcedCells" : 3,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Flow",
+      "fingerprint" : "5f119b47ff723c73",
+      "generationMilliseconds" : 2,
+      "level" : 121,
+      "seed" : 14427431683812652717,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 3,
+          "initialForcedCells" : 3,
+          "remainingUnresolved" : 7,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Flow",
+      "fingerprint" : "0551fc014686669d",
+      "generationMilliseconds" : 5,
+      "level" : 122,
+      "seed" : 7381402429426299586,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 8,
+          "initialForcedCells" : 3,
+          "remainingUnresolved" : 3,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "e9c8bffb4f0dd01f",
+      "generationMilliseconds" : 3,
+      "level" : 123,
+      "seed" : 335373175039946455,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 3,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 8,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "0b39da3741a55a4f",
+      "generationMilliseconds" : 10,
+      "level" : 124,
+      "seed" : 11736087994363144940,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 8,
+          "initialForcedCells" : 3,
+          "remainingUnresolved" : 3,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Challenge",
+      "fingerprint" : "66aed65515e7efa1",
+      "generationMilliseconds" : 68,
+      "level" : 125,
+      "seed" : 4690058739976791809,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 12,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 9,
+        "found" : 10,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 11,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Recovery",
+      "fingerprint" : "36b3e097f0c3e3bc",
+      "generationMilliseconds" : 22,
+      "level" : 126,
+      "seed" : 16090773559299990294,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 5,
+          "initialForcedCells" : 3,
+          "remainingUnresolved" : 6,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "368c60ba11eaf886",
+      "generationMilliseconds" : 13,
+      "level" : 127,
+      "seed" : 9044744304913637163,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 5,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 7,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Challenge",
+      "fingerprint" : "bc817258e3f7f8da",
+      "generationMilliseconds" : 15,
+      "level" : 128,
+      "seed" : 1998715050527284032,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 5,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 7,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Pre-Hard",
+      "fingerprint" : "983a7b710ab797b8",
+      "generationMilliseconds" : 1,
+      "level" : 129,
+      "seed" : 13399429869850482517,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 7,
+          "initialForcedCells" : 3,
+          "remainingUnresolved" : 6,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 1,
+        "found" : 10,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 12,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Hard",
+      "fingerprint" : "b25df61165598db9",
+      "generationMilliseconds" : 9,
+      "level" : 130,
+      "seed" : 6353400615464129386,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 10,
+          "initialForcedCells" : 3,
+          "remainingUnresolved" : 3,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Flow",
+      "fingerprint" : "6c89141f2b45ef4f",
+      "generationMilliseconds" : 124,
+      "level" : 131,
+      "seed" : 17754115434787327871,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 6,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 8,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Flow",
+      "fingerprint" : "86f4329cf479b727",
+      "generationMilliseconds" : 90,
+      "level" : 132,
+      "seed" : 10708086180400974740,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 4,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 7,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "86df2ab945f6fc95",
+      "generationMilliseconds" : 3,
+      "level" : 133,
+      "seed" : 3662056926014621609,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 7,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 5,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "22091ea6ef5a953f",
+      "generationMilliseconds" : 18,
+      "level" : 134,
+      "seed" : 15062771745337820094,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 5,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 7,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Challenge",
+      "fingerprint" : "888baad8c906fa1a",
+      "generationMilliseconds" : 1,
+      "level" : 135,
+      "seed" : 8016742490951466963,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 2,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 8,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 0,
+        "found" : 10,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 11,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Recovery",
+      "fingerprint" : "820633dfc0a7f7b2",
+      "generationMilliseconds" : 43,
+      "level" : 136,
+      "seed" : 970713236565113832,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 12,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "c22b6a8abc7f1e2e",
+      "generationMilliseconds" : 5,
+      "level" : 137,
+      "seed" : 12371428055888312317,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 8,
+          "initialForcedCells" : 3,
+          "remainingUnresolved" : 4,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Challenge",
+      "fingerprint" : "29e231ae3dda839c",
+      "generationMilliseconds" : 4,
+      "level" : 138,
+      "seed" : 5325398801501959186,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 8,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 5,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Pre-Hard",
+      "fingerprint" : "e1986201b3d5f256",
+      "generationMilliseconds" : 18,
+      "level" : 139,
+      "seed" : 16726113620825157671,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 11,
+          "initialForcedCells" : 3,
+          "remainingUnresolved" : 3,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 3,
+        "found" : 10,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 10,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Hard",
+      "fingerprint" : "26a6f0cee301ba0a",
+      "generationMilliseconds" : 18,
+      "level" : 140,
+      "seed" : 9680084366438804540,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 6,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 5,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Flow",
+      "fingerprint" : "574e496f09048e06",
+      "generationMilliseconds" : 55,
+      "level" : 141,
+      "seed" : 2634055112052451409,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 8,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 4,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Flow",
+      "fingerprint" : "8640c3ea94e933c2",
+      "generationMilliseconds" : 1,
+      "level" : 142,
+      "seed" : 14034769931375649894,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 10,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 3,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "da5e455797576056",
+      "generationMilliseconds" : 8,
+      "level" : 143,
+      "seed" : 6988740676989296763,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 11,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "31975bd94266beee",
+      "generationMilliseconds" : 11,
+      "level" : 144,
+      "seed" : 18389455496312495248,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 9,
+          "initialForcedCells" : 3,
+          "remainingUnresolved" : 4,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Challenge",
+      "fingerprint" : "124b686e7c512303",
+      "generationMilliseconds" : 21,
+      "level" : 145,
+      "seed" : 11343426241926142117,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 8,
+          "initialForcedCells" : 3,
+          "remainingUnresolved" : 3,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 11,
+        "found" : 10,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 10,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Recovery",
+      "fingerprint" : "b2604ab028717340",
+      "generationMilliseconds" : 11,
+      "level" : 146,
+      "seed" : 4297396987539788986,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 4,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 8,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Medium",
+      "fingerprint" : "4cd069571a75f9fd",
+      "generationMilliseconds" : 33,
+      "level" : 147,
+      "seed" : 15698111806862987471,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 6,
+          "initialForcedCells" : 3,
+          "remainingUnresolved" : 5,
+          "requiresSearch" : true
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Challenge",
+      "fingerprint" : "fd6d19dfecf93992",
+      "generationMilliseconds" : 3,
+      "level" : 148,
+      "seed" : 8652082552476634340,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 10,
+          "initialForcedCells" : 3,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "difficulty" : "Pre-Hard",
+      "fingerprint" : "239eaceb53bb7e72",
+      "generationMilliseconds" : 12,
+      "level" : 149,
+      "seed" : 1606053298090281209,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 10,
+          "initialForcedCells" : 2,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    },
+    {
+      "automatedPlaythrough" : {
+        "contradictionHintsApplied" : 0,
+        "found" : 10,
+        "livesRemaining" : 3,
+        "logicalHintsApplied" : 11,
+        "method" : "Automated solver-guided gameplay, not human playtesting. Hint previews are applied as marks without consuming tool inventory; checks correctness and recovery, not difficulty or monetization.",
+        "passed" : true,
+        "sameStateRestoreChecks" : 3,
+        "status" : "won"
+      },
+      "difficulty" : "Hard",
+      "fingerprint" : "012abddad87dd751",
+      "generationMilliseconds" : 7,
+      "level" : 150,
+      "seed" : 13006768117413479694,
+      "size" : 10,
+      "validation" : {
+        "errors" : [
+
+        ],
+        "logicalMetrics" : {
+          "deductionSteps" : 12,
+          "initialForcedCells" : 4,
+          "remainingUnresolved" : 0,
+          "requiresSearch" : false
+        },
+        "regionConnected" : true,
+        "solutionCount" : 1,
+        "valid" : true
+      }
+    }
+  ],
+  "profileVersion" : "demo-provisional-v1",
+  "status" : "Internal demo only. Exact geometry duplicates rejected; Pawdoku difficulty mirroring and cross-product similarity acceptance pending reference data.",
+  "uniqueFingerprints" : 150
+}

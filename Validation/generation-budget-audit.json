@@ -1,0 +1,348 @@
+{
+  "recordedAt": "2026-09-30T17:54:35+08:00",
+  "environment": "macOS arm64, SwiftPM debug build; concurrent simulator/Xcode work can affect wall-clock scheduling",
+  "trigger": {
+    "log": "/tmp/capydoku-core-final.log",
+    "result": "39 tests; 1 failed with timeBudgetExceeded in the three-block generation test",
+    "failedLevel": "Not captured by the original test; cannot identify retrospectively"
+  },
+  "diagnosis": "The original 2000 ms wall-clock limit had little headroom. Instrumented L169 took 1758 ms at a 2000 ms budget and 1892 ms at a 4000 ms budget. L160 took 1104 ms and 1640 ms respectively. This is consistent with debug-build CPU/scheduling pressure; no invalid board was returned when the original deadline fired.",
+  "change": {
+    "oldDefaultBudgetMilliseconds": 2000,
+    "newDefaultBudgetMilliseconds": 4000,
+    "defaultCandidateLimit": 150,
+    "hardTimeCeilingMilliseconds": 8000,
+    "hardAttemptCeiling": 500,
+    "engineAlgorithmChanged": false,
+    "packagedLevelsChanged": false,
+    "testBudgetSource": "DemoConfig.default",
+    "failureDiagnostics": "Each generated level reports elapsed milliseconds; an error names its level, elapsed time and configured budget"
+  },
+  "validation": "All 8 PuzzleEngineTests passed after change; levels 151–180, all 30 unique connected legal boards generated within 4000 ms, validated and JSON-restored. A passing run is not a guarantee under arbitrary CPU contention; timeout remains a recoverable error.",
+  "runs": [
+    {
+      "budgetMilliseconds": 2000,
+      "levelCount": 30,
+      "allThirtyCompleted": true,
+      "slowest": {
+        "level": 169,
+        "elapsedMilliseconds": 1758,
+        "budgetMilliseconds": 2000
+      },
+      "measurements": [
+        {
+          "level": 151,
+          "elapsedMilliseconds": 11,
+          "budgetMilliseconds": 2000
+        },
+        {
+          "level": 152,
+          "elapsedMilliseconds": 5,
+          "budgetMilliseconds": 2000
+        },
+        {
+          "level": 153,
+          "elapsedMilliseconds": 40,
+          "budgetMilliseconds": 2000
+        },
+        {
+          "level": 154,
+          "elapsedMilliseconds": 53,
+          "budgetMilliseconds": 2000
+        },
+        {
+          "level": 155,
+          "elapsedMilliseconds": 4,
+          "budgetMilliseconds": 2000
+        },
+        {
+          "level": 156,
+          "elapsedMilliseconds": 2,
+          "budgetMilliseconds": 2000
+        },
+        {
+          "level": 157,
+          "elapsedMilliseconds": 34,
+          "budgetMilliseconds": 2000
+        },
+        {
+          "level": 158,
+          "elapsedMilliseconds": 51,
+          "budgetMilliseconds": 2000
+        },
+        {
+          "level": 159,
+          "elapsedMilliseconds": 387,
+          "budgetMilliseconds": 2000
+        },
+        {
+          "level": 160,
+          "elapsedMilliseconds": 1104,
+          "budgetMilliseconds": 2000
+        },
+        {
+          "level": 161,
+          "elapsedMilliseconds": 1,
+          "budgetMilliseconds": 2000
+        },
+        {
+          "level": 162,
+          "elapsedMilliseconds": 2,
+          "budgetMilliseconds": 2000
+        },
+        {
+          "level": 163,
+          "elapsedMilliseconds": 33,
+          "budgetMilliseconds": 2000
+        },
+        {
+          "level": 164,
+          "elapsedMilliseconds": 20,
+          "budgetMilliseconds": 2000
+        },
+        {
+          "level": 165,
+          "elapsedMilliseconds": 9,
+          "budgetMilliseconds": 2000
+        },
+        {
+          "level": 166,
+          "elapsedMilliseconds": 3,
+          "budgetMilliseconds": 2000
+        },
+        {
+          "level": 167,
+          "elapsedMilliseconds": 23,
+          "budgetMilliseconds": 2000
+        },
+        {
+          "level": 168,
+          "elapsedMilliseconds": 161,
+          "budgetMilliseconds": 2000
+        },
+        {
+          "level": 169,
+          "elapsedMilliseconds": 1758,
+          "budgetMilliseconds": 2000
+        },
+        {
+          "level": 170,
+          "elapsedMilliseconds": 107,
+          "budgetMilliseconds": 2000
+        },
+        {
+          "level": 171,
+          "elapsedMilliseconds": 2,
+          "budgetMilliseconds": 2000
+        },
+        {
+          "level": 172,
+          "elapsedMilliseconds": 5,
+          "budgetMilliseconds": 2000
+        },
+        {
+          "level": 173,
+          "elapsedMilliseconds": 46,
+          "budgetMilliseconds": 2000
+        },
+        {
+          "level": 174,
+          "elapsedMilliseconds": 31,
+          "budgetMilliseconds": 2000
+        },
+        {
+          "level": 175,
+          "elapsedMilliseconds": 34,
+          "budgetMilliseconds": 2000
+        },
+        {
+          "level": 176,
+          "elapsedMilliseconds": 7,
+          "budgetMilliseconds": 2000
+        },
+        {
+          "level": 177,
+          "elapsedMilliseconds": 38,
+          "budgetMilliseconds": 2000
+        },
+        {
+          "level": 178,
+          "elapsedMilliseconds": 183,
+          "budgetMilliseconds": 2000
+        },
+        {
+          "level": 179,
+          "elapsedMilliseconds": 42,
+          "budgetMilliseconds": 2000
+        },
+        {
+          "level": 180,
+          "elapsedMilliseconds": 129,
+          "budgetMilliseconds": 2000
+        }
+      ]
+    },
+    {
+      "budgetMilliseconds": 4000,
+      "levelCount": 30,
+      "allThirtyCompleted": true,
+      "slowest": {
+        "level": 169,
+        "elapsedMilliseconds": 1892,
+        "budgetMilliseconds": 4000
+      },
+      "measurements": [
+        {
+          "level": 151,
+          "elapsedMilliseconds": 3,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 152,
+          "elapsedMilliseconds": 2,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 153,
+          "elapsedMilliseconds": 60,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 154,
+          "elapsedMilliseconds": 85,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 155,
+          "elapsedMilliseconds": 5,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 156,
+          "elapsedMilliseconds": 1,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 157,
+          "elapsedMilliseconds": 69,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 158,
+          "elapsedMilliseconds": 107,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 159,
+          "elapsedMilliseconds": 499,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 160,
+          "elapsedMilliseconds": 1640,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 161,
+          "elapsedMilliseconds": 2,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 162,
+          "elapsedMilliseconds": 2,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 163,
+          "elapsedMilliseconds": 49,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 164,
+          "elapsedMilliseconds": 30,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 165,
+          "elapsedMilliseconds": 18,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 166,
+          "elapsedMilliseconds": 3,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 167,
+          "elapsedMilliseconds": 24,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 168,
+          "elapsedMilliseconds": 149,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 169,
+          "elapsedMilliseconds": 1892,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 170,
+          "elapsedMilliseconds": 137,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 171,
+          "elapsedMilliseconds": 2,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 172,
+          "elapsedMilliseconds": 1,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 173,
+          "elapsedMilliseconds": 52,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 174,
+          "elapsedMilliseconds": 52,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 175,
+          "elapsedMilliseconds": 57,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 176,
+          "elapsedMilliseconds": 2,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 177,
+          "elapsedMilliseconds": 45,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 178,
+          "elapsedMilliseconds": 229,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 179,
+          "elapsedMilliseconds": 41,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 180,
+          "elapsedMilliseconds": 175,
+          "budgetMilliseconds": 4000
+        }
+      ]
+    }
+  ]
+}

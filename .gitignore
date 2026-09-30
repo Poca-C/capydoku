@@ -1,0 +1,11 @@
+.DS_Store
+.build/
+DerivedData*/
+__pycache__/
+*.xcuserstate
+xcuserdata/
+*.xcresult/
+.swiftpm/
+Validation/screenshots/
+Validation/test-runs/
+~$*

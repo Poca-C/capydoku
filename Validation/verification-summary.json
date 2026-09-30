@@ -1,0 +1,12 @@
+{
+  "version": "0.1.0 (1); config demo-2026-09-v2; generator demo-connected-v2",
+  "xcode": "26.6 (17F113)",
+  "simulatorOS": "iOS 26.5",
+  "coreTests": "39/39通过，9.09秒；另补剩余1命仍可通关的定向用例通过",
+  "iPhone17Pro": "14/14通过，446秒；最终保护与预算修改的定向复测待完成",
+  "iPhone17e": "整套14项正在执行，目前6项通过",
+  "releaseDeviceBuild": "通过：Release设备构建与开发签名校验完成；未提交App Store",
+  "physicalDevice": "未测试：iPhone 14 Pro Max锁屏使开发镜像无法挂载；当前通用开发配置文件尚未包含此设备",
+  "iOS15Runtime": "未运行：最低编译目标15.0；现有模拟器仅在iOS26.5验证",
+  "originalRequirementsPreserved": true
+}
