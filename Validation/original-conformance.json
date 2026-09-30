@@ -213,6 +213,22 @@
         "Validation/original-verification.json"
       ],
       "next": "获得冻结录屏后核对精确时序；正式地区Data Use/CMP、法律链接与真机全部权限组合仍待验。临时最短显示时间不当作原版值。"
+    },
+    {
+      "id": "CLIENT-10",
+      "sourceParagraphs": [
+        159,
+        402
+      ],
+      "priority": "P1 · 客户端未完成",
+      "topic": "动态教学演示顺序与旧档步骤兼容",
+      "finding": "目标格和操作目标来自当前棋盘，但九步顺序仍固定；GEN-03已改为partial，不以目标动态冒充整条完成。",
+      "evidence": [
+        "Sources/CapydokuCore/PuzzleHints.swift",
+        "Sources/CapydokuCore/PlayerProgress.swift",
+        "App/AppModel.swift"
+      ],
+      "next": "新增版本化教学路径，保留旧存档的步骤身份；新教学尝试依据棋盘规则的信息量选择演示顺序，验证逐步冷恢复后再关闭此项。"
     }
   ],
   "rows": [
@@ -619,9 +635,9 @@
         169
       ],
       "title": "L1 动态教学目标及逻辑安全",
-      "status": "verified",
-      "implemented": "当前L1保持4×4，按可证明排除生成教学目标；去掉隐藏答案仍获得同一教学路径，元数据重建一致。",
-      "gap": "正式引导时序仍待冻结录屏。",
+      "status": "partial",
+      "implemented": "当前L1保持4×4，按可证明排除动态选择教学坐标与操作目标；去掉隐藏答案仍获得同一教学路径，元数据重建一致。",
+      "gap": "本轮重新核对[159]发现演示顺序仍固定，尚未实现按最终棋盘动态选择顺序；旧版将本行标verified只覆盖目标坐标，不能证明本条全部完成。修正需保留旧档数字步骤对应的教学路径，避免升级中途错步。正式引导时序仍待冻结录屏。",
       "evidence": [
         "Sources/CapydokuCore/PuzzleHints.swift",
         "Tests/CapydokuCoreTests/OriginalStorageTests.swift",
@@ -1144,7 +1160,7 @@
       ],
       "title": "44pt、状态、焦点恢复与可读性",
       "status": "partial",
-      "implemented": "17e已验证Settings/模拟广告/结算底层控件隔离、关闭后恢复原盘、主要按钮44×44及长文案自然增高；有效Button动作发反馈，明暗背景分别配文字色。Hint保留只读棋盘并路由解释焦点。 0.2.13补开关与签到功能文字对比，按下开关文字仍大于4.5:1；装饰色保留。 0.2.14补Welcome功能文字可读色；真实UI发现新增容器标识覆盖同意按钮标识，删除后两设备首启与重启复验通过。 0.2.15复现并修复长提示从固定66pt区域向上覆盖关闭X；正文独立滚动、视口高度有上限、棋盘保持方形。中英提示正文12档动态字号、最大字号关闭/Apply至少44pt及不遮挡已验证，普通字号布局保留。 0.2.16实际布局测量验证小屏主要控件44pt、信息顺序和可达性，包含教学、AX5提示及合成免费入口；普通尺寸真实UI回归通过。 0.2.17修复免费复活角标15pt白字对比偏弱，实际中英文Root宿主测得5.83:1；数值是本地可读性指标，原文未给阈值。",
+      "implemented": "17e已验证Settings/模拟广告/结算底层控件隔离、关闭后恢复原盘、主要按钮44×44及长文案自然增高；有效Button动作发反馈，明暗背景分别配文字色。Hint保留只读棋盘并路由解释焦点。 0.2.13补开关与签到功能文字对比，按下开关文字仍大于4.5:1；装饰色保留。 0.2.14补Welcome功能文字可读色；真实UI发现新增容器标识覆盖同意按钮标识，删除后两设备首启与重启复验通过。 0.2.15复现并修复长提示从固定66pt区域向上覆盖关闭X；正文独立滚动、视口高度有上限、棋盘保持方形。中英提示正文12档动态字号、最大字号关闭/Apply至少44pt及不遮挡已验证，普通字号布局保留。 0.2.16实际布局测量验证小屏主要控件44pt、信息顺序和可达性，包含教学、AX5提示及合成免费入口；普通尺寸真实UI回归通过。 0.2.17修复免费复活角标15pt白字对比偏弱，实际中英文Root宿主测得5.83:1；数值是本地可读性指标，原文未给阈值。 0.2.18业务层补notice/error输入锁：迟到的标记、提交、道具入口不再改盘扣血或扣库存；计时同时排除生成/启动等不可玩状态，教学阅读计时保持。",
       "gap": "Hint的XCTest语义树仍可包含禁用背景内容，不据此宣称VoiceOver可达或不可达；真实VoiceOver焦点顺序、所有动态字体档位、最低系统和真机仍待验。",
       "evidence": [
         "App/Views/RootView.swift",
@@ -1163,7 +1179,8 @@
         "Docs/original-hint-0215/manifest.json",
         "Docs/original-compact-0216/manifest.json",
         "AppTests/BoardMarkContrastTests.swift",
-        "Docs/original-contrast-0217/manifest.json"
+        "Docs/original-contrast-0217/manifest.json",
+        "AppTests/GameplayAvailabilityTests.swift"
       ]
     },
     {
@@ -1361,7 +1378,7 @@
       ],
       "title": "12 事件边界与业务触发",
       "status": "partial",
-      "implemented": "实现11个启用事件，coin_change 预留并禁止发送；新增关卡/道具/奖励业务事件。 0.2.2补齐库存来源批次，配置免费/首次赠送/签到/广告及补偿能跨保存、重开、换关保留；Hint预览与Apply使用同次来源，应用集成已验证。 0.2.6补独立实际结果与随存档保存的冻结事件；复活/继续胜负不再被吞，签到返回不生成虚假quit；奖励通关原子提交。 0.2.7补已确认奖励回执的completed恢复，保留原上下文，奖励实际补库存后才标到账。 0.2.8补插页offer/result、actual started和持久重试；后台终态不会提前创建不可操作的下一关。 0.2.9 buff_use与真实道具效果同次持久化；预览使用身份、来源、库存和原提示保存，重试保留原事件。实际广告offer跨会话、队列失败及冷恢复归属专项通过。 0.2.10补原offer及实际started/skipped/failed/加载超时的持久保存，重试保留原ID/时间/归属；未知最终回调不猜结果、不补奖。9项核心新增与14项应用新增专项通过。 0.2.16首页Settings重开不再提前生成不可玩首页的level_start，重置后进入游戏再记录新尝试；重复触发和冷恢复不重复记录。",
+      "implemented": "实现11个启用事件，coin_change 预留并禁止发送；新增关卡/道具/奖励业务事件。 0.2.2补齐库存来源批次，配置免费/首次赠送/签到/广告及补偿能跨保存、重开、换关保留；Hint预览与Apply使用同次来源，应用集成已验证。 0.2.6补独立实际结果与随存档保存的冻结事件；复活/继续胜负不再被吞，签到返回不生成虚假quit；奖励通关原子提交。 0.2.7补已确认奖励回执的completed恢复，保留原上下文，奖励实际补库存后才标到账。 0.2.8补插页offer/result、actual started和持久重试；后台终态不会提前创建不可操作的下一关。 0.2.9 buff_use与真实道具效果同次持久化；预览使用身份、来源、库存和原提示保存，重试保留原事件。实际广告offer跨会话、队列失败及冷恢复归属专项通过。 0.2.10补原offer及实际started/skipped/failed/加载超时的持久保存，重试保留原ID/时间/归属；未知最终回调不猜结果、不补奖。9项核心新增与14项应用新增专项通过。 0.2.16首页Settings重开不再提前生成不可玩首页的level_start，重置后进入游戏再记录新尝试；重复触发和冷恢复不重复记录。 0.2.18后台生成完成只保存新盘；开局事件等前台且所有模态解除后入队，冷恢复及重复前后台不重复发。真实150→151生成、保存和分析队列专项通过，事件归属恢复后的会话。",
       "gap": "未知来源旧库存继续诊断；正式attempt/时长、真实SDK及物理设备钥匙串仍待验。本地事件链不等于真实线上数据验收。",
       "evidence": [
         "App/AppModel.swift",
@@ -1384,7 +1401,8 @@
         "Tests/CapydokuCoreTests/HintUsePersistenceTests.swift",
         "AppTests/RewardLifecycleDurabilityTests.swift",
         "Tests/CapydokuCoreTests/RewardAdEventPersistenceTests.swift",
-        "AppTests/RestartNavigationTests.swift"
+        "AppTests/RestartNavigationTests.swift",
+        "AppTests/GameplayAvailabilityTests.swift"
       ]
     },
     {
@@ -1489,7 +1507,7 @@
       ],
       "title": "Xcode26/iOS26构建及正式发布",
       "status": "external_pending",
-      "implemented": "0.2.17(20)通过Xcode26.6的Simulator Debug及通用iOS Release无签名构建；17Pro与17e均正常覆盖安装、核对版本并无测试/重置参数启动。",
+      "implemented": "0.2.18(21)通过Xcode26.6的Simulator Debug及通用iOS Release无签名构建；17Pro与17e均正常覆盖安装、核对版本并无测试/重置参数启动。",
       "gap": "当前仅Debug/Release两套编译配置，均为同一internal Demo；尚无独立TestFlight、预发布和正式构建配置。未签名Release构建不是可分发安装包；真机签名运行、TestFlight、App Store审核及上架均未完成。",
       "evidence": [
         "Capydoku.xcodeproj/project.pbxproj",
@@ -1502,7 +1520,8 @@
         "Validation/original-0215-install-audit.json",
         "Validation/original-0216-install-audit.json",
         "scripts/generate_project.py",
-        "Capydoku.xcodeproj/xcshareddata/xcschemes/Capydoku.xcscheme"
+        "Capydoku.xcodeproj/xcshareddata/xcschemes/Capydoku.xcscheme",
+        "Validation/original-0218-install-audit.json"
       ]
     },
     {
@@ -1544,19 +1563,24 @@
       "id": "TECH-05",
       "section": "7.3",
       "sourceParagraphs": [
+        392,
         395,
         396,
         397
       ],
       "title": "启动允许/拒绝及错误不中断核心游戏",
       "status": "partial",
-      "implemented": "5项启动App测试与首次安装UI路径通过；额外广告启动门禁测试验证权限流程完成前不预热、不展示。",
+      "implemented": "0.2.18共20项启动专项通过：通知API普通异常只记录系统日志并继续Tracking与首页，失败不伪记权限完成；三次冷启动持续异常仍可进入，后续成功再记录完成。取消、后台等待、Accept写盘、资源加载与Tracking门禁保留。另有广告启动门禁及真实UI首次同意/冷启回归。",
       "gap": "真实地区DataUse、CMP、所有权限允许/拒绝、弱网/SDK超时和物理设备首次安装尚未完整验证。",
       "evidence": [
         "App/Services/StartupController.swift",
         "AppTests/StartupControllerTests.swift",
         "UITests/OriginalReferenceUITests.swift",
-        "Validation/test-runs/analytics-startup-audit.log"
+        "Validation/test-runs/analytics-startup-audit.log",
+        "AppTests/StartupPreparationTests.swift",
+        "AppTests/RewardReadinessTests.swift",
+        "Validation/test-runs/original-0218-app-final-recheck.xcresult",
+        "Validation/test-runs/original-0218-ui-17e.xcresult"
       ]
     },
     {
@@ -1692,8 +1716,8 @@
       ],
       "title": "iOS技术验收与SDK升级兼容",
       "status": "partial",
-      "implemented": "0.2.17在Pro全量269项App（无排除）及2项选定真实UI通过；17e两项实际渲染专项通过。未修改核心/150关包，156项Core保留0.2.16的证据，不标本轮重跑。未签名设备Release编译通过，两正常模拟器覆盖安装启动并核对全部玩家数据保留。修复前62条对比断言失败和修复后证据分开归档。 独立临时17e另通过实际操作建档→冷恢复→卸载重装的3阶段UI核验，均1 passed/0 skipped。",
-      "gap": "这不是全部设备/全部场景通过。真机、最低系统、真实SDK升级及远程关闭尚未验证；组合UI运行的启动冲突及成功单独重验已如实记录。",
+      "implemented": "0.2.18最终在Pro全量277项App（无排除/跳过）通过；17e三项选定真实UI通过，包含中文默认及双语同盘冷恢复、首次同意流程和模态恢复。Release无签名构建通过，两台正常模拟器覆盖安装启动并验证全部玩家字段保留。两轮旧测试夹具冲突的失败及修正原因均保留。Core和150关包未改，156项Core仍归属0.2.16，0.2.17实际重装证据保留原版本。",
+      "gap": "这不是全部设备/全部场景通过。真机、最低系统、真实SDK升级及远程关闭尚未验证；历史组合UI运行的启动冲突及成功单独重验已如实记录。",
       "evidence": [
         "Validation/original-verification.json",
         "Validation/test-runs/original-026-core-atomic-final.log",
@@ -1737,7 +1761,10 @@
         "AppTests/BoardMarkContrastTests.swift",
         "Validation/original-0217-install-audit.json",
         "Docs/original-contrast-0217/manifest.json",
-        "Validation/original-0217-operation-reinstall.json"
+        "Validation/original-0217-operation-reinstall.json",
+        "AppTests/GameplayAvailabilityTests.swift",
+        "Validation/original-0218-install-audit.json",
+        "Validation/test-runs/original-0218-app-final-recheck.xcresult"
       ]
     },
     {
@@ -2038,5 +2065,5 @@
       ]
     }
   ],
-  "currentBuild": "0.2.17 (20)"
+  "currentBuild": "0.2.18 (21)"
 }

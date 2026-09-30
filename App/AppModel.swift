@@ -9,18 +9,18 @@ final class AppModel: ObservableObject {
     @Published var progress = PlayerProgress()
     @Published var screen: AppScreen = .home { didSet {
         if screen != .game { boardInputOwners.removeAll() }
-        syncFeedbackState(); restoreSavedHint()
+        syncFeedbackState(); restoreSavedHint(); schedulePendingLevelStart()
     } }
-    @Published var sheet: AppSheet? { didSet { syncFeedbackState(); if sheet == nil { restoreSavedHint() } } }
-    @Published private(set) var hint: PuzzleHint? { didSet { syncFeedbackState() } }
-    @Published var loading = false { didSet { syncFeedbackState(); if !loading { restoreSavedHint() } } }
-    @Published var notice: String? { didSet { syncFeedbackState() } }
-    @Published var errorMessage: String? { didSet { syncFeedbackState() } }
+    @Published var sheet: AppSheet? { didSet { syncFeedbackState(); if sheet == nil { restoreSavedHint() }; schedulePendingLevelStart() } }
+    @Published private(set) var hint: PuzzleHint? { didSet { syncFeedbackState(); schedulePendingLevelStart() } }
+    @Published var loading = false { didSet { syncFeedbackState(); if !loading { restoreSavedHint() }; schedulePendingLevelStart() } }
+    @Published var notice: String? { didSet { syncFeedbackState(); schedulePendingLevelStart() } }
+    @Published var errorMessage: String? { didSet { syncFeedbackState(); schedulePendingLevelStart() } }
     @Published var rewardKind: RewardKind = .hint
     @Published var rewardScenario: RewardScenario = .success
-    @Published var rewardBusy = false
-    @Published var interstitialBusy = false
-    @Published var challengePending = false { didSet { syncFeedbackState() } }
+    @Published var rewardBusy = false { didSet { schedulePendingLevelStart() } }
+    @Published var interstitialBusy = false { didSet { schedulePendingLevelStart() } }
+    @Published var challengePending = false { didSet { syncFeedbackState(); schedulePendingLevelStart() } }
     @Published private(set) var referenceConfiguration: ReferenceGameplayConfiguration?
     @Published private(set) var lastGenerationReport: GenerationPipelineReport?
     private var winTransitionID: UUID?
@@ -87,6 +87,11 @@ final class AppModel: ObservableObject {
     private var rewardWasReplenished = false
     private var startupFlowCompleted = false
     private var preloadedSessionID: UUID?
+    // An asynchronously prepared board is not a playable level_start. A cold
+    // launch requests the saved attempt again through startOrContinue; the
+    // analytics queue's existing attempt key also prevents repeats after delivery.
+    private var pendingLevelStartID: UUID?
+    private var levelStartDeliveryScheduled = false
     private let interstitialProvider: InterstitialProvider?
     private var activeInterstitialProvider: InterstitialProvider?
     private var interstitialIsReady = false
@@ -188,12 +193,7 @@ final class AppModel: ObservableObject {
         applySettings()
         if runsTimer { timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
             Task { @MainActor [weak self] in
-                guard let self else { return }
-                self.now = Date()
-                if self.active && self.screen == .game && self.sheet == nil && self.hint == nil && self.notice == nil && self.errorMessage == nil && self.session?.status == .playing {
-                    self.progress.session?.advanceTime(by: 1)
-                    if (self.progress.session?.elapsedSeconds ?? 0).truncatingRemainder(dividingBy: 10) < 1 { self.save() }
-                }
+                self?.tickGameplayClock()
             }
         } }
         if args.contains("-skip-tutorial") { progress.tutorialCompleted = true }
@@ -207,6 +207,16 @@ final class AppModel: ObservableObject {
     }
 
     deinit { timer?.invalidate(); rewardDeadline?.cancel(); interstitialDeadline?.cancel() }
+
+    /// The production one-second timer and deterministic lifecycle tests share
+    /// this entry point. Reading a tutorial still counts, as before; overlays,
+    /// generation, startup and background time do not count as playable time.
+    func tickGameplayClock() {
+        now = Date()
+        guard canTouchBoard else { return }
+        progress.session?.advanceTime(by: 1)
+        if (progress.session?.elapsedSeconds ?? 0).truncatingRemainder(dividingBy: 10) < 1 { save() }
+    }
 
     var session: GameSession? { progress.session }
     var gameplayConfigurationDiagnostics: GameplayConfigurationDiagnostics { gameplayConfigurations.diagnostics }
@@ -264,6 +274,7 @@ final class AppModel: ObservableObject {
     var tutorialCount: Int { session.map { PuzzleHints.tutorial(puzzle: $0.puzzle).count } ?? 0 }
 
     func loadProgress() {
+        pendingLevelStartID = nil
         flushPendingSaves(); saveRevision += 1
         rewardDeadline?.cancel(); rewardDeadline = nil
         let loaded = store.load()
@@ -490,6 +501,7 @@ final class AppModel: ObservableObject {
 
     func start(level: Int) {
         guard !loading else { return }
+        pendingLevelStartID = nil
         hint = nil; pendingHintAppearance = nil
         if let puzzle = levels[level] {
             progress.begin(puzzle: puzzle, config: configuration(for: level))
@@ -750,6 +762,7 @@ final class AppModel: ObservableObject {
             return
         }
         lastRestartTime = time
+        pendingLevelStartID = nil
         hint = nil
         track("level_restart", key: current.id.uuidString, parameters: ["restart_reason": current.status == .lost ? "after_fail" : "manual", "previous_fail_reason": current.status == .lost ? "life_zero" : "", "next_attempt_no": "\(current.attempt + 1)"])
         progress.restart()
@@ -1114,7 +1127,11 @@ final class AppModel: ObservableObject {
             errorMessage = "The reward could not be saved. Free up storage if needed, then tap Retry save. Your receipt is kept for this retry. \(error.localizedDescription)"
         }
     }
-    private var canTouchBoard: Bool { active && screen == .game && !loading && !rewardBusy && !interstitialBusy && !challengePending && sheet == nil && hint == nil && progress.activeHintUse == nil && session?.status == .playing }
+    private var canTouchBoard: Bool {
+        active && startupFlowCompleted && screen == .game && !loading && !rewardBusy && !interstitialBusy &&
+        !challengePending && sheet == nil && hint == nil && progress.activeHintUse == nil &&
+        notice == nil && errorMessage == nil && session?.status == .playing
+    }
 
     var boardInputInProgress: Bool {
         guard let id = session?.id else { return false }
@@ -1221,6 +1238,7 @@ final class AppModel: ObservableObject {
             resumeConfirmedRewardHint()
             restoreSavedHint()
             refreshGameplayConfiguration()
+            deliverPendingLevelStart()
         }
     }
     func consentAccepted() {
@@ -1234,6 +1252,7 @@ final class AppModel: ObservableObject {
         startupFlowCompleted = true
         syncFeedbackState()
         preloadRewardPlacementsIfNeeded()
+        deliverPendingLevelStart()
     }
     private func preloadRewardPlacementsIfNeeded() {
         guard startupFlowCompleted, let session, preloadedSessionID != session.id else { return }
@@ -1259,6 +1278,25 @@ final class AppModel: ObservableObject {
     }
     private func trackLevelStart() {
         guard let s = session, s.status == .playing else { return }
+        pendingLevelStartID = s.id
+        deliverPendingLevelStart()
+    }
+    private func schedulePendingLevelStart() {
+        guard pendingLevelStartID != nil, !levelStartDeliveryScheduled else { return }
+        levelStartDeliveryScheduled = true
+        // A single business action can dismiss a sheet and then show an alert
+        // or a hint. Observe its settled state, not that intermediate gap.
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            self.levelStartDeliveryScheduled = false
+            self.deliverPendingLevelStart()
+        }
+    }
+    private func deliverPendingLevelStart() {
+        guard let pending = pendingLevelStartID else { return }
+        guard let s = session, s.id == pending else { pendingLevelStartID = nil; return }
+        guard canTouchBoard else { return }
+        pendingLevelStartID = nil
         track("level_start", key: s.id.uuidString, parameters: ["attempt_no": "\(s.attempt)", "grid_size": "\(s.puzzle.size)x\(s.puzzle.size)", "is_tutorial": "\(tutorial != nil)", "direct_find_visible": "\(directVisible)", "direct_find_inventory": "\(progress.availableDirect)", "hint_inventory": "\(progress.availableHints)", "level_start_free_available": "\(levelStartFreeAvailable)"])
         if tutorial != nil { track("tutorial_start", key: s.id.uuidString, parameters: ["tutorial_id": "level-1-dynamic"]) }
     }

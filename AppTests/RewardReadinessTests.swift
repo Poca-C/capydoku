@@ -57,7 +57,16 @@ final class RewardReadinessTests: XCTestCase {
         XCTAssertTrue(provider.loads.isEmpty); XCTAssertTrue(provider.displays.isEmpty)
         XCTAssertTrue(app.progress.rewardLedger.isEmpty)
         XCTAssertNil(app.notice)
-        for cell in try XCTUnwrap(app.session).puzzle.solution { app.submit(cell) }
+        let beforeStartup = try XCTUnwrap(app.session)
+        for cell in beforeStartup.puzzle.solution { app.submit(cell) }
+        XCTAssertEqual(app.session, beforeStartup, "Startup must also block board input.")
+        // Model a previously won board waiting behind startup. Construct that
+        // fixture through the core; application input may no longer bypass the
+        // startup gate just to arrange an interstitial test.
+        for cell in beforeStartup.puzzle.solution { _ = app.progress.session?.submit(cell: cell) }
+        XCTAssertTrue(app.progress.finishWin())
+        XCTAssertEqual(app.session?.status, .won)
+        app.save()
         app.next()
         XCTAssertEqual(app.session?.puzzle.id, 1); XCTAssertTrue(interstitial.callbacks.isEmpty)
         app.startupReady(); app.startupReady()

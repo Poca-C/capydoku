@@ -2,6 +2,7 @@ import Foundation
 import UserNotifications
 import AppTrackingTransparency
 import UIKit
+import OSLog
 
 enum StartupStage: String { case loading, brandLoading, welcome, notifications, tracking, ready }
 struct StartupConsent: Codable, Equatable {
@@ -71,6 +72,7 @@ struct BundledStartupResources: StartupResources {
 @MainActor
 final class StartupController: ObservableObject {
     static let consentVersion = "internal-demo-review-v1"
+    private static let logger = Logger(subsystem: "com.capydoku.demo", category: "StartupPermissions")
     @Published private(set) var stage: StartupStage = .loading
     @Published private(set) var consent = StartupConsent()
     @Published var errorMessage: String?
@@ -162,10 +164,24 @@ final class StartupController: ObservableObject {
             if !consent.notificationsCompleted {
                 try await waitForForeground()
                 stage = .notifications
-                try await permissions.notifications()
-                try Task.checkCancellation()
-                var updated = consent; updated.notificationsCompleted = true
-                guard persist(updated) else { return }
+                var completed = false
+                do {
+                    try await permissions.notifications()
+                    try Task.checkCancellation()
+                    completed = true
+                } catch is CancellationError { throw CancellationError() }
+                catch {
+                    // Push is optional (original [392]). An API failure must not
+                    // make it a prerequisite for Home. Do not record a failed
+                    // request as complete or bypass the remaining ATT step.
+                    try Task.checkCancellation()
+                    let failure = error as NSError
+                    Self.logger.error("Notification request failed; continuing startup. domain=\(failure.domain, privacy: .public) code=\(failure.code)")
+                }
+                if completed {
+                    var updated = consent; updated.notificationsCompleted = true
+                    guard persist(updated) else { return }
+                }
             }
             if !consent.trackingCompleted {
                 try await waitForForeground()

@@ -124,6 +124,12 @@ final class LevelResultAnalyticsTests: XCTestCase {
     }
     @MainActor func testUnsavedGameplayResultIsNotDeliveredUntilTheSaveSucceeds() throws {
         let dir = directory(), app = model(dir)
+        // Fail the write of the winning move, rather than playing through an
+        // earlier storage alert. Alerts now correctly reject subsequent input.
+        let solution = try XCTUnwrap(app.session?.puzzle.solution)
+        for cell in solution.dropLast() { app.submit(cell) }
+        XCTAssertEqual(app.session?.status, .playing)
+        XCTAssertEqual(app.session?.found.count, solution.count - 1)
         let primary = dir.appendingPathComponent("progress.json")
         let previous = try Data(contentsOf: primary)
         try FileManager.default.removeItem(at: primary)

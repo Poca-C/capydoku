@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "date": "2026-10-01",
-  "build": "0.2.17 (20)",
+  "build": "0.2.18 (21)",
   "status": "Partial original-spec alignment; remaining client, reference and release gaps open.",
   "originalSHA256": "274bbf15f031bd80bb8b360cf14c0266acff370a230d9cad1b1785461df54dd2",
   "currentPackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49",
@@ -619,6 +619,15 @@
       "failed": 0,
       "seconds": 34.657,
       "scope": "Four current-pack board sizes retain layout; Hint preview/close does not mark, simulated reward permits next preview, Apply alone adds marks. Selected UI tests only."
+    },
+    {
+      "build": "0.2.18 (21)",
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-0218-ui-17e.xcresult",
+      "uiTestsPassed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "scope": "Actual UI: default Chinese/English switch with cold same-board restore; English first-launch legal/acceptance flow with restart; modal isolation and return to same board. Existing system permission decisions may be retained by this simulator; not fresh hardware permission acceptance."
     }
   ],
   "visualEvidence": {
@@ -640,17 +649,18 @@
     "Actual system Reduce Motion and full animation timing remain unverified; 0.2.7 uses scoped RootView/CheckInView test overrides.",
     "Formal interstitial placement/closed mapping, request-vs-display cooldown, repeat-clear counting and provider metadata timing remain to be frozen; local v1 mapping is not reference acceptance.",
     "Client: configured free-ad trigger sequence and reference restart flow are not fully implemented. The invented triggerOrder/restartCreatesNewBoard fields do not define the original behavior; frozen captures must resolve sequencing and whether confirmation or an alternate board is required.",
-    "Real rewarded-ad SDK/metadata/error mapping and analytics transport/acknowledgement/server deduplication remain unconnected; local lifecycle durability is covered in 0.2.10."
+    "Real rewarded-ad SDK/metadata/error mapping and analytics transport/acknowledgement/server deduplication remain unconnected; local lifecycle durability is covered in 0.2.10.",
+    "Client: original [159] requires board-dependent tutorial demonstration order. Current targets are dynamic but order remains fixed; versioned plan migration is needed to preserve saved numeric steps. GEN-03 is corrected to partial in 0.2.18."
   ],
   "historicalFailuresRetained": "Initial UI/app runs and first full-core run failed on changed fixture assumptions or real UI issues; these are retained under Validation/test-runs. Only explicitly listed successful reruns count. Old 88-item checklist completion counts are superseded.",
   "applicationTests": {
-    "build": "0.2.17 (20)",
-    "passed": 269,
+    "build": "0.2.18 (21)",
+    "passed": 277,
     "failed": 0,
     "skipped": 0,
-    "seconds": 105.074,
-    "bundle": "Validation/test-runs/original-0217-app-final.xcresult",
-    "scope": "Complete AppTests on iPhone17Pro, no exclusions. Two added actual-rendering contrast cases cover white/hollow/red Xs across10 palette colors and two board widths, and bilingual free-revive badges. Synthetic palette and reference-row fixtures are explicitly labeled."
+    "seconds": 103.394,
+    "bundle": "Validation/test-runs/original-0218-app-final-recheck.xcresult",
+    "scope": "Complete AppTests on iPhone 17 Pro with no exclusions. Includes 20 startup cases and 5 gameplay-availability integration cases. Optional notification errors are injected; gameplay generation uses actual runtime generator and local persistence. Not physical-device or real SDK verification."
   },
   "supersededOrInterruptedRuns": [
     "reward-readiness-final was intentionally interrupted to stop two runners targeting one simulator; not counted as success.",
@@ -693,36 +703,26 @@
     }
   ],
   "buildVerification": {
-    "bundleVersion": "0.2.17 (20)",
+    "bundleVersion": "0.2.18 (21)",
     "simulatorDebug": "passed with local simulator signing",
-    "simulatorLog": "Validation/test-runs/original-0217-app-final.log",
+    "simulatorLog": "Validation/test-runs/original-0218-app-final-recheck.log",
     "genericIOSReleaseUnsigned": "passed",
-    "releaseLog": "Validation/test-runs/original-0217-release.log",
-    "signingAndDeviceExecution": "Simulator locally signed; device Release compilation unsigned. No physical-device, minimum-runtime, TestFlight or App Store acceptance. Debug/Release are both the same internal Demo environment.",
+    "releaseLog": "Validation/test-runs/original-0218-release.log",
+    "signingAndDeviceExecution": "Simulator locally signed; device Release compilation unsigned. No physical-device, minimum-runtime, TestFlight or App Store acceptance. Debug/Release remain one internal Demo environment.",
     "sourceDocumentSHA256Unchanged": true,
-    "normalInstallEvidence": "Validation/original-0217-install-audit.json",
+    "normalInstallEvidence": "Validation/original-0218-install-audit.json",
     "normalInstallDevices": [
       {
         "device": "iPhone 17 Pro",
         "deviceID": "3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3",
-        "version": "0.2.17 (20)",
+        "version": "0.2.18 (21)",
         "dataContainerChanged": true,
-        "launch": "com.capydoku.demo: 49984",
+        "launch": "com.capydoku.demo: 57697",
         "installBytesUnchanged": true,
         "launchPlayerStateUnchanged": true,
         "allEnvelopeChecksumsValid": true,
         "launchBytesUnchanged": false,
         "before": {
-          "progress.json": {
-            "bytes": 3746,
-            "sha256": "caea64edb451cb8f9d1036598b6177b91ff439d450a9377e5bc760c5ce2e6566"
-          },
-          "progress.backup.json": {
-            "bytes": 3746,
-            "sha256": "6862725d547dc78a71fadaabd97047b2e4859be97e76718440d1a1bb90098ba0"
-          }
-        },
-        "afterLaunch": {
           "progress.json": {
             "bytes": 3746,
             "sha256": "ad7f88ed4c19a7336d82dae94d21fbdd662b209b019a6eaaaf23cef175485139"
@@ -731,14 +731,24 @@
             "bytes": 3746,
             "sha256": "caea64edb451cb8f9d1036598b6177b91ff439d450a9377e5bc760c5ce2e6566"
           }
+        },
+        "afterLaunch": {
+          "progress.json": {
+            "bytes": 3746,
+            "sha256": "fa5f31ec8c3ea6202656aec3617b39f9e0c82a50aa58dda295e7dd2e1c57421f"
+          },
+          "progress.backup.json": {
+            "bytes": 3746,
+            "sha256": "ad7f88ed4c19a7336d82dae94d21fbdd662b209b019a6eaaaf23cef175485139"
+          }
         }
       },
       {
         "device": "iPhone 17e",
         "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
-        "version": "0.2.17 (20)",
+        "version": "0.2.18 (21)",
         "dataContainerChanged": true,
-        "launch": "com.capydoku.demo: 50033",
+        "launch": "com.capydoku.demo: 57721",
         "installBytesUnchanged": true,
         "launchPlayerStateUnchanged": true,
         "allEnvelopeChecksumsValid": true,
@@ -976,6 +986,15 @@
       "seconds": 104.418,
       "bundle": "Validation/test-runs/original-0216-app-final.xcresult",
       "scope": "Complete AppTests with no exclusions. Adds4 runtime generation-report/file/cold-export integrations,3 restart navigation/event cases and4 actual hosted compact-layout cases. Scoped synthetic configuration/font/lifecycle fixtures remain explicitly labeled; not physical-device or external-service acceptance."
+    },
+    {
+      "build": "0.2.17 (20)",
+      "passed": 269,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 105.074,
+      "bundle": "Validation/test-runs/original-0217-app-final.xcresult",
+      "scope": "Complete AppTests on iPhone17Pro, no exclusions. Two added actual-rendering contrast cases cover white/hollow/red Xs across10 palette colors and two board widths, and bilingual free-revive badges. Synthetic palette and reference-row fixtures are explicitly labeled."
     }
   ],
   "remoteConfigurationContract": {
@@ -1302,6 +1321,80 @@
           "version": "0.2.16 (19)",
           "dataContainerChanged": true,
           "launch": "com.capydoku.demo: 44033",
+          "installBytesUnchanged": true,
+          "launchPlayerStateUnchanged": true,
+          "allEnvelopeChecksumsValid": true,
+          "launchBytesUnchanged": true,
+          "before": {
+            "progress.json": {
+              "bytes": 1078,
+              "sha256": "7e8827414371c98c312b7dba72169b67c1bd64c7ef0e305a4541d40b0e7231e4"
+            },
+            "progress.backup.json": {
+              "bytes": 1078,
+              "sha256": "7e8827414371c98c312b7dba72169b67c1bd64c7ef0e305a4541d40b0e7231e4"
+            }
+          },
+          "afterLaunch": {
+            "progress.json": {
+              "bytes": 1078,
+              "sha256": "7e8827414371c98c312b7dba72169b67c1bd64c7ef0e305a4541d40b0e7231e4"
+            },
+            "progress.backup.json": {
+              "bytes": 1078,
+              "sha256": "7e8827414371c98c312b7dba72169b67c1bd64c7ef0e305a4541d40b0e7231e4"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "bundleVersion": "0.2.17 (20)",
+      "simulatorDebug": "passed with local simulator signing",
+      "simulatorLog": "Validation/test-runs/original-0217-app-final.log",
+      "genericIOSReleaseUnsigned": "passed",
+      "releaseLog": "Validation/test-runs/original-0217-release.log",
+      "signingAndDeviceExecution": "Simulator locally signed; device Release compilation unsigned. No physical-device, minimum-runtime, TestFlight or App Store acceptance. Debug/Release are both the same internal Demo environment.",
+      "sourceDocumentSHA256Unchanged": true,
+      "normalInstallEvidence": "Validation/original-0217-install-audit.json",
+      "normalInstallDevices": [
+        {
+          "device": "iPhone 17 Pro",
+          "deviceID": "3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3",
+          "version": "0.2.17 (20)",
+          "dataContainerChanged": true,
+          "launch": "com.capydoku.demo: 49984",
+          "installBytesUnchanged": true,
+          "launchPlayerStateUnchanged": true,
+          "allEnvelopeChecksumsValid": true,
+          "launchBytesUnchanged": false,
+          "before": {
+            "progress.json": {
+              "bytes": 3746,
+              "sha256": "caea64edb451cb8f9d1036598b6177b91ff439d450a9377e5bc760c5ce2e6566"
+            },
+            "progress.backup.json": {
+              "bytes": 3746,
+              "sha256": "6862725d547dc78a71fadaabd97047b2e4859be97e76718440d1a1bb90098ba0"
+            }
+          },
+          "afterLaunch": {
+            "progress.json": {
+              "bytes": 3746,
+              "sha256": "ad7f88ed4c19a7336d82dae94d21fbdd662b209b019a6eaaaf23cef175485139"
+            },
+            "progress.backup.json": {
+              "bytes": 3746,
+              "sha256": "caea64edb451cb8f9d1036598b6177b91ff439d450a9377e5bc760c5ce2e6566"
+            }
+          }
+        },
+        {
+          "device": "iPhone 17e",
+          "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+          "version": "0.2.17 (20)",
+          "dataContainerChanged": true,
+          "launch": "com.capydoku.demo: 50033",
           "installBytesUnchanged": true,
           "launchPlayerStateUnchanged": true,
           "allEnvelopeChecksumsValid": true,
@@ -2203,5 +2296,79 @@
     "unexercisedNonemptyFields": "This run stopped at3/4 found inL1. completedLevels was already empty and unlockedLevel already1; post-reinstall defaults were checked, but resetting nonempty completion/high-unlock data is not proven by this run. The prior artificial-fixture audit remains separately versioned.",
     "evidenceManifest": "Docs/original-reinstall-0217/manifest.json",
     "reportSHA256": "36fbe8405914c74217b200604fe87b280e45d38fb8686518ac80e3e37690b05f"
+  },
+  "corrections0218": {
+    "sourceParagraphs": [
+      159,
+      305,
+      364,
+      392,
+      396,
+      402
+    ],
+    "changes": [
+      "Optional notification API errors log domain/code to the system log and continue through ATT to Home. Failed notification phase stays incomplete for the next launch; cancellation, consent durability and resource gates remain.",
+      "One shared playable-state guard rejects late board/tool actions during notices/errors and stops gameplay clock during loading, startup, background and modal blocking. Tutorial reading retains prior timing.",
+      "A prepared background board queues its level_start until foreground and all modal blocks clear; synchronous modal replacement cannot expose a transient start. Cold Continue and repeat foreground preserve one event per attempt.",
+      "Corrected GEN-03 from verified to partial: coordinates and action targets are dynamic, but rule demonstration order is still fixed. A versioned teaching path is required to preserve existing saved step identities."
+    ],
+    "startupFocused": {
+      "bundle": "Validation/test-runs/original-0218-startup.xcresult",
+      "passed": 20,
+      "failed": 0,
+      "skipped": 0,
+      "scope": "Focused run before final gameplay availability integration; startup is re-covered by the complete final suite."
+    },
+    "initialRelatedRun": {
+      "bundle": "Validation/test-runs/original-0218-availability.xcresult",
+      "passed": 23,
+      "failed": 1,
+      "assertionFailures": 4,
+      "skipped": 0,
+      "newAvailabilityTestsPassed": 5,
+      "diagnosis": "An old write-failure test attempted subsequent board moves while its storage-error alert was open. The test now fails only the final winning-move write, retaining pending-result and exactly-once persistence assertions."
+    },
+    "initialFullRun": {
+      "bundle": "Validation/test-runs/original-0218-app-final.xcresult",
+      "passed": 276,
+      "failed": 1,
+      "assertionFailures": 2,
+      "skipped": 0,
+      "diagnosis": "An old ad-startup test built its won fixture by calling board actions before startup completion. It now asserts those actions are rejected, then explicitly constructs a core-only previously-won fixture to preserve the pre-startup interstitial guard test. No production guard was relaxed."
+    },
+    "applicationRegression": {
+      "build": "0.2.18 (21)",
+      "passed": 277,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 103.394,
+      "bundle": "Validation/test-runs/original-0218-app-final-recheck.xcresult",
+      "scope": "Complete AppTests on iPhone 17 Pro with no exclusions. Includes 20 startup cases and 5 gameplay-availability integration cases. Optional notification errors are injected; gameplay generation uses actual runtime generator and local persistence. Not physical-device or real SDK verification."
+    },
+    "uiRegression": {
+      "build": "0.2.18 (21)",
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-0218-ui-17e.xcresult",
+      "uiTestsPassed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "scope": "Actual UI: default Chinese/English switch with cold same-board restore; English first-launch legal/acceptance flow with restart; modal isolation and return to same board. Existing system permission decisions may be retained by this simulator; not fresh hardware permission acceptance."
+    },
+    "normalInstallEvidence": "Validation/original-0218-install-audit.json",
+    "coreAndPackScope": "Core sources and the production 150-level pack are unchanged. 156 Core tests remain 0.2.16 evidence; no rerun claimed.",
+    "sourceHashes": {
+      "App/AppModel.swift": "638b4682710cd17aebdca8cb57f0bbc715a23600e80a3eab8912ed2b1c339d85",
+      "App/Services/StartupController.swift": "e0902da4a5485071b2727037914b8537ecfb7edb30d15bf186bcf8a9fbf91482",
+      "AppTests/GameplayAvailabilityTests.swift": "be8b923c3b6f8f5893317c6cc211c55b86234f8782fc3d8cd6018ade10e355c0",
+      "AppTests/StartupPreparationTests.swift": "a7781c981bbc99d8544fb1d3f9c9331f8dc71c7aa66bf0d05ecb4e9793f06584",
+      "AppTests/LevelResultAnalyticsTests.swift": "1963a92fba23940948601c2555b5197e36fe142e463a05d246141875b91473c6",
+      "AppTests/RewardReadinessTests.swift": "eec5376600267c07db096a17814be688f4b478e7e412c31f8fdc62e854a053df"
+    },
+    "limitations": [
+      "Notification failure logging is in the system log, not a new persisted permission-completion field; failed requests remain incomplete.",
+      "Tracking request failures, acceptance persistence and resource errors retain existing blocking/retry behavior; this change specifically fixes optional notification API errors.",
+      "Some blockers are exercised by model state control. Actual UI regressions do not simulate an Apple notification service exception or arbitrary physical gesture timing.",
+      "Fixed tutorial demonstration order, frozen gameplay/difficulty/reference media, actual audio/services, physical-device and release acceptance remain open."
+    ]
   }
 }

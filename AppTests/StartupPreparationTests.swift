@@ -203,30 +203,96 @@ final class StartupPreparationTests: XCTestCase {
         XCTAssertTrue(permissions.calls.isEmpty)
     }
 
-    @MainActor func testPermissionThrowDoesNotMarkCompletionOrReplayLoadingStagesOnRetry() async throws {
+    @MainActor func testNotificationFailureContinuesThroughTrackingWithoutReentryOrFalseCompletion() async throws {
         let root = directory(), resources = PreparationResources(), permissions = PreparationPermissions()
         let failed = StartupPreparationGate(); failed.fail(); permissions.notificationGates = [failed]
         let controller = StartupController(directory: root, permissions: permissions, resources: resources, timing: .immediate)
         var accepted = 0, ready = 0
         controller.onAccepted = { accepted += 1 }; controller.onReady = { ready += 1 }
         await controller.begin(); await controller.accept()
-        XCTAssertNotNil(controller.errorMessage)
-        XCTAssertFalse(controller.consent.notificationsCompleted)
-        XCTAssertFalse(controller.consent.trackingCompleted)
-        XCTAssertFalse(try XCTUnwrap(savedConsent(root)).notificationsCompleted)
-        XCTAssertEqual(permissions.calls, ["notifications"])
-        var retryStages: [StartupStage] = []
-        let observation = controller.$stage.sink { retryStages.append($0) }
-        defer { observation.cancel() }
-        await controller.begin()
         XCTAssertEqual(controller.stage, .ready)
+        XCTAssertNil(controller.errorMessage)
+        XCTAssertFalse(controller.consent.notificationsCompleted)
+        XCTAssertTrue(controller.consent.trackingCompleted)
+        let saved = try XCTUnwrap(savedConsent(root))
+        XCTAssertFalse(saved.notificationsCompleted)
+        XCTAssertTrue(saved.trackingCompleted)
+        XCTAssertEqual(permissions.calls, ["notifications", "tracking"])
+        await controller.begin(); await controller.accept()
         XCTAssertEqual(resources.calls, 1)
-        XCTAssertFalse(retryStages.contains(.loading))
-        XCTAssertFalse(retryStages.contains(.brandLoading))
-        XCTAssertEqual(permissions.calls, ["notifications", "notifications", "tracking"])
+        XCTAssertEqual(permissions.calls, ["notifications", "tracking"])
         XCTAssertEqual(accepted, 1)
         XCTAssertEqual(ready, 1)
+    }
+
+    @MainActor func testPersistentNotificationFailureNeverBlocksSubsequentLaunchAndOnlyRetriesIncompleteStep() async throws {
+        let root = directory()
+        try acceptInSave(root)
+        for launch in 0..<3 {
+            let permissions = PreparationPermissions(), failed = StartupPreparationGate()
+            failed.fail(); permissions.notificationGates = [failed]
+            let controller = StartupController(directory: root, permissions: permissions,
+                resources: PreparationResources(), timing: .immediate)
+            await controller.begin()
+            XCTAssertEqual(controller.stage, .ready)
+            XCTAssertNil(controller.errorMessage)
+            XCTAssertEqual(permissions.calls, launch == 0 ? ["notifications", "tracking"] : ["notifications"])
+            let saved = try XCTUnwrap(savedConsent(root))
+            XCTAssertFalse(saved.notificationsCompleted)
+            XCTAssertTrue(saved.trackingCompleted)
+        }
+        // A later successful system-state check completes only the pending phase.
+        let permissions = PreparationPermissions()
+        let recovered = StartupController(directory: root, permissions: permissions,
+            resources: PreparationResources(), timing: .immediate)
+        await recovered.begin()
+        XCTAssertEqual(recovered.stage, .ready)
+        XCTAssertEqual(permissions.calls, ["notifications"])
+        XCTAssertTrue(try XCTUnwrap(savedConsent(root)).notificationsCompleted)
+    }
+
+    @MainActor func testNotificationFailureInBackgroundWaitsForForegroundBeforeTrackingAndHome() async throws {
+        let root = directory(), permissions = PreparationPermissions(), notifications = StartupPreparationGate()
+        permissions.notificationGates = [notifications]
+        let controller = StartupController(directory: root, permissions: permissions,
+            resources: PreparationResources(), timing: .immediate)
+        await controller.begin()
+        let accepting = Task { await controller.accept() }
+        defer { accepting.cancel() }
+        try await waitUntil { permissions.calls == ["notifications"] }
+        controller.setActive(false); notifications.fail()
+        try await Task.sleep(nanoseconds: 30_000_000)
+        XCTAssertEqual(controller.stage, .notifications)
+        XCTAssertEqual(permissions.calls, ["notifications"])
         XCTAssertNil(controller.errorMessage)
+        controller.setActive(true)
+        await accepting.value
+        XCTAssertEqual(controller.stage, .ready)
+        XCTAssertEqual(permissions.calls, ["notifications", "tracking"])
+        XCTAssertFalse(controller.consent.notificationsCompleted)
+        XCTAssertTrue(controller.consent.trackingCompleted)
+    }
+
+    @MainActor func testNotificationFailureDoesNotBypassTrackingCancellation() async throws {
+        let root = directory(), permissions = PreparationPermissions()
+        let failed = StartupPreparationGate(), tracking = StartupPreparationGate()
+        failed.fail(); permissions.notificationGates = [failed]; permissions.trackingGates = [tracking]
+        let controller = StartupController(directory: root, permissions: permissions,
+            resources: PreparationResources(), timing: .immediate)
+        var ready = 0; controller.onReady = { ready += 1 }
+        await controller.begin()
+        let accepting = Task { await controller.accept() }
+        defer { accepting.cancel() }
+        try await waitUntil { permissions.calls == ["notifications", "tracking"] }
+        accepting.cancel(); await accepting.value
+        XCTAssertEqual(controller.stage, .tracking)
+        XCTAssertEqual(ready, 0)
+        XCTAssertNil(controller.errorMessage)
+        XCTAssertFalse(controller.consent.notificationsCompleted)
+        XCTAssertFalse(controller.consent.trackingCompleted)
+        let saved = try XCTUnwrap(savedConsent(root))
+        XCTAssertFalse(saved.notificationsCompleted)
+        XCTAssertFalse(saved.trackingCompleted)
     }
 
     @MainActor func testExistingNotificationRequestMayFinishInBackgroundButTrackingCannotStartThere() async throws {
