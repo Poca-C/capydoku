@@ -1,4 +1,4 @@
-> 历史记录：本文记录0.1.x对后续88条Checklist的检查，不代表符合原始Word。自0.2.0起，以 `original-conformance.md` 与 `original-verification.json` 为准（当前0.2.1）；原文冲突优先纠正。
+> 历史记录：本文记录0.1.x对后续88条Checklist的检查，不代表符合原始Word。自0.2.0起，以 `original-conformance.md` 与 `original-verification.json` 为准（当前0.2.2）；原文冲突优先纠正。
 
 # Capydoku 首轮 Demo 验收记录
 

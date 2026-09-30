@@ -22,7 +22,7 @@
     "旧88项Checklist的完成数字与originalRequirementsPreserved标志不作为原文符合性证据；旧版报告只保留历史。",
     "当前150+30严格生产完成，180唯一答案及不同区域结构，无相似性豁免；数值Profile仍未经Pawdoku校准，跨产品语料缺失。",
     "原文只固定L1为4×4；本地早期尺寸安排不能覆盖原文的去重要求。",
-    "最终截图已目视核对；当前包页面、教学及L10流程有测试，但不声称与尚未提供的冻结录屏逐帧一致。",
+    "0.2.1截图、页面及手势证据保留其原构建标识；0.2.2未改页面，只补道具来源与相关应用回归，不声称已与缺失的冻结录屏逐帧对齐。",
     "真实广告SDK由外部供应；客户端入口、配置、库存、复活和奖励安全仍是本Demo责任。",
     "Daily Challenge保留锁定入口，Profile明确不做。正式原音频、真实SDK、真机及上架均待验。"
   ],
@@ -115,6 +115,23 @@
         "App/Views/RootView.swift"
       ],
       "next": "保留真实VoiceOver、Hint焦点、全部动态字体及原录屏对照验收；当前自动化不替代手工读屏。"
+    },
+    {
+      "id": "CLIENT-06",
+      "sourceParagraphs": [
+        364,
+        368,
+        376
+      ],
+      "priority": "来源修复已验证，正式数据路径待验",
+      "topic": "道具库存与使用事件来源一致",
+      "finding": "新增来源随库存批次保存；广告补偿、开局广告和签到不再混成逐关免费。8项核心来源测试与6项应用来源测试覆盖保存、恢复、混存、Apply和幂等。",
+      "evidence": [
+        "Sources/CapydokuCore/ToolInventorySource.swift",
+        "Sources/CapydokuCore/PlayerProgress.swift",
+        "AppTests/ToolSourceAnalyticsTests.swift"
+      ],
+      "next": "旧库存无法可靠追溯时保留数量并标未知；正式钥匙串、SDK及完整统计路径仍待签名环境验收。"
     }
   ],
   "rows": [
@@ -1194,12 +1211,16 @@
       ],
       "title": "12 事件边界与业务触发",
       "status": "partial",
-      "implemented": "实现11个启用事件，coin_change 预留并禁止发送；新增关卡/道具/奖励业务事件。",
-      "gap": "需要最终完整路径核对；事件source、复活后attempt结算、广告真实开始时机及free-ad场景仍待最终审查。",
+      "implemented": "实现11个启用事件，coin_change 预留并禁止发送；新增关卡/道具/奖励业务事件。 0.2.2补齐库存来源批次，配置免费/首次赠送/签到/广告及补偿能跨保存、重开、换关保留；Hint预览与Apply使用同次来源，应用集成已验证。",
+      "gap": "旧档无法追溯的库存来源保留未知并跳过该次buff_use（本地诊断计数），不能伪造枚举。复活后attempt结算、广告真实开始时机、真实SDK与最终完整事件路径仍待验；测试身份注入不代表正式钥匙串通过。",
       "evidence": [
         "App/AppModel.swift",
         "App/Services/AnalyticsRecorder.swift",
-        "Validation/analytics-startup-audit.json"
+        "Validation/analytics-startup-audit.json",
+        "Sources/CapydokuCore/ToolInventorySource.swift",
+        "Tests/CapydokuCoreTests/ToolInventorySourceTests.swift",
+        "AppTests/ToolSourceAnalyticsTests.swift",
+        "Validation/test-runs/original-022-tool-sources-app-final.xcresult"
       ]
     },
     {
@@ -1679,7 +1700,7 @@
       "title": "新关生效与缓存默认配置降级",
       "status": "partial",
       "implemented": "DemoConfig随session保存，新关读取导入配置，不更改进行中局。",
-      "gap": "联网拉取、最近成功缓存及同冻结版本包内默认值未完整接入；当前无真实基线可校验。",
+      "gap": "客户端尚未实现联网拉取、最近成功缓存及包内默认值的完整回退链。这属于实现缺口；真实服务、同冻结版本配置及联调资料也尚缺，不能合并写成仅待外部交付。",
       "evidence": [
         "Sources/CapydokuCore/DemoConfig.swift",
         "App/AppModel.swift",
@@ -1727,5 +1748,5 @@
       ]
     }
   ],
-  "currentBuild": "0.2.1 (4)"
+  "currentBuild": "0.2.2 (5)"
 }

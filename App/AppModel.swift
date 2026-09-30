@@ -70,11 +70,14 @@ final class AppModel: ObservableObject {
     private var lastRestartTime: TimeInterval = 0
     private var lastDirectTime: TimeInterval = 0
     private var lastSubmission: (cell: Int, time: TimeInterval)?
-    private var hintSource = "level_config_free"
+    private var hintSource: ToolInventorySource?
+    /// Legacy mixed balances have no provable source. Keep gameplay available,
+    /// but do not invent the required analytics enum for those consumptions.
+    private(set) var unattributedToolUseCount = 0
     private let feedback = FeedbackPlayer()
 
     init(saveDirectory: URL? = nil, rewardProvider: RewardProvider? = nil,
-         rewardTimeout: TimeInterval = 5, runsTimer: Bool = true, feedbackEnabled: Bool = true, bundledPuzzles: [Puzzle]? = nil, interstitialProvider: InterstitialProvider? = nil, startupBypassForTesting: Bool = true) {
+         rewardTimeout: TimeInterval = 5, runsTimer: Bool = true, feedbackEnabled: Bool = true, bundledPuzzles: [Puzzle]? = nil, interstitialProvider: InterstitialProvider? = nil, startupBypassForTesting: Bool = true, analyticsIdentityStore: AnalyticsIdentityStore? = nil) {
         #if DEBUG
         let args = ProcessInfo.processInfo.arguments
         #else
@@ -94,7 +97,7 @@ final class AppModel: ObservableObject {
         self.rewardTimeout = rewardTimeout.isFinite ? max(0.01, rewardTimeout) : 5
         self.feedbackEnabled = feedbackEnabled && !testHost
         if args.contains("-reset-demo") { try? FileManager.default.removeItem(at: self.saveDirectory) }
-        self.analytics = AnalyticsRecorder(directory: self.saveDirectory)
+        self.analytics = AnalyticsRecorder(directory: self.saveDirectory, identityStore: analyticsIdentityStore)
         let packName = args.contains("-legacy-fixture") ? "levels-legacy-v2" : "levels"
         if let bundledPuzzles { levels = Dictionary(uniqueKeysWithValues: bundledPuzzles.map { ($0.id, $0) }) }
         else if let url = Bundle.main.url(forResource: packName, withExtension: "json") {
@@ -449,8 +452,9 @@ final class AppModel: ObservableObject {
         lastDirectTime = time
         if progress.availableDirect == 0 { offer(.direct); return }
         let before = progress.availableDirect
+        let source = progress.nextDirectSource
         if progress.directFind() != nil {
-            trackBuff("direct_find", applied: true, before: before, after: progress.availableDirect, source: "level_config_free")
+            trackBuff("direct_find", applied: true, before: before, after: progress.availableDirect, source: source)
             feedback.play(.correct); afterAction()
         }
     }
@@ -461,7 +465,7 @@ final class AppModel: ObservableObject {
         }
         if progress.availableHints == 0 { offer(.hint); return }
         let before = progress.availableHints
-        hintSource = session?.pendingRewardHint == true ? "rewarded_ad" : "level_config_free"
+        hintSource = progress.nextHintSource
         if progress.consumeHint() {
             hint = preview; save()
             trackBuff("hint", applied: false, before: before, after: progress.availableHints, source: hintSource)
@@ -576,7 +580,7 @@ final class AppModel: ObservableObject {
                 case .hintReady:
                     deferredRewardHintSessionID = session?.id
                     resumeConfirmedRewardHint()
-                case .directRevealed: trackBuff("direct_find", applied: true, before: 0, after: 0, source: "rewarded_ad"); feedback.play(.correct); afterAction()
+                case .directRevealed: trackBuff("direct_find", applied: true, before: 0, after: 0, source: .rewardedAd); feedback.play(.correct); afterAction()
                 case .inventoryGranted: break
                 case .revived: break
                 case .duplicate: break
@@ -715,8 +719,13 @@ final class AppModel: ObservableObject {
         guard tutorial != nil, let s = session else { return }
         track("tutorial_end", key: s.id.uuidString + ":" + result, parameters: ["tutorial_id": "level-1-dynamic", "result": result, "duration_sec": "\(Int(s.elapsedSeconds))"])
     }
-    private func trackBuff(_ type: String, applied: Bool, before: Int, after: Int, source: String) {
-        track("buff_use", key: UUID().uuidString, parameters: ["buff_type": type, "source": source, "applied": "\(applied)", "inventory_before": "\(before)", "inventory_after": "\(after)"])
+    private func trackBuff(_ type: String, applied: Bool, before: Int, after: Int, source: ToolInventorySource?) {
+        guard let source else {
+            // Count the consumption once, not again when the same hint is applied.
+            if type == "direct_find" || !applied { unattributedToolUseCount += 1 }
+            return
+        }
+        track("buff_use", key: UUID().uuidString, parameters: ["buff_type": type, "source": source.rawValue, "applied": "\(applied)", "inventory_before": "\(before)", "inventory_after": "\(after)"])
     }
     private func trackAdResult(_ id: String, status: String, granted: Bool) {
         let placement = rewardKind == .direct ? "direct_find" : rewardKind == .levelStartFree ? "level_start_free" : rewardKind.rawValue
@@ -727,11 +736,12 @@ final class AppModel: ObservableObject {
             let generatedAt: Date; let build: String; let demoConfig: DemoConfig
             let progress: PlayerProgress; let levelPackCount: Int
             let referenceGameplay: ReferenceGameplayConfiguration?; let generationReport: GenerationPipelineReport?
+            let unattributedToolUsesSinceLaunch: Int
         }
         do {
             let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "unknown"
             let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "unknown"
-            let report = Report(generatedAt: Date(), build: "\(version) (\(build))", demoConfig: config, progress: progress, levelPackCount: levels.count, referenceGameplay: referenceConfiguration, generationReport: lastGenerationReport)
+            let report = Report(generatedAt: Date(), build: "\(version) (\(build))", demoConfig: config, progress: progress, levelPackCount: levels.count, referenceGameplay: referenceConfiguration, generationReport: lastGenerationReport, unattributedToolUsesSinceLaunch: unattributedToolUseCount)
             let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
             let url = FileManager.default.temporaryDirectory.appendingPathComponent("Capydoku-diagnostics.json")
             try encoder.encode(report).write(to: url, options: .atomic)

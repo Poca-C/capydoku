@@ -2,7 +2,7 @@
 
 本记录以原始 Word V1.3 正文及附图为依据。结论：**可内部试玩，部分符合；冻结参考、外部接入和上架尚未验收。** 后续报告和旧 Checklist 不覆盖原文。
 
-当前构建：**0.2.1 (4)**。实际测试范围、初次失败及修复后的重验见 [验证记录](original-verification.json)。
+当前构建：**0.2.2 (5)**。实际测试范围、初次失败及修复后的重验见 [验证记录](original-verification.json)。
 
 原文校验值：`274bbf15f031bd80bb8b360cf14c0266acff370a230d9cad1b1785461df54dd2`。原文[n]对应 [document.txt](../Reference/Original/document.txt) 的0-based正文块索引（含表格），不是页码。83行是实质要求分组，不是完成率。
 
@@ -19,7 +19,7 @@
 - 旧88项Checklist的完成数字与originalRequirementsPreserved标志不作为原文符合性证据；旧版报告只保留历史。
 - 当前150+30严格生产完成，180唯一答案及不同区域结构，无相似性豁免；数值Profile仍未经Pawdoku校准，跨产品语料缺失。
 - 原文只固定L1为4×4；本地早期尺寸安排不能覆盖原文的去重要求。
-- 最终截图已目视核对；当前包页面、教学及L10流程有测试，但不声称与尚未提供的冻结录屏逐帧一致。
+- 0.2.1截图、页面及手势证据保留其原构建标识；0.2.2未改页面，只补道具来源与相关应用回归，不声称已与缺失的冻结录屏逐帧对齐。
 - 真实广告SDK由外部供应；客户端入口、配置、库存、复活和奖励安全仍是本Demo责任。
 - Daily Challenge保留锁定入口，Profile明确不做。正式原音频、真实SDK、真机及上架均待验。
 
@@ -30,6 +30,7 @@
 - **CLIENT-03 · 本地已验证 · 广告位加载与展示合同**：已接按广告位预热/ready/展示/立即补载；offer落盘后才展示，超时覆盖等待ready，重复/过期回调隔离，启动完成前禁用广告；插页失败及超时可继续且不发奖。13项最终专项及兼容测试通过。 正式逐关广告位表、真实SDK、单元缓存及网络性能待联调。
 - **CLIENT-04 · 已验证 · One-time state corruption recovery**：同意/通关/挑战状态已迁移SHA校验双副本，主文件损坏回退测试通过；旧主存档与归档棋盘升级恢复通过。 保留真机中断和长期存储压力的正式验收。
 - **CLIENT-05 · 客户端部分验证，辅助功能待真机 · Touch target and focus audit**：已补普通UIKit父容器隔离，修复SwiftUI子层/自定义棋盘暴露；设置/广告/结算隔离与关闭恢复、44pt和长文案布局已验证。 保留真实VoiceOver、Hint焦点、全部动态字体及原录屏对照验收；当前自动化不替代手工读屏。
+- **CLIENT-06 · 来源修复已验证，正式数据路径待验 · 道具库存与使用事件来源一致**：新增来源随库存批次保存；广告补偿、开局广告和签到不再混成逐关免费。8项核心来源测试与6项应用来源测试覆盖保存、恢复、混存、Apply和幂等。 旧库存无法可靠追溯时保留数量并标未知；正式钥匙串、SDK及完整统计路径仍待签名环境验收。
 
 ## 1 · 参考基线
 
@@ -113,7 +114,7 @@
 |---|---|---|
 | DATA-01<br>[351] [353] [354] [383] [384] | 四块最小看板与指标口径<br>`external_pending` | 客户端已建立本地最小事件合同，不采逐格、X或Combo明细。<br>**缺口：**分析SDK/数据源/仪表盘未接；复活attempt等口径未冻结，四块看板不可宣称可算或上线完成。<br>[AnalyticsRecorder.swift](../App/Services/AnalyticsRecorder.swift) · [analytics-startup-audit.json](../Validation/analytics-startup-audit.json) |
 | DATA-02<br>[357] [360] [370] [372] | 公共字段、类型、匿名身份与最小数据<br>`verified` | 本地合同验证字段类型、必填、枚举及非负计数；数字形ID保持字符串；Keychain匿名身份按测试目录隔离。<br>**缺口：**只验证本地合同；实际SDK公共字段、country来源和重装身份政策仍需冻结与联调。<br>[AnalyticsRecorder.swift](../App/Services/AnalyticsRecorder.swift) · [AnalyticsRecorderTests.swift](../AppTests/AnalyticsRecorderTests.swift) · [analytics-startup-audit.log](../Validation/test-runs/analytics-startup-audit.log) |
-| DATA-03<br>[364] [374] [376] | 12 事件边界与业务触发<br>`partial` | 实现11个启用事件，coin_change 预留并禁止发送；新增关卡/道具/奖励业务事件。<br>**缺口：**需要最终完整路径核对；事件source、复活后attempt结算、广告真实开始时机及free-ad场景仍待最终审查。<br>[AppModel.swift](../App/AppModel.swift) · [AnalyticsRecorder.swift](../App/Services/AnalyticsRecorder.swift) · [analytics-startup-audit.json](../Validation/analytics-startup-audit.json) |
+| DATA-03<br>[364] [374] [376] | 12 事件边界与业务触发<br>`partial` | 实现11个启用事件，coin_change 预留并禁止发送；新增关卡/道具/奖励业务事件。 0.2.2补齐库存来源批次，配置免费/首次赠送/签到/广告及补偿能跨保存、重开、换关保留；Hint预览与Apply使用同次来源，应用集成已验证。<br>**缺口：**旧档无法追溯的库存来源保留未知并跳过该次buff_use（本地诊断计数），不能伪造枚举。复活后attempt结算、广告真实开始时机、真实SDK与最终完整事件路径仍待验；测试身份注入不代表正式钥匙串通过。<br>[AppModel.swift](../App/AppModel.swift) · [AnalyticsRecorder.swift](../App/Services/AnalyticsRecorder.swift) · [analytics-startup-audit.json](../Validation/analytics-startup-audit.json) · [ToolInventorySource.swift](../Sources/CapydokuCore/ToolInventorySource.swift) · [ToolInventorySourceTests.swift](../Tests/CapydokuCoreTests/ToolInventorySourceTests.swift) · [ToolSourceAnalyticsTests.swift](../AppTests/ToolSourceAnalyticsTests.swift) · [original-022-tool-sources-app-final.xcresult](../Validation/test-runs/original-022-tool-sources-app-final.xcresult) |
 | DATA-04<br>[367] [368] [369] [371] [375] [377] | 广告 offer_id 与冻结配置版本<br>`partial` | 同offer串联、参数枚举检查、关卡事件携带配置版本。<br>**缺口：**当前无冻结版本，demo version 不能伪称 pawdoku_config_version 正式值；插页 placement 枚举缺口尚待确认。<br>[AppModel.swift](../App/AppModel.swift) · [AnalyticsRecorder.swift](../App/Services/AnalyticsRecorder.swift) · [analytics-startup-audit.json](../Validation/analytics-startup-audit.json) |
 | DATA-05<br>[379] [380] [381] | 同意后采集、幂等、离线与失败重试<br>`verified` | 本地事件同意前不生成身份/新事件，业务key去重，原ID/时间缓存，写失败重试与中断session恢复；5个专项测试通过。<br>**缺口：**网络上传/确认/服务端去重均未实现验证；300秒session暂定值与延迟结算约定待冻结。<br>[AnalyticsRecorder.swift](../App/Services/AnalyticsRecorder.swift) · [AnalyticsRecorderTests.swift](../AppTests/AnalyticsRecorderTests.swift) · [analytics-startup-audit.log](../Validation/test-runs/analytics-startup-audit.log) |
 | DATA-06<br>[382] [383] [384] | 全路径埋点验收与测试正式数据隔离<br>`partial` | 事件固定 internal-demo-offline，测试身份和本地目录隔离。<br>**缺口：**未验证真实数据源上的首次打开→引导→失败→重试→广告→通关→Session完整路径，TestFlight/生产数据源尚缺。<br>[AnalyticsRecorder.swift](../App/Services/AnalyticsRecorder.swift) · [analytics-startup-audit.json](../Validation/analytics-startup-audit.json) |
@@ -150,7 +151,7 @@
 | ADS-09<br>[440] | 免费次数、重置节点和跨关策略<br>`partial` | direct/hint、level_start_free及revive的配置额度/重置已接；主线程报告免费复活配额持久化专项通过。<br>**缺口：**所有正式免费次数/补充节点和跨关期望仍缺冻结来源，整体仍不能按Pawdoku验收。<br>[ReferenceGameplayConfiguration.swift](../Sources/CapydokuCore/ReferenceGameplayConfiguration.swift) · [PlayerProgress.swift](../Sources/CapydokuCore/PlayerProgress.swift) · [AppModel.swift](../App/AppModel.swift) · [OriginalFlowTests.swift](../AppTests/OriginalFlowTests.swift) |
 | ADS-10<br>[442] | 按需预加载及播放后补加载<br>`partial` | 客户端具备placement级预加载、ready、展示及立即补加载；按本局配置预热，启动权限流程完成前禁止广告。重复与过期ready、后台等待和加载不可用均通过专项测试。<br>**缺口：**缺冻结逐关广告位表、真实SDK和广告单元；真实每单元一已加载实例、网络下首屏时延和棋盘帧率仍需联调。<br>[RewardProvider.swift](../App/Services/RewardProvider.swift) · [AppModel.swift](../App/AppModel.swift) · [RewardReadinessTests.swift](../AppTests/RewardReadinessTests.swift) · [reward-readiness-compatibility.xcresult](../Validation/test-runs/reward-readiness-compatibility.xcresult) |
 | ADS-11<br>[443] [444] [445] | 广告音频/打断/快速输入幂等<br>`partial` | 广告显示、后台和棋盘输入锁独立传递；展示最终结束后释放广告音频锁，即便奖励写盘仍需重试。后台提示恢复、重复回调和原子音频路由通过AppTests。<br>**缺口：**真实适配器必须合并SDK奖励与关闭回调成最终结果；来电/系统弹窗、正式音频及SDK真机联调仍待验。<br>[FeedbackPlayer.swift](../App/Services/FeedbackPlayer.swift) · [AppModel.swift](../App/AppModel.swift) · [AppModelTests.swift](../AppTests/AppModelTests.swift) · [AppModelFeedbackRoutingTests.swift](../AppTests/AppModelFeedbackRoutingTests.swift) · [original-audio-final.xcresult](../Validation/test-runs/original-audio-final.xcresult) |
-| ADS-12<br>[446] | 新关生效与缓存默认配置降级<br>`partial` | DemoConfig随session保存，新关读取导入配置，不更改进行中局。<br>**缺口：**联网拉取、最近成功缓存及同冻结版本包内默认值未完整接入；当前无真实基线可校验。<br>[DemoConfig.swift](../Sources/CapydokuCore/DemoConfig.swift) · [AppModel.swift](../App/AppModel.swift) · [SaveStore.swift](../Sources/CapydokuCore/SaveStore.swift) |
+| ADS-12<br>[446] | 新关生效与缓存默认配置降级<br>`partial` | DemoConfig随session保存，新关读取导入配置，不更改进行中局。<br>**缺口：**客户端尚未实现联网拉取、最近成功缓存及包内默认值的完整回退链。这属于实现缺口；真实服务、同冻结版本配置及联调资料也尚缺，不能合并写成仅待外部交付。<br>[DemoConfig.swift](../Sources/CapydokuCore/DemoConfig.swift) · [AppModel.swift](../App/AppModel.swift) · [SaveStore.swift](../Sources/CapydokuCore/SaveStore.swift) |
 | ADS-13<br>[448] [449] [450] [451] [452] | 广告漏斗、收益回传与商业化看板<br>`external_pending` | 本地激励事件包含offer/status/rewardGranted及ad_type/network/ad_unit_id。<br>**缺口：**真实收益回传/去重通道、插页placement口径和线上看板未实现验证；不得估算收益或宣称SDK接入完成。<br>[AnalyticsRecorder.swift](../App/Services/AnalyticsRecorder.swift) · [AppModel.swift](../App/AppModel.swift) · [analytics-startup-audit.json](../Validation/analytics-startup-audit.json) |
 | ADS-14<br>[454] [455] [456] [457] [458] | L1–20逐关及故障场景广告验收<br>`partial` | 模拟器有奖励失败/中断/重复/超时与库存一致性测试基础。<br>**缺口：**缺原L1–20配置，不能逐关通过；真实SDK、环境、CMP、收益及音频前后必须在外部资料齐全后联调。<br>[AppModelTests.swift](../AppTests/AppModelTests.swift) · [HardeningUITests.swift](../UITests/HardeningUITests.swift) · [reference-gameplay-import.json](../Validation/reference-gameplay-import.json) |
 

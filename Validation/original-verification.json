@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "date": "2026-09-30",
-  "build": "0.2.1 (4)",
+  "build": "0.2.2 (5)",
   "status": "PLAYABLE_ORIGINAL_ALIGNMENT_DEMO_WITH_REFERENCE_AND_EXTERNAL_GAPS",
   "originalSHA256": "274bbf15f031bd80bb8b360cf14c0266acff370a230d9cad1b1785461df54dd2",
   "currentPackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49",
@@ -27,6 +27,14 @@
     },
     "baselineBuild": "0.2.0 (3)",
     "currentChangeRegression": {
+      "build": "0.2.2 (5)",
+      "passed": 60,
+      "failed": 0,
+      "seconds": 4.09,
+      "log": "Validation/test-runs/original-tool-provenance-core.log",
+      "scope": "8 inventory-source tests plus GameSession, reference gameplay execution, original storage, persistence and save hardening. Generation and level pack unchanged."
+    },
+    "previousChangeRegression": {
       "build": "0.2.1 (4)",
       "passed": 52,
       "failed": 0,
@@ -179,6 +187,23 @@
       "appTestsPassed": 2,
       "failed": 0,
       "scope": "Final production scrims: six current main screens, L10 challenge, long-button dimensions and real long-copy result top/bottom rendering. Screens visually inspected; real VoiceOver remains pending."
+    },
+    {
+      "build": "0.2.2 (5)",
+      "device": "iPhone 17 Pro",
+      "bundle": "Validation/test-runs/original-022-tool-sources-app-final.xcresult",
+      "appTestsPassed": 54,
+      "failed": 0,
+      "scope": "All AppTests except OriginalUIContractTests, whose UI evidence remains 0.2.1. Includes6 new source tests with injected identity store; signed production Keychain not verified."
+    },
+    {
+      "build": "0.2.2 (5)",
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-022-tool-sources-17e.xcresult",
+      "appTestsPassed": 6,
+      "failed": 0,
+      "seconds": 0.19,
+      "scope": "All6 new source integration cases; same source code as the54-test17 Pro run. No new full UI sweep."
     }
   ],
   "visualEvidence": {
@@ -199,29 +224,46 @@
   ],
   "historicalFailuresRetained": "Initial UI/app runs and first full-core run failed on changed fixture assumptions or real UI issues; these are retained under Validation/test-runs. Only explicitly listed successful reruns count. Old 88-item checklist completion counts are superseded.",
   "applicationTests": {
-    "passed": 48,
+    "build": "0.2.2 (5)",
+    "passed": 54,
     "failed": 0,
-    "bundle": "Validation/test-runs/original-audio-final.xcresult",
-    "scope": "All AppTests excluding OriginalUIContractTests (separately run on iPhone 17e). Includes13 audio-policy tests,2 audio-routing tests,7 AppModel tests,9 readiness tests and complete tutorial restart/recovery paths."
+    "seconds": 10.598,
+    "bundle": "Validation/test-runs/original-022-tool-sources-app-final.xcresult",
+    "scope": "All AppTests except OriginalUIContractTests, whose UI evidence remains 0.2.1. Includes6 new source tests with injected identity store; signed production Keychain not verified."
   },
   "supersededOrInterruptedRuns": [
-    "reward-readiness-final was intentionally interrupted to stop two runners targeting one simulator; not counted as success."
+    "reward-readiness-final was intentionally interrupted to stop two runners targeting one simulator; not counted as success.",
+    {
+      "build": "0.2.2 (5)",
+      "bundle": "Validation/test-runs/original-022-tool-sources-app.xcresult",
+      "tests": 54,
+      "passed": 49,
+      "failedTestCases": 5,
+      "reason": "All5 new source event assertions failed because the unsigned host could not save the anonymous identity; inventory gameplay assertions passed. Not counted as success."
+    },
+    {
+      "build": "0.2.2 (5)",
+      "bundle": "Validation/test-runs/original-022-identity-diagnosis.xcresult",
+      "tests": 1,
+      "failedTestCases": 1,
+      "reason": "Explicit enabled assertion confirmed Anonymous analytics identity could not be saved. Corrected test dependency injection, not the production privacy gate."
+    }
   ],
   "buildVerification": {
-    "simulatorDebug": "passed",
-    "simulatorLog": "Validation/test-runs/original-021-fullscreen-simulator-build.log",
+    "bundleVersion": "0.2.2 (5)",
+    "simulatorDebug": "passed via test build",
+    "simulatorLog": "Validation/test-runs/original-022-tool-sources-app-final.log",
     "genericIOSReleaseUnsigned": "passed",
-    "releaseLog": "Validation/test-runs/original-021-fullscreen-release-build.log",
+    "releaseLog": "Validation/test-runs/original-022-release-build.log",
     "installedOn": [
       "iPhone 17 Pro",
       "iPhone 17e"
     ],
-    "normalLaunch": "iPhone 17 Pro launched without test/reset flags; Welcome verified visually; normal user data preserved",
-    "normalLaunchScreenshot": "Validation/test-runs/original-021-normal-launch.png",
-    "bundleVersion": "0.2.1 (4)",
-    "signingAndDeviceExecution": "Unsigned compilation only; no physical-device or App Store claim",
-    "sourceDocumentSHA256Unchanged": true,
-    "scope": "Final production sources including native accessibility isolation, explicit hosted text color and full-screen Root scrims; unsigned compilation only."
+    "normalLaunch": "iPhone17 Pro launched without test/reset flags; Welcome visually verified; normal user data preserved",
+    "normalLaunchScreenshot": "Validation/test-runs/original-022-normal-launch.png",
+    "signingAndDeviceExecution": "Unsigned compilation only; no physical-device, Keychain or App Store claim",
+    "scope": "Inventory source ledger, AppModel analytics routing and test identity injection; UI and level generation unchanged.",
+    "sourceDocumentSHA256Unchanged": true
   },
   "audioContract": {
     "policyTestsPassed": 13,
@@ -282,5 +324,39 @@
     "Rejected the first all-black long-copy host image despite passing initial assertions. Scene-bound hosting, pixel-diversity checks and top/bottom snapshots added.",
     "Dark secondary text was unsuitable on the result backdrop; result Restart now uses light orange while white-card Feedback keeps dark orange.",
     "Native accessibility hosting clipped inner Hint/Result scrims to safe-area bounds. Moved full-screen backgrounds to Root; final screenshots rerun."
-  ]
+  ],
+  "previousApplicationTests": {
+    "passed": 48,
+    "failed": 0,
+    "bundle": "Validation/test-runs/original-audio-final.xcresult",
+    "scope": "All AppTests excluding OriginalUIContractTests (separately run on iPhone 17e). Includes13 audio-policy tests,2 audio-routing tests,7 AppModel tests,9 readiness tests and complete tutorial restart/recovery paths."
+  },
+  "toolSourceCorrection": {
+    "originalParagraphs": [
+      364,
+      368,
+      376
+    ],
+    "coreCases": 8,
+    "appCases": 6,
+    "legacyPolicy": "Preserve unknown stock; omit buff_use when its required source cannot be proven. Count once per consumption in launch-scoped diagnostics; no fabricated attribution.",
+    "ordering": "Existing pool priority unchanged; grants within a pool retain arrival order.",
+    "identityTestBoundary": "Unsigned simulator test host reported Anonymous analytics identity could not be saved. AppModel now accepts the existing AnalyticsIdentityStore dependency; tests inject memory storage. Production default remains Keychain."
+  },
+  "previousBuildVerification": {
+    "simulatorDebug": "passed",
+    "simulatorLog": "Validation/test-runs/original-021-fullscreen-simulator-build.log",
+    "genericIOSReleaseUnsigned": "passed",
+    "releaseLog": "Validation/test-runs/original-021-fullscreen-release-build.log",
+    "installedOn": [
+      "iPhone 17 Pro",
+      "iPhone 17e"
+    ],
+    "normalLaunch": "iPhone 17 Pro launched without test/reset flags; Welcome verified visually; normal user data preserved",
+    "normalLaunchScreenshot": "Validation/test-runs/original-021-normal-launch.png",
+    "bundleVersion": "0.2.1 (4)",
+    "signingAndDeviceExecution": "Unsigned compilation only; no physical-device or App Store claim",
+    "sourceDocumentSHA256Unchanged": true,
+    "scope": "Final production sources including native accessibility isolation, explicit hosted text color and full-screen Root scrims; unsigned compilation only."
+  }
 }

@@ -93,6 +93,9 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
     public var carriedToolBalance: ToolBalance
     public var levelStartLocalBalances: [String: ToolBalance]
     public var freeReviveUsage: [String: Int]
+    private var bonusToolSources: ToolInventorySources
+    private var levelToolSources: [String: ToolInventorySources]
+    private var carriedToolSources: ToolInventorySources
 
     public init() {
         unlockedLevel = 1
@@ -113,6 +116,9 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
         carriedToolBalance = ToolBalance(hints: 0, direct: 0)
         levelStartLocalBalances = [:]
         freeReviveUsage = [:]
+        bonusToolSources = ToolInventorySources()
+        levelToolSources = [:]
+        carriedToolSources = ToolInventorySources()
     }
 
     public var availableHints: Int {
@@ -123,6 +129,26 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
         levelStartLocalBalances[String(currentLevel)] ?? ToolBalance(hints: 0, direct: 0)
     }
 
+    /// Read immediately before a successful use. Nil means no usable stock or
+    /// unknown attribution (for example, a migrated mixed bonus inventory).
+    public var nextDirectSource: ToolInventorySource? {
+        guard let session, session.status == .playing, session.directToolEnabled, session.remainingCount > 0 else { return nil }
+        if currentLevelStartBalance.direct > 0 { return .rewardedAd }
+        if session.directRemaining > 0 {
+            return levelToolSources[String(session.puzzle.id)]?.direct.matching(session.directRemaining).nextSource
+        }
+        return bonusToolSources.direct.matching(bonusDirect).nextSource
+    }
+
+    public var nextHintSource: ToolInventorySource? {
+        guard let session, session.status == .playing, session.hintToolEnabled, session.hasUnmarkedExclusions else { return nil }
+        if session.pendingRewardHint || currentLevelStartBalance.hints > 0 { return .rewardedAd }
+        if session.hintsRemaining > 0 {
+            return levelToolSources[String(session.puzzle.id)]?.hints.matching(session.hintsRemaining).nextSource
+        }
+        return bonusToolSources.hints.matching(bonusHints).nextSource
+    }
+
     public mutating func begin(puzzle: Puzzle, config: DemoConfig = .default) {
         _ = recoverInterruptedRewards()
         captureSessionBalance()
@@ -131,18 +157,32 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
         let attempt = (attemptCounts[key] ?? 0) + 1
         let firstGrant = !freeToolGrantedLevels.contains(puzzle.id)
         var next = GameSession(puzzle: puzzle, config: config, attempt: attempt, grantFreeTools: firstGrant)
+        var nextSources = ToolInventorySources()
         if let reference = config.referenceGameplay {
             let sameLevel = currentLevel == puzzle.id && (session != nil || levelToolBalances[key] != nil)
             let existing = levelToolBalances[key] ?? ToolBalance(hints: 0, direct: 0)
             let hintsBase = sameLevel ? existing.hints : (reference.hint.inventoryAcrossLevels == .retain ? carriedToolBalance.hints : 0)
             let directBase = sameLevel ? existing.direct : (reference.directFind.inventoryAcrossLevels == .retain ? carriedToolBalance.direct : 0)
-            let hints = hintsBase + referenceGrant(reference.hint, kind: .hint, level: puzzle.id)
-            let direct = directBase + referenceGrant(reference.directFind, kind: .directFind, level: puzzle.id)
+            let existingSources = (levelToolSources[key] ?? ToolInventorySources()).matching(existing)
+            let carriedSources = carriedToolSources.matching(carriedToolBalance)
+            nextSources.hints = (sameLevel ? existingSources.hints : carriedSources.hints).matching(hintsBase)
+            nextSources.direct = (sameLevel ? existingSources.direct : carriedSources.direct).matching(directBase)
+            let hintGrant = referenceGrant(reference.hint, kind: .hint, level: puzzle.id)
+            let directGrant = referenceGrant(reference.directFind, kind: .directFind, level: puzzle.id)
+            let hints = hintsBase + (hintGrant.count ?? 0)
+            let direct = directBase + (directGrant.count ?? 0)
+            nextSources.hints.append(hintGrant)
+            nextSources.direct.append(directGrant)
             next.restoreToolBalance(ToolBalance(hints: hints, direct: direct))
         } else if !firstGrant, let balance = levelToolBalances[key] {
             next.restoreToolBalance(balance)
+            nextSources = (levelToolSources[key] ?? ToolInventorySources()).matching(balance)
+        } else {
+            nextSources.hints = ToolSourceQueue(count: next.hintsRemaining, source: .levelConfigFree)
+            nextSources.direct = ToolSourceQueue(count: next.directRemaining, source: .levelConfigFree)
         }
         session = next
+        levelToolSources[key] = nextSources
         // A new board attempt must replay its teaching actions from the beginning.
         // Continuing or restoring a saved session does not call begin, so its
         // instruction and the marks needed by that instruction stay together.
@@ -171,15 +211,18 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
     @discardableResult
     public mutating func directFind() -> Int? {
         guard session?.status == .playing, session?.directToolEnabled == true else { return nil }
+        captureSessionBalance()
+        synchronizeBonusSources()
         let result: Int?
         if currentLevelStartBalance.direct > 0 {
             result = session?.revealDirectReward()
             if result != nil { levelStartLocalBalances[String(currentLevel)]?.direct -= 1 }
         } else if (session?.directRemaining ?? 0) > 0 {
             result = session?.directFind()
+            if result != nil, let level = session?.puzzle.id { levelToolSources[String(level)]?.direct.consumeOne() }
         } else if bonusDirect > 0 {
             result = session?.revealDirectReward()
-            if result != nil { bonusDirect -= 1 }
+            if result != nil { bonusDirect -= 1; bonusToolSources.direct.consumeOne() }
         } else { return nil }
         captureSessionBalance()
         return result
@@ -188,16 +231,21 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
     @discardableResult
     public mutating func consumeHint() -> Bool {
         guard session?.status == .playing, session?.hintToolEnabled == true, session?.hasUnmarkedExclusions == true else { return false }
+        captureSessionBalance()
+        synchronizeBonusSources()
         if session?.pendingRewardHint != true && currentLevelStartBalance.hints > 0 {
             levelStartLocalBalances[String(currentLevel)]?.hints -= 1
             return true
         }
+        let pendingReward = session?.pendingRewardHint == true
         if session?.consumeHint() == true {
+            if !pendingReward, let level = session?.puzzle.id { levelToolSources[String(level)]?.hints.consumeOne() }
             captureSessionBalance()
             return true
         }
         guard bonusHints > 0 else { return false }
         bonusHints -= 1
+        bonusToolSources.hints.consumeOne()
         return true
     }
 
@@ -206,9 +254,25 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
         guard let session else { return }
         let key = String(session.puzzle.id)
         levelToolBalances[key] = ToolBalance(hints: session.hintsRemaining, direct: session.directRemaining)
+        let sources = (levelToolSources[key] ?? ToolInventorySources()).matching(levelToolBalances[key]!)
+        levelToolSources[key] = sources
         attemptCounts[key] = max(attemptCounts[key] ?? 0, session.attempt)
         carriedToolBalance.hints = session.config.referenceGameplay?.hint.inventoryAcrossLevels == .retain ? session.hintsRemaining : 0
         carriedToolBalance.direct = session.config.referenceGameplay?.directFind.inventoryAcrossLevels == .retain ? session.directRemaining : 0
+        carriedToolSources.hints = sources.hints.matching(carriedToolBalance.hints)
+        carriedToolSources.direct = sources.direct.matching(carriedToolBalance.direct)
+    }
+
+    private mutating func synchronizeBonusSources() {
+        bonusToolSources = bonusToolSources.matching(ToolBalance(hints: bonusHints, direct: bonusDirect))
+    }
+
+    private mutating func grantBonus(_ kind: ReferenceToolKind, count: Int, source: ToolInventorySource) {
+        guard count > 0 else { return }
+        synchronizeBonusSources()
+        let grant = ToolSourceQueue(count: count, source: source)
+        if kind == .hint { bonusHints += count; bonusToolSources.hints.append(grant) }
+        else { bonusDirect += count; bonusToolSources.direct.append(grant) }
     }
 
     @discardableResult
@@ -224,14 +288,14 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
         checkIn.cycleDay = (checkIn.streak - 1) % cycleLength + 1
         let direct = checkIn.cycleDay == cycleLength ? config.cycleDirectReward : 0
         if checkIn.cycleDay == cycleLength { checkIn.completedCycles += 1 }
-        bonusHints += config.dailyHintReward
-        bonusDirect += direct
+        grantBonus(.hint, count: config.dailyHintReward, source: .initialFree)
+        grantBonus(.directFind, count: direct, source: .initialFree)
         return .claimed(streak: checkIn.streak, cycleDay: checkIn.cycleDay,
                         hints: config.dailyHintReward, direct: direct)
     }
 
-    private mutating func referenceGrant(_ tool: ReferenceToolConfiguration, kind: ReferenceToolKind, level: Int) -> Int {
-        guard tool.enabled, level >= tool.unlockLevel else { return 0 }
+    private mutating func referenceGrant(_ tool: ReferenceToolConfiguration, kind: ReferenceToolKind, level: Int) -> ToolSourceQueue {
+        guard tool.enabled, level >= tool.unlockLevel else { return ToolSourceQueue() }
         let levelKey = "\(kind.rawValue):level:\(level)"
         let unlockKey = "\(kind.rawValue):firstUnlock"
         let initial: Int
@@ -243,7 +307,9 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
         let unlock = referenceToolGrantKeys.contains(unlockKey) ? 0 : tool.firstUnlockBonusCount
         referenceToolGrantKeys.insert(levelKey)
         referenceToolGrantKeys.insert(unlockKey)
-        return initial + unlock
+        var sources = ToolSourceQueue(count: initial, source: .levelConfigFree)
+        sources.append(ToolSourceQueue(count: unlock, source: .initialFree))
+        return sources
     }
 
     public var levelStartFreeQuotaKey: String? {
@@ -347,8 +413,8 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
     private mutating func compensate(offerID: String) -> RewardOutcome {
         guard var record = rewardLedger[offerID], record.state == .rewarded else { return .ignored }
         switch record.kind {
-        case .direct: bonusDirect += 1
-        case .hint: bonusHints += 1
+        case .direct: grantBonus(.directFind, count: 1, source: .rewardedAd)
+        case .hint: grantBonus(.hint, count: 1, source: .rewardedAd)
         case .levelStartFree:
             guard grantRecordedInventory(record) else {
                 record.state = .cancelled
@@ -377,8 +443,7 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
             var balance = levelStartLocalBalances[key] ?? ToolBalance(hints: 0, direct: 0)
             if tool == .hint { balance.hints += count } else { balance.direct += count }
             levelStartLocalBalances[key] = balance
-        } else if tool == .hint { bonusHints += count }
-        else { bonusDirect += count }
+        } else { grantBonus(tool, count: count, source: .rewardedAd) }
         return true
     }
 
@@ -396,7 +461,7 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
             }
         }
         if session?.pendingRewardHint == true {
-            bonusHints += 1
+            grantBonus(.hint, count: 1, source: .rewardedAd)
             session?.pendingRewardHint = false
             recovered += 1
         }
@@ -407,6 +472,7 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
         case unlockedLevel, currentLevel, completedLevels, attemptCounts, session, settings
         case tutorialStep, tutorialCompleted, checkIn, bonusHints, bonusDirect, rewardLedger
         case freeToolGrantedLevels, levelToolBalances, referenceToolGrantKeys, carriedToolBalance, levelStartLocalBalances, freeReviveUsage
+        case bonusToolSources, levelToolSources, carriedToolSources
     }
 
     public init(from decoder: Decoder) throws {
@@ -430,6 +496,11 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
         carriedToolBalance = try values.decodeIfPresent(ToolBalance.self, forKey: .carriedToolBalance) ?? ToolBalance(hints: 0, direct: 0)
         levelStartLocalBalances = try values.decodeIfPresent([String: ToolBalance].self, forKey: .levelStartLocalBalances) ?? [:]
         freeReviveUsage = try values.decodeIfPresent([String: Int].self, forKey: .freeReviveUsage) ?? [:]
+        // Provenance is optional metadata. Invalid or absent metadata must never
+        // invalidate a user's otherwise valid saved inventory.
+        bonusToolSources = (try? values.decode(ToolInventorySources.self, forKey: .bonusToolSources)) ?? ToolInventorySources()
+        levelToolSources = (try? values.decode([String: ToolInventorySources].self, forKey: .levelToolSources)) ?? [:]
+        carriedToolSources = (try? values.decode(ToolInventorySources.self, forKey: .carriedToolSources)) ?? ToolInventorySources()
         if let session {
             freeToolGrantedLevels.insert(session.puzzle.id)
             captureSessionBalance()

@@ -1,6 +1,6 @@
 # Capydoku · 原文对齐 Demo
 
-原生 Swift / SwiftUI iPhone 应用，英文界面、竖屏，最低编译目标 iOS 15。当前版本 **0.2.1（4）**，可内部试玩，尚未达到正式验收或上架状态。
+原生 Swift / SwiftUI iPhone 应用，英文界面、竖屏，最低编译目标 iOS 15。当前版本 **0.2.2（5）**，可内部试玩，尚未达到正式验收或上架状态。
 
 ## 唯一需求基准
 
@@ -16,12 +16,14 @@
 4. 故意选错至失败，点击 Play On 直接运行**明确标注的模拟广告**，无需第二次确认；复活保留原局。签到后关闭并重进验证状态。
 5. Debug 构建中，**长按 Settings 标题**进入开发面板，可跳关、选择模拟奖励结果、查看 seed / 配置和导出定位信息。
 
-当前截图：[首页](Docs/original-reference/01-home.png) · [游戏](Docs/original-reference/04-gameplay.png) · [提示](Docs/original-reference/05-hint.png) · [设置](Docs/original-reference/02-settings.png) · [签到](Docs/original-reference/03-check-in.png)。
+页面未在0.2.2改动，下列截图保留0.2.1的实测版本：[首页](Docs/original-reference/01-home.png) · [游戏](Docs/original-reference/04-gameplay.png) · [提示](Docs/original-reference/05-hint.png) · [设置](Docs/original-reference/02-settings.png) · [签到](Docs/original-reference/03-check-in.png)。
 
 无需第三方依赖或真实广告 SDK。真机运行需自己的签名与可用设备。本轮仅模拟器测试；先前版本签名成功不算本版本真机通过。
 
 ## 本次纠正
 
+- 补齐道具来源记录：首次赠送、逐关免费、签到与广告奖励分别记录，来源随库存保存、重开及跨关变化。广告补偿不再被误报为免费；Hint 预览与 Apply 使用同一次消费的来源。
+- 旧档无法追溯的库存照常可用，但不伪造来源事件；诊断导出包含本次启动的未知来源使用次数。此项测试使用注入的测试身份存储，正式钥匙串与服务仍须签名环境联调。
 - 按原文重建首页、棋盘、三个规则卡、四个横向设置开关、签到日历、提示遮罩及胜负弹层；角色保持卡皮巴拉特征，使用参考风格的原创图像。
 - 红色错误 X 也能单击撤销和再次双击提交；只防同次触摸重复送达，不永久锁住错误格。找到动物不自动打 X。
 - 教学目标来自当前棋盘的逻辑证明，不读取隐藏答案选教学位置。
