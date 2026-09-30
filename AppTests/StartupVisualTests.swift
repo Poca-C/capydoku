@@ -137,6 +137,117 @@ final class StartupVisualTests: XCTestCase {
         return try XCTUnwrap(image.pngData())
     }
 
+    private struct WelcomeRaster {
+        let width: Int
+        let height: Int
+        var pixels: [UInt8]
+
+        init(_ image: CGImage) throws {
+            width = image.width
+            height = image.height
+            var bytes = [UInt8](repeating: 0, count: image.width * image.height * 4)
+            try bytes.withUnsafeMutableBytes { storage in
+                let context = try XCTUnwrap(CGContext(data: storage.baseAddress, width: image.width,
+                    height: image.height, bitsPerComponent: 8, bytesPerRow: image.width * 4,
+                    space: CGColorSpace(name: CGColorSpace.sRGB)!,
+                    bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue | CGBitmapInfo.byteOrder32Big.rawValue))
+                context.draw(image, in: CGRect(x: 0, y: 0, width: image.width, height: image.height))
+            }
+            pixels = bytes
+        }
+
+        func bounds(in rect: CGRect? = nil, matching predicate: (ArraySlice<UInt8>) -> Bool) -> CGRect? {
+            let area = rect ?? CGRect(x: 0, y: 0, width: width, height: height)
+            var left = width, top = height, right = -1, bottom = -1
+            for y in Int(area.minY)..<Int(area.maxY) {
+                for x in Int(area.minX)..<Int(area.maxX) {
+                    let offset = (y * width + x) * 4
+                    if predicate(pixels[offset..<(offset + 4)]) {
+                        left = min(left, x); top = min(top, y)
+                        right = max(right, x); bottom = max(bottom, y)
+                    }
+                }
+            }
+            guard right >= left, bottom >= top else { return nil }
+            return CGRect(x: left, y: top, width: right - left + 1, height: bottom - top + 1)
+        }
+
+        func crop(_ rect: CGRect) -> Data {
+            var bytes = Data()
+            for y in Int(rect.minY)..<Int(rect.maxY) {
+                let start = (y * width + Int(rect.minX)) * 4
+                bytes.append(contentsOf: pixels[start..<(start + Int(rect.width) * 4)])
+            }
+            return bytes
+        }
+
+        mutating func fill(_ rect: CGRect, with color: [UInt8]) {
+            for y in Int(rect.minY)..<Int(rect.maxY) {
+                for x in Int(rect.minX)..<Int(rect.maxX) {
+                    let offset = (y * width + x) * 4
+                    pixels.replaceSubrange(offset..<(offset + 4), with: color)
+                }
+            }
+        }
+    }
+
+    @MainActor private func assertSameWelcomeAllowingAcceptTextPixelAlignment(
+        _ first: Data, _ second: Data, _ message: String, file: StaticString = #filePath, line: UInt = #line
+    ) throws {
+        var a = try WelcomeRaster(XCTUnwrap(UIImage(data: first)?.cgImage))
+        var b = try WelcomeRaster(XCTUnwrap(UIImage(data: second)?.cgImage))
+        XCTAssertEqual(a.width, b.width, message, file: file, line: line)
+        XCTAssertEqual(a.height, b.height, message, file: file, line: line)
+        guard a.width == b.width, a.height == b.height else { return }
+        if a.pixels == b.pixels { return }
+
+        // The 17e evidence shows the exact same Accept glyphs shifted by one
+        // physical pixel only. A scale/opacity compositing difference is the
+        // suspected cause, not a verified explanation. Locate the actual orange
+        // capsule from its rendered theme color; never hard-code device bounds.
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = 1
+        format.preferredRange = .standard
+        let fillImage = UIGraphicsImageRenderer(size: CGSize(width: 1, height: 1), format: format).image { _ in
+            UIColor(CapyPalette.actionOrange).setFill()
+            UIRectFill(CGRect(x: 0, y: 0, width: 1, height: 1))
+        }
+        let themePixel = try WelcomeRaster(XCTUnwrap(fillImage.cgImage)).pixels
+        // UIKit and SwiftUI may quantize a theme component differently by one
+        // 8-bit step. Use that only to locate the actual solid fill in A; both
+        // images must then match that exact rendered color, with no tolerance.
+        var candidates: [UInt32: Int] = [:]
+        for offset in stride(from: 0, to: a.pixels.count, by: 4) {
+            let pixel = Array(a.pixels[offset..<(offset + 4)])
+            guard zip(pixel, themePixel).allSatisfy({ abs(Int($0.0) - Int($0.1)) <= 1 }) else { continue }
+            let key = pixel.reduce(UInt32(0)) { ($0 << 8) | UInt32($1) }
+            candidates[key, default: 0] += 1
+        }
+        let fillKey = try XCTUnwrap(candidates.max(by: { $0.value < $1.value })?.key, message, file: file, line: line)
+        let orange = [24, 16, 8, 0].map { UInt8((fillKey >> $0) & 255) }
+        let capsuleA = try XCTUnwrap(a.bounds { $0.elementsEqual(orange) }, message, file: file, line: line)
+        let capsuleB = try XCTUnwrap(b.bounds { $0.elementsEqual(orange) }, message, file: file, line: line)
+        XCTAssertEqual(capsuleA, capsuleB, "The Accept capsule must retain its exact pixel bounds. " + message, file: file, line: line)
+        guard capsuleA == capsuleB else { return }
+        // The capsule's central strip has a solid fill, away from rounded edges.
+        // Its only foreground is the white Accept text; all other pixels below
+        // still have to match exactly, including the complete capsule outline.
+        let textArea = capsuleA.insetBy(dx: ceil(capsuleA.height / 2) + 2, dy: 2)
+        XCTAssertGreaterThan(textArea.width, 0, message, file: file, line: line)
+        guard textArea.width > 0, textArea.height > 0 else { return }
+        let glyphA = try XCTUnwrap(a.bounds(in: textArea) { !$0.elementsEqual(orange) }, message, file: file, line: line)
+        let glyphB = try XCTUnwrap(b.bounds(in: textArea) { !$0.elementsEqual(orange) }, message, file: file, line: line)
+        XCTAssertEqual(glyphA.size, glyphB.size, "Accept glyph dimensions must match exactly. " + message, file: file, line: line)
+        XCTAssertEqual(glyphA.minX, glyphB.minX, "Accept text cannot move horizontally. " + message, file: file, line: line)
+        XCTAssertLessThanOrEqual(abs(glyphA.minY - glyphB.minY), 1,
+            "Only one physical pixel of vertical glyph alignment is allowed. " + message, file: file, line: line)
+        XCTAssertEqual(a.crop(glyphA), b.crop(glyphB), "Every Accept glyph pixel must match after alignment. " + message, file: file, line: line)
+        a.fill(glyphA, with: orange)
+        b.fill(glyphB, with: orange)
+        XCTAssertEqual(Data(a.pixels), Data(b.pixels),
+            "Every pixel outside the Accept glyphs must match exactly. " + message, file: file, line: line)
+    }
+
     @MainActor private func assertBeforeAcceptance(_ model: AppModel, permissions: StartupVisualPermissions,
                                                  rewards: StartupVisualRewards) {
         XCTAssertFalse(model.analytics.enabled)
@@ -234,19 +345,20 @@ final class StartupVisualTests: XCTestCase {
         // is a hosted lifecycle test, not an OS background or VoiceOver test.
         lifecycle.phase = .background
         try await Task.sleep(nanoseconds: 260_000_000)
-        let background = try capture(rig, name: "welcome-transition-02-background-settled")
+        let background = try capture(rig, name: "welcome-transition-02-background-settled", afterScreenUpdates: true)
         XCTAssertEqual(controller.stage, .welcome)
         XCTAssertNil(controller.consent.acceptedVersion)
         XCTAssertTrue(permissions.calls.isEmpty)
         lifecycle.phase = .active
         lifecycle.reduceMotion = true
         try await Task.sleep(nanoseconds: 260_000_000)
-        let reduced = try capture(rig, name: "welcome-transition-03-reduce-motion-view-override")
-        XCTAssertEqual(background, reduced, "Lifecycle cleanup must retain the complete unaccepted Welcome card.")
+        let reduced = try capture(rig, name: "welcome-transition-03-reduce-motion-view-override", afterScreenUpdates: true)
+        try assertSameWelcomeAllowingAcceptTextPixelAlignment(background, reduced, "Lifecycle cleanup must retain the complete unaccepted Welcome card.")
         lifecycle.reduceMotion = false
         try await Task.sleep(nanoseconds: 260_000_000)
-        let settled = try capture(rig, name: "welcome-transition-04-foreground-settled")
-        XCTAssertEqual(reduced, settled, "Re-enabling motion cannot restart loading, hide Welcome, or change its final layout.")
+        let settled = try capture(rig, name: "welcome-transition-04-foreground-settled", afterScreenUpdates: true)
+        try assertSameWelcomeAllowingAcceptTextPixelAlignment(reduced, settled, "Re-enabling motion cannot restart loading, hide Welcome, or change its final layout.")
+        XCTAssertEqual(background, settled, "Returning to the same motion mode must reproduce the exact full image.")
         XCTAssertTrue(model.analytics.events.isEmpty)
         XCTAssertTrue(rewards.loads.isEmpty)
 

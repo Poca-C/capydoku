@@ -483,21 +483,26 @@ final class CapydokuUITests: XCTestCase {
         tapButton("next_level")
         let next = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", "Level 151"), object: app.staticTexts["level_title"])
         XCTAssertEqual(XCTWaiter.wait(for: [next], timeout: 15), .completed)
-        XCTAssertTrue(cell(35).exists)
-        XCTAssertFalse(cell(36).exists, "The first recovery board in the local lab should be 6×6.")
+        XCTAssertTrue(cell(0).waitForExistence(timeout: 5))
         cell(0).tap()
         expectValue(cell(0), "marked")
-        let before = boardValues(count: 36)
-        let regions = (0..<36).map { cell($0).label }
+        let boardCells = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "cell_")).allElementsBoundByIndex
+        let count = boardCells.count
+        XCTAssertTrue([36, 64, 100].contains(count), "The current endless profile permits 6×6, 8×8 or 10×10; do not freeze a generated size.")
+        XCTAssertEqual(Set(boardCells.map(\.identifier)), Set((0..<count).map { "cell_\($0)" }))
+        let before = boardValues(count: count)
+        let regions = (0..<count).map { cell($0).label }
         attachScreen("Current pack Level 150 to generated Level 151")
         app.terminate()
         app.launchArguments = ["-ui-testing"]
         app.launch()
         tapButton("play")
-        XCTAssertTrue(cell(35).waitForExistence(timeout: 5))
+        XCTAssertTrue(cell(count - 1).waitForExistence(timeout: 5))
         XCTAssertEqual(app.staticTexts["level_title"].label, "Level 151")
-        XCTAssertEqual(boardValues(count: 36), before)
-        XCTAssertEqual((0..<36).map { cell($0).label }, regions, "Every region label must restore along with the player's marks.")
+        XCTAssertFalse(cell(count).exists)
+        XCTAssertEqual(app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "cell_")).count, count)
+        XCTAssertEqual(boardValues(count: count), before)
+        XCTAssertEqual((0..<count).map { cell($0).label }, regions, "Every region label must restore along with the player's marks.")
     }
 
     func testGenerationFailureKeepsCompletedLevel150Intact() {

@@ -11,6 +11,7 @@ struct RootView: View {
     var reduceMotionOverride: Bool? = nil
     private var reduceMotion: Bool { reduceMotionOverride ?? systemReduceMotion }
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @AccessibilityFocusState private var focusedControl: String?
     @State private var lastActivatedControl: String?
     @State private var previousModal: String?
@@ -47,6 +48,7 @@ struct RootView: View {
                 }
                 }.environmentObject(model).foregroundColor(CapyPalette.ink)
                     .environment(\.appLanguage, language)
+                    .environment(\.dynamicTypeSize, dynamicTypeSize)
                     .environment(\.capyAccessibilityFocus, $focusedControl)
                     .environment(\.capyButtonActivation, activate)
             }
@@ -55,6 +57,7 @@ struct RootView: View {
                 CapyAccessibilityHost(hidden: hasCard || model.loading || model.challengePending) {
                     ResultPanel(won: model.session?.status == .won).environmentObject(model).foregroundColor(CapyPalette.ink)
                         .environment(\.appLanguage, language)
+                        .environment(\.dynamicTypeSize, dynamicTypeSize)
                         .environment(\.capyAccessibilityFocus, $focusedControl)
                         .environment(\.capyButtonActivation, activate)
                 }
@@ -204,6 +207,7 @@ struct GameView: View {
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @StateObject private var feedback = GameFeedbackPresentation()
+    @State private var hintContentHeight: CGFloat = 66
     private var canPresentFeedback: Bool {
         scenePhase == .active && model.hint == nil && model.sheet == nil && !model.loading &&
         !model.challengePending && model.errorMessage == nil && model.notice == nil
@@ -211,7 +215,12 @@ struct GameView: View {
     var body: some View {
         GeometryReader { geometry in
             if let s = model.session {
-                let boardSide = max(190, min(geometry.size.width - 28, geometry.size.height - 420, 500))
+                // Preserve the normal reference layout for short explanations.
+                // Longer/larger text may grow only into spare board space; the
+                // remainder scrolls inside its own viewport, never over Close.
+                let maximumHintHeight = max(66, geometry.size.height - 420 - 190 + 66)
+                let hintHeight = model.hint == nil ? 66 : min(max(66, hintContentHeight), maximumHintHeight)
+                let boardSide = max(190, min(geometry.size.width - 28, geometry.size.height - 420 - (hintHeight - 66), 500))
                 let covered = s.status != .playing || model.sheet != nil || model.loading || model.challengePending
                 ZStack {
                     VStack(spacing: 0) {
@@ -244,8 +253,19 @@ struct GameView: View {
                         }.frame(height: 40).opacity(model.hint == nil ? 1 : 0.35).accessibilityHidden(covered || model.hint != nil)
                         Group {
                             if let hint = model.hint, let useID = model.progress.activeHintUse?.id {
-                                HintPanel(hint: hint).frame(height: 66, alignment: .bottom)
+                                ScrollView(.vertical, showsIndicators: true) {
+                                    HintPanel(hint: hint)
+                                        .background(GeometryReader { layout in
+                                            Color.clear.preference(key: HintContentHeightKey.self, value: layout.size.height)
+                                        })
+                                }
+                                    .frame(height: hintHeight)
+                                    .background(CapyPalette.paper)
+                                    .clipShape(RoundedRectangle(cornerRadius: 17))
                                     .id(useID)
+                                    .onPreferenceChange(HintContentHeightKey.self) { height in
+                                        if height > 0 { hintContentHeight = ceil(height) }
+                                    }
                                     .onAppear { model.hintDidAppear(useID: useID) }
                                     .onChange(of: scenePhase) { phase in
                                         if phase == .active { model.hintDidAppear(useID: useID) }
@@ -264,7 +284,7 @@ struct GameView: View {
                                     }
                             }
                             else { RuleStrip() }
-                        }.frame(height: 66).padding(.top, 8)
+                        }.frame(height: hintHeight).padding(.top, 8)
                         Spacer(minLength: 10)
                         PuzzleBoardView(puzzle: s.puzzle, found: s.found, marks: s.marks, errors: s.errors,
                                         sessionID: s.id, lives: s.lives,
@@ -474,15 +494,21 @@ struct TutorialPanel: View {
 
 struct HintPanel: View {
     @Environment(\.appLanguage) private var language
+    @ScaledMetric(relativeTo: .footnote) private var textSize: CGFloat = 13
     let hint: PuzzleHint
     var body: some View {
-        Text(language.text(hint.explanation)).font(.system(size: 13, weight: .semibold, design: .rounded))
+        Text(language.text(hint.explanation)).font(.system(size: textSize, weight: .semibold, design: .rounded))
             .fixedSize(horizontal: false, vertical: true).frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, 17).padding(.vertical, 11)
             .background(CapyPalette.paper).clipShape(RoundedRectangle(cornerRadius: 17))
             .accessibilityLabel(language.text("Hint. \(hint.rule). \(hint.explanation)"))
             .accessibilityIdentifier("hint_explanation").capyFocus("hint_explanation")
     }
+}
+
+private struct HintContentHeightKey: PreferenceKey {
+    static var defaultValue: CGFloat = 66
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) { value = max(value, nextValue()) }
 }
 
 struct ResultPanel: View {

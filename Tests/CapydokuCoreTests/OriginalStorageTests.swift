@@ -40,6 +40,105 @@ final class OriginalStorageTests: XCTestCase {
         XCTAssertEqual(try FileManager.default.contentsOfDirectory(atPath: cache.path).count, 1)
         XCTAssertEqual(store.load().progress, progress)
     }
+
+    func testDamagedExperimentalCacheIsPreservedAndRepairedBeforeWritingSaveReference() throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let puzzle = try PuzzleGenerator.generate(level: 151)
+        var progress = PlayerProgress(); progress.begin(puzzle: puzzle)
+        let store = SaveStore(directory: directory, packagedPuzzle: { _ in nil })
+        try store.save(progress)
+        _ = progress.session?.toggleMark(at: 0); try store.save(progress)
+
+        let savedSession = try XCTUnwrap(try payload(store)["session"] as? [String: Any])
+        let reference = try XCTUnwrap(savedSession["puzzleReference"] as? [String: Any])
+        let digest = try XCTUnwrap(reference["checksum"] as? String)
+        let cache = directory.appendingPathComponent("BoardCache", isDirectory: true)
+        let boardURL = cache.appendingPathComponent(digest + ".json")
+        let originalBoardBytes = try Data(contentsOf: boardURL)
+        let damaged = Data("damaged experimental board".utf8)
+        try damaged.write(to: boardURL, options: .atomic)
+
+        try store.transaction(progress: &progress) { candidate in
+            _ = candidate.session?.toggleMark(at: 1)
+        }
+        XCTAssertEqual(try Data(contentsOf: boardURL), originalBoardBytes)
+        let preserved = try FileManager.default.contentsOfDirectory(
+            at: cache.appendingPathComponent("Preserved", isDirectory: true), includingPropertiesForKeys: nil)
+        XCTAssertEqual(preserved.count, 1)
+        XCTAssertEqual(try Data(contentsOf: XCTUnwrap(preserved.first)), damaged)
+
+        // A fresh SaveStore has no warm validation cache. Both player files may
+        // reference this board, so verify the repaired dependency on cold load.
+        let cold = SaveStore(directory: directory, packagedPuzzle: { _ in nil }).load()
+        XCTAssertEqual(cold.source, .primary)
+        XCTAssertEqual(cold.progress, progress)
+        XCTAssertNil(cold.warning)
+        XCTAssertEqual(cold.progress.session?.marks, [0, 1])
+    }
+
+    func testFailedDamagedBoardPreservationThrowsWithoutPublishingNewPlayerState() throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let packaged = try PuzzleGenerator.generate(level: 1)
+        let experimental = try PuzzleGenerator.generate(level: 151)
+        let store = SaveStore(directory: directory, packagedPuzzle: { $0 == 1 ? packaged : nil })
+        var progress = PlayerProgress(); progress.begin(puzzle: packaged)
+        _ = progress.session?.toggleMark(at: 0)
+        let previousPackagedProgress = progress
+        try store.save(progress)
+        progress.begin(puzzle: experimental); try store.save(progress)
+        let beforeTransaction = progress
+        let beforePrimary = try Data(contentsOf: store.primaryURL)
+        let beforeBackup = try Data(contentsOf: store.backupURL)
+
+        let savedSession = try XCTUnwrap(try payload(store)["session"] as? [String: Any])
+        let reference = try XCTUnwrap(savedSession["puzzleReference"] as? [String: Any])
+        let digest = try XCTUnwrap(reference["checksum"] as? String)
+        let cache = directory.appendingPathComponent("BoardCache", isDirectory: true)
+        let boardURL = cache.appendingPathComponent(digest + ".json")
+        let damaged = Data("damaged experimental board".utf8)
+        try damaged.write(to: boardURL, options: .atomic)
+        // Real filesystem failure: a file occupies the required preservation
+        // directory. Do not discard the evidence to claim a successful repair.
+        let obstruction = Data("preservation directory unavailable".utf8)
+        try obstruction.write(to: cache.appendingPathComponent("Preserved"), options: .atomic)
+
+        XCTAssertThrowsError(try store.transaction(progress: &progress) { candidate in
+            _ = candidate.session?.toggleMark(at: 1)
+        })
+        XCTAssertEqual(progress, beforeTransaction)
+        XCTAssertEqual(try Data(contentsOf: store.primaryURL), beforePrimary)
+        XCTAssertEqual(try Data(contentsOf: store.backupURL), beforeBackup)
+        XCTAssertEqual(try Data(contentsOf: boardURL), damaged)
+        XCTAssertEqual(try Data(contentsOf: cache.appendingPathComponent("Preserved")), obstruction)
+
+        let cold = SaveStore(directory: directory, packagedPuzzle: { $0 == 1 ? packaged : nil }).load()
+        XCTAssertEqual(cold.source, .backup)
+        XCTAssertEqual(cold.progress, previousPackagedProgress)
+        XCTAssertNotNil(cold.warning)
+    }
+
+    func testExperimentalHistoryCheckpointRejectsMalformedCountsAndDigests() throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let store = SaveStore(directory: directory)
+        var progress = PlayerProgress()
+        progress.experimentalHistoryCheckpoint = .init(count: 0, chainSHA256: String(repeating: "a", count: 64))
+        try store.save(progress)
+        let saved = try Data(contentsOf: store.primaryURL)
+        XCTAssertEqual(store.load().progress.experimentalHistoryCheckpoint, progress.experimentalHistoryCheckpoint)
+        for (count, hash) in [(-1, String(repeating: "a", count: 64)),
+                              (100_001, String(repeating: "a", count: 64)),
+                              (1, String(repeating: "A", count: 64)),
+                              (1, String(repeating: "g", count: 64)),
+                              (1, String(repeating: "a", count: 63))] {
+            progress.experimentalHistoryCheckpoint = .init(count: count, chainSHA256: hash)
+            XCTAssertThrowsError(try store.save(progress))
+            XCTAssertEqual(try Data(contentsOf: store.primaryURL), saved)
+        }
+    }
+
     func testUpgradeKeepsAnOldInProgressBoardWhileNewGamesUseTheNewPack() throws {
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         defer { try? FileManager.default.removeItem(at: directory) }

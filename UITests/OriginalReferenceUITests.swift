@@ -76,6 +76,33 @@ final class OriginalReferenceUITests: XCTestCase {
         XCTAssertEqual(item("lives").value as? String, "3")
     }
 
+    func testLargestTextHintKeepsCloseApplyAndBoardReachableInBothLanguages() {
+        for language in ["en", "zh-Hans"] {
+            app.launchEnvironment["CAPYDOKU_UI_LANGUAGE"] = language
+            launch(["-level", "1", "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"])
+            XCTAssertTrue(item("puzzle_board").waitForExistence(timeout: 12))
+            let before = (0..<16).map { item("cell_\($0)").value as? String ?? "" }
+            tap("hint")
+            XCTAssertTrue(item("hint_explanation").waitForExistence(timeout: 5))
+            XCTAssertGreaterThan(item("hint_explanation").frame.height, 120,
+                                 "The real launch must render enlarged hint text, not silently test the default font.")
+            let close = item("hint_close"), apply = item("hint_apply"), board = item("puzzle_board")
+            for control in [close, apply] {
+                XCTAssertTrue(control.isHittable)
+                XCTAssertGreaterThanOrEqual(control.frame.width, 44)
+                XCTAssertGreaterThanOrEqual(control.frame.height, 44)
+            }
+            XCTAssertLessThan(close.frame.maxY, board.frame.minY)
+            XCTAssertGreaterThan(apply.frame.minY, board.frame.maxY)
+            XCTAssertEqual(board.frame.width, board.frame.height, accuracy: 1)
+            XCTAssertGreaterThanOrEqual(board.frame.width, 190)
+            capture("largest-text-hint-\(language)")
+            tap("hint_close")
+            XCTAssertEqual((0..<16).map { item("cell_\($0)").value as? String ?? "" }, before)
+            XCTAssertTrue(item("hint").isHittable)
+        }
+    }
+
     func testFirstLaunchHasWorkingLegalLinksAndAcceptancePersists() {
         launch(["-test-first-launch"])
         XCTAssertTrue(item("accept_terms").waitForExistence(timeout: 10))

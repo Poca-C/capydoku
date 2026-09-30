@@ -1,0 +1,226 @@
+{
+  "schemaVersion": 1,
+  "scope": "StartupVisualTests/testWelcomePresentationLifecycleAndFailedAcceptDoNotAdvancePermissions()",
+  "diagnosis": "实际布局仅 Accept 白字存在精确 1 个物理像素的纵向对齐差异；不是 PNG 元数据或压缩字节差异。没有发现卡片、按钮轮廓、正文、链接或品牌布局移动。",
+  "comparisonMethod": "使用 ImageIO 解码并用 CoreGraphics 归一化为 sRGB 8-bit RGBA，逐像素比较；对白字差异区执行整数像素平移对照。原始六张截图已逐张实际查看；差异区三张裁剪也已逐张查看。",
+  "coordinates": {
+    "origin": "左上角",
+    "unit": "物理像素",
+    "width": 1170,
+    "height": 2532
+  },
+  "verified": {
+    "backgroundVersusForeground": {
+      "changedPixels": 0,
+      "changedChannels": 0
+    },
+    "backgroundVersusReduced": {
+      "changedPixels": 4145,
+      "changedChannels": 12332,
+      "maxChannelDifference": 251,
+      "absoluteChannelDifferenceSum": 861578,
+      "differenceBoundsInclusive": [
+        432,
+        1539,
+        739,
+        1598
+      ]
+    },
+    "reducedVersusForeground": {
+      "changedPixels": 4145,
+      "changedChannels": 12332,
+      "maxChannelDifference": 251,
+      "absoluteChannelDifferenceSum": 861578,
+      "differenceBoundsInclusive": [
+        432,
+        1539,
+        739,
+        1598
+      ]
+    },
+    "whiteGlyphs": {
+      "threshold": "RGB 各通道 > 245",
+      "pixelsEach": 7657,
+      "backgroundBoundsInclusive": [
+        433,
+        1541,
+        737,
+        1597
+      ],
+      "reducedBoundsInclusive": [
+        433,
+        1540,
+        737,
+        1596
+      ],
+      "foregroundBoundsInclusive": [
+        433,
+        1541,
+        737,
+        1597
+      ]
+    },
+    "alignedPatch": {
+      "crop": [
+        420,
+        1525,
+        335,
+        90
+      ],
+      "reducedShiftRelativeToBackground": [
+        0,
+        -1
+      ],
+      "changedChannelsAfterAlignment": 0,
+      "absoluteChannelDifferenceAfterAlignment": 0
+    }
+  },
+  "inference": "可能与 SwiftUI 的 scale/opacity 合成路径像素对齐有关。此为推断；证据只直接证明 1px 字形对齐差异，不能声称已确认底层原因。",
+  "failedRuns": [
+    {
+      "bundle": "Validation/test-runs/original-0215-app-first.xcresult",
+      "result": "完整 256 项中的该项两个 PNG 严格相等断言失败；其他 255 项通过（父任务执行）。"
+    },
+    {
+      "bundle": "Validation/test-runs/original-0215-welcome-sync-first.xcresult",
+      "result": "仅给三张稳定状态改为 afterScreenUpdates:true，严格 PNG 比较仍产生同样两个失败。稳定图 02/03/04/05 的导出 PNG SHA256 与首次失败完全一致。"
+    },
+    {
+      "bundle": "Validation/test-runs/original-0215-welcome-pixel-17e.xcresult",
+      "result": "首次 helper 不能按 UIKit 色样精确定位 SwiftUI 填充，产生 CGRect 解包失败。仅定位改为从截图选取接近主题色的主填充，所有后续相等校验仍使用截图实际像素严格比较。"
+    }
+  ],
+  "testCorrection": {
+    "file": "AppTests/StartupVisualTests.swift",
+    "productionChanged": false,
+    "exactChecks": [
+      "相同运动模式的后台与最终前台 PNG 全图严格相等。",
+      "跨 Reduce Motion 时保持图像尺寸、按钮实际边界、字形尺寸、横坐标、字形裁剪像素完全相等。",
+      "仅容许按钮文字在纵向相差最多 1 个物理像素。",
+      "移除已严格验证的字形后，全屏每一个 RGBA 像素仍必须完全相等。",
+      "仍保留非空截图、宿主尺寸、未同意/持久化失败/权限等待/完成顺序的全部有效断言。"
+    ],
+    "locatorOnly": "定位橙色填充时允许色样与实际截图的各8-bit通道最多差1，以应对 UIKit/SwiftUI 色样量化差异；选中后，两图实际填充必须完全一致。这不是全图颜色容差。",
+    "earlySample": "40ms 入场采样未改动。首次失败的01图仅品牌可见；专项最终17e的01图可见半透明缩小卡片。两者都不是冻结逐帧时序验收。",
+    "limitations": [
+      "宿主 scenePhase 与 Reduce Motion override 不等同于系统设置切换。",
+      "没有增加真机或 VoiceOver 通过声明。",
+      "没有忽略失败或将画面相等降为非空。"
+    ]
+  },
+  "finalTargetedResults": [
+    {
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-0215-welcome-pixel-17e-final.xcresult",
+      "tests": 1,
+      "failures": 0,
+      "seconds": 10.82
+    },
+    {
+      "device": "iPhone 17 Pro",
+      "bundle": "Validation/test-runs/original-0215-welcome-pixel-pro-final.xcresult",
+      "tests": 1,
+      "failures": 0,
+      "seconds": 5.823
+    }
+  ],
+  "finalImageCheck": "最终17e稳定图02/03/04/05的PNG SHA256与原始已审阅图完全相同。最终17e变化的00与01两张已另外实际查看，非空且画面正常。所有原始失败记录保留，未提升到正式图册。",
+  "sources": {
+    "original-0215-welcome-lifecycle-diagnostic": {
+      "welcome-transition-05-notification-pending-brand-only": {
+        "source": "Validation/test-runs/original-0215-welcome-lifecycle-diagnostic/872A82C0-0DD0-457B-BE8E-78E1A13B3B11.png",
+        "sha256": "d6b45b48440ad0d940b0df4e0056635f6ea49c44c7d78e30810986a4b1668296",
+        "bytes": 215145
+      },
+      "welcome-transition-04-foreground-settled": {
+        "source": "Validation/test-runs/original-0215-welcome-lifecycle-diagnostic/110E6154-D88F-4BBF-9D70-252DD8EF5CA2.png",
+        "sha256": "2e8755bf6bb052c5ff5cf12c8fe32371359fe4fd362f6b205cf65b6c68e18f90",
+        "bytes": 340715
+      },
+      "welcome-transition-03-reduce-motion-view-override": {
+        "source": "Validation/test-runs/original-0215-welcome-lifecycle-diagnostic/D623C3E2-D4CC-4C33-BDEB-61CCE919B446.png",
+        "sha256": "a031160f5c3031a685174c76424e9bbe9939dd712c122af630dd00a565105f3c",
+        "bytes": 340758
+      },
+      "welcome-transition-02-background-settled": {
+        "source": "Validation/test-runs/original-0215-welcome-lifecycle-diagnostic/1BE05E2E-2B07-44C4-8F5D-1CE5DDBC5BF7.png",
+        "sha256": "2e8755bf6bb052c5ff5cf12c8fe32371359fe4fd362f6b205cf65b6c68e18f90",
+        "bytes": 340715
+      },
+      "welcome-transition-01-entrance-sample": {
+        "source": "Validation/test-runs/original-0215-welcome-lifecycle-diagnostic/13184C6F-7349-4F7F-9703-C4B019782E3E.png",
+        "sha256": "d6b45b48440ad0d940b0df4e0056635f6ea49c44c7d78e30810986a4b1668296",
+        "bytes": 215145
+      },
+      "welcome-transition-00-loading-host-ready": {
+        "source": "Validation/test-runs/original-0215-welcome-lifecycle-diagnostic/1340D001-3505-4ABF-81D3-A58E7FAA50B9.png",
+        "sha256": "5f9b1c8956bacdc982a40df6ac2eb6e7cb47dd053ef5daa9c9fd0c437dab346a",
+        "bytes": 1639053
+      }
+    },
+    "original-0215-welcome-sync-first-attachments": {
+      "welcome-transition-05-notification-pending-brand-only": {
+        "source": "Validation/test-runs/original-0215-welcome-sync-first-attachments/907FCFD1-FE99-4789-B629-A50504B35809.png",
+        "sha256": "d6b45b48440ad0d940b0df4e0056635f6ea49c44c7d78e30810986a4b1668296",
+        "bytes": 215145
+      },
+      "welcome-transition-04-foreground-settled": {
+        "source": "Validation/test-runs/original-0215-welcome-sync-first-attachments/881FE4A5-AE0E-4CE5-87D0-B525F8A41146.png",
+        "sha256": "2e8755bf6bb052c5ff5cf12c8fe32371359fe4fd362f6b205cf65b6c68e18f90",
+        "bytes": 340715
+      },
+      "welcome-transition-03-reduce-motion-view-override": {
+        "source": "Validation/test-runs/original-0215-welcome-sync-first-attachments/1A802FDF-882B-4D5C-85D0-EAFBFDEF8902.png",
+        "sha256": "a031160f5c3031a685174c76424e9bbe9939dd712c122af630dd00a565105f3c",
+        "bytes": 340758
+      },
+      "welcome-transition-02-background-settled": {
+        "source": "Validation/test-runs/original-0215-welcome-sync-first-attachments/55C477B3-CE51-4F02-9392-6A93E42CC3C3.png",
+        "sha256": "2e8755bf6bb052c5ff5cf12c8fe32371359fe4fd362f6b205cf65b6c68e18f90",
+        "bytes": 340715
+      },
+      "welcome-transition-01-entrance-sample": {
+        "source": "Validation/test-runs/original-0215-welcome-sync-first-attachments/03FDC69B-58F5-4565-8EAC-EE91B9625CAD.png",
+        "sha256": "6a4ab8bb37d6ec98b66f39c1089772bf4874ac0f3a5b69955c1a69f71b470893",
+        "bytes": 311702
+      },
+      "welcome-transition-00-loading-host-ready": {
+        "source": "Validation/test-runs/original-0215-welcome-sync-first-attachments/9DFCDDAD-C6A4-4CBA-B511-A1D3238F9742.png",
+        "sha256": "dc1ac2a78e9ba82d7c0da2c73bdd414bafe766921f44321ff28f3eb5e4b33191",
+        "bytes": 1639018
+      }
+    },
+    "original-0215-welcome-pixel-17e-final-attachments": {
+      "welcome-transition-05-notification-pending-brand-only": {
+        "source": "Validation/test-runs/original-0215-welcome-pixel-17e-final-attachments/5A240BBD-1CC4-4FBA-8A63-179436CDD4B8.png",
+        "sha256": "d6b45b48440ad0d940b0df4e0056635f6ea49c44c7d78e30810986a4b1668296",
+        "bytes": 215145
+      },
+      "welcome-transition-04-foreground-settled": {
+        "source": "Validation/test-runs/original-0215-welcome-pixel-17e-final-attachments/FDBBC43B-7CA3-4C36-865A-F3AC44116E8B.png",
+        "sha256": "2e8755bf6bb052c5ff5cf12c8fe32371359fe4fd362f6b205cf65b6c68e18f90",
+        "bytes": 340715
+      },
+      "welcome-transition-03-reduce-motion-view-override": {
+        "source": "Validation/test-runs/original-0215-welcome-pixel-17e-final-attachments/5D259C19-02D3-49B4-B471-492C81FEFBC4.png",
+        "sha256": "a031160f5c3031a685174c76424e9bbe9939dd712c122af630dd00a565105f3c",
+        "bytes": 340758
+      },
+      "welcome-transition-02-background-settled": {
+        "source": "Validation/test-runs/original-0215-welcome-pixel-17e-final-attachments/1A7AF87E-F701-4599-836A-C8B249DAF918.png",
+        "sha256": "2e8755bf6bb052c5ff5cf12c8fe32371359fe4fd362f6b205cf65b6c68e18f90",
+        "bytes": 340715
+      },
+      "welcome-transition-01-entrance-sample": {
+        "source": "Validation/test-runs/original-0215-welcome-pixel-17e-final-attachments/902AAD2D-B862-4EEA-B645-325DA32A1DBB.png",
+        "sha256": "6a4ab8bb37d6ec98b66f39c1089772bf4874ac0f3a5b69955c1a69f71b470893",
+        "bytes": 311702
+      },
+      "welcome-transition-00-loading-host-ready": {
+        "source": "Validation/test-runs/original-0215-welcome-pixel-17e-final-attachments/A905E08F-4E86-4CE2-A24E-69F7E8B5D64E.png",
+        "sha256": "12695a9ed0bc56a590eead680d70c72b25a86687caafecb5be05481e93650a8d",
+        "bytes": 1639603
+      }
+    }
+  }
+}

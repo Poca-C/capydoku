@@ -1,0 +1,78 @@
+{
+  "build": "0.2.15 (18)",
+  "scope": "Normal simulator update and launch without test/reset arguments. Install preserves bytes. After launch checks each envelope checksum and all payload fields, normalizing only six source-declared Set fields. No other arrays ignored or sorted. Not an uninstall, device, or App Store acceptance.",
+  "initialFailure": {
+    "script": "Validation/test-runs/install_0215_preserving_progress.py",
+    "device": "iPhone 17 Pro",
+    "stage": "After normal launch; install byte comparison passed",
+    "reason": "Only session.marks Set serialization changed [5,9,13] to [13,5,9]. Both checksums valid; backup exactly matches previous 0.2.14 primary SHA. Normal foreground calls save. No player values changed.",
+    "diagnosticDirectory": "Validation/test-runs/original-0215-install-diagnostic",
+    "productionChange": false
+  },
+  "devices": [
+    {
+      "device": "iPhone 17 Pro",
+      "deviceID": "3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3",
+      "version": "0.2.15 (18)",
+      "dataContainerChanged": true,
+      "launch": "com.capydoku.demo: 35486",
+      "installBytesUnchanged": true,
+      "launchPlayerStateUnchanged": true,
+      "primaryMatchesPrevious0214State": true,
+      "allEnvelopeChecksumsValid": true,
+      "launchBytesUnchanged": false,
+      "before": {
+        "progress.json": {
+          "bytes": 3746,
+          "sha256": "caea64edb451cb8f9d1036598b6177b91ff439d450a9377e5bc760c5ce2e6566"
+        },
+        "progress.backup.json": {
+          "bytes": 3746,
+          "sha256": "4a717917dd74a15b28b3dcbed2b0376342d767fe050ea7f430b0a7528a01e5c2"
+        }
+      },
+      "afterLaunch": {
+        "progress.json": {
+          "bytes": 3746,
+          "sha256": "6862725d547dc78a71fadaabd97047b2e4859be97e76718440d1a1bb90098ba0"
+        },
+        "progress.backup.json": {
+          "bytes": 3746,
+          "sha256": "caea64edb451cb8f9d1036598b6177b91ff439d450a9377e5bc760c5ce2e6566"
+        }
+      }
+    },
+    {
+      "device": "iPhone 17e",
+      "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+      "version": "0.2.15 (18)",
+      "dataContainerChanged": true,
+      "launch": "com.capydoku.demo: 35512",
+      "installBytesUnchanged": true,
+      "launchPlayerStateUnchanged": true,
+      "primaryMatchesPrevious0214State": true,
+      "allEnvelopeChecksumsValid": true,
+      "launchBytesUnchanged": true,
+      "before": {
+        "progress.json": {
+          "bytes": 1078,
+          "sha256": "7e8827414371c98c312b7dba72169b67c1bd64c7ef0e305a4541d40b0e7231e4"
+        },
+        "progress.backup.json": {
+          "bytes": 1078,
+          "sha256": "7e8827414371c98c312b7dba72169b67c1bd64c7ef0e305a4541d40b0e7231e4"
+        }
+      },
+      "afterLaunch": {
+        "progress.json": {
+          "bytes": 1078,
+          "sha256": "7e8827414371c98c312b7dba72169b67c1bd64c7ef0e305a4541d40b0e7231e4"
+        },
+        "progress.backup.json": {
+          "bytes": 1078,
+          "sha256": "7e8827414371c98c312b7dba72169b67c1bd64c7ef0e305a4541d40b0e7231e4"
+        }
+      }
+    }
+  ]
+}

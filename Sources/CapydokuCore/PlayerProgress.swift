@@ -117,6 +117,7 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
     public var currentLevel: Int
     public var completedLevels: Set<Int>
     public var attemptCounts: [String: Int]
+    public var experimentalHistoryCheckpoint: ExperimentalHistoryCheckpoint?
     public var session: GameSession?
     public var settings: GameSettings
     public var tutorialStep: Int
@@ -147,6 +148,7 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
         currentLevel = 1
         completedLevels = []
         attemptCounts = [:]
+        experimentalHistoryCheckpoint = nil
         session = nil
         settings = GameSettings()
         tutorialStep = 0
@@ -519,7 +521,7 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
     }
 
     private enum CodingKeys: String, CodingKey {
-        case unlockedLevel, currentLevel, completedLevels, attemptCounts, session, settings
+        case unlockedLevel, currentLevel, completedLevels, attemptCounts, session, settings, experimentalHistoryCheckpoint
         case tutorialStep, tutorialCompleted, checkIn, bonusHints, bonusDirect, rewardLedger
         case pendingLevelResultEvents, activeHintUse, pendingBuffEvents
         case freeToolGrantedLevels, levelToolBalances, referenceToolGrantKeys, carriedToolBalance, levelStartLocalBalances, freeReviveUsage
@@ -533,6 +535,7 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
         currentLevel = try values.decodeIfPresent(Int.self, forKey: .currentLevel) ?? 1
         completedLevels = try values.decodeIfPresent(Set<Int>.self, forKey: .completedLevels) ?? []
         attemptCounts = try values.decodeIfPresent([String: Int].self, forKey: .attemptCounts) ?? [:]
+        experimentalHistoryCheckpoint = try values.decodeIfPresent(ExperimentalHistoryCheckpoint.self, forKey: .experimentalHistoryCheckpoint)
         session = try values.decodeIfPresent(GameSession.self, forKey: .session)
         settings = try values.decodeIfPresent(GameSettings.self, forKey: .settings) ?? GameSettings()
         tutorialStep = try values.decodeIfPresent(Int.self, forKey: .tutorialStep) ?? 0

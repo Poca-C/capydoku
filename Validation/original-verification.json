@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "date": "2026-10-01",
-  "build": "0.2.14 (17)",
+  "build": "0.2.15 (18)",
   "status": "Partial original-spec alignment; remaining client, reference and release gaps open.",
   "originalSHA256": "274bbf15f031bd80bb8b360cf14c0266acff370a230d9cad1b1785461df54dd2",
   "currentPackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49",
@@ -16,12 +16,12 @@
     "minimumOSRuntime": "not tested; compile target iOS 15"
   },
   "core": {
-    "build": "0.2.14 (17)",
-    "passed": 133,
+    "build": "0.2.15 (18)",
+    "passed": 144,
     "failed": 0,
-    "seconds": 48.93,
-    "log": "Validation/test-runs/original-0214-core.log",
-    "scope": "Full Swift package suite, four new capacity/profile tests. Packaged150 unchanged; new endless profile is provisional."
+    "seconds": 50.975,
+    "log": "Validation/test-runs/original-0215-core.log",
+    "scope": "Complete Swift package suite including eight experimental history cases and three cache/checkpoint storage cases. No new packaged-level production or formal difficulty acceptance."
   },
   "pythonImport": {
     "passed": 6,
@@ -545,6 +545,34 @@
       "failed": 0,
       "seconds": 78.625,
       "scope": "Chinese first-launch legal UI; Chinese default/language switch/same-board relaunch; actual found-origin swipe rejection; English first-launch consent and relaunch."
+    },
+    {
+      "build": "0.2.15 (18)",
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-0215-app-final.xcresult",
+      "appTestsPassed": 256,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 84.105,
+      "scope": "Complete AppTests, including all four OriginalUIContractTests (no exclusions), five actual generator/history/save/cold-restore integrations and complete local event-chain test. Simulator locally signed. Final full rerun follows precise Welcome rendering comparison correction; production Welcome unchanged."
+    },
+    {
+      "build": "0.2.15 (18)",
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-0215-ui-17e.xcresult",
+      "uiTestsPassed": 5,
+      "failed": 0,
+      "seconds": 145.505,
+      "scope": "Chinese default/language switch/relaunch; generation failure keeps L150; L150 to151 full board restore; normal Hint Apply; largest text Hint in both languages."
+    },
+    {
+      "build": "0.2.15 (18)",
+      "device": "iPhone 17 Pro",
+      "bundle": "Validation/test-runs/original-0215-ui-pro.xcresult",
+      "uiTestsPassed": 2,
+      "failed": 0,
+      "seconds": 60.668,
+      "scope": "L150 to151 full board restore; largest text Hint in both languages."
     }
   ],
   "visualEvidence": {
@@ -570,12 +598,13 @@
   ],
   "historicalFailuresRetained": "Initial UI/app runs and first full-core run failed on changed fixture assumptions or real UI issues; these are retained under Validation/test-runs. Only explicitly listed successful reruns count. Old 88-item checklist completion counts are superseded.",
   "applicationTests": {
-    "build": "0.2.14 (17)",
-    "passed": 246,
+    "build": "0.2.15 (18)",
+    "passed": 256,
     "failed": 0,
-    "seconds": 69.26,
-    "bundle": "Validation/test-runs/original-0214-app-final.xcresult",
-    "scope": "All AppTests except OriginalUIContractTests. Includes 20 production-default real-Keychain tests, 10 injected-native-pan path tests, two Welcome contrast tests and one hosted Welcome lifecycle test. Simulator uses local signing; not device Keychain acceptance. Final UI correction removes only an unused container accessibility identifier after this run; UI tests explicitly reverify Accept."
+    "skipped": 0,
+    "seconds": 84.105,
+    "bundle": "Validation/test-runs/original-0215-app-final.xcresult",
+    "scope": "Complete AppTests, including all four OriginalUIContractTests (no exclusions), five actual generator/history/save/cold-restore integrations and complete local event-chain test. Simulator locally signed. Final full rerun follows precise Welcome rendering comparison correction; production Welcome unchanged."
   },
   "supersededOrInterruptedRuns": [
     "reward-readiness-final was intentionally interrupted to stop two runners targeting one simulator; not counted as success.",
@@ -618,26 +647,30 @@
     }
   ],
   "buildVerification": {
-    "bundleVersion": "0.2.14 (17)",
+    "bundleVersion": "0.2.15 (18)",
     "simulatorDebug": "passed with CODE_SIGNING_ALLOWED=YES and simulator-only embedded Keychain entitlements",
-    "simulatorLog": "Validation/test-runs/original-0214-app-final.log",
+    "simulatorLog": "Validation/test-runs/original-0215-app-final.log",
     "genericIOSReleaseUnsigned": "passed",
-    "releaseLog": "Validation/test-runs/original-0214-release-final.log",
+    "releaseLog": "Validation/test-runs/original-0215-release.log",
     "signingAndDeviceExecution": "Simulator locally signed; generic device Release compile is unsigned. Physical devices, minimum runtime, TestFlight and App Store remain unverified.",
     "sourceDocumentSHA256Unchanged": true,
-    "normalInstallEvidence": "Validation/original-0214-install-audit.json",
+    "normalInstallEvidence": "Validation/original-0215-install-audit.json",
     "normalInstallDevices": [
       {
         "device": "iPhone 17 Pro",
-        "version": "0.2.14 (17)",
-        "normalProgressBytesUnchanged": true,
-        "launch": "com.capydoku.demo: 24721"
+        "version": "0.2.15 (18)",
+        "installBytesUnchanged": true,
+        "launchPlayerStateUnchanged": true,
+        "primaryMatchesPrevious0214State": true,
+        "launch": "com.capydoku.demo: 35486"
       },
       {
         "device": "iPhone 17e",
-        "version": "0.2.14 (17)",
-        "normalProgressBytesUnchanged": true,
-        "launch": "com.capydoku.demo: 24868"
+        "version": "0.2.15 (18)",
+        "installBytesUnchanged": true,
+        "launchPlayerStateUnchanged": true,
+        "primaryMatchesPrevious0214State": true,
+        "launch": "com.capydoku.demo: 35512"
       }
     ]
   },
@@ -825,6 +858,14 @@
       "seconds": 63.421,
       "bundle": "Validation/test-runs/original-0213-app-final.xcresult",
       "scope": "All AppTests except OriginalUIContractTests. Twenty additions: six board recognizer activity/lifecycle, nine reward input gate/visibility, four functional contrast, one actual RootView configured-offer visual test."
+    },
+    {
+      "build": "0.2.14 (17)",
+      "passed": 246,
+      "failed": 0,
+      "seconds": 69.26,
+      "bundle": "Validation/test-runs/original-0214-app-final.xcresult",
+      "scope": "All AppTests except OriginalUIContractTests. Includes 20 production-default real-Keychain tests, 10 injected-native-pan path tests, two Welcome contrast tests and one hosted Welcome lifecycle test. Simulator uses local signing; not device Keychain acceptance. Final UI correction removes only an unused container accessibility identifier after this run; UI tests explicitly reverify Accept."
     }
   ],
   "remoteConfigurationContract": {
@@ -1051,6 +1092,30 @@
           ]
         }
       ]
+    },
+    {
+      "bundleVersion": "0.2.14 (17)",
+      "simulatorDebug": "passed with CODE_SIGNING_ALLOWED=YES and simulator-only embedded Keychain entitlements",
+      "simulatorLog": "Validation/test-runs/original-0214-app-final.log",
+      "genericIOSReleaseUnsigned": "passed",
+      "releaseLog": "Validation/test-runs/original-0214-release-final.log",
+      "signingAndDeviceExecution": "Simulator locally signed; generic device Release compile is unsigned. Physical devices, minimum runtime, TestFlight and App Store remain unverified.",
+      "sourceDocumentSHA256Unchanged": true,
+      "normalInstallEvidence": "Validation/original-0214-install-audit.json",
+      "normalInstallDevices": [
+        {
+          "device": "iPhone 17 Pro",
+          "version": "0.2.14 (17)",
+          "normalProgressBytesUnchanged": true,
+          "launch": "com.capydoku.demo: 24721"
+        },
+        {
+          "device": "iPhone 17e",
+          "version": "0.2.14 (17)",
+          "normalProgressBytesUnchanged": true,
+          "launch": "com.capydoku.demo: 24868"
+        }
+      ]
     }
   ],
   "feedbackCorrection": {
@@ -1161,6 +1226,14 @@
       "seconds": 30.475,
       "log": "Validation/test-runs/original-0212-core.log",
       "scope": "Full Swift package suite; four new language migration/persistence tests. Original levels unchanged; not new difficulty acceptance."
+    },
+    {
+      "build": "0.2.14 (17)",
+      "passed": 133,
+      "failed": 0,
+      "seconds": 48.93,
+      "log": "Validation/test-runs/original-0214-core.log",
+      "scope": "Full Swift package suite, four new capacity/profile tests. Packaged150 unchanged; new endless profile is provisional."
     }
   ],
   "levelResultCorrection": {
@@ -1694,5 +1767,79 @@
       "failed": 0,
       "scope": "Selected paths on two simulators, not the full UI suite."
     }
+  },
+  "corrections0215": {
+    "build": "0.2.15 (18)",
+    "sourceParagraphs": [
+      77,
+      78,
+      79,
+      210,
+      216,
+      230,
+      283,
+      303,
+      305,
+      306,
+      383,
+      404,
+      405,
+      406,
+      407
+    ],
+    "changes": [
+      "Runtime experimental history now persists independent checksummed fingerprints in two consistent append-only copies. Player state saves a small count/hash commitment. Same-level prior variants remain in corpus; malformed or missing evidenced history stops generation rather than silently reducing comparisons.",
+      "New generated board is registered before a player-save transaction publishes it. On progress write failure the old board, inventory and attempts remain; partially reserved candidates stay conservatively excluded. Checked cache repair preserves damaged bytes before replacing them from the valid in-memory puzzle.",
+      "Long Hint text scales with Dynamic Type inside a measured capped scroll viewport; Close/Apply and the square board remain reachable. Both language text fixtures cover12 supported sizes. Actual selected UI runs exercise largest size and full151-board restoration.",
+      "Complete original[383] local business sequence produces19 durable ordered events using real tutorial/game/reward paths and a local mock provider; cold session attribution verified. This is not real analytics transport, production dashboard or SDK acceptance."
+    ],
+    "historyEvidence": {
+      "coreTests": "Tests/CapydokuCoreTests/ExperimentalHistoryTests.swift",
+      "appTests": "AppTests/ExperimentalGenerationHistoryTests.swift",
+      "appCases": 5,
+      "scope": "Actual151→152→cold153 with deleted151 cache still deduplicated; dual corrupted history; legacy missing required level; real progress-write obstruction and recovery; regeneration of151 retains prior151 variant. Each generated success uses100 candidates and packaged150 plus all registered history."
+    },
+    "eventChainEvidence": {
+      "path": "Validation/original-0215-local-event-chain.json",
+      "sha256": "8b85925b304186e509a126fc1cb31f0175e04a68c03f798994b30ba11449f9f4",
+      "events": 19,
+      "fixtureLimit": "Test-only configuration and memory identity; Mock duplicate reward callbacks; no external transmission."
+    },
+    "visualManifest": "Docs/original-hint-0215/manifest.json",
+    "welcomeComparisonDiagnosis": "Validation/original-0215-welcome-diagnostic.json",
+    "uiRegression": {
+      "passed": 7,
+      "failed": 0,
+      "scope": "Selected paths across two simulators, not a full UI suite."
+    },
+    "normalInstallEvidence": "Validation/original-0215-install-audit.json",
+    "failedAttempts": [
+      {
+        "log": "Validation/test-runs/original-0215-history-core.log",
+        "reason": "Initial new history test compile missing try on second Data read; corrected before successful focused and full core runs."
+      },
+      {
+        "bundle": "Validation/test-runs/original-0215-long-hint-before.xcresult",
+        "reason": "Actual long Hint overflow covered Close and lacked scroll viewport. Production layout fixed and final host/UI reruns passed."
+      },
+      {
+        "bundle": "Validation/test-runs/original-0215-app-first.xcresult",
+        "passed": 255,
+        "failed": 1,
+        "assertionFailures": 2,
+        "reason": "Welcome Reduce Motion screenshot differed by exactly one physical pixel in vertical Accept glyph placement; full card/content/other pixels identical. Detailed failed diagnostic reruns retained in welcome report."
+      },
+      {
+        "script": "Validation/test-runs/install_0215_preserving_progress.py",
+        "reason": "Install byte comparison passed, normal launch re-encoded the marks Set in a different order. Original baseline recovered by matching prior audit SHA; all payload fields verified. Final audit checks only declared Set fields without ignoring other ordered arrays."
+      }
+    ],
+    "limitations": [
+      "Legacy migration validates present cache and known experimental levels but cannot prove a same-level variant was never deleted before migration. Modern checkpointed history fails closed when missing or inconsistent.",
+      "History is a bounded Demo implementation (100000 records and64MB); no claim of unlimited production storage or successful infinite generation. Existing original150 pack and0.2.14 independent210-board audit remain unchanged and retain original version labels.",
+      "First six Hint visual proof images carry actual development0.2.14(17) metadata; two final17e images carry0.2.15(18). Host synthetic long text, actual UI and failure evidence are labeled separately.",
+      "Welcome test now requires unchanged background/normal-foreground PNG and exact whole-image pixels except verified identical button glyphs aligned by at most one physical pixel vertically for Reduce Motion. No production change or global image tolerance.",
+      "No full-app accessibility, actual VoiceOver/system Reduce Motion, minimumOS, physical device, frozen reference difficulty/audio, external services or release acceptance claim."
+    ]
   }
 }

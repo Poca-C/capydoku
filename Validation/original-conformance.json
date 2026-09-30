@@ -114,12 +114,13 @@
       ],
       "priority": "客户端部分验证，辅助功能待真机",
       "topic": "Touch target and focus audit",
-      "finding": "已补普通UIKit父容器隔离，修复SwiftUI子层/自定义棋盘暴露；设置/广告/结算隔离与关闭恢复、44pt和长文案布局已验证。",
+      "finding": "已补普通UIKit父容器隔离，修复SwiftUI子层/自定义棋盘暴露；设置/广告/结算隔离与关闭恢复、44pt和长文案布局已验证。 0.2.15修复长Hint覆盖关闭入口，验证中英正文12档字号及两设备最大字号可达。",
       "evidence": [
         "App/Views/SupportingViews.swift",
-        "App/Views/RootView.swift"
+        "App/Views/RootView.swift",
+        "Docs/original-hint-0215/manifest.json"
       ],
-      "next": "保留真实VoiceOver、Hint焦点、全部动态字体及原录屏对照验收；当前自动化不替代手工读屏。"
+      "next": "保留真实VoiceOver、Hint焦点、全应用动态字体及原录屏对照验收；当前提示专项自动化不替代手工读屏。"
     },
     {
       "id": "CLIENT-06",
@@ -136,7 +137,7 @@
         "Sources/CapydokuCore/PlayerProgress.swift",
         "AppTests/ToolSourceAnalyticsTests.swift"
       ],
-      "next": "旧库存无法可靠追溯时保留数量并标未知；正式钥匙串、SDK及完整统计路径仍待签名环境验收。"
+      "next": "旧库存无法可靠追溯时保留数量并标未知；0.2.14已验证真实模拟器钥匙串，0.2.15已验证完整本地事件链；物理设备钥匙串及真实SDK/数据源路径仍待验。"
     },
     {
       "id": "CLIENT-07",
@@ -171,7 +172,7 @@
       ],
       "priority": "本地业务持久链已验证，真实服务待验",
       "topic": "真实业务结果不能因去重或中断而丢失",
-      "finding": "0.2.6–028补真实结果、奖励完成及插页持久链；0.2.9把道具效果和buff_use同盘保存，提示保留同一预览并区分实际展示与Apply，关闭不退次数。17项新增应用专项、7项核心及两设备实际提示恢复路径通过。 0.2.10补激励offer/started/skipped/failed/超时的原事实持久恢复；125核心和162应用全套通过，含9项核心与14项应用新增，17e亦复验。",
+      "finding": "0.2.6–028补真实结果、奖励完成及插页持久链；0.2.9把道具效果和buff_use同盘保存，提示保留同一预览并区分实际展示与Apply，关闭不退次数。17项新增应用专项、7项核心及两设备实际提示恢复路径通过。 0.2.10补激励offer/started/skipped/failed/超时的原事实持久恢复；125核心和162应用全套通过，含9项核心与14项应用新增，17e亦复验。 0.2.15补原文[383]完整本地业务路径，19条事件的顺序、归属和防重通过。",
       "evidence": [
         "App/AppModel.swift",
         "App/Services/AnalyticsRecorder.swift",
@@ -187,7 +188,8 @@
         "Tests/CapydokuCoreTests/HintUsePersistenceTests.swift",
         "Docs/original-tools/manifest.json",
         "AppTests/RewardLifecycleDurabilityTests.swift",
-        "Tests/CapydokuCoreTests/RewardAdEventPersistenceTests.swift"
+        "Tests/CapydokuCoreTests/RewardAdEventPersistenceTests.swift",
+        "Validation/original-0215-local-event-chain.json"
       ],
       "next": "真实SDK及元数据时机、网络上报、服务端确认去重、正式统计口径仍待联调；未首次落盘即强退无法恢复未知事实。"
     },
@@ -457,7 +459,7 @@
       ],
       "title": "提示仅预览，Apply 应用，关闭不改盘",
       "status": "verified",
-      "implemented": "未消费的已确认广告提示奖励在冷恢复时补库存；已消费并保存的HintUseState恢复原预览，不再扣次或补发。实际显示才记录预览，Apply有真实新增X才保存应用结果，关闭不改盘也不退款。两设备实测强退→Home→Continue同提示→Apply→再重启保留标记。",
+      "implemented": "未消费的已确认广告提示奖励在冷恢复时补库存；已消费并保存的HintUseState恢复原预览，不再扣次或补发。实际显示才记录预览，Apply有真实新增X才保存应用结果，关闭不改盘也不退款。两设备实测强退→Home→Continue同提示→Apply→再重启保留标记。 0.2.15长提示滚动和大字号关闭也验证不改棋盘、不重复扣次；Apply仍由玩家确认。",
       "gap": "原提示文案、时序和规则映射仍待冻结资料；未持久化的首次实际展示时间无法跨强退保留。",
       "evidence": [
         "App/AppModel.swift",
@@ -468,7 +470,9 @@
         "Validation/test-runs/original-audio-final.xcresult",
         "AppTests/BuffUseDurabilityTests.swift",
         "Tests/CapydokuCoreTests/HintUsePersistenceTests.swift",
-        "Docs/original-tools/manifest.json"
+        "Docs/original-tools/manifest.json",
+        "AppTests/OriginalUIContractTests.swift",
+        "Docs/original-hint-0215/manifest.json"
       ]
     },
     {
@@ -803,11 +807,14 @@
       ],
       "title": "本产品历史硬拒绝与综合相似度",
       "status": "partial",
-      "implemented": "累计历史逐关检查：180个不同答案、180种不同区域结构；完全重复硬拒绝，无4×4或其他例外。",
-      "gap": "综合阈值0.90尚需样本评审；跨产品比较缺真实语料。",
+      "implemented": "累计历史逐关检查：180个不同答案、180种不同区域结构；完全重复硬拒绝，无4×4或其他例外。 0.2.15补客户端独立历史账册：校验双副本并取一致最长前缀，玩家存档只保存条目数与链校验值；旧缓存不再以try?静默遗漏，同关号旧变体也参与比较。损坏或不能满足已保存checkpoint时停止生成。",
+      "gap": "综合阈值0.90尚需样本评审；跨产品比较缺真实语料。 旧档迁移只核对现存合法缓存与attempt/completed/session证明的关号，无法证明迁移前同关号的旧变体从未丢失；账册有明示容量上限，非无限容量证明。",
       "evidence": [
         "Sources/CapydokuCore/PuzzleSimilarity.swift",
-        "Validation/original-generation/summary.json"
+        "Validation/original-generation/summary.json",
+        "Sources/CapydokuCore/ExperimentalPuzzleHistoryStore.swift",
+        "Tests/CapydokuCoreTests/ExperimentalHistoryTests.swift",
+        "AppTests/ExperimentalGenerationHistoryTests.swift"
       ]
     },
     {
@@ -860,7 +867,7 @@
       ],
       "title": "151+ 十关循环与同等过滤",
       "status": "partial",
-      "implemented": "旧Profile下151–180三个十关组使用累计150关历史严格过滤，合法性和限时生成通过；运行保存独立棋盘缓存并恢复。0.2.1旧Profile下8×8 L150进入6×6 L151与生成失败保留原盘，在17e逐格冷启动恢复通过，此为历史证据。0.2.14确认6×6仅90种合法答案，固定尺寸无法长期严格去重。151+临时Profile v2允许在6–10或8–10范围筛选，先跳过答案容量耗尽的尺寸，分数/深度/波形和硬去重不放宽。最终重生成151–180并在完整6×6答案人工历史下生成291–320；新版L151为10×10，这60关与原150关合计210关独立合法、唯一解、区域连通且答案/区域不重复。",
+      "implemented": "旧Profile下151–180三个十关组使用累计150关历史严格过滤，合法性和限时生成通过；运行保存独立棋盘缓存并恢复。0.2.1旧Profile下8×8 L150进入6×6 L151与生成失败保留原盘，在17e逐格冷启动恢复通过，此为历史证据。0.2.14确认6×6仅90种合法答案，固定尺寸无法长期严格去重。151+临时Profile v2允许在6–10或8–10范围筛选，先跳过答案容量耗尽的尺寸，分数/深度/波形和硬去重不放宽。最终重生成151–180并在完整6×6答案人工历史下生成291–320；新版L151为10×10，这60关与原150关合计210关独立合法、唯一解、区域连通且答案/区域不重复。 0.2.15真实AppModel验证151→152→冷恢复153的累计历史；删除非当前151缓存后，其指纹仍参与拒重。双账册损坏、旧档缺已知历史和新盘写盘失败均保留原局/库存/尝试次数；重复生成151仍比较前一变体。",
       "gap": "新版60关为151–180及容量压力下291–320，未验证181–290、无限生成或全部未来历史组合；跨产品库、正式参考难度仍缺，151+架构仍为获准Demo实验。",
       "evidence": [
         "App/AppModel.swift",
@@ -872,7 +879,9 @@
         "Validation/test-runs/original-ui-current-pack-endless.xcresult",
         "Sources/CapydokuCore/PuzzleAnswerCapacity.swift",
         "Tests/CapydokuCoreTests/EndlessCapacityTests.swift",
-        "Validation/original-generation-0214-final/independent-audit.json"
+        "Validation/original-generation-0214-final/independent-audit.json",
+        "AppTests/ExperimentalGenerationHistoryTests.swift",
+        "Validation/test-runs/original-0215-app-first.xcresult"
       ]
     },
     {
@@ -1127,7 +1136,7 @@
       ],
       "title": "44pt、状态、焦点恢复与可读性",
       "status": "partial",
-      "implemented": "17e已验证Settings/模拟广告/结算底层控件隔离、关闭后恢复原盘、主要按钮44×44及长文案自然增高；有效Button动作发反馈，明暗背景分别配文字色。Hint保留只读棋盘并路由解释焦点。 0.2.13补开关与签到功能文字对比，按下开关文字仍大于4.5:1；装饰色保留。 0.2.14补Welcome功能文字可读色；真实UI发现新增容器标识覆盖同意按钮标识，删除后两设备首启与重启复验通过。",
+      "implemented": "17e已验证Settings/模拟广告/结算底层控件隔离、关闭后恢复原盘、主要按钮44×44及长文案自然增高；有效Button动作发反馈，明暗背景分别配文字色。Hint保留只读棋盘并路由解释焦点。 0.2.13补开关与签到功能文字对比，按下开关文字仍大于4.5:1；装饰色保留。 0.2.14补Welcome功能文字可读色；真实UI发现新增容器标识覆盖同意按钮标识，删除后两设备首启与重启复验通过。 0.2.15复现并修复长提示从固定66pt区域向上覆盖关闭X；正文独立滚动、视口高度有上限、棋盘保持方形。中英提示正文12档动态字号、最大字号关闭/Apply至少44pt及不遮挡已验证，普通字号布局保留。",
       "gap": "Hint的XCTest语义树仍可包含禁用背景内容，不据此宣称VoiceOver可达或不可达；真实VoiceOver焦点顺序、所有动态字体档位、最低系统和真机仍待验。",
       "evidence": [
         "App/Views/RootView.swift",
@@ -1142,7 +1151,8 @@
         "Validation/test-runs/original-ui-scrim-021-final.xcresult",
         "Docs/original-reference/manifest.json",
         "AppTests/FunctionalContrastTests.swift",
-        "Docs/original-welcome-0214/manifest.json"
+        "Docs/original-welcome-0214/manifest.json",
+        "Docs/original-hint-0215/manifest.json"
       ]
     },
     {
@@ -1430,11 +1440,14 @@
       ],
       "title": "全路径埋点验收与测试正式数据隔离",
       "status": "partial",
-      "implemented": "事件固定 internal-demo-offline，测试身份和本地目录隔离。",
+      "implemented": "事件固定 internal-demo-offline，测试身份和本地目录隔离。 0.2.15首次补一条实际本地完整业务路径：同意后首次打开→九步教学→通关教学关→第二关失败/重试→Hint展示/Apply→模拟广告重复回调→通关→后台/冷启结算Session。19条落盘事件的顺序、字段、身份/会话/配置及去重均验证；使用测试身份注入及simulation适配器。",
       "gap": "未验证真实数据源上的首次打开→引导→失败→重试→广告→通关→Session完整路径，TestFlight/生产数据源尚缺。",
       "evidence": [
         "App/Services/AnalyticsRecorder.swift",
-        "Validation/analytics-startup-audit.json"
+        "Validation/analytics-startup-audit.json",
+        "AppTests/AnalyticsRecorderTests.swift",
+        "Validation/original-0215-local-event-chain.json",
+        "Validation/test-runs/original-0215-app-first.xcresult"
       ]
     },
     {
@@ -1464,7 +1477,7 @@
       ],
       "title": "Xcode26/iOS26构建及正式发布",
       "status": "external_pending",
-      "implemented": "0.2.8(11)完成Xcode26.6的Simulator Debug与通用iOS Release无签名构建，正常17Pro/17e均安装并核对版本，17Pro无测试/重置参数启动成功。",
+      "implemented": "0.2.15(18)完成Xcode26.6的Simulator Debug与通用iOS Release无签名构建，两款17Pro/17e均正常覆盖安装并核对版本，无测试/重置参数启动成功。",
       "gap": "未签名Release构建不是可分发安装包；真机签名运行、TestFlight、App Store审核及上架均未完成。",
       "evidence": [
         "Capydoku.xcodeproj/project.pbxproj",
@@ -1473,7 +1486,8 @@
         "Validation/original-verification.json",
         "AppTests/InterstitialAnalyticsTests.swift",
         "AppTests/AnalyticsRecorderTests.swift",
-        "Reference/interstitial-analytics-contract.md"
+        "Reference/interstitial-analytics-contract.md",
+        "Validation/original-0215-install-audit.json"
       ]
     },
     {
@@ -1593,11 +1607,13 @@
       ],
       "title": "玩家存档不写具体棋盘",
       "status": "partial",
-      "implemented": "固定包关卡使用 puzzleReference，恢复从包/兼容归档解析；151+单独不可变BoardCache避免混入player payload。",
+      "implemented": "固定包关卡使用 puzzleReference，恢复从包/兼容归档解析；151+单独不可变BoardCache避免混入player payload。 0.2.15历史指纹另存独立账册，玩家状态仅增加count+chainSHA256检查点，不嵌入具体区域或答案；旧档可选字段兼容。",
       "gap": "固定包引用与旧包兼容恢复已通过；151+缓存是获准Demo实验，不能等同正式版全部棋盘来自安装包的架构。",
       "evidence": [
         "Sources/CapydokuCore/SaveStore.swift",
-        "Tests/CapydokuCoreTests/OriginalStorageTests.swift"
+        "Tests/CapydokuCoreTests/OriginalStorageTests.swift",
+        "Sources/CapydokuCore/ExperimentalPuzzleHistoryStore.swift",
+        "Sources/CapydokuCore/PlayerProgress.swift"
       ]
     },
     {
@@ -1610,7 +1626,7 @@
       ],
       "title": "断点恢复、原子备份与迁移",
       "status": "verified",
-      "implemented": "主存档校验/备份/损坏保留通过；升级加载旧包进行中局保留盘面/库存/签到。consent/win/challenge已用校验双副本，损坏主文件后恢复一次性状态的App测试通过。 0.2.9验证旧schema迁移默认空提示/事件、原预览及来源恢复、非法预览拒绝；恢复已消费广告提示不再次补库存。 0.2.10验证激励已观察状态、旧档迁移、存档/队列失败、冷恢复及过期回调隔离；未收到最终回调不补造终态。",
+      "implemented": "主存档校验/备份/损坏保留通过；升级加载旧包进行中局保留盘面/库存/签到。consent/win/challenge已用校验双副本，损坏主文件后恢复一次性状态的App测试通过。 0.2.9验证旧schema迁移默认空提示/事件、原预览及来源恢复、非法预览拒绝；恢复已消费广告提示不再次补库存。 0.2.10验证激励已观察状态、旧档迁移、存档/队列失败、冷恢复及过期回调隔离；未收到最终回调不补造终态。 0.2.15修复已存在实验棋盘缓存只检查文件存在的问题：保存引用前校验SHA，坏件先保留再从当前已验证棋盘原子修复；失败抛错且事务不发布新玩家状态。实际文件损坏/保存阻塞与冷恢复通过。",
       "gap": "双副本均损坏时无法凭空还原；正式主动Home处理仍待参考，真机强退及存储压力仍待验。",
       "evidence": [
         "Sources/CapydokuCore/SaveStore.swift",
@@ -1622,7 +1638,8 @@
         "Tests/CapydokuCoreTests/HintUsePersistenceTests.swift",
         "Docs/original-tools/manifest.json",
         "AppTests/RewardLifecycleDurabilityTests.swift",
-        "Tests/CapydokuCoreTests/RewardAdEventPersistenceTests.swift"
+        "Tests/CapydokuCoreTests/RewardAdEventPersistenceTests.swift",
+        "Validation/test-runs/original-0215-storage-core.log"
       ]
     },
     {
@@ -1656,7 +1673,7 @@
       ],
       "title": "iOS技术验收与SDK升级兼容",
       "status": "partial",
-      "implemented": "0.2.14通过133项Core及17Pro246项App（排除OriginalUIContractTests）；真实Keychain专项、转弯滑动处理、Welcome生命周期及可读性、151+答案容量已覆盖。初次无权限与截图首帧失败及最终复验记录保留。未签名Release编译通过；实际UI和安装范围见验证记录。 最终两设备选定UI共7项通过；签名后的实际覆盖安装各两次及正常启动通过，现有试玩存档逐字节保留。",
+      "implemented": "0.2.15通过144项Core及17e全量256项App，包含此前排除的4项OriginalUIContractTests。两设备选定UI共7项通过，覆盖大字中英文Hint和150→151完整同盘恢复。真实历史/写盘故障与本地事件链已测；初次失败及修正复验保留。未签名设备Release编译通过。两模拟器正常覆盖安装及启动，安装前后存档字节一致，启动后全部玩家字段一致（仅明确Set字段按集合比较）。",
       "gap": "这不是全部设备/全部场景通过。真机、最低系统、真实SDK升级及远程关闭尚未验证；组合UI运行的启动冲突及成功单独重验已如实记录。",
       "evidence": [
         "Validation/original-verification.json",
@@ -1688,7 +1705,11 @@
         "AppTests/AnalyticsIdentityMigrationTests.swift",
         "AppTests/BoardSwipePathTests.swift",
         "Docs/original-welcome-0214/manifest.json",
-        "Validation/original-0214-install-audit.json"
+        "Validation/original-0214-install-audit.json",
+        "Validation/original-0215-install-audit.json",
+        "Validation/original-0215-welcome-diagnostic.json",
+        "Docs/original-hint-0215/manifest.json",
+        "AppTests/ExperimentalGenerationHistoryTests.swift"
       ]
     },
     {
@@ -1989,5 +2010,5 @@
       ]
     }
   ],
-  "currentBuild": "0.2.14 (17)"
+  "currentBuild": "0.2.15 (18)"
 }

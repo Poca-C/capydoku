@@ -249,7 +249,24 @@ public final class SaveStore: @unchecked Sendable {
             let cache = directory.appendingPathComponent("BoardCache", isDirectory: true)
             try fileManager.createDirectory(at: cache, withIntermediateDirectories: true)
             let url = cache.appendingPathComponent(digest + ".json")
-            if !fileManager.fileExists(atPath: url.path) { try boardData.write(to: url, options: .atomic) }
+            if fileManager.fileExists(atPath: url.path) {
+                let existing = try Data(contentsOf: url)
+                if Self.checksum(existing) != digest {
+                    // Both player-save copies can reference the same immutable
+                    // board. An existing filename alone does not make that
+                    // dependency valid. Preserve the damaged bytes before
+                    // repairing them from the validated in-memory puzzle.
+                    let preserved = cache.appendingPathComponent("Preserved", isDirectory: true)
+                    try fileManager.createDirectory(at: preserved, withIntermediateDirectories: true)
+                    let rejected = preserved.appendingPathComponent(digest + "-" + Self.checksum(existing) + ".json")
+                    if !fileManager.fileExists(atPath: rejected.path) {
+                        try existing.write(to: rejected, options: .atomic)
+                    }
+                    try boardData.write(to: url, options: .atomic)
+                }
+            } else {
+                try boardData.write(to: url, options: .atomic)
+            }
         }
         session.removeValue(forKey: "puzzle")
         session["puzzleReference"] = ["levelID": puzzle.id, "source": source, "checksum": digest]
@@ -291,6 +308,12 @@ public final class SaveStore: @unchecked Sendable {
         // storage safety bounds, not tuning limits imposed on ordinary player progress.
         func counter(_ value: Int) -> Bool { (0...(Int.max / 4)).contains(value) }
         func positive(_ value: Int) -> Bool { value > 0 && counter(value) }
+        if let checkpoint = progress.experimentalHistoryCheckpoint {
+            guard (0...100_000).contains(checkpoint.count), checkpoint.chainSHA256.count == 64,
+                  checkpoint.chainSHA256.utf8.allSatisfy({ (48...57).contains($0) || (97...102).contains($0) }) else {
+                throw SaveStoreError.invalidState("experimental history checkpoint is malformed")
+            }
+        }
         guard positive(progress.unlockedLevel), positive(progress.currentLevel),
               counter(progress.bonusHints), counter(progress.bonusDirect), counter(progress.tutorialStep),
               counter(progress.carriedToolBalance.hints), counter(progress.carriedToolBalance.direct),

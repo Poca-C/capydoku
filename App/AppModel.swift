@@ -53,6 +53,7 @@ final class AppModel: ObservableObject {
     let saveDirectory: URL
     let analytics: AnalyticsRecorder
     private let store: SaveStore
+    private let experimentalHistory: ExperimentalPuzzleHistoryStore
     private let gameplayConfigurations: GameplayConfigurationStore
     private let saveQueue = DispatchQueue(label: "com.capydoku.progress-writes", qos: .utility)
     private let synchronousSaves: Bool
@@ -144,6 +145,7 @@ final class AppModel: ObservableObject {
         let legacy: [Puzzle] = Bundle.main.url(forResource: "levels-legacy-v2", withExtension: "json")
             .flatMap { try? Data(contentsOf: $0) }.flatMap { try? JSONDecoder().decode([Puzzle].self, from: $0) } ?? []
         store = SaveStore(directory: self.saveDirectory, packagedPuzzle: { packagedLevels[$0] }, archivedPuzzles: { id in legacy.filter { $0.id == id } })
+        experimentalHistory = ExperimentalPuzzleHistoryStore(directory: self.saveDirectory)
         let packError = errorMessage
         loadProgress()
         #if DEBUG
@@ -495,6 +497,8 @@ final class AppModel: ObservableObject {
             errorMessage = "This level is not included in the demo pack."; return
         }
         loading = true
+        lastGenerationReport = nil
+        flushPendingSaves()
         let request = UUID(); loadingID = request
         let configuration = configuration(for: level)
         let candidateLimit = generationCandidateLimitOverride ?? configuration.generatorCandidateLimit
@@ -502,21 +506,25 @@ final class AppModel: ObservableObject {
         generationRetryCounts[level] = retry + 1
         let retrySeed: UInt64? = retry == 0 ? nil : (UInt64(level) &* 0x9E3779B97F4A7C15 &+ 0xCA9D0C0) ^ (UInt64(retry) &* 0xD1B54A32D192ED03)
         let packaged = Array(levels.values)
-        let cacheDirectory = saveDirectory.appendingPathComponent("BoardCache")
+        let history = experimentalHistory
+        let checkpoint = progress.experimentalHistoryCheckpoint
+        let requiredLevels = Set((progress.attemptCounts.keys.compactMap(Int.init)
+            + Array(progress.completedLevels) + [session?.puzzle.id].compactMap { $0 }).filter { $0 >= 151 })
         DispatchQueue.global(qos: .userInitiated).async {
-            let result = Result { () throws -> GenerationPipelineResult in
-                let cached = ((try? FileManager.default.contentsOfDirectory(at: cacheDirectory, includingPropertiesForKeys: nil)) ?? []).compactMap { url -> Puzzle? in
-                    guard url.pathExtension == "json", let data = try? Data(contentsOf: url) else { return nil }
-                    return try? JSONDecoder().decode(Puzzle.self, from: data)
-                }
-                let corpus = (packaged + cached).filter { $0.id != level }.map { SimilarityCorpusEntry(game: "CapyDoku", puzzle: $0) }
-                return try PuzzleGenerator.generateAudited(level: level, seed: retrySeed, corpus: corpus, similarityConfiguration: .strict, maxAttempts: candidateLimit, timeBudgetMilliseconds: configuration.generatorBudgetMilliseconds)
+            let result = Result { () throws -> (GenerationPipelineResult, ExperimentalHistoryCheckpoint?) in
+                let previous = try history.load(checkpoint: checkpoint, requiredLevels: requiredLevels)
+                // Same-level variants are still historical boards and must not
+                // disappear from the similarity corpus on a repeat/debug start.
+                let corpus = packaged.map { SimilarityCorpusEntry(game: "CapyDoku", puzzle: $0) } + previous.corpus
+                let generated = try PuzzleGenerator.generateAudited(level: level, seed: retrySeed, corpus: corpus, similarityConfiguration: .strict, maxAttempts: candidateLimit, timeBudgetMilliseconds: configuration.generatorBudgetMilliseconds)
+                let committed = try generated.puzzle.map { try history.record($0, checkpoint: checkpoint, requiredLevels: requiredLevels) }
+                return (generated, committed)
             }
             DispatchQueue.main.async { [weak self] in
                 guard let self, self.loadingID == request else { return }
                 self.loading = false
                 switch result {
-                case .success(let generation):
+                case .success(let (generation, historyCheckpoint)):
                     self.lastGenerationReport = generation.report
                     guard let puzzle = generation.puzzle else {
                         if generation.report.termination == "answer_space_exhausted" {
@@ -525,10 +533,26 @@ final class AppModel: ObservableObject {
                         }
                         self.errorMessage = "Generation stopped safely. Your current board is intact. Please retry. \(generation.report.termination)"; return
                     }
-                    self.progress.begin(puzzle: puzzle, config: configuration)
-                    self.screen = .game; self.save(); self.trackLevelStart(); self.preloadRewardPlacementsIfNeeded()
+                    // The history and new board reference must be durable before
+                    // replacing the playable state. A write failure keeps the old
+                    // in-memory board, inventory and attempt counts unchanged.
+                    var candidate = self.progress
+                    do {
+                        try self.saveQueue.sync {
+                            try self.store.transaction(progress: &candidate) {
+                                $0.begin(puzzle: puzzle, config: configuration)
+                                $0.experimentalHistoryCheckpoint = historyCheckpoint
+                            }
+                        }
+                        self.progress = candidate
+                        self.hint = nil; self.pendingHintAppearance = nil
+                        self.screen = .game; self.trackLevelStart(); self.preloadRewardPlacementsIfNeeded()
+                    } catch {
+                        self.errorMessage = "Generation stopped safely. Your current board is intact. Please retry. \(error.localizedDescription)"
+                    }
                 case .failure(let error):
-                    self.errorMessage = "Generation stopped safely. Your current board is intact. Please retry. \(error.localizedDescription)"
+                    self.errorMessage = error is ExperimentalPuzzleHistoryStore.HistoryError ? error.localizedDescription
+                        : "Generation stopped safely. Your current board is intact. Please retry. \(error.localizedDescription)"
                 }
             }
         }

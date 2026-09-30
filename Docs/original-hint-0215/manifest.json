@@ -1,0 +1,176 @@
+{
+  "capturedBuild": "0.2.14 (17)",
+  "pendingRelease": "0.2.15 (18)",
+  "date": "2026-10-01",
+  "sourceParagraphs": [
+    77,
+    78,
+    79,
+    283,
+    303,
+    305,
+    306
+  ],
+  "captureVersionNote": "前6张采集构建为0.2.14 (17)，作为本轮修复前后证据保留；新增2张17e来自最终0.2.15 (18)实际UI测试，逐张标记版本。",
+  "limitations": [
+    "修复前样本保留为失败证据，前6张中其余5张为修复后证据，不把失败图计为通过。",
+    "托管长提示是测试专用文案长度夹具，不是冻结Pawdoku提示，也不代表当前关卡真实推理措辞。",
+    "AX5托管图使用dynamicTypeSize覆盖；实际UI用启动参数请求最大辅助字号，并通过实际文字高度与截图验证放大，不代表已操作系统设置应用。",
+    "提示正文已在应用测试中验证中英全部12个动态字号，但不据此宣称全应用所有页面动态字体完成。",
+    "截图及XCTest可点击/尺寸验证不等同于真实VoiceOver焦点顺序、真机手势或iOS15最低系统验收。",
+    "实际UI大字截图仅显示滚动视口顶部；阅读全文到底由独立长提示托管测试及底部图证明。"
+  ],
+  "review": "8张均已逐张view_image检查；前6张由视觉复核任务检查，后2张由根任务检查。修复前遮挡关闭入口，修复后提示在独立视口内滚动；当前17e新增151关100格完整恢复与最大中文字号界面证据。",
+  "images": [
+    {
+      "path": "Docs/original-hint-0215/before-long-hint-covered-close.png",
+      "title": "修复前：长提示覆盖关闭入口",
+      "result": "失败复现",
+      "capturedBuild": "0.2.14 (17)",
+      "device": "iPhone 17 Pro",
+      "deviceID": "3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3",
+      "test": "OriginalUIContractTests/testLongHintPreviewCanBeReadWithoutCoveringBoardOrChangingMarks()",
+      "source": "Validation/test-runs/original-0215-long-hint-before-attachments/02D6869F-8F42-4A2B-9A57-560F28BB4247.png",
+      "sourceManifest": "Validation/test-runs/original-0215-long-hint-before-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0215-long-hint-before.xcresult",
+      "attachmentTimestamp": 1790790001.025,
+      "dimensions": [
+        1206,
+        2622
+      ],
+      "sha256": "0b6200bab6c40121d6fb2f7ff5486513171b981d67a37a0c545c0fb7d17c983f",
+      "individuallyViewed": true,
+      "visualReview": "已逐张view_image检查：长提示卡片向上越过固定66pt位置，遮住顶部导航/关闭X、关卡及生命信息；没有内部滚动视口。测试失败于无法找到可滚动提示，截图作为修复前问题证据，不能归入通过样本。宿主请求AX3，但旧字体固定13pt，因此不宣称旧图已经支持该字号。"
+    },
+    {
+      "path": "Docs/original-hint-0215/after-long-hint-ax5-top.png",
+      "title": "修复后：AX5长提示顶部",
+      "result": "通过",
+      "capturedBuild": "0.2.14 (17)",
+      "device": "iPhone 17 Pro",
+      "deviceID": "3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3",
+      "test": "OriginalUIContractTests/testLongHintPreviewCanBeReadWithoutCoveringBoardOrChangingMarks()",
+      "source": "Validation/test-runs/original-0215-hint-app-final-attachments/CB631F3D-1B38-4A98-8CC7-D5912C7669C4.png",
+      "sourceManifest": "Validation/test-runs/original-0215-hint-app-final-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0215-hint-app-final.xcresult",
+      "attachmentTimestamp": 1790790203.304,
+      "dimensions": [
+        1206,
+        2622
+      ],
+      "sha256": "6df9dd5da2d067e65ff9df2766e54bba6f28f057772a0de3155be77172b0ea1a",
+      "individuallyViewed": true,
+      "visualReview": "已逐张view_image检查：辅助最大字号明显放大，文字被约束在独立提示视口；关闭X完整露出，棋盘保持正方形，Apply位于棋盘下方。视口底部出现待滚动内容，是可滚动裁切而非丢失文案。"
+    },
+    {
+      "path": "Docs/original-hint-0215/after-long-hint-ax5-bottom.png",
+      "title": "修复后：AX5长提示滚动到底",
+      "result": "通过",
+      "capturedBuild": "0.2.14 (17)",
+      "device": "iPhone 17 Pro",
+      "deviceID": "3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3",
+      "test": "OriginalUIContractTests/testLongHintPreviewCanBeReadWithoutCoveringBoardOrChangingMarks()",
+      "source": "Validation/test-runs/original-0215-hint-app-final-attachments/2D7B3A27-7A7C-4833-B8A5-9535AD56E317.png",
+      "sourceManifest": "Validation/test-runs/original-0215-hint-app-final-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0215-hint-app-final.xcresult",
+      "attachmentTimestamp": 1790790204.019,
+      "dimensions": [
+        1206,
+        2622
+      ],
+      "sha256": "4c1ab63a2823723e64cb783481d6bb2b603ee4dff1f97b96737184a1d2d8459b",
+      "individuallyViewed": true,
+      "visualReview": "已逐张view_image检查：已滚动至最后一段末尾，完整看到最终marks.，关闭X、棋盘及Apply保持原位置。对应测试直接操作真实UIScrollView并验证滚动与关闭不改变棋盘或重复消耗提示；这不替代实际手指/VoiceOver滚动验收。"
+    },
+    {
+      "path": "Docs/original-hint-0215/actual-ui-largest-hint-en.png",
+      "title": "实际UI：英文最大字号提示",
+      "result": "通过",
+      "capturedBuild": "0.2.14 (17)",
+      "device": "iPhone 17 Pro",
+      "deviceID": "3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3",
+      "test": "OriginalReferenceUITests/testLargestTextHintKeepsCloseApplyAndBoardReachableInBothLanguages()",
+      "source": "Validation/test-runs/original-0215-hint-ui-pro-attachments/484E4904-39FD-4C3A-8C24-3408569671D9.png",
+      "sourceManifest": "Validation/test-runs/original-0215-hint-ui-pro-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0215-hint-ui-pro-first.xcresult",
+      "attachmentTimestamp": 1790790264.702,
+      "dimensions": [
+        1206,
+        2622
+      ],
+      "sha256": "424c421613cd81f9ca08cad3cb1913398e40a48d9e23fe8b40991b15f22333c5",
+      "individuallyViewed": true,
+      "visualReview": "已逐张view_image检查：实际当前关卡英文提示放大显示，关闭X及Apply未被覆盖，提示视口与棋盘分开，棋盘保持正方形。UI测试确认文字高度大于120pt、两按钮可点击且至少44×44pt，关闭后标记不变。此图只显示视口顶部，不单独证明全部文案已阅读。"
+    },
+    {
+      "path": "Docs/original-hint-0215/actual-ui-largest-hint-zh-hans.png",
+      "title": "实际UI：中文最大字号提示",
+      "result": "通过",
+      "capturedBuild": "0.2.14 (17)",
+      "device": "iPhone 17 Pro",
+      "deviceID": "3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3",
+      "test": "OriginalReferenceUITests/testLargestTextHintKeepsCloseApplyAndBoardReachableInBothLanguages()",
+      "source": "Validation/test-runs/original-0215-hint-ui-pro-attachments/6AF53454-C4AB-40DB-92A8-300DAD5AA4A3.png",
+      "sourceManifest": "Validation/test-runs/original-0215-hint-ui-pro-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0215-hint-ui-pro-first.xcresult",
+      "attachmentTimestamp": 1790790274.162,
+      "dimensions": [
+        1206,
+        2622
+      ],
+      "sha256": "d32369e1d78d53fae25b092fef245daff952ae086207c520abbac8cd8ebd222f",
+      "individuallyViewed": true,
+      "visualReview": "已逐张view_image检查：实际当前关卡中文提示按最大辅助字号显示，关闭X及应用按钮完整，视口不覆盖棋盘；UI测试确认至少44×44pt及可点击，关闭后棋盘标记不变。视口底部文字需继续滚动，不宣称单张图展示全文。"
+    },
+    {
+      "path": "Docs/original-hint-0215/actual-ui-normal-hint-en.png",
+      "title": "实际UI：普通字号提示布局",
+      "result": "通过",
+      "capturedBuild": "0.2.14 (17)",
+      "device": "iPhone 17 Pro",
+      "deviceID": "3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3",
+      "test": "OriginalReferenceUITests/testHintIsAnOverlayAndOnlyApplyWritesMarks()",
+      "source": "Validation/test-runs/original-0215-hint-ui-pro-attachments/573F24AA-0BC6-4E22-ABC5-1BF59B2C5E57.png",
+      "sourceManifest": "Validation/test-runs/original-0215-hint-ui-pro-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0215-hint-ui-pro-first.xcresult",
+      "attachmentTimestamp": 1790790250.574,
+      "dimensions": [
+        1206,
+        2622
+      ],
+      "sha256": "313ef0f39f5db2216e28f23b3feb75c5b7a043a7b66c258cd5415a352f83b6d3",
+      "individuallyViewed": true,
+      "visualReview": "已逐张view_image检查：英文提示全部文字完整可读，短卡片仍处于信息区与棋盘之间，关闭X与Apply位置正确，棋盘保持原常规尺寸。对应UI流程验证关闭不改盘、主动Apply才写入X。"
+    },
+    {
+      "path": "Docs/original-hint-0215/17e-level-151-current.png",
+      "title": "当前版本第150关通关后进入151关",
+      "result": "通过",
+      "capturedBuild": "0.2.15 (18)",
+      "device": "iPhone 17e",
+      "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+      "test": "CapydokuUITests/testLevel150AdvancesToGenerated151AndRestoresSameBoard()",
+      "source": "Validation/test-runs/original-0215-final-ui-17e-attachments/B398453D-C926-4C50-BC25-02AC3AE59D89.png",
+      "sourceManifest": "Validation/test-runs/original-0215-final-ui-17e-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0215-ui-17e.xcresult",
+      "sha256": "a40f623aa4a2272870ccba5a1d63e40e173e5d10139506f3b44cfafbfe990394",
+      "individuallyViewed": true,
+      "visualReview": "实际10×10棋盘、信息区、规则卡和底部道具无重叠；测试逐格对比100格状态及区域标签，强退后恢复同盘。英文来自回归测试显式选语，正式默认中文。"
+    },
+    {
+      "path": "Docs/original-hint-0215/17e-largest-hint-zh-hans-current.png",
+      "title": "当前版本17e中文最大字号提示",
+      "result": "通过",
+      "capturedBuild": "0.2.15 (18)",
+      "device": "iPhone 17e",
+      "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+      "test": "OriginalReferenceUITests/testLargestTextHintKeepsCloseApplyAndBoardReachableInBothLanguages()",
+      "source": "Validation/test-runs/original-0215-final-ui-17e-attachments/80157F82-0F4C-48CC-BF51-F72A1F92193E.png",
+      "sourceManifest": "Validation/test-runs/original-0215-final-ui-17e-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0215-ui-17e.xcresult",
+      "sha256": "9a8948cae37d11c80b3d70c060e59d368c218c74405b88c5a2b043175707b73e",
+      "individuallyViewed": true,
+      "visualReview": "根任务逐张view_image检查：中文提示在独立滚动视口内，关闭和应用按钮完整，棋盘保持方形，底部文字可以继续滚动。UI测试核验按钮至少44pt及关闭不改盘。"
+    }
+  ]
+}
