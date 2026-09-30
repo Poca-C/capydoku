@@ -1,0 +1,40 @@
+{
+  "build": "0.2.21 (24)",
+  "timestampUTC": "2026-09-30T20:40:49.245012+00:00",
+  "scope": "Signed Debug device build and read-only connected-iPhone preflight. No app installed or launched on the physical phone. Device identifiers, certificate owner and raw private device inventory omitted from tracked report.",
+  "signedBuild": {
+    "status": "passed",
+    "log": "Validation/test-runs/original-0221-signed-device-build.log",
+    "app": ".build/Physical0221/Build/Products/Debug-iphoneos/Capydoku.app",
+    "bundle": "com.capydoku.demo",
+    "codeSignatureVerification": "codesign --verify --deep --strict passed",
+    "developerDebugEntitlement": true,
+    "applicationIdentifierMatchesProfile": true,
+    "binarySHA256": "85d8bf11ed16bd22c8a114c38a11cfce232fa2aea4465b90e870de4988134380",
+    "embeddedProfileSHA256": "d320d139f919ebee30e4b57a3e0e56b6cb9002f2feac71bc81037f7318d78c00",
+    "profileExpiresUTC": "2026-10-07 10:02:11",
+    "signedDeviceBuildDoesNotProveInstallabilityOnThisPhone": true
+  },
+  "iPhone": {
+    "model": "iPhone 14 Pro Max",
+    "osVersion": "26.3.1",
+    "paired": true,
+    "developerModeEnabled": true,
+    "developerDiskServicesAvailable": false,
+    "passcodeRequired": true,
+    "profileIncludesPhone": false,
+    "mountFailure": "kAMDMobileImageMounterDeviceLocked (0xe80000e2)",
+    "physicalInstall": "not attempted",
+    "physicalRun": "not performed"
+  },
+  "nextAction": "User unlocks the already paired iPhone and keeps it connected; then validate or update device provisioning through Xcode before installation and real gesture/recovery testing. No passcode requested or bypass attempted.",
+  "referenceInventory": {
+    "originalDocument": "Original Word contains 28 PNG/JPEG images, no embedded audio/video/other attachments.",
+    "frozenGameplay": "Reference/gameplay-template.json remains awaiting_baseline; all 150 configuration rows null. Validation/reference-gameplay-import.json readyForUse=false.",
+    "audio": "Resources/audio-manifest.json referenceVerified=false and clips empty.",
+    "videos": "Only Capydoku test recordings found; no frozen Pawdoku source recordings.",
+    "profiles": "All 150 difficulty profiles are unverified_local_demo.",
+    "externalCorpus": "Synthetic capacity fixtures do not provide real Panda/Eagle/Shiba product libraries.",
+    "publisherInputs": "Formal legal/feedback/time endpoint and service values not delivered."
+  }
+}

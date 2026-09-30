@@ -1530,7 +1530,7 @@
       ],
       "title": "Xcode26/iOS26构建及正式发布",
       "status": "partial",
-      "implemented": "0.2.20新增独立TestFlight/Staging/Production候选配置与scheme；五套Xcode设置核验，Demo Debug及三个候选Simulator实际编译通过，Demo Release与Production候选通用iOS无签名编译通过。原Demo正常覆盖安装两模拟器，试玩状态保留。",
+      "implemented": "0.2.20新增独立TestFlight/Staging/Production候选配置与scheme；五套Xcode设置核验，Demo Debug及三个候选Simulator实际编译通过，Demo Release与Production候选通用iOS无签名编译通过。原Demo正常覆盖安装两模拟器，试玩状态保留。 0.2.21真机Debug签名构建及严格签名校验通过；已配对iPhone 14 Pro Max为iOS 26.3.1、开发者模式开启，但锁屏阻止开发镜像挂载，且现有描述文件不包含该机，未安装或运行。",
       "gap": "新增Bundle ID是内部占位，未由发布方配置注册/签名。候选包名称不代表已上传TestFlight或可上架；真机、TestFlight、App Store审核与正式发布均未完成。",
       "evidence": [
         "Capydoku.xcodeproj/project.pbxproj",
@@ -1556,7 +1556,8 @@
         "Validation/original-0220-coinstall-audit.json",
         "Validation/original-0220-install-audit.json",
         "Docs/original-environments-0220/manifest.json",
-        "Validation/test-runs/original-0220-app.xcresult"
+        "Validation/test-runs/original-0220-app.xcresult",
+        "Validation/original-0221-physical-preflight.json"
       ]
     },
     {
@@ -1782,7 +1783,7 @@
       ],
       "title": "iOS技术验收与SDK升级兼容",
       "status": "partial",
-      "implemented": "0.2.21全量169项Core与9项签到/奖励定向AppTests通过，含异常存档实际AppModel加载后的签到组件绘制；Demo Debug及通用iOS无签名Release编译通过，正常保留数据覆盖安装两模拟器。上轮0.2.20全量293项App及17e两项UI记录保留原版本；三候选并存仍是0.2.20证据，不重标本轮。 0.2.21三个优化候选在17 Pro正常目录通过中文Welcome、实际通知/Tracking拒绝、九步教学、英中切换、签到和两次冷启动同盘恢复；无调试参数或存档注入，各包本地身份独立，原Demo玩家状态和历史事件保留。",
+      "implemented": "0.2.21全量169项Core与9项签到/奖励定向AppTests通过，含异常存档实际AppModel加载后的签到组件绘制；Demo Debug及通用iOS无签名Release编译通过，正常保留数据覆盖安装两模拟器。上轮0.2.20全量293项App及17e两项UI记录保留原版本；三候选并存仍是0.2.20证据，不重标本轮。 0.2.21三个优化候选在17 Pro正常目录通过中文Welcome、实际通知/Tracking拒绝、九步教学、英中切换、签到和两次冷启动同盘恢复；无调试参数或存档注入，各包本地身份独立，原Demo玩家状态和历史事件保留。 0.2.21真机Debug签名构建及严格签名校验通过；已配对iPhone 14 Pro Max为iOS 26.3.1、开发者模式开启，但锁屏阻止开发镜像挂载，且现有描述文件不包含该机，未安装或运行。",
       "gap": "这不是全部设备/场景通过；17e升级前无正常统计队列，不能声称该设备历史统计迁移已验证。真机、最低系统、候选包其余权限组合与胜负/广告/高关/持续生成、真实SDK升级及正式远程关闭仍待验。",
       "evidence": [
         "Validation/original-verification.json",
@@ -1855,7 +1856,8 @@
         "Validation/original-0221-build-settings.json",
         "UITests/EnvironmentCandidateUITests.swift",
         "Validation/original-0221-candidate-playthrough.json",
-        "Docs/original-candidates-0221/manifest.json"
+        "Docs/original-candidates-0221/manifest.json",
+        "Validation/original-0221-physical-preflight.json"
       ]
     },
     {

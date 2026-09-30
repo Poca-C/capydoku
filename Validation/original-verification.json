@@ -804,8 +804,10 @@
         }
       }
     ],
-    "signingAndDeviceExecution": "Demo Debug locally signed and normally updated on both simulators; device Release unsigned compile. Three optimized 0.2.21 candidates normally installed and exercised on Pro in the separately scoped candidatePlaythrough0221 audit. No device signing, minimum runtime, actual TestFlight distribution or App Store acceptance.",
-    "candidateSupplement": "0.2.21 optimized three-candidate rebuild/normal-install and recorded L1 playthrough verified separately in candidatePlaythrough0221; previous device Production build remains 0.2.20."
+    "signingAndDeviceExecution": "Demo Debug locally signed and normally updated on both simulators; unsigned device Release and signed device Debug compile passed. The signed profile does not include the connected, locked iPhone, so no physical install/run was performed. Three optimized candidates were installed and exercised on Pro simulator in candidatePlaythrough0221. No minimum runtime, actual TestFlight distribution or App Store acceptance.",
+    "candidateSupplement": "0.2.21 optimized three-candidate rebuild/normal-install and recorded L1 playthrough verified separately in candidatePlaythrough0221; previous device Production build remains 0.2.20.",
+    "genericIOSSignedDebug": "passed with existing development certificate/profile; profile excludes the connected iPhone",
+    "signedDebugLog": "Validation/test-runs/original-0221-signed-device-build.log"
   },
   "audioContract": {
     "policyTestsPassed": 13,
@@ -2977,5 +2979,16 @@
         "Publisher legal/feedback/time sources, actual services, cross-product puzzle corpus and physical/distribution conditions remain outstanding."
       ]
     }
+  },
+  "physicalPreflight0221": {
+    "evidence": "Validation/original-0221-physical-preflight.json",
+    "signedDebugBuild": "passed and strict signature verification passed",
+    "phone": "iPhone 14 Pro Max / iOS 26.3.1, paired and developer mode enabled",
+    "blockers": [
+      "Phone requires passcode unlock; developer disk image mount fails with DeviceLocked.",
+      "Current embedded provisioning profile does not include this phone."
+    ],
+    "physicalRun": "not performed",
+    "scope": "This is device-build/preflight evidence only; no physical UI, gestures, save recovery, audio or signing trust acceptance."
   }
 }
