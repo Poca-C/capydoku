@@ -1,0 +1,24 @@
+{
+  "build": "0.2.21 (24)",
+  "captureMethod": "Unedited actual CheckInView hosted in the iPhone 17 Pro AppTests after AppModel loads the malformed primary. Screenshot scope is the calendar component, without RootView background or alert.",
+  "limitations": [
+    "Not a device-level corrupted-save UI launch or an actual pre-fix crash recording.",
+    "No claim of server time, frozen timezone/reward values or manual system-clock testing."
+  ],
+  "images": [
+    {
+      "path": "Docs/original-checkin-0221/backup-restored.png",
+      "source": "Validation/test-runs/original-0221-checkin-attachments/A1EA808E-E337-46EF-8EC6-317941878A03.png",
+      "sha256": "7babf3bbdca52e3b395002894f76ead55d2e736d08e1084d1a1d3da150d20706",
+      "state": "Seven prior daily claims recovered from backup, including the cycle reward; repeat claim is denied.",
+      "visualReview": "Individually inspected: Chinese labels, full seven-day row and expected claimed/unclaimed states rendered without clipping. Standalone component background is white; not evidence of full-page styling."
+    },
+    {
+      "path": "Docs/original-checkin-0221/invalid-reset.png",
+      "source": "Validation/test-runs/original-0221-checkin-attachments/D1BAF9B6-547B-4CAE-8A61-4DCCB658870D.png",
+      "sha256": "ab6a7b4ea2aafa03c00a8541aa41c5c7df128b2fb9147dcc145913194097a673",
+      "state": "Without a valid backup the default zero-streak calendar renders; rejected bytes preserved after next normal save.",
+      "visualReview": "Individually inspected: Chinese labels, full seven-day row and expected claimed/unclaimed states rendered without clipping. Standalone component background is white; not evidence of full-page styling."
+    }
+  ]
+}

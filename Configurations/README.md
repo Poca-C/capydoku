@@ -1,6 +1,6 @@
 # 构建环境
 
-当前版本 0.2.20 (23)。原 `Capydoku` scheme 保留 Debug / Release 和 `com.capydoku.demo`，继续使用原 Demo 的应用容器。额外提供三套优化构建；它们不包含 `DEBUG` 条件编译代码。
+当前源码版本 0.2.21 (24)。原 `Capydoku` scheme 保留 Debug / Release 和 `com.capydoku.demo`，继续使用原 Demo 的应用容器。额外提供三套优化构建；它们不包含 `DEBUG` 条件编译代码。三候选包并存安装的验证记录仍属于0.2.20，不能当作每次源码更新均已重新安装验证。
 
 | Scheme | 构建配置 | 环境 | Bundle ID | 桌面名称 |
 | --- | --- | --- | --- | --- |

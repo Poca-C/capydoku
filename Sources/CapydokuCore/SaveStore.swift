@@ -332,6 +332,7 @@ public final class SaveStore: @unchecked Sendable {
               progress.levelStartLocalBalances.allSatisfy({ Int($0.key).map(positive) == true && counter($0.value.hints) && counter($0.value.direct) }),
               counter(progress.checkIn.streak), counter(progress.checkIn.cycleDay),
               counter(progress.checkIn.completedCycles),
+              progress.checkIn.lastClaimedDay.map(CheckInState.storedDayRange.contains) ?? true,
               progress.completedLevels.allSatisfy(positive),
               progress.freeToolGrantedLevels.allSatisfy(positive),
               progress.attemptCounts.allSatisfy({ Int($0.key).map(positive) == true && positive($0.value) }),

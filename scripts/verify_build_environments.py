@@ -58,8 +58,8 @@ def check():
             "CAPYDOKU_REMOTE_CONFIGURATION_ENABLED": "NO",
             "CAPYDOKU_REMOTE_CONFIGURATION_URL": "",
             "CAPYDOKU_ANALYTICS_ENABLED": "YES",
-            "MARKETING_VERSION": "0.2.20",
-            "CURRENT_PROJECT_VERSION": "23",
+            "MARKETING_VERSION": "0.2.21",
+            "CURRENT_PROJECT_VERSION": "24",
             "SWIFT_OPTIMIZATION_LEVEL": "-Onone" if configuration == "Debug" else "-O",
         }
         for key, expected in expected_values.items():

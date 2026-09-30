@@ -1,0 +1,78 @@
+{
+  "build": "0.2.21 (24)",
+  "scope": "Normal simulator update and launch without test/reset arguments. Existing normal progress is required. Install preserves bytes. After launch every envelope checksum and every payload field are verified; only the six source-declared Set fields are normalized. All fields, including tutorialPlanVersion, must be unchanged; envelope schema4 remains. No other fields or arrays are ignored. Not uninstall, physical-device or App Store acceptance.",
+  "devices": [
+    {
+      "device": "iPhone 17 Pro",
+      "deviceID": "3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3",
+      "version": "0.2.21 (24)",
+      "dataContainerChanged": true,
+      "launch": "com.capydoku.demo: 72704",
+      "installBytesUnchanged": true,
+      "launchPlayerStateUnchanged": true,
+      "allEnvelopeChecksumsValid": true,
+      "primarySchemaAfterLaunch": 4,
+      "tutorialPlanVersionAfterLaunch": 1,
+      "analyticsHistoryUnchanged": true,
+      "firstOpenNotDuplicated": true,
+      "identityNamespaceUnchanged": true,
+      "launchBytesUnchanged": false,
+      "before": {
+        "progress.json": {
+          "bytes": 3778,
+          "sha256": "8be2d1ba89dfb61d97191819806dd0e4024453344c034178e385805015a96e55"
+        },
+        "progress.backup.json": {
+          "bytes": 3778,
+          "sha256": "00bd9fec2adcbbc7e4b5319b113afd3f4b2c854450df63bc4a8ccb336e709f07"
+        }
+      },
+      "afterLaunch": {
+        "progress.json": {
+          "bytes": 3778,
+          "sha256": "e15ab1b31803df0d58f94d03b316d7833caae19dc6bf9e7003c8a0e555a727aa"
+        },
+        "progress.backup.json": {
+          "bytes": 3778,
+          "sha256": "8be2d1ba89dfb61d97191819806dd0e4024453344c034178e385805015a96e55"
+        }
+      }
+    },
+    {
+      "device": "iPhone 17e",
+      "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+      "version": "0.2.21 (24)",
+      "dataContainerChanged": true,
+      "launch": "com.capydoku.demo: 72744",
+      "installBytesUnchanged": true,
+      "launchPlayerStateUnchanged": true,
+      "allEnvelopeChecksumsValid": true,
+      "primarySchemaAfterLaunch": 4,
+      "tutorialPlanVersionAfterLaunch": 1,
+      "analyticsHistoryUnchanged": null,
+      "firstOpenNotDuplicated": null,
+      "identityNamespaceUnchanged": null,
+      "launchBytesUnchanged": true,
+      "before": {
+        "progress.json": {
+          "bytes": 1110,
+          "sha256": "0d93a250abca328e2616bd599035c05d823cfe5cf9f7248907d620f9b827243c"
+        },
+        "progress.backup.json": {
+          "bytes": 1110,
+          "sha256": "0d93a250abca328e2616bd599035c05d823cfe5cf9f7248907d620f9b827243c"
+        }
+      },
+      "afterLaunch": {
+        "progress.json": {
+          "bytes": 1110,
+          "sha256": "0d93a250abca328e2616bd599035c05d823cfe5cf9f7248907d620f9b827243c"
+        },
+        "progress.backup.json": {
+          "bytes": 1110,
+          "sha256": "0d93a250abca328e2616bd599035c05d823cfe5cf9f7248907d620f9b827243c"
+        }
+      }
+    }
+  ]
+}

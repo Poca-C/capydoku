@@ -1,0 +1,42 @@
+{
+  "sourceCommit": "84a10e1",
+  "scope": "Read-only pre-fix audit against unchanged Core source. Existing SaveStore.save and load accepted the extreme-date states; the Int.max shownStreak expression was checked with overflow reporting. No actual UI crash was executed.",
+  "cases": [
+    {
+      "canClaimAtCurrentDate": false,
+      "case": "int-max-zero-cycle",
+      "cycleDay": 0,
+      "cycleStartExpressionEvaluated": false,
+      "cycleStartUsesTodayBranch": true,
+      "lastClaimedDay": 9223372036854775807,
+      "loadSource": "primary",
+      "savedStateUnchanged": true,
+      "shownCycleDay": 0,
+      "shownStreakLastPlusOneOverflows": true,
+      "fixtureSHA256": "a5e0b675bb9692e953661451710576367244cc51c339b7c516f33be7453dcd4c",
+      "fixtureEnvelope": {
+        "checksum": "04d34eabddded734ded02e44f05c49076b099ec5e792d0eacba2284bc0eaea08",
+        "payload": "eyJhdHRlbXB0Q291bnRzIjp7fSwiYm9udXNEaXJlY3QiOjAsImJvbnVzSGludHMiOjAsImJvbnVzVG9vbFNvdXJjZXMiOnsiZGlyZWN0Ijp7ImJhdGNoZXMiOltdfSwiaGludHMiOnsiYmF0Y2hlcyI6W119fSwiY2FycmllZFRvb2xCYWxhbmNlIjp7ImRpcmVjdCI6MCwiaGludHMiOjB9LCJjYXJyaWVkVG9vbFNvdXJjZXMiOnsiZGlyZWN0Ijp7ImJhdGNoZXMiOltdfSwiaGludHMiOnsiYmF0Y2hlcyI6W119fSwiY2hlY2tJbiI6eyJjb21wbGV0ZWRDeWNsZXMiOjAsImN5Y2xlRGF5IjowLCJsYXN0Q2xhaW1lZERheSI6OTIyMzM3MjAzNjg1NDc3NTgwNywic3RyZWFrIjowfSwiY29tcGxldGVkTGV2ZWxzIjpbXSwiY3VycmVudExldmVsIjoxLCJmcmVlUmV2aXZlVXNhZ2UiOnt9LCJmcmVlVG9vbEdyYW50ZWRMZXZlbHMiOltdLCJsZXZlbFN0YXJ0TG9jYWxCYWxhbmNlcyI6e30sImxldmVsVG9vbEJhbGFuY2VzIjp7fSwibGV2ZWxUb29sU291cmNlcyI6e30sInBlbmRpbmdCdWZmRXZlbnRzIjp7fSwicGVuZGluZ0xldmVsUmVzdWx0RXZlbnRzIjp7fSwicmVmZXJlbmNlVG9vbEdyYW50S2V5cyI6W10sInJld2FyZExlZGdlciI6e30sInNldHRpbmdzIjp7ImhhcHRpY3NFbmFibGVkIjp0cnVlLCJsYW5ndWFnZSI6InpoLUhhbnMiLCJtdXNpY0VuYWJsZWQiOnRydWUsInNvdW5kRW5hYmxlZCI6dHJ1ZSwidm9pY2VFbmFibGVkIjp0cnVlfSwidHV0b3JpYWxDb21wbGV0ZWQiOmZhbHNlLCJ0dXRvcmlhbFBsYW5WZXJzaW9uIjoyLCJ0dXRvcmlhbFN0ZXAiOjAsInVubG9ja2VkTGV2ZWwiOjF9",
+        "schemaVersion": 4
+      }
+    },
+    {
+      "canClaimAtCurrentDate": true,
+      "case": "int-min-one-cycle",
+      "cycleDay": 1,
+      "cycleStartExpressionEvaluated": false,
+      "cycleStartUsesTodayBranch": true,
+      "lastClaimedDay": -9223372036854775808,
+      "loadSource": "primary",
+      "savedStateUnchanged": true,
+      "shownCycleDay": 0,
+      "shownStreakLastPlusOneOverflows": false,
+      "fixtureSHA256": "f40be1302026fc9bcf29b4ea2f435c729f987891727de5edbed40601c7539445",
+      "fixtureEnvelope": {
+        "checksum": "f690447e80fcc475e81e21472e6cc67ebdfd92899fb287fa7cb114eeb8d13f18",
+        "payload": "eyJhdHRlbXB0Q291bnRzIjp7fSwiYm9udXNEaXJlY3QiOjAsImJvbnVzSGludHMiOjAsImJvbnVzVG9vbFNvdXJjZXMiOnsiZGlyZWN0Ijp7ImJhdGNoZXMiOltdfSwiaGludHMiOnsiYmF0Y2hlcyI6W119fSwiY2FycmllZFRvb2xCYWxhbmNlIjp7ImRpcmVjdCI6MCwiaGludHMiOjB9LCJjYXJyaWVkVG9vbFNvdXJjZXMiOnsiZGlyZWN0Ijp7ImJhdGNoZXMiOltdfSwiaGludHMiOnsiYmF0Y2hlcyI6W119fSwiY2hlY2tJbiI6eyJjb21wbGV0ZWRDeWNsZXMiOjAsImN5Y2xlRGF5IjoxLCJsYXN0Q2xhaW1lZERheSI6LTkyMjMzNzIwMzY4NTQ3NzU4MDgsInN0cmVhayI6MX0sImNvbXBsZXRlZExldmVscyI6W10sImN1cnJlbnRMZXZlbCI6MSwiZnJlZVJldml2ZVVzYWdlIjp7fSwiZnJlZVRvb2xHcmFudGVkTGV2ZWxzIjpbXSwibGV2ZWxTdGFydExvY2FsQmFsYW5jZXMiOnt9LCJsZXZlbFRvb2xCYWxhbmNlcyI6e30sImxldmVsVG9vbFNvdXJjZXMiOnt9LCJwZW5kaW5nQnVmZkV2ZW50cyI6e30sInBlbmRpbmdMZXZlbFJlc3VsdEV2ZW50cyI6e30sInJlZmVyZW5jZVRvb2xHcmFudEtleXMiOltdLCJyZXdhcmRMZWRnZXIiOnt9LCJzZXR0aW5ncyI6eyJoYXB0aWNzRW5hYmxlZCI6dHJ1ZSwibGFuZ3VhZ2UiOiJ6aC1IYW5zIiwibXVzaWNFbmFibGVkIjp0cnVlLCJzb3VuZEVuYWJsZWQiOnRydWUsInZvaWNlRW5hYmxlZCI6dHJ1ZX0sInR1dG9yaWFsQ29tcGxldGVkIjpmYWxzZSwidHV0b3JpYWxQbGFuVmVyc2lvbiI6MiwidHV0b3JpYWxTdGVwIjowLCJ1bmxvY2tlZExldmVsIjoxfQ==",
+        "schemaVersion": 4
+      }
+    }
+  ]
+}

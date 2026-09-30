@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "date": "2026-10-01",
-  "build": "0.2.20 (23)",
+  "build": "0.2.21 (24)",
   "status": "Partial original-spec alignment; remaining client, reference and release gaps open.",
   "originalSHA256": "274bbf15f031bd80bb8b360cf14c0266acff370a230d9cad1b1785461df54dd2",
   "currentPackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49",
@@ -16,13 +16,12 @@
     "minimumOSRuntime": "not tested; compile target iOS 15"
   },
   "core": {
-    "build": "0.2.19 (22)",
-    "passed": 164,
+    "build": "0.2.21 (24)",
+    "passed": 169,
     "failed": 0,
-    "seconds": 55.24,
-    "log": "Validation/test-runs/original-0219-core.log",
-    "scope": "Complete Swift package suite. Includes 3 new dynamic/legacy tutorial cases and 5 schema/plan migration cases; generator eligibility still validates 64 seeds. Production 150 boards unchanged; formal difficulty and cross-product reference acceptance remain open.",
-    "currentBuildScope": "0.2.20 changes App and build configuration only. Swift package source and level pack are unchanged; the complete 164-case Core run remains 0.2.19 evidence and was not repeated or relabeled."
+    "seconds": 53.614,
+    "log": "Validation/test-runs/original-0221-core.log",
+    "scope": "Complete Swift package suite. Five new checksum-valid malformed-date/backup/preservation and lawful-boundary cases. Only stored-date validation changed; puzzle generation/pack unchanged."
   },
   "pythonImport": {
     "passed": 6,
@@ -679,7 +678,8 @@
     "skipped": 0,
     "seconds": 115.191,
     "bundle": "Validation/test-runs/original-0220-app.xcresult",
-    "scope": "All AppTests, no exclusions, on iPhone 17 Pro. Includes 12 new build/identity tests: cross-environment queues and prepared/related events with shared identity, real Keychain non-adoption and container move, hand-authored pre-change Demo queue, fail-closed service settings. No real service transport."
+    "scope": "All AppTests, no exclusions, on iPhone 17 Pro. Includes 12 new build/identity tests: cross-environment queues and prepared/related events with shared identity, real Keychain non-adoption and container move, hand-authored pre-change Demo queue, fail-closed service settings. No real service transport.",
+    "currentBuildScope": "Latest complete App suite remains 293 tests from 0.2.20. Version 0.2.21 ran the nine targeted check-in/reward tests listed in corrections0221; do not relabel this full run."
   },
   "supersededOrInterruptedRuns": [
     "reward-readiness-final was intentionally interrupted to stop two runners targeting one simulator; not counted as success.",
@@ -722,24 +722,21 @@
     }
   ],
   "buildVerification": {
-    "bundleVersion": "0.2.20 (23)",
+    "bundleVersion": "0.2.21 (24)",
     "simulatorDebug": "passed with local simulator signing",
-    "simulatorLog": "Validation/test-runs/original-0220-app.log",
+    "simulatorLog": "Validation/test-runs/original-0221-checkin-app-final.log",
     "genericIOSReleaseUnsigned": "passed",
-    "releaseLog": "Validation/test-runs/original-0220-release-device.log",
-    "productionCandidateIOSUnsigned": "passed",
-    "productionCandidateLog": "Validation/test-runs/original-0220-production-device.log",
-    "candidateSimulatorBuilds": "Validation/original-0220-environment-builds.json",
-    "resolvedBuildSettings": "Validation/original-0220-build-settings.json",
-    "coinstallEvidence": "Validation/original-0220-coinstall-audit.json",
-    "normalInstallEvidence": "Validation/original-0220-install-audit.json",
+    "releaseLog": "Validation/test-runs/original-0221-release.log",
+    "resolvedBuildSettings": "Validation/original-0221-build-settings.json",
+    "sourceDocumentSHA256Unchanged": true,
+    "normalInstallEvidence": "Validation/original-0221-install-audit.json",
     "normalInstallDevices": [
       {
         "device": "iPhone 17 Pro",
         "deviceID": "3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3",
-        "version": "0.2.20 (23)",
+        "version": "0.2.21 (24)",
         "dataContainerChanged": true,
-        "launch": "com.capydoku.demo: 68603",
+        "launch": "com.capydoku.demo: 72704",
         "installBytesUnchanged": true,
         "launchPlayerStateUnchanged": true,
         "allEnvelopeChecksumsValid": true,
@@ -752,7 +749,7 @@
         "before": {
           "progress.json": {
             "bytes": 3778,
-            "sha256": "00bd9fec2adcbbc7e4b5319b113afd3f4b2c854450df63bc4a8ccb336e709f07"
+            "sha256": "8be2d1ba89dfb61d97191819806dd0e4024453344c034178e385805015a96e55"
           },
           "progress.backup.json": {
             "bytes": 3778,
@@ -762,20 +759,20 @@
         "afterLaunch": {
           "progress.json": {
             "bytes": 3778,
-            "sha256": "8be2d1ba89dfb61d97191819806dd0e4024453344c034178e385805015a96e55"
+            "sha256": "e15ab1b31803df0d58f94d03b316d7833caae19dc6bf9e7003c8a0e555a727aa"
           },
           "progress.backup.json": {
             "bytes": 3778,
-            "sha256": "00bd9fec2adcbbc7e4b5319b113afd3f4b2c854450df63bc4a8ccb336e709f07"
+            "sha256": "8be2d1ba89dfb61d97191819806dd0e4024453344c034178e385805015a96e55"
           }
         }
       },
       {
         "device": "iPhone 17e",
         "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
-        "version": "0.2.20 (23)",
+        "version": "0.2.21 (24)",
         "dataContainerChanged": true,
-        "launch": "com.capydoku.demo: 68642",
+        "launch": "com.capydoku.demo: 72744",
         "installBytesUnchanged": true,
         "launchPlayerStateUnchanged": true,
         "allEnvelopeChecksumsValid": true,
@@ -807,8 +804,7 @@
         }
       }
     ],
-    "sourceDocumentSHA256Unchanged": true,
-    "signingAndDeviceExecution": "Demo Debug and three optimized candidates locally signed for simulator. Device Release and Production candidate compile unsigned. Three new IDs are placeholders, not publisher registrations. No physical device, TestFlight upload or App Store claim."
+    "signingAndDeviceExecution": "Demo Debug locally signed and normally updated on both simulators; device Release unsigned compile. Candidate coinstallation remains 0.2.20 evidence, not rerun for this stored-date-only change. No device signing, minimum runtime, TestFlight or App Store acceptance."
   },
   "audioContract": {
     "policyTestsPassed": 13,
@@ -1625,6 +1621,95 @@
           }
         }
       ]
+    },
+    {
+      "bundleVersion": "0.2.20 (23)",
+      "simulatorDebug": "passed with local simulator signing",
+      "simulatorLog": "Validation/test-runs/original-0220-app.log",
+      "genericIOSReleaseUnsigned": "passed",
+      "releaseLog": "Validation/test-runs/original-0220-release-device.log",
+      "productionCandidateIOSUnsigned": "passed",
+      "productionCandidateLog": "Validation/test-runs/original-0220-production-device.log",
+      "candidateSimulatorBuilds": "Validation/original-0220-environment-builds.json",
+      "resolvedBuildSettings": "Validation/original-0220-build-settings.json",
+      "coinstallEvidence": "Validation/original-0220-coinstall-audit.json",
+      "normalInstallEvidence": "Validation/original-0220-install-audit.json",
+      "normalInstallDevices": [
+        {
+          "device": "iPhone 17 Pro",
+          "deviceID": "3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3",
+          "version": "0.2.20 (23)",
+          "dataContainerChanged": true,
+          "launch": "com.capydoku.demo: 68603",
+          "installBytesUnchanged": true,
+          "launchPlayerStateUnchanged": true,
+          "allEnvelopeChecksumsValid": true,
+          "primarySchemaAfterLaunch": 4,
+          "tutorialPlanVersionAfterLaunch": 1,
+          "analyticsHistoryUnchanged": true,
+          "firstOpenNotDuplicated": true,
+          "identityNamespaceUnchanged": true,
+          "launchBytesUnchanged": false,
+          "before": {
+            "progress.json": {
+              "bytes": 3778,
+              "sha256": "00bd9fec2adcbbc7e4b5319b113afd3f4b2c854450df63bc4a8ccb336e709f07"
+            },
+            "progress.backup.json": {
+              "bytes": 3778,
+              "sha256": "00bd9fec2adcbbc7e4b5319b113afd3f4b2c854450df63bc4a8ccb336e709f07"
+            }
+          },
+          "afterLaunch": {
+            "progress.json": {
+              "bytes": 3778,
+              "sha256": "8be2d1ba89dfb61d97191819806dd0e4024453344c034178e385805015a96e55"
+            },
+            "progress.backup.json": {
+              "bytes": 3778,
+              "sha256": "00bd9fec2adcbbc7e4b5319b113afd3f4b2c854450df63bc4a8ccb336e709f07"
+            }
+          }
+        },
+        {
+          "device": "iPhone 17e",
+          "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+          "version": "0.2.20 (23)",
+          "dataContainerChanged": true,
+          "launch": "com.capydoku.demo: 68642",
+          "installBytesUnchanged": true,
+          "launchPlayerStateUnchanged": true,
+          "allEnvelopeChecksumsValid": true,
+          "primarySchemaAfterLaunch": 4,
+          "tutorialPlanVersionAfterLaunch": 1,
+          "analyticsHistoryUnchanged": null,
+          "firstOpenNotDuplicated": null,
+          "identityNamespaceUnchanged": null,
+          "launchBytesUnchanged": true,
+          "before": {
+            "progress.json": {
+              "bytes": 1110,
+              "sha256": "0d93a250abca328e2616bd599035c05d823cfe5cf9f7248907d620f9b827243c"
+            },
+            "progress.backup.json": {
+              "bytes": 1110,
+              "sha256": "0d93a250abca328e2616bd599035c05d823cfe5cf9f7248907d620f9b827243c"
+            }
+          },
+          "afterLaunch": {
+            "progress.json": {
+              "bytes": 1110,
+              "sha256": "0d93a250abca328e2616bd599035c05d823cfe5cf9f7248907d620f9b827243c"
+            },
+            "progress.backup.json": {
+              "bytes": 1110,
+              "sha256": "0d93a250abca328e2616bd599035c05d823cfe5cf9f7248907d620f9b827243c"
+            }
+          }
+        }
+      ],
+      "sourceDocumentSHA256Unchanged": true,
+      "signingAndDeviceExecution": "Demo Debug and three optimized candidates locally signed for simulator. Device Release and Production candidate compile unsigned. Three new IDs are placeholders, not publisher registrations. No physical device, TestFlight upload or App Store claim."
     }
   ],
   "feedbackCorrection": {
@@ -1759,6 +1844,15 @@
       "seconds": 55.319,
       "log": "Validation/test-runs/original-0216-core.log",
       "scope": "Complete Swift package suite including12 new generation-archive persistence and validation cases; no new150-level production or formal difficulty acceptance."
+    },
+    {
+      "build": "0.2.19 (22)",
+      "passed": 164,
+      "failed": 0,
+      "seconds": 55.24,
+      "log": "Validation/test-runs/original-0219-core.log",
+      "scope": "Complete Swift package suite. Includes 3 new dynamic/legacy tutorial cases and 5 schema/plan migration cases; generator eligibility still validates 64 seeds. Production 150 boards unchanged; formal difficulty and cross-product reference acceptance remain open.",
+      "currentBuildScope": "0.2.20 changes App and build configuration only. Swift package source and level pack are unchanged; the complete 164-case Core run remains 0.2.19 evidence and was not repeated or relabeled."
     }
   ],
   "levelResultCorrection": {
@@ -2731,6 +2825,50 @@
       "Actual publisher App IDs, signing and TestFlight upload are not configured. Candidate names are not release qualification.",
       "Ad units, live analytics sources, crash/CMP/push providers, remote endpoint, SDK inventory details and privacy/store declarations still require real integration.",
       "Core 164 and generated-level evidence retain their previous dates/builds; no level content or algorithm changed."
+    ]
+  },
+  "corrections0221": {
+    "sourceParagraphs": [
+      299,
+      406,
+      407,
+      409,
+      415
+    ],
+    "problem": "A checksum-valid saved lastClaimedDay = Int.max was accepted by the old SaveStore; CheckInView.shownStreak evaluates last + 1 and would overflow. Pre-fix load and overflow-reporting probe verified; no actual crashing UI was executed.",
+    "beforeEvidence": "Validation/original-0221-date-before.json",
+    "change": "Reject stored non-nil day ordinals outside -719164...2932896, matching Foundation Gregorian UTC civil years 1 through 9999 with its historical cutover. This is a technical storage boundary, not a change to timezone, rewards, server timing, schema or normal saved values.",
+    "focusedCoreNew": {
+      "passed": 5,
+      "failed": 0
+    },
+    "core": {
+      "build": "0.2.21 (24)",
+      "passed": 169,
+      "failed": 0,
+      "seconds": 53.614,
+      "log": "Validation/test-runs/original-0221-core.log",
+      "scope": "Complete Swift package suite. Five new checksum-valid malformed-date/backup/preservation and lawful-boundary cases. Only stored-date validation changed; puzzle generation/pack unchanged."
+    },
+    "initialApplicationBuild": {
+      "exitCode": 65,
+      "bundle": "Validation/test-runs/original-0221-checkin-app.xcresult",
+      "reason": "New test fixture attempted to call a private Core grant helper. Corrected the fixture to earn its inventory through seven real check-in operations; production API and reward logic unchanged."
+    },
+    "applicationTests": {
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 24.819,
+      "bundle": "Validation/test-runs/original-0221-checkin-app-final.xcresult",
+      "scope": "Two malformed-date AppModel recovery plus actual hosted calendar cases; seven existing reward/check-in rendering and lifecycle cases. Selected AppTests only, not full suite or XCTest UI navigation."
+    },
+    "visualManifest": "Docs/original-checkin-0221/manifest.json",
+    "normalInstallEvidence": "Validation/original-0221-install-audit.json",
+    "remaining": [
+      "Formal timezone/reward/makeup rules and trusted server-time source remain unfrozen. No server endpoint invented.",
+      "Actual system-clock changes, foreground midnight UI crossing and physical-device corrupted-storage cases remain unverified.",
+      "The complete App and two UI-navigation tests remain 0.2.20 evidence; candidate packages also retain their 0.2.20 coinstall evidence."
     ]
   }
 }

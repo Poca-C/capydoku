@@ -86,6 +86,12 @@ public struct ToolBalance: Codable, Equatable, Sendable {
 }
 
 public struct CheckInState: Codable, Equatable, Sendable {
+    /// Storage safety range for civil dates rendered by Foundation's Gregorian
+    /// calendar in UTC: 0001-01-01 through 9999-12-31. Its historical calendar
+    /// cutover makes the lower bound differ from the proleptic Gregorian date.
+    /// This is not a change to the provisional UTC reward-day policy.
+    public static let storedDayRange = -719_164...2_932_896
+
     /// UTC day ordinal, not a locale-dependent string. A claimed future date prevents rollback rewards.
     public var lastClaimedDay: Int?
     public var streak: Int

@@ -1149,7 +1149,7 @@
       ],
       "title": "签到页面、周期礼盒和自然日状态",
       "status": "partial",
-      "implemented": "左上返回、抱牌角色、Day Streak及横向状态按附图布局；0.2.7补周期末达到领取条件时的短弹跳/粒子，后台/离页/领取后清理。当前配置下领取幂等、重入及保存通过；测试预置前六日实际签到业务记录。 0.2.13已领取/未来日期变为只读禁用状态；领取按钮补焦点绑定，关闭失败提示的路由有实际目标，避免重复按钮反馈。 0.2.16窄屏七日条按44pt热区预算启用横向滚动，礼盒可达；紧凑尺寸压缩上部装饰留白，不改变领取状态和奖励。",
+      "implemented": "左上返回、抱牌角色、Day Streak及横向状态按附图布局；0.2.7补周期末达到领取条件时的短弹跳/粒子，后台/离页/领取后清理。当前配置下领取幂等、重入及保存通过；测试预置前六日实际签到业务记录。 0.2.13已领取/未来日期变为只读禁用状态；领取按钮补焦点绑定，关闭失败提示的路由有实际目标，避免重复按钮反馈。 0.2.16窄屏七日条按44pt热区预算启用横向滚动，礼盒可达；紧凑尺寸压缩上部装饰留白，不改变领取状态和奖励。 0.2.21拒绝签到越界日期，合法checksum异常主档回退正常备份/无备份安全复位并保留原bytes；正常负日期、合法边界与nil不变。5项核心专项及2项真实AppModel恢复/签到组件绘制通过，回退后不重复领取。技术日期范围不改变当前UTC临时规则。",
       "gap": "真实奖励/补签条件、正式项目时区和服务器时间未冻结，正式签到对标待验。",
       "evidence": [
         "App/Views/SupportingViews.swift",
@@ -1157,7 +1157,13 @@
         "Reference/Original/image26.png",
         "AppTests/OriginalRewardVisualTests.swift",
         "Docs/original-rewards/manifest.json",
-        "Docs/original-compact-0216/manifest.json"
+        "Docs/original-compact-0216/manifest.json",
+        "Tests/CapydokuCoreTests/CheckInDateStorageTests.swift",
+        "AppTests/CheckInDateRecoveryTests.swift",
+        "Validation/original-0221-date-before.json",
+        "Docs/original-checkin-0221/manifest.json",
+        "Validation/original-0221-install-audit.json",
+        "Validation/test-runs/original-0221-checkin-app-final.xcresult"
       ]
     },
     {
@@ -1702,7 +1708,7 @@
       ],
       "title": "断点恢复、原子备份与迁移",
       "status": "verified",
-      "implemented": "主存档校验/备份/损坏保留通过；升级加载旧包进行中局保留盘面/库存/签到。consent/win/challenge已用校验双副本，损坏主文件后恢复一次性状态的App测试通过。 0.2.9验证旧schema迁移默认空提示/事件、原预览及来源恢复、非法预览拒绝；恢复已消费广告提示不再次补库存。 0.2.10验证激励已观察状态、旧档迁移、存档/队列失败、冷恢复及过期回调隔离；未收到最终回调不补造终态。 0.2.15修复已存在实验棋盘缓存只检查文件存在的问题：保存引用前校验SHA，坏件先保留再从当前已验证棋盘原子修复；失败抛错且事务不发布新玩家状态。实际文件损坏/保存阻塞与冷恢复通过。 0.2.19旧教学版本与九步目标保留，逐步冷恢复及半程横纵滑动验证；schema4显式绑定教学版本，缺失/null/未知版本拒绝后回退并逐字节保留被拒原档。两台正常模拟器真实覆盖升级仅新增legacy1字段并迁移schema4，其余完整字段不变。",
+      "implemented": "主存档校验/备份/损坏保留通过；升级加载旧包进行中局保留盘面/库存/签到。consent/win/challenge已用校验双副本，损坏主文件后恢复一次性状态的App测试通过。 0.2.9验证旧schema迁移默认空提示/事件、原预览及来源恢复、非法预览拒绝；恢复已消费广告提示不再次补库存。 0.2.10验证激励已观察状态、旧档迁移、存档/队列失败、冷恢复及过期回调隔离；未收到最终回调不补造终态。 0.2.15修复已存在实验棋盘缓存只检查文件存在的问题：保存引用前校验SHA，坏件先保留再从当前已验证棋盘原子修复；失败抛错且事务不发布新玩家状态。实际文件损坏/保存阻塞与冷恢复通过。 0.2.19旧教学版本与九步目标保留，逐步冷恢复及半程横纵滑动验证；schema4显式绑定教学版本，缺失/null/未知版本拒绝后回退并逐字节保留被拒原档。两台正常模拟器真实覆盖升级仅新增legacy1字段并迁移schema4，其余完整字段不变。 0.2.21拒绝签到越界日期，合法checksum异常主档回退正常备份/无备份安全复位并保留原bytes；正常负日期、合法边界与nil不变。5项核心专项及2项真实AppModel恢复/签到组件绘制通过，回退后不重复领取。技术日期范围不改变当前UTC临时规则。",
       "gap": "双副本均损坏时无法凭空还原；正式主动Home处理仍待参考，真机强退及存储压力仍待验。",
       "evidence": [
         "Sources/CapydokuCore/SaveStore.swift",
@@ -1718,7 +1724,13 @@
         "Validation/test-runs/original-0215-storage-core.log",
         "Tests/CapydokuCoreTests/TutorialPlanStorageTests.swift",
         "AppTests/TutorialPlanMigrationTests.swift",
-        "Validation/original-0219-install-audit.json"
+        "Validation/original-0219-install-audit.json",
+        "Tests/CapydokuCoreTests/CheckInDateStorageTests.swift",
+        "AppTests/CheckInDateRecoveryTests.swift",
+        "Validation/original-0221-date-before.json",
+        "Docs/original-checkin-0221/manifest.json",
+        "Validation/original-0221-install-audit.json",
+        "Validation/test-runs/original-0221-checkin-app-final.xcresult"
       ]
     },
     {
@@ -1731,7 +1743,7 @@
       ],
       "title": "重装重置、签到防刷与隐私",
       "status": "partial",
-      "implemented": "0.2.17在新建临时17e模拟器上，通过真实UI完成同意/权限流程、设置与语言修改、签到、九步教学、库存直找、一次模拟广告直找和错误扣血；正常后台保存后冷启动，完整玩家字段精确保持，仅游玩时间递增及一次Continue→Home的resultPhase+1。真实卸载确认旧存档消失，再安装同一冻结构建，UI与保存数据共同核验关卡/库存/签到/设置/奖励台账回初始；3阶段各1项UI通过且无跳过，临时设备已删除。旧0.2.6人工夹具证据保留为历史。",
+      "implemented": "0.2.17在新建临时17e模拟器上，通过真实UI完成同意/权限流程、设置与语言修改、签到、九步教学、库存直找、一次模拟广告直找和错误扣血；正常后台保存后冷启动，完整玩家字段精确保持，仅游玩时间递增及一次Continue→Home的resultPhase+1。真实卸载确认旧存档消失，再安装同一冻结构建，UI与保存数据共同核验关卡/库存/签到/设置/奖励台账回初始；3阶段各1项UI通过且无跳过，临时设备已删除。旧0.2.6人工夹具证据保留为历史。 0.2.21拒绝签到越界日期，合法checksum异常主档回退正常备份/无备份安全复位并保留原bytes；正常负日期、合法边界与nil不变。5项核心专项及2项真实AppModel恢复/签到组件绘制通过，回退后不重复领取。技术日期范围不改变当前UTC临时规则。",
       "gap": "本轮使用测试隔离目录与模拟广告，不代表真实SDK、真机、系统备份或App Store重装验收；正常后台保存后冷恢复不等同前台任意指令点强退。正式时区/服务器时间和实际系统时钟变化仍待验。 本轮未通关L1，通关列表与高关解锁未先变为非空；其重装后默认值已核对，非空清除仅有旧版人工夹具证据。",
       "evidence": [
         "scripts/verify_reinstall.py",
@@ -1740,7 +1752,13 @@
         "Sources/CapydokuCore/PlayerProgress.swift",
         "UITests/OperationReinstallUITests.swift",
         "scripts/verify_operation_reinstall.py",
-        "Validation/original-0217-operation-reinstall.json"
+        "Validation/original-0217-operation-reinstall.json",
+        "Tests/CapydokuCoreTests/CheckInDateStorageTests.swift",
+        "AppTests/CheckInDateRecoveryTests.swift",
+        "Validation/original-0221-date-before.json",
+        "Docs/original-checkin-0221/manifest.json",
+        "Validation/original-0221-install-audit.json",
+        "Validation/test-runs/original-0221-checkin-app-final.xcresult"
       ]
     },
     {
@@ -1755,7 +1773,7 @@
       ],
       "title": "iOS技术验收与SDK升级兼容",
       "status": "partial",
-      "implemented": "0.2.20在17Pro通过全量293项App（零跳过/失败），17e两项真实界面通过；实际五配置检查、三个优化候选Simulator构建、两个无签名iOS构建通过。原Demo保留完整玩家状态覆盖安装两设备，Pro现有统计历史/first_open/namespace保持。Core与150关未改，保留0.2.19的164项及重建证据。",
+      "implemented": "0.2.21全量169项Core与9项签到/奖励定向AppTests通过，含异常存档实际AppModel加载后的签到组件绘制；Demo Debug及通用iOS无签名Release编译通过，正常保留数据覆盖安装两模拟器。上轮0.2.20全量293项App及17e两项UI记录保留原版本；三候选并存仍是0.2.20证据，不重标本轮。",
       "gap": "这不是全部设备/场景通过；17e升级前无正常统计队列，不能声称该设备历史统计迁移已验证。真机、最低系统、候选包完整权限/游玩、真实SDK升级及正式远程关闭仍待验。",
       "evidence": [
         "Validation/original-verification.json",
@@ -1818,7 +1836,14 @@
         "Validation/original-0220-coinstall-audit.json",
         "Validation/original-0220-install-audit.json",
         "Docs/original-environments-0220/manifest.json",
-        "Validation/test-runs/original-0220-app.xcresult"
+        "Validation/test-runs/original-0220-app.xcresult",
+        "Tests/CapydokuCoreTests/CheckInDateStorageTests.swift",
+        "AppTests/CheckInDateRecoveryTests.swift",
+        "Validation/original-0221-date-before.json",
+        "Docs/original-checkin-0221/manifest.json",
+        "Validation/original-0221-install-audit.json",
+        "Validation/test-runs/original-0221-checkin-app-final.xcresult",
+        "Validation/original-0221-build-settings.json"
       ]
     },
     {
@@ -2119,5 +2144,5 @@
       ]
     }
   ],
-  "currentBuild": "0.2.20 (23)"
+  "currentBuild": "0.2.21 (24)"
 }
