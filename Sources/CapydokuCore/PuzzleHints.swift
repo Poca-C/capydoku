@@ -65,14 +65,68 @@ public enum PuzzleHints {
                 }
             }
         }
+        // A row, column or region must contain an animal somewhere among its candidates.
+        // A cell outside that unit is impossible if it conflicts with EVERY candidate.
+        // This includes the useful "two neighboring candidates block the same neighbor"
+        // deduction, and mixed row/region/adjacency conflicts. No answer is consulted.
+        for (name, cells) in units(p) where confirmed.isDisjoint(with: cells) {
+            let remaining = cells.filter { candidates.contains($0) }
+            guard remaining.count > 1 else { continue }
+            let inUnit = Set(cells)
+            let excluded = Set(candidates.filter { cell in
+                !inUnit.contains(cell) && remaining.allSatisfy { p.conflicts(cell, $0) }
+            })
+            if !excluded.isEmpty {
+                return Deduction(excluded: excluded,
+                                 explanation: "\(name) must contain one capybara. Every highlighted cell conflicts with all remaining candidates in that unit: whichever candidate is chosen, the highlighted cells would break a row, column, region or touching rule.",
+                                 rule: "Common conflict")
+            }
+        }
+        // Two unfinished units from one family need two distinct animals. If all
+        // candidates occupy exactly two units from another family, those target
+        // units are reserved. This is a Hall pair, not hypothetical search.
+        let allUnits = units(p)
+        let familyNames = ["rows", "columns", "regions"]
+        func unitIndex(_ cell: Int, family: Int) -> Int {
+            family == 0 ? cell / p.size : family == 1 ? cell % p.size : p.regions[cell]
+        }
+        for source in 0..<3 {
+            let unfinished = (0..<p.size).filter { confirmed.isDisjoint(with: allUnits[source * p.size + $0].1) }
+            guard unfinished.count >= 2 else { continue }
+            for i in 0..<(unfinished.count - 1) {
+                for j in (i + 1)..<unfinished.count {
+                    let first = unfinished[i], second = unfinished[j]
+                    let pairCells = candidates.filter {
+                        let unit = unitIndex($0, family: source)
+                        return unit == first || unit == second
+                    }
+                    for target in 0..<3 where target != source {
+                        let occupied = Set(pairCells.map { unitIndex($0, family: target) })
+                        guard occupied.count == 2 else { continue }
+                        let excluded = candidates.filter { !pairCells.contains($0) && occupied.contains(unitIndex($0, family: target)) }
+                        if !excluded.isEmpty {
+                            let names = occupied.sorted().map { String($0 + 1) }.joined(separator: " and ")
+                            return Deduction(excluded: excluded,
+                                             explanation: "The two \(familyNames[source]) \(first + 1) and \(second + 1) need two capybaras. All their remaining candidates lie in \(familyNames[target]) \(names), so both of those \(familyNames[target]) are reserved for this pair. Exclude their highlighted cells outside the pair.",
+                                             rule: "Two-unit lock")
+                        }
+                    }
+                }
+            }
+        }
         return nil
     }
 
     public static func next(puzzle p: Puzzle, found: Set<Int>, marks: Set<Int>) -> PuzzleHint? {
-        guard (1...16).contains(p.size), p.regions.count == p.size * p.size else { return nil }
+        guard (1...16).contains(p.size), p.regions.count == p.size * p.size,
+              p.regions.allSatisfy({ (0..<p.size).contains($0) }), Set(p.regions).count == p.size else { return nil }
         // Marks are deliberately NOT constraints: a player's incorrect X cannot poison a hint.
-        var confirmed = found.intersection(Set(p.solution))
         let all = Set(p.regions.indices)
+        guard found.isSubset(of: all) else { return nil }
+        // Found animals come from accepted gameplay submissions. Validate those assumptions
+        // against the rules, not the stored answer, so this hint engine is answer-independent.
+        if !found.isEmpty && PuzzleSolver.solutions(size: p.size, regions: p.regions, limit: 1, required: found.sorted()).isEmpty { return nil }
+        var confirmed = found
         let blocked = Set(all.filter { cell in !confirmed.contains(cell) && confirmed.contains(where: { p.conflicts(cell, $0) }) })
         let freshBlocked = blocked.subtracting(marks)
         if !freshBlocked.isEmpty {
@@ -90,8 +144,8 @@ public enum PuzzleHints {
         }
         // On harder temporary boards we honestly label an exhaustive contradiction check.
         // We never call a hidden answer lookup a human deduction.
-        for cell in candidates.sorted() where !marks.contains(cell) && !p.isSolutionCell(cell) {
-            if PuzzleSolver.solutions(size: p.size, regions: p.regions, limit: 1, required: Array(found.intersection(Set(p.solution))) + [cell]).isEmpty {
+        for cell in candidates.sorted() where !marks.contains(cell) {
+            if PuzzleSolver.solutions(size: p.size, regions: p.regions, limit: 1, required: found.sorted() + [cell]).isEmpty {
                 return PuzzleHint(cells: [cell],
                                   explanation: "Contradiction check: placing a capybara in row \(cell / p.size + 1), column \(cell % p.size + 1) leaves no complete arrangement satisfying all four rules. This cell can be excluded.", rule: "Contradiction check")
             }
@@ -111,6 +165,55 @@ public enum PuzzleHints {
         }
         return PuzzleLogicalMetrics(initialForcedCells: initial, deductionSteps: steps,
                                     remainingUnresolved: p.size - confirmed.count, requiresSearch: confirmed.count != p.size)
+    }
+
+    /// Eligibility gate for the current nine-step Level 1 introduction.
+    /// A valid puzzle alone is insufficient: its highlighted operations and the
+    /// final single-cell-region explanation must also be safe and completable.
+    public static func canTeach(puzzle p: Puzzle) -> Bool {
+        guard p.id == 1, p.size == 4, PuzzleSolver.validate(p).valid else { return false }
+        let steps = tutorial(puzzle: p)
+        guard steps.map(\.id) == ["row", "column", "region", "neighbors", "mark", "undo", "swipe", "swipeVertical", "find"],
+              steps.map(\.action) == ["read", "read", "read", "read", "tap", "tap", "swipe", "swipe", "doubleTap"] else { return false }
+        let cells = Set(p.regions.indices)
+        guard steps.allSatisfy({ !$0.targetCells.isEmpty && Set($0.targetCells).count == $0.targetCells.count && Set($0.targetCells).isSubset(of: cells) }),
+              steps[8].targetCells.count == 1, let animal = steps[8].targetCells.first,
+              p.isSolutionCell(animal), p.regions.filter({ $0 == p.regions[animal] }).count == 1 else { return false }
+
+        // The four rule demonstrations must describe this board and this animal.
+        let row = Set(cells.filter { $0 / p.size == animal / p.size })
+        let column = Set(cells.filter { $0 % p.size == animal % p.size })
+        let region = Set(cells.filter { p.regions[$0] == p.regions[animal] })
+        let neighbors = Set(cells.filter {
+            $0 != animal && abs($0 / p.size - animal / p.size) <= 1 && abs($0 % p.size - animal % p.size) <= 1
+        })
+        guard Set(steps[0].targetCells) == row, Set(steps[1].targetCells) == column,
+              Set(steps[2].targetCells) == region, Set(steps[3].targetCells) == neighbors,
+              steps[4].targetCells.count == 1, steps[4].targetCells == steps[5].targetCells else { return false }
+
+        var marks = Set<Int>()
+        for step in steps[4...7] {
+            let targets = Set(step.targetCells)
+            guard targets.isDisjoint(with: p.solution) else { return false }
+            if step.action == "tap" {
+                let cell = step.targetCells[0]
+                if marks.contains(cell) { marks.remove(cell) } else { marks.insert(cell) }
+            } else {
+                // Both cells must still be available so partial swipe callbacks
+                // cannot finish the next instruction before its own swipe occurs.
+                guard targets.count == 2, targets.isDisjoint(with: marks) else { return false }
+                let ordered = step.targetCells.sorted()
+                if step.id == "swipe" {
+                    guard ordered[0] / p.size == ordered[1] / p.size,
+                          ordered[1] - ordered[0] == 1 else { return false }
+                } else {
+                    guard ordered[0] % p.size == ordered[1] % p.size,
+                          ordered[1] - ordered[0] == p.size else { return false }
+                }
+                marks.formUnion(targets)
+            }
+        }
+        return !marks.contains(animal)
     }
 
     public static func tutorial(puzzle p: Puzzle) -> [TutorialStep] {

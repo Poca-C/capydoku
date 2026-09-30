@@ -39,6 +39,9 @@ public final class SaveStore: @unchecked Sendable {
     public var backupURL: URL { directory.appendingPathComponent("progress.backup.json") }
     private let lock = NSRecursiveLock()
     private let fileManager: FileManager
+    // Each board is immutable during play. Keep a small exact-value cache so saving a tap
+    // does not repeatedly solve the same board (or the previous board kept as backup).
+    private var validatedPuzzles: [Puzzle] = []
 
     private struct Envelope: Codable {
         var schemaVersion: Int
@@ -100,15 +103,24 @@ public final class SaveStore: @unchecked Sendable {
             let previous = try Data(contentsOf: primaryURL)
             if (try? decode(previous)) != nil {
                 // A damaged primary must never overwrite the last known-good backup.
+                // Preserve an unusable backup too, before a later good save replaces it.
+                if fileManager.fileExists(atPath: backupURL.path) {
+                    let oldBackup = try Data(contentsOf: backupURL)
+                    if (try? decode(oldBackup)) == nil { try preserveRejected(oldBackup) }
+                }
                 try previous.write(to: backupURL, options: .atomic)
             } else {
-                let rejectedURL = directory.appendingPathComponent("progress.preserved-\(Self.checksum(previous).prefix(16)).json")
-                if !fileManager.fileExists(atPath: rejectedURL.path) {
-                    try previous.write(to: rejectedURL, options: .atomic)
-                }
+                try preserveRejected(previous)
             }
         }
         try data.write(to: primaryURL, options: .atomic)
+    }
+
+    private func preserveRejected(_ data: Data) throws {
+        let rejectedURL = directory.appendingPathComponent("progress.preserved-\(Self.checksum(data).prefix(16)).json")
+        if !fileManager.fileExists(atPath: rejectedURL.path) {
+            try data.write(to: rejectedURL, options: .atomic)
+        }
     }
 
     /// General mutation with commit-on-success semantics, useful for check-in and settings.
@@ -188,17 +200,40 @@ public final class SaveStore: @unchecked Sendable {
     }
 
     private func validate(_ progress: PlayerProgress) throws {
-        guard progress.unlockedLevel > 0, progress.currentLevel > 0,
-              progress.bonusHints >= 0, progress.bonusDirect >= 0,
-              progress.checkIn.streak >= 0, progress.checkIn.cycleDay >= 0,
-              progress.attemptCounts.values.allSatisfy({ $0 > 0 }),
-              progress.levelToolBalances.values.allSatisfy({ $0.hints >= 0 && $0.direct >= 0 }),
-              progress.rewardLedger.allSatisfy({ $0.key == $0.value.id }) else {
+        // Leave arithmetic headroom for the next reward, retry, day and level. These are
+        // storage safety bounds, not tuning limits imposed on ordinary player progress.
+        func counter(_ value: Int) -> Bool { (0...(Int.max / 4)).contains(value) }
+        func positive(_ value: Int) -> Bool { value > 0 && counter(value) }
+        guard positive(progress.unlockedLevel), positive(progress.currentLevel),
+              counter(progress.bonusHints), counter(progress.bonusDirect), counter(progress.tutorialStep),
+              counter(progress.checkIn.streak), counter(progress.checkIn.cycleDay),
+              counter(progress.checkIn.completedCycles),
+              progress.completedLevels.allSatisfy(positive),
+              progress.freeToolGrantedLevels.allSatisfy(positive),
+              progress.attemptCounts.allSatisfy({ Int($0.key).map(positive) == true && positive($0.value) }),
+              progress.levelToolBalances.allSatisfy({ Int($0.key).map(positive) == true && counter($0.value.hints) && counter($0.value.direct) }),
+              progress.rewardLedger.allSatisfy({ !$0.key.isEmpty && $0.key == $0.value.id }) else {
             throw SaveStoreError.invalidState("progress, inventory or reward records are out of range")
         }
         guard let session = progress.session else { return }
+        let config = session.config
+        let normalized = DemoConfig(version: config.version, initialLives: config.initialLives,
+                                    hintsPerLevel: config.hintsPerLevel, directPerLevel: config.directPerLevel,
+                                    baseScore: config.baseScore, comboBonus: config.comboBonus,
+                                    comboThresholds: config.comboThresholds, dailyHintReward: config.dailyHintReward,
+                                    cycleDirectReward: config.cycleDirectReward, checkInCycleDays: config.checkInCycleDays,
+                                    generatorBudgetMilliseconds: config.generatorBudgetMilliseconds,
+                                    generatorCandidateLimit: config.generatorCandidateLimit)
+        guard config == normalized, !config.version.isEmpty,
+              counter(config.hintsPerLevel), counter(config.directPerLevel),
+              counter(config.dailyHintReward), counter(config.cycleDirectReward),
+              positive(config.checkInCycleDays),
+              config.baseScore <= Int.max / 4096, config.comboBonus <= Int.max / 4096 else {
+            throw SaveStoreError.invalidState("session configuration is outside supported bounds")
+        }
         let size = session.puzzle.size
-        guard (2...16).contains(size), session.puzzle.regions.count == size * size,
+        guard positive(session.puzzle.id), progress.currentLevel == session.puzzle.id,
+              (4...PuzzleGenerator.maximumBoardSize).contains(size), session.puzzle.regions.count == size * size,
               session.puzzle.solution.count == size,
               Set(session.puzzle.solution).count == size else {
             throw SaveStoreError.invalidState("invalid board structure")
@@ -208,11 +243,13 @@ public final class SaveStore: @unchecked Sendable {
               session.found.isSubset(of: Set(session.puzzle.solution)),
               session.marks.isSubset(of: cells), session.errors.isSubset(of: cells),
               session.errors.isDisjoint(with: Set(session.puzzle.solution)),
+              session.errors.isSubset(of: session.marks),
               session.found.isDisjoint(with: session.marks),
               session.lives >= 0, session.lives <= session.config.initialLives,
-              session.hintsRemaining >= 0, session.directRemaining >= 0,
-              session.score >= 0, session.combo >= 0, session.attempt > 0,
+              counter(session.hintsRemaining), counter(session.directRemaining),
+              counter(session.score), (0...session.found.count).contains(session.combo), positive(session.attempt),
               session.elapsedSeconds.isFinite, session.elapsedSeconds >= 0,
+              session.elapsedSeconds < Double(Int.max / 4),
               session.config.initialLives > 0, session.config.checkInCycleDays > 0 else {
             throw SaveStoreError.invalidState("session values are out of range")
         }
@@ -224,6 +261,15 @@ public final class SaveStore: @unchecked Sendable {
         }
         if session.status == .playing && (session.lives == 0 || session.remainingCount == 0) {
             throw SaveStoreError.invalidState("playing status does not match board state")
+        }
+        if !validatedPuzzles.contains(session.puzzle) {
+            let puzzle = session.puzzle
+            guard PuzzleSolver.regionsAreConnected(size: size, regions: puzzle.regions),
+                  PuzzleSolver.solutions(size: size, regions: puzzle.regions, limit: 2) == [puzzle.solution.sorted()] else {
+                throw SaveStoreError.invalidState("saved board must have connected regions and the recorded unique solution")
+            }
+            validatedPuzzles.append(puzzle)
+            if validatedPuzzles.count > 4 { validatedPuzzles.removeFirst() }
         }
     }
 }

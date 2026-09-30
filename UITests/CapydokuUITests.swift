@@ -326,6 +326,7 @@ final class CapydokuUITests: XCTestCase {
 
     func testGenerationFailureKeepsCompletedLevel150Intact() {
         launchAndSolveLevel150(extraArguments: ["-generation-candidate-limit", "0"])
+        XCTAssertFalse(app.alerts.firstMatch.exists, "Failure injection must not produce an invalid session save.")
         tapButton("next_level")
         XCTAssertTrue(app.alerts.buttons["OK"].waitForExistence(timeout: 10))
         XCTAssertTrue(app.alerts.staticTexts.containing(NSPredicate(format: "label CONTAINS %@", "Generation stopped safely")).firstMatch.exists)
@@ -339,5 +340,12 @@ final class CapydokuUITests: XCTestCase {
         XCTAssertEqual(app.staticTexts["level_title"].label, "Level 150")
         XCTAssertTrue(app.staticTexts["win_result"].exists)
         XCTAssertEqual(boardValues(count: 100).filter { $0 == "found" }.count, 10)
+        app.terminate()
+        app.launchArguments = ["-ui-testing"]
+        app.launch()
+        tapButton("play")
+        XCTAssertEqual(app.staticTexts["level_title"].label, "Level 150")
+        XCTAssertTrue(app.staticTexts["win_result"].exists, "The pre-failure board must also survive a cold restart.")
+        XCTAssertFalse(app.alerts.firstMatch.exists)
     }
 }

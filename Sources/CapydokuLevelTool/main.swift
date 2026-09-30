@@ -77,6 +77,13 @@ func playthrough(_ puzzle: Puzzle) throws -> AutomatedPlaythrough {
 }
 
 do {
+    if args.contains("--audit-existing") {
+        try runHintQualityAudit(
+            inputURL: URL(fileURLWithPath: argument("--catalog", fallback: "Resources/levels.json")),
+            baselineURL: URL(fileURLWithPath: argument("--baseline", fallback: "Validation/levels-report.json")),
+            outputURL: outputDirectory.appendingPathComponent("Validation/hint-quality-audit.json"))
+        exit(0)
+    }
     guard first > 0, count > 0, count <= 10_000 else { throw PuzzleGenerationError.invalidLevel }
     var puzzles: [Puzzle] = [], records: [LevelRecord] = [], fingerprints = Set<String>()
     for level in first..<(first + count) {

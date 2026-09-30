@@ -19,9 +19,27 @@ final class FeedbackPlayer {
     private var paused = false
     private var effects: [AVAudioPlayer] = []
     private var musicPlayer: AVAudioPlayer?
-    private let speech = AVSpeechSynthesizer()
+    private var speech = AVSpeechSynthesizer()
     private var sessionReady = false
     private var lastEventTime: TimeInterval = 0
+    private var interrupted = false
+    private var observers: [NSObjectProtocol] = []
+
+    init() {
+        let center = NotificationCenter.default
+        observers.append(center.addObserver(forName: AVAudioSession.interruptionNotification,
+                                            object: nil, queue: .main) { [weak self] notification in
+            let type = notification.userInfo?[AVAudioSessionInterruptionTypeKey] as? UInt
+            let options = notification.userInfo?[AVAudioSessionInterruptionOptionKey] as? UInt ?? 0
+            Task { @MainActor [weak self] in self?.handleInterruption(type: type, options: options) }
+        })
+        observers.append(center.addObserver(forName: AVAudioSession.mediaServicesWereResetNotification,
+                                            object: nil, queue: .main) { [weak self] _ in
+            Task { @MainActor [weak self] in self?.handleMediaServicesReset() }
+        })
+    }
+
+    deinit { observers.forEach { NotificationCenter.default.removeObserver($0) } }
 
     func apply(settings: Settings) {
         let previous = self.settings
@@ -34,10 +52,11 @@ final class FeedbackPlayer {
     func setPaused(_ paused: Bool) {
         self.paused = paused
         if paused {
-            effects.forEach { $0.stop() }
-            effects.removeAll()
-            musicPlayer?.pause()
-            speech.stopSpeaking(at: .immediate)
+            stopTransientAudio()
+            if sessionReady {
+                try? AVAudioSession.sharedInstance().setActive(false, options: [.notifyOthersOnDeactivation])
+                sessionReady = false
+            }
         } else {
             updateMusic()
         }
@@ -54,8 +73,7 @@ final class FeedbackPlayer {
         }
         lastEventTime = now
         if settings.haptic { haptic(event) }
-        if settings.sound && !isUITesting {
-            prepareSession()
+        if settings.sound && !interrupted && !isUITesting && prepareSession() {
             let notes: [(Double, Double)]
             switch event {
             case .tap: notes = [(520, 0.035)]
@@ -75,7 +93,7 @@ final class FeedbackPlayer {
                 player.play()
             }
         }
-        if settings.voice && !isUITesting { speak(event) }
+        if settings.voice && !interrupted && !isUITesting { speak(event) }
     }
 
     private var isUITesting: Bool {
@@ -84,8 +102,9 @@ final class FeedbackPlayer {
         ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
     }
 
-    private func prepareSession() {
-        guard !sessionReady else { return }
+    private func prepareSession() -> Bool {
+        guard !paused, !interrupted else { return false }
+        guard !sessionReady else { return true }
         do {
             try AVAudioSession.sharedInstance().setCategory(.ambient, mode: .default, options: [.mixWithOthers])
             try AVAudioSession.sharedInstance().setActive(true)
@@ -94,11 +113,12 @@ final class FeedbackPlayer {
             // Audio is optional; an unavailable session must never interrupt a puzzle.
             sessionReady = false
         }
+        return sessionReady
     }
 
     private func updateMusic() {
-        guard settings.music, !paused, !isUITesting else { musicPlayer?.pause(); return }
-        prepareSession()
+        guard settings.music, !paused, !interrupted, !isUITesting else { musicPlayer?.pause(); return }
+        guard prepareSession() else { return }
         if musicPlayer == nil {
             musicPlayer = try? AVAudioPlayer(data: Self.musicData())
             musicPlayer?.numberOfLoops = -1
@@ -106,6 +126,39 @@ final class FeedbackPlayer {
             musicPlayer?.prepareToPlay()
         }
         musicPlayer?.play()
+    }
+
+    private func stopTransientAudio() {
+        effects.forEach { $0.stop() }
+        effects.removeAll()
+        musicPlayer?.pause()
+        speech.stopSpeaking(at: .immediate)
+    }
+
+    private func handleInterruption(type: UInt?, options: UInt) {
+        guard let type, let interruption = AVAudioSession.InterruptionType(rawValue: type) else { return }
+        sessionReady = false
+        switch interruption {
+        case .began:
+            interrupted = true
+            stopTransientAudio()
+        case .ended:
+            interrupted = false
+            if AVAudioSession.InterruptionOptions(rawValue: options).contains(.shouldResume) {
+                updateMusic()
+            }
+        @unknown default: break
+        }
+    }
+
+    private func handleMediaServicesReset() {
+        // Audio objects from the old media service cannot safely be reused after reset.
+        stopTransientAudio()
+        musicPlayer = nil
+        speech = AVSpeechSynthesizer()
+        sessionReady = false
+        interrupted = false
+        updateMusic()
     }
 
     private func haptic(_ event: FeedbackEvent) {
@@ -127,7 +180,7 @@ final class FeedbackPlayer {
         case .combo(let count): text = "\(count) in a row!"
         default: return
         }
-        prepareSession()
+        guard prepareSession() else { return }
         speech.stopSpeaking(at: .immediate)
         let utterance = AVSpeechUtterance(string: text)
         utterance.voice = AVSpeechSynthesisVoice(language: "en-US")

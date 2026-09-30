@@ -68,7 +68,8 @@ public struct PuzzleGenerator: Sendable {
                 if solutions.count == 1 {
                     let puzzle = Puzzle(id: level, size: n, regions: labels, solution: solutions[0],
                                         seed: seed, generatorVersion: version, difficulty: difficulty(for: level))
-                    if PuzzleSolver.validate(puzzle).valid { return puzzle }
+                    if PuzzleSolver.validate(puzzle).valid,
+                       level != 1 || PuzzleHints.canTeach(puzzle: puzzle) { return puzzle }
                     break
                 }
                 guard let alternative = solutions.first(where: { Set($0) != rootSet }) else { break }

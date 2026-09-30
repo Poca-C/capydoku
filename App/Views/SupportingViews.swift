@@ -108,18 +108,22 @@ struct RewardView: View {
                             Text("Simulation outcome").font(.headline)
                             Picker("Outcome", selection: $model.rewardScenario) {
                                 ForEach(RewardScenario.allCases) { Text($0.rawValue).tag($0) }
-                            }.pickerStyle(.menu).accessibilityIdentifier("reward_scenario")
-                            Text("Success grants once. Cancel and failure grant nothing. Duplicate tests idempotency; interruption saves a receipt for recovery.").font(.caption).foregroundColor(CapyPalette.muted)
+                            }.pickerStyle(.menu).disabled(model.rewardBusy || model.rewardRetryPending).accessibilityIdentifier("reward_scenario")
+                            Text("Success grants once. Cancel, failure and timeout grant nothing. Duplicate tests idempotency; interruption saves a receipt for recovery. No callback times out after 5 seconds.").font(.caption).foregroundColor(CapyPalette.muted)
                         }.frame(maxWidth: .infinity, alignment: .leading)
                     }
+                    if model.rewardRetryPending {
+                        Text("Your reward is waiting to be saved. Free up storage if needed, then retry. You do not need to run another simulation.")
+                            .font(.callout).foregroundColor(CapyPalette.ink)
+                    }
                     Button(action: model.runReward) {
-                        HStack { if model.rewardBusy { ProgressView().tint(.white) }; Text(model.rewardBusy ? "Simulating…" : "Run simulation") }.frame(maxWidth: .infinity)
+                        HStack { if model.rewardBusy { ProgressView().tint(.white) }; Text(model.rewardBusy ? "Simulating…" : model.rewardRetryPending ? "Retry save" : "Run simulation") }.frame(maxWidth: .infinity)
                     }.buttonStyle(CapyButtonStyle()).disabled(model.rewardBusy).accessibilityIdentifier("run_reward")
                 }.padding(26)
             }.background(CapyPalette.cream.ignoresSafeArea())
                 .navigationTitle("Demo reward").navigationBarTitleDisplayMode(.inline)
-                .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Close") { dismiss() }.disabled(model.rewardBusy).accessibilityIdentifier("reward_close") } }
-        }.navigationViewStyle(.stack).interactiveDismissDisabled(model.rewardBusy)
+                .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Close") { dismiss() }.disabled(model.rewardBusy || model.rewardRetryPending).accessibilityIdentifier("reward_close") } }
+        }.navigationViewStyle(.stack).interactiveDismissDisabled(model.rewardBusy || model.rewardRetryPending)
     }
 }
 

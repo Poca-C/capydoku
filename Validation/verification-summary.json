@@ -1,12 +1,56 @@
 {
-  "version": "0.1.0 (1); config demo-2026-09-v2; generator demo-connected-v2",
+  "version": "0.1.1 (2); config demo-2026-09-v2; generator demo-connected-v2（新增L1教学适配门禁；已有seed输出保持一致）",
+  "stage": "首轮完整内测Demo功能打通后的稳定性补验；尚未正式验收或上架",
   "xcode": "26.6 (17F113)",
   "simulatorOS": "iOS 26.5",
-  "coreTests": "39/39通过，9.09秒；另补剩余1命仍可通关的定向用例通过",
-  "iPhone17Pro": "14/14通过，446.446秒；使用最终同一构建补测恢复、150→151、生成失败、红X／复活4/4通过，124.604秒",
-  "iPhone17e": "14/14通过，0失败／0跳过，用例292.140秒；包含最终v2配置与全部修复",
-  "releaseDeviceBuild": "通过：Release设备构建与开发签名校验完成；未提交App Store",
-  "physicalDevice": "未测试：iPhone 14 Pro Max锁屏使开发镜像无法挂载；当前通用开发配置文件尚未包含此设备",
+  "coreTests": "58/58通过，7.081秒（最终完整运行）；包含150关提示审计、151–180生成、240次10×10保存／全新实例恢复、双损坏原件持续保留",
+  "appIntegrationTests": "8项在17 Pro及17e通过；17e最终运行1.527秒，覆盖无回调／迟到／后台奖励、写盘失败重试、损坏回退和8个seed的教学每步恢复",
+  "iPhone17Pro": "本轮新增5项UI全部通过：4项稳定性用例168.532秒，新增超时后再领取37.628秒；另生成失败与复活2项补测通过；0.1.0原有14项通过记录保留为前轮基线",
+  "iPhone17e": "本轮18项完整UI初跑17通过、1失败（506.496秒）；发现故障注入参数污染存档配置并修复。最终定向UI 2/2通过，含原失败项的冷重启恢复及新增超时后再领取。19个UI用例均有通过记录；不是最终构建全量零失败重跑",
+  "releaseDeviceBuild": "0.1.1 Release设备构建通过，codesign严格签名校验通过；未提交App Store",
+  "hardeningSummary": "修复滑出误标、奖励无限等待／写盘失败后的卡住、异常存档放行和损坏备份被覆盖；增加教学适配拒绝与逐步恢复；卸载重装重置通过。明确逻辑可解35→141/150，剩9关仍需反证，其中96关Recovery待调",
+  "physicalDevice": "未测试：此前iPhone 14 Pro Max锁屏阻止挂载开发镜像；具体设备仍需解锁及匹配开发配置文件，当前没有真机通过记录",
   "iOS15Runtime": "未运行：最低编译目标15.0；现有模拟器仅在iOS26.5验证",
-  "originalRequirementsPreserved": true
+  "originalRequirementsPreserved": true,
+  "levelPackUnchanged": true,
+  "knownFailedRunsResolved": [
+    {
+      "log": "test-runs/hardening-17e.log",
+      "failure": "生成失败测试用0候选破坏保存的配置，被强化存档校验拒绝",
+      "fix": "只覆盖生成请求预算，保留有效对局配置；增加失败后的冷重启断言",
+      "verifiedBy": "test-runs/hardening-17e-final.log"
+    },
+    {
+      "log": "test-runs/hardening-timeout-final.log",
+      "failure": "新UI脚本的页面滚动辅助误关系统菜单",
+      "fix": "菜单内直接选择，无页面滑动",
+      "verifiedBy": [
+        "test-runs/hardening-timeout-menu.log",
+        "test-runs/hardening-17e-final.log"
+      ]
+    }
+  ],
+  "evidence": [
+    "test-runs/hardening-core-complete.log",
+    "test-runs/hardening-pro.xcresult",
+    "test-runs/hardening-pro-final.xcresult",
+    "test-runs/hardening-timeout-menu.xcresult",
+    "test-runs/hardening-17e.xcresult",
+    "test-runs/hardening-17e-final.xcresult",
+    "test-runs/hardening-release-complete.log",
+    "hint-quality-audit.json",
+    "reinstall-audit.json"
+  ],
+  "previousBaseline": {
+    "version": "0.1.0 (1); config demo-2026-09-v2; generator demo-connected-v2",
+    "xcode": "26.6 (17F113)",
+    "simulatorOS": "iOS 26.5",
+    "coreTests": "39/39通过，9.09秒；另补剩余1命仍可通关的定向用例通过",
+    "iPhone17Pro": "14/14通过，446.446秒；使用最终同一构建补测恢复、150→151、生成失败、红X／复活4/4通过，124.604秒",
+    "iPhone17e": "14/14通过，0失败／0跳过，用例292.140秒；包含最终v2配置与全部修复",
+    "releaseDeviceBuild": "通过：Release设备构建与开发签名校验完成；未提交App Store",
+    "physicalDevice": "未测试：iPhone 14 Pro Max锁屏使开发镜像无法挂载；当前通用开发配置文件尚未包含此设备",
+    "iOS15Runtime": "未运行：最低编译目标15.0；现有模拟器仅在iOS26.5验证",
+    "originalRequirementsPreserved": true
+  }
 }

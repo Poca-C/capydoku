@@ -168,6 +168,15 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
             visited.removeAll()
         }
         guard let start = dragStart else { return }
+        // End this stroke as soon as the finger leaves the board. Clearing its
+        // origin also prevents re-entry from filling the gap back to that origin.
+        // Only a new touch (.began) can start another marking stroke.
+        guard boardRect.contains(location), gesture.state != .cancelled, gesture.state != .failed else {
+            dragStart = nil
+            dragAxis = .invalid
+            visited.removeAll()
+            return
+        }
         if gesture.state == .began || gesture.state == .changed || gesture.state == .ended {
             if case .pending = dragAxis, max(abs(movement.x), abs(movement.y)) >= 12 {
                 if abs(movement.x) >= abs(movement.y) * 1.65 { dragAxis = .horizontal }

@@ -16,6 +16,7 @@ final class AppModel: ObservableObject {
     @Published var rewardKind: RewardKind = .hint
     @Published var rewardScenario: RewardScenario = .success
     @Published var rewardBusy = false
+    @Published private(set) var rewardRetryPending = false
     @Published var config = DemoConfig.default
     @Published var jumpLevel = "1"
     @Published var exportURL: URL?
@@ -26,21 +27,32 @@ final class AppModel: ObservableObject {
     private var active = true
     private var timer: Timer?
     private var loadingID = UUID()
+    private var generationCandidateLimitOverride: Int?
     private var activeOfferID: String?
+    private var rewardDeadline: DispatchWorkItem?
+    private var pendingRewardSignal: RewardSignal?
+    private let rewardProvider: RewardProvider?
+    private let rewardTimeout: TimeInterval
+    private let feedbackEnabled: Bool
     private var lastRestartTime: TimeInterval = 0
     private var lastDirectTime: TimeInterval = 0
     private let feedback = FeedbackPlayer()
 
-    init() {
+    init(saveDirectory: URL? = nil, rewardProvider: RewardProvider? = nil,
+         rewardTimeout: TimeInterval = 5, runsTimer: Bool = true, feedbackEnabled: Bool = true) {
         #if DEBUG
         let args = ProcessInfo.processInfo.arguments
         #else
         let args: [String] = []
         #endif
         let root = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-        saveDirectory = root.appendingPathComponent(args.contains("-ui-testing") ? "CapydokuUITesting" : "Capydoku", isDirectory: true)
-        if args.contains("-reset-demo") { try? FileManager.default.removeItem(at: saveDirectory) }
-        store = SaveStore(directory: saveDirectory)
+        let testHost = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+        self.saveDirectory = saveDirectory ?? root.appendingPathComponent(args.contains("-ui-testing") ? "CapydokuUITesting" : testHost ? "CapydokuAppTestingHost" : "Capydoku", isDirectory: true)
+        self.rewardProvider = rewardProvider
+        self.rewardTimeout = rewardTimeout.isFinite ? max(0.01, rewardTimeout) : 5
+        self.feedbackEnabled = feedbackEnabled && !testHost
+        if args.contains("-reset-demo") { try? FileManager.default.removeItem(at: self.saveDirectory) }
+        store = SaveStore(directory: self.saveDirectory)
         loadProgress()
         if let url = Bundle.main.url(forResource: "levels", withExtension: "json") {
             do {
@@ -49,24 +61,26 @@ final class AppModel: ObservableObject {
             } catch { errorMessage = "The packaged levels could not be loaded. \(error.localizedDescription)" }
         } else { errorMessage = "The level pack is missing from this build." }
         applySettings()
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
+        if runsTimer { timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
             Task { @MainActor [weak self] in
                 guard let self else { return }
                 self.now = Date()
                 if self.active && self.screen == .game && self.sheet == nil && self.hint == nil && self.notice == nil && self.errorMessage == nil && self.session?.status == .playing {
                     self.progress.session?.advanceTime(by: 1)
-                    if Int(self.progress.session?.elapsedSeconds ?? 0) % 10 == 0 { self.save() }
+                    if (self.progress.session?.elapsedSeconds ?? 0).truncatingRemainder(dividingBy: 10) < 1 { self.save() }
                 }
             }
-        }
+        } }
         if args.contains("-skip-tutorial") { progress.tutorialCompleted = true }
         if let i = args.firstIndex(of: "-generation-candidate-limit"), args.indices.contains(i + 1), let limit = Int(args[i + 1]) {
-            config.generatorCandidateLimit = limit // Debug-only failure injection for end-to-end tests.
+            generationCandidateLimitOverride = limit // Failure injection must not corrupt the saved session config.
         }
         if let i = args.firstIndex(of: "-level"), args.indices.contains(i + 1), let level = Int(args[i + 1]) {
             start(level: level)
         }
     }
+
+    deinit { timer?.invalidate(); rewardDeadline?.cancel() }
 
     var session: GameSession? { progress.session }
     var tutorial: TutorialStep? {
@@ -77,8 +91,11 @@ final class AppModel: ObservableObject {
     var tutorialCount: Int { session.map { PuzzleHints.tutorial(puzzle: $0.puzzle).count } ?? 0 }
 
     func loadProgress() {
+        rewardDeadline?.cancel(); rewardDeadline = nil
         let loaded = store.load()
         hint = nil; activeOfferID = nil; rewardBusy = false
+        rewardRetryPending = false; pendingRewardSignal = nil
+        if sheet == .reward { sheet = nil }
         notice = nil; errorMessage = nil
         progress = loaded.progress
         if progress.session == nil { screen = .home }
@@ -109,8 +126,9 @@ final class AppModel: ObservableObject {
         loading = true
         let request = UUID(); loadingID = request
         let configuration = config
+        let candidateLimit = generationCandidateLimitOverride ?? configuration.generatorCandidateLimit
         DispatchQueue.global(qos: .userInitiated).async {
-            let result = Result { try PuzzleGenerator.generate(level: level, maxAttempts: configuration.generatorCandidateLimit, timeBudgetMilliseconds: configuration.generatorBudgetMilliseconds) }
+            let result = Result { try PuzzleGenerator.generate(level: level, maxAttempts: candidateLimit, timeBudgetMilliseconds: configuration.generatorBudgetMilliseconds) }
             DispatchQueue.main.async { [weak self] in
                 guard let self, self.loadingID == request else { return }
                 self.loading = false
@@ -196,7 +214,8 @@ final class AppModel: ObservableObject {
         if progress.consumeHint() { hint = preview; save() }
     }
     func applyHint() {
-        guard let hint else { return }
+        guard active, screen == .game, sheet == nil, !loading, !rewardBusy,
+              session?.status == .playing, let hint else { return }
         _ = progress.session?.markMany(hint.cells)
         self.hint = nil; feedback.play(.mark); save()
     }
@@ -205,7 +224,13 @@ final class AppModel: ObservableObject {
         rewardKind = kind; sheet = .reward
     }
     func runReward() {
-        guard !rewardBusy else { return }
+        guard active, sheet == .reward, !loading, !rewardBusy else { return }
+        if let offerID = activeOfferID, let signal = pendingRewardSignal {
+            errorMessage = nil
+            rewardBusy = true
+            receive(signal, offerID: offerID)
+            return
+        }
         let offerID = UUID().uuidString
         do {
             guard try store.prepareReward(offerID: offerID, kind: rewardKind, progress: &progress) else {
@@ -213,8 +238,12 @@ final class AppModel: ObservableObject {
             }
             activeOfferID = offerID
             rewardBusy = true
-            MockRewardProvider(scenario: rewardScenario).present(offerID: offerID) { [weak self] signal in
-                self?.receive(signal, offerID: offerID)
+            let deadline = DispatchWorkItem { [weak self] in self?.receive(.timedOut, offerID: offerID) }
+            rewardDeadline = deadline
+            DispatchQueue.main.asyncAfter(deadline: .now() + rewardTimeout, execute: deadline)
+            (rewardProvider ?? MockRewardProvider(scenario: rewardScenario)).present(offerID: offerID) { [weak self] signal in
+                // Ad adapters may invoke callbacks on any queue, or after cancellation.
+                DispatchQueue.main.async { self?.receive(signal, offerID: offerID) }
             }
         } catch { errorMessage = "Reward could not start: \(error.localizedDescription)" }
     }
@@ -222,8 +251,10 @@ final class AppModel: ObservableObject {
         // A late duplicate must not dismiss a newer sheet or unlock a newer transaction.
         guard let record = progress.rewardLedger[offerID], record.state == .offered || record.state == .rewarded else { return }
         guard activeOfferID == offerID else { return }
-        activeOfferID = nil
+        guard rewardBusy else { return } // A failed write retains the first result for explicit retry.
+        rewardDeadline?.cancel(); rewardDeadline = nil
         rewardBusy = false
+        pendingRewardSignal = signal
         do {
             switch signal {
             case .earned:
@@ -237,16 +268,24 @@ final class AppModel: ObservableObject {
                 case .compensated: notice = "Reward saved to your inventory."
                 case .ignored: break
                 }
-            case .cancelled, .failed:
+            case .cancelled, .failed, .timedOut:
                 try store.cancelReward(offerID: offerID, progress: &progress)
                 sheet = nil
-                notice = signal == .cancelled ? "Simulation cancelled. No reward was issued." : "Simulated ad failure. No reward was issued."
+                switch signal {
+                case .cancelled: notice = "Simulation cancelled. No reward was issued."
+                case .timedOut: notice = "The reward simulation timed out. No reward was issued. You can try again."
+                default: notice = "Simulated ad failure. No reward was issued."
+                }
             case .interrupted:
                 try store.markRewardReceived(offerID: offerID, progress: &progress)
                 sheet = nil
                 notice = "Reward receipt saved. Use Recover save in Developer tools, or relaunch, to test interruption recovery."
             }
-        } catch { errorMessage = "Reward persistence failed: \(error.localizedDescription)" }
+            activeOfferID = nil; pendingRewardSignal = nil; rewardRetryPending = false
+        } catch {
+            rewardRetryPending = true
+            errorMessage = "The reward could not be saved. Free up storage if needed, then tap Retry save. Your receipt is kept for this retry. \(error.localizedDescription)"
+        }
     }
     private var canTouchBoard: Bool { active && screen == .game && !loading && !rewardBusy && sheet == nil && hint == nil && session?.status == .playing }
     func claim() {
@@ -267,7 +306,7 @@ final class AppModel: ObservableObject {
     }
     func applySettings() {
         let s = progress.settings
-        feedback.apply(settings: .init(sound: s.soundEnabled, haptic: s.hapticsEnabled, voice: s.voiceEnabled, music: s.musicEnabled))
+        feedback.apply(settings: .init(sound: feedbackEnabled && s.soundEnabled, haptic: feedbackEnabled && s.hapticsEnabled, voice: feedbackEnabled && s.voiceEnabled, music: feedbackEnabled && s.musicEnabled))
     }
     func settingsChanged() { applySettings(); save() }
     func setActive(_ value: Bool) {
@@ -280,7 +319,9 @@ final class AppModel: ObservableObject {
             let progress: PlayerProgress; let levelPackCount: Int
         }
         do {
-            let report = Report(generatedAt: Date(), build: "0.1.0 (1)", demoConfig: config, progress: progress, levelPackCount: levels.count)
+            let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "unknown"
+            let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "unknown"
+            let report = Report(generatedAt: Date(), build: "\(version) (\(build))", demoConfig: config, progress: progress, levelPackCount: levels.count)
             let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
             let url = FileManager.default.temporaryDirectory.appendingPathComponent("Capydoku-diagnostics.json")
             try encoder.encode(report).write(to: url, options: .atomic)

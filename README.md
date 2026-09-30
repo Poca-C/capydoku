@@ -1,6 +1,6 @@
 # Capydoku · 首轮内测 Demo
 
-原生 Swift / SwiftUI iPhone 应用，最低编译目标 iOS 15，竖屏。游戏界面按需求使用英文。当前版本用于内部试玩，不是已上架版本。
+原生 Swift / SwiftUI iPhone 应用，最低编译目标 iOS 15，竖屏。游戏界面按需求使用英文。当前版本 **0.1.1（2）**，处于首轮功能完成后的稳定性补验阶段，用于内部试玩，尚未上架。
 
 本轮计时用途声明在 `App/PrivacyInfo.xcprivacy`：`systemUptime` 用于生成预算和防重复操作的耗时计算，采用 `35F9.1` 理由，依据 [Apple 的 Required Reason API 文档](https://developer.apple.com/documentation/bundleresources/app-privacy-configuration/nsprivacyaccessedapitypes/nsprivacyaccessedapitype)。正式版仍需按最终 SDK 和真实数据处理重新核对。
 
@@ -24,7 +24,7 @@
 ## 已实现的范围
 
 - 四条规则、单击普通 X／撤销、双击提交、横纵滑动、生命、分数、Combo、失败、反复复活、重开和下一关。
-- Find 与 Hint 独立库存；Hint 先预览，Apply 才改变棋盘；模拟奖励成功／取消／失败／重复回调／到账中断。
+- Find 与 Hint 独立库存；Hint 先预览，Apply 才改变棋盘；模拟奖励成功／取消／失败／重复回调／到账中断／无回调超时；写盘失败保留结果并支持重试。
 - 根据 L1 棋盘选择目标的 9 步教学；首页、游戏页、设置、签到、胜负、奖励与调试页面。
 - 原创矢量角色和图标、区域色板、操作反馈、程序合成临时音效／音乐、系统语音和震动独立开关。
 - UTC 连续签到、7 天周期、奖励防重复、日期回拨保护。
@@ -52,7 +52,7 @@ Daily Challenge、Pattern Mode、排行榜和活动本轮没有入口。真实�
 
 包内关卡规模：L1–10 为 4×4，L11–50 为 6×6，L51–100 为 8×8，L101–150 为 10×10。后续每十关包含 2 Flow、1 Recovery 和末关 Hard，规模为 6／8／10。
 
-**这些标签只描述临时节奏，没有完成正式难度校准。** 当前基础逻辑求解器可完整解出 35/150 关，其余关卡可能需要明确标为 “Contradiction check” 的反证提示。合法、唯一解不等于玩家体验已合格。详见关卡报告中的逐关指标。
+**这些标签只描述临时节奏，没有完成正式难度校准。** 本轮增加共同冲突排除和两单位锁，150 关中可用明确逻辑规则解出的关卡由 35 关增加到 141 关。其余 9 关（18、34、65、67、69、96、100、114、127）仍需要明确标为 “Contradiction check” 的反证提示，其中第 96 关暂标 Recovery，仍需调难度。全部 150 关提示安全、可自动通关，清空隐藏答案后提示保持一致；旋转／镜像／区域重命名审计未发现包内等价几何。合法、唯一解和逻辑可解均不等于玩家体验已合格。最新提示指标见 `Validation/hint-quality-audit.json`；`levels-report.json` 保留生产时的原始逻辑指标。
 
 ## 验证与复现
 
@@ -64,6 +64,12 @@ xcodebuild -project Capydoku.xcodeproj -scheme Capydoku \
   -derivedDataPath DerivedData CODE_SIGNING_ALLOWED=NO test
 ```
 
+只审计现有150关提示与对称等价（不修改关卡包）：
+
+```sh
+swift run -c release CapydokuLevelTool --audit-existing
+```
+
 重新生产关卡（会更新关卡包和报告；修改后需要重新回归）：
 
 ```sh
@@ -71,7 +77,7 @@ swift run -c release CapydokuLevelTool --start 1 --count 150 --output .
 swift run -c release CapydokuLevelTool --start 151 --count 30 --experimental --output .
 ```
 
-新增 App 或 UITests 源文件后运行 `python3 scripts/generate_project.py` 更新工程。它是本仓库的确定性工程生成脚本；当前工程已生成，不需首次运行时手动执行。
+新增 App、AppTests 或 UITests 源文件后运行 `python3 scripts/generate_project.py` 更新工程。它是本仓库的确定性工程生成脚本；当前工程已生成，不需首次运行时手动执行。
 
 ## 目录与交付资料
 
@@ -81,7 +87,8 @@ swift run -c release CapydokuLevelTool --start 151 --count 30 --experimental --o
 | `Sources/CapydokuCore/` | 与页面独立的规则、生成、提示、对局、存档和奖励逻辑 |
 | `Sources/CapydokuLevelTool/` | 关卡批量生产与自动通关验证工具 |
 | `Resources/levels.json` | 首轮 150 关，附答案、seed、版本及区域信息 |
-| `Tests/` / `UITests/` | 核心测试和实际模拟器交互回归 |
+| `Tests/` / `AppTests/` / `UITests/` | 核心测试、应用状态与存档集成测试、实际模拟器交互回归 |
+| `Validation/hint-quality-audit.json` | 150 关最新提示安全性、逻辑覆盖和旋转／镜像等价审计 |
 | `Validation/levels-report.json` | 150 关逐关校验；46 个重点关自动通关与同盘恢复 |
 | `Validation/experimental-levels-report.json` | 151–180 三组连续生成与自动通关结果 |
 | `Validation/demo-acceptance.md` | 沿用 88 条原 Checklist 的本轮适用范围与实际结果 |
