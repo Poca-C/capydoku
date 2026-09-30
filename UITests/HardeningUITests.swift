@@ -210,11 +210,16 @@ final class HardeningUITests: XCTestCase {
         tap("debug_done")
     }
 
-    func testRewardWithoutCallbackTimesOutAndCanRetry() {
+    func testRewardLoadingTimesOutAndCanRetry() {
         launch()
         tap("hint"); tap("hint_close")
-        selectRewardScenario("No callback (timeout)")
+        selectRewardScenario("Loading timeout")
         tap("hint")
+        XCTAssertTrue(app.staticTexts["reward_title"].waitForExistence(timeout: 2))
+        for id in ["home", "settings", "cell_0", "hint", "direct"] {
+            XCTAssertFalse(app.descendants(matching: .any).matching(identifier: id).firstMatch.exists, "The simulated ad must isolate \(id) from the accessibility tree.")
+        }
+        XCTAssertFalse(app.buttons["reward_close"].isEnabled)
         let alert = app.alerts.firstMatch
         XCTAssertTrue(alert.waitForExistence(timeout: 10))
         XCTAssertTrue(alert.staticTexts.containing(NSPredicate(format: "label CONTAINS %@", "timed out")).firstMatch.exists)

@@ -190,10 +190,11 @@ final class CapydokuUITests: XCTestCase {
         launchGame()
         for index in solution {
             cell(index).doubleTap()
-            expectValue(cell(index), "found")
+            if index != solution.last { expectValue(cell(index), "found") }
         }
         XCTAssertTrue(app.staticTexts["win_result"].waitForExistence(timeout: 5))
-        XCTAssertEqual(app.staticTexts["score"].label, "520")
+        XCTAssertEqual(app.staticTexts["win_result"].value as? String, "Level 1. Score 520. 4 of 4 found.")
+        XCTAssertFalse(cell(0).exists, "The completed board must not leak beneath its modal result.")
         attachScreen("Level complete")
         tapButton("next_level")
         let next = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", "Level 2"), object: app.staticTexts["level_title"])
@@ -211,8 +212,10 @@ final class CapydokuUITests: XCTestCase {
             if offset == 1 {
                 XCTAssertTrue(app.descendants(matching: .any)["found_count"].label.contains("One heart left"), "The last-life reminder should be shown.")
             }
-            expectValue(cell(index), "error")
-            expectValue(app.otherElements["lives"], String(2 - offset))
+            if offset < 2 {
+                expectValue(cell(index), "error")
+                expectValue(app.otherElements["lives"], String(2 - offset))
+            }
             if offset == 0 {
                 let mistake = cell(index).coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
                 mistake.tap()
@@ -223,7 +226,8 @@ final class CapydokuUITests: XCTestCase {
             }
         }
         XCTAssertTrue(app.staticTexts["loss_result"].waitForExistence(timeout: 5))
-        let before = boardValues()
+        XCTAssertFalse(cell(0).exists)
+        let before = (0..<16).map { $0 == 1 ? "found" : $0 == 0 ? "marked" : [2, 3].contains($0) ? "error" : "empty" }
         tapButton("revive")
         expectValue(app.otherElements["lives"], "3", timeout: 8)
         XCTAssertFalse(app.alerts.firstMatch.exists, "A successful revival resumes this board without an additional confirmation popup.")
@@ -345,7 +349,11 @@ final class CapydokuUITests: XCTestCase {
         app.launch()
         XCTAssertTrue(cell(35).waitForExistence(timeout: 15))
         // Current original-pipeline-v3 L10: 6×6, seed 3326683751187130770, candidate 48.
-        for index in [3, 7, 16, 20, 29, 30] { cell(index).doubleTap(); expectValue(cell(index), "found") }
+        for index in [3, 7, 16, 20, 29, 30] {
+            cell(index).doubleTap()
+            if index != 30 { expectValue(cell(index), "found") }
+        }
+        XCTAssertTrue(app.staticTexts["win_result"].waitForExistence(timeout: 5))
         tapButton("next_level")
         XCTAssertTrue(app.staticTexts["challenge_title"].waitForExistence(timeout: 5))
         XCTAssertEqual(app.staticTexts["challenge_title"].label, "A New Challenge!")
@@ -358,7 +366,11 @@ final class CapydokuUITests: XCTestCase {
         app.launchArguments = ["-ui-testing", "-skip-tutorial", "-level", "10"]
         app.launch()
         XCTAssertTrue(cell(35).waitForExistence(timeout: 15))
-        for index in [3, 7, 16, 20, 29, 30] { cell(index).doubleTap(); expectValue(cell(index), "found") }
+        for index in [3, 7, 16, 20, 29, 30] {
+            cell(index).doubleTap()
+            if index != 30 { expectValue(cell(index), "found") }
+        }
+        XCTAssertTrue(app.staticTexts["win_result"].waitForExistence(timeout: 5))
         tapButton("next_level")
         let repeated = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", "Level 11"), object: app.staticTexts["level_title"])
         XCTAssertEqual(XCTWaiter.wait(for: [repeated], timeout: 10), .completed)
@@ -374,7 +386,7 @@ final class CapydokuUITests: XCTestCase {
         XCTAssertEqual(app.staticTexts["level_title"].label, "Level 150")
         for index in [4, 14, 19, 29, 32, 42, 55, 57] {
             cell(index).doubleTap()
-            expectValue(cell(index), "found")
+            if index != 57 { expectValue(cell(index), "found") }
         }
         XCTAssertTrue(app.staticTexts["win_result"].waitForExistence(timeout: 5))
     }
@@ -403,34 +415,31 @@ final class CapydokuUITests: XCTestCase {
 
     func testGenerationFailureKeepsCompletedLevel150Intact() {
         launchAndSolveLevel150(extraArguments: ["-generation-candidate-limit", "0"])
-        let before = boardValues(count: 64)
-        let regions = (0..<64).map { cell($0).label }
+        let before = app.staticTexts["win_result"].value as? String
+        XCTAssertTrue(before?.contains("Level 150.") == true)
+        XCTAssertTrue(before?.contains("8 of 8 found.") == true)
+        XCTAssertFalse(cell(0).exists, "Result isolation hides the completed board; exact snapshot persistence is also covered in AppModel tests.")
         XCTAssertFalse(app.alerts.firstMatch.exists, "Failure injection must not produce an invalid session save.")
         tapButton("next_level")
         XCTAssertTrue(app.alerts.buttons["OK"].waitForExistence(timeout: 10))
         XCTAssertTrue(app.alerts.staticTexts.containing(NSPredicate(format: "label CONTAINS %@", "Generation stopped safely")).firstMatch.exists)
         app.alerts.buttons["OK"].tap()
-        XCTAssertEqual(app.staticTexts["level_title"].label, "Level 150")
         XCTAssertTrue(app.staticTexts["win_result"].exists)
-        XCTAssertEqual(boardValues(count: 64).filter { $0 == "found" }.count, 8)
-        XCTAssertEqual(boardValues(count: 64), before)
-        XCTAssertEqual((0..<64).map { cell($0).label }, regions)
+        XCTAssertEqual(app.staticTexts["win_result"].value as? String, before)
+        XCTAssertFalse(cell(0).exists)
         tapButton("result_home")
         XCTAssertTrue(app.buttons["play"].waitForExistence(timeout: 5))
         tapButton("play")
-        XCTAssertEqual(app.staticTexts["level_title"].label, "Level 150")
         XCTAssertTrue(app.staticTexts["win_result"].exists)
-        XCTAssertEqual(boardValues(count: 64).filter { $0 == "found" }.count, 8)
-        XCTAssertEqual(boardValues(count: 64), before)
-        XCTAssertEqual((0..<64).map { cell($0).label }, regions)
+        XCTAssertEqual(app.staticTexts["win_result"].value as? String, before)
+        XCTAssertFalse(cell(0).exists)
         app.terminate()
         app.launchArguments = ["-ui-testing"]
         app.launch()
         tapButton("play")
-        XCTAssertEqual(app.staticTexts["level_title"].label, "Level 150")
         XCTAssertTrue(app.staticTexts["win_result"].exists, "The pre-failure board must also survive a cold restart.")
-        XCTAssertEqual(boardValues(count: 64), before)
-        XCTAssertEqual((0..<64).map { cell($0).label }, regions, "Failed generation must keep every region of the completed current-pack board after a cold restart.")
+        XCTAssertEqual(app.staticTexts["win_result"].value as? String, before)
+        XCTAssertFalse(cell(0).exists)
         XCTAssertFalse(app.alerts.firstMatch.exists)
     }
 }

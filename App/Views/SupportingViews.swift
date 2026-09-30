@@ -4,20 +4,20 @@ import CapydokuCore
 
 struct SettingsView: View {
     @EnvironmentObject private var model: AppModel
-    @AccessibilityFocusState private var headingFocused: Bool
+    @Environment(\.capyAccessibilityFocus) private var focus
     @State private var showingFeedback = false
     var body: some View {
         VStack(spacing: 0) {
             ZStack {
                 Text("Settings").font(.system(size: 33, weight: .heavy, design: .rounded))
-                    .accessibilityAddTraits(.isHeader).accessibilityFocused($headingFocused).accessibilityIdentifier("settings_title")
+                    .accessibilityAddTraits(.isHeader).capyFocus("settings_title").accessibilityIdentifier("settings_title")
                     #if DEBUG
                     .onLongPressGesture(minimumDuration: 1) { model.sheet = .debug }
                     .accessibilityAction(named: "Developer tools") { model.sheet = .debug }
                     #endif
                 HStack {
                     Spacer()
-                    Button { model.sheet = nil } label: {
+                    CapyButton(id: "settings_done") { model.sheet = nil } label: {
                         Image(systemName: "xmark").font(.system(size: 25, weight: .bold)).frame(width: 48, height: 48)
                     }.buttonStyle(CapyPressStyle()).accessibilityLabel("Close settings").accessibilityIdentifier("settings_done")
                 }
@@ -30,11 +30,11 @@ struct SettingsView: View {
                     setting("Haptics", symbol: "iphone.radiowaves.left.and.right", binding: $model.progress.settings.hapticsEnabled, id: "haptics_toggle")
                 }.padding(.top, 6)
                 VStack(spacing: 15) {
-                    Button {
+                    CapyButton(id: "feedback") {
                         model.exportDiagnostics(); showingFeedback = model.exportURL != nil
                     } label: { Text("Feedback").frame(maxWidth: .infinity) }
                         .buttonStyle(CapyButtonStyle(secondary: true)).accessibilityIdentifier("feedback")
-                    Button {
+                    CapyButton(id: "restart") {
                         model.sheet = nil; model.restart()
                     } label: { Text("Restart").frame(maxWidth: .infinity) }
                         .buttonStyle(CapyButtonStyle()).disabled(model.session == nil).accessibilityIdentifier("restart")
@@ -44,20 +44,20 @@ struct SettingsView: View {
         .background(CapyPalette.paper).clipShape(RoundedRectangle(cornerRadius: 28))
         .frame(maxWidth: 365).padding(.horizontal, 24)
         .accessibilityAddTraits(.isModal)
-        .onAppear { headingFocused = true }
         .onChange(of: model.progress.settings) { _ in model.settingsChanged() }
-        .sheet(isPresented: $showingFeedback) { if let url = model.exportURL { ShareSheet(items: [url]) } }
+        .sheet(isPresented: $showingFeedback, onDismiss: { focus?.wrappedValue = "feedback" }) { if let url = model.exportURL { ShareSheet(items: [url]) } }
     }
     private func setting(_ label: String, symbol: String, binding: Binding<Bool>, id: String) -> some View {
         Toggle(isOn: binding) {
             Image(systemName: symbol).font(.system(size: 27, weight: .semibold)).frame(height: 33)
-        }.toggleStyle(IconSwitchStyle()).accessibilityLabel(label).accessibilityIdentifier(id)
+        }.toggleStyle(IconSwitchStyle(id: id)).accessibilityLabel(label).accessibilityIdentifier(id)
     }
 }
 
 struct IconSwitchStyle: ToggleStyle {
+    let id: String
     func makeBody(configuration: Configuration) -> some View {
-        Button { configuration.isOn.toggle() } label: {
+        CapyButton(id: id) { configuration.isOn.toggle() } label: {
             VStack(spacing: 8) {
                 configuration.label
                 HStack(spacing: 2) {
@@ -75,6 +75,7 @@ struct IconSwitchStyle: ToggleStyle {
 }
 
 struct CheckInView: View {
+    @Environment(\.capyButtonActivation) private var activate
     @EnvironmentObject private var model: AppModel
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var rewardBounce = false
@@ -119,7 +120,7 @@ struct CheckInView: View {
                     .overlay { if showRewardBurst { CheckInParticleBurst(progress: burstProgress).allowsHitTesting(false) } }
                     .accessibilityHidden(true)
                 Text("\(shownStreak)").font(.system(size: 78, weight: .heavy, design: .rounded))
-                    .foregroundColor(CapyPalette.orange).padding(.top, 8).accessibilityIdentifier("checkin_streak")
+                    .foregroundColor(CapyPalette.orange).padding(.top, 8).accessibilityIdentifier("checkin_streak").capyFocus("checkin_streak")
                 Text("Day Streak").font(.system(size: 26, weight: .heavy, design: .rounded)).foregroundColor(CapyPalette.orange)
                 Spacer().frame(height: max(32, geometry.size.height * 0.07))
                 Group {
@@ -146,7 +147,8 @@ struct CheckInView: View {
             Text(weekday(day)).font(.system(size: 12, weight: .heavy, design: .rounded))
                 .foregroundColor(claimed || canClaim ? CapyPalette.orange : Color(red: 0.61, green: 0.69, blue: 0.74))
             Button {
-                guard canClaim else { return }
+                guard model.progress.checkIn.canClaim(on: model.now), day == shownCycleDay + 1 else { return }
+                activate("claim_reward")
                 let previousClaim = model.progress.checkIn.lastClaimedDay
                 model.claim()
                 if !reduceMotion && model.progress.checkIn.lastClaimedDay != previousClaim {
@@ -211,16 +213,16 @@ struct RewardView: View {
             VStack(spacing: 22) {
                 HStack {
                     Spacer()
-                    Button { model.sheet = nil } label: {
+                    CapyButton(id: "reward_close") { model.sheet = nil } label: {
                         Image(systemName: "xmark").font(.system(size: 22, weight: .bold)).frame(width: 44, height: 44)
-                    }.disabled(model.rewardBusy || model.rewardRetryPending || model.interstitialBusy).accessibilityLabel("Close reward").accessibilityIdentifier("reward_close")
+                    }.buttonStyle(CapyPressStyle()).disabled(model.rewardBusy || model.rewardRetryPending || model.interstitialBusy).accessibilityLabel("Close reward").accessibilityIdentifier("reward_close")
                 }
                 Image(systemName: "play.rectangle.fill").font(.system(size: 64)).foregroundColor(CapyPalette.video)
-                Text(model.interstitialBusy ? "Simulated interstitial" : "Demo Video").font(.system(size: 27, weight: .heavy, design: .rounded)).multilineTextAlignment(.center)
+                Text(model.interstitialBusy ? "Simulated interstitial" : "Demo Video").font(.system(size: 27, weight: .heavy, design: .rounded)).multilineTextAlignment(.center).accessibilityIdentifier("reward_title").capyFocus("reward_title")
                 Text(model.interstitialBusy ? "Internal demo · no real ad" : "Simulated reward · no real ad").font(.system(size: 13, weight: .semibold, design: .rounded)).foregroundColor(CapyPalette.muted)
                 if model.rewardRetryPending && !model.interstitialBusy {
                     Text("Your reward is waiting to be saved.").font(.callout).multilineTextAlignment(.center)
-                    Button("Retry save", action: model.runReward).buttonStyle(CapyButtonStyle()).accessibilityIdentifier("run_reward")
+                    CapyButton("Retry save", id: "run_reward", action: model.runReward).buttonStyle(CapyButtonStyle()).accessibilityIdentifier("run_reward")
                 } else {
                     ProgressView().tint(CapyPalette.orange).padding(12)
                     Text("Loading…").font(.system(size: 16, weight: .bold, design: .rounded))
@@ -233,6 +235,8 @@ struct RewardView: View {
 struct DebugView: View {
     @EnvironmentObject private var model: AppModel
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.capyButtonActivation) private var activate
+    @Environment(\.capyAccessibilityFocus) private var focus
     @State private var showingExport = false
     var body: some View {
         NavigationView {
@@ -243,10 +247,11 @@ struct DebugView: View {
                         TextField("Level number", text: $model.jumpLevel).keyboardType(.numberPad).accessibilityIdentifier("jump_level")
                         Button("Go") {
                             guard let level = Int(model.jumpLevel), level > 0 else { return }
+                            activate("jump_go")
                             dismiss(); model.start(level: level)
-                        }.accessibilityIdentifier("jump_go")
+                        }.frame(minWidth: 44, minHeight: 44).accessibilityIdentifier("jump_go")
                     }
-                    Button("Replay tutorial", action: model.replayTutorial)
+                    CapyButton("Replay tutorial", id: "replay_tutorial", action: model.replayTutorial)
                 }
                 Section(header: Text("Reward simulation")) {
                     Picker("Outcome", selection: $model.rewardScenario) {
@@ -275,14 +280,14 @@ struct DebugView: View {
                     Text("Difficulty is a temporary content label, not formal reference-product calibration.").font(.caption)
                 }
                 Section(header: Text("Recovery & diagnostics")) {
-                    Button("Recover save") { model.loadProgress(); model.applySettings(); dismiss() }.accessibilityIdentifier("recover_save")
-                    Button("Export issue report") { model.exportDiagnostics(); showingExport = model.exportURL != nil }.accessibilityIdentifier("export_diagnostics")
+                    CapyButton("Recover save", id: "recover_save") { model.loadProgress(); model.applySettings(); dismiss() }.accessibilityIdentifier("recover_save")
+                    CapyButton("Export issue report", id: "export_diagnostics") { model.exportDiagnostics(); showingExport = model.exportURL != nil }.accessibilityIdentifier("export_diagnostics")
                     Text("The export contains the full local board, seed, settings, inventory and reward ledger. It contains the solution for debugging. No account or device identifier is collected.").font(.caption)
                 }
             }.tint(CapyPalette.orange).navigationTitle("Developer tools")
-                .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() }.accessibilityIdentifier("debug_done") } }
+                .toolbar { ToolbarItem(placement: .confirmationAction) { CapyButton("Done", id: "debug_done") { dismiss() }.frame(minWidth: 44, minHeight: 44).accessibilityIdentifier("debug_done") } }
         }.navigationViewStyle(.stack)
-            .sheet(isPresented: $showingExport) { if let url = model.exportURL { ShareSheet(items: [url]) } }
+            .sheet(isPresented: $showingExport, onDismiss: { focus?.wrappedValue = "export_diagnostics" }) { if let url = model.exportURL { ShareSheet(items: [url]) } }
     }
     private func field(_ name: String, _ value: String) -> some View {
         VStack(alignment: .leading, spacing: 4) { Text(name).font(.caption).foregroundColor(.secondary); Text(value).font(.system(.footnote, design: .monospaced)).textSelection(.enabled) }

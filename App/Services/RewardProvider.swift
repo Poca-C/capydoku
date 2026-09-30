@@ -4,7 +4,7 @@ import CapydokuCore
 enum RewardScenario: String, CaseIterable, Identifiable {
     case success = "Success", cancel = "Cancel", failure = "Failure"
     case duplicate = "Duplicate callback", interrupted = "Interrupt after reward"
-    case timeout = "No callback (timeout)"
+    case timeout = "Loading timeout"
     var id: String { rawValue }
 }
 enum RewardSignal: Equatable { case earned, cancelled, failed, interrupted, timedOut }
@@ -12,6 +12,9 @@ enum RewardReadiness { case ready, unavailable }
 
 /// Placement-based loading boundary; real adapters coalesce concurrent preload requests
 /// and keep at most one ready ad per configured unit. No network SDK is linked here.
+/// `present` completion is the final display outcome. A live adapter combines its
+/// SDK reward and dismissal/failure callbacks before emitting it; a reward callback
+/// alone must not dismiss the app's display state while the SDK video is still open.
 protocol RewardProvider {
     func preload(placement: RewardKind, completion: @escaping (RewardReadiness) -> Void)
     func isReady(placement: RewardKind) -> Bool
@@ -36,6 +39,10 @@ extension RewardProvider {
 
 struct MockRewardProvider: RewardProvider {
     let scenario: RewardScenario
+    func preload(placement: RewardKind, completion: @escaping (RewardReadiness) -> Void) {
+        if scenario != .timeout { completion(.ready) }
+    }
+    func isReady(placement: RewardKind) -> Bool { scenario != .timeout }
     func present(offerID: String, completion: @escaping (RewardSignal) -> Void) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             switch scenario {
@@ -43,7 +50,7 @@ struct MockRewardProvider: RewardProvider {
             case .cancel: completion(.cancelled)
             case .failure: completion(.failed)
             case .interrupted: completion(.interrupted)
-            case .timeout: break // The app must release its lock without trusting the adapter.
+            case .timeout: break // This scenario never becomes ready for presentation.
             case .duplicate:
                 completion(.earned)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { completion(.earned) }
@@ -54,10 +61,20 @@ struct MockRewardProvider: RewardProvider {
 
 enum InterstitialSignal { case closed, failed, timedOut }
 protocol InterstitialProvider {
+    func load(completion: @escaping (RewardReadiness) -> Void)
+    var isReady: Bool { get }
     func present(completion: @escaping (InterstitialSignal) -> Void)
+}
+extension InterstitialProvider {
+    func load(completion: @escaping (RewardReadiness) -> Void) { completion(.ready) }
+    var isReady: Bool { true }
 }
 struct MockInterstitialProvider: InterstitialProvider {
     let scenario: RewardScenario
+    func load(completion: @escaping (RewardReadiness) -> Void) {
+        if scenario != .timeout { completion(.ready) }
+    }
+    var isReady: Bool { scenario != .timeout }
     func present(completion: @escaping (InterstitialSignal) -> Void) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             switch scenario {

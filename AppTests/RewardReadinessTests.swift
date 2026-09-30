@@ -19,6 +19,10 @@ private final class ReadinessRewards: RewardProvider {
 
 private final class ReadinessInterstitial: InterstitialProvider {
     var callbacks: [(InterstitialSignal) -> Void] = []
+    var loads: [(RewardReadiness) -> Void] = []
+    var isReady: Bool
+    init(ready: Bool = true) { isReady = ready }
+    func load(completion: @escaping (RewardReadiness) -> Void) { loads.append(completion) }
     func present(completion: @escaping (InterstitialSignal) -> Void) { callbacks.append(completion) }
 }
 
@@ -151,16 +155,50 @@ final class RewardReadinessTests: XCTestCase {
         XCTAssertEqual(app.session?.id, newSession); XCTAssertTrue(app.progress.rewardLedger.isEmpty)
         XCTAssertEqual(app.progress.bonusHints, bonusHints); XCTAssertEqual(app.progress.bonusDirect, bonusDirect)
     }
-    @MainActor func testInterstitialMissingCallbackTimesOutAndLateCallbackDoesNotAdvanceAgain() async throws {
+    @MainActor func testInterstitialLoadTimesOutAndLateReadinessDoesNotAdvanceAgain() async throws {
         let root = directory(); defer { try? FileManager.default.removeItem(at: root) }
-        let provider = ReadinessInterstitial(), app = try winningModel(root, provider: provider)
+        let provider = ReadinessInterstitial(ready: false), app = try winningModel(root, provider: provider)
         let bonusHints = app.progress.bonusHints, bonusDirect = app.progress.bonusDirect
-        app.next(); XCTAssertTrue(app.interstitialBusy); XCTAssertEqual(provider.callbacks.count, 1)
+        app.next(); XCTAssertTrue(app.interstitialBusy); XCTAssertTrue(provider.callbacks.isEmpty)
+        XCTAssertEqual(provider.loads.count, 1)
         try? await Task.sleep(nanoseconds: 1_150_000_000)
         XCTAssertFalse(app.interstitialBusy); XCTAssertNil(app.sheet); XCTAssertEqual(app.session?.puzzle.id, 3)
         let newSession = app.session?.id
-        provider.callbacks[0](.closed); provider.callbacks[0](.timedOut); await drain()
+        provider.loads[0](.ready); provider.loads[0](.unavailable); await drain()
+        XCTAssertTrue(provider.callbacks.isEmpty)
         XCTAssertEqual(app.session?.id, newSession); XCTAssertTrue(app.progress.rewardLedger.isEmpty)
         XCTAssertEqual(app.progress.bonusHints, bonusHints); XCTAssertEqual(app.progress.bonusDirect, bonusDirect)
+    }
+
+    @MainActor func testDisplayedInterstitialWaitsForCloseBeyondLoadingBudget() async throws {
+        let root = directory(); defer { try? FileManager.default.removeItem(at: root) }
+        let provider = ReadinessInterstitial(), app = try winningModel(root, provider: provider)
+        let board = app.session
+        app.next(); XCTAssertEqual(provider.callbacks.count, 1)
+        try? await Task.sleep(nanoseconds: 1_150_000_000)
+        XCTAssertTrue(app.interstitialBusy); XCTAssertEqual(app.session, board)
+        app.next(); XCTAssertEqual(provider.callbacks.count, 1)
+        provider.callbacks[0](.closed); provider.callbacks[0](.closed); await drain()
+        XCTAssertFalse(app.interstitialBusy); XCTAssertEqual(app.session?.puzzle.id, 3)
+        XCTAssertTrue(app.progress.rewardLedger.isEmpty)
+    }
+
+    @MainActor func testInterstitialReadyWhileBackgroundedWaitsToPresentThenRestoresHome() async throws {
+        let root = directory(); defer { try? FileManager.default.removeItem(at: root) }
+        let provider = ReadinessInterstitial(ready: false), app = try winningModel(root, provider: provider)
+        var row = try referenceRow(); row.adsEnabled = true; row.interstitial.enabled = true
+        row.interstitial.onReturnHome = true; row.interstitial.startLevel = 1
+        row.interstitial.frequency = 1; row.interstitial.cooldownSeconds = 0; row.interstitial.adTimeoutSeconds = 1
+        app.config = DemoConfig(referenceGameplay: row); app.start(level: 2)
+        for cell in try XCTUnwrap(app.session).puzzle.solution { app.submit(cell) }
+        app.home(); app.setActive(false)
+        provider.loads[0](.ready); await drain()
+        try? await Task.sleep(nanoseconds: 1_150_000_000)
+        XCTAssertTrue(app.interstitialBusy); XCTAssertTrue(provider.callbacks.isEmpty)
+        app.setActive(true); app.setActive(true)
+        XCTAssertEqual(provider.callbacks.count, 1)
+        provider.callbacks[0](.closed); await drain()
+        XCTAssertEqual(app.screen, .home); XCTAssertEqual(app.session?.puzzle.id, 2)
+        XCTAssertTrue(app.progress.rewardLedger.isEmpty)
     }
 }

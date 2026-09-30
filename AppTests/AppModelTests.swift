@@ -26,7 +26,7 @@ final class AppModelTests: XCTestCase {
         XCTAssertEqual(model.progress.availableHints, 0)
     }
 
-    @MainActor func testMissingCallbackTimesOutAndLateSuccessCannotAffectNewOffer() async {
+    @MainActor func testReadyVideoCanOutlastLoadingBudgetAndRewardOnlyOnce() async {
         let dir = directory(); defer { try? FileManager.default.removeItem(at: dir) }
         let provider = ControlledRewards()
         let app = model(directory: dir, provider: provider, timeout: 0.25)
@@ -34,22 +34,39 @@ final class AppModelTests: XCTestCase {
         app.offer(.hint); app.runReward(); app.runReward()
         XCTAssertEqual(provider.offers.count, 1)
         try? await Task.sleep(nanoseconds: 500_000_000)
-        XCTAssertFalse(app.rewardBusy); XCTAssertNil(app.sheet)
-        XCTAssertTrue(app.notice?.contains("timed out") == true)
-        XCTAssertEqual(app.progress.rewardLedger[provider.offers[0].0]?.state, .cancelled)
+        XCTAssertTrue(app.rewardBusy); XCTAssertEqual(app.sheet, .reward)
+        XCTAssertNil(app.notice)
+        XCTAssertEqual(app.progress.rewardLedger[provider.offers[0].0]?.state, .offered)
         XCTAssertEqual(app.progress.availableHints, 0)
-        app.notice = nil; app.offer(.hint); app.runReward()
+        app.offer(.hint); app.runReward()
+        XCTAssertEqual(provider.offers.count, 1)
         provider.offers[0].1(.earned)
         await drainCallbacks()
-        XCTAssertTrue(app.rewardBusy); XCTAssertEqual(app.sheet, .reward)
-        XCTAssertEqual(app.progress.availableHints, 0)
-        provider.offers[1].1(.earned)
-        await drainCallbacks()
         XCTAssertFalse(app.rewardBusy); XCTAssertNotNil(app.hint)
-        XCTAssertEqual(app.progress.rewardLedger[provider.offers[1].0]?.state, .executed)
+        XCTAssertEqual(app.progress.rewardLedger[provider.offers[0].0]?.state, .executed)
         app.hint = nil
-        provider.offers[0].1(.earned); provider.offers[1].1(.earned)
+        provider.offers[0].1(.earned); provider.offers[0].1(.cancelled)
         await drainCallbacks()
+        XCTAssertNil(app.hint); XCTAssertEqual(app.progress.availableHints, 0)
+    }
+
+    @MainActor func testConfirmedHintAfterBackgroundDisplaysOnSameProcessForegroundOnlyOnce() async {
+        let dir = directory(); defer { try? FileManager.default.removeItem(at: dir) }
+        let provider = ControlledRewards(); let app = model(directory: dir, provider: provider)
+        exhaustHint(app); let board = app.session?.marks
+        app.offer(.hint); app.setActive(false)
+        provider.offers[0].1(.earned); provider.offers[0].1(.earned)
+        await drainCallbacks()
+        XCTAssertNil(app.hint); XCTAssertEqual(app.progress.availableHints, 1)
+        XCTAssertEqual(app.session?.marks, board)
+        app.setActive(true)
+        XCTAssertNotNil(app.hint); XCTAssertEqual(app.progress.availableHints, 0)
+        XCTAssertEqual(app.session?.marks, board, "Only Apply may write the suggested X marks.")
+        let preview = app.hint
+        app.setActive(false); app.setActive(true)
+        XCTAssertEqual(app.hint, preview); XCTAssertEqual(provider.offers.count, 1)
+        app.hint = nil; app.setActive(true)
+        provider.offers[0].1(.earned); await drainCallbacks()
         XCTAssertNil(app.hint); XCTAssertEqual(app.progress.availableHints, 0)
     }
 
@@ -131,6 +148,8 @@ final class AppModelTests: XCTestCase {
         await drainCallbacks()
         XCTAssertTrue(app.rewardRetryPending); XCTAssertFalse(app.rewardBusy)
         XCTAssertEqual(app.sheet, .reward); XCTAssertNotNil(app.errorMessage)
+        XCTAssertFalse(app.currentAudioEnvironment.blocks.contains(.advertisement),
+                       "A completed video must release audio even when its receipt needs a disk-write retry.")
         XCTAssertEqual(app.progress.availableHints, 0)
         provider.offers[0].1(.cancelled) // A contradictory late signal must not replace the earned result.
         await drainCallbacks()

@@ -7,6 +7,8 @@ enum CapyPalette {
     static let paper = Color(red: 1.00, green: 0.99, blue: 0.97)
     static let ink = Color(red: 0.49, green: 0.31, blue: 0.29)
     static let orange = Color(red: 0.97, green: 0.56, blue: 0.08)
+    // Functional labels/buttons need contrast; decorative artwork keeps the reference orange.
+    static let actionOrange = Color(red: 0.72, green: 0.30, blue: 0.015)
     static let orangeLight = Color(red: 0.98, green: 0.88, blue: 0.77)
     static let muted = Color(red: 0.62, green: 0.45, blue: 0.41)
     static let green = Color(red: 0.24, green: 0.64, blue: 0.31)
@@ -106,37 +108,126 @@ struct CapyCard<Content: View>: View {
 }
 
 struct CapyButtonStyle: ButtonStyle {
-    @EnvironmentObject private var model: AppModel
     var secondary: Bool = false
     var compact: Bool = false
+    var darkBackdrop: Bool = false
     @Environment(\.isEnabled) private var isEnabled
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.system(size: compact ? 16 : 25, weight: .heavy, design: .rounded))
+            .multilineTextAlignment(.center)
+            .fixedSize(horizontal: false, vertical: true)
             .padding(.horizontal, compact ? 18 : 26)
-            .frame(minHeight: compact ? 44 : 60)
-            .foregroundColor(secondary ? CapyPalette.orange : .white)
-            .background(secondary ? Color.clear : CapyPalette.orange)
+            .padding(.vertical, compact ? 10 : 14)
+            .frame(minWidth: 44, minHeight: compact ? 44 : 60)
+            .foregroundColor(secondary ? (darkBackdrop ? CapyPalette.orange : CapyPalette.actionOrange) : .white)
+            .background(secondary ? Color.clear : CapyPalette.actionOrange)
             .clipShape(Capsule())
             .overlay(Capsule().stroke(secondary ? CapyPalette.orange : .clear, lineWidth: 1.5))
             .shadow(color: secondary ? .clear : CapyPalette.orange.opacity(0.22), radius: 5, y: 3)
             .opacity(isEnabled ? (configuration.isPressed ? 0.86 : 1) : 0.42)
             .scaleEffect(configuration.isPressed && !reduceMotion ? 0.96 : 1)
             .animation(reduceMotion ? nil : .easeOut(duration: 0.13), value: configuration.isPressed)
-            .onChange(of: configuration.isPressed) { pressed in if pressed { model.uiTap() } }
     }
 }
 
 struct CapyPressStyle: ButtonStyle {
-    @EnvironmentObject private var model: AppModel
     @Environment(\.isEnabled) private var isEnabled
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     func makeBody(configuration: Configuration) -> some View {
-        configuration.label.opacity(isEnabled ? (configuration.isPressed ? 0.8 : 1) : 0.45)
+        configuration.label.frame(minWidth: 44, minHeight: 44).contentShape(Rectangle())
+            .opacity(isEnabled ? (configuration.isPressed ? 0.8 : 1) : 0.45)
             .scaleEffect(configuration.isPressed && !reduceMotion ? 0.93 : 1)
             .animation(reduceMotion ? nil : .easeOut(duration: 0.12), value: configuration.isPressed)
-            .onChange(of: configuration.isPressed) { pressed in if pressed { model.uiTap() } }
+    }
+}
+
+private struct CapyButtonActivationKey: EnvironmentKey {
+    static let defaultValue: (String?) -> Void = { _ in }
+}
+
+private struct CapyAccessibilityFocusKey: EnvironmentKey {
+    static let defaultValue: AccessibilityFocusState<String?>.Binding? = nil
+}
+
+extension EnvironmentValues {
+    var capyButtonActivation: (String?) -> Void {
+        get { self[CapyButtonActivationKey.self] }
+        set { self[CapyButtonActivationKey.self] = newValue }
+    }
+    var capyAccessibilityFocus: AccessibilityFocusState<String?>.Binding? {
+        get { self[CapyAccessibilityFocusKey.self] }
+        set { self[CapyAccessibilityFocusKey.self] = newValue }
+    }
+}
+
+/// Feedback belongs to the completed Button action, never to its pressed visual state.
+struct CapyButton<Label: View>: View {
+    @Environment(\.capyButtonActivation) private var activate
+    var id: String? = nil
+    let action: () -> Void
+    @ViewBuilder let label: () -> Label
+    var body: some View {
+        Button { activate(id); action() } label: { label().contentShape(Rectangle()) }
+            .capyFocus(id)
+    }
+}
+
+extension CapyButton where Label == Text {
+    init(_ title: String, id: String? = nil, action: @escaping () -> Void) {
+        self.id = id; self.action = action; self.label = { Text(title) }
+    }
+}
+
+private struct CapyFocusModifier: ViewModifier {
+    @Environment(\.capyAccessibilityFocus) private var focus
+    let id: String?
+    @ViewBuilder func body(content: Content) -> some View {
+        if let focus, let id { content.accessibilityFocused(focus, equals: id) }
+        else { content }
+    }
+}
+
+extension View {
+    func capyFocus(_ id: String?) -> some View { modifier(CapyFocusModifier(id: id)) }
+}
+
+/// A real UIKit boundary keeps an entire covered SwiftUI page out of the
+/// accessibility tree while retaining the frozen visual background beneath it.
+struct CapyAccessibilityHost<Content: View>: UIViewControllerRepresentable {
+    let hidden: Bool
+    let content: Content
+    init(hidden: Bool, @ViewBuilder content: () -> Content) {
+        self.hidden = hidden; self.content = content()
+    }
+    func makeUIViewController(context: Context) -> CapyAccessibilityController<Content> {
+        CapyAccessibilityController(content: content)
+    }
+    func updateUIViewController(_ controller: CapyAccessibilityController<Content>, context: Context) {
+        controller.host.rootView = content
+        controller.view.accessibilityElementsHidden = hidden
+        controller.view.accessibilityElements = hidden ? [] : [controller.host.view!]
+        controller.view.isUserInteractionEnabled = !hidden
+    }
+}
+
+final class CapyAccessibilityController<Content: View>: UIViewController {
+    let host: UIHostingController<Content>
+    init(content: Content) { host = UIHostingController(rootView: content); super.init(nibName: nil, bundle: nil) }
+    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .clear; view.isAccessibilityElement = false
+        host.view.backgroundColor = .clear
+        addChild(host); view.addSubview(host.view); host.didMove(toParent: self)
+        host.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            host.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            host.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            host.view.topAnchor.constraint(equalTo: view.topAnchor),
+            host.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
 }
 

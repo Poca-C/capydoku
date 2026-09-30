@@ -9,10 +9,13 @@ struct PuzzleBoardView: UIViewRepresentable {
     let errors: Set<Int>
     var preview: Set<Int> = []
     var tutorialTargets: Set<Int> = []
+    var hideAccessibility: Bool = false
     let locked: Bool
     let onToggle: (Int) -> Void
     let onSubmit: (Int) -> Void
     let onMark: ([Int]) -> Void
+    var onBeginSwipe: () -> Void = {}
+    var onEndSwipe: (Bool) -> Void = { _ in }
 
     func makeUIView(context: Context) -> PuzzleGridUIView {
         let view = PuzzleGridUIView()
@@ -23,8 +26,9 @@ struct PuzzleBoardView: UIViewRepresentable {
     func updateUIView(_ uiView: PuzzleGridUIView, context: Context) {
         uiView.configure(size: puzzle.size, regions: puzzle.regions, found: found,
                          marks: marks, errors: errors, preview: preview,
-                         tutorialTargets: tutorialTargets, locked: locked,
-                         onToggle: onToggle, onSubmit: onSubmit, onMark: onMark)
+                         tutorialTargets: tutorialTargets, locked: locked, hideAccessibility: hideAccessibility,
+                         onToggle: onToggle, onSubmit: onSubmit, onMark: onMark,
+                         onBeginSwipe: onBeginSwipe, onEndSwipe: onEndSwipe)
     }
 }
 
@@ -38,9 +42,13 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     private var preview = Set<Int>()
     private var tutorialTargets = Set<Int>()
     private var locked = false
+    private var hideAccessibility = false
     private var onToggle: ((Int) -> Void)?
     private var onSubmit: ((Int) -> Void)?
     private var onMark: (([Int]) -> Void)?
+    private var onBeginSwipe: (() -> Void)?
+    private var onEndSwipe: ((Bool) -> Void)?
+    private var swipeFeedbackActive = false
     private var cells: [PuzzleCellAccessibilityElement] = []
     private enum DragAxis { case pending, horizontal, vertical, invalid }
     private var dragAxis: DragAxis = .pending
@@ -73,14 +81,16 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
     func configure(size: Int, regions: [Int], found: Set<Int>, marks: Set<Int>, errors: Set<Int>,
-                   preview: Set<Int>, tutorialTargets: Set<Int>, locked: Bool,
+                   preview: Set<Int>, tutorialTargets: Set<Int>, locked: Bool, hideAccessibility: Bool = false,
                    onToggle: @escaping (Int) -> Void, onSubmit: @escaping (Int) -> Void,
-                   onMark: @escaping ([Int]) -> Void) {
+                   onMark: @escaping ([Int]) -> Void,
+                   onBeginSwipe: @escaping () -> Void = {}, onEndSwipe: @escaping (Bool) -> Void = { _ in }) {
         let sameBoard = self.size == size && self.regions == regions
         let addedFound = found.subtracting(self.found)
         let addedErrors = errors.subtracting(self.errors)
         let changedMarks = marks.symmetricDifference(self.marks).subtracting(found).subtracting(errors)
-        if !sameBoard {
+        if !sameBoard || locked {
+            finishSwipe(cancelled: true)
             dragStart = nil
             visited.removeAll()
         }
@@ -92,9 +102,13 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         self.preview = preview
         self.tutorialTargets = tutorialTargets
         self.locked = locked
+        self.hideAccessibility = hideAccessibility
+        accessibilityElementsHidden = hideAccessibility
         self.onToggle = onToggle
         self.onSubmit = onSubmit
         self.onMark = onMark
+        self.onBeginSwipe = onBeginSwipe
+        self.onEndSwipe = onEndSwipe
         refreshAccessibility()
         setNeedsDisplay()
         if hasConfigured, sameBoard, window != nil, !UIAccessibility.isReduceMotionEnabled {
@@ -160,7 +174,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     }
 
     @objc private func pan(_ gesture: UIPanGestureRecognizer) {
-        guard !locked else { return }
+        guard !locked else { finishSwipe(cancelled: true); return }
         let location = gesture.location(in: self)
         let movement = gesture.translation(in: self)
         if gesture.state == .began {
@@ -174,6 +188,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         // origin also prevents re-entry from filling the gap back to that origin.
         // Only a new touch (.began) can start another marking stroke.
         guard boardRect.contains(location), gesture.state != .cancelled, gesture.state != .failed else {
+            finishSwipe(cancelled: true)
             dragStart = nil
             dragAxis = .invalid
             visited.removeAll()
@@ -184,6 +199,10 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
                 if abs(movement.x) >= abs(movement.y) * 1.65 { dragAxis = .horizontal }
                 else if abs(movement.y) >= abs(movement.x) * 1.65 { dragAxis = .vertical }
                 else { dragAxis = .invalid }
+                if dragAxis == .horizontal || dragAxis == .vertical {
+                    swipeFeedbackActive = true
+                    onBeginSwipe?()
+                }
             }
             var indexes: [Int] = []
             switch dragAxis {
@@ -200,9 +219,21 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
             if !fresh.isEmpty { onMark?(fresh) }
         }
         if gesture.state == .ended || gesture.state == .cancelled || gesture.state == .failed {
+            finishSwipe(cancelled: gesture.state != .ended)
             dragStart = nil
             visited.removeAll()
         }
+    }
+
+    private func finishSwipe(cancelled: Bool) {
+        guard swipeFeedbackActive else { return }
+        swipeFeedbackActive = false
+        onEndSwipe?(cancelled)
+    }
+
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        if window == nil { finishSwipe(cancelled: true) }
     }
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool { false }
@@ -219,20 +250,22 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
                 element.index = index
                 element.owner = self
                 element.accessibilityIdentifier = "cell_\(index)"
-                element.accessibilityCustomActions = [
-                    UIAccessibilityCustomAction(name: "Confirm capybara", target: element, selector: #selector(PuzzleCellAccessibilityElement.submit)),
-                    UIAccessibilityCustomAction(name: "Toggle exclusion mark", target: element, selector: #selector(PuzzleCellAccessibilityElement.toggle))
-                ]
                 return element
             }
-            accessibilityElements = cells
         }
+        // SwiftUI's ancestor accessibilityHidden does not reliably hide custom
+        // UIAccessibilityElement arrays owned by UIViewRepresentable children.
+        accessibilityElements = hideAccessibility ? [] : cells
         for (index, element) in cells.enumerated() {
             let state = found.contains(index) ? "found" : errors.contains(index) ? "error" : marks.contains(index) ? "marked" : "empty"
             element.accessibilityLabel = "Row \(index / size + 1), column \(index % size + 1), region \(region(index) + 1)"
             element.accessibilityValue = state
             let extra = tutorialTargets.contains(index) ? " Tutorial target." : preview.contains(index) ? " Hint preview." : ""
-            element.accessibilityHint = "Activate to toggle an exclusion mark. Use the Confirm capybara custom action to submit.\(extra)"
+            element.accessibilityHint = locked ? "Read-only board preview.\(extra)" : "Activate to toggle an exclusion mark. Use the Confirm capybara custom action to submit.\(extra)"
+            element.accessibilityCustomActions = locked || found.contains(index) ? nil : [
+                UIAccessibilityCustomAction(name: "Confirm capybara", target: element, selector: #selector(PuzzleCellAccessibilityElement.submit)),
+                UIAccessibilityCustomAction(name: "Toggle exclusion mark", target: element, selector: #selector(PuzzleCellAccessibilityElement.toggle))
+            ]
             element.accessibilityTraits = locked || found.contains(index) ? [.button, .notEnabled] : .button
             element.accessibilityFrameInContainerSpace = rect(for: index)
         }

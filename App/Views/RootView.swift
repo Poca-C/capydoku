@@ -4,19 +4,53 @@ import CapydokuCore
 struct RootView: View {
     @EnvironmentObject private var model: AppModel
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.scenePhase) private var scenePhase
+    @AccessibilityFocusState private var focusedControl: String?
+    @State private var lastActivatedControl: String?
+    @State private var previousModal: String?
+    @State private var modalOrigins: [String: String] = [:]
     private var hasCard: Bool { model.sheet == .settings || model.sheet == .reward }
+    private var hasResult: Bool { model.screen == .game && model.session?.status != .playing && model.session != nil }
+    private var modal: String? {
+        if model.errorMessage != nil || model.notice != nil { return "alert" }
+        if model.loading { return "loading" }
+        if model.sheet == .reward { return "reward" }
+        if model.challengePending { return "challenge" }
+        if model.sheet == .settings { return "settings" }
+        if model.sheet == .debug { return "debug" }
+        if model.screen == .game, model.hint != nil { return "hint" }
+        if model.screen == .game, let session = model.session, session.status != .playing {
+            return session.status == .won ? "win" : "loss"
+        }
+        return nil
+    }
     var body: some View {
         ZStack {
             CapyPalette.cream.ignoresSafeArea()
-            Group {
+            // Scrims belong to the root window; a hosted content view cannot
+            // extend its drawing into the parent's status/home-indicator areas.
+            if model.screen == .game && model.hint != nil && !hasResult {
+                Color.black.opacity(0.72).ignoresSafeArea().accessibilityHidden(true)
+            }
+            CapyAccessibilityHost(hidden: hasCard || model.loading || model.challengePending || hasResult || model.sheet == .debug) {
+                Group {
                 switch model.screen {
                 case .home: HomeView()
                 case .game: GameView()
                 case .checkIn: CheckInView()
                 }
+                }.environmentObject(model).foregroundColor(CapyPalette.ink)
+                    .environment(\.capyAccessibilityFocus, $focusedControl)
+                    .environment(\.capyButtonActivation, activate)
             }
-            .disabled(hasCard || model.loading || model.challengePending)
-            .accessibilityHidden(hasCard || model.loading || model.challengePending)
+            if hasResult && model.sheet != .reward {
+                Color.black.opacity(0.78).ignoresSafeArea().accessibilityHidden(true)
+                CapyAccessibilityHost(hidden: hasCard || model.loading || model.challengePending) {
+                    ResultPanel(won: model.session?.status == .won).environmentObject(model).foregroundColor(CapyPalette.ink)
+                        .environment(\.capyAccessibilityFocus, $focusedControl)
+                        .environment(\.capyButtonActivation, activate)
+                }
+            }
             if hasCard {
                 Color.black.opacity(0.68).ignoresSafeArea().contentShape(Rectangle())
                 Group {
@@ -36,18 +70,57 @@ struct RootView: View {
                     VStack(spacing: 16) {
                         CapyMascot(size: 88)
                         ProgressView().tint(CapyPalette.orange)
-                        Text("Loading…").font(.system(size: 22, weight: .bold, design: .rounded))
+                        Text("Loading…").font(.system(size: 22, weight: .bold, design: .rounded)).capyFocus("loading_title")
                     }.frame(maxWidth: .infinity).padding(16)
-                }.frame(maxWidth: 310).padding(26)
+                }.frame(maxWidth: 310).padding(26).accessibilityAddTraits(.isModal)
             }
         }
+        .environment(\.capyAccessibilityFocus, $focusedControl)
+        .environment(\.capyButtonActivation, activate)
+        .onAppear { moveFocus(to: modal) }
+        .onChange(of: modal) { moveFocus(to: $0) }
+        .onChange(of: scenePhase) { phase in if phase == .active { requestFocus(modalHeading ?? focusedControl ?? defaultFocus) } }
         .foregroundColor(CapyPalette.ink)
         .animation(reduceMotion ? nil : .easeOut(duration: 0.18), value: hasCard)
         .animation(reduceMotion ? nil : .easeOut(duration: 0.18), value: model.challengePending)
-        .sheet(isPresented: Binding(get: { model.sheet == .debug }, set: { if !$0 && model.sheet == .debug { model.sheet = nil } })) { DebugView() }
+        .sheet(isPresented: Binding(get: { model.sheet == .debug }, set: { if !$0 && model.sheet == .debug { model.sheet = nil } })) {
+            DebugView().environment(\.capyAccessibilityFocus, $focusedControl).environment(\.capyButtonActivation, activate)
+        }
         .alert("Capydoku", isPresented: Binding(get: { model.errorMessage != nil || model.notice != nil }, set: { if !$0 { model.errorMessage = nil; model.notice = nil } })) {
-            Button("OK") { model.errorMessage = nil; model.notice = nil }
+            Button("OK") { model.uiTap("alert_ok"); model.errorMessage = nil; model.notice = nil }
         } message: { Text(model.errorMessage ?? model.notice ?? "") }
+    }
+    private var defaultFocus: String { model.screen == .game ? "level_title" : model.screen == .checkIn ? "checkin_streak" : "play" }
+    private func activate(_ id: String?) {
+        if let id { lastActivatedControl = id }
+        model.uiTap(id ?? "button")
+    }
+    private var modalHeading: String? {
+        guard let modal else { return nil }
+        return ["settings": "settings_title", "reward": "reward_title", "challenge": "challenge_title",
+                "loading": "loading_title", "hint": "hint_explanation", "win": "win_result", "loss": "loss_result"][modal]
+    }
+    private func requestFocus(_ id: String) {
+        focusedControl = nil
+        DispatchQueue.main.async { focusedControl = id }
+    }
+    private func moveFocus(to current: String?) {
+        let old = previousModal
+        previousModal = current
+        if let current {
+            if current != old { modalOrigins[current] = lastActivatedControl ?? defaultFocus }
+            if let heading = modalHeading { requestFocus(heading) }
+        } else if let old {
+            let origin = modalOrigins.removeValue(forKey: old)
+            let target: String
+            switch old {
+            case "hint": target = "hint"
+            case "win", "loss", "challenge", "loading": target = defaultFocus
+            case "settings", "debug": target = model.screen == .checkIn ? defaultFocus : "settings"
+            default: target = origin == "revive" || origin == "next_level" ? defaultFocus : origin ?? defaultFocus
+            }
+            requestFocus(target)
+        }
     }
 }
 
@@ -82,7 +155,7 @@ struct HomeView: View {
                             }.frame(maxWidth: .infinity).frame(height: 60)
                                 .foregroundColor(.white).background(CapyPalette.disabled).clipShape(Capsule())
                         }.disabled(true).accessibilityIdentifier("daily_challenge").accessibilityHint("Not available in this build")
-                        Button(action: model.startOrContinue) {
+                        CapyButton(id: "play", action: model.startOrContinue) {
                             Text("Level \(model.session?.puzzle.id ?? model.progress.currentLevel)")
                                 .font(.system(size: 31, weight: .heavy, design: .rounded))
                                 .frame(maxWidth: .infinity).frame(height: 24)
@@ -102,7 +175,7 @@ struct IconButton: View {
     let symbol: String; let label: String; let id: String
     var action: () -> Void
     var body: some View {
-        Button(action: action) {
+        CapyButton(id: id, action: action) {
             Image(systemName: symbol).font(.system(size: 22, weight: .bold))
                 .frame(width: 44, height: 44).background(CapyPalette.paper).clipShape(Circle())
                 .shadow(color: CapyPalette.orange.opacity(0.15), radius: 1, y: 2)
@@ -119,13 +192,13 @@ struct GameView: View {
         GeometryReader { geometry in
             if let s = model.session {
                 let boardSide = max(190, min(geometry.size.width - 28, geometry.size.height - 420, 500))
+                let covered = s.status != .playing || model.sheet != nil || model.loading || model.challengePending
                 ZStack {
-                    if model.hint != nil { Color.black.opacity(0.72).ignoresSafeArea() }
                     VStack(spacing: 0) {
                         HStack {
                             IconButton(symbol: "arrow.left", label: "Home", id: "home") {
                                 if model.hint != nil { model.hint = nil } else { model.home() }
-                            }
+                            }.accessibilityHidden(covered || model.hint != nil).disabled(model.hint != nil)
                             Spacer()
                             IconButton(symbol: model.hint == nil ? "gearshape.fill" : "xmark", label: model.hint == nil ? "Settings" : "Close hint", id: model.hint == nil ? "settings" : "hint_close") {
                                 if model.hint != nil { model.hint = nil } else { model.sheet = .settings }
@@ -133,12 +206,12 @@ struct GameView: View {
                         }.frame(height: 44).padding(.horizontal, 8)
                         HStack(spacing: 52) {
                             (Text("Level\n").font(.system(size: 17, weight: .medium, design: .rounded)) + Text("\(s.puzzle.id)").font(.system(size: 25, weight: .heavy, design: .rounded)))
-                                .multilineTextAlignment(.center).accessibilityLabel("Level \(s.puzzle.id)").accessibilityIdentifier("level_title")
+                                .multilineTextAlignment(.center).accessibilityLabel("Level \(s.puzzle.id)").accessibilityIdentifier("level_title").capyFocus("level_title")
                             VStack(spacing: 0) {
                                 Text("Score").font(.system(size: 17, weight: .medium, design: .rounded))
                                 Text("\(s.score)").font(.system(size: 25, weight: .heavy, design: .rounded)).accessibilityIdentifier("score")
                             }
-                        }.frame(height: 56).opacity(model.hint == nil ? 1 : 0.35)
+                        }.frame(height: 56).opacity(model.hint == nil ? 1 : 0.35).accessibilityHidden(covered || model.hint != nil)
                         HStack(spacing: 18) {
                             progress(s)
                             HStack(spacing: 4) {
@@ -148,7 +221,7 @@ struct GameView: View {
                                 }
                             }.padding(.horizontal, 10).padding(.vertical, 5).background(CapyPalette.paper).clipShape(Capsule())
                                 .accessibilityElement(children: .ignore).accessibilityLabel("Lives").accessibilityValue("\(s.lives)").accessibilityIdentifier("lives")
-                        }.frame(height: 40).opacity(model.hint == nil ? 1 : 0.35)
+                        }.frame(height: 40).opacity(model.hint == nil ? 1 : 0.35).accessibilityHidden(covered || model.hint != nil)
                         Group {
                             if let hint = model.hint { HintPanel(hint: hint).frame(height: 66, alignment: .bottom) }
                             else { RuleStrip() }
@@ -156,12 +229,15 @@ struct GameView: View {
                         Spacer(minLength: 10)
                         PuzzleBoardView(puzzle: s.puzzle, found: s.found, marks: s.marks, errors: s.errors,
                                         preview: Set(model.hint?.cells ?? []), tutorialTargets: Set(model.tutorial?.targetCells ?? []),
+                                        hideAccessibility: covered,
                                         locked: s.status != .playing || model.hint != nil || model.sheet != nil || model.tutorial?.action == "read",
-                                        onToggle: model.toggle, onSubmit: model.submit, onMark: model.mark)
+                                        onToggle: model.toggle, onSubmit: model.submit, onMark: model.mark,
+                                        onBeginSwipe: model.beginSwipeFeedback,
+                                        onEndSwipe: { model.endSwipeFeedback(cancelled: $0) })
                             .frame(width: boardSide, height: boardSide)
                         Spacer(minLength: 10)
                         if model.hint != nil {
-                            Button(action: model.applyHint) { Text("Apply").frame(maxWidth: .infinity) }
+                            CapyButton(id: "hint_apply", action: model.applyHint) { Text("Apply").frame(maxWidth: .infinity) }
                                 .buttonStyle(CapyButtonStyle()).frame(maxWidth: 280).accessibilityIdentifier("hint_apply").frame(height: 130)
                         } else if let tutorial = model.tutorial {
                             TutorialPanel(step: tutorial).padding(.top, 8)
@@ -169,7 +245,7 @@ struct GameView: View {
                             VStack(spacing: 0) {
                                 Group {
                                     if model.levelStartFreeAvailable {
-                                        Button(action: model.levelStartFree) {
+                                        CapyButton(id: "level_start_free", action: model.levelStartFree) {
                                             HStack(spacing: 6) {
                                                 Image(systemName: "play.rectangle.fill").foregroundColor(CapyPalette.video)
                                                 Text("Free tool").font(.system(size: 13, weight: .bold, design: .rounded))
@@ -189,8 +265,7 @@ struct GameView: View {
                         }
                         // Reserved in every state, so loading or hiding a banner never moves the board.
                         Color.clear.frame(height: model.tutorial == nil ? 44 : 12).accessibilityIdentifier("banner_reservation")
-                    }.disabled(s.status != .playing).padding(.horizontal, 14).padding(.top, 4).padding(.bottom, 4)
-                    if s.status != .playing && model.sheet != .reward { ResultPanel(won: s.status == .won) }
+                    }.disabled(s.status != .playing).accessibilityElement(children: covered ? .ignore : .contain).accessibilityHidden(covered).padding(.horizontal, 14).padding(.top, 4).padding(.bottom, 4)
                     if showLastLife && s.status == .playing && model.hint == nil && model.sheet == nil {
                         VStack {
                             Text("Only one chance left!")
@@ -217,6 +292,7 @@ struct GameView: View {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) { withAnimation { showLastLife = false } }
                     } else { showLastLife = false }
                 }
+                .accessibilityAddTraits(model.hint != nil ? .isModal : [])
             }
         }
     }
@@ -247,7 +323,7 @@ struct ToolButton: View {
     let id: String
     let action: () -> Void
     var body: some View {
-        Button(action: action) {
+        CapyButton(id: id, action: action) {
             ZStack {
                 Circle().fill(CapyPalette.paper).shadow(color: CapyPalette.orange.opacity(0.17), radius: 2, y: 3)
                 if isDirect {
@@ -328,11 +404,11 @@ struct TutorialPanel: View {
                     Text("\(model.progress.tutorialStep + 1)/\(model.tutorialCount) · \(step.title)")
                         .font(.system(size: 14, weight: .bold, design: .rounded)).accessibilityIdentifier("tutorial_title")
                     Spacer()
-                    Button("Skip", action: model.skipTutorial).font(.system(size: 13, weight: .bold, design: .rounded)).frame(minWidth: 44, minHeight: 44).accessibilityIdentifier("skip_tutorial")
+                    CapyButton("Skip", id: "skip_tutorial", action: model.skipTutorial).buttonStyle(CapyPressStyle()).font(.system(size: 13, weight: .bold, design: .rounded)).frame(minWidth: 44, minHeight: 44).accessibilityIdentifier("skip_tutorial")
                 }
                 Text(step.instruction).font(.system(size: 12, design: .rounded)).fixedSize(horizontal: false, vertical: true)
                 if step.action == "read" {
-                    Button("Got it", action: model.advanceTutorial).buttonStyle(CapyButtonStyle(compact: true)).accessibilityIdentifier("tutorial_next")
+                    CapyButton("Got it", id: "tutorial_next", action: model.advanceTutorial).buttonStyle(CapyButtonStyle(compact: true)).accessibilityIdentifier("tutorial_next")
                 }
             }.frame(maxWidth: .infinity, alignment: .leading)
         }
@@ -347,6 +423,7 @@ struct HintPanel: View {
             .padding(.horizontal, 17).padding(.vertical, 11)
             .background(CapyPalette.paper).clipShape(RoundedRectangle(cornerRadius: 17))
             .accessibilityLabel("Hint. \(hint.rule). \(hint.explanation)")
+            .accessibilityIdentifier("hint_explanation").capyFocus("hint_explanation")
     }
 }
 
@@ -364,12 +441,15 @@ struct ResultPanel: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                Color.black.opacity(0.78).ignoresSafeArea()
+                ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 20) {
                     Text(won ? praise : (failure?.title ?? "So Close!"))
                         .font(.system(size: 39, weight: .heavy, design: .rounded)).foregroundColor(.white)
+                        .multilineTextAlignment(.center).fixedSize(horizontal: false, vertical: true)
                         .shadow(color: CapyPalette.orange, radius: 0, x: 1, y: 2)
                         .accessibilityIdentifier(won ? "win_result" : "loss_result")
+                        .accessibilityAddTraits(.isHeader).capyFocus(won ? "win_result" : "loss_result")
+                        .accessibilityValue("Level \(model.session?.puzzle.id ?? 1). Score \(model.session?.score ?? 0). \(model.session?.found.count ?? 0) of \(model.session?.puzzle.size ?? 0) found.")
                     ZStack {
                         if won { Image(systemName: "sun.max.fill").resizable().scaledToFit().foregroundColor(CapyPalette.orange.opacity(0.28)).padding(8) }
                         CapyMascot(mood: won ? .happy : .sad, size: min(geometry.size.width * 0.65, 250))
@@ -378,7 +458,7 @@ struct ResultPanel: View {
                         .font(.system(size: 20, weight: .bold, design: .rounded))
                         .foregroundColor(won ? Color(red: 1, green: 0.86, blue: 0.39) : CapyPalette.orangeLight)
                         .multilineTextAlignment(.center).fixedSize(horizontal: false, vertical: true)
-                    Button {
+                    CapyButton(id: won ? "next_level" : "revive") {
                         if won { model.next() } else { model.revive() }
                     } label: {
                         Text(won ? "Level \((model.session?.puzzle.id ?? 1) + 1)" : (failure?.reviveButtonTitle ?? "Play On")).frame(maxWidth: .infinity)
@@ -393,10 +473,12 @@ struct ResultPanel: View {
                             }
                         }
                     if !won {
-                        Button(action: model.restart) { Text(failure?.restartButtonTitle ?? "Restart").frame(maxWidth: .infinity) }
-                            .buttonStyle(CapyButtonStyle(secondary: true)).accessibilityIdentifier("result_restart")
+                        CapyButton(id: "result_restart", action: model.restart) { Text(failure?.restartButtonTitle ?? "Restart").frame(maxWidth: .infinity) }
+                            .buttonStyle(CapyButtonStyle(secondary: true, darkBackdrop: true)).accessibilityIdentifier("result_restart")
                     }
-                }.padding(.horizontal, 40).frame(maxWidth: 440).frame(maxWidth: .infinity, maxHeight: .infinity)
+                }.padding(.horizontal, 40).padding(.vertical, 24)
+                    .frame(maxWidth: 440).frame(maxWidth: .infinity, minHeight: max(0, geometry.size.height - 52))
+                }.padding(.top, 52)
                 if won || failure?.canDismiss != false {
                     VStack {
                         HStack {
@@ -414,18 +496,17 @@ struct ResultPanel: View {
 /// The original L10 → L11 flow places this after the interstitial has closed.
 struct ChallengePanel: View {
     @EnvironmentObject private var model: AppModel
-    @AccessibilityFocusState private var headingFocused: Bool
     var body: some View {
         CapyCard(padding: 24) {
             VStack(spacing: 22) {
                 Text("A New Challenge!").font(.system(size: 29, weight: .heavy, design: .rounded))
                     .multilineTextAlignment(.center).accessibilityAddTraits(.isHeader)
-                    .accessibilityFocused($headingFocused).accessibilityIdentifier("challenge_title")
+                    .capyFocus("challenge_title").accessibilityIdentifier("challenge_title")
                 CapyMascot(mood: .happy, size: 160)
-                Button(action: model.continueChallenge) { Text("Continue").frame(maxWidth: .infinity) }
+                CapyButton(id: "challenge_continue", action: model.continueChallenge) { Text("Continue").frame(maxWidth: .infinity) }
                     .buttonStyle(CapyButtonStyle()).accessibilityIdentifier("challenge_continue")
             }
         }.frame(maxWidth: 350).padding(.horizontal, 24)
-            .accessibilityAddTraits(.isModal).onAppear { headingFocused = true }
+            .accessibilityAddTraits(.isModal)
     }
 }

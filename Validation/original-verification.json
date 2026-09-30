@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "date": "2026-09-30",
-  "build": "0.2.0 (3)",
+  "build": "0.2.1 (4)",
   "status": "PLAYABLE_ORIGINAL_ALIGNMENT_DEMO_WITH_REFERENCE_AND_EXTERNAL_GAPS",
   "originalSHA256": "274bbf15f031bd80bb8b360cf14c0266acff370a230d9cad1b1785461df54dd2",
   "currentPackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49",
@@ -24,6 +24,15 @@
       "passed": 6,
       "failed": 0,
       "log": "Validation/test-runs/original-candidate-minimum.log"
+    },
+    "baselineBuild": "0.2.0 (3)",
+    "currentChangeRegression": {
+      "build": "0.2.1 (4)",
+      "passed": 52,
+      "failed": 0,
+      "seconds": 4.822,
+      "log": "Validation/test-runs/original-state-followup-core.log",
+      "scope": "GameSession, reference configuration execution, original storage, persistence and save-hardening tests after tutorial restart change. Generation code/pack unchanged; original generation evidence retained."
     }
   },
   "pythonImport": {
@@ -122,12 +131,62 @@
       "uiTestsPassed": 2,
       "failed": 0,
       "scope": "Current8x8 L150→6x6 generated L151, exact board/mark restoration; failed generation retains completed L150 through home and cold relaunch."
+    },
+    {
+      "device": "iPhone 17 Pro",
+      "bundle": "Validation/test-runs/original-audio-integration.xcresult",
+      "appTestsPassed": 47,
+      "failed": 0,
+      "scope": "First 0.2.1 app integration. Superseded by final run adding effect fade-out execution and final reward-display audio-state fix."
+    },
+    {
+      "device": "iPhone 17 Pro",
+      "bundle": "Validation/test-runs/original-audio-final.xcresult",
+      "appTestsPassed": 48,
+      "failed": 0,
+      "scope": "Final audio-policy13, actual model audio routing2, reward load/display boundary, long video outcomes, same-process background hint restoration, receipt-write retry, teaching restart and all remaining non-UI-contract app tests."
+    },
+    {
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-ui-focus-contract.xcresult",
+      "uiTestsPassed": 2,
+      "uiTestsFailed": 5,
+      "appTestsPassed": 2,
+      "appTestsFailed": 0,
+      "scope": "Initial focus/overlay run exposed actual accessibility leaks in both SwiftUI child overrides and custom UIKit board. These failures prompted fixes; not green. Long-copy host assertions passed but its first image was black and is not valid visual evidence."
+    },
+    {
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-ui-focus-final.xcresult",
+      "uiTestsPassed": 11,
+      "uiTestsFailed": 1,
+      "appTestsPassed": 2,
+      "appTestsFailed": 0,
+      "scope": "14-case integration: settings/reward/results isolation and state restore, four board sizes, first launch, game transitions, loading timeout and swipe cancellation passed. Hint test incorrectly equated XCTest existence of disabled background content with VoiceOver reachability; this assertion is replaced with explicit input-lock/board-state checks, with real VoiceOver still pending. Final text-color screenshot refresh recorded separately."
+    },
+    {
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-ui-artwork-021-final.xcresult",
+      "uiTestsPassed": 3,
+      "appTestsPassed": 2,
+      "failed": 0,
+      "scope": "Final-color screenshot capture, L10 transition, refined hint input-lock/restoration test and both long-copy host checks. All5 passed; visual inspection then found scrim safe-area clipping, corrected separately without layout/input changes."
+    },
+    {
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-ui-scrim-021-final.xcresult",
+      "uiTestsPassed": 2,
+      "appTestsPassed": 2,
+      "failed": 0,
+      "scope": "Final production scrims: six current main screens, L10 challenge, long-button dimensions and real long-copy result top/bottom rendering. Screens visually inspected; real VoiceOver remains pending."
     }
   ],
   "visualEvidence": {
     "path": "Docs/original-reference",
     "inspected": true,
-    "scope": "Compared layout and character theme with supplied Word figures. Not a pixel/timing match to unavailable frozen recordings."
+    "scope": "Current01–07 main screens plus settings overlay visually reviewed;08/09 are explicitly synthetic long-copy fixtures with full Restart reachable by scrolling. No claim of pixel/timing fidelity to missing frozen recordings.",
+    "build": "0.2.1 (4)",
+    "manifest": "Docs/original-reference/manifest.json"
   },
   "remaining": [
     "Frozen Pawdoku release/captures and actual per-level gameplay/difficulty configurations",
@@ -135,31 +194,93 @@
     "Cross-product corpus and reviewed similarity calibration",
     "Exact trigger ordering and alternate-board restart behavior",
     "Production legal/support endpoints and service adapters/data dashboards",
-    "Physical-device, old-system, TestFlight and App Store release validation"
+    "Physical-device, old-system, TestFlight and App Store release validation",
+    "VoiceOver actual focus navigation and full Dynamic Type/readability verification on physical devices"
   ],
   "historicalFailuresRetained": "Initial UI/app runs and first full-core run failed on changed fixture assumptions or real UI issues; these are retained under Validation/test-runs. Only explicitly listed successful reruns count. Old 88-item checklist completion counts are superseded.",
   "applicationTests": {
-    "passed": 29,
+    "passed": 48,
     "failed": 0,
-    "bundle": "Validation/test-runs/original-release-candidate.xcresult",
-    "scope": "AppTests portion passed; combined bundle also contains the separately documented UI launch failure."
+    "bundle": "Validation/test-runs/original-audio-final.xcresult",
+    "scope": "All AppTests excluding OriginalUIContractTests (separately run on iPhone 17e). Includes13 audio-policy tests,2 audio-routing tests,7 AppModel tests,9 readiness tests and complete tutorial restart/recovery paths."
   },
   "supersededOrInterruptedRuns": [
     "reward-readiness-final was intentionally interrupted to stop two runners targeting one simulator; not counted as success."
   ],
   "buildVerification": {
     "simulatorDebug": "passed",
-    "simulatorLog": "Validation/test-runs/original-final-build.log",
+    "simulatorLog": "Validation/test-runs/original-021-fullscreen-simulator-build.log",
     "genericIOSReleaseUnsigned": "passed",
-    "releaseLog": "Validation/test-runs/original-final-release-build.log",
+    "releaseLog": "Validation/test-runs/original-021-fullscreen-release-build.log",
     "installedOn": [
       "iPhone 17 Pro",
       "iPhone 17e"
     ],
-    "normalLaunch": "iPhone 17 Pro launched without test/reset flags;Welcome verified visually;existing normal user data preserved",
-    "normalLaunchScreenshot": "Validation/test-runs/original-normal-launch.png",
-    "bundleVersion": "0.2.0 (3)",
-    "signingAndDeviceExecution": "Release compilation was unsigned;no physical-device or App Store claim",
-    "sourceDocumentSHA256Unchanged": true
-  }
+    "normalLaunch": "iPhone 17 Pro launched without test/reset flags; Welcome verified visually; normal user data preserved",
+    "normalLaunchScreenshot": "Validation/test-runs/original-021-normal-launch.png",
+    "bundleVersion": "0.2.1 (4)",
+    "signingAndDeviceExecution": "Unsigned compilation only; no physical-device or App Store claim",
+    "sourceDocumentSHA256Unchanged": true,
+    "scope": "Final production sources including native accessibility isolation, explicit hosted text color and full-screen Root scrims; unsigned compilation only."
+  },
+  "audioContract": {
+    "policyTestsPassed": 13,
+    "modelRoutingTestsPassed": 2,
+    "actualAudioFiles": 0,
+    "referenceVerified": false,
+    "limitation": "Injected playback handles and deterministic scheduling verify client decisions, not original audio fidelity or device listening."
+  },
+  "uiIsolationDiagnosisHistory": [
+    {
+      "bundle": "Validation/test-runs/original-ui-focus-isolation-fix.xcresult",
+      "passed": 3,
+      "failed": 2,
+      "result": "Failed",
+      "failures": [
+        "XCTAssertFalse failed - Covered home must be absent from the accessibility tree.",
+        "XCTAssertFalse failed - The simulated ad must isolate home from the accessibility tree."
+      ]
+    },
+    {
+      "bundle": "Validation/test-runs/original-ui-focus-inspection.xcresult",
+      "passed": 1,
+      "failed": 1,
+      "result": "Failed",
+      "failures": [
+        "XCTAssertFalse failed - Covered home must be absent from the accessibility tree."
+      ]
+    },
+    {
+      "bundle": "Validation/test-runs/original-ui-focus-container.xcresult",
+      "passed": 0,
+      "failed": 1,
+      "result": "Failed",
+      "failures": [
+        "XCTAssertFalse failed - Covered home must be absent from the accessibility tree."
+      ]
+    },
+    {
+      "bundle": "Validation/test-runs/original-ui-focus-native-scope.xcresult",
+      "passed": 0,
+      "failed": 1,
+      "result": "Failed",
+      "failures": [
+        "XCTAssertFalse failed - Covered home must be absent from the accessibility tree."
+      ]
+    },
+    {
+      "bundle": "Validation/test-runs/original-ui-focus-plain-container.xcresult",
+      "passed": 0,
+      "failed": 1,
+      "result": "Failed",
+      "failures": [
+        "XCTAssertEqual failed: (\"[\"marked\", \"empty\", \"empty\", \"empty\", \"empty\", \"empty\", \"empty\", \"empty\", \"empty\", \"empty\", \"empty\", \"empty\", \"empty\", \"empty\", \"empty\", \"empty\"]\") is not equal to (\"[\"empty\", \"empty\", \"empty\", \"empty\", \"empty\", \"empty\", \"empty\", \"empty\", \"empty\", \"empty\", \"empty\", \"empty\", \"empty\", \"empty\", \"empty\", \"empty\"]\")"
+      ]
+    }
+  ],
+  "visualReviewFindings": [
+    "Rejected the first all-black long-copy host image despite passing initial assertions. Scene-bound hosting, pixel-diversity checks and top/bottom snapshots added.",
+    "Dark secondary text was unsuitable on the result backdrop; result Restart now uses light orange while white-card Feedback keeps dark orange.",
+    "Native accessibility hosting clipped inner Hint/Result scrims to safe-area bounds. Moved full-screen backgrounds to Root; final screenshots rerun."
+  ]
 }

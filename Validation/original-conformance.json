@@ -54,14 +54,18 @@
         331,
         333
       ],
-      "priority": "P2",
+      "priority": "客户端已验证，原资源待交付",
       "topic": "Complete audio playback/configuration contract",
-      "finding": "Current manifest has volume/delay/concurrency/loops but no complete page applicability, loop-point or fade policy; bulk swipe audio can be suppressed by the minimum interval. Actual reference audio is missing.",
+      "finding": "页面/弹层范围、循环点/淡出、连拍排队/停止、有效按钮映射及中断策略已补；13项策略与2项路由测试通过。空清单继续静音。",
       "evidence": [
         "App/Services/FeedbackPlayer.swift",
-        "Resources/audio-manifest.json"
+        "Resources/audio-manifest.json",
+        "App/Services/ReferenceAudioPolicy.swift",
+        "AppTests/AudioPolicyTests.swift",
+        "AppTests/AppModelFeedbackRoutingTests.swift",
+        "Validation/test-runs/original-audio-final.xcresult"
       ],
-      "next": "Add mappings/timing support alongside the supplied original audio; remain silent and unverified before assets arrive."
+      "next": "导入经确认的原音频与每项播放策略，完成逐文件核验及真机听测。"
     },
     {
       "id": "CLIENT-03",
@@ -103,14 +107,14 @@
         305,
         306
       ],
-      "priority": "P2",
+      "priority": "客户端部分验证，辅助功能待真机",
       "topic": "Touch target and focus audit",
-      "finding": "签到38pt已修为至少44×44，并以17e实际UI尺寸与单行测试验证。",
+      "finding": "已补普通UIKit父容器隔离，修复SwiftUI子层/自定义棋盘暴露；设置/广告/结算隔离与关闭恢复、44pt和长文案布局已验证。",
       "evidence": [
         "App/Views/SupportingViews.swift",
         "App/Views/RootView.swift"
       ],
-      "next": "保留全局焦点恢复、长英文、动态字体和对比度的专项验收。"
+      "next": "保留真实VoiceOver、Hint焦点、全部动态字体及原录屏对照验收；当前自动化不替代手工读屏。"
     }
   ],
   "rows": [
@@ -346,13 +350,15 @@
       ],
       "title": "提示仅预览，Apply 应用，关闭不改盘",
       "status": "verified",
-      "implemented": "当前包在17 Pro验证提示仅预览、关闭不改盘、观看模拟广告自动进预览、Apply才写X；App测试覆盖重复操作与后台限制。",
+      "implemented": "当前包在17 Pro验证提示仅预览、关闭不改盘、观看模拟广告自动进预览、Apply才写X；App测试覆盖重复操作与后台限制。 后台收到已确认提示奖励后，同进程回前台自动显示一次预览；冷启动仍补库存，Apply之前不写X。",
       "gap": "原提示文案、时序和规则映射仍待冻结资料。",
       "evidence": [
         "App/AppModel.swift",
         "App/Views/RootView.swift",
         "UITests/OriginalReferenceUITests.swift",
-        "Validation/original-verification.json"
+        "Validation/original-verification.json",
+        "AppTests/AppModelTests.swift",
+        "Validation/test-runs/original-audio-final.xcresult"
       ]
     },
     {
@@ -515,14 +521,16 @@
       ],
       "title": "教学覆盖四条规则和全部操作",
       "status": "verified",
-      "implemented": "当前L1完整9步教学在17e通过，四规则、Tap、Undo、横滑、纵滑、Double Tap，提交后无自动X；App测试覆盖分步恢复。",
+      "implemented": "当前L1完整9步教学在17e通过，四规则、Tap、Undo、横滑、纵滑、Double Tap，提交后无自动X；App测试覆盖分步恢复。 新L1尝试只在教学未完成时重置步骤；中途撤销/半段滑动后重开，完整教学实操通过；Home/冷启动保持当前步骤，完成后不重复教学。",
       "gap": "真人理解效果、精确节奏仍待参考与试玩。",
       "evidence": [
         "Sources/CapydokuCore/PuzzleHints.swift",
         "App/AppModel.swift",
         "AppTests/TutorialRecoveryTests.swift",
         "Validation/test-runs/original-ui-current-pack-paths.xcresult",
-        "Validation/original-verification.json"
+        "Validation/original-verification.json",
+        "Tests/CapydokuCoreTests/GameSessionTests.swift",
+        "Validation/test-runs/original-audio-final.xcresult"
       ]
     },
     {
@@ -779,12 +787,13 @@
       "title": "2D 卡皮巴拉主题、颜色、字体与资产",
       "status": "partial",
       "implemented": "奶油/橙/棕圆润 UI、白 X、多色棋盘和卡皮巴拉资源已替换；核心界面非3D。",
-      "gap": "美术仍在本轮修正；最终物种辨识、棋盘小尺寸和完整逐屏比对待验，不能以生成完成代表美术验收。",
+      "gap": "已对照原文附图目视核对7张当前主题截图，资源来源有记录；冻结录屏逐帧/全部尺寸与真机仍待验。",
       "evidence": [
         "App/Views/CapyStyle.swift",
         "App/Views/PuzzleBoardView.swift",
         "App/Resources/Assets.xcassets",
-        "Reference/art-provenance.json"
+        "Reference/art-provenance.json",
+        "Docs/original-reference/manifest.json"
       ]
     },
     {
@@ -799,13 +808,16 @@
       ],
       "title": "按压/弹窗/正确错误/奖励动效",
       "status": "partial",
-      "implemented": "按钮缩放、中央弹窗、角色/星星/破心、签到弹跳及短粒子、Reduce Motion 支持存在。",
+      "implemented": "按钮缩放、中央弹窗、角色/星星/破心、签到弹跳及短粒子、Reduce Motion 支持存在。 原生隔离容器的Hint/结算遮罩安全区裁切已修复，并以最终截图复核。",
       "gap": "主线程已目视最终7张截图；低性能/真机动效和冻结视频逐帧节奏仍未完成验收。",
       "evidence": [
         "App/Views/CapyStyle.swift",
         "App/Views/RootView.swift",
         "App/Views/PuzzleBoardView.swift",
-        "App/Views/SupportingViews.swift"
+        "App/Views/SupportingViews.swift",
+        "Validation/test-runs/original-ui-artwork-021-final.xcresult",
+        "Validation/test-runs/original-ui-scrim-021-final.xcresult",
+        "Docs/original-reference/manifest.json"
       ]
     },
     {
@@ -979,13 +991,20 @@
       ],
       "title": "44pt、状态、焦点恢复与可读性",
       "status": "partial",
-      "implemented": "签到按钮最小44×44，17e实测宽高及七天单行通过；主要按钮和弹层有状态、禁用和无障碍标识。",
-      "gap": "所有弹窗焦点恢复、动态字体、长文案及对比度尚未完整审计。",
+      "implemented": "17e已验证Settings/模拟广告/结算底层控件隔离、关闭后恢复原盘、主要按钮44×44及长文案自然增高；有效Button动作发反馈，明暗背景分别配文字色。Hint保留只读棋盘并路由解释焦点。",
+      "gap": "Hint的XCTest语义树仍可包含禁用背景内容，不据此宣称VoiceOver可达或不可达；真实VoiceOver焦点顺序、所有动态字体档位、最低系统和真机仍待验。",
       "evidence": [
         "App/Views/RootView.swift",
         "App/Views/SupportingViews.swift",
         "App/Views/CapyStyle.swift",
-        "Validation/test-runs/original-ui-checkin-touch-target.xcresult"
+        "Validation/test-runs/original-ui-checkin-touch-target.xcresult",
+        "AppTests/OriginalUIContractTests.swift",
+        "UITests/OriginalReferenceUITests.swift",
+        "UITests/HardeningUITests.swift",
+        "Validation/original-verification.json",
+        "Validation/test-runs/original-ui-artwork-021-final.xcresult",
+        "Validation/test-runs/original-ui-scrim-021-final.xcresult",
+        "Docs/original-reference/manifest.json"
       ]
     },
     {
@@ -1022,11 +1041,15 @@
       ],
       "title": "音乐页面范围、循环、淡入淡出与恢复",
       "status": "partial",
-      "implemented": "播放器支持音量、loop、开关、暂停恢复及系统音频中断处理。",
-      "gap": "适用页面映射、循环点、切换/淡入淡出参数尚无实现或资源基线，必须补齐后逐项验证。",
+      "implemented": "显式配置页面/关卡/弹层范围、循环点、淡入淡出及各流程暂停/恢复/重播；背景/广告原子状态与系统中断有播放器及模型路由测试。",
+      "gap": "客户端策略测试已通过；原文件、每个流程动作及音量/节奏数值缺失，实际音乐与听感待验。",
       "evidence": [
         "App/Services/FeedbackPlayer.swift",
-        "Resources/audio-manifest.json"
+        "Resources/audio-manifest.json",
+        "App/Services/ReferenceAudioPolicy.swift",
+        "AppTests/AudioPolicyTests.swift",
+        "AppTests/AppModelFeedbackRoutingTests.swift",
+        "Validation/test-runs/original-audio-final.xcresult"
       ]
     },
     {
@@ -1039,11 +1062,15 @@
       ],
       "title": "有效按钮点击映射与节流/并发",
       "status": "partial",
-      "implemented": "统一按钮样式触发点击反馈，manifest 支持最小间隔和并发。",
-      "gap": "目前在按下时触发，取消触摸仍可能触发；缺原按钮白名单及无效/禁用状态音频规则，不能全局统一认定匹配。",
+      "implemented": "通用点击移到有效Button动作，保留独立按压动画；稳定按钮ID按冻结映射决定播放，支持节流、并发及导航后片段处理策略。",
+      "gap": "原按钮白名单、禁用/无效点击规则和实际节奏仍缺；当前空清单不会发声。",
       "evidence": [
         "App/Views/CapyStyle.swift",
-        "App/Services/FeedbackPlayer.swift"
+        "App/Services/FeedbackPlayer.swift",
+        "App/Services/ReferenceAudioPolicy.swift",
+        "AppTests/AudioPolicyTests.swift",
+        "AppTests/AppModelFeedbackRoutingTests.swift",
+        "Validation/test-runs/original-audio-final.xcresult"
       ]
     },
     {
@@ -1060,12 +1087,16 @@
       ],
       "title": "单格/连拍/撤销/正确/错误事件",
       "status": "partial",
-      "implemented": "仅有效标记、撤销、提交扣命触发对应事件；连拍按新增 X 数量调用。",
-      "gap": "原逐格时序、滑动停止/中断处理及双击声音优先级未参考资源验证；连拍批量调用可能被minimumInterval压掉。",
+      "implemented": "成功操作才发事件，滑动按实际新增X逐格排队；横纵手势开始/结束/取消、离盘和锁定接入停止策略；Apply不额外发单格标记声。",
+      "gap": "纯播放器测试通过；真实逐格时序、声音优先级与实际素材听感仍需冻结资料和真机。",
       "evidence": [
         "App/AppModel.swift",
         "App/Views/PuzzleBoardView.swift",
-        "App/Services/FeedbackPlayer.swift"
+        "App/Services/FeedbackPlayer.swift",
+        "App/Services/ReferenceAudioPolicy.swift",
+        "AppTests/AudioPolicyTests.swift",
+        "AppTests/AppModelFeedbackRoutingTests.swift",
+        "Validation/test-runs/original-audio-final.xcresult"
       ]
     },
     {
@@ -1081,12 +1112,16 @@
       ],
       "title": "Combo 阈值、分组及四开关",
       "status": "awaiting_reference",
-      "implemented": "四开关保存，播放器按manifest group控制声效/语音，Combo 文本与事件存在。",
-      "gap": "阈值、默认开关、延迟、分组、音量均无冻结值；当前demo参数不可当参考验收值。",
+      "implemented": "四开关保存，参考清单显式映射Combo次数、语音/音效分组、延迟及音量；不为缺失配置补默认音频。",
+      "gap": "参考阈值、默认开关、分组和延迟均缺冻结值；播放器可配置不等于App/画面触发已对标。当前App仅在非胜利且Combo>1时派发，须与正式Combo及胜利时序一起校准。",
       "evidence": [
         "Sources/CapydokuCore/DemoConfig.swift",
         "Sources/CapydokuCore/GameSession.swift",
-        "App/Services/FeedbackPlayer.swift"
+        "App/Services/FeedbackPlayer.swift",
+        "App/Services/ReferenceAudioPolicy.swift",
+        "AppTests/AudioPolicyTests.swift",
+        "AppTests/AppModelFeedbackRoutingTests.swift",
+        "Validation/test-runs/original-audio-final.xcresult"
       ]
     },
     {
@@ -1100,11 +1135,15 @@
       ],
       "title": "不新增声音及完整音频回归",
       "status": "partial",
-      "implemented": "代码避免新增胜利音/奖励声，缺正式素材时不播放替代声音。",
-      "gap": "静音不等于音频通过；原资源未到，所有开关组合、广告/后台及快速滑动需真机听测。",
+      "implemented": "无新增胜利/奖励声；资源目录仍为空，referenceVerified=false保持静音。13项音频合同测试覆盖输入锁、导航、结果、连拍、开关、淡出和系统中断。",
+      "gap": "静音和策略测试不等于原版音频通过；原资源、实际按钮/Combo时序及真机听测仍待交付。",
       "evidence": [
         "App/Services/FeedbackPlayer.swift",
-        "Resources/audio-manifest.json"
+        "Resources/audio-manifest.json",
+        "App/Services/ReferenceAudioPolicy.swift",
+        "AppTests/AudioPolicyTests.swift",
+        "AppTests/AppModelFeedbackRoutingTests.swift",
+        "Validation/test-runs/original-audio-final.xcresult"
       ]
     },
     {
@@ -1508,7 +1547,7 @@
       ],
       "title": "插页失败不阻塞与广告后恢复",
       "status": "verified",
-      "implemented": "本地插页关闭重复回调、失败及无回调超时均只继续一次，不发奖励；迟到回调不会再次换关。",
+      "implemented": "插页加载/展示分离：未就绪超时或无填充跳过，已展示后等最终关闭/失败回调。验证长展示、后台就绪等前台、回首页和重复关闭不推进两次。",
       "gap": "真实SDK无填充/系统中断/声音恢复仍需接入与真机验收。",
       "evidence": [
         "App/AppModel.swift",
@@ -1516,7 +1555,8 @@
         "AppTests/OriginalFlowTests.swift",
         "App/Services/FeedbackPlayer.swift",
         "AppTests/RewardReadinessTests.swift",
-        "Validation/test-runs/reward-readiness-compatibility.xcresult"
+        "Validation/test-runs/reward-readiness-compatibility.xcresult",
+        "Validation/test-runs/original-audio-final.xcresult"
       ]
     },
     {
@@ -1529,12 +1569,15 @@
       ],
       "title": "激励四场景、直接拉起、Loading与Video unavailable",
       "status": "partial",
-      "implemented": "direct/hint/revive/level_start_free 已有入口，不加二次确认；有超时和模拟失败，失败不扣次。",
+      "implemented": "direct/hint/revive/level_start_free客户端入口不加确认；Loading只约束未就绪，已展示视频不会被加载计时误取消。超时迟到ready、长视频奖励及无填充不扣次已测试。",
       "gap": "真实逐关入口/配额与免费广告triggerOrder待冻结；模拟流程不能代替真实SDK故障与隐私联调。",
       "evidence": [
         "App/AppModel.swift",
         "App/Views/SupportingViews.swift",
-        "Sources/CapydokuCore/PlayerProgress.swift"
+        "Sources/CapydokuCore/PlayerProgress.swift",
+        "AppTests/AppModelTests.swift",
+        "AppTests/RewardReadinessTests.swift",
+        "Validation/test-runs/original-audio-final.xcresult"
       ]
     },
     {
@@ -1617,12 +1660,14 @@
       ],
       "title": "广告音频/打断/快速输入幂等",
       "status": "partial",
-      "implemented": "广告暂停/恢复背景音、奖励锁和重复回调防护存在，未确认奖励不自动发放。",
-      "gap": "缺真实音频与来电/系统打断真机验证；本轮最终全部场景结果待汇总。",
+      "implemented": "广告显示、后台和棋盘输入锁独立传递；展示最终结束后释放广告音频锁，即便奖励写盘仍需重试。后台提示恢复、重复回调和原子音频路由通过AppTests。",
+      "gap": "真实适配器必须合并SDK奖励与关闭回调成最终结果；来电/系统弹窗、正式音频及SDK真机联调仍待验。",
       "evidence": [
         "App/Services/FeedbackPlayer.swift",
         "App/AppModel.swift",
-        "AppTests/AppModelTests.swift"
+        "AppTests/AppModelTests.swift",
+        "AppTests/AppModelFeedbackRoutingTests.swift",
+        "Validation/test-runs/original-audio-final.xcresult"
       ]
     },
     {
@@ -1681,5 +1726,6 @@
         "Validation/reference-gameplay-import.json"
       ]
     }
-  ]
+  ],
+  "currentBuild": "0.2.1 (4)"
 }

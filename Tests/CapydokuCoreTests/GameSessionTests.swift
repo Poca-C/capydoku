@@ -174,6 +174,32 @@ final class GameSessionTests: XCTestCase {
         XCTAssertEqual(progress.completedLevels, [1])
     }
 
+    func testNewTutorialAttemptResetsInstructionButRestorationKeepsItsMarks() throws {
+        let first = try puzzle()
+        let steps = PuzzleHints.tutorial(puzzle: first)
+        let markCell = try XCTUnwrap(steps.first { $0.id == "mark" }?.targetCells.first)
+        var progress = PlayerProgress()
+        progress.begin(puzzle: first)
+        _ = progress.session?.toggleMark(at: markCell)
+        progress.tutorialStep = try XCTUnwrap(steps.firstIndex { $0.id == "undo" })
+
+        progress = try JSONDecoder().decode(PlayerProgress.self, from: JSONEncoder().encode(progress))
+        XCTAssertEqual(steps[progress.tutorialStep].id, "undo")
+        XCTAssertTrue(progress.session?.marks.contains(markCell) == true)
+        progress.restart()
+        XCTAssertEqual(progress.tutorialStep, 0)
+        XCTAssertEqual(progress.session?.marks, [])
+        XCTAssertEqual(progress.session?.attempt, 2)
+
+        progress.tutorialCompleted = true
+        progress.tutorialStep = steps.count
+        progress.restart()
+        XCTAssertTrue(progress.tutorialCompleted)
+        XCTAssertEqual(progress.tutorialStep, steps.count)
+        XCTAssertEqual(progress.session?.attempt, 3)
+        XCTAssertTrue(progress.session?.toggleMark(at: markCell) == true)
+    }
+
     func testCheckInUTCDateBoundaryAndRollback() {
         var progress = PlayerProgress()
         let midnight = Date(timeIntervalSince1970: 2_000 * 86_400)

@@ -99,6 +99,8 @@ final class TutorialRecoveryTests: XCTestCase {
                 XCTAssertEqual(app.session, before)
             case "tap":
                 let cell = try XCTUnwrap(step.targetCells.first)
+                XCTAssertEqual(before.marks.contains(cell), step.id == "undo",
+                               "Mark needs an empty cell; undo needs an existing X.")
                 app.toggle(cell)
                 XCTAssertEqual(app.session?.marks, before.marks.symmetricDifference([cell]))
                 XCTAssertEqual(app.session?.score, before.score)
@@ -151,6 +153,60 @@ final class TutorialRecoveryTests: XCTestCase {
         app.start(level: 1)
         XCTAssertEqual(app.session?.puzzle.id, 1)
         try completeTutorial(app, at: dir)
+    }
+
+    @MainActor func testRestartDuringUndoOrPartialSwipeReplaysTheCompleteTutorial() throws {
+        for stopAtPartialSwipe in [false, true] {
+            let dir = directory()
+            defer { try? FileManager.default.removeItem(at: dir) }
+            var app = model(at: dir)
+            app.start(level: 1)
+            for _ in 0..<4 { app.advanceTutorial() }
+            XCTAssertEqual(app.tutorial?.id, "mark")
+            let markedCell = try XCTUnwrap(app.tutorial?.targetCells.first)
+            app.toggle(markedCell)
+            XCTAssertEqual(app.tutorial?.id, "undo")
+            XCTAssertTrue(app.session?.marks.contains(markedCell) == true)
+            if stopAtPartialSwipe {
+                app.toggle(markedCell)
+                XCTAssertFalse(app.session?.marks.contains(markedCell) == true)
+                XCTAssertEqual(app.tutorial?.id, "swipe")
+                let swipeCell = try XCTUnwrap(app.tutorial?.targetCells.first)
+                app.mark([swipeCell])
+                XCTAssertEqual(app.tutorial?.id, "swipe")
+                XCTAssertEqual(app.session?.marks, [swipeCell])
+            }
+
+            // Returning home and loading the same saved attempt must not reset it.
+            let checkpoint = try XCTUnwrap(app.session)
+            let checkpointStep = app.progress.tutorialStep
+            app.home(); app.startOrContinue()
+            XCTAssertEqual(app.session, checkpoint)
+            XCTAssertEqual(app.progress.tutorialStep, checkpointStep)
+            app = try restore(app, at: dir)
+
+            app.sheet = .settings
+            app.restart()
+            app.sheet = nil
+            XCTAssertNotEqual(app.session?.id, checkpoint.id)
+            XCTAssertEqual(app.session?.attempt, checkpoint.attempt + 1)
+            XCTAssertEqual(app.session?.marks, [])
+            XCTAssertEqual(app.tutorial?.id, "row")
+            XCTAssertFalse(app.progress.tutorialCompleted)
+            // Execute all four rules, mark, actual undo, both swipes and double tap;
+            // the shared helper also restores between every action and mid-swipe.
+            try completeTutorial(app, at: dir)
+
+            let completed = model(at: dir)
+            completed.startOrContinue()
+            XCTAssertTrue(completed.progress.tutorialCompleted)
+            completed.restart()
+            XCTAssertNil(completed.tutorial, "A completed tutorial stays completed on a new attempt.")
+            let puzzle = try XCTUnwrap(completed.session?.puzzle)
+            let answer = try XCTUnwrap(puzzle.solution.first)
+            completed.submit(answer)
+            XCTAssertEqual(completed.session?.found, [answer], "Ordinary play must remain available after restarting.")
+        }
     }
 
     @MainActor func testGeneratedTutorialTargetsWorkAcrossEightSeedsAndEverySavedStep() throws {

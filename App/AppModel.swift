@@ -7,17 +7,17 @@ enum AppSheet: String, Identifiable { case settings, debug, reward; var id: Stri
 @MainActor
 final class AppModel: ObservableObject {
     @Published var progress = PlayerProgress()
-    @Published var screen: AppScreen = .home
-    @Published var sheet: AppSheet? { didSet { feedback.setPaused(!active || sheet == .reward) } }
-    @Published var hint: PuzzleHint?
-    @Published var loading = false
-    @Published var notice: String?
-    @Published var errorMessage: String?
+    @Published var screen: AppScreen = .home { didSet { syncFeedbackState() } }
+    @Published var sheet: AppSheet? { didSet { syncFeedbackState() } }
+    @Published var hint: PuzzleHint? { didSet { syncFeedbackState() } }
+    @Published var loading = false { didSet { syncFeedbackState() } }
+    @Published var notice: String? { didSet { syncFeedbackState() } }
+    @Published var errorMessage: String? { didSet { syncFeedbackState() } }
     @Published var rewardKind: RewardKind = .hint
     @Published var rewardScenario: RewardScenario = .success
     @Published var rewardBusy = false
     @Published var interstitialBusy = false
-    @Published var challengePending = false
+    @Published var challengePending = false { didSet { syncFeedbackState() } }
     @Published private(set) var referenceConfiguration: ReferenceGameplayConfiguration?
     @Published private(set) var lastGenerationReport: GenerationPipelineReport?
     private var winTransitionID: UUID?
@@ -51,14 +51,19 @@ final class AppModel: ObservableObject {
     private var activeOfferID: String?
     private var rewardDeadline: DispatchWorkItem?
     private var pendingRewardSignal: RewardSignal?
+    private var deferredRewardHintSessionID: UUID?
     private let rewardProvider: RewardProvider?
     private var activeRewardProvider: RewardProvider?
     private var rewardIsReady = false
     private var rewardWasPresented = false
+    private var rewardDisplayActive = false
     private var rewardWasReplenished = false
     private var startupFlowCompleted = false
     private var preloadedSessionID: UUID?
     private let interstitialProvider: InterstitialProvider?
+    private var activeInterstitialProvider: InterstitialProvider?
+    private var interstitialIsReady = false
+    private var interstitialWasPresented = false { didSet { syncFeedbackState() } }
     private var interstitialDeadline: DispatchWorkItem?
     private let rewardTimeout: TimeInterval
     private let feedbackEnabled: Bool
@@ -163,6 +168,7 @@ final class AppModel: ObservableObject {
     }
     var reviveNeedsVideo: Bool { progress.freeRevivesRemaining == 0 }
     func revive() {
+        defer { syncFeedbackState() }
         guard reviveAvailable, sheet == nil, !rewardBusy else { return }
         if progress.freeRevivesRemaining > 0 {
             flushPendingSaves()
@@ -193,12 +199,16 @@ final class AppModel: ObservableObject {
         flushPendingSaves(); saveRevision += 1
         rewardDeadline?.cancel(); rewardDeadline = nil
         let loaded = store.load()
+        rewardDisplayActive = false
         hint = nil; activeOfferID = nil; rewardBusy = false
         activeRewardProvider = nil; rewardIsReady = false; rewardWasPresented = false; rewardWasReplenished = false
         rewardRetryPending = false; pendingRewardSignal = nil
+        deferredRewardHintSessionID = nil
         if sheet == .reward { sheet = nil }
         notice = nil; errorMessage = nil
         progress = loaded.progress
+        syncFeedbackState()
+        applySettings()
         if progress.session == nil { screen = .home }
         if let message = loaded.warning { notice = message }
     }
@@ -208,6 +218,7 @@ final class AppModel: ObservableObject {
     /// overwrite a later reward or a restored save.
     func save(force: Bool = false) {
         progress.captureSessionBalance()
+        syncFeedbackState()
         let snapshot = progress
         saveRevision += 1; let revision = saveRevision
         let store = store
@@ -298,18 +309,43 @@ final class AppModel: ObservableObject {
                 let deadline = DispatchWorkItem { [weak self] in self?.finishInterstitial(winID: s.id) }
                 interstitialDeadline = deadline
                 DispatchQueue.main.asyncAfter(deadline: .now() + Double(row.interstitial.adTimeoutSeconds), execute: deadline)
-                (interstitialProvider ?? MockInterstitialProvider(scenario: rewardScenario)).present { [weak self] _ in
-                    DispatchQueue.main.async { self?.finishInterstitial(winID: s.id) }
+                let provider = interstitialProvider ?? MockInterstitialProvider(scenario: rewardScenario)
+                activeInterstitialProvider = provider
+                interstitialIsReady = false; interstitialWasPresented = false
+                provider.load { [weak self] readiness in
+                    DispatchQueue.main.async { self?.receiveInterstitialReadiness(readiness, winID: s.id) }
                 }
+                if provider.isReady { receiveInterstitialReadiness(.ready, winID: s.id) }
                 return
             }
             guard persistWinAdState(previous: previous) else { winTransitionID = nil; return }
         }
         completeWinTransition()
     }
+    private func receiveInterstitialReadiness(_ readiness: RewardReadiness, winID: UUID) {
+        guard interstitialBusy, winTransitionID == winID, !interstitialWasPresented else { return }
+        switch readiness {
+        case .unavailable: finishInterstitial(winID: winID)
+        case .ready:
+            // Original §8.2 limits loading, not the duration of an ad already ready to show.
+            interstitialDeadline?.cancel(); interstitialDeadline = nil
+            interstitialIsReady = true
+            displayReadyInterstitial()
+        }
+    }
+    private func displayReadyInterstitial() {
+        guard active, startupFlowCompleted, interstitialBusy, interstitialIsReady,
+              !interstitialWasPresented, let winID = winTransitionID,
+              let provider = activeInterstitialProvider else { return }
+        interstitialWasPresented = true
+        provider.present { [weak self] _ in
+            DispatchQueue.main.async { self?.finishInterstitial(winID: winID) }
+        }
+    }
     private func finishInterstitial(winID: UUID) {
         guard interstitialBusy, winTransitionID == winID else { return }
         interstitialDeadline?.cancel(); interstitialDeadline = nil
+        activeInterstitialProvider = nil; interstitialIsReady = false; interstitialWasPresented = false
         interstitialBusy = false; sheet = nil; completeWinTransition()
     }
     private func persistWinAdState(previous: WinAdState) -> Bool {
@@ -366,6 +402,7 @@ final class AppModel: ObservableObject {
         start(level: 1)
     }
     func toggle(_ cell: Int) {
+        syncFeedbackState(); defer { syncFeedbackState() }
         guard canTouchBoard, tutorialAllows("tap", cells: [cell]) else { return }
         let wasMarked = session?.marks.contains(cell) == true
         if progress.session?.toggleMark(at: cell) == true {
@@ -375,6 +412,7 @@ final class AppModel: ObservableObject {
         }
     }
     func mark(_ cells: [Int]) {
+        syncFeedbackState(); defer { syncFeedbackState() }
         guard canTouchBoard, tutorialAllows("swipe", cells: cells) else { return }
         let count = progress.session?.markMany(cells) ?? 0
         guard count > 0 else { return }
@@ -383,6 +421,7 @@ final class AppModel: ObservableObject {
         save()
     }
     func submit(_ cell: Int) {
+        syncFeedbackState(); defer { syncFeedbackState() }
         guard canTouchBoard, tutorialAllows("doubleTap", cells: [cell]) else { return }
         let timestamp = ProcessInfo.processInfo.systemUptime
         // Ignore a duplicated delivery of this gesture, not all future attempts at this cell.
@@ -404,6 +443,7 @@ final class AppModel: ObservableObject {
         save()
     }
     func direct() {
+        syncFeedbackState(); defer { syncFeedbackState() }
         let time = ProcessInfo.processInfo.systemUptime
         guard canTouchBoard, tutorial == nil, directVisible, directEnabled, time - lastDirectTime > 0.35 else { return }
         lastDirectTime = time
@@ -432,7 +472,7 @@ final class AppModel: ObservableObject {
               session?.status == .playing, let hint else { return }
         _ = progress.session?.markMany(hint.cells)
         trackBuff("hint", applied: true, before: progress.availableHints, after: progress.availableHints, source: hintSource)
-        self.hint = nil; feedback.play(.mark); save()
+        self.hint = nil; save() // Apply has its mapped button feedback; it is not a single-cell tap.
     }
     func offer(_ kind: RewardKind) {
         guard startupFlowCompleted, !loading, !rewardBusy, !interstitialBusy, sheet == nil, hint == nil, progress.canReceiveReward(kind) else { return }
@@ -489,6 +529,9 @@ final class AppModel: ObservableObject {
         switch readiness {
         case .unavailable: receive(.failed, offerID: offerID)
         case .ready:
+            // ad_timeout_sec applies while loading. A playing ad must await its
+            // final SDK outcome, including a valid reward after a long video.
+            rewardDeadline?.cancel(); rewardDeadline = nil
             rewardIsReady = true
             displayReadyReward(offerID: offerID)
         }
@@ -498,6 +541,7 @@ final class AppModel: ObservableObject {
               rewardBusy, rewardIsReady, !rewardWasPresented, pendingRewardSignal == nil,
               let provider = activeRewardProvider else { return }
         rewardWasPresented = true
+        rewardDisplayActive = true; syncFeedbackState()
         trackAdResult(offerID, status: "started", granted: false)
         provider.present(placement: rewardKind, offerID: offerID) { [weak self] signal in
             DispatchQueue.main.async { self?.receive(signal, offerID: offerID) }
@@ -514,6 +558,10 @@ final class AppModel: ObservableObject {
         guard let record = progress.rewardLedger[offerID], record.state == .offered || record.state == .rewarded else { return }
         guard activeOfferID == offerID else { return }
         guard rewardBusy else { return } // A failed write retains the first result for explicit retry.
+        // The adapter delivers a final display outcome. Receipt persistence may still
+        // need retry, but the video itself no longer owns the audio session.
+        rewardDisplayActive = false
+        defer { syncFeedbackState() }
         rewardDeadline?.cancel(); rewardDeadline = nil
         rewardBusy = false
         pendingRewardSignal = signal
@@ -525,7 +573,9 @@ final class AppModel: ObservableObject {
                 trackAdResult(offerID, status: "completed", granted: result != .ignored && result != .duplicate)
                 sheet = nil
                 switch result {
-                case .hintReady: showHint()
+                case .hintReady:
+                    deferredRewardHintSessionID = session?.id
+                    resumeConfirmedRewardHint()
                 case .directRevealed: trackBuff("direct_find", applied: true, before: 0, after: 0, source: "rewarded_ad"); feedback.play(.correct); afterAction()
                 case .inventoryGranted: break
                 case .revived: break
@@ -555,6 +605,15 @@ final class AppModel: ObservableObject {
         }
     }
     private var canTouchBoard: Bool { active && screen == .game && !loading && !rewardBusy && !interstitialBusy && !challengePending && sheet == nil && hint == nil && session?.status == .playing }
+    private func resumeConfirmedRewardHint() {
+        guard let expected = deferredRewardHintSessionID else { return }
+        guard session?.id == expected, session?.pendingRewardHint == true else {
+            deferredRewardHintSessionID = nil; return
+        }
+        guard canTouchBoard else { return }
+        showHint()
+        if hint != nil || session?.pendingRewardHint != true { deferredRewardHintSessionID = nil }
+    }
     func claim() {
         now = Date()
         let outcome: CheckInOutcome
@@ -570,23 +629,55 @@ final class AppModel: ObservableObject {
         case .clockRollback: notice = "Check-in is paused until the saved UTC date has passed."
         }
     }
-    func uiTap() { feedback.play(.tap) }
+    func uiTap(_ id: String = "button") { syncFeedbackState(); feedback.playButton(id: id) }
+    func beginSwipeFeedback() { syncFeedbackState(); if canTouchBoard { feedback.beginSwipe() } }
+    func endSwipeFeedback(cancelled: Bool) { feedback.endSwipe(cancelled: cancelled) }
+    var currentAudioEnvironment: FeedbackEnvironment { feedback.environment }
+    private func syncFeedbackState() {
+        var page: FeedbackAudioPage
+        switch screen { case .home: page = .home; case .game: page = .game; case .checkIn: page = .checkIn }
+        var overlay: FeedbackAudioOverlay = .none
+        if errorMessage != nil { overlay = .error }
+        else if notice != nil { overlay = .notice }
+        else if loading { overlay = .loading }
+        else if sheet == .reward { overlay = rewardDisplayActive || interstitialWasPresented ? .none : .loading }
+        else if challengePending { overlay = .challenge }
+        else if sheet == .settings { page = .settings; overlay = .settings }
+        else if sheet == .debug { overlay = .debug }
+        else if screen == .game {
+            if hint != nil { overlay = .hint }
+            else if session?.status == .won { overlay = .won }
+            else if session?.status == .lost { overlay = .lost }
+            else if tutorial != nil { overlay = .tutorial }
+        }
+        var blocks = Set<FeedbackAudioBlock>()
+        if !active { blocks.insert(.background) }
+        if sheet == .reward && (rewardDisplayActive || interstitialWasPresented) { blocks.insert(.advertisement) }
+        if !startupFlowCompleted || (screen == .game && (!canTouchBoard || notice != nil || errorMessage != nil)) { blocks.insert(.inputLocked) }
+        if !startupFlowCompleted { page = .startup; overlay = .none }
+        feedback.setEnvironment(FeedbackEnvironment(page: page, level: screen == .game ? session?.puzzle.id : nil, overlay: overlay, blocks: blocks))
+    }
     func applySettings() {
         let s = progress.settings
         feedback.apply(settings: .init(sound: feedbackEnabled && s.soundEnabled, haptic: feedbackEnabled && s.hapticsEnabled, voice: feedbackEnabled && s.voiceEnabled, music: feedbackEnabled && s.musicEnabled))
     }
     func settingsChanged() { applySettings(); save() }
     func setActive(_ value: Bool) {
-        active = value; now = Date(); feedback.setPaused(!value || sheet == .reward)
+        active = value; now = Date(); syncFeedbackState()
         if value { analytics.beginSession(source: "resume") } else { analytics.endSession(reason: "background") }
         if !value { save(force: true) }
-        else if let offerID = activeOfferID { displayReadyReward(offerID: offerID) }
+        else {
+            if let offerID = activeOfferID { displayReadyReward(offerID: offerID) }
+            displayReadyInterstitial()
+            resumeConfirmedRewardHint()
+        }
     }
     func consentAccepted() { analytics.acceptConsent() }
     /// Called only after the startup view reaches Home, including optional permission completion.
     /// This permits local adapter use; it does not claim a real SDK/CMP has been initialized.
     func startupReady() {
         startupFlowCompleted = true
+        syncFeedbackState()
         preloadRewardPlacementsIfNeeded()
     }
     private func preloadRewardPlacementsIfNeeded() {

@@ -143,6 +143,10 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
             next.restoreToolBalance(balance)
         }
         session = next
+        // A new board attempt must replay its teaching actions from the beginning.
+        // Continuing or restoring a saved session does not call begin, so its
+        // instruction and the marks needed by that instruction stay together.
+        if puzzle.id == 1 && !tutorialCompleted { tutorialStep = 0 }
         currentLevel = puzzle.id
         attemptCounts[key] = attempt
         freeToolGrantedLevels.insert(puzzle.id)

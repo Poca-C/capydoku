@@ -5,59 +5,29 @@
         "configurationName": "Test Scheme Action",
         "deviceId": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
         "deviceName": "iPhone 17e",
-        "exportedFileName": "3672BD6A-B18C-402B-A977-E14E05751270.png",
+        "exportedFileName": "59D0CE94-20EE-47A0-9426-A3D756E65454.png",
         "isAssociatedWithFailure": false,
-        "suggestedHumanReadableName": "Reference 06 Failure_0_E1DF03FE-58A1-4791-86D6-9F95F67E37A8.png",
-        "timestamp": 1790768515.452
+        "suggestedHumanReadableName": "Long imported failure copy scrolled to restart_0_5904246D-47E8-4794-995E-B6584D2B2BCC.png",
+        "timestamp": 1790772205.457,
+        "reviewFileName": "09-long-failure-restart.png",
+        "syntheticLongCopyFixture": true
       },
       {
         "configurationName": "Test Scheme Action",
         "deviceId": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
         "deviceName": "iPhone 17e",
-        "exportedFileName": "C55DF8E4-4235-4CAD-B9CA-2BAFC992C467.png",
+        "exportedFileName": "97C2B4D7-FDDA-4485-B71A-50465569BD11.png",
         "isAssociatedWithFailure": false,
-        "suggestedHumanReadableName": "Reference 05 Hint preview_0_9738F493-35D0-4587-9155-943BB58C387D.png",
-        "timestamp": 1790768510.859
-      },
-      {
-        "configurationName": "Test Scheme Action",
-        "deviceId": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
-        "deviceName": "iPhone 17e",
-        "exportedFileName": "A37D27BC-399D-469F-B642-9396129EA608.png",
-        "isAssociatedWithFailure": false,
-        "suggestedHumanReadableName": "Reference 04 Current puzzle_0_98C901DC-B088-4CCB-A779-4E6BB8B31064.png",
-        "timestamp": 1790768508.193
-      },
-      {
-        "configurationName": "Test Scheme Action",
-        "deviceId": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
-        "deviceName": "iPhone 17e",
-        "exportedFileName": "FD82832B-C9C9-4FD9-8232-0EEF839936A8.png",
-        "isAssociatedWithFailure": false,
-        "suggestedHumanReadableName": "Reference 03 Check-in_0_B241C754-B88C-4A8B-9D03-4757E0209302.png",
-        "timestamp": 1790768504.11
-      },
-      {
-        "configurationName": "Test Scheme Action",
-        "deviceId": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
-        "deviceName": "iPhone 17e",
-        "exportedFileName": "F8E82FA4-55FA-4AE9-AB47-5F0F38E4C0C6.png",
-        "isAssociatedWithFailure": false,
-        "suggestedHumanReadableName": "Reference 02 Settings_0_263FC4F8-2FC4-40B0-B60B-33B3DA06EA34.png",
-        "timestamp": 1790768499.975
-      },
-      {
-        "configurationName": "Test Scheme Action",
-        "deviceId": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
-        "deviceName": "iPhone 17e",
-        "exportedFileName": "1617DFD8-45D3-467C-82C3-0E2DF592DB33.png",
-        "isAssociatedWithFailure": false,
-        "suggestedHumanReadableName": "Reference 01 Home_0_9C69F931-6A27-483B-9386-1918AC629DEB.png",
-        "timestamp": 1790768497.319
+        "suggestedHumanReadableName": "Long imported failure copy on current device_0_A376ED0D-E760-47F3-AFA3-624F4BCABF81.png",
+        "timestamp": 1790772205.245,
+        "reviewFileName": "08-long-failure-top.png",
+        "syntheticLongCopyFixture": true
       }
     ],
-    "testIdentifier": "CapydokuUITests/testCaptureCurrentOriginalReferenceScreens()",
-    "testIdentifierURL": "test://com.apple.xcode/Capydoku/CapydokuUITests/CapydokuUITests/testCaptureCurrentOriginalReferenceScreens"
+    "testIdentifier": "OriginalUIContractTests/testLongImportedFailureRendersInTheActualResultPanel()",
+    "testIdentifierURL": "test://com.apple.xcode/Capydoku/CapydokuAppTests/OriginalUIContractTests/testLongImportedFailureRendersInTheActualResultPanel",
+    "sourceResultBundle": "Validation/test-runs/original-ui-scrim-021-final.xcresult",
+    "appVersion": "0.2.1 (4)"
   },
   {
     "attachments": [
@@ -65,16 +35,92 @@
         "configurationName": "Test Scheme Action",
         "deviceId": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
         "deviceName": "iPhone 17e",
-        "exportedFileName": "EB1FE3B3-B6B1-4A30-AAB8-A1829FA56BB3.png",
+        "exportedFileName": "F20EE713-916A-4F62-BA50-72CCA6FB86B1.png",
         "isAssociatedWithFailure": false,
-        "suggestedHumanReadableName": "Current Level 10 challenge transition_0_0D535C0A-6454-4ED1-A967-ADC6ED41471E.png",
-        "timestamp": 1790769141.309
+        "suggestedHumanReadableName": "Reference 06 Failure_0_D54C83A2-16E9-41DA-AAE2-88EB6C8B5085.png",
+        "timestamp": 1790772163.689,
+        "reviewFileName": "06-failure.png",
+        "syntheticLongCopyFixture": false
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+        "deviceName": "iPhone 17e",
+        "exportedFileName": "A6819494-2ED0-429B-9D10-0BD1E55D4599.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Reference 05 Hint preview_0_E727BBA5-9A2B-4C2E-A7DF-2D2C4A1F087C.png",
+        "timestamp": 1790772159.105,
+        "reviewFileName": "05-hint.png",
+        "syntheticLongCopyFixture": false
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+        "deviceName": "iPhone 17e",
+        "exportedFileName": "8C8BABC9-7BEC-42E3-A797-753C96CB9921.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Reference 04 Current puzzle_0_699FA5FF-C2A3-4DC1-961D-9BE733C27AB3.png",
+        "timestamp": 1790772156.401,
+        "reviewFileName": "04-gameplay.png",
+        "syntheticLongCopyFixture": false
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+        "deviceName": "iPhone 17e",
+        "exportedFileName": "02E63C83-73ED-4A6A-9D14-8E7F0AC3DF95.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Reference 03 Check-in_0_ABBAE45B-4133-4ABF-9F6B-DECCC549B63C.png",
+        "timestamp": 1790772152.272,
+        "reviewFileName": "03-check-in.png",
+        "syntheticLongCopyFixture": false
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+        "deviceName": "iPhone 17e",
+        "exportedFileName": "DC10067E-99F4-4069-B16C-15CE8EEAE0FE.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Reference 02 Settings_0_759D2062-D138-443F-884E-8F5E9170CB35.png",
+        "timestamp": 1790772148.164,
+        "reviewFileName": "02-settings.png",
+        "syntheticLongCopyFixture": false
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+        "deviceName": "iPhone 17e",
+        "exportedFileName": "ECDEE8D1-046D-469A-BF1B-029EA842A5BF.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Reference 01 Home_0_67A926D9-20AC-4305-A38D-5E1718BB9526.png",
+        "timestamp": 1790772145.505,
+        "reviewFileName": "01-home.png",
+        "syntheticLongCopyFixture": false
+      }
+    ],
+    "testIdentifier": "CapydokuUITests/testCaptureCurrentOriginalReferenceScreens()",
+    "testIdentifierURL": "test://com.apple.xcode/Capydoku/CapydokuUITests/CapydokuUITests/testCaptureCurrentOriginalReferenceScreens",
+    "sourceResultBundle": "Validation/test-runs/original-ui-scrim-021-final.xcresult",
+    "appVersion": "0.2.1 (4)"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+        "deviceName": "iPhone 17e",
+        "exportedFileName": "F83DE355-82F6-4015-B6C9-604B4DDF6B96.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Current Level 10 challenge transition_0_FB1A06BB-3359-4D02-94BD-8AAD44453C40.png",
+        "timestamp": 1790772183.456,
+        "reviewFileName": "07-challenge.png",
+        "syntheticLongCopyFixture": false
       }
     ],
     "testIdentifier": "CapydokuUITests/testFirstLevelTenWinShowsChallengeOnceBeforeLevelEleven()",
     "testIdentifierURL": "test://com.apple.xcode/Capydoku/CapydokuUITests/CapydokuUITests/testFirstLevelTenWinShowsChallengeOnceBeforeLevelEleven",
-    "sourceResultBundle": "original-ui-current-pack-paths.xcresult",
-    "reviewFileName": "07-challenge.png"
+    "sourceResultBundle": "Validation/test-runs/original-ui-scrim-021-final.xcresult",
+    "appVersion": "0.2.1 (4)"
   },
   {
     "attachments": [
@@ -82,15 +128,17 @@
         "configurationName": "Test Scheme Action",
         "deviceId": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
         "deviceName": "iPhone 17e",
-        "exportedFileName": "A59D2F6D-1363-4EF9-853C-80ECF17DCF49.png",
+        "exportedFileName": "16C67FC4-76FC-4CBE-AA6F-9F5BD0F5DE48.png",
         "isAssociatedWithFailure": false,
-        "suggestedHumanReadableName": "Current check-in 44pt touch targets_0_C54DAF12-58F7-4510-8668-9EDABFEFFA0A.png",
-        "timestamp": 1790769338.42
+        "suggestedHumanReadableName": "modal-settings-isolated_0_EAAEE24F-6245-4460-B2A0-3EBD47435973.png",
+        "timestamp": 1790772041.017,
+        "reviewFileName": "10-settings-game-overlay.png",
+        "syntheticLongCopyFixture": false
       }
     ],
-    "testIdentifier": "CapydokuUITests/testDailyClaimIsGrantedOnceAndPersists()",
-    "testIdentifierURL": "test://com.apple.xcode/Capydoku/CapydokuUITests/CapydokuUITests/testDailyClaimIsGrantedOnceAndPersists",
-    "sourceResultBundle": "original-ui-checkin-touch-target.xcresult",
-    "reviewFileName": "03-check-in.png"
+    "testIdentifier": "OriginalReferenceUITests/testModalControlsExcludeBackgroundAndReturnToTheSameBoard()",
+    "testIdentifierURL": "test://com.apple.xcode/Capydoku/CapydokuUITests/OriginalReferenceUITests/testModalControlsExcludeBackgroundAndReturnToTheSameBoard",
+    "sourceResultBundle": "Validation/test-runs/original-ui-artwork-021-final.xcresult",
+    "appVersion": "0.2.1 (4)"
   }
 ]
