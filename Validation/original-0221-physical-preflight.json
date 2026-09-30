@@ -36,5 +36,14 @@
     "profiles": "All 150 difficulty profiles are unverified_local_demo.",
     "externalCorpus": "Synthetic capacity fixtures do not provide real Panda/Eagle/Shiba product libraries.",
     "publisherInputs": "Formal legal/feedback/time endpoint and service values not delivered."
+  },
+  "deviceSpecificProvisioningAttempt": {
+    "log": "Validation/test-runs/original-0221-iphone-provisioning.log",
+    "exitCode": 70,
+    "terminal": true,
+    "requested": "Build for the connected iPhone using the existing development team, with Xcode automatic provisioning updates and device registration allowed.",
+    "result": "Xcode timed out waiting for destination readiness; developer disk image could not be mounted. Independent current lockState still reports passcodeRequired=true.",
+    "profileAfterAttempt": "Existing signed app profile is unchanged and still excludes this iPhone; no registration or install success claimed.",
+    "nextAction": "Await user unlock before retrying this device-dependent operation."
   }
 }

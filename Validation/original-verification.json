@@ -2989,6 +2989,7 @@
       "Current embedded provisioning profile does not include this phone."
     ],
     "physicalRun": "not performed",
-    "scope": "This is device-build/preflight evidence only; no physical UI, gestures, save recovery, audio or signing trust acceptance."
+    "scope": "This is device-build/preflight evidence only; no physical UI, gestures, save recovery, audio or signing trust acceptance.",
+    "deviceSpecificBuildAttempt": "Terminal exit 70: locked iPhone prevented destination readiness. Existing embedded profile unchanged; no installation or new signing success claimed."
   }
 }
