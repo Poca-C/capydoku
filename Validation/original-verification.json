@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "date": "2026-09-30",
-  "build": "0.2.10 (13)",
+  "date": "2026-10-01",
+  "build": "0.2.11 (14)",
   "status": "Partial original-spec alignment; remaining client, reference and release gaps open.",
   "originalSHA256": "274bbf15f031bd80bb8b360cf14c0266acff370a230d9cad1b1785461df54dd2",
   "currentPackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49",
@@ -385,6 +385,69 @@
       "seconds": 1.705,
       "scope": "All fourteen final observed reward lifecycle durability cases; no additional UI cases.",
       "build": "0.2.10 (13)"
+    },
+    {
+      "build": "0.2.11 (14)",
+      "device": "iPhone 17 Pro",
+      "bundle": "Validation/test-runs/original-0211-startup-initial.xcresult",
+      "appTestsPassed": 5,
+      "failed": 0,
+      "seconds": 6.935,
+      "scope": "Existing startup controller tests after first two-stage integration."
+    },
+    {
+      "build": "0.2.11 (14)",
+      "device": "iPhone 17 Pro",
+      "bundle": "Validation/test-runs/original-0211-startup-boundaries.xcresult",
+      "appTestsPassed": 17,
+      "failed": 0,
+      "seconds": 7.697,
+      "scope": "Five existing plus twelve new startup lifecycle tests; actual file failure, controlled resource/permission adapters, foreground duration, cancellation and reentry."
+    },
+    {
+      "build": "0.2.11 (14)",
+      "device": "iPhone 17 Pro",
+      "bundle": "Validation/test-runs/original-0211-startup-app-final.xcresult",
+      "appTestsPassed": 176,
+      "failed": 0,
+      "seconds": 61.449,
+      "scope": "Full application suite except OriginalUIContractTests before final presentation-only text colors; subsequent final hosted checks below."
+    },
+    {
+      "build": "0.2.11 (14)",
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-0211-17e-startup-visual.xcresult",
+      "appTestsPassed": 14,
+      "failed": 0,
+      "seconds": 7.34,
+      "scope": "Twelve new lifecycle and two hosted visual cases before final contrast correction."
+    },
+    {
+      "build": "0.2.11 (14)",
+      "device": "iPhone 17 Pro",
+      "bundle": "Validation/test-runs/original-0211-pro-startup-contrast-final.xcresult",
+      "appTestsPassed": 2,
+      "failed": 0,
+      "seconds": 7.127,
+      "scope": "Both actual hosted visual cases after final signature and large-type heading color correction; seven final screenshots."
+    },
+    {
+      "build": "0.2.11 (14)",
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-0211-17e-startup-contrast-final.xcresult",
+      "appTestsPassed": 2,
+      "failed": 0,
+      "seconds": 6.866,
+      "scope": "Both actual hosted visual cases after final signature and large-type heading color correction; seven final screenshots."
+    },
+    {
+      "build": "0.2.11 (14)",
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-0211-17e-first-launch.xcresult",
+      "uiTestsPassed": 1,
+      "failed": 0,
+      "uiSeconds": 17.824,
+      "scope": "Actual launch, clickable terms, Accept, permission handling according to current simulator OS state, Home, termination/relaunch without repeat consent. Before final loading text-color correction, which does not change this path. Does not cover all authorization combinations or regional Data Use."
     }
   ],
   "visualEvidence": {
@@ -406,17 +469,16 @@
     "Actual system Reduce Motion and full animation timing remain unverified; 0.2.7 uses scoped RootView/CheckInView test overrides.",
     "Formal interstitial placement/closed mapping, request-vs-display cooldown, repeat-clear counting and provider metadata timing remain to be frozen; local v1 mapping is not reference acceptance.",
     "Client: configured free-ad trigger sequence and reference restart flow are not fully implemented. The invented triggerOrder/restartCreatesNewBoard fields do not define the original behavior; frozen captures must resolve sequencing and whether confirmation or an alternate board is required.",
-    "Real rewarded-ad SDK/metadata/error mapping and analytics transport/acknowledgement/server deduplication remain unconnected; local lifecycle durability is covered in 0.2.10.",
-    "Client: original paragraphs 272/278 and image23 require distinct Loading and Brand Loading screens. Current startup still merges them into one provisional loading stage; no reference duration or percentage has been provided."
+    "Real rewarded-ad SDK/metadata/error mapping and analytics transport/acknowledgement/server deduplication remain unconnected; local lifecycle durability is covered in 0.2.10."
   ],
   "historicalFailuresRetained": "Initial UI/app runs and first full-core run failed on changed fixture assumptions or real UI issues; these are retained under Validation/test-runs. Only explicitly listed successful reruns count. Old 88-item checklist completion counts are superseded.",
   "applicationTests": {
-    "build": "0.2.10 (13)",
-    "passed": 162,
+    "build": "0.2.11 (14)",
+    "passed": 176,
     "failed": 0,
-    "seconds": 48.425,
-    "bundle": "Validation/test-runs/original-0210-ad-events-app-final.xcresult",
-    "scope": "All AppTests except OriginalUIContractTests. Includes fourteen new observed reward lifecycle durability cases. Local controlled providers, injected identity and real filesystem failures; no real SDK or analytics transport acceptance."
+    "seconds": 61.449,
+    "bundle": "Validation/test-runs/original-0211-startup-app-final.xcresult",
+    "scope": "All AppTests except OriginalUIContractTests, including twelve new startup lifecycle cases and two actual hosted visual cases. This run preceded the final text-color correction only; both hosted cases reran successfully on both devices after that correction. Startup/gameplay logic unchanged after the full suite."
   },
   "supersededOrInterruptedRuns": [
     "reward-readiness-final was intentionally interrupted to stop two runners targeting one simulator; not counted as success.",
@@ -459,18 +521,18 @@
     }
   ],
   "buildVerification": {
-    "bundleVersion": "0.2.10 (13)",
-    "simulatorDebug": "passed via final test builds",
-    "simulatorLog": "Validation/test-runs/original-0210-ad-events-app-final.log",
+    "bundleVersion": "0.2.11 (14)",
+    "simulatorDebug": "passed via final hosted test builds",
+    "simulatorLog": "Validation/test-runs/original-0211-pro-startup-contrast-final.log",
     "genericIOSReleaseUnsigned": "passed",
-    "releaseLog": "Validation/test-runs/original-0210-release-build.log",
+    "releaseLog": "Validation/test-runs/original-0211-release-final.log",
     "installedOn": [
       "iPhone 17 Pro",
       "iPhone 17e"
     ],
-    "normalLaunch": "Both installed Info.plist values verified 0.2.10 / 13 and launched without test/reset arguments. Existing game data preserved; see Validation/test-runs/original-0210-install.json.",
-    "signingAndDeviceExecution": "Unsigned Release and simulators only; physical device, TestFlight and App Store untested.",
-    "scope": "Reward offer/observed lifecycle persistence and metadata attribution. No artwork, levels, audio or formal reference configuration changes. After Release build only test/project registration and documentation changed.",
+    "normalLaunch": "Final contrast-corrected app installed; both Info.plist values verified 0.2.11 / 14 and launched without test/reset arguments. See Validation/test-runs/original-0211-install.json.",
+    "signingAndDeviceExecution": "Unsigned Release and simulators only; physical device, minimum-OS runtime, TestFlight and App Store untested.",
+    "scope": "Two original-reference startup pages, lifecycle and permission-failure handling. No Core, level-pack, audio or formal gameplay-config changes. Core evidence remains the 125-case 0.2.10 run, not rerun or relabelled.",
     "sourceDocumentSHA256Unchanged": true
   },
   "audioContract": {
@@ -625,6 +687,14 @@
       "seconds": 46.804,
       "bundle": "Validation/test-runs/original-029-tools-app.xcresult",
       "scope": "All AppTests except OriginalUIContractTests at this run. Includes 16 new tool persistence cases. A later independent 17th tool case passed separately without production code changes; total unique application cases covered in this build: 148, not one 148-case suite. Local injected identity/providers and real filesystem write failures; not external analytics/SDK acceptance."
+    },
+    {
+      "build": "0.2.10 (13)",
+      "passed": 162,
+      "failed": 0,
+      "seconds": 48.425,
+      "bundle": "Validation/test-runs/original-0210-ad-events-app-final.xcresult",
+      "scope": "All AppTests except OriginalUIContractTests. Includes fourteen new observed reward lifecycle durability cases. Local controlled providers, injected identity and real filesystem failures; no real SDK or analytics transport acceptance."
     }
   ],
   "remoteConfigurationContract": {
@@ -763,6 +833,21 @@
       "normalLaunch": "Both installed Info.plist values verified 0.2.9 / 12 and launched without testing/reset arguments; details in Validation/test-runs/original-029-install.json.",
       "signingAndDeviceExecution": "Unsigned Release build and simulator only; physical device, TestFlight and App Store untested.",
       "scope": "Atomic tool consumption/effects/events, durable hint preview and actual presentation acknowledgement. No artwork, level-pack, generator or formal reference configuration changes.",
+      "sourceDocumentSHA256Unchanged": true
+    },
+    {
+      "bundleVersion": "0.2.10 (13)",
+      "simulatorDebug": "passed via final test builds",
+      "simulatorLog": "Validation/test-runs/original-0210-ad-events-app-final.log",
+      "genericIOSReleaseUnsigned": "passed",
+      "releaseLog": "Validation/test-runs/original-0210-release-build.log",
+      "installedOn": [
+        "iPhone 17 Pro",
+        "iPhone 17e"
+      ],
+      "normalLaunch": "Both installed Info.plist values verified 0.2.10 / 13 and launched without test/reset arguments. Existing game data preserved; see Validation/test-runs/original-0210-install.json.",
+      "signingAndDeviceExecution": "Unsigned Release and simulators only; physical device, TestFlight and App Store untested.",
+      "scope": "Reward offer/observed lifecycle persistence and metadata attribution. No artwork, levels, audio or formal reference configuration changes. After Release build only test/project registration and documentation changed.",
       "sourceDocumentSHA256Unchanged": true
     }
   ],
@@ -1154,6 +1239,69 @@
   "originalAudit0210": {
     "source": "Reference/Original/document.txt and embedded image23",
     "finding": "Startup missing distinct Loading/Brand Loading is a client implementation gap, not solely an external legal/permission dependency. GEN-08 verified is limited to the local pipeline and own-product history; formal difficulty and cross-product acceptance remain pending.",
-    "changedImplementation": false
+    "changedImplementation": false,
+    "correctedIn": "0.2.11 (14): distinct startup pages and lifecycle; formal regional/legal/permission acceptance remains open."
+  },
+  "startupCorrection": {
+    "build": "0.2.11 (14)",
+    "sourceParagraphs": [
+      272,
+      273,
+      274,
+      275,
+      276,
+      277,
+      278
+    ],
+    "referenceImage": "Reference/Original/image23.png",
+    "newApplicationCases": 14,
+    "implementation": [
+      "Loading waterfront page, separate cream brand page, then Welcome/remaining permissions. Brand content remains beneath Welcome; bundled theme assets warm before permissions.",
+      "Original composition retained; seated original CapyMascot is shown bathing, existing CapyFace replaces reference cat, and both text/wordmark use Capydoku. No reference-product or sleep-health claim reused.",
+      "Both display holds exclude background time. Stage and permission transitions wait for foreground; an already open system permission request is not cancelled by its inactive scene phase.",
+      "Concurrent begin/accept are coalesced. Successful consent precedes analytics enablement; each permission completion persists separately. A thrown/cancelled request or failed save does not mark completion or skip the remaining step.",
+      "Resource/permission failure is retryable, successful retry clears stale error state, and cold startup checks local resources again without re-requesting already completed permissions.",
+      "Production Release entry always disables test skip. Dedicated first-launch flag still overrides host-test convenience bypass."
+    ],
+    "provisionalPresentation": {
+      "loadingMinimumForegroundSeconds": 0.45,
+      "brandMinimumForegroundSeconds": 0.65,
+      "busyLineCycleSeconds": 1.8,
+      "busyLineSegmentFraction": 0.32,
+      "meaning": "Explicit Demo presentation values, not measured original timing or loaded percentage. The hosted flow uses a separately labelled one-second brand test hold."
+    },
+    "visualEvidence": {
+      "manifest": "Docs/original-startup/manifest.json",
+      "finalImages": 14,
+      "initialContrastSample": "Docs/original-startup/initial-pro-loading-accessibility3-low-contrast.png",
+      "reviewScope": "Current simulator viewport, default and accessibility3 text, view-level Reduce Motion override, two distinct startup pages and real Welcome overlay. Final review recorded in manifest."
+    },
+    "contrastCorrection": {
+      "finding": "Initial large-type loading title/signature wrapped into the pale sky with weak contrast; automated functional tests passed but visual inspection found it.",
+      "fix": "Dark signature at every size and dark heading at accessibility sizes; normal title remains white.",
+      "intermediateRuns": [
+        "Validation/test-runs/original-0211-pro-startup-contrast.xcresult",
+        "Validation/test-runs/original-0211-17e-startup-contrast.xcresult"
+      ],
+      "finalRuns": [
+        "Validation/test-runs/original-0211-pro-startup-contrast-final.xcresult",
+        "Validation/test-runs/original-0211-17e-startup-contrast-final.xcresult"
+      ],
+      "noFunctionalFailures": true
+    },
+    "limitations": [
+      "No frozen reference timing provided; theme adaptation and provisional holds do not prove frame-accurate parity.",
+      "Hosted visual tests use controlled resources/permissions and a Reduce Motion view override; not real VoiceOver or the system accessibility switch.",
+      "Actual UI test follows existing simulator permission status; regional Data Use, all permission combinations and physical-device interruptions remain unverified.",
+      "Final legal/support endpoints, real CMP/services, original audio and formal release acceptance remain absent."
+    ],
+    "evidence": [
+      "App/Services/StartupController.swift",
+      "App/Views/StartupFlowView.swift",
+      "App/Views/StartupArtworkViews.swift",
+      "AppTests/StartupPreparationTests.swift",
+      "AppTests/StartupVisualTests.swift",
+      "Docs/original-startup/manifest.json"
+    ]
   }
 }

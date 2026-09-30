@@ -1,0 +1,153 @@
+{
+  "build": "0.2.11 (14)",
+  "date": "2026-10-01",
+  "reference": "Reference/Original/image23.png",
+  "sourceParagraphs": [
+    272,
+    274,
+    278
+  ],
+  "captureMethod": "Actual UIHostingController/SwiftUI pages in simulator application tests; test-controlled resource gate and one-second brand hold for flow screenshots.",
+  "finalImageCount": 14,
+  "inspected": true,
+  "review": "All fourteen final images individually opened. Initial low-contrast large white lettering over pale sky corrected with dark signature and dark accessibility-size heading; default white heading retained. Both simulator layouts and Welcome overlay are complete.",
+  "limitations": [
+    "View-level Reduce Motion override, not an actual system-switch verification.",
+    "Screenshots do not prove precise reference timing, VoiceOver navigation or physical-device behavior.",
+    "Theme and original copy replace reference character/brands; no sleep benefit claim.",
+    "Temporary presentation values and art proportions are not frozen Pawdoku values."
+  ],
+  "initialFinding": {
+    "image": "Docs/original-startup/initial-pro-loading-accessibility3-low-contrast.png",
+    "status": "Historical pre-correction sample only; not final UI.",
+    "finding": "Weak contrast on lower large title and signature over pale gradient; functional tests alone did not detect it."
+  },
+  "images": [
+    {
+      "path": "Docs/original-startup/pro-startup-artwork-brand-device-size-accessibility3-reduce-motion-view-override.png",
+      "device": "iPhone 17 Pro",
+      "test": "StartupVisualTests/testActualStartupArtworkAtDeviceSizeAndLargeTypeWithReducedMotionOverride()",
+      "timestamp": 1790784856.67,
+      "source": "Validation/test-runs/original-0211-pro-startup-final-attachments/0A7E41B3-9A68-49F5-97F5-C718F9693785.png",
+      "visualReview": "Inspected final image: distinct stage, complete text, clear large-type text, no clipping/overlap observed.",
+      "sha256": "7ad409dc8ed4ca644dc57db640871d4ebb5f76e30123de534a6b6e421b52547f"
+    },
+    {
+      "path": "Docs/original-startup/pro-startup-artwork-loading-device-size-accessibility3-reduce-motion-view-override.png",
+      "device": "iPhone 17 Pro",
+      "test": "StartupVisualTests/testActualStartupArtworkAtDeviceSizeAndLargeTypeWithReducedMotionOverride()",
+      "timestamp": 1790784855.769,
+      "source": "Validation/test-runs/original-0211-pro-startup-final-attachments/615DC9EE-1995-42E9-A868-606C6CFDE18E.png",
+      "visualReview": "Inspected final image: distinct stage, complete text, clear large-type text, no clipping/overlap observed.",
+      "sha256": "e4349933c715cfcf4f4b629f9a81f7f2c6657aa3db494a91d88d53e5ce94c430"
+    },
+    {
+      "path": "Docs/original-startup/pro-startup-artwork-brand-device-size-default-type.png",
+      "device": "iPhone 17 Pro",
+      "test": "StartupVisualTests/testActualStartupArtworkAtDeviceSizeAndLargeTypeWithReducedMotionOverride()",
+      "timestamp": 1790784854.892,
+      "source": "Validation/test-runs/original-0211-pro-startup-final-attachments/3E27869B-0408-4A3A-8BD7-164680EAF2ED.png",
+      "visualReview": "Inspected final image: distinct stage, complete text, clear large-type text, no clipping/overlap observed.",
+      "sha256": "743475e6dab755a404471c24484bac77629ac851f8f69542a34c00fc631928be"
+    },
+    {
+      "path": "Docs/original-startup/pro-startup-artwork-loading-device-size-default-type.png",
+      "device": "iPhone 17 Pro",
+      "test": "StartupVisualTests/testActualStartupArtworkAtDeviceSizeAndLargeTypeWithReducedMotionOverride()",
+      "timestamp": 1790784854.034,
+      "source": "Validation/test-runs/original-0211-pro-startup-final-attachments/5FA17151-EDF8-485E-92D9-6AE15BE8EB68.png",
+      "visualReview": "Inspected final image: distinct stage, complete text, clear large-type text, no clipping/overlap observed.",
+      "sha256": "aa185baf6994cc05f6306c8e2c06c0e03757d27b915f5050e15712f25a88a6c5"
+    },
+    {
+      "path": "Docs/original-startup/pro-startup-flow-03-welcome-before-accept.png",
+      "device": "iPhone 17 Pro",
+      "test": "StartupVisualTests/testActualStartupFlowRendersBothStagesBeforeWelcomeWithoutEarlySideEffects()",
+      "timestamp": 1790784860.199,
+      "source": "Validation/test-runs/original-0211-pro-startup-final-attachments/E2A0850B-3492-491C-BB92-DDDCE8BDC6EE.png",
+      "visualReview": "Inspected final image: distinct stage, complete text, clear large-type text, no clipping/overlap observed.",
+      "sha256": "cfffb3c921860122db4cc5af6eef8c0732eb49d77c4439560f1fb178ff8107cc"
+    },
+    {
+      "path": "Docs/original-startup/pro-startup-flow-02-brand-demo-one-second-hold.png",
+      "device": "iPhone 17 Pro",
+      "test": "StartupVisualTests/testActualStartupFlowRendersBothStagesBeforeWelcomeWithoutEarlySideEffects()",
+      "timestamp": 1790784858.44,
+      "source": "Validation/test-runs/original-0211-pro-startup-final-attachments/CDB31DA1-8B54-4407-9C03-A79F2671CD91.png",
+      "visualReview": "Inspected final image: distinct stage, complete text, clear large-type text, no clipping/overlap observed.",
+      "sha256": "484d46c600a860dd48ae58fee03ec84df152ebfadaf1b499f2c63edf88646e1a"
+    },
+    {
+      "path": "Docs/original-startup/pro-startup-flow-01-loading-resource-gate.png",
+      "device": "iPhone 17 Pro",
+      "test": "StartupVisualTests/testActualStartupFlowRendersBothStagesBeforeWelcomeWithoutEarlySideEffects()",
+      "timestamp": 1790784857.576,
+      "source": "Validation/test-runs/original-0211-pro-startup-final-attachments/1FD2E29C-0AD4-417F-A8B6-8BE68467A049.png",
+      "visualReview": "Inspected final image: distinct stage, complete text, clear large-type text, no clipping/overlap observed.",
+      "sha256": "21af1e2e40a547d39e81cc10e94d0d2e17717d5cfa7e447f003d4b2bc5b5522f"
+    },
+    {
+      "path": "Docs/original-startup/17e-startup-artwork-brand-device-size-accessibility3-reduce-motion-view-override.png",
+      "device": "iPhone 17e",
+      "test": "StartupVisualTests/testActualStartupArtworkAtDeviceSizeAndLargeTypeWithReducedMotionOverride()",
+      "timestamp": 1790784856.183,
+      "source": "Validation/test-runs/original-0211-17e-startup-final-attachments/70CABAE8-AE6B-42DA-A5D9-FB01247FF272.png",
+      "visualReview": "Inspected final image: distinct stage, complete text, clear large-type text, no clipping/overlap observed.",
+      "sha256": "69fdc35e1bb4a73b63fb298a2221ae4e41d867e5c1295cc0bc4bc08c81992a9c"
+    },
+    {
+      "path": "Docs/original-startup/17e-startup-artwork-loading-device-size-accessibility3-reduce-motion-view-override.png",
+      "device": "iPhone 17e",
+      "test": "StartupVisualTests/testActualStartupArtworkAtDeviceSizeAndLargeTypeWithReducedMotionOverride()",
+      "timestamp": 1790784855.333,
+      "source": "Validation/test-runs/original-0211-17e-startup-final-attachments/AF5921BF-CA2C-43C6-8BA4-8F1DC810738F.png",
+      "visualReview": "Inspected final image: distinct stage, complete text, clear large-type text, no clipping/overlap observed.",
+      "sha256": "3d1a3cc255db646fc89610068985cb240f911696372dc1525c785821a781173d"
+    },
+    {
+      "path": "Docs/original-startup/17e-startup-artwork-brand-device-size-default-type.png",
+      "device": "iPhone 17e",
+      "test": "StartupVisualTests/testActualStartupArtworkAtDeviceSizeAndLargeTypeWithReducedMotionOverride()",
+      "timestamp": 1790784854.494,
+      "source": "Validation/test-runs/original-0211-17e-startup-final-attachments/1B0F0CE3-8314-4B11-908A-A9B658D16923.png",
+      "visualReview": "Inspected final image: distinct stage, complete text, clear large-type text, no clipping/overlap observed.",
+      "sha256": "69cf0f7dc1376a324e920d2baf8fe01dade1a0a2331f47396a6a0e0f158fb998"
+    },
+    {
+      "path": "Docs/original-startup/17e-startup-artwork-loading-device-size-default-type.png",
+      "device": "iPhone 17e",
+      "test": "StartupVisualTests/testActualStartupArtworkAtDeviceSizeAndLargeTypeWithReducedMotionOverride()",
+      "timestamp": 1790784853.65,
+      "source": "Validation/test-runs/original-0211-17e-startup-final-attachments/CAE0C38B-FB76-48B5-A67E-8A3E289A3CF0.png",
+      "visualReview": "Inspected final image: distinct stage, complete text, clear large-type text, no clipping/overlap observed.",
+      "sha256": "c723e4701963aae78e1d0f01e3d2c6fb2da499e0eb42ea770ef56f7f14b6183b"
+    },
+    {
+      "path": "Docs/original-startup/17e-startup-flow-03-welcome-before-accept.png",
+      "device": "iPhone 17e",
+      "test": "StartupVisualTests/testActualStartupFlowRendersBothStagesBeforeWelcomeWithoutEarlySideEffects()",
+      "timestamp": 1790784859.563,
+      "source": "Validation/test-runs/original-0211-17e-startup-final-attachments/5153629B-72F9-49F6-A278-177F97D3705F.png",
+      "visualReview": "Inspected final image: distinct stage, complete text, clear large-type text, no clipping/overlap observed.",
+      "sha256": "c64499115525f41bc8e7182923b09764c2f1835d3e7bec10d086e8eb0473025a"
+    },
+    {
+      "path": "Docs/original-startup/17e-startup-flow-02-brand-demo-one-second-hold.png",
+      "device": "iPhone 17e",
+      "test": "StartupVisualTests/testActualStartupFlowRendersBothStagesBeforeWelcomeWithoutEarlySideEffects()",
+      "timestamp": 1790784857.867,
+      "source": "Validation/test-runs/original-0211-17e-startup-final-attachments/7B41BC7B-65A1-4B44-9DC4-91413361E2A6.png",
+      "visualReview": "Inspected final image: distinct stage, complete text, clear large-type text, no clipping/overlap observed.",
+      "sha256": "022b29f088d335f965477001c3bbf6e959ae09853b16a123d38121077414b0a3"
+    },
+    {
+      "path": "Docs/original-startup/17e-startup-flow-01-loading-resource-gate.png",
+      "device": "iPhone 17e",
+      "test": "StartupVisualTests/testActualStartupFlowRendersBothStagesBeforeWelcomeWithoutEarlySideEffects()",
+      "timestamp": 1790784857.039,
+      "source": "Validation/test-runs/original-0211-17e-startup-final-attachments/22F35913-EA57-4FED-83E7-AD2117316050.png",
+      "visualReview": "Inspected final image: distinct stage, complete text, clear large-type text, no clipping/overlap observed.",
+      "sha256": "2b5aa98ace158110b745e77cc56b173a44677de036484f267e749072314ec3e5"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "reviewedAt": "2026-09-30",
+  "reviewedAt": "2026-10-01",
   "source": {
     "path": "卡皮巴拉主题（Capydoku）区域逻辑小游戏需求说明_Vfinal_程序化关卡生成版(1).docx",
     "title": "卡皮巴拉主题（Capydoku）区域逻辑小游戏需求说明 V1.3",
@@ -24,7 +24,8 @@
     "原文只固定L1为4×4；本地早期尺寸安排不能覆盖原文的去重要求。",
     "0.2.1主页面与0.2.4反馈组件图册保留原版本；0.2.7另有25张实际宿主页面截图，两设备核对结算、礼盒和8×8进度。页面级Reduce Motion注入不代表系统全局验收，缺冻结录屏时不声称逐帧一致。",
     "真实广告SDK由外部供应；客户端入口、配置、库存、复活和奖励安全仍是本Demo责任。",
-    "Daily Challenge保留锁定入口，Profile明确不做。正式原音频、真实SDK、真机及上架均待验。"
+    "Daily Challenge保留锁定入口，Profile明确不做。正式原音频、真实SDK、真机及上架均待验。",
+    "0.2.11启动图册来自两设备实际宿主页面；大字与Reduce Motion为视图测试配置，14张最终截图不代表真机、系统读屏或原版逐帧时序验收。"
   ],
   "priorityClientFollowUps": [
     {
@@ -194,15 +195,20 @@
         272,
         278
       ],
-      "priority": "P1 · 客户端待修",
+      "priority": "客户端两阶段已验证，正式时序/系统组合待验",
       "topic": "区分启动加载与品牌预加载",
-      "finding": "image23及正文明确两张不同页面；当前StartupStage仅有一个loading，资源完成后直接进入Welcome。",
+      "finding": "0.2.11已按image23分开Loading水面页与Brand Loading米白页；前台暂停、重复开始、取消/异常及权限进度保存均已测试。大字号对比问题经实测截图发现后修正，两设备最终宿主复验通过。",
       "evidence": [
         "Reference/Original/document.txt",
         "App/Services/StartupController.swift",
-        "App/Views/StartupFlowView.swift"
+        "App/Views/StartupFlowView.swift",
+        "App/Views/StartupArtworkViews.swift",
+        "AppTests/StartupPreparationTests.swift",
+        "AppTests/StartupVisualTests.swift",
+        "Docs/original-startup/manifest.json",
+        "Validation/original-verification.json"
       ],
-      "next": "按原图分开两个可辨认阶段并验证顺序；不得把临时停留时间或虚假加载百分比当成原文参数。"
+      "next": "获得冻结录屏后核对精确时序；正式地区Data Use/CMP、法律链接与真机全部权限组合仍待验。临时最短显示时间不当作原版值。"
     }
   ],
   "rows": [
@@ -1012,14 +1018,18 @@
       ],
       "title": "首次启动顺序与权限恢复",
       "status": "partial",
-      "implemented": "首次Welcome法律链接、Accept、通知/Tracking顺序及重启不重复同意在模拟器通过；5项启动App测试通过含取消恢复与损坏回退。",
-      "gap": "原文[272、278]及image23要求可区分的Loading→Brand Loading；当前仍合并为一个临时加载阶段，属于客户端待修。原文未规定停留时长或进度百分比，不自行冻结。条款仅内部说明，正式链接、地区DataUse/CMP与真机所有授权组合尚缺。",
+      "implemented": "首次Welcome法律链接、Accept、通知/Tracking顺序及重启不重复同意在模拟器通过；5项启动App测试通过含取消恢复与损坏回退。 0.2.11补独立Loading→Brand Loading→Welcome/权限；保留原图构图并替换卡皮巴拉原创内容。前台时间控制、后台停留、权限异常/取消/持久化失败及重入经过12项新增逻辑测试；两实际宿主测试覆盖流程和大字视图，17e首次启动UI通过。两设备最终截图留档，修复目视发现的浅色天空文字对比不足。",
+      "gap": "加载停留和忙碌指示采用明确临时值，尚无冻结时序；正式条款链接、地区Data Use/CMP、全部授权组合、真实系统减少动态效果/读屏及真机验收仍缺。当前不能强制展示或仿造系统不提供调用API的地区网络权限。",
       "evidence": [
         "App/Services/StartupController.swift",
         "App/Views/StartupFlowView.swift",
         "AppTests/StartupControllerTests.swift",
         "Validation/analytics-startup-audit.json",
-        "Validation/original-verification.json"
+        "Validation/original-verification.json",
+        "App/Views/StartupArtworkViews.swift",
+        "AppTests/StartupPreparationTests.swift",
+        "AppTests/StartupVisualTests.swift",
+        "Docs/original-startup/manifest.json"
       ]
     },
     {
@@ -1623,7 +1633,7 @@
       ],
       "title": "iOS技术验收与SDK升级兼容",
       "status": "partial",
-      "implemented": "0.2.10最终125核心、17Pro162应用通过；17e两批合计24应用及复活/直接道具重开2条UI通过。Release未签名构建和两台正常模拟器安装启动通过；保留初次归属测试夹具失败及修正结果。历史图册、重装与难度证据保持原版本。",
+      "implemented": "0.2.11通过17Pro176项App（不含OriginalUIContractTests）；17e14项启动专项及首次启动1条实际UI。最后文字对比修正后，两设备各2项真实宿主复验、Release无签名构建和正常安装启动通过。Core未改，125项核心证据保留0.2.10版本；历史重装/关卡/非启动图册未重标。",
       "gap": "这不是全部设备/全部场景通过。真机、最低系统、真实SDK升级及远程关闭尚未验证；组合UI运行的启动冲突及成功单独重验已如实记录。",
       "evidence": [
         "Validation/original-verification.json",
@@ -1637,7 +1647,11 @@
         "AppTests/AnalyticsRecorderTests.swift",
         "Reference/interstitial-analytics-contract.md",
         "AppTests/RewardLifecycleDurabilityTests.swift",
-        "Tests/CapydokuCoreTests/RewardAdEventPersistenceTests.swift"
+        "Tests/CapydokuCoreTests/RewardAdEventPersistenceTests.swift",
+        "App/Views/StartupArtworkViews.swift",
+        "AppTests/StartupPreparationTests.swift",
+        "AppTests/StartupVisualTests.swift",
+        "Docs/original-startup/manifest.json"
       ]
     },
     {
@@ -1938,5 +1952,5 @@
       ]
     }
   ],
-  "currentBuild": "0.2.10 (13)"
+  "currentBuild": "0.2.11 (14)"
 }

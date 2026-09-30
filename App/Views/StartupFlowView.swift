@@ -2,8 +2,10 @@ import SwiftUI
 
 struct StartupFlowView: View {
     @EnvironmentObject var model: AppModel
+    @Environment(\.scenePhase) private var scenePhase
     @StateObject private var controller: StartupController
     @State private var legalTitle: String?
+    private let scenePhaseOverride: ScenePhase?
 
     init(directory: URL) {
         #if DEBUG
@@ -13,20 +15,22 @@ struct StartupFlowView: View {
         let skip = false
         #endif
         _controller = StateObject(wrappedValue: StartupController(directory: directory, skip: skip))
+        scenePhaseOverride = nil
+    }
+    /// Hosts the actual flow with controlled lifecycle and permission adapters in tests.
+    init(controller: StartupController, scenePhaseOverride: ScenePhase? = nil) {
+        _controller = StateObject(wrappedValue: controller)
+        self.scenePhaseOverride = scenePhaseOverride
     }
     var body: some View {
         ZStack {
             if controller.stage == .ready { RootView() }
             else {
-                Color(red: 0.98, green: 0.96, blue: 0.93).ignoresSafeArea()
-                VStack(spacing: 24) {
-                    Spacer()
-                    Image("CapyMascot").resizable().scaledToFit().frame(maxWidth: 210, maxHeight: 240)
-                    Text("Capydoku").font(.system(size: 44, weight: .black, design: .rounded)).foregroundColor(.brown)
-                    Spacer()
-                    ProgressView().tint(.orange).accessibilityLabel("Loading Capydoku")
-                    Spacer().frame(height: 64)
+                Group {
+                    if controller.stage == .loading { StartupLoadingView(isPreparing: true) }
+                    else { StartupBrandView(isPreparing: controller.stage == .brandLoading) }
                 }
+                .accessibilityHidden(controller.stage == .welcome || controller.errorMessage != nil)
                 if controller.stage == .welcome {
                     Color.black.opacity(0.65).ignoresSafeArea()
                     VStack(spacing: 0) {
@@ -53,8 +57,15 @@ struct StartupFlowView: View {
         .task {
             controller.onAccepted = { model.consentAccepted() }
             controller.onReady = { model.startupReady() }
+            controller.setActive((scenePhaseOverride ?? scenePhase) == .active)
             await controller.begin()
-            if controller.stage == .ready { model.startupReady() } // Explicit UI-test bypass still reaches this gate.
+        }
+        .onChange(of: scenePhase) { phase in
+            let active = (scenePhaseOverride ?? phase) == .active
+            controller.setActive(active)
+            // A disappeared view may have cancelled its task. Resume only a
+            // stopped flow; begin() coalesces any request still in progress.
+            if active && controller.errorMessage == nil { Task { await controller.begin() } }
         }
         .sheet(isPresented: Binding(get: { legalTitle != nil }, set: { if !$0 { legalTitle = nil } })) {
             NavigationView {
@@ -68,8 +79,11 @@ struct StartupFlowView: View {
                     .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Close") { legalTitle = nil } } }
             }
         }
-        .alert("Unable to save", isPresented: Binding(get: { controller.errorMessage != nil }, set: { if !$0 { controller.errorMessage = nil } })) {
-            Button("OK") { controller.errorMessage = nil }
+        .alert("Unable to continue", isPresented: Binding(get: { controller.errorMessage != nil }, set: { if !$0 { controller.errorMessage = nil } })) {
+            Button("Try Again") {
+                controller.errorMessage = nil
+                Task { await controller.begin() }
+            }
         } message: { Text(controller.errorMessage ?? "") }
     }
 }
