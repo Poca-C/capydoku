@@ -153,6 +153,30 @@
         "AppTests/GameplayConfigurationIntegrationTests.swift"
       ],
       "next": "获取冻结配置及真实服务／SDK合同，定义151+实验广告配置；现有实现与测试不能替代真实联调。"
+    },
+    {
+      "id": "CLIENT-08",
+      "sourceParagraphs": [
+        364,
+        379,
+        380,
+        381,
+        448,
+        450,
+        452,
+        455
+      ],
+      "priority": "P1 · 实际结果已修，广告事件仍缺",
+      "topic": "真实业务结果不能因去重或中断而丢失",
+      "finding": "0.2.6补实际结果稳定标识和持久事件，修复复活/继续漏记、奖励通关原子性与签到误记quit；11核心及10应用专项通过。中断奖励补偿completed与插页事件未完成，DATA-05及ADS-13继续partial。",
+      "evidence": [
+        "App/AppModel.swift",
+        "App/Services/AnalyticsRecorder.swift",
+        "Sources/CapydokuCore/SaveStore.swift",
+        "AppTests/LevelResultAnalyticsTests.swift",
+        "Validation/original-verification.json"
+      ],
+      "next": "补完整广告事件和真实上报；冻结正式attempt/时长口径。结果测试通过不代表全部统计验收。"
     }
   ],
   "rows": [
@@ -182,7 +206,7 @@
       "title": "150 关玩法与商业化映射",
       "status": "partial",
       "implemented": "定义并接入逐关 direct/hint、免费广告、复活、失败与插页配置模型；失败标题/按钮/关闭、免费复活配额已补接。",
-      "gap": "真实逐关值尚缺；triggerOrder、restartCreatesNewBoard 的精确语义和执行路径仍待冻结，不可称全字段执行完毕。",
+      "gap": "真实逐关值尚缺。另有明确客户端缺口：triggerOrder 只读入并校验，尚未执行；restartCreatesNewBoard=true 仅报未支持，没有换盘路径。缺冻结资料不能作为这两项已经实现的依据。",
       "evidence": [
         "Sources/CapydokuCore/ReferenceGameplayConfiguration.swift",
         "App/AppModel.swift",
@@ -1245,8 +1269,8 @@
       ],
       "title": "12 事件边界与业务触发",
       "status": "partial",
-      "implemented": "实现11个启用事件，coin_change 预留并禁止发送；新增关卡/道具/奖励业务事件。 0.2.2补齐库存来源批次，配置免费/首次赠送/签到/广告及补偿能跨保存、重开、换关保留；Hint预览与Apply使用同次来源，应用集成已验证。",
-      "gap": "旧档无法追溯的库存来源保留未知并跳过该次buff_use（本地诊断计数），不能伪造枚举。复活后attempt结算、广告真实开始时机、真实SDK与最终完整事件路径仍待验；测试身份注入不代表正式钥匙串通过。",
+      "implemented": "实现11个启用事件，coin_change 预留并禁止发送；新增关卡/道具/奖励业务事件。 0.2.2补齐库存来源批次，配置免费/首次赠送/签到/广告及补偿能跨保存、重开、换关保留；Hint预览与Apply使用同次来源，应用集成已验证。 0.2.6补独立实际结果与随存档保存的冻结事件；复活/继续胜负不再被吞，签到返回不生成虚假quit；奖励通关原子提交。",
+      "gap": "旧库存未知来源继续诊断。客户端中断奖励补偿缺completed事件恢复，插页尚未接事件。正式复活attempt/时长口径、真实SDK及完整数据路径待验；注入测试身份不代表钥匙串通过。",
       "evidence": [
         "App/AppModel.swift",
         "App/Services/AnalyticsRecorder.swift",
@@ -1254,7 +1278,10 @@
         "Sources/CapydokuCore/ToolInventorySource.swift",
         "Tests/CapydokuCoreTests/ToolInventorySourceTests.swift",
         "AppTests/ToolSourceAnalyticsTests.swift",
-        "Validation/test-runs/original-022-tool-sources-app-final.xcresult"
+        "Validation/test-runs/original-022-tool-sources-app-final.xcresult",
+        "AppTests/LevelResultAnalyticsTests.swift",
+        "Tests/CapydokuCoreTests/LevelResultPhaseTests.swift",
+        "Validation/test-runs/original-026-results-complete-final.xcresult"
       ]
     },
     {
@@ -1287,13 +1314,15 @@
         381
       ],
       "title": "同意后采集、幂等、离线与失败重试",
-      "status": "verified",
-      "implemented": "本地事件同意前不生成身份/新事件，业务key去重，原ID/时间缓存，写失败重试与中断session恢复；5个专项测试通过。",
-      "gap": "网络上传/确认/服务端去重均未实现验证；300秒session暂定值与延迟结算约定待冻结。",
+      "status": "partial",
+      "implemented": "同意后本地持久队列、原ID/时间去重；0.2.5补写失败后的会话切换，0.2.6补结果与棋盘原子保存、跨关待发事件及冷恢复。103核心／102应用中相关专项通过，17e复验23应用。",
+      "gap": "奖励补偿与插页事件仍不完整，网络上传/确认/服务端去重未接。300秒session及正式结果口径待冻结。本地结果修复不代表全事件链完成。",
       "evidence": [
         "App/Services/AnalyticsRecorder.swift",
         "AppTests/AnalyticsRecorderTests.swift",
-        "Validation/test-runs/analytics-startup-audit.log"
+        "Validation/test-runs/analytics-startup-audit.log",
+        "AppTests/LevelResultAnalyticsTests.swift",
+        "Validation/original-verification.json"
       ]
     },
     {
@@ -1340,7 +1369,7 @@
       ],
       "title": "Xcode26/iOS26构建及正式发布",
       "status": "external_pending",
-      "implemented": "当前0.2.0(3)完成Xcode26.6的Simulator Debug与通用iOS Release无签名构建，两台模拟器安装成功，17Pro正常启动Welcome已目视确认。",
+      "implemented": "0.2.6(9)完成Xcode26.6的Simulator Debug与通用iOS Release无签名构建，两台正常模拟器安装及版本核对成功，17Pro无测试/重置参数正常启动返回进程。",
       "gap": "未签名Release构建不是可分发安装包；真机签名运行、TestFlight、App Store审核及上架均未完成。",
       "evidence": [
         "Capydoku.xcodeproj/project.pbxproj",
@@ -1498,12 +1527,13 @@
       ],
       "title": "重装重置、签到防刷与隐私",
       "status": "partial",
-      "implemented": "本地目录重装重置设计，UTC自然日幂等/时钟回拨阻断，不保存直接身份资料。",
-      "gap": "正式项目时区及服务器时间来源尚缺；新构建卸载重装与实际系统时钟场景待验证。",
+      "implemented": "0.2.6在临时模拟器实测非空保存/恢复及卸载重装；进度、库存、签到、设置、奖励台账恢复默认。玩家保存只引用包内棋盘，临时设备已删除。UTC自然日幂等与回拨保护已实现。",
+      "gap": "非空数据为校验正确的人工夹具，不替代实际签到/发奖操作。正式时区、服务器时间、实际系统时钟与真机重装仍待验。",
       "evidence": [
-        "Sources/CapydokuCore/PlayerProgress.swift",
-        "Validation/reinstall-audit.json",
-        "App/Services/AnalyticsRecorder.swift"
+        "scripts/verify_reinstall.py",
+        "Validation/reinstall-original-025-audit.json",
+        "Validation/reinstall-original-026-audit.json",
+        "Sources/CapydokuCore/PlayerProgress.swift"
       ]
     },
     {
@@ -1518,13 +1548,13 @@
       ],
       "title": "iOS技术验收与SDK升级兼容",
       "status": "partial",
-      "implemented": "83项Core测试、29项App测试通过；两台模拟器完成记录所列的原文页面、当前教学、L10衔接、150→151、故障恢复等关键回归。",
+      "implemented": "0.2.6最终103项Core、17Pro102项App通过；17e专项23项App及复活/恢复/签到/提示4项UI通过。历史回归保留版本，不累计为本构建全量UI验证。",
       "gap": "这不是全部设备/全部场景通过。真机、最低系统、真实SDK升级及远程关闭尚未验证；组合UI运行的启动冲突及成功单独重验已如实记录。",
       "evidence": [
-        "Validation/test-runs/analytics-startup-audit.log",
-        "Validation/verification-summary.json",
-        "AppTests/AppModelTests.swift",
-        "Validation/original-verification.json"
+        "Validation/original-verification.json",
+        "Validation/test-runs/original-026-core-atomic-final.log",
+        "Validation/test-runs/original-026-results-complete-final.xcresult",
+        "Validation/test-runs/original-026-17e-results-final.xcresult"
       ]
     },
     {
@@ -1717,14 +1747,16 @@
       ],
       "title": "广告音频/打断/快速输入幂等",
       "status": "partial",
-      "implemented": "广告显示、后台和棋盘输入锁独立传递；展示最终结束后释放广告音频锁，即便奖励写盘仍需重试。后台提示恢复、重复回调和原子音频路由通过AppTests。",
+      "implemented": "广告显示、后台和棋盘输入锁独立传递；展示最终结束后释放广告音频锁，即便奖励写盘仍需重试。后台提示恢复、重复回调和原子音频路由通过AppTests。 仅实际started回调上报开始并锁定广告音频；4项就绪/开始/重复/过期/完成场景在0.2.6复验。",
       "gap": "真实适配器必须合并SDK奖励与关闭回调成最终结果；来电/系统弹窗、正式音频及SDK真机联调仍待验。",
       "evidence": [
         "App/Services/FeedbackPlayer.swift",
         "App/AppModel.swift",
         "AppTests/AppModelTests.swift",
         "AppTests/AppModelFeedbackRoutingTests.swift",
-        "Validation/test-runs/original-audio-final.xcresult"
+        "Validation/test-runs/original-audio-final.xcresult",
+        "AppTests/RewardPresentationTests.swift",
+        "Validation/original-verification.json"
       ]
     },
     {
@@ -1759,9 +1791,9 @@
         452
       ],
       "title": "广告漏斗、收益回传与商业化看板",
-      "status": "external_pending",
+      "status": "partial",
       "implemented": "本地激励事件包含offer/status/rewardGranted及ad_type/network/ad_unit_id。",
-      "gap": "真实收益回传/去重通道、插页placement口径和线上看板未实现验证；不得估算收益或宣称SDK接入完成。",
+      "gap": "客户端插页流程未接入广告事件，中断奖励补偿未恢复对应completed事件；这些是本地实现缺口，不能仅归为外部待接入。真实收益回传/去重通道、插页placement合同和线上看板另待联调；不得估算收益。",
       "evidence": [
         "App/Services/AnalyticsRecorder.swift",
         "App/AppModel.swift",
@@ -1789,5 +1821,5 @@
       ]
     }
   ],
-  "currentBuild": "0.2.4 (7)"
+  "currentBuild": "0.2.6 (9)"
 }

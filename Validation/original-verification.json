@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "date": "2026-09-30",
-  "build": "0.2.4 (7)",
-  "status": "PLAYABLE_ORIGINAL_ALIGNMENT_DEMO_WITH_REFERENCE_AND_EXTERNAL_GAPS",
+  "build": "0.2.6 (9)",
+  "status": "Partial original-spec alignment; remaining client, reference and release gaps open.",
   "originalSHA256": "274bbf15f031bd80bb8b360cf14c0266acff370a230d9cad1b1785461df54dd2",
   "currentPackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49",
   "environment": {
@@ -16,33 +16,12 @@
     "minimumOSRuntime": "not tested; compile target iOS 15"
   },
   "core": {
-    "passed": 83,
+    "build": "0.2.6 (9)",
+    "passed": 103,
     "failed": 0,
-    "log": "Validation/test-runs/original-core-final-integration.log",
-    "seconds": 24.525,
-    "followUpCandidateBudgetGuard": {
-      "passed": 6,
-      "failed": 0,
-      "log": "Validation/test-runs/original-candidate-minimum.log"
-    },
-    "baselineBuild": "0.2.0 (3)",
-    "currentChangeRegression": {
-      "build": "0.2.2 (5)",
-      "passed": 60,
-      "failed": 0,
-      "seconds": 4.09,
-      "log": "Validation/test-runs/original-tool-provenance-core.log",
-      "scope": "8 inventory-source tests plus GameSession, reference gameplay execution, original storage, persistence and save hardening. Generation and level pack unchanged."
-    },
-    "previousChangeRegression": {
-      "build": "0.2.1 (4)",
-      "passed": 52,
-      "failed": 0,
-      "seconds": 4.822,
-      "log": "Validation/test-runs/original-state-followup-core.log",
-      "scope": "GameSession, reference configuration execution, original storage, persistence and save-hardening tests after tutorial restart change. Generation code/pack unchanged; original generation evidence retained."
-    },
-    "notRerunForBuild": "0.2.3 (6); core sources and level package unchanged from0.2.2. Configuration parsing is exercised through current application tests."
+    "seconds": 27.492,
+    "log": "Validation/test-runs/original-026-core-atomic-final.log",
+    "scope": "Full Swift package suite after reward-finalizer change, including 11 result-phase/persistence cases. Production pack unchanged; no frozen difficulty parity claim."
   },
   "pythonImport": {
     "passed": 6,
@@ -248,6 +227,42 @@
       "uiTestsPassed": 2,
       "failed": 0,
       "scope": "All new feedback tests, plus mixed gestures and modal isolation on final production code. UI tests use the archived gesture fixture where required; modal isolation uses current pack."
+    },
+    {
+      "build": "0.2.5 (8)",
+      "device": "iPhone 17 Pro",
+      "bundle": "Validation/test-runs/original-025-ad-session-app.xcresult",
+      "appTestsPassed": 92,
+      "failed": 0,
+      "scope": "All AppTests except OriginalUIContractTests, before level-result phase work."
+    },
+    {
+      "build": "0.2.5 (8)",
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-025-17e-reward-session.xcresult",
+      "appTestsPassed": 13,
+      "uiTestsPassed": 2,
+      "failed": 0,
+      "scope": "Recorder, reward presentation and feedback routing; revive and hint UI."
+    },
+    {
+      "build": "0.2.6 (9)",
+      "device": "iPhone 17 Pro",
+      "bundle": "Validation/test-runs/original-026-results-complete-final.xcresult",
+      "appTestsPassed": 102,
+      "failed": 0,
+      "scope": "All AppTests except OriginalUIContractTests. Includes 10 level-result/outbox, 4 reward presentation and 7 recorder tests. Actual file-write failures, frozen cold recovery, lost acknowledgement, reward transaction boundary and real callback covered."
+    },
+    {
+      "build": "0.2.6 (9)",
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-026-17e-results-final.xcresult",
+      "appTestsPassed": 23,
+      "appSeconds": 2.844,
+      "uiTestsPassed": 4,
+      "uiSeconds": 67.103,
+      "failed": 0,
+      "scope": "10 result/outbox, 7 recorder, 4 reward presentation, 2 feedback routing. UI: lose/revive, background/relaunch, daily claim, hint Apply. Uses archived gesture fixture where configured; hint uses current pack. Not full UI."
     }
   ],
   "visualEvidence": {
@@ -261,20 +276,22 @@
     "Frozen Pawdoku release/captures and actual per-level gameplay/difficulty configurations",
     "Reference audio files, detailed playback timing and group mappings",
     "Cross-product corpus and reviewed similarity calibration",
-    "Exact trigger ordering and alternate-board restart behavior",
     "Production legal/support endpoints and service adapters/data dashboards",
     "Physical-device, old-system, TestFlight and App Store release validation",
     "VoiceOver actual focus navigation and full Dynamic Type/readability verification on physical devices",
-    "Frozen correct/wrong/Combo animation frames and timing, found-count/star motion synchronization and physical-device Reduce Motion/feedback review"
+    "Frozen correct/wrong/Combo animation frames and timing, found-count/star motion synchronization and physical-device Reduce Motion/feedback review",
+    "Client: free-ad triggerOrder execution and alternate-board restart are not implemented; frozen specifics separately missing.",
+    "Client: interrupted reward compensation lacks durable completed ad_result recovery; interstitial offer/result events still missing.",
+    "Formal revive/continue attempt/duration definitions pending; result fix preserves existing attempt and cumulative duration."
   ],
   "historicalFailuresRetained": "Initial UI/app runs and first full-core run failed on changed fixture assumptions or real UI issues; these are retained under Validation/test-runs. Only explicitly listed successful reruns count. Old 88-item checklist completion counts are superseded.",
   "applicationTests": {
-    "build": "0.2.4 (7)",
-    "passed": 86,
+    "build": "0.2.6 (9)",
+    "passed": 102,
     "failed": 0,
-    "seconds": 14.869,
-    "bundle": "Validation/test-runs/original-024-feedback-lifecycle-final.xcresult",
-    "scope": "All AppTests except OriginalUIContractTests. Includes 8 new AppModel-to-player Combo/reward tests, 3 real-board visual/lifecycle tests and 4 deterministic text lifecycle tests. No original audio assets, device listening or frozen animation match claimed."
+    "seconds": 17.662,
+    "bundle": "Validation/test-runs/original-026-results-complete-final.xcresult",
+    "scope": "All AppTests except OriginalUIContractTests. Includes 10 level-result/outbox, 4 reward presentation and 7 recorder tests. Actual file-write failures, frozen cold recovery, lost acknowledgement, reward transaction boundary and real callback covered."
   },
   "supersededOrInterruptedRuns": [
     "reward-readiness-final was intentionally interrupted to stop two runners targeting one simulator; not counted as success.",
@@ -317,18 +334,18 @@
     }
   ],
   "buildVerification": {
-    "bundleVersion": "0.2.4 (7)",
+    "bundleVersion": "0.2.6 (9)",
     "simulatorDebug": "passed via test build",
-    "simulatorLog": "Validation/test-runs/original-024-feedback-lifecycle-final.log",
+    "simulatorLog": "Validation/test-runs/original-026-results-complete-final.log",
     "genericIOSReleaseUnsigned": "passed",
-    "releaseLog": "Validation/test-runs/original-024-release-final-build.log",
+    "releaseLog": "Validation/test-runs/original-026-release-build.log",
     "installedOn": [
       "iPhone 17 Pro",
       "iPhone 17e"
     ],
-    "normalLaunch": "simctl normal launch returned process 59463 on iPhone 17 Pro without test/reset flags; bundle metadata verified as 0.2.4 / 7",
-    "signingAndDeviceExecution": "Unsigned compilation only; no physical-device or App Store claim",
-    "scope": "Gameplay feedback, session-specific gesture debounce, Combo/audio routing and transient lifecycle. Core package and level pack unchanged; no new core-generation acceptance claim.",
+    "normalLaunch": "iPhone 17 Pro simctl normal launch process 70702; no test/reset flags. Both installed Info.plist values verified 0.2.6 / 9.",
+    "signingAndDeviceExecution": "Unsigned compilation only; physical device and App Store untested.",
+    "scope": "Result phases and persisted result events; atomic reward win; genuine gameplay quit; rewarded presentation confirmation; session file-write failure. UI art and level package unchanged.",
     "sourceDocumentSHA256Unchanged": true
   },
   "audioContract": {
@@ -443,6 +460,14 @@
       "seconds": 11.997,
       "bundle": "Validation/test-runs/original-023-configuration-app-final.xcresult",
       "scope": "All AppTests except OriginalUIContractTests. Includes11 new store/HTTP transport tests and6 new AppModel integration tests; uses synthetic reference data and URLProtocol, not a live remote service."
+    },
+    {
+      "build": "0.2.4 (7)",
+      "passed": 86,
+      "failed": 0,
+      "seconds": 14.869,
+      "bundle": "Validation/test-runs/original-024-feedback-lifecycle-final.xcresult",
+      "scope": "All AppTests except OriginalUIContractTests. Includes 8 new AppModel-to-player Combo/reward tests, 3 real-board visual/lifecycle tests and 4 deterministic text lifecycle tests. No original audio assets, device listening or frozen animation match claimed."
     }
   ],
   "remoteConfigurationContract": {
@@ -507,6 +532,21 @@
       "signingAndDeviceExecution": "Unsigned compilation only; no physical-device or App Store claim",
       "scope": "Configuration store/HTTP provider and AppModel integration; current app tests and scoped startup/board UI tests passed. Main artwork/gallery unchanged.",
       "sourceDocumentSHA256Unchanged": true
+    },
+    {
+      "bundleVersion": "0.2.4 (7)",
+      "simulatorDebug": "passed via test build",
+      "simulatorLog": "Validation/test-runs/original-024-feedback-lifecycle-final.log",
+      "genericIOSReleaseUnsigned": "passed",
+      "releaseLog": "Validation/test-runs/original-024-release-final-build.log",
+      "installedOn": [
+        "iPhone 17 Pro",
+        "iPhone 17e"
+      ],
+      "normalLaunch": "simctl normal launch returned process 59463 on iPhone 17 Pro without test/reset flags; bundle metadata verified as 0.2.4 / 7",
+      "signingAndDeviceExecution": "Unsigned compilation only; no physical-device or App Store claim",
+      "scope": "Gameplay feedback, session-specific gesture debounce, Combo/audio routing and transient lifecycle. Core package and level pack unchanged; no new core-generation acceptance claim.",
+      "sourceDocumentSHA256Unchanged": true
     }
   ],
   "feedbackCorrection": {
@@ -546,5 +586,114 @@
       "Reference audio files remain absent; player tests use synthetic manifests and fake playback handles.",
       "Reduce Motion component branch verified, not system-setting changes on physical devices."
     ]
-  }
+  },
+  "coreHistory": [
+    {
+      "passed": 83,
+      "failed": 0,
+      "log": "Validation/test-runs/original-core-final-integration.log",
+      "seconds": 24.525,
+      "followUpCandidateBudgetGuard": {
+        "passed": 6,
+        "failed": 0,
+        "log": "Validation/test-runs/original-candidate-minimum.log"
+      },
+      "baselineBuild": "0.2.0 (3)",
+      "currentChangeRegression": {
+        "build": "0.2.2 (5)",
+        "passed": 60,
+        "failed": 0,
+        "seconds": 4.09,
+        "log": "Validation/test-runs/original-tool-provenance-core.log",
+        "scope": "8 inventory-source tests plus GameSession, reference gameplay execution, original storage, persistence and save hardening. Generation and level pack unchanged."
+      },
+      "previousChangeRegression": {
+        "build": "0.2.1 (4)",
+        "passed": 52,
+        "failed": 0,
+        "seconds": 4.822,
+        "log": "Validation/test-runs/original-state-followup-core.log",
+        "scope": "GameSession, reference configuration execution, original storage, persistence and save-hardening tests after tutorial restart change. Generation code/pack unchanged; original generation evidence retained."
+      },
+      "notRerunForBuild": "0.2.3 (6); core sources and level package unchanged from0.2.2. Configuration parsing is exercised through current application tests."
+    }
+  ],
+  "levelResultCorrection": {
+    "build": "0.2.6 (9)",
+    "originalParagraphs": [
+      364,
+      379,
+      380,
+      381
+    ],
+    "coreCases": 11,
+    "applicationCases": 10,
+    "paths": [
+      "repeated lose/revive then win",
+      "quit/continue, background and cold restore",
+      "restart new attempt",
+      "queue write failure and frozen cold replay",
+      "queue commit before gameplay acknowledgement",
+      "gameplay write failure prevents premature delivery",
+      "no pre-consent retroactive events",
+      "check-in return not gameplay quit",
+      "reward commit before afterAction then restore",
+      "duplicate actual reward callback",
+      "production async save and immediate next level"
+    ],
+    "durableFields": [
+      "event_id",
+      "event_time",
+      "user_id",
+      "session_id",
+      "level_id",
+      "pawdoku_config_version",
+      "result/attempt/duration/lives"
+    ],
+    "atomicRewardBoundary": "Shared App finalizer inside SaveStore.grantReward effect transaction; boundary test stops after commit before afterAction/app.save and cold restores. Does not claim an OS process kill at that instruction.",
+    "formalSemantics": "Revive/continue preserve existing attempt_no and cumulative elapsedSeconds. Formal definitions pending. No invented legacy terminal history."
+  },
+  "rewardPresentationCorrection": {
+    "build": "0.2.5 (8); rerun in 0.2.6 (9)",
+    "cases": 4,
+    "behavior": "Only provider .started confirms visibility. Ready/present request is not started. Nonterminal duplicate/late signals isolated. Demo failure means failed presentation.",
+    "realSDKVerified": false
+  },
+  "sessionStorageRecovery": {
+    "casesAdded": 2,
+    "behavior": "Accepted session_end closes in-memory old session even when queued for disk retry; new activity gets new session, old event IDs/times retained.",
+    "identityScope": "Injected test identity; production Keychain not validated."
+  },
+  "reinstallAudit": {
+    "build": "0.2.6 (9)",
+    "report": "Validation/reinstall-original-026-audit.json",
+    "status": "passed",
+    "previousBuildReport": "Validation/reinstall-original-025-audit.json",
+    "scope": "Actual install/launch/restore/uninstall/reinstall on disposable simulator. Checksummed nonempty fixture injected while terminated; not real-button grant evidence. Progress/inventory/check-in/settings/reward reset and bundle-board reference restoration.",
+    "cleanupVerified": true,
+    "scriptCorrections": [
+      "current installed catalog and reference-only save",
+      "sort unordered sets",
+      "deep-copy snapshots",
+      "retain failed attempts"
+    ],
+    "historicalReportLimitation": "Untracked original-024 exploratory report predates deep-copy correction; not current evidence."
+  },
+  "resultCorrectionFailures": [
+    {
+      "log": "Validation/test-runs/original-026-core.log",
+      "result": "1/103 failed initially",
+      "cause": "Fixture used phase key instead of UUID event_id; cleanup error obscured validation failure. Corrected UUID and actual file-error assertion; final103 passed."
+    },
+    {
+      "bundle": "Validation/test-runs/original-026-results-app.xcresult",
+      "result": "99 tests, 8 failed assertions",
+      "cause": "Old equality expected no result phase update; new fixture lacked bundle resolver. Corrected without weakening gameplay/config comparisons; intermediate99 passed."
+    },
+    {
+      "bundle": "Validation/test-runs/original-026-results-atomic-final.xcresult",
+      "result": "101 tests; new reward fixture rejected at entry",
+      "cause": "Free direct inventory correctly blocked rewarded offer. Set zero initial direct and add actual callback coverage; final102 passed."
+    }
+  ]
 }

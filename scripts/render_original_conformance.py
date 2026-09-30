@@ -12,7 +12,7 @@ def escape(value):
     return value.replace('|', '\\|').replace('\n', '<br>')
 
 lines = ['# 原始需求逐项符合性记录', '',
-         '本记录以原始 Word V1.3 正文及附图为依据。结论：**可内部试玩，部分符合；冻结参考、外部接入和上架尚未验收。** 后续报告和旧 Checklist 不覆盖原文。', '',
+         '本记录以原始 Word V1.3 正文及附图为依据。结论：**可内部试玩，部分符合；客户端仍有未实现项，冻结参考、外部接入和上架尚未验收。** 后续报告和旧 Checklist 不覆盖原文。', '',
          f"当前构建：**{data.get('currentBuild', '见验证记录')}**。实际测试范围、初次失败及修复后的重验见 [验证记录](original-verification.json)。", '',
          f"原文校验值：`{data['source']['sha256']}`。原文[n]对应 [document.txt](../Reference/Original/document.txt) 的0-based正文块索引（含表格），不是页码。83行是实质要求分组，不是完成率。", '',
          '## 状态含义', '',

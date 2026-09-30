@@ -7,13 +7,15 @@ enum RewardScenario: String, CaseIterable, Identifiable {
     case timeout = "Loading timeout"
     var id: String { rawValue }
 }
-enum RewardSignal: Equatable { case earned, cancelled, failed, interrupted, timedOut }
+enum RewardSignal: Equatable { case started, earned, cancelled, failed, interrupted, timedOut }
 enum RewardReadiness { case ready, unavailable }
 
 /// Placement-based loading boundary; real adapters coalesce concurrent preload requests
 /// and keep at most one ready ad per configured unit. No network SDK is linked here.
-/// `present` completion is the final display outcome. A live adapter combines its
-/// SDK reward and dismissal/failure callbacks before emitting it; a reward callback
+/// `present` emits `started` only after the SDK confirms presentation; being ready
+/// or calling present is not evidence that a video appeared. Other signals are the
+/// final display outcome. A live adapter combines its SDK reward and dismissal/
+/// failure callbacks before emitting the final result; a reward callback
 /// alone must not dismiss the app's display state while the SDK video is still open.
 protocol RewardProvider {
     func preload(placement: RewardKind, completion: @escaping (RewardReadiness) -> Void)
@@ -44,6 +46,7 @@ struct MockRewardProvider: RewardProvider {
     }
     func isReady(placement: RewardKind) -> Bool { scenario != .timeout }
     func present(offerID: String, completion: @escaping (RewardSignal) -> Void) {
+        if scenario != .failure && scenario != .timeout { completion(.started) }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             switch scenario {
             case .success: completion(.earned)

@@ -1,0 +1,558 @@
+{
+  "startedAt": "2026-09-30T14:18:39.573712+00:00",
+  "status": "passed",
+  "scope": "Disposable iOS simulator, local app container only",
+  "exclusions": [
+    "Physical device",
+    "iCloud or device backup restore",
+    "App Store installation"
+  ],
+  "sourceApp": "/Users/poca/Documents/ChatGPT/capydoku开发/DerivedDataFinal/Build/Products/Debug-iphonesimulator/Capydoku.app",
+  "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-5",
+  "deviceType": "com.apple.CoreSimulator.SimDeviceType.iPhone-17e",
+  "steps": [
+    {
+      "arguments": [
+        "xcrun",
+        "simctl",
+        "create",
+        "Capydoku-Reinstall-Audit-68120007",
+        "com.apple.CoreSimulator.SimDeviceType.iPhone-17e",
+        "com.apple.CoreSimulator.SimRuntime.iOS-26-5"
+      ],
+      "exitCode": 0,
+      "seconds": 0.17,
+      "stdout": "8C60F382-D58D-4E30-AD7C-372A7A8F87ED",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "xcrun",
+        "simctl",
+        "boot",
+        "8C60F382-D58D-4E30-AD7C-372A7A8F87ED"
+      ],
+      "exitCode": 0,
+      "seconds": 0.351,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "xcrun",
+        "simctl",
+        "bootstatus",
+        "8C60F382-D58D-4E30-AD7C-372A7A8F87ED",
+        "-b"
+      ],
+      "exitCode": 0,
+      "seconds": 26.455,
+      "stdout": "Monitoring boot status for Capydoku-Reinstall-Audit-68120007 (8C60F382-D58D-4E30-AD7C-372A7A8F87ED).\n[2026-09-30 14:18:41 +0000] Status=2, isTerminal=NO, Elapsed=00:01.\n\tWaiting on Data Migration\n\t\tReason:(null)\n\t\tMigration Elapsed:00:00 seconds\n\n[2026-09-30 14:18:58 +0000] Status=2, isTerminal=NO, Elapsed=00:18.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.securityd.KeychainMigrator (KeychainMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:17 seconds\n\n[2026-09-30 14:18:59 +0000] Status=2, isTerminal=NO, Elapsed=00:19.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.managedconfiguration.migrator (MCProfile.migrator, user-agnostic)\n\t\tMigration Elapsed:00:17 seconds\n\n[2026-09-30 14:18:59 +0000] Status=2, isTerminal=NO, Elapsed=00:19.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.managedconfiguration.migrator (MCProfile.migrator, user-agnostic)\n\t\tMigration Elapsed:00:18 seconds\n\n[2026-09-30 14:19:00 +0000] Status=2, isTerminal=NO, Elapsed=00:20.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.managedconfiguration.migrator (MCProfile.migrator, user-agnostic)\n\t\tMigration Elapsed:00:19 seconds\n\n[2026-09-30 14:19:01 +0000] Status=2, isTerminal=NO, Elapsed=00:21.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.managedconfiguration.migrator (MCProfile.migrator, user-agnostic)\n\t\tMigration Elapsed:00:20 seconds\n\n[2026-09-30 14:19:02 +0000] Status=2, isTerminal=NO, Elapsed=00:22.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.WebBookmarks.migrator (WebBookmarks.migrator)\n\t\tMigration Elapsed:00:21 seconds\n\n[2026-09-30 14:19:03 +0000] Status=4, isTerminal=NO, Elapsed=00:23.\n\tWaiting on System App\n\n[2026-09-30 14:19:04 +0000] Status=4, isTerminal=NO, Elapsed=00:24.\n\tWaiting on System App\n\n[2026-09-30 14:19:05 +0000] Status=4, isTerminal=NO, Elapsed=00:25.\n\tWaiting on System App\n\n[2026-09-30 14:19:06 +0000] Status=4294967295, isTerminal=YES, Elapsed=00:26.\n\tFinished",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "xcrun",
+        "simctl",
+        "install",
+        "8C60F382-D58D-4E30-AD7C-372A7A8F87ED",
+        "/var/folders/z_/nv14sgb12rqc9mkm2f73xyk80000gn/T/capydoku-reinstall-app-k5mh1_nd/Capydoku.app"
+      ],
+      "exitCode": 0,
+      "seconds": 5.409,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "xcrun",
+        "simctl",
+        "get_app_container",
+        "8C60F382-D58D-4E30-AD7C-372A7A8F87ED",
+        "com.capydoku.demo",
+        "data"
+      ],
+      "exitCode": 0,
+      "seconds": 0.308,
+      "stdout": "/Users/poca/Library/Developer/CoreSimulator/Devices/8C60F382-D58D-4E30-AD7C-372A7A8F87ED/data/Containers/Data/Application/BC01BD13-32BD-4C14-B04F-6FE45D8FCE2E",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "xcrun",
+        "simctl",
+        "launch",
+        "8C60F382-D58D-4E30-AD7C-372A7A8F87ED",
+        "com.capydoku.demo",
+        "-ui-testing",
+        "-skip-tutorial",
+        "-level",
+        "150"
+      ],
+      "exitCode": 0,
+      "seconds": 2.132,
+      "stdout": "com.capydoku.demo: 70891",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "xcrun",
+        "simctl",
+        "terminate",
+        "8C60F382-D58D-4E30-AD7C-372A7A8F87ED",
+        "com.capydoku.demo"
+      ],
+      "exitCode": 0,
+      "seconds": 0.287,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "xcrun",
+        "simctl",
+        "launch",
+        "8C60F382-D58D-4E30-AD7C-372A7A8F87ED",
+        "com.capydoku.demo",
+        "-ui-testing"
+      ],
+      "exitCode": 0,
+      "seconds": 0.726,
+      "stdout": "com.capydoku.demo: 70908",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "xcrun",
+        "simctl",
+        "launch",
+        "8C60F382-D58D-4E30-AD7C-372A7A8F87ED",
+        "com.apple.Preferences"
+      ],
+      "exitCode": 0,
+      "seconds": 0.395,
+      "stdout": "com.apple.Preferences: 70925",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "xcrun",
+        "simctl",
+        "terminate",
+        "8C60F382-D58D-4E30-AD7C-372A7A8F87ED",
+        "com.capydoku.demo"
+      ],
+      "exitCode": 0,
+      "seconds": 0.374,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "xcrun",
+        "simctl",
+        "uninstall",
+        "8C60F382-D58D-4E30-AD7C-372A7A8F87ED",
+        "com.capydoku.demo"
+      ],
+      "exitCode": 0,
+      "seconds": 0.573,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "xcrun",
+        "simctl",
+        "get_app_container",
+        "8C60F382-D58D-4E30-AD7C-372A7A8F87ED",
+        "com.capydoku.demo",
+        "data"
+      ],
+      "exitCode": 2,
+      "seconds": 0.472,
+      "stdout": "",
+      "stderr": "An error was encountered processing the command (domain=NSPOSIXErrorDomain, code=2):\nThe operation couldn’t be completed. No such file or directory\nNo such file or directory"
+    },
+    {
+      "arguments": [
+        "xcrun",
+        "simctl",
+        "install",
+        "8C60F382-D58D-4E30-AD7C-372A7A8F87ED",
+        "/var/folders/z_/nv14sgb12rqc9mkm2f73xyk80000gn/T/capydoku-reinstall-app-k5mh1_nd/Capydoku.app"
+      ],
+      "exitCode": 0,
+      "seconds": 1.368,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "xcrun",
+        "simctl",
+        "get_app_container",
+        "8C60F382-D58D-4E30-AD7C-372A7A8F87ED",
+        "com.capydoku.demo",
+        "data"
+      ],
+      "exitCode": 0,
+      "seconds": 0.371,
+      "stdout": "/Users/poca/Library/Developer/CoreSimulator/Devices/8C60F382-D58D-4E30-AD7C-372A7A8F87ED/data/Containers/Data/Application/66D970D2-CAB4-4F34-96FC-D6ED3D015D75",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "xcrun",
+        "simctl",
+        "launch",
+        "8C60F382-D58D-4E30-AD7C-372A7A8F87ED",
+        "com.capydoku.demo",
+        "-ui-testing"
+      ],
+      "exitCode": 0,
+      "seconds": 0.551,
+      "stdout": "com.capydoku.demo: 70977",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "xcrun",
+        "simctl",
+        "launch",
+        "8C60F382-D58D-4E30-AD7C-372A7A8F87ED",
+        "com.apple.Preferences"
+      ],
+      "exitCode": 0,
+      "seconds": 0.23,
+      "stdout": "com.apple.Preferences: 70925",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "xcrun",
+        "simctl",
+        "terminate",
+        "8C60F382-D58D-4E30-AD7C-372A7A8F87ED",
+        "com.capydoku.demo"
+      ],
+      "exitCode": 0,
+      "seconds": 0.325,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "xcrun",
+        "simctl",
+        "shutdown",
+        "8C60F382-D58D-4E30-AD7C-372A7A8F87ED"
+      ],
+      "exitCode": 0,
+      "seconds": 3.296,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "xcrun",
+        "simctl",
+        "delete",
+        "8C60F382-D58D-4E30-AD7C-372A7A8F87ED"
+      ],
+      "exitCode": 0,
+      "seconds": 0.1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "xcrun",
+        "simctl",
+        "list",
+        "devices",
+        "--json"
+      ],
+      "exitCode": 0,
+      "seconds": 0.094,
+      "stdout": "(inventory omitted)",
+      "stderr": ""
+    }
+  ],
+  "cleanup": {
+    "deleted": true,
+    "deviceAbsentFromInventory": true
+  },
+  "bundleID": "com.capydoku.demo",
+  "appVersion": "0.2.6",
+  "appBuild": "9",
+  "executableSHA256": "e23b9a495852b873c85a6e09df5ffcf2b284e56bc48f3f3304b5720709b4bf6e",
+  "installedPackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49",
+  "temporaryDevice": {
+    "name": "Capydoku-Reinstall-Audit-68120007",
+    "udid": "8C60F382-D58D-4E30-AD7C-372A7A8F87ED"
+  },
+  "originalLevelSave": {
+    "progress": {
+      "currentLevel": 150,
+      "unlockedLevel": 1,
+      "tutorialCompleted": true,
+      "bonusHints": 0,
+      "bonusDirect": 0,
+      "completedLevels": [],
+      "checkIn": {
+        "completedCycles": 0,
+        "cycleDay": 0,
+        "streak": 0
+      },
+      "rewardCount": 0,
+      "hasSession": true,
+      "sessionID": "1F3D47A6-DA32-4B42-AC18-78E3C1373A7B",
+      "sessionLevel": 150,
+      "boardSizeFromInstalledPack": 8,
+      "puzzleReference": {
+        "checksum": "256b2267f15121803c169ba57b7a867877f8e56e505cb6844fd27e8c14482864",
+        "levelID": 150,
+        "source": "bundle"
+      },
+      "containsBoardPayload": false,
+      "settings": {
+        "hapticsEnabled": true,
+        "musicEnabled": true,
+        "soundEnabled": true,
+        "voiceEnabled": true
+      },
+      "attemptCounts": {
+        "150": 1
+      },
+      "sessionState": {
+        "found": [],
+        "marks": [],
+        "errors": [],
+        "lives": 3,
+        "score": 0,
+        "hasRevived": false
+      }
+    },
+    "checksumValid": true
+  },
+  "fixture": {
+    "method": "Injected checksum-valid test state while app was terminated",
+    "scope": "Only the newly created simulator's app container",
+    "bonusHints": 7,
+    "bonusDirect": 4,
+    "checkIn": {
+      "lastClaimedDay": 20725,
+      "streak": 3,
+      "cycleDay": 3,
+      "completedCycles": 2
+    },
+    "notClaimedByThisTest": "Actual check-in, settings, solve or reward button behavior",
+    "appReloadAndBackgroundPersistenceConfirmed": true
+  },
+  "fixtureReloadComparison": {
+    "expected": {
+      "currentLevel": 150,
+      "unlockedLevel": 150,
+      "tutorialCompleted": true,
+      "bonusHints": 7,
+      "bonusDirect": 4,
+      "completedLevels": [
+        1,
+        2,
+        3
+      ],
+      "checkIn": {
+        "lastClaimedDay": 20725,
+        "streak": 3,
+        "cycleDay": 3,
+        "completedCycles": 2
+      },
+      "rewardCount": 1,
+      "hasSession": true,
+      "sessionID": "1F3D47A6-DA32-4B42-AC18-78E3C1373A7B",
+      "sessionLevel": 150,
+      "boardSizeFromInstalledPack": 8,
+      "puzzleReference": {
+        "checksum": "256b2267f15121803c169ba57b7a867877f8e56e505cb6844fd27e8c14482864",
+        "levelID": 150,
+        "source": "bundle"
+      },
+      "containsBoardPayload": false,
+      "settings": {
+        "hapticsEnabled": false,
+        "musicEnabled": false,
+        "soundEnabled": false,
+        "voiceEnabled": false
+      },
+      "attemptCounts": {
+        "150": 2
+      },
+      "sessionState": {
+        "found": [
+          4
+        ],
+        "marks": [
+          0
+        ],
+        "errors": [
+          0
+        ],
+        "lives": 2,
+        "score": 100,
+        "hasRevived": true
+      }
+    },
+    "actual": {
+      "currentLevel": 150,
+      "unlockedLevel": 150,
+      "tutorialCompleted": true,
+      "bonusHints": 7,
+      "bonusDirect": 4,
+      "completedLevels": [
+        1,
+        2,
+        3
+      ],
+      "checkIn": {
+        "completedCycles": 2,
+        "cycleDay": 3,
+        "lastClaimedDay": 20725,
+        "streak": 3
+      },
+      "rewardCount": 1,
+      "hasSession": true,
+      "sessionID": "1F3D47A6-DA32-4B42-AC18-78E3C1373A7B",
+      "sessionLevel": 150,
+      "boardSizeFromInstalledPack": 8,
+      "puzzleReference": {
+        "checksum": "256b2267f15121803c169ba57b7a867877f8e56e505cb6844fd27e8c14482864",
+        "levelID": 150,
+        "source": "bundle"
+      },
+      "containsBoardPayload": false,
+      "settings": {
+        "hapticsEnabled": false,
+        "musicEnabled": false,
+        "soundEnabled": false,
+        "voiceEnabled": false
+      },
+      "attemptCounts": {
+        "150": 2
+      },
+      "sessionState": {
+        "found": [
+          4
+        ],
+        "marks": [
+          0
+        ],
+        "errors": [
+          0
+        ],
+        "lives": 2,
+        "score": 100,
+        "hasRevived": true
+      }
+    }
+  },
+  "beforeUninstall": {
+    "dataContainer": "/Users/poca/Library/Developer/CoreSimulator/Devices/8C60F382-D58D-4E30-AD7C-372A7A8F87ED/data/Containers/Data/Application/BC01BD13-32BD-4C14-B04F-6FE45D8FCE2E",
+    "progress": {
+      "currentLevel": 150,
+      "unlockedLevel": 150,
+      "tutorialCompleted": true,
+      "bonusHints": 7,
+      "bonusDirect": 4,
+      "completedLevels": [
+        1,
+        2,
+        3
+      ],
+      "checkIn": {
+        "completedCycles": 2,
+        "cycleDay": 3,
+        "lastClaimedDay": 20725,
+        "streak": 3
+      },
+      "rewardCount": 1,
+      "hasSession": true,
+      "sessionID": "1F3D47A6-DA32-4B42-AC18-78E3C1373A7B",
+      "sessionLevel": 150,
+      "boardSizeFromInstalledPack": 8,
+      "puzzleReference": {
+        "checksum": "256b2267f15121803c169ba57b7a867877f8e56e505cb6844fd27e8c14482864",
+        "levelID": 150,
+        "source": "bundle"
+      },
+      "containsBoardPayload": false,
+      "settings": {
+        "hapticsEnabled": false,
+        "musicEnabled": false,
+        "soundEnabled": false,
+        "voiceEnabled": false
+      },
+      "attemptCounts": {
+        "150": 2
+      },
+      "sessionState": {
+        "found": [
+          4
+        ],
+        "marks": [
+          0
+        ],
+        "errors": [
+          0
+        ],
+        "lives": 2,
+        "score": 100,
+        "hasRevived": true
+      }
+    },
+    "saveBytes": 2486,
+    "checksumValid": true
+  },
+  "uninstall": {
+    "oldSaveAbsent": true,
+    "containerLookupFails": true
+  },
+  "afterReinstallBeforeBackground": {
+    "dataContainer": "/Users/poca/Library/Developer/CoreSimulator/Devices/8C60F382-D58D-4E30-AD7C-372A7A8F87ED/data/Containers/Data/Application/66D970D2-CAB4-4F34-96FC-D6ED3D015D75",
+    "saveFileAbsentBeforeBackground": true
+  },
+  "afterReinstall": {
+    "progress": {
+      "currentLevel": 1,
+      "unlockedLevel": 1,
+      "tutorialCompleted": false,
+      "bonusHints": 0,
+      "bonusDirect": 0,
+      "completedLevels": [],
+      "checkIn": {
+        "completedCycles": 0,
+        "cycleDay": 0,
+        "streak": 0
+      },
+      "rewardCount": 0,
+      "hasSession": false,
+      "sessionID": null,
+      "sessionLevel": null,
+      "boardSizeFromInstalledPack": null,
+      "puzzleReference": null,
+      "containsBoardPayload": false,
+      "settings": {
+        "hapticsEnabled": true,
+        "musicEnabled": true,
+        "soundEnabled": true,
+        "voiceEnabled": true
+      },
+      "attemptCounts": {},
+      "sessionState": null
+    },
+    "saveBytes": 1018,
+    "checksumValid": true,
+    "initialProgressConfirmed": true
+  },
+  "finishedAt": "2026-09-30T14:19:28.668550+00:00"
+}

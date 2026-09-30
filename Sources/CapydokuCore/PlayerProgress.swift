@@ -87,6 +87,9 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
     public var bonusHints: Int
     public var bonusDirect: Int
     public var rewardLedger: [String: RewardRecord]
+    /// Frozen result events travel atomically with player state and survive
+    /// replacement of the current board until delivery has been acknowledged.
+    public var pendingLevelResultEvents: [String: Data]
     public var freeToolGrantedLevels: Set<Int>
     public var levelToolBalances: [String: ToolBalance]
     public var referenceToolGrantKeys: Set<String>
@@ -110,6 +113,7 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
         bonusHints = 0
         bonusDirect = 0
         rewardLedger = [:]
+        pendingLevelResultEvents = [:]
         freeToolGrantedLevels = []
         levelToolBalances = [:]
         referenceToolGrantKeys = []
@@ -471,6 +475,7 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
     private enum CodingKeys: String, CodingKey {
         case unlockedLevel, currentLevel, completedLevels, attemptCounts, session, settings
         case tutorialStep, tutorialCompleted, checkIn, bonusHints, bonusDirect, rewardLedger
+        case pendingLevelResultEvents
         case freeToolGrantedLevels, levelToolBalances, referenceToolGrantKeys, carriedToolBalance, levelStartLocalBalances, freeReviveUsage
         case bonusToolSources, levelToolSources, carriedToolSources
     }
@@ -490,6 +495,7 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
         bonusHints = try values.decodeIfPresent(Int.self, forKey: .bonusHints) ?? 0
         bonusDirect = try values.decodeIfPresent(Int.self, forKey: .bonusDirect) ?? 0
         rewardLedger = try values.decodeIfPresent([String: RewardRecord].self, forKey: .rewardLedger) ?? [:]
+        pendingLevelResultEvents = try values.decodeIfPresent([String: Data].self, forKey: .pendingLevelResultEvents) ?? [:]
         freeToolGrantedLevels = try values.decodeIfPresent(Set<Int>.self, forKey: .freeToolGrantedLevels) ?? []
         levelToolBalances = try values.decodeIfPresent([String: ToolBalance].self, forKey: .levelToolBalances) ?? [:]
         referenceToolGrantKeys = try values.decodeIfPresent(Set<String>.self, forKey: .referenceToolGrantKeys) ?? []

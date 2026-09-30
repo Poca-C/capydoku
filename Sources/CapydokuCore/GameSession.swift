@@ -4,6 +4,10 @@ public enum GameStatus: String, Codable, Equatable, Sendable {
     case playing, won, lost
 }
 
+public enum LevelEndResult: String, Codable, Sendable {
+    case win, lose, quit
+}
+
 public enum MoveResult: Equatable, Sendable {
     case correct(cell: Int, points: Int, won: Bool)
     case incorrect(cell: Int, livesRemaining: Int)
@@ -26,6 +30,10 @@ public struct GameSession: Codable, Equatable, Sendable {
     public private(set) var attempt: Int
     public var elapsedSeconds: Double
     public private(set) var hasRevived: Bool
+    /// One board may end several play phases through loss/revival or quit/continue.
+    /// The phase is separate from the board identity and the restart attempt count.
+    public private(set) var resultPhase: Int
+    public private(set) var resultPhaseEnd: LevelEndResult?
     public var pendingRewardHint: Bool
     public let config: DemoConfig
 
@@ -58,6 +66,8 @@ public struct GameSession: Codable, Equatable, Sendable {
         self.attempt = max(1, attempt)
         self.elapsedSeconds = 0
         self.hasRevived = false
+        self.resultPhase = 0
+        self.resultPhaseEnd = nil
         self.pendingRewardHint = false
     }
 
@@ -152,6 +162,27 @@ public struct GameSession: Codable, Equatable, Sendable {
         elapsedSeconds += seconds
     }
 
+    /// Claims a real result once. The caller persists this mutation together with
+    /// the frozen event payload before attempting to deliver the event.
+    public mutating func claimResult(_ result: LevelEndResult) -> String? {
+        guard resultPhaseEnd == nil else { return nil }
+        switch (result, status) {
+        case (.win, .won), (.lose, .lost), (.quit, .playing): break
+        default: return nil
+        }
+        resultPhaseEnd = result
+        return id.uuidString + ":result:" + String(resultPhase)
+    }
+
+    /// A genuine Home-to-continue transition reopens play without a new attempt.
+    @discardableResult
+    public mutating func resumeAfterQuit() -> Bool {
+        guard status == .playing, resultPhaseEnd == .quit, resultPhase < Int.max - 1 else { return false }
+        resultPhase += 1
+        resultPhaseEnd = nil
+        return true
+    }
+
     /// Restart preserves the tool balance; restarting cannot farm per-level free tools.
     public mutating func restart() {
         let hints = hintsRemaining
@@ -179,9 +210,14 @@ public struct GameSession: Codable, Equatable, Sendable {
     public mutating func revive() -> Bool {
         guard status == .lost else { return false }
         guard config.referenceGameplay?.revive.enabled != false else { return false }
+        guard resultPhaseEnd == nil || resultPhase < Int.max - 1 else { return false }
         lives = config.referenceGameplay?.revive.restoredLives ?? config.initialLives
         status = .playing
         hasRevived = true
+        if resultPhaseEnd != nil {
+            resultPhase += 1
+            resultPhaseEnd = nil
+        }
         // Found animals, manual Xs and red mistake Xs all survive revival.
         return true
     }
@@ -189,6 +225,7 @@ public struct GameSession: Codable, Equatable, Sendable {
     private enum CodingKeys: String, CodingKey {
         case id, puzzle, found, marks, errors, lives, score, combo, status
         case hintsRemaining, directRemaining, attempt, elapsedSeconds, hasRevived, pendingRewardHint, config
+        case resultPhase, resultPhaseEnd
     }
 
     public init(from decoder: Decoder) throws {
@@ -205,6 +242,23 @@ public struct GameSession: Codable, Equatable, Sendable {
         score = try values.decodeIfPresent(Int.self, forKey: .score) ?? 0
         combo = try values.decodeIfPresent(Int.self, forKey: .combo) ?? 0
         status = try values.decodeIfPresent(GameStatus.self, forKey: .status) ?? .playing
+        if let savedPhase = try values.decodeIfPresent(Int.self, forKey: .resultPhase) {
+            guard savedPhase >= 0, savedPhase < Int.max else {
+                throw DecodingError.dataCorruptedError(forKey: .resultPhase, in: values,
+                                                      debugDescription: "Invalid result phase counter")
+            }
+            resultPhase = savedPhase
+            resultPhaseEnd = try values.decodeIfPresent(LevelEndResult.self, forKey: .resultPhaseEnd)
+        } else {
+            // Legacy terminal boards have no durable event fact to replay. Mark
+            // their existing result closed instead of fabricating a new event.
+            resultPhase = 0
+            switch status {
+            case .playing: resultPhaseEnd = nil
+            case .lost: resultPhaseEnd = .lose
+            case .won: resultPhaseEnd = .win
+            }
+        }
         hintsRemaining = try values.decodeIfPresent(Int.self, forKey: .hintsRemaining) ?? config.hintsPerLevel
         directRemaining = try values.decodeIfPresent(Int.self, forKey: .directRemaining) ?? config.directPerLevel
         elapsedSeconds = try values.decodeIfPresent(Double.self, forKey: .elapsedSeconds) ?? 0

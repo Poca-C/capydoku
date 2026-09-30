@@ -181,7 +181,10 @@ final class TutorialRecoveryTests: XCTestCase {
             let checkpoint = try XCTUnwrap(app.session)
             let checkpointStep = app.progress.tutorialStep
             app.home(); app.startOrContinue()
-            XCTAssertEqual(app.session, checkpoint)
+            var continued = checkpoint
+            XCTAssertNotNil(continued.claimResult(.quit))
+            XCTAssertTrue(continued.resumeAfterQuit())
+            XCTAssertEqual(app.session, continued, "Continuing only reopens result tracking; all tutorial board state remains identical.")
             XCTAssertEqual(app.progress.tutorialStep, checkpointStep)
             app = try restore(app, at: dir)
 

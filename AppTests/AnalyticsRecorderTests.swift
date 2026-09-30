@@ -108,4 +108,82 @@ final class AnalyticsRecorderTests: XCTestCase {
         XCTAssertEqual(restored.events.first?.eventTime, original.eventTime)
         XCTAssertEqual(restored.events.first?.userID, original.userID)
     }
+
+    @MainActor func testFailedCrashSessionSettlementStillStartsNewColdSessionAndRecoveryPreservesEvents() throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let identity = MemoryIdentity(), start = Date(timeIntervalSince1970: 1000)
+        let first = AnalyticsRecorder(directory: directory, identityStore: identity)
+        first.acceptConsent(at: start)
+        XCTAssertTrue(first.record("tutorial_start", key: "previous-activity", parameters: ["tutorial_id": "first"], at: start.addingTimeInterval(15)))
+        let previousID = try XCTUnwrap(first.events.last?.sessionID)
+
+        // Read the real saved active session, then make its directory unwritable
+        // by replacing the path with a regular file before crash settlement.
+        let current = AnalyticsRecorder(directory: directory, identityStore: identity)
+        try FileManager.default.removeItem(at: directory)
+        try Data("blocked-directory".utf8).write(to: directory)
+        let coldStart = start.addingTimeInterval(40)
+        current.acceptConsent(at: coldStart)
+        XCTAssertNotNil(current.lastError)
+        let ending = try XCTUnwrap(current.events.first { $0.eventName == "session_end" })
+        let newStart = try XCTUnwrap(current.events.last { $0.eventName == "session_start" })
+        XCTAssertEqual(ending.sessionID, previousID)
+        XCTAssertEqual(ending.eventTime, start.addingTimeInterval(15))
+        XCTAssertEqual(ending.parameters["duration_sec"], .integer(15))
+        XCTAssertEqual(ending.parameters["end_reason"], .text("quit"))
+        XCTAssertNotEqual(newStart.sessionID, previousID)
+        XCTAssertEqual(newStart.eventTime, coldStart)
+        XCTAssertEqual(newStart.parameters["entry_source"], .text("cold_start"))
+        XCTAssertFalse(current.record("tutorial_start", key: "new-activity", parameters: ["tutorial_id": "second"], at: coldStart.addingTimeInterval(2)))
+        let activity = try XCTUnwrap(current.events.last)
+        XCTAssertEqual(activity.sessionID, newStart.sessionID)
+
+        try FileManager.default.removeItem(at: directory)
+        current.acceptConsent(at: coldStart.addingTimeInterval(5)) // The existing enabled path retries writes.
+        current.beginSession(source: "resume", at: coldStart.addingTimeInterval(6))
+        XCTAssertNil(current.lastError)
+        XCTAssertEqual(current.events.filter { $0.eventName == "session_start" }.count, 2)
+        XCTAssertEqual(current.events.filter { $0.eventName == "session_end" }.count, 1)
+        let restored = AnalyticsRecorder(directory: directory, identityStore: identity)
+        for expected in [ending, newStart, activity] {
+            let actual = try XCTUnwrap(restored.events.first { $0.eventID == expected.eventID })
+            XCTAssertEqual(actual.eventTime, expected.eventTime)
+            XCTAssertEqual(actual.sessionID, expected.sessionID)
+            XCTAssertEqual(actual.userID, expected.userID)
+            XCTAssertEqual(actual.parameters, expected.parameters)
+        }
+        XCTAssertEqual(restored.events.filter { $0.eventName == "first_open" }.count, 1)
+    }
+
+    @MainActor func testFailedLongBackgroundSettlementDoesNotAttachResumeActivityToEndedSession() throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let identity = MemoryIdentity(), start = Date(timeIntervalSince1970: 1000)
+        let recorder = AnalyticsRecorder(directory: directory, identityStore: identity, sessionTimeout: 30)
+        recorder.acceptConsent(at: start)
+        let oldID = try XCTUnwrap(recorder.events.last?.sessionID)
+        recorder.endSession(reason: "background", at: start.addingTimeInterval(10))
+        try FileManager.default.removeItem(at: directory)
+        try Data("blocked-directory".utf8).write(to: directory)
+        recorder.beginSession(source: "resume", at: start.addingTimeInterval(60))
+        XCTAssertNotNil(recorder.lastError)
+        let ending = try XCTUnwrap(recorder.events.first { $0.eventName == "session_end" })
+        let resumed = try XCTUnwrap(recorder.events.last { $0.eventName == "session_start" })
+        XCTAssertEqual(ending.sessionID, oldID)
+        XCTAssertEqual(ending.eventTime, start.addingTimeInterval(10))
+        XCTAssertEqual(ending.parameters["duration_sec"], .integer(10))
+        XCTAssertEqual(resumed.eventTime, start.addingTimeInterval(60))
+        XCTAssertEqual(resumed.parameters["entry_source"], .text("resume"))
+        XCTAssertNotEqual(resumed.sessionID, oldID)
+        XCTAssertFalse(recorder.record("tutorial_start", key: "resumed-activity", parameters: ["tutorial_id": "second"], at: start.addingTimeInterval(61)))
+        XCTAssertEqual(recorder.events.last?.sessionID, resumed.sessionID)
+        try FileManager.default.removeItem(at: directory)
+        XCTAssertTrue(recorder.retryPendingWrites())
+        recorder.beginSession(source: "resume", at: start.addingTimeInterval(65))
+        XCTAssertEqual(recorder.events.filter { $0.eventName == "session_start" }.count, 2)
+        XCTAssertEqual(recorder.events.filter { $0.eventName == "session_end" }.count, 1)
+        let restored = AnalyticsRecorder(directory: directory, identityStore: identity)
+        XCTAssertEqual(restored.events.map(\.eventID), recorder.events.map(\.eventID))
+    }
 }

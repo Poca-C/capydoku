@@ -50,6 +50,9 @@ final class AppModelFeedbackRoutingTests: XCTestCase {
         for cell in puzzle.regions.indices.filter({ !puzzle.solution.contains($0) }).prefix(3) { app.submit(cell) }
         XCTAssertEqual(app.currentAudioEnvironment.overlay, .lost)
         app.revive()
+        XCTAssertFalse(app.currentAudioEnvironment.blocks.contains(.advertisement), "A presentation request is not an SDK display confirmation.")
+        try XCTUnwrap(provider.completion)(.started)
+        try? await Task.sleep(nanoseconds: 30_000_000)
         XCTAssertTrue(app.currentAudioEnvironment.blocks.contains(.advertisement))
         app.setActive(false)
         XCTAssertTrue(app.currentAudioEnvironment.blocks.contains(.background))

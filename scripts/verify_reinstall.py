@@ -10,6 +10,7 @@ device backups, App Store installation, or real-device behavior.
 
 import argparse
 import base64
+import copy
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -28,6 +29,7 @@ def main():
     parser.add_argument("--runtime", default="com.apple.CoreSimulator.SimRuntime.iOS-26-5")
     parser.add_argument("--device-type", default="com.apple.CoreSimulator.SimDeviceType.iPhone-17e")
     parser.add_argument("--output", type=Path, default=Path(__file__).resolve().parents[1] / "Validation/reinstall-audit.json")
+    parser.add_argument("--level", type=int, default=150, help="Packaged level used for the disposable saved-state fixture")
     args = parser.parse_args()
     app = args.app.resolve()
     report = {
@@ -39,14 +41,16 @@ def main():
     }
     if args.output.exists():
         previous = json.loads(args.output.read_text())
+        history = previous.get("previousFailedAttempts", [])
+        if previous.get("previousFailedAttempt"):
+            history.append(previous["previousFailedAttempt"])
         if previous.get("status") == "failed":
-            history = previous.get("previousFailedAttempts", [])
-            if previous.get("previousFailedAttempt"):
-                history.append(previous["previousFailedAttempt"])
             history.append({key: previous.get(key) for key in
                             ("startedAt", "status", "error", "temporaryDevice", "cleanup")})
+        if history:
             report["previousFailedAttempts"] = history[-5:]
     device = None
+    catalog = {}
 
     def command(*parts, check=True, timeout=60, record_output=True):
         arguments = ["xcrun", "simctl", *map(str, parts)]
@@ -81,14 +85,21 @@ def main():
 
     def summary(progress):
         session = progress.get("session")
-        return {"currentLevel": progress["currentLevel"], "unlockedLevel": progress["unlockedLevel"],
+        reference = session.get("puzzleReference") if session else None
+        level = reference.get("levelID") if reference else session.get("puzzle", {}).get("id") if session else None
+        # Reports are immutable observations. Later fixture injection must not
+        # mutate the settings/attempt dictionaries captured before the injection.
+        return copy.deepcopy({"currentLevel": progress["currentLevel"], "unlockedLevel": progress["unlockedLevel"],
                 "tutorialCompleted": progress["tutorialCompleted"], "bonusHints": progress["bonusHints"],
-                "bonusDirect": progress["bonusDirect"], "completedLevels": progress["completedLevels"],
+                "bonusDirect": progress["bonusDirect"], "completedLevels": sorted(progress["completedLevels"]),
                 "checkIn": progress["checkIn"],
                 "rewardCount": len(progress["rewardLedger"]), "hasSession": session is not None,
                 "sessionID": session.get("id") if session else None,
-                "sessionLevel": session["puzzle"]["id"] if session else None,
-                "boardSize": session["puzzle"]["size"] if session else None}
+                "sessionLevel": level, "boardSizeFromInstalledPack": catalog.get(level, {}).get("size"),
+                "puzzleReference": reference, "containsBoardPayload": "puzzle" in session if session else False,
+                "settings": progress["settings"], "attemptCounts": progress["attemptCounts"],
+                "sessionState": {key: sorted(session[key]) if key in ("found", "marks", "errors") else session[key]
+                                 for key in ("found", "marks", "errors", "lives", "score", "hasRevived")} if session else None})
 
     try:
         with (app / "Info.plist").open("rb") as stream:
@@ -103,6 +114,12 @@ def main():
             shutil.copytree(app, frozen_app, symlinks=True)
             executable = frozen_app / info["CFBundleExecutable"]
             report["executableSHA256"] = hashlib.sha256(executable.read_bytes()).hexdigest()
+            # Derive board metadata from this exact installation. The player save
+            # now contains a checked reference, never the board or its solution.
+            pack_bytes = (frozen_app / "levels.json").read_bytes()
+            catalog = {row["id"]: row for row in json.loads(pack_bytes)}
+            assert args.level in catalog and 1 <= args.level <= 150, "Choose an installed packaged level"
+            report["installedPackSHA256"] = hashlib.sha256(pack_bytes).hexdigest()
             name = f"Capydoku-Reinstall-Audit-{uuid.uuid4().hex[:8]}"
             device = command("create", name, args.device_type, args.runtime).stdout.strip()
             uuid.UUID(device)  # Refuse to continue unless simctl returned an actual device ID.
@@ -121,12 +138,14 @@ def main():
             command("install", device, frozen_app)
             original_container = Path(command("get_app_container", device, bundle, "data").stdout.strip())
             original_save = original_container / "Library/Application Support/CapydokuUITesting/progress.json"
-            command("launch", device, bundle, "-ui-testing", "-skip-tutorial", "-level", "150")
+            command("launch", device, bundle, "-ui-testing", "-skip-tutorial", "-level", str(args.level))
             wait_for_file(original_save)
             command("terminate", device, bundle)
             before = read_progress(original_save)
-            assert before["currentLevel"] == 150 and before["session"]["puzzle"]["id"] == 150
-            assert before["session"]["puzzle"]["size"] == 10
+            reference = before["session"]["puzzleReference"]
+            assert before["currentLevel"] == args.level and reference["levelID"] == args.level
+            assert reference["source"] == "bundle" and len(reference["checksum"]) == 64
+            assert "puzzle" not in before["session"], "Player state must not embed packaged board data"
             report["originalLevelSave"] = {"progress": summary(before), "checksumValid": True}
             # Fixture injection is restricted to this disposable app container. It proves
             # cleanup of non-empty data; it is not evidence that the Check-in button works.
@@ -135,6 +154,22 @@ def main():
             before["bonusHints"] = 7
             before["bonusDirect"] = 4
             before["checkIn"] = fixture_check_in
+            before["completedLevels"] = [1, 2, 3]
+            before["unlockedLevel"] = max(args.level, 4)
+            before["attemptCounts"][str(args.level)] = 2
+            before["session"]["attempt"] = 2
+            before["settings"].update({"musicEnabled": False, "soundEnabled": False, "voiceEnabled": False, "hapticsEnabled": False})
+            board = catalog[args.level]
+            found = board["solution"][0]
+            wrong = next(index for index in range(board["size"] ** 2) if index not in board["solution"])
+            before["session"].update({"found": [found], "marks": [wrong], "errors": [wrong],
+                "lives": before["session"]["config"]["initialLives"] - 1,
+                "score": before["session"]["config"]["baseScore"], "combo": 0, "hasRevived": True})
+            before["rewardLedger"]["reinstall-fixture-receipt"] = {
+                "id": "reinstall-fixture-receipt", "kind": "hint", "state": "executed",
+                "sessionID": before["session"]["id"], "createdAt": time.time() - 978307200,
+            }
+            expected_state = summary(before)
             envelope = json.loads(original_save.read_text())
             fixture_payload = json.dumps(before, sort_keys=True, separators=(",", ":")).encode()
             envelope["payload"] = base64.b64encode(fixture_payload).decode()
@@ -146,7 +181,7 @@ def main():
             report["fixture"] = {"method": "Injected checksum-valid test state while app was terminated",
                                  "scope": "Only the newly created simulator's app container",
                                  "bonusHints": 7, "bonusDirect": 4, "checkIn": fixture_check_in,
-                                 "notClaimedByThisTest": "Actual check-in button behavior"}
+                                 "notClaimedByThisTest": "Actual check-in, settings, solve or reward button behavior"}
             command("launch", device, bundle, "-ui-testing")
             time.sleep(2)
             command("launch", device, "com.apple.Preferences")
@@ -157,7 +192,9 @@ def main():
             assert "fixtureAuditMarker" not in json.loads(original_save.read_text()), "App did not rewrite the loaded fixture"
             command("terminate", device, bundle)
             before = read_progress(original_save)
-            assert before["currentLevel"] == 150 and before["session"]["puzzle"]["id"] == 150
+            report["fixtureReloadComparison"] = {"expected": expected_state, "actual": summary(before)}
+            assert summary(before) == expected_state, "Cold restore/background changed persisted fixture state"
+            assert before["currentLevel"] == args.level and before["session"]["puzzleReference"] == reference
             assert before["bonusHints"] == 7 and before["bonusDirect"] == 4
             assert before["checkIn"] == fixture_check_in
             report["fixture"]["appReloadAndBackgroundPersistenceConfirmed"] = True
@@ -189,6 +226,8 @@ def main():
             assert after["checkIn"]["streak"] == 0 and after["checkIn"]["cycleDay"] == 0
             assert after["checkIn"]["completedCycles"] == 0
             assert after["rewardLedger"] == {}, "Reward ledger survived reinstall"
+            assert after["attemptCounts"] == {}, "Attempts survived reinstall"
+            assert all(after["settings"][key] for key in ("musicEnabled", "soundEnabled", "voiceEnabled", "hapticsEnabled")), "Settings did not return to this build's explicit Demo defaults"
             report["afterReinstall"] = {"progress": summary(after), "saveBytes": new_save.stat().st_size,
                                         "checksumValid": True, "initialProgressConfirmed": True}
             report["status"] = "passed"

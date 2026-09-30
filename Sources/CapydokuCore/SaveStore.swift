@@ -169,13 +169,20 @@ public final class SaveStore: @unchecked Sendable {
     }
 
     @discardableResult
-    public func grantReward(offerID: String, progress: inout PlayerProgress) throws -> RewardOutcome {
+    public func grantReward(offerID: String, progress: inout PlayerProgress,
+                            finalize: ((inout PlayerProgress, RewardOutcome) -> Void)? = nil) throws -> RewardOutcome {
         lock.lock(); defer { lock.unlock() }
         guard let record = progress.rewardLedger[offerID] else { throw SaveStoreError.missingOffer }
         if record.state == .executed || record.state == .compensated { return .duplicate }
         guard record.state == .offered || record.state == .rewarded else { return .ignored }
         if record.state == .offered { _ = try markRewardReceived(offerID: offerID, progress: &progress) }
-        return try transaction(progress: &progress) { candidate in candidate.executeReward(offerID: offerID) }
+        return try transaction(progress: &progress) { candidate in
+            let outcome = candidate.executeReward(offerID: offerID)
+            // A reward can finish a level. Its completion and pending business
+            // event must commit with the effect, not in a second vulnerable save.
+            finalize?(&candidate, outcome)
+            return outcome
+        }
     }
 
     @discardableResult
@@ -274,6 +281,7 @@ public final class SaveStore: @unchecked Sendable {
               counter(progress.carriedToolBalance.hints), counter(progress.carriedToolBalance.direct),
               progress.referenceToolGrantKeys.allSatisfy({ !$0.isEmpty }),
               progress.freeReviveUsage.allSatisfy({ !$0.key.isEmpty && counter($0.value) }),
+              progress.pendingLevelResultEvents.allSatisfy({ UUID(uuidString: $0.key) != nil && !$0.value.isEmpty && $0.value.count <= 32_768 }),
               progress.levelStartLocalBalances.allSatisfy({ Int($0.key).map(positive) == true && counter($0.value.hints) && counter($0.value.direct) }),
               counter(progress.checkIn.streak), counter(progress.checkIn.cycleDay),
               counter(progress.checkIn.completedCycles),
@@ -325,6 +333,7 @@ public final class SaveStore: @unchecked Sendable {
               session.lives >= 0, session.lives <= session.config.initialLives,
               counter(session.hintsRemaining), counter(session.directRemaining),
               counter(session.score), (0...session.found.count).contains(session.combo), positive(session.attempt),
+              counter(session.resultPhase),
               session.elapsedSeconds.isFinite, session.elapsedSeconds >= 0,
               session.elapsedSeconds < Double(Int.max / 4),
               session.config.initialLives > 0, session.config.checkInCycleDays > 0 else {

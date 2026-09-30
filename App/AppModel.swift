@@ -56,7 +56,8 @@ final class AppModel: ObservableObject {
     private let rewardProvider: RewardProvider?
     private var activeRewardProvider: RewardProvider?
     private var rewardIsReady = false
-    private var rewardWasPresented = false
+    // Coalesces presentation requests; only .started confirms actual visibility.
+    private var rewardPresentationRequested = false
     private var rewardDisplayActive = false
     private var rewardWasReplenished = false
     private var startupFlowCompleted = false
@@ -215,12 +216,13 @@ final class AppModel: ObservableObject {
         let loaded = store.load()
         rewardDisplayActive = false
         hint = nil; activeOfferID = nil; rewardBusy = false
-        activeRewardProvider = nil; rewardIsReady = false; rewardWasPresented = false; rewardWasReplenished = false
+        activeRewardProvider = nil; rewardIsReady = false; rewardPresentationRequested = false; rewardWasReplenished = false
         rewardRetryPending = false; pendingRewardSignal = nil
         deferredRewardHintSessionID = nil
         if sheet == .reward { sheet = nil }
         notice = nil; errorMessage = nil
         progress = loaded.progress
+        deliverSavedLevelResults(progress.pendingLevelResultEvents)
         syncFeedbackState()
         applySettings()
         if progress.session == nil { screen = .home }
@@ -237,11 +239,17 @@ final class AppModel: ObservableObject {
         saveRevision += 1; let revision = saveRevision
         let store = store
         if force || synchronousSaves {
-            do { try saveQueue.sync { try store.save(snapshot) } }
+            do {
+                try saveQueue.sync { try store.save(snapshot) }
+                deliverSavedLevelResults(snapshot.pendingLevelResultEvents)
+            }
             catch { errorMessage = "Progress could not be saved: \(error.localizedDescription)" }
         } else {
             saveQueue.async { [weak self] in
-                do { try store.save(snapshot) }
+                do {
+                    try store.save(snapshot)
+                    DispatchQueue.main.async { self?.deliverSavedLevelResults(snapshot.pendingLevelResultEvents) }
+                }
                 catch {
                     let message = "Progress could not be saved: \(error.localizedDescription)"
                     DispatchQueue.main.async { if self?.saveRevision == revision { self?.errorMessage = message } }
@@ -251,8 +259,30 @@ final class AppModel: ObservableObject {
     }
     func flushPendingSaves() { saveQueue.sync {} }
 
+    private func deliverSavedLevelResults(_ saved: [String: Data]) {
+        guard analytics.enabled else { return }
+        var acknowledged = false
+        let records = saved.compactMap { id, data -> (String, Data, AnalyticsRecorder.PreparedEvent)? in
+            guard let event = try? JSONDecoder().decode(AnalyticsRecorder.PreparedEvent.self, from: data) else { return nil }
+            return (id, data, event)
+        }.sorted { $0.2.event.eventTime == $1.2.event.eventTime ? $0.0 < $1.0 : $0.2.event.eventTime < $1.2.event.eventTime }
+        for (id, data, prepared) in records {
+            guard progress.pendingLevelResultEvents[id] == data,
+                  prepared.event.eventID == id, prepared.event.eventName == "level_end",
+                  analytics.commit(prepared) else { continue }
+            progress.pendingLevelResultEvents.removeValue(forKey: id)
+            acknowledged = true
+        }
+        // The queue is already durable. A crash before this acknowledgement is
+        // saved merely re-delivers the original event through the same dedup key.
+        if acknowledged { save() }
+    }
+
     func startOrContinue() {
-        if session != nil { screen = .game; trackLevelStart(); preloadRewardPlacementsIfNeeded() }
+        if session != nil {
+            if progress.session?.resumeAfterQuit() == true { save() }
+            screen = .game; trackLevelStart(); preloadRewardPlacementsIfNeeded()
+        }
         else { start(level: progress.currentLevel) }
     }
 
@@ -303,8 +333,9 @@ final class AppModel: ObservableObject {
     }
 
     func home() {
+        guard screen == .game else { hint = nil; screen = .home; return }
         if session?.status == .won { transitionAfterWin(toHome: true); return }
-        trackLevelEnd("quit"); trackTutorialEnd("quit"); hint = nil; screen = .home; save()
+        trackLevelEnd(.quit); trackTutorialEnd("quit"); hint = nil; screen = .home; save()
     }
     func next() { transitionAfterWin(toHome: false) }
     private func transitionAfterWin(toHome: Bool) {
@@ -447,7 +478,7 @@ final class AppModel: ObservableObject {
             playRevealFeedback()
             if tutorial != nil { advanceTutorial() }
             afterAction()
-        case .incorrect: feedback.play(.wrong); if session?.status == .lost { trackLevelEnd("lose") }; save()
+        case .incorrect: feedback.play(.wrong); if session?.status == .lost { trackLevelEnd(.lose) }; save()
         default: break
         }
     }
@@ -456,7 +487,7 @@ final class AppModel: ObservableObject {
         if let count = session?.combo { feedback.play(.combo(count), acceptedIn: context) }
     }
     private func afterAction() {
-        if progress.finishWin() { feedback.play(.win); trackLevelEnd("win") }
+        if progress.finishWin() { feedback.play(.win); trackLevelEnd(.win) }
         save()
     }
     func direct() {
@@ -524,7 +555,7 @@ final class AppModel: ObservableObject {
             activeOfferID = offerID
             let provider = rewardProvider ?? MockRewardProvider(scenario: rewardScenario)
             activeRewardProvider = provider
-            rewardIsReady = false; rewardWasPresented = false; rewardWasReplenished = false
+            rewardIsReady = false; rewardPresentationRequested = false; rewardWasReplenished = false
             let placement = rewardKind == .direct ? "direct_find" : rewardKind == .levelStartFree ? "level_start_free" : rewardKind.rawValue
             let rewardType = rewardKind == .levelStartFree ? (session?.config.referenceGameplay?.levelStartFreeAd.reward.rawValue ?? "") : placement
             track("ad_offer_shown", key: offerID, parameters: ["offer_id": offerID, "placement_id": placement, "reward_type": rewardType, "buff_type": rewardKind == .revive ? "" : rewardType, "reward_amount": "\(rewardKind == .levelStartFree ? (session?.config.referenceGameplay?.levelStartFreeAd.rewardCount ?? 0) : 1)", "ad_type": "rewarded", "network": "simulation", "ad_unit_id": "internal-demo"])
@@ -542,7 +573,7 @@ final class AppModel: ObservableObject {
     }
 
     private func receiveReadiness(_ readiness: RewardReadiness, offerID: String) {
-        guard activeOfferID == offerID, rewardBusy, !rewardWasPresented, pendingRewardSignal == nil,
+        guard activeOfferID == offerID, rewardBusy, !rewardPresentationRequested, pendingRewardSignal == nil,
               progress.rewardLedger[offerID]?.state == .offered else { return }
         switch readiness {
         case .unavailable: receive(.failed, offerID: offerID)
@@ -556,11 +587,9 @@ final class AppModel: ObservableObject {
     }
     private func displayReadyReward(offerID: String) {
         guard startupFlowCompleted, active, sheet == .reward, activeOfferID == offerID,
-              rewardBusy, rewardIsReady, !rewardWasPresented, pendingRewardSignal == nil,
+              rewardBusy, rewardIsReady, !rewardPresentationRequested, pendingRewardSignal == nil,
               let provider = activeRewardProvider else { return }
-        rewardWasPresented = true
-        rewardDisplayActive = true; syncFeedbackState()
-        trackAdResult(offerID, status: "started", granted: false)
+        rewardPresentationRequested = true
         provider.present(placement: rewardKind, offerID: offerID) { [weak self] signal in
             DispatchQueue.main.async { self?.receive(signal, offerID: offerID) }
         }
@@ -576,6 +605,14 @@ final class AppModel: ObservableObject {
         guard let record = progress.rewardLedger[offerID], record.state == .offered || record.state == .rewarded else { return }
         guard activeOfferID == offerID else { return }
         guard rewardBusy else { return } // A failed write retains the first result for explicit retry.
+        if signal == .started {
+            guard rewardPresentationRequested, pendingRewardSignal == nil, record.state == .offered,
+                  !rewardDisplayActive else { return }
+            rewardDisplayActive = true
+            syncFeedbackState()
+            trackAdResult(offerID, status: "started", granted: false)
+            return
+        }
         // The adapter delivers a final display outcome. Receipt persistence may still
         // need retry, but the video itself no longer owns the audio session.
         rewardDisplayActive = false
@@ -586,8 +623,11 @@ final class AppModel: ObservableObject {
         flushPendingSaves()
         do {
             switch signal {
+            case .started: return // Nonterminal presentation signals are handled above.
             case .earned:
-                let result = try store.grantReward(offerID: offerID, progress: &progress)
+                let result = try store.grantReward(offerID: offerID, progress: &progress) { candidate, outcome in
+                    self.finalizeRewardResult(outcome, in: &candidate)
+                }
                 trackAdResult(offerID, status: "completed", granted: result != .ignored && result != .duplicate)
                 sheet = nil
                 switch result {
@@ -705,7 +745,10 @@ final class AppModel: ObservableObject {
             refreshGameplayConfiguration()
         }
     }
-    func consentAccepted() { analytics.acceptConsent() }
+    func consentAccepted() {
+        analytics.acceptConsent()
+        if !progress.pendingLevelResultEvents.isEmpty { save(force: true) }
+    }
     /// Called only after the startup view reaches Home, including optional permission completion.
     /// This permits local adapter use; it does not claim a real SDK/CMP has been initialized.
     func startupReady() {
@@ -740,9 +783,21 @@ final class AppModel: ObservableObject {
         track("level_start", key: s.id.uuidString, parameters: ["attempt_no": "\(s.attempt)", "grid_size": "\(s.puzzle.size)x\(s.puzzle.size)", "is_tutorial": "\(tutorial != nil)", "direct_find_visible": "\(directVisible)", "direct_find_inventory": "\(progress.availableDirect)", "hint_inventory": "\(progress.availableHints)", "level_start_free_available": "\(levelStartFreeAvailable)"])
         if tutorial != nil { track("tutorial_start", key: s.id.uuidString, parameters: ["tutorial_id": "level-1-dynamic"]) }
     }
-    private func trackLevelEnd(_ result: String) {
-        guard let s = session, result != "quit" || s.status == .playing else { return }
-        track("level_end", key: s.id.uuidString, parameters: ["result": result, "duration_sec": "\(Int(s.elapsedSeconds))", "attempt_no": "\(s.attempt)", "fail_reason": result == "lose" ? "life_zero" : result == "quit" ? "quit" : "", "life_remaining": "\(s.lives)"])
+    private func trackLevelEnd(_ result: LevelEndResult) {
+        stageLevelEnd(result, in: &progress)
+    }
+    func finalizeRewardResult(_ result: RewardOutcome, in candidate: inout PlayerProgress) {
+        guard case .directRevealed = result, candidate.finishWin() else { return }
+        stageLevelEnd(.win, in: &candidate)
+    }
+    private func stageLevelEnd(_ result: LevelEndResult, in candidate: inout PlayerProgress) {
+        guard let key = candidate.session?.claimResult(result), let s = candidate.session else { return }
+        guard let prepared = analytics.prepare("level_end", key: key, level: s.puzzle.id, config: s.config.version,
+            parameters: ["result": result.rawValue, "duration_sec": "\(Int(s.elapsedSeconds))", "attempt_no": "\(s.attempt)", "fail_reason": result == .lose ? "life_zero" : result == .quit ? "quit" : "", "life_remaining": "\(s.lives)"]),
+              let data = try? JSONEncoder().encode(prepared) else { return }
+        // Written atomically with the resulting board state by the caller's save.
+        // Disabled analytics never generates a retroactive pre-consent event.
+        candidate.pendingLevelResultEvents[prepared.event.eventID] = data
     }
     private func trackTutorialEnd(_ result: String) {
         guard tutorial != nil, let s = session else { return }

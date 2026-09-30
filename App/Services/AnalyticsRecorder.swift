@@ -74,6 +74,12 @@ final class AnalyticsRecorder {
             case levelID = "level_id", pawdokuConfigVersion = "pawdoku_config_version", parameters
         }
     }
+    /// Frozen with the gameplay save before delivery. Recovery must retain the
+    /// original event, user, analytics session and occurrence time.
+    struct PreparedEvent: Codable {
+        let key: String
+        let event: Event
+    }
     private struct Cache: Codable {
         var events: [Event] = []
         var keys: Set<String> = []
@@ -165,27 +171,49 @@ final class AnalyticsRecorder {
     }
     private func finishSession(reason: String, at date: Date) -> Bool {
         guard let current = cache.activeSession else { return true }
-        guard record("session_end", key: current.id,
-                     parameters: ["duration_sec": "\(current.duration(at: date))", "end_reason": reason], at: date) else { return false }
+        _ = record("session_end", key: current.id,
+                   parameters: ["duration_sec": "\(current.duration(at: date))", "end_reason": reason], at: date)
+        // record returns false both for rejected events and for accepted events
+        // awaiting a disk retry. Only rejection should block the lifecycle: once
+        // the old end is queued, new events must belong to a new session even if
+        // storage is temporarily unavailable. The original queued IDs and times
+        // are retained and committed together when writing succeeds again.
+        guard cache.keys.contains("session_end:" + current.id) else { return false }
         cache.activeSession = nil; hasPendingWrite = true
-        return retryPendingWrites()
+        _ = retryPendingWrites()
+        return true
     }
     @discardableResult
     func record(_ name: String, key: String, level: Int? = nil, config: String? = nil,
                 parameters: [String: String], at date: Date = Date()) -> Bool {
-        guard enabled, Self.supported.contains(name), !key.isEmpty, let identity, let session = cache.activeSession else { return false }
+        guard let prepared = prepare(name, key: key, level: level, config: config, parameters: parameters, at: date) else { return false }
+        return commit(prepared)
+    }
+
+    func prepare(_ name: String, key: String, level: Int? = nil, config: String? = nil,
+                 parameters: [String: String], at date: Date = Date()) -> PreparedEvent? {
+        guard enabled, Self.supported.contains(name), !key.isEmpty, let identity, let session = cache.activeSession else { return nil }
         let levelEvent = ["level_start", "level_end", "level_restart", "ad_offer_shown", "ad_result", "buff_use"].contains(name)
         guard !levelEvent || ((level ?? 0) > 0 && !(config ?? "").isEmpty),
-              let typed = Self.validateParameters(name: name, parameters: parameters) else { lastError = "Event contract rejected \(name)."; return false }
+              let typed = Self.validateParameters(name: name, parameters: parameters) else { lastError = "Event contract rejected \(name)."; return nil }
         let eventKey = name + ":" + key
-        if cache.keys.contains(eventKey) { return retryPendingWrites() }
         let event = Event(eventID: UUID().uuidString, eventName: name, eventTime: date, userID: identity.userID,
                           sessionID: session.id, platform: "iOS",
                           appVersion: Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "internal",
                           country: Locale.current.regionCode ?? "ZZ", installDate: identity.installDate,
                           environment: "internal-demo-offline", levelID: level, pawdokuConfigVersion: config, parameters: typed)
-        cache.events.append(event); cache.keys.insert(eventKey)
-        cache.activeSession?.lastActiveAt = max(date, session.lastActiveAt)
+        return PreparedEvent(key: eventKey, event: event)
+    }
+
+    /// True only once the event is durably queued, including an already queued
+    /// duplicate. A failed write must not acknowledge the gameplay outbox.
+    @discardableResult func commit(_ prepared: PreparedEvent) -> Bool {
+        guard enabled, let identity, identity.userID == prepared.event.userID else { return false }
+        if cache.keys.contains(prepared.key) { return retryPendingWrites() }
+        cache.events.append(prepared.event); cache.keys.insert(prepared.key)
+        if let current = cache.activeSession, current.id == prepared.event.sessionID {
+            cache.activeSession?.lastActiveAt = max(prepared.event.eventTime, current.lastActiveAt)
+        }
         hasPendingWrite = true
         return retryPendingWrites()
     }
