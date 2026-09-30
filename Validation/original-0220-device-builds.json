@@ -1,0 +1,22 @@
+{
+  "build": "0.2.20 (23)",
+  "scope": "Generic iOS compile only, unsigned, not a device installation or distributable archive.",
+  "rows": [
+    {
+      "configuration": "Release",
+      "buildExitCode": 0,
+      "environment": "internal_demo",
+      "bundleIdentifier": "com.capydoku.demo",
+      "log": "Validation/test-runs/original-0220-release-device.log",
+      "signed": false
+    },
+    {
+      "configuration": "Production",
+      "buildExitCode": 0,
+      "environment": "production",
+      "bundleIdentifier": "com.capydoku.demo.production",
+      "log": "Validation/test-runs/original-0220-production-device.log",
+      "signed": false
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "scope": "Resolved Xcode settings and shared schemes only; no build, signing, installation or external service connection.",
+  "status": "passed",
+  "placeholderPublisherIdentities": true,
+  "analyticsTransport": "local-only",
+  "remoteConfigurationEnabled": false,
+  "rows": [
+    {
+      "configuration": "Debug",
+      "scheme": "Capydoku",
+      "settings": {
+        "PRODUCT_BUNDLE_IDENTIFIER": "com.capydoku.demo",
+        "CAPYDOKU_APP_BUNDLE_IDENTIFIER": "com.capydoku.demo",
+        "CAPYDOKU_APP_DISPLAY_NAME": "Capydoku",
+        "CAPYDOKU_ENVIRONMENT": "internal_demo",
+        "CAPYDOKU_REMOTE_CONFIGURATION_ENVIRONMENT": "internal_demo",
+        "CAPYDOKU_REMOTE_CONFIGURATION_ENABLED": "NO",
+        "CAPYDOKU_REMOTE_CONFIGURATION_URL": "",
+        "CAPYDOKU_ANALYTICS_ENABLED": "YES",
+        "MARKETING_VERSION": "0.2.20",
+        "CURRENT_PROJECT_VERSION": "23",
+        "SWIFT_OPTIMIZATION_LEVEL": "-Onone"
+      },
+      "swiftActiveCompilationConditions": [
+        "DEBUG"
+      ]
+    },
+    {
+      "configuration": "Release",
+      "scheme": "Capydoku",
+      "settings": {
+        "PRODUCT_BUNDLE_IDENTIFIER": "com.capydoku.demo",
+        "CAPYDOKU_APP_BUNDLE_IDENTIFIER": "com.capydoku.demo",
+        "CAPYDOKU_APP_DISPLAY_NAME": "Capydoku",
+        "CAPYDOKU_ENVIRONMENT": "internal_demo",
+        "CAPYDOKU_REMOTE_CONFIGURATION_ENVIRONMENT": "internal_demo",
+        "CAPYDOKU_REMOTE_CONFIGURATION_ENABLED": "NO",
+        "CAPYDOKU_REMOTE_CONFIGURATION_URL": "",
+        "CAPYDOKU_ANALYTICS_ENABLED": "YES",
+        "MARKETING_VERSION": "0.2.20",
+        "CURRENT_PROJECT_VERSION": "23",
+        "SWIFT_OPTIMIZATION_LEVEL": "-O"
+      },
+      "swiftActiveCompilationConditions": []
+    },
+    {
+      "configuration": "TestFlight",
+      "scheme": "Capydoku-TestFlight",
+      "settings": {
+        "PRODUCT_BUNDLE_IDENTIFIER": "com.capydoku.demo.testing",
+        "CAPYDOKU_APP_BUNDLE_IDENTIFIER": "com.capydoku.demo.testing",
+        "CAPYDOKU_APP_DISPLAY_NAME": "Capydoku 测试",
+        "CAPYDOKU_ENVIRONMENT": "testing",
+        "CAPYDOKU_REMOTE_CONFIGURATION_ENVIRONMENT": "testing",
+        "CAPYDOKU_REMOTE_CONFIGURATION_ENABLED": "NO",
+        "CAPYDOKU_REMOTE_CONFIGURATION_URL": "",
+        "CAPYDOKU_ANALYTICS_ENABLED": "YES",
+        "MARKETING_VERSION": "0.2.20",
+        "CURRENT_PROJECT_VERSION": "23",
+        "SWIFT_OPTIMIZATION_LEVEL": "-O"
+      },
+      "swiftActiveCompilationConditions": []
+    },
+    {
+      "configuration": "Staging",
+      "scheme": "Capydoku-Staging",
+      "settings": {
+        "PRODUCT_BUNDLE_IDENTIFIER": "com.capydoku.demo.staging",
+        "CAPYDOKU_APP_BUNDLE_IDENTIFIER": "com.capydoku.demo.staging",
+        "CAPYDOKU_APP_DISPLAY_NAME": "Capydoku 预发布",
+        "CAPYDOKU_ENVIRONMENT": "staging",
+        "CAPYDOKU_REMOTE_CONFIGURATION_ENVIRONMENT": "staging",
+        "CAPYDOKU_REMOTE_CONFIGURATION_ENABLED": "NO",
+        "CAPYDOKU_REMOTE_CONFIGURATION_URL": "",
+        "CAPYDOKU_ANALYTICS_ENABLED": "YES",
+        "MARKETING_VERSION": "0.2.20",
+        "CURRENT_PROJECT_VERSION": "23",
+        "SWIFT_OPTIMIZATION_LEVEL": "-O"
+      },
+      "swiftActiveCompilationConditions": []
+    },
+    {
+      "configuration": "Production",
+      "scheme": "Capydoku-Production",
+      "settings": {
+        "PRODUCT_BUNDLE_IDENTIFIER": "com.capydoku.demo.production",
+        "CAPYDOKU_APP_BUNDLE_IDENTIFIER": "com.capydoku.demo.production",
+        "CAPYDOKU_APP_DISPLAY_NAME": "Capydoku 正式候选",
+        "CAPYDOKU_ENVIRONMENT": "production",
+        "CAPYDOKU_REMOTE_CONFIGURATION_ENVIRONMENT": "production",
+        "CAPYDOKU_REMOTE_CONFIGURATION_ENABLED": "NO",
+        "CAPYDOKU_REMOTE_CONFIGURATION_URL": "",
+        "CAPYDOKU_ANALYTICS_ENABLED": "YES",
+        "MARKETING_VERSION": "0.2.20",
+        "CURRENT_PROJECT_VERSION": "23",
+        "SWIFT_OPTIMIZATION_LEVEL": "-O"
+      },
+      "swiftActiveCompilationConditions": []
+    }
+  ],
+  "sourceSHA256": {
+    "App/Info.plist": "fa19e2cb72da9a9272330c43abf154ec40763dbc2bd97ed93de1d628da7f85d3",
+    "scripts/generate_project.py": "6648cd1807f25e15c3b269038dc1c79d65f0295eaaf2cc24e0560606b954ef32",
+    "Configurations/Common.xcconfig": "9f474dbc87962bc5d17a1dad610c65c1fa2e316a536bf763373e8a3350471100",
+    "Configurations/InternalDemo.xcconfig": "b72375cd6b2c8382af4e374b07de98386c2ac85e6d23b23d93e1e4080ccbe38b",
+    "Configurations/Production.xcconfig": "a9ab4bc97535734524bec25c834deffde315d114296689cdf0056db17ff079b6",
+    "Configurations/Staging.xcconfig": "43cf9627a98ab9b79c2ed35edfda5f449d89118d593fdd6e857b7dc532b5e46d",
+    "Configurations/Testing.xcconfig": "22493ff8677a1bd8dc338b6eaa7bc35d2f53dd5499c792ccf23628ae8d4bcb05",
+    "Capydoku.xcodeproj/xcshareddata/xcschemes/Capydoku-Production.xcscheme": "441c4865dcade2ece1456dcd7531ddd02f726d536587c4938316bd448d8aae10",
+    "Capydoku.xcodeproj/xcshareddata/xcschemes/Capydoku-Staging.xcscheme": "e68678e173ac6208fe427cb8154c4c024cabe7d14b5c8e9cca7545e503f3d2ee",
+    "Capydoku.xcodeproj/xcshareddata/xcschemes/Capydoku-TestFlight.xcscheme": "b1d44a5c9412fd988a475f470f62f652feafa41cc9ea69b44a3e4fac0faf709b",
+    "Capydoku.xcodeproj/xcshareddata/xcschemes/Capydoku.xcscheme": "1881ad7059f90de29c4411cbbf665ce999a54303ddf618f7829861f559292d21"
+  }
+}

@@ -67,15 +67,14 @@ private enum LocalAnalyticsIdentity {
         }
     }
     static let legacyPrefix = "com.capydoku.demo.analytics.internal."
-    static let prefix = "com.capydoku.demo.analytics.namespace."
     static func legacyService(directory: URL) -> String {
         let hash = SHA256.hash(data: Data(directory.standardizedFileURL.path.utf8)).prefix(12).map { String(format: "%02x", $0) }.joined()
         return legacyPrefix + hash
     }
     static func resolve(directory: URL, expected: AnalyticsIdentity?, hasPreviousQueue: Bool,
-                        at date: Date) throws -> (KeychainAnalyticsIdentityStore, AnalyticsIdentity) {
+                        at date: Date, configuration: AppBuildConfiguration) throws -> (KeychainAnalyticsIdentityStore, AnalyticsIdentity) {
         var namespace = try readNamespace(directory: directory)
-        let store = KeychainAnalyticsIdentityStore(service: prefix + namespace.id.uuidString)
+        let store = KeychainAnalyticsIdentityStore(service: configuration.identityServicePrefix + namespace.id.uuidString)
         var identity = try store.checkedLoad()
         if let current = identity, let expected,
            (current.userID != expected.userID || current.installDate != expected.installDate) {
@@ -86,8 +85,10 @@ private enum LocalAnalyticsIdentity {
             // both Keychain and queue ownership are lost, neither an old path
             // alias nor a fresh ID can prove continuity.
             guard namespace.phase == .pending || expected != nil else { throw Error.identityUnavailable }
-            let legacy = try KeychainAnalyticsIdentityStore(service: legacyService(directory: directory)).checkedLoad()
+            let legacy = configuration.permitsLegacyDemoIdentity
+                ? try KeychainAnalyticsIdentityStore(service: legacyService(directory: directory)).checkedLoad() : nil
             if let expected {
+                guard configuration.permitsLegacyDemoIdentity else { throw Error.identityUnavailable }
                 // Search only this app's old namespace, and only for the saved
                 // current session's owner. Other test/install identities cannot match.
                 var candidates = try legacyIdentities(matching: expected.userID)
@@ -233,6 +234,7 @@ final class AnalyticsRecorder {
     private let url: URL
     private var identityStore: AnalyticsIdentityStore?
     private let usesLocalIdentity: Bool
+    private let buildConfiguration: AppBuildConfiguration
     private var hasPreviousQueue = false
     private var queueUnreadable = false
     private var identity: AnalyticsIdentity?
@@ -244,8 +246,10 @@ final class AnalyticsRecorder {
     private(set) var lastError: String?
     var events: [Event] { cache.events }
 
-    init(directory: URL, identityStore: AnalyticsIdentityStore? = nil, sessionTimeout: TimeInterval = 300) {
+    init(directory: URL, identityStore: AnalyticsIdentityStore? = nil, sessionTimeout: TimeInterval = 300,
+         buildConfiguration: AppBuildConfiguration = .current) {
         url = directory.appendingPathComponent("analytics-demo-queue.json")
+        self.buildConfiguration = buildConfiguration
         self.identityStore = identityStore
         self.usesLocalIdentity = identityStore == nil
         self.sessionTimeout = sessionTimeout.isFinite ? max(1, sessionTimeout) : 300
@@ -260,9 +264,17 @@ final class AnalyticsRecorder {
                 let preserved = url.deletingLastPathComponent().appendingPathComponent("analytics-preserved-\(UUID().uuidString).json")
                 try? FileManager.default.copyItem(at: url, to: preserved)
             }
+            // A queue is an immutable attribution boundary. Preserve a copied
+            // or wrongly routed file instead of relabeling its historical events.
+            if cache.events.contains(where: { $0.environment != buildConfiguration.analyticsEnvironment }) {
+                queueUnreadable = true
+                lastError = "Local event queue belongs to a different build environment; collection is disabled."
+            }
         }
     }
     func acceptConsent(at date: Date = Date()) {
+        guard buildConfiguration.analyticsEnabled else { return }
+        guard !queueUnreadable else { return }
         guard !enabled else { _ = retryPendingWrites(); return }
         let formatter = ISO8601DateFormatter(); formatter.formatOptions = [.withFullDate]; formatter.timeZone = TimeZone(secondsFromGMT: 0)
         if usesLocalIdentity {
@@ -277,7 +289,8 @@ final class AnalyticsRecorder {
                 } else { owner = cache.events.last }
                 let expected = owner.map { AnalyticsIdentity(userID: $0.userID, installDate: $0.installDate, firstOpenRecorded: false) }
                 let resolved = try LocalAnalyticsIdentity.resolve(directory: url.deletingLastPathComponent(), expected: expected,
-                                                                   hasPreviousQueue: hasPreviousQueue, at: date)
+                                                                   hasPreviousQueue: hasPreviousQueue, at: date,
+                                                                   configuration: buildConfiguration)
                 identityStore = resolved.0; identity = resolved.1
             } catch {
                 lastError = "Anonymous analytics identity could not be recovered; collection is disabled to preserve existing event ownership."
@@ -358,14 +371,15 @@ final class AnalyticsRecorder {
                           sessionID: session.id, platform: "iOS",
                           appVersion: Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "internal",
                           country: Locale.current.regionCode ?? "ZZ", installDate: identity.installDate,
-                          environment: "internal-demo-offline", levelID: level, pawdokuConfigVersion: config, parameters: typed)
+                          environment: buildConfiguration.analyticsEnvironment, levelID: level, pawdokuConfigVersion: config, parameters: typed)
         return PreparedEvent(key: eventKey, event: event)
     }
 
     /// True only once the event is durably queued, including an already queued
     /// duplicate. A failed write must not acknowledge the gameplay outbox.
     @discardableResult func commit(_ prepared: PreparedEvent) -> Bool {
-        guard enabled, let identity, identity.userID == prepared.event.userID else { return false }
+        guard enabled, let identity, identity.userID == prepared.event.userID,
+              prepared.event.environment == buildConfiguration.analyticsEnvironment else { return false }
         if cache.keys.contains(prepared.key) { return retryPendingWrites() }
         cache.events.append(prepared.event); cache.keys.insert(prepared.key)
         if let current = cache.activeSession, current.id == prepared.event.sessionID {
@@ -380,6 +394,7 @@ final class AnalyticsRecorder {
     func prepareRelated(_ name: String, key: String, to original: Event,
                         parameters: [String: String], at date: Date = Date()) -> PreparedEvent? {
         guard enabled, identity?.userID == original.userID, !key.isEmpty,
+              original.environment == buildConfiguration.analyticsEnvironment,
               ["ad_result", "buff_use"].contains(name),
               let typed = Self.validateParameters(name: name, parameters: parameters) else { return nil }
         let event = Event(eventID: UUID().uuidString, eventName: name, eventTime: date,

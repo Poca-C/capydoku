@@ -1,0 +1,45 @@
+{
+  "build": "0.2.20 (23)",
+  "scope": "Actual simulator app products; internal placeholder identities, no distribution or live-service claim.",
+  "configurations": [
+    {
+      "configuration": "TestFlight",
+      "buildExitCode": 0,
+      "log": "Validation/test-runs/original-0220-testflight-sim.log",
+      "app": ".build/Environments/Build/Products/TestFlight-iphonesimulator/Capydoku.app",
+      "bundleIdentifier": "com.capydoku.demo.testing",
+      "environment": "testing",
+      "displayName": "Capydoku 测试",
+      "remoteEnabled": false,
+      "remoteURL": "",
+      "analyticsLocalEnabled": true,
+      "infoSHA256": "6b592b9754bb2798a50b45ac4180a35dda6d26570b731d2081cc16b43aadde3f"
+    },
+    {
+      "configuration": "Staging",
+      "buildExitCode": 0,
+      "log": "Validation/test-runs/original-0220-staging-sim.log",
+      "app": ".build/Environments/Build/Products/Staging-iphonesimulator/Capydoku.app",
+      "bundleIdentifier": "com.capydoku.demo.staging",
+      "environment": "staging",
+      "displayName": "Capydoku 预发布",
+      "remoteEnabled": false,
+      "remoteURL": "",
+      "analyticsLocalEnabled": true,
+      "infoSHA256": "f3ddaafd0604b861165f2ea151e21708862a4db73a5e5143d2bbdcb99ea4db5d"
+    },
+    {
+      "configuration": "Production",
+      "buildExitCode": 0,
+      "log": "Validation/test-runs/original-0220-production-sim.log",
+      "app": ".build/Environments/Build/Products/Production-iphonesimulator/Capydoku.app",
+      "bundleIdentifier": "com.capydoku.demo.production",
+      "environment": "production",
+      "displayName": "Capydoku 正式候选",
+      "remoteEnabled": false,
+      "remoteURL": "",
+      "analyticsLocalEnabled": true,
+      "infoSHA256": "0cf70675fbb296eb52252a4ca92176a54bcad730ade615860d7b51d7c5eec222"
+    }
+  ]
+}

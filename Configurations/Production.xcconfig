@@ -1,0 +1,11 @@
+#include "Common.xcconfig"
+
+// Internal placeholder only; this is not a signed App Store production identity.
+CAPYDOKU_ENVIRONMENT = production
+CAPYDOKU_APP_BUNDLE_IDENTIFIER = com.capydoku.demo.production
+CAPYDOKU_APP_DISPLAY_NAME = Capydoku 正式候选
+CAPYDOKU_REMOTE_CONFIGURATION_ENABLED = NO
+CAPYDOKU_REMOTE_CONFIGURATION_ENVIRONMENT = production
+CAPYDOKU_REMOTE_CONFIGURATION_URL =
+// Consent-gated local queue only; no analytics SDK or upload.
+CAPYDOKU_ANALYTICS_ENABLED = YES

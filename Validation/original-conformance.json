@@ -1517,9 +1517,9 @@
         390
       ],
       "title": "Xcode26/iOS26构建及正式发布",
-      "status": "external_pending",
-      "implemented": "0.2.19(22)通过Xcode26.6的Simulator Debug及通用iOS Release无签名构建；17Pro与17e正常覆盖安装、核对版本并无测试/重置参数启动。",
-      "gap": "当前仅Debug/Release两套编译配置，均为同一internal Demo；尚无独立TestFlight、预发布和正式构建配置。未签名Release构建不是可分发安装包；真机签名运行、TestFlight、App Store审核及上架均未完成。",
+      "status": "partial",
+      "implemented": "0.2.20新增独立TestFlight/Staging/Production候选配置与scheme；五套Xcode设置核验，Demo Debug及三个候选Simulator实际编译通过，Demo Release与Production候选通用iOS无签名编译通过。原Demo正常覆盖安装两模拟器，试玩状态保留。",
+      "gap": "新增Bundle ID是内部占位，未由发布方配置注册/签名。候选包名称不代表已上传TestFlight或可上架；真机、TestFlight、App Store审核与正式发布均未完成。",
       "evidence": [
         "Capydoku.xcodeproj/project.pbxproj",
         "Validation/verification-summary.json",
@@ -1533,7 +1533,18 @@
         "scripts/generate_project.py",
         "Capydoku.xcodeproj/xcshareddata/xcschemes/Capydoku.xcscheme",
         "Validation/original-0218-install-audit.json",
-        "Validation/original-0219-install-audit.json"
+        "Validation/original-0219-install-audit.json",
+        "App/Services/AppBuildConfiguration.swift",
+        "AppTests/BuildEnvironmentTests.swift",
+        "AppTests/BuildEnvironmentIdentityTests.swift",
+        "Configurations/README.md",
+        "Validation/original-0220-build-settings.json",
+        "Validation/original-0220-environment-builds.json",
+        "Validation/original-0220-device-builds.json",
+        "Validation/original-0220-coinstall-audit.json",
+        "Validation/original-0220-install-audit.json",
+        "Docs/original-environments-0220/manifest.json",
+        "Validation/test-runs/original-0220-app.xcresult"
       ]
     },
     {
@@ -1603,13 +1614,24 @@
         399
       ],
       "title": "环境隔离与SDK隐私清单",
-      "status": "external_pending",
-      "implemented": "当前明确内部离线环境，App有隐私清单占位配置。",
-      "gap": "Debug/Release共用com.capydoku.demo，均记录internal-demo-offline并无线上上报；不能当作测试/预发布/正式三环境已经隔离。UI与宿主测试存储目录已隔离，配置缓存按完整目标隔离。最终三环境AppID/构建配置、SDK名称/版本/采集字段/政策/关闭方式清单及实际App Privacy、年龄分级仍需随正式接入完成。",
+      "status": "partial",
+      "implemented": "0.2.20将原Demo与测试/预发布/正式候选的Bundle ID、存储目录、Keychain前缀、统计环境及配置目标分开；未知环境和错环境远程地址不启用服务，跨环境队列和待交付事件拒绝。三个优化候选同原Demo四容器并存，首次欢迎页无同意前统计；原Demo文件不被覆盖。12项新增隔离/真实Keychain测试包含在全量293项通过中。",
+      "gap": "实际发行AppID、广告位、线上数据源、SDK版本/采集字段/政策/关闭方式清单与App Privacy、年龄分级仍待真实接入；当前无第三方SDK和上报，不能据离线隔离宣称正式线上三环境验收完成。三候选仅实际验证到首次欢迎页，完整权限和游玩流待验。",
       "evidence": [
         "App/PrivacyInfo.xcprivacy",
         "App/Info.plist",
-        "App/Services/AnalyticsRecorder.swift"
+        "App/Services/AnalyticsRecorder.swift",
+        "App/Services/AppBuildConfiguration.swift",
+        "AppTests/BuildEnvironmentTests.swift",
+        "AppTests/BuildEnvironmentIdentityTests.swift",
+        "Configurations/README.md",
+        "Validation/original-0220-build-settings.json",
+        "Validation/original-0220-environment-builds.json",
+        "Validation/original-0220-device-builds.json",
+        "Validation/original-0220-coinstall-audit.json",
+        "Validation/original-0220-install-audit.json",
+        "Docs/original-environments-0220/manifest.json",
+        "Validation/test-runs/original-0220-app.xcresult"
       ]
     },
     {
@@ -1733,8 +1755,8 @@
       ],
       "title": "iOS技术验收与SDK升级兼容",
       "status": "partial",
-      "implemented": "0.2.19最终164项Core、Pro全量281项App（无排除/跳过）以及17e三项选定真实UI通过；初次中文测试写死旧顺序的失败保留并修正重验。150关重建为同盘，关卡包未改。未签名Release通过，正常覆盖安装两模拟器；升级只新增教学legacy1版本字段并迁移schema4，其余完整玩家字段保持。旧重装证据保留其版本，不重标本轮。",
-      "gap": "这不是全部设备/全部场景通过。真机、最低系统、真实SDK升级及远程关闭尚未验证；历史组合UI运行的启动冲突及成功单独重验已如实记录。",
+      "implemented": "0.2.20在17Pro通过全量293项App（零跳过/失败），17e两项真实界面通过；实际五配置检查、三个优化候选Simulator构建、两个无签名iOS构建通过。原Demo保留完整玩家状态覆盖安装两设备，Pro现有统计历史/first_open/namespace保持。Core与150关未改，保留0.2.19的164项及重建证据。",
+      "gap": "这不是全部设备/场景通过；17e升级前无正常统计队列，不能声称该设备历史统计迁移已验证。真机、最低系统、候选包完整权限/游玩、真实SDK升级及正式远程关闭仍待验。",
       "evidence": [
         "Validation/original-verification.json",
         "Validation/test-runs/original-026-core-atomic-final.log",
@@ -1785,7 +1807,18 @@
         "Validation/original-0219-install-audit.json",
         "Validation/original-0219-rebuild.json",
         "Docs/original-tutorial-0219/manifest.json",
-        "Validation/test-runs/original-0219-app-final-recheck.xcresult"
+        "Validation/test-runs/original-0219-app-final-recheck.xcresult",
+        "App/Services/AppBuildConfiguration.swift",
+        "AppTests/BuildEnvironmentTests.swift",
+        "AppTests/BuildEnvironmentIdentityTests.swift",
+        "Configurations/README.md",
+        "Validation/original-0220-build-settings.json",
+        "Validation/original-0220-environment-builds.json",
+        "Validation/original-0220-device-builds.json",
+        "Validation/original-0220-coinstall-audit.json",
+        "Validation/original-0220-install-audit.json",
+        "Docs/original-environments-0220/manifest.json",
+        "Validation/test-runs/original-0220-app.xcresult"
       ]
     },
     {
@@ -2086,5 +2119,5 @@
       ]
     }
   ],
-  "currentBuild": "0.2.19 (22)"
+  "currentBuild": "0.2.20 (23)"
 }

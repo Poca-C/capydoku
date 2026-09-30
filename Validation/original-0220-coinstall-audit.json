@@ -1,0 +1,55 @@
+{
+  "build": "0.2.20 (23)",
+  "device": "iPhone 17 Pro",
+  "scope": "Three optimized candidates installed beside existing Demo; first launch without test arguments, before consent. No physical-device or service integration claim.",
+  "candidates": [
+    {
+      "configuration": "TestFlight",
+      "environment": "testing",
+      "bundleIdentifier": "com.capydoku.demo.testing",
+      "launch": "com.capydoku.demo.testing: 68260",
+      "dataContainer": "/Users/poca/Library/Developer/CoreSimulator/Devices/3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3/data/Containers/Data/Application/B744C160-9430-46E2-8738-49F9DD975E6F",
+      "expectedStorageSubdirectory": "Library/Application Support/Capydoku-testing",
+      "noAnalyticsBeforeConsent": true,
+      "screenshot": "Docs/original-environments-0220/testing-first-launch.png",
+      "screenshotSHA256": "d30e2a125c0dd227588fd85b56652712055bb02f7af8a52ca28437f26929f24a",
+      "analyticsFilesAnywhereBeforeConsent": [],
+      "simulatorMachOKeychainAccessGroups": [
+        "com.capydoku.demo.testing"
+      ]
+    },
+    {
+      "configuration": "Staging",
+      "environment": "staging",
+      "bundleIdentifier": "com.capydoku.demo.staging",
+      "launch": "com.capydoku.demo.staging: 68304",
+      "dataContainer": "/Users/poca/Library/Developer/CoreSimulator/Devices/3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3/data/Containers/Data/Application/31CF0EA0-5591-43E3-95A3-82DD4BE49F7E",
+      "expectedStorageSubdirectory": "Library/Application Support/Capydoku-staging",
+      "noAnalyticsBeforeConsent": true,
+      "screenshot": "Docs/original-environments-0220/staging-first-launch.png",
+      "screenshotSHA256": "d30e2a125c0dd227588fd85b56652712055bb02f7af8a52ca28437f26929f24a",
+      "analyticsFilesAnywhereBeforeConsent": [],
+      "simulatorMachOKeychainAccessGroups": [
+        "com.capydoku.demo.staging"
+      ]
+    },
+    {
+      "configuration": "Production",
+      "environment": "production",
+      "bundleIdentifier": "com.capydoku.demo.production",
+      "launch": "com.capydoku.demo.production: 68357",
+      "dataContainer": "/Users/poca/Library/Developer/CoreSimulator/Devices/3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3/data/Containers/Data/Application/9B1724F3-EFF1-4106-8D30-0616753E9CBC",
+      "expectedStorageSubdirectory": "Library/Application Support/Capydoku-production",
+      "noAnalyticsBeforeConsent": true,
+      "screenshot": "Docs/original-environments-0220/production-first-launch.png",
+      "screenshotSHA256": "d30e2a125c0dd227588fd85b56652712055bb02f7af8a52ca28437f26929f24a",
+      "analyticsFilesAnywhereBeforeConsent": [],
+      "simulatorMachOKeychainAccessGroups": [
+        "com.capydoku.demo.production"
+      ]
+    }
+  ],
+  "fourDistinctContainers": true,
+  "normalDemoFilesUnchanged": true,
+  "entitlementInspection": "Installed arm64 Mach-O __TEXT/__entitlements section, used by iOS Simulator. codesign outer entitlement dictionary is empty on these simulator binaries and is not the appropriate evidence."
+}

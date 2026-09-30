@@ -125,7 +125,7 @@ final class AppModel: ObservableObject {
         // apply to release builds or dedicated first-launch permission tests.
         startupFlowCompleted = startupBypassForTesting && testHost && !args.contains("-test-first-launch")
         #endif
-        self.saveDirectory = saveDirectory ?? root.appendingPathComponent(args.contains("-ui-testing") ? "CapydokuUITesting" : testHost ? "CapydokuAppTestingHost" : "Capydoku", isDirectory: true)
+        self.saveDirectory = saveDirectory ?? root.appendingPathComponent(args.contains("-ui-testing") ? "CapydokuUITesting" : testHost ? "CapydokuAppTestingHost" : AppBuildConfiguration.current.storageDirectoryName, isDirectory: true)
         self.rewardProvider = rewardProvider
         self.interstitialProvider = interstitialProvider
         self.synchronousSaves = !runsTimer
@@ -1362,6 +1362,7 @@ final class AppModel: ObservableObject {
     func exportDiagnostics() {
         struct Report: Encodable {
             let generatedAt: Date; let build: String; let demoConfig: DemoConfig
+            let buildConfiguration = AppBuildConfiguration.current
             let progress: PlayerProgress; let levelPackCount: Int
             let referenceGameplay: ReferenceGameplayConfiguration?; let generationReport: GenerationPipelineReport?
             let currentBoardGenerationReport: GenerationPipelineReport?

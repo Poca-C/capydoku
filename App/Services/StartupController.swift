@@ -72,7 +72,7 @@ struct BundledStartupResources: StartupResources {
 @MainActor
 final class StartupController: ObservableObject {
     static let consentVersion = "internal-demo-review-v1"
-    private static let logger = Logger(subsystem: "com.capydoku.demo", category: "StartupPermissions")
+    private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "capydoku.unconfigured", category: "StartupPermissions")
     @Published private(set) var stage: StartupStage = .loading
     @Published private(set) var consent = StartupConsent()
     @Published var errorMessage: String?

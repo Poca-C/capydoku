@@ -1,0 +1,11 @@
+#include "Common.xcconfig"
+
+// Internal placeholder only; the publisher must provide its real App ID/signing.
+CAPYDOKU_ENVIRONMENT = staging
+CAPYDOKU_APP_BUNDLE_IDENTIFIER = com.capydoku.demo.staging
+CAPYDOKU_APP_DISPLAY_NAME = Capydoku 预发布
+CAPYDOKU_REMOTE_CONFIGURATION_ENABLED = NO
+CAPYDOKU_REMOTE_CONFIGURATION_ENVIRONMENT = staging
+CAPYDOKU_REMOTE_CONFIGURATION_URL =
+// Consent-gated local queue only; no analytics SDK or upload.
+CAPYDOKU_ANALYTICS_ENABLED = YES

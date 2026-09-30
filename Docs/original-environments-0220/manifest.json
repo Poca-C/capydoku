@@ -1,0 +1,26 @@
+{
+  "build": "0.2.20 (23)",
+  "device": "iPhone 17 Pro / iOS 26.5",
+  "captureMethod": "Unedited simctl screenshots of normal first launch, without test/reset arguments, after separate optimized simulator builds.",
+  "scope": "Welcome screen only. Candidate permission/gameplay flows and physical-device release are not verified by these three images.",
+  "images": [
+    {
+      "path": "Docs/original-environments-0220/testing-first-launch.png",
+      "environment": "testing",
+      "sha256": "d30e2a125c0dd227588fd85b56652712055bb02f7af8a52ca28437f26929f24a",
+      "visualReview": "Individually inspected: complete Chinese Welcome, readable terms/privacy and acceptance button, no obvious clipping or overlap. Same current art and provisional timing as Demo."
+    },
+    {
+      "path": "Docs/original-environments-0220/staging-first-launch.png",
+      "environment": "staging",
+      "sha256": "d30e2a125c0dd227588fd85b56652712055bb02f7af8a52ca28437f26929f24a",
+      "visualReview": "Individually inspected: complete Chinese Welcome, readable terms/privacy and acceptance button, no obvious clipping or overlap. Same current art and provisional timing as Demo."
+    },
+    {
+      "path": "Docs/original-environments-0220/production-first-launch.png",
+      "environment": "production",
+      "sha256": "d30e2a125c0dd227588fd85b56652712055bb02f7af8a52ca28437f26929f24a",
+      "visualReview": "Individually inspected: complete Chinese Welcome, readable terms/privacy and acceptance button, no obvious clipping or overlap. Same current art and provisional timing as Demo."
+    }
+  ]
+}

@@ -29,9 +29,9 @@ python3 scripts/import_reference_gameplay.py /path/to/frozen-source.json \
 
 这一流程的前置条件是包内已有完整、有效、状态为 `frozen` 的 `Resources/reference-gameplay.json`。远程响应的冻结 baseline 必须与包内批准的 baseline 一致，不能通过联网替换参考产品、商店版本、采样证据或归档校验值。缺少包内基线、仅提供空模板或包内文件校验不通过时，不读取远程配置作为替代基线，也不发起远程请求；应用继续使用明确标注的 Demo 临时配置。
 
-配置按 `platform`、`appVersion`、`environment` 联合隔离，缓存使用独立命名空间，响应也必须与请求目标完全一致。当前默认目标为 `iOS`、安装包 `CFBundleShortVersionString` 和 `internal_demo`；这不表示预发布与正式环境的服务、App ID、广告位或数据源已经配置。不同应用版本不会直接复用这一命名空间中的缓存，后续如需迁移须另行定义并验证。
+配置按 `platform`、`appVersion`、`environment` 联合隔离，缓存使用独立命名空间，响应也必须与请求目标完全一致。目标取自 `iOS`、安装包 `CFBundleShortVersionString` 和构建的 `CapydokuEnvironment`：原 Demo 为 `internal_demo`，另有 `testing`、`staging`、`production` 候选配置。未知或缺失环境不会回落到 Demo，也不会启用服务。各候选配置的应用标识仍是内部占位，不表示发行方 App ID、广告位或数据源已经接入。不同应用版本不会直接复用这一命名空间中的缓存，后续如需迁移须另行定义并验证。
 
-当前没有提供真实服务地址。默认 HTTP 接入只读取 Info.plist 的 `CapydokuRemoteConfigURL`，且仅接受不带用户名和密码的 HTTPS 地址；未配置有效地址时不联网，不使用示例网址代替。供应商 SDK 到位后，也可通过 `GameplayConfigurationProvider` 接入其实际拉取接口。启动拉取和回到前台时的重试均不等待网络结果再进入首页；进行中的请求不会重复发起，普通拉取尝试之间设置基于单调时钟的 30 秒技术退避，显式重试可跳过退避。该时长不是 Pawdoku 的玩法或广告频控参数。
+当前所有环境都没有真实服务地址，默认关闭远程拉取。HTTP 接入要求 Info.plist 的 `CapydokuRemoteConfigurationEnabled` 为 `YES` 或布尔真、`CapydokuRemoteConfigurationEnvironment` 与构建环境完全一致，且 `CapydokuRemoteConfigurationURL` 是不带用户名、密码和片段的 HTTPS 地址；任一条件缺失即不创建网络提供者，不回落到其他环境地址。旧的单独 `CapydokuRemoteConfigURL` 不再启用服务。供应商 SDK 到位后，也可通过 `GameplayConfigurationProvider` 接入其实际拉取接口。启动拉取和回到前台时的重试均不等待网络结果再进入首页；进行中的请求不会重复发起，普通拉取尝试之间设置基于单调时钟的 30 秒技术退避，显式重试可跳过退避。该时长不是 Pawdoku 的玩法或广告频控参数。
 
 ## HTTP 内部草案合同
 

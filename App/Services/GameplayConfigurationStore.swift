@@ -8,7 +8,7 @@ struct GameplayConfigurationTarget: Codable, Equatable, Sendable {
     var environment: String
     static var current: Self {
         Self(appVersion: Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "internal",
-             environment: "internal_demo")
+             environment: AppBuildConfiguration.current.environment.rawValue)
     }
 }
 
@@ -291,9 +291,9 @@ final class HTTPGameplayConfigurationProvider: GameplayConfigurationProvider {
         self.session = session ?? URLSession(configuration: configuration)
     }
     static func configured(in bundle: Bundle = .main) -> HTTPGameplayConfigurationProvider? {
-        guard let raw = bundle.object(forInfoDictionaryKey: "CapydokuRemoteConfigURL") as? String,
-              let url = URL(string: raw), url.scheme == "https", url.host != nil,
-              url.user == nil, url.password == nil else { return nil }
+        let configuration = AppBuildConfiguration(info: bundle.infoDictionary ?? [:],
+                                                  bundleIdentifier: bundle.bundleIdentifier ?? "unconfigured")
+        guard let url = configuration.remoteConfigurationEndpoint else { return nil }
         return Self(endpoint: url)
     }
     func fetch(_ request: GameplayConfigurationRequest,
