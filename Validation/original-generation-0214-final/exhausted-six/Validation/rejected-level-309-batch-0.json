@@ -1,0 +1,92 @@
+{
+  "createdAtUTC" : "2026-09-30T17:13:06Z",
+  "difficultyPassed" : 0,
+  "elapsedMilliseconds" : 27,
+  "generatedCandidates" : 100,
+  "metadata" : {
+    "candidateBatchID" : "original-pipeline-v3:original-ch3-endless-capacity-v2:CapyDoku:17939505166265980441",
+    "candidateIndex" : -1,
+    "candidateSeed" : 0,
+    "generationSeed" : 17939505166265980441,
+    "generatorVersion" : "original-pipeline-v3",
+    "productNamespace" : "CapyDoku",
+    "profileVersion" : "original-ch3-endless-capacity-v2"
+  },
+  "referenceAcceptance" : "unverified: frozen Pawdoku profiles, calibrated player metrics, and cross-product corpus are required",
+  "rejectionReasons" : {
+    "difficulty:band_score_outside_target" : 24,
+    "difficulty:difficulty_score_outside_target" : 24,
+    "difficulty:reasoning_depth_outside_target" : 7,
+    "difficulty:trial_not_allowed" : 1,
+    "solver:invalid_or_non_unique" : 76
+  },
+  "requestedCandidates" : 100,
+  "similarityPassed" : 0,
+  "solverPassed" : 24,
+  "target" : {
+    "bandScoreRange" : {
+      "maximum" : 65,
+      "minimum" : 50
+    },
+    "boardSizeCurveTarget" : {
+      "maximum" : 10,
+      "minimum" : 8
+    },
+    "candidateBatchSize" : 100,
+    "candidateDensityTarget" : {
+      "maximum" : 1,
+      "minimum" : 0
+    },
+    "difficultyBand" : "Pre-Hard",
+    "difficultyRole" : "Pre-Hard",
+    "difficultyScoreTarget" : {
+      "maximum" : 65.55,
+      "minimum" : 48.449999999999996
+    },
+    "errorRiskTarget" : {
+      "maximum" : 1,
+      "minimum" : 0
+    },
+    "failPressureTarget" : {
+      "maximum" : 1,
+      "minimum" : 0
+    },
+    "forcedMoveDensityTarget" : {
+      "maximum" : 1,
+      "minimum" : 0
+    },
+    "hintPressureTarget" : {
+      "maximum" : 1,
+      "minimum" : 0
+    },
+    "levelID" : 309,
+    "logicalStepCountTarget" : {
+      "maximum" : 200,
+      "minimum" : 8
+    },
+    "profileVersion" : "original-ch3-endless-capacity-v2",
+    "provenance" : {
+      "source" : "Original Word chapter 3 role sequence; numeric targets are local solver estimates. Frozen Pawdoku sampling is missing.",
+      "status" : "unverified_local_demo"
+    },
+    "reasoningDepthTarget" : {
+      "maximum" : 3,
+      "minimum" : 2
+    },
+    "regionComplexityTarget" : {
+      "maximum" : 1,
+      "minimum" : 0
+    },
+    "regionCountTarget" : {
+      "maximum" : 10,
+      "minimum" : 8
+    },
+    "solveTimeTarget" : {
+      "maximum" : 3600,
+      "minimum" : 0
+    },
+    "tolerancePercent" : 0.15,
+    "trialAllowed" : false
+  },
+  "termination" : "no_candidate_matched"
+}

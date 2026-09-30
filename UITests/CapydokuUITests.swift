@@ -144,6 +144,22 @@ final class CapydokuUITests: XCTestCase {
         expectValue(cell(0), "marked", timeout: 5)
     }
 
+    func testSwipeCannotStartOnFoundCapybaraAndNextValidStrokeStillWorks() {
+        launchGame()
+        cell(1).doubleTap()
+        expectValue(cell(1), "found")
+        let before = boardValues()
+        drag(from: 1, to: 3)
+        XCTAssertEqual(boardValues(), before)
+        drag(from: 1, to: 13)
+        XCTAssertEqual(boardValues(), before)
+        drag(from: 0, to: 3)
+        expectValue(cell(3), "marked")
+        XCTAssertEqual(boardValues(), (0..<16).map { $0 == 1 ? "found" : [0, 2, 3].contains($0) ? "marked" : "empty" })
+        expectValue(app.otherElements["lives"], "3")
+        XCTAssertEqual(app.staticTexts["score"].label, "100")
+    }
+
     func testHintPreviewAndClosePreserveBoard() {
         launchGame()
         let before = boardValues()

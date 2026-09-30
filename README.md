@@ -1,6 +1,6 @@
 # Capydoku · 原文对齐 Demo
 
-原生 Swift / SwiftUI iPhone 应用，默认简体中文、可在设置中切换 English、竖屏，最低编译目标 iOS 15。当前版本 **0.2.13（16）**，可内部试玩，尚未达到正式验收或上架状态。
+原生 Swift / SwiftUI iPhone 应用，默认简体中文、可在设置中切换 English、竖屏，最低编译目标 iOS 15。当前版本 **0.2.14（17）**，可内部试玩，尚未达到正式验收或上架状态。
 
 ## 唯一需求基准
 
@@ -18,9 +18,15 @@
 
 下列主页面图册保留0.2.1的实测版本；0.2.4新增操作反馈，分时组件截图见 Docs/original-feedback/manifest.json，不能用旧图替代新构建验收：[首页](Docs/original-reference/01-home.png) · [游戏](Docs/original-reference/04-gameplay.png) · [提示](Docs/original-reference/05-hint.png) · [设置](Docs/original-reference/02-settings.png) · [签到](Docs/original-reference/03-check-in.png)。
 
-无需第三方依赖或真实广告 SDK。真机运行需自己的签名与可用设备。本轮仅模拟器测试；先前版本签名成功不算本版本真机通过。
+无需第三方依赖或真实广告 SDK。模拟器运行/测试须保留本地签名（CODE_SIGNING_ALLOWED=YES），工程仅为模拟器配置钥匙串权限；禁用签名只能验证编译，不能验证真实钥匙串。真机运行需自己的签名与可用设备。本轮仅模拟器测试；先前版本签名成功不算本版本真机通过。
 
-## 本次交互修正
+## 本轮原文差异修正
+
+- 151+持续生成解除固定6×6的容量瓶颈：在原难度分数/深度上限内允许其他尺寸，继续严格拒绝重复答案；固定导入Profile不扩大。新版60关独立校验见 `Validation/original-generation-0214-final/independent-audit.json`，不代表无限生成或正式难度对标。
+- 滑动离开起始行/列即停止新增X；已找到动物不能作为起点。Welcome补独立居中缩放过渡，改善正文、法律链接和同意按钮的可读性。
+- 匿名统计身份改为随本地目录迁移的稳定命名空间，身份本身保留在钥匙串；旧记录归属不能确认时暂停记录，游戏仍可运行。模拟器通过专用模拟器权限与临时签名验证，未接真实分析服务。
+
+## 0.2.13交互修正
 
 - 依据原文[97]保护未完成的点击、双击判定和滑动，识别结束前不响应道具或广告入口；不暂停当前棋盘操作，不用固定延时猜双击窗口。
 - 依据原文[88]区分开局免费奖励“是否显示”与“能否领取”，禁止将可见但禁用的配置直接隐藏；真实逐关顺序仍缺冻结资料。
@@ -91,11 +97,13 @@
 
 `Resources/levels.json` 是重新生成的150关。每关经过100个候选、求解、难度筛选、相似度拒绝和选优；失败批次另存拒绝原因。本次共筛选19,500个候选，含15个被拒绝批次。
 
-150关及151–180三组实验共180关均通过独立唯一解与区域连通检查；180种不同答案排列、180种不同区域结构，严格拒绝完全重复，没有小棋盘例外。150关全部通过共享逻辑推完与按生成元数据重建。难关按推理指标筛选，可有紧凑难关，不能用尺寸替代难度。
+初版150关及旧Profile下151–180三组实验共180关均通过独立唯一解与区域连通检查；180种不同答案排列、180种不同区域结构，严格拒绝完全重复，没有小棋盘例外。150关全部通过共享逻辑推完与按生成元数据重建。难关按推理指标筛选，可有紧凑难关，不能用尺寸替代难度。
+
+0.2.14使用临时Profile v2重新生成151–180，并在全部6×6合法答案已用尽的人工历史下生成291–320。新增60关与原150关合计210关通过独立唯一解、连通和去重校验；181–290未生成，人工答案历史不算已生产关卡。最新证据见 `Validation/original-generation-0214-final/independent-audit.json`。
 
 **以上不等于已对齐 Pawdoku 的难度体验。** 当前 Profile 数值、预计时长与失败压力为明确标注的本地估计。冻结版难度采样与跨产品对比语料尚未提供。证据见 `Validation/original-generation/summary.json`。
 
-151+ 在后台有预算地生成，保存同盘、seed 与生成器版本；失败保留旧盘并允许重新尝试。这仍是获准的 Demo 实验方案。
+151+ 在后台有预算地生成，保存同盘、seed 与生成器版本；预算/候选失败保留旧盘并允许重试，尺寸答案容量耗尽则明确提示更新配置。这仍是获准的 Demo 实验方案。
 
 ## 客户端待修与外部待验
 
@@ -116,7 +124,7 @@ python3 scripts/verify_levels.py
 python3 -m unittest discover -s scripts -p 'test_import_reference_gameplay.py'
 xcodebuild -project Capydoku.xcodeproj -scheme Capydoku \
   -destination 'platform=iOS Simulator,name=iPhone 17 Pro' \
-  -derivedDataPath DerivedData CODE_SIGNING_ALLOWED=NO test
+  -derivedDataPath DerivedData CODE_SIGNING_ALLOWED=YES test
 ```
 
 只检查现有关卡，避免误覆盖生产包：

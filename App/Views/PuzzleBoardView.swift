@@ -275,6 +275,9 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         if gesture.state == .began {
             dragStartPoint = CGPoint(x: location.x - movement.x, y: location.y - movement.y)
             dragStart = cell(at: dragStartPoint)
+            // A found animal is not an operable origin, just as it cannot
+            // receive a single tap. Crossing one later still skips that cell.
+            if let start = dragStart, found.contains(start) { dragStart = nil }
             dragAxis = .pending
             visited.removeAll()
         }
@@ -283,10 +286,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         // origin also prevents re-entry from filling the gap back to that origin.
         // Only a new touch (.began) can start another marking stroke.
         guard boardRect.contains(location), gesture.state != .cancelled, gesture.state != .failed else {
-            finishSwipe(cancelled: true)
-            dragStart = nil
-            dragAxis = .invalid
-            visited.removeAll()
+            invalidateSwipePath()
             return
         }
         if gesture.state == .began || gesture.state == .changed || gesture.state == .ended {
@@ -302,9 +302,17 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
             var indexes: [Int] = []
             switch dragAxis {
             case .horizontal:
+                // Original [133] marks only cells the finger passes through
+                // along one row/column. Do not project a turn onto the old row.
+                guard let current = cell(at: location), current / size == start / size else {
+                    invalidateSwipePath(); return
+                }
                 let column = max(0, min(size - 1, Int(floor((location.x - boardRect.minX) / cellSide))))
                 indexes = (min(start % size, column)...max(start % size, column)).map { start / size * size + $0 }
             case .vertical:
+                guard let current = cell(at: location), current % size == start % size else {
+                    invalidateSwipePath(); return
+                }
                 let row = max(0, min(size - 1, Int(floor((location.y - boardRect.minY) / cellSide))))
                 indexes = (min(start / size, row)...max(start / size, row)).map { $0 * size + start % size }
             case .pending, .invalid: break
@@ -318,6 +326,13 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
             dragStart = nil
             visited.removeAll()
         }
+    }
+
+    private func invalidateSwipePath() {
+        finishSwipe(cancelled: true)
+        dragStart = nil
+        dragAxis = .invalid
+        visited.removeAll()
     }
 
     private func finishSwipe(cancelled: Bool) {

@@ -1,0 +1,72 @@
+{
+  "build": "0.2.14 (17)",
+  "scope": "Two real simulator install/launch rounds per device in the isolated UI-test directory. Consent was given by the first-launch UI test, not in the normal user directory. Production signing/device/reinstall identity policy not established.",
+  "devices": [
+    {
+      "device": "iPhone 17 Pro",
+      "id": "3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3",
+      "initialEvents": 4,
+      "rounds": [
+        {
+          "round": 1,
+          "dataContainerChanged": true,
+          "launch": "com.capydoku.demo: 24632",
+          "eventCount": 6,
+          "distinctUserIDs": 1,
+          "firstOpenCount": 1,
+          "namespaceUnchanged": true,
+          "consentUnchanged": true,
+          "originalEventPayloadsUnchanged": true,
+          "normalProgressBytesUnchanged": true
+        },
+        {
+          "round": 2,
+          "dataContainerChanged": true,
+          "launch": "com.capydoku.demo: 24676",
+          "eventCount": 8,
+          "distinctUserIDs": 1,
+          "firstOpenCount": 1,
+          "namespaceUnchanged": true,
+          "consentUnchanged": true,
+          "originalEventPayloadsUnchanged": true,
+          "normalProgressBytesUnchanged": true
+        }
+      ],
+      "normalProgressSHA256": "4a717917dd74a15b28b3dcbed2b0376342d767fe050ea7f430b0a7528a01e5c2",
+      "normalLaunchWithoutTestOrResetArguments": "com.capydoku.demo: 24721"
+    },
+    {
+      "device": "iPhone 17e",
+      "id": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+      "initialEvents": 4,
+      "rounds": [
+        {
+          "round": 1,
+          "dataContainerChanged": true,
+          "launch": "com.capydoku.demo: 24751",
+          "eventCount": 6,
+          "distinctUserIDs": 1,
+          "firstOpenCount": 1,
+          "namespaceUnchanged": true,
+          "consentUnchanged": true,
+          "originalEventPayloadsUnchanged": true,
+          "normalProgressBytesUnchanged": true
+        },
+        {
+          "round": 2,
+          "dataContainerChanged": true,
+          "launch": "com.capydoku.demo: 24827",
+          "eventCount": 8,
+          "distinctUserIDs": 1,
+          "firstOpenCount": 1,
+          "namespaceUnchanged": true,
+          "consentUnchanged": true,
+          "originalEventPayloadsUnchanged": true,
+          "normalProgressBytesUnchanged": true
+        }
+      ],
+      "normalProgressSHA256": "7e8827414371c98c312b7dba72169b67c1bd64c7ef0e305a4541d40b0e7231e4",
+      "normalLaunchWithoutTestOrResetArguments": "com.capydoku.demo: 24868"
+    }
+  ]
+}

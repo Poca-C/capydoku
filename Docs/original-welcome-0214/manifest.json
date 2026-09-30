@@ -1,0 +1,222 @@
+{
+  "build": "0.2.14 (17)",
+  "date": "2026-10-01",
+  "sourceParagraphs": [
+    253,
+    274,
+    277,
+    278,
+    303,
+    306
+  ],
+  "captureMethod": "7张Pro真实视图宿主截图，加2张删除容器标识后的17e最终实际UI截图；未收录初次失败黑图。",
+  "limitations": [
+    "40ms入场采样实际仅品牌页可见，不能证明可见缩放中间帧，也不是冻结参考逐帧时序验收。",
+    "0.18s与0.88缩放系数是明确的Demo参数，并非冻结Pawdoku动效参数。",
+    "宿主scenePhase与reduceMotionOverride验证代码分支，不等同于系统前后台、系统减少动态效果开关或VoiceOver验收。",
+    "通知等待使用测试适配器，没有模拟或冒充系统弹窗；法律正文仍为内部Demo占位说明。",
+    "仅证明所列设备、语言、字号及样本状态；初次失败黑图保留于test-runs历史资料，不收录为通过证据。"
+  ],
+  "review": "9张全部逐张view_image审查。7张宿主样本的逐项结论保持：稳定卡片完整，40ms入口仅品牌可见；新增17e中英文实际UI截图完整居中且可读。已复核最终17e测试日志4项通过与对应测试内容；中文同意按钮可定位、服务条款可打开/返回，英文同意后首次进入与重启保留通过。不扩大为隐私政策点击或VoiceOver验收。",
+  "images": [
+    {
+      "path": "Docs/original-welcome-0214/pro-startup-flow-03-welcome-before-accept.png",
+      "title": "欢迎页稳定显示（未接受）",
+      "device": "iPhone 17 Pro",
+      "deviceID": "3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3",
+      "captureMethod": "SwiftUI StartupFlowView hosted by UIHostingController",
+      "test": "StartupVisualTests/testActualStartupFlowRendersBothStagesBeforeWelcomeWithoutEarlySideEffects()",
+      "testIdentifierURL": "test://com.apple.xcode/Capydoku/CapydokuAppTests/StartupVisualTests/testActualStartupFlowRendersBothStagesBeforeWelcomeWithoutEarlySideEffects",
+      "source": "Validation/test-runs/original-0214-startup-final-attachments/DECD47A1-A1B8-4268-8DFE-6496EF646DBC.png",
+      "sourceManifest": "Validation/test-runs/original-0214-startup-final-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0214-app-final.xcresult",
+      "attachmentTimestamp": 1790788975.11,
+      "dimensions": [
+        1206,
+        2622
+      ],
+      "sha256": "d0c4fa8db2cd583f033bf8f161e2b171e5d7847074fedb90360a411e46725b6e",
+      "individuallyViewed": true,
+      "visualReview": "已逐张打开：奶油色卡片完整居中，中文标题、正文、法律链接及深橙按钮白字清楚；无文字截断或素材重叠，背景遮罩完整。该图不证明VoiceOver焦点或冻结时序。",
+      "captureRevisionNote": "这7张宿主图采集于移除Welcome容器welcome_card标识之前。该标识曾被SwiftUI传递给子控件并覆盖accept_terms，造成真实界面测试失败；最终代码已仅移除容器标识，绘制、布局和动画未改变。这组图片仅用于视觉证据，不用于最终可访问性标识/焦点验收；后续真实界面回归另记。"
+    },
+    {
+      "path": "Docs/original-welcome-0214/pro-welcome-transition-00-loading-host-ready.png",
+      "title": "Loading宿主首帧已提交",
+      "device": "iPhone 17 Pro",
+      "deviceID": "3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3",
+      "captureMethod": "SwiftUI StartupFlowView hosted by UIHostingController",
+      "test": "StartupVisualTests/testWelcomePresentationLifecycleAndFailedAcceptDoNotAdvancePermissions()",
+      "testIdentifierURL": "test://com.apple.xcode/Capydoku/CapydokuAppTests/StartupVisualTests/testWelcomePresentationLifecycleAndFailedAcceptDoNotAdvancePermissions",
+      "source": "Validation/test-runs/original-0214-startup-final-attachments/C015806E-CD16-42FB-846F-B58BFDA0E1EF.png",
+      "sourceManifest": "Validation/test-runs/original-0214-startup-final-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0214-app-final.xcresult",
+      "attachmentTimestamp": 1790788975.927,
+      "dimensions": [
+        1206,
+        2622
+      ],
+      "sha256": "3754c34d2a6acf74eb1a0bcca3d0df5787b44b500b4aec42225d446bd2e52a6d",
+      "individuallyViewed": true,
+      "visualReview": "已逐张打开：水景加载页完整，中文文案、角色、加载线及Logo均可见，非黑图。使用afterScreenUpdates:true绘制，证明释放资源门前宿主已有可绘制画面。",
+      "captureRevisionNote": "这7张宿主图采集于移除Welcome容器welcome_card标识之前。该标识曾被SwiftUI传递给子控件并覆盖accept_terms，造成真实界面测试失败；最终代码已仅移除容器标识，绘制、布局和动画未改变。这组图片仅用于视觉证据，不用于最终可访问性标识/焦点验收；后续真实界面回归另记。"
+    },
+    {
+      "path": "Docs/original-welcome-0214/pro-welcome-transition-01-entrance-sample.png",
+      "title": "首帧采样（仅品牌可见）",
+      "device": "iPhone 17 Pro",
+      "deviceID": "3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3",
+      "captureMethod": "SwiftUI StartupFlowView hosted by UIHostingController",
+      "test": "StartupVisualTests/testWelcomePresentationLifecycleAndFailedAcceptDoNotAdvancePermissions()",
+      "testIdentifierURL": "test://com.apple.xcode/Capydoku/CapydokuAppTests/StartupVisualTests/testWelcomePresentationLifecycleAndFailedAcceptDoNotAdvancePermissions",
+      "source": "Validation/test-runs/original-0214-startup-final-attachments/BAE43309-F6D8-4C06-81A5-17FFD529CC84.png",
+      "sourceManifest": "Validation/test-runs/original-0214-startup-final-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0214-app-final.xcresult",
+      "attachmentTimestamp": 1790788976.665,
+      "dimensions": [
+        1206,
+        2622
+      ],
+      "sha256": "04ad8a6bb1643f1b58a28aacf38b4cbaeb747a02d0ebf346249560d1ce1587fc",
+      "individuallyViewed": true,
+      "visualReview": "已逐张打开：画面非空，品牌页完整；本帧尚未显示Welcome卡片或遮罩。测试在控制器进入welcome后等待40ms采样，但渲染帧不等于控制器时间；不能宣称已捕获可见缩放中间帧。",
+      "captureRevisionNote": "这7张宿主图采集于移除Welcome容器welcome_card标识之前。该标识曾被SwiftUI传递给子控件并覆盖accept_terms，造成真实界面测试失败；最终代码已仅移除容器标识，绘制、布局和动画未改变。这组图片仅用于视觉证据，不用于最终可访问性标识/焦点验收；后续真实界面回归另记。"
+    },
+    {
+      "path": "Docs/original-welcome-0214/pro-welcome-transition-02-background-settled.png",
+      "title": "宿主后台环境下欢迎页保持完整",
+      "device": "iPhone 17 Pro",
+      "deviceID": "3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3",
+      "captureMethod": "SwiftUI StartupFlowView hosted by UIHostingController",
+      "test": "StartupVisualTests/testWelcomePresentationLifecycleAndFailedAcceptDoNotAdvancePermissions()",
+      "testIdentifierURL": "test://com.apple.xcode/Capydoku/CapydokuAppTests/StartupVisualTests/testWelcomePresentationLifecycleAndFailedAcceptDoNotAdvancePermissions",
+      "source": "Validation/test-runs/original-0214-startup-final-attachments/CC65A2B5-B569-4BDF-96B0-A890788808EC.png",
+      "sourceManifest": "Validation/test-runs/original-0214-startup-final-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0214-app-final.xcresult",
+      "attachmentTimestamp": 1790788977.635,
+      "dimensions": [
+        1206,
+        2622
+      ],
+      "sha256": "d0c4fa8db2cd583f033bf8f161e2b171e5d7847074fedb90360a411e46725b6e",
+      "individuallyViewed": true,
+      "visualReview": "已逐张打开：宿主scenePhase改为background后，完整居中卡片与遮罩保留，中文正文、链接、按钮清楚，无缩小或半透明残留。此为托管环境输入，不是操作系统真实后台截图。",
+      "captureRevisionNote": "这7张宿主图采集于移除Welcome容器welcome_card标识之前。该标识曾被SwiftUI传递给子控件并覆盖accept_terms，造成真实界面测试失败；最终代码已仅移除容器标识，绘制、布局和动画未改变。这组图片仅用于视觉证据，不用于最终可访问性标识/焦点验收；后续真实界面回归另记。"
+    },
+    {
+      "path": "Docs/original-welcome-0214/pro-welcome-transition-03-reduce-motion-view-override.png",
+      "title": "减少动态效果视图分支的稳定欢迎页",
+      "device": "iPhone 17 Pro",
+      "deviceID": "3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3",
+      "captureMethod": "SwiftUI StartupFlowView hosted by UIHostingController",
+      "test": "StartupVisualTests/testWelcomePresentationLifecycleAndFailedAcceptDoNotAdvancePermissions()",
+      "testIdentifierURL": "test://com.apple.xcode/Capydoku/CapydokuAppTests/StartupVisualTests/testWelcomePresentationLifecycleAndFailedAcceptDoNotAdvancePermissions",
+      "source": "Validation/test-runs/original-0214-startup-final-attachments/9019691C-71D1-4551-B21B-2FF5CCDAA99D.png",
+      "sourceManifest": "Validation/test-runs/original-0214-startup-final-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0214-app-final.xcresult",
+      "attachmentTimestamp": 1790788978.58,
+      "dimensions": [
+        1206,
+        2622
+      ],
+      "sha256": "d0c4fa8db2cd583f033bf8f161e2b171e5d7847074fedb90360a411e46725b6e",
+      "individuallyViewed": true,
+      "visualReview": "已逐张打开：卡片及遮罩完整居中，中文可读，无缺失或缩放残留。测试使用reduceMotionOverride，不代表操作系统减少动态效果开关已验证。",
+      "captureRevisionNote": "这7张宿主图采集于移除Welcome容器welcome_card标识之前。该标识曾被SwiftUI传递给子控件并覆盖accept_terms，造成真实界面测试失败；最终代码已仅移除容器标识，绘制、布局和动画未改变。这组图片仅用于视觉证据，不用于最终可访问性标识/焦点验收；后续真实界面回归另记。"
+    },
+    {
+      "path": "Docs/original-welcome-0214/pro-welcome-transition-04-foreground-settled.png",
+      "title": "宿主恢复前台后的完整欢迎页",
+      "device": "iPhone 17 Pro",
+      "deviceID": "3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3",
+      "captureMethod": "SwiftUI StartupFlowView hosted by UIHostingController",
+      "test": "StartupVisualTests/testWelcomePresentationLifecycleAndFailedAcceptDoNotAdvancePermissions()",
+      "testIdentifierURL": "test://com.apple.xcode/Capydoku/CapydokuAppTests/StartupVisualTests/testWelcomePresentationLifecycleAndFailedAcceptDoNotAdvancePermissions",
+      "source": "Validation/test-runs/original-0214-startup-final-attachments/67E48264-B262-4E7E-A883-4D604E50AD7F.png",
+      "sourceManifest": "Validation/test-runs/original-0214-startup-final-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0214-app-final.xcresult",
+      "attachmentTimestamp": 1790788979.53,
+      "dimensions": [
+        1206,
+        2622
+      ],
+      "sha256": "d0c4fa8db2cd583f033bf8f161e2b171e5d7847074fedb90360a411e46725b6e",
+      "individuallyViewed": true,
+      "visualReview": "已逐张打开：重新active并关闭测试减少动态效果覆盖后，卡片完整居中，正文、链接与同意按钮可读；没有首页或重新Loading，只验证宿主生命周期分支。",
+      "captureRevisionNote": "这7张宿主图采集于移除Welcome容器welcome_card标识之前。该标识曾被SwiftUI传递给子控件并覆盖accept_terms，造成真实界面测试失败；最终代码已仅移除容器标识，绘制、布局和动画未改变。这组图片仅用于视觉证据，不用于最终可访问性标识/焦点验收；后续真实界面回归另记。"
+    },
+    {
+      "path": "Docs/original-welcome-0214/pro-welcome-transition-05-notification-pending-brand-only.png",
+      "title": "通知等待阶段（品牌页保留、Welcome已退出）",
+      "device": "iPhone 17 Pro",
+      "deviceID": "3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3",
+      "captureMethod": "SwiftUI StartupFlowView hosted by UIHostingController",
+      "test": "StartupVisualTests/testWelcomePresentationLifecycleAndFailedAcceptDoNotAdvancePermissions()",
+      "testIdentifierURL": "test://com.apple.xcode/Capydoku/CapydokuAppTests/StartupVisualTests/testWelcomePresentationLifecycleAndFailedAcceptDoNotAdvancePermissions",
+      "source": "Validation/test-runs/original-0214-startup-final-attachments/3076A817-FA40-4AC9-A843-9D8EF6D8732B.png",
+      "sourceManifest": "Validation/test-runs/original-0214-startup-final-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0214-app-final.xcresult",
+      "attachmentTimestamp": 1790788980.51,
+      "dimensions": [
+        1206,
+        2622
+      ],
+      "sha256": "04ad8a6bb1643f1b58a28aacf38b4cbaeb747a02d0ebf346249560d1ce1587fc",
+      "individuallyViewed": true,
+      "visualReview": "已逐张打开：奶油色品牌页完整，没有Welcome卡片、遮罩或卡片残影，未显示首页。通知调用由测试适配器保持未完成，不是系统通知授权弹窗截图。",
+      "captureRevisionNote": "这7张宿主图采集于移除Welcome容器welcome_card标识之前。该标识曾被SwiftUI传递给子控件并覆盖accept_terms，造成真实界面测试失败；最终代码已仅移除容器标识，绘制、布局和动画未改变。这组图片仅用于视觉证据，不用于最终可访问性标识/焦点验收；后续真实界面回归另记。"
+    },
+    {
+      "path": "Docs/original-welcome-0214/17e-chinese-welcome.png",
+      "title": "17e中文欢迎页（修复控件标识后）",
+      "device": "iPhone 17e",
+      "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+      "captureMethod": "Actual simulator screenshot from XCTest UI run after removal of container accessibility identifier",
+      "test": "AppLanguageUITests/testChineseFirstLaunchLegalCopy()",
+      "testIdentifierURL": "test://com.apple.xcode/Capydoku/CapydokuUITests/AppLanguageUITests/testChineseFirstLaunchLegalCopy",
+      "source": "Validation/test-runs/original-0214-17e-attachments/1CDD0F85-8265-4FB6-8B96-71609F83B5C7.png",
+      "sourceManifest": "Validation/test-runs/original-0214-17e-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0214-ui-17e.xcresult",
+      "attachmentTimestamp": 1790789301.865,
+      "dimensions": [
+        1170,
+        2532
+      ],
+      "sha256": "e8fd9b40a449675d2caf2b6b6fa678b2dc80fea8e48bd6beaf774707ff52fce0",
+      "individuallyViewed": true,
+      "visualReview": "已逐张打开实际模拟器界面截图：中文欢迎卡片完整居中，正文、服务条款、隐私政策及同意按钮清楚，无截断或遮挡。对应UI测试已定位accept_terms并确认文字为同意并继续，成功打开服务条款的内部测试说明并关闭返回；本图不单独证明VoiceOver或隐私政策点击路径。",
+      "captureRevisionNote": "采集于删除Welcome容器welcome_card标识之后的最终真实模拟器UI测试。保留子控件accept_terms标识；不是UIHostingController宿主截图，也不宣称真实VoiceOver验收。"
+    },
+    {
+      "path": "Docs/original-welcome-0214/17e-original-welcome.png",
+      "title": "17e英文欢迎页（修复控件标识后）",
+      "device": "iPhone 17e",
+      "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+      "captureMethod": "Actual simulator screenshot from XCTest UI run after removal of container accessibility identifier",
+      "test": "OriginalReferenceUITests/testFirstLaunchHasWorkingLegalLinksAndAcceptancePersists()",
+      "testIdentifierURL": "test://com.apple.xcode/Capydoku/CapydokuUITests/OriginalReferenceUITests/testFirstLaunchHasWorkingLegalLinksAndAcceptancePersists",
+      "source": "Validation/test-runs/original-0214-17e-attachments/68CF3875-641D-41A5-85E4-393BF5AD39A0.png",
+      "sourceManifest": "Validation/test-runs/original-0214-17e-attachments/manifest.json",
+      "bundle": "Validation/test-runs/original-0214-ui-17e.xcresult",
+      "attachmentTimestamp": 1790789362.982,
+      "dimensions": [
+        1170,
+        2532
+      ],
+      "sha256": "d341b37131edd84d1f206cf31fcf9711dfcdb74f4d52f4816b6e64a14d5003c4",
+      "individuallyViewed": true,
+      "visualReview": "已逐张打开实际模拟器界面截图：英文标题、正文、两项法律链接与Accept按钮完整居中且可读，无截断。对应UI测试成功打开并关闭Terms of Service，点击Accept后进入首页，终止并重启后保持已接受状态、不重复显示Welcome。",
+      "captureRevisionNote": "采集于删除Welcome容器welcome_card标识之后的最终真实模拟器UI测试。保留子控件accept_terms标识；不是UIHostingController宿主截图，也不宣称真实VoiceOver验收。"
+    }
+  ],
+  "captureRevisionNote": "前7张Pro宿主图采集于移除容器welcome_card标识之前，仅作视觉证据；新增2张17e实际UI图采集于修复之后。原标识覆盖accept_terms导致的真实UI失败及后续修复分别保留历史，未归类为测试不稳定。",
+  "finalUIEvidence": {
+    "bundle": "Validation/test-runs/original-0214-ui-17e.xcresult",
+    "log": "Validation/test-runs/original-0214-ui-17e.log",
+    "testsPassed": 4,
+    "sourceTests": [
+      "UITests/AppLanguageUITests.swift",
+      "UITests/OriginalReferenceUITests.swift"
+    ]
+  }
+}

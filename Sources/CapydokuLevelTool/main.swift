@@ -24,7 +24,7 @@ struct AutomatedPlaythrough: Codable {
 }
 struct GenerationReport: Codable {
     var generatorVersion = PuzzleGenerator.version
-    var profileVersion = DifficultyProfile.provisionalVersion
+    var profileVersion: String
     var status = "Original chapter 3 candidate/solver/difficulty/similarity/select pipeline implemented. Numeric profiles and player metrics are local estimates, not frozen Pawdoku validation. Same-product exact region/answer/board duplicates are strictly rejected; cross-product corpus is missing."
     var count: Int
     var uniqueFingerprints: Int
@@ -114,7 +114,9 @@ do {
         catalog = imported.0
     }
     if args.contains("--export-profiles") {
-        let profiles = DifficultyProfileCatalog(version: DifficultyProfile.provisionalVersion, profiles: (first..<(first + count)).map { .provisional(level: $0) })
+        let values = (first..<(first + count)).map { DifficultyProfile.provisional(level: $0) }
+        let versions = Set(values.map(\.profileVersion)).sorted().joined(separator: "+")
+        let profiles = DifficultyProfileCatalog(version: versions, profiles: values)
         try FileManager.default.createDirectory(at: outputDirectory, withIntermediateDirectories: true)
         try encoder.encode(profiles).write(to: outputDirectory.appendingPathComponent("difficulty-profiles.json"), options: .atomic)
         print("Exported explicitly unverified local profiles.")
@@ -171,7 +173,8 @@ do {
     let validation = outputDirectory.appendingPathComponent("Validation", isDirectory: true)
     try FileManager.default.createDirectory(at: resources, withIntermediateDirectories: true)
     try FileManager.default.createDirectory(at: validation, withIntermediateDirectories: true)
-    let report = GenerationReport(count: puzzles.count, uniqueFingerprints: fingerprints.count,
+    let versions = Set(records.compactMap { $0.pipeline?.target.profileVersion }).sorted().joined(separator: "+")
+    let report = GenerationReport(profileVersion: versions, count: puzzles.count, uniqueFingerprints: fingerprints.count,
                                   allValid: records.allSatisfy { $0.validation.valid }, levels: records)
     if !experimental { try encoder.encode(puzzles).write(to: resources.appendingPathComponent("levels.json"), options: .atomic) }
     else { try encoder.encode(puzzles).write(to: validation.appendingPathComponent("experimental-levels.json"), options: .atomic) }

@@ -3,9 +3,13 @@ import SwiftUI
 struct StartupFlowView: View {
     @EnvironmentObject var model: AppModel
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.accessibilityReduceMotion) private var systemReduceMotion
     @StateObject private var controller: StartupController
     @State private var legalTitle: String?
     private let scenePhaseOverride: ScenePhase?
+    private let reduceMotionOverride: Bool?
+    private var active: Bool { (scenePhaseOverride ?? scenePhase) == .active }
+    private var reduceMotion: Bool { reduceMotionOverride ?? systemReduceMotion }
 
     init(directory: URL) {
         #if DEBUG
@@ -16,11 +20,13 @@ struct StartupFlowView: View {
         #endif
         _controller = StateObject(wrappedValue: StartupController(directory: directory, skip: skip))
         scenePhaseOverride = nil
+        reduceMotionOverride = nil
     }
     /// Hosts the actual flow with controlled lifecycle and permission adapters in tests.
-    init(controller: StartupController, scenePhaseOverride: ScenePhase? = nil) {
+    init(controller: StartupController, scenePhaseOverride: ScenePhase? = nil, reduceMotionOverride: Bool? = nil) {
         _controller = StateObject(wrappedValue: controller)
         self.scenePhaseOverride = scenePhaseOverride
+        self.reduceMotionOverride = reduceMotionOverride
     }
     var body: some View {
         ZStack {
@@ -31,28 +37,26 @@ struct StartupFlowView: View {
                     else { StartupBrandView(isPreparing: controller.stage == .brandLoading) }
                 }
                 .accessibilityHidden(controller.stage == .welcome || controller.errorMessage != nil)
+            }
+            // This persistent, independent layer keeps only the Welcome card
+            // in its removal transition. Brand and Home never inherit it.
+            ZStack {
                 if controller.stage == .welcome {
-                    Color.black.opacity(0.65).ignoresSafeArea()
-                    VStack(spacing: 0) {
-                        Text(model.progress.settings.language.text("Welcome")).font(.system(size: 26, weight: .bold, design: .rounded))
-                            .frame(maxWidth: .infinity).padding(14).background(Color.orange.opacity(0.10))
-                        VStack(spacing: 6) {
-                            Text(model.progress.settings.language.text("Please read and accept our"))
-                            Button { legalTitle = "Terms of Service" } label: { Text(model.progress.settings.language.text("Terms of Service")).underline() }
-                            Text(model.progress.settings.language.text("and"))
-                            Button { legalTitle = "Privacy Policy" } label: { Text(model.progress.settings.language.text("Privacy Policy")).underline() }
-                        }.font(.system(size: 18, weight: .medium, design: .rounded)).padding(24)
-                        Button { Task { await controller.accept() } } label: {
-                            Text(model.progress.settings.language.text("Accept")).font(.system(size: 22, weight: .bold, design: .rounded))
-                                .foregroundColor(.white).frame(maxWidth: .infinity).frame(height: 52)
-                                .background(Capsule().fill(Color.orange))
-                        }.accessibilityIdentifier("accept_terms").padding([.horizontal, .bottom], 24)
-                    }
-                    .foregroundColor(.brown).background(Color(red: 1, green: 0.99, blue: 0.96))
-                    .clipShape(RoundedRectangle(cornerRadius: 24)).frame(maxWidth: 310)
-                    .accessibilityAddTraits(.isModal)
+                    Color.black.opacity(0.65).ignoresSafeArea().transition(.opacity)
+                    welcomeCard.transition(reduceMotion ? .opacity : .scale(scale: 0.88).combined(with: .opacity))
                 }
             }
+            // Original [253]; same provisional values as the other Demo cards,
+            // not a claim about the missing frozen reference's animation timing.
+            .animation(active && !reduceMotion ? .easeOut(duration: 0.18) : nil, value: controller.stage == .welcome)
+            // Changing lifecycle/accessibility context disposes any in-flight
+            // visual transition, without touching the controller or consent.
+            .id(StartupWelcomePresentationIdentity(active: active, reduceMotion: reduceMotion))
+            .transaction { transaction in
+                if !active || reduceMotion { transaction.animation = nil; transaction.disablesAnimations = true }
+            }
+            .allowsHitTesting(active && controller.stage == .welcome)
+            .accessibilityHidden(controller.stage != .welcome)
         }
         .task {
             controller.onAccepted = { model.consentAccepted() }
@@ -87,5 +91,44 @@ struct StartupFlowView: View {
         } message: { Text(model.progress.settings.language.text(controller.errorMessage ?? "")) }
         .environment(\.appLanguage, model.progress.settings.language)
         .environment(\.locale, Locale(identifier: model.progress.settings.language.localeIdentifier))
+    }
+
+    private var welcomeCard: some View {
+        VStack(spacing: 0) {
+            Text(model.progress.settings.language.text("Welcome")).font(.system(size: 26, weight: .bold, design: .rounded))
+                .frame(maxWidth: .infinity).padding(14).background(Color.orange.opacity(0.10))
+            VStack(spacing: 6) {
+                Text(model.progress.settings.language.text("Please read and accept our"))
+                Button { legalTitle = "Terms of Service" } label: { Text(model.progress.settings.language.text("Terms of Service")).underline() }
+                    .buttonStyle(StartupWelcomeButtonStyle())
+                Text(model.progress.settings.language.text("and"))
+                Button { legalTitle = "Privacy Policy" } label: { Text(model.progress.settings.language.text("Privacy Policy")).underline() }
+                    .buttonStyle(StartupWelcomeButtonStyle())
+            }.font(.system(size: 18, weight: .medium, design: .rounded)).padding(24)
+            Button { Task { await controller.accept() } } label: {
+                Text(model.progress.settings.language.text("Accept")).font(.system(size: 22, weight: .bold, design: .rounded))
+                    .foregroundColor(.white).frame(maxWidth: .infinity).frame(height: 52)
+                    .background(Capsule().fill(CapyPalette.actionOrange))
+            }.buttonStyle(StartupWelcomeButtonStyle())
+                .accessibilityIdentifier("accept_terms").padding([.horizontal, .bottom], 24)
+        }
+        .foregroundColor(CapyPalette.ink).background(CapyPalette.paper)
+        .clipShape(RoundedRectangle(cornerRadius: 24)).frame(maxWidth: 310)
+        .accessibilityAddTraits(.isModal)
+    }
+}
+
+private struct StartupWelcomePresentationIdentity: Hashable {
+    let active: Bool
+    let reduceMotion: Bool
+}
+
+/// Keep the Welcome controls' existing geometry while giving their functional
+/// text a predictable pressed contrast (Original [303, 306]).
+struct StartupWelcomeButtonStyle: ButtonStyle {
+    static let pressedOpacity: Double = 0.86
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label.opacity(configuration.isPressed ? Self.pressedOpacity : 1)
     }
 }

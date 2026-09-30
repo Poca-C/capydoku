@@ -53,4 +53,27 @@ final class FunctionalContrastTests: XCTestCase {
     @MainActor func testFutureCheckInWeekdaysRemainReadableAsStatusText() throws {
         XCTAssertGreaterThanOrEqual(contrast(try rgb(CapyPalette.checkInSecondaryText), try rgb(CapyPalette.cream)), 4.5)
     }
+
+    @MainActor func testWelcomeBodyLegalLinksAndHeadingMeetContrast() throws {
+        let paper = try rgb(CapyPalette.paper)
+        let text = try rgb(CapyPalette.ink)
+        XCTAssertGreaterThanOrEqual(contrast(text, paper), 4.5, "Welcome body and legal links use 18pt medium text.")
+        let headingBackground = composite(try rgb(.orange), opacity: 0.10, over: paper)
+        XCTAssertGreaterThanOrEqual(contrast(text, headingBackground), 4.5, "The tinted Welcome heading retains readable brand ink.")
+        let pressedLink = composite(text, opacity: StartupWelcomeButtonStyle.pressedOpacity, over: paper)
+        XCTAssertGreaterThanOrEqual(contrast(pressedLink, paper), 4.5, "Pressing either legal link must keep its text readable.")
+    }
+
+    @MainActor func testWelcomeAcceptLabelMeetsContrastBeforeAndDuringPress() throws {
+        let paper = try rgb(CapyPalette.paper)
+        let text = try rgb(.white)
+        let fill = try rgb(CapyPalette.actionOrange)
+        XCTAssertGreaterThanOrEqual(contrast(text, fill), 4.5)
+        let opacity = StartupWelcomeButtonStyle.pressedOpacity
+        let pressedText = composite(text, opacity: opacity, over: paper)
+        let pressedFill = composite(fill, opacity: opacity, over: paper)
+        // The existing Accept label is 22pt bold, so the large-text criterion
+        // is 3:1. Check its actual whole-control opacity, not just its base fill.
+        XCTAssertGreaterThanOrEqual(contrast(pressedText, pressedFill), 3)
+    }
 }

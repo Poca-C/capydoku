@@ -66,8 +66,17 @@ extension PuzzleGenerator {
             report.termination = "insufficient_candidate_budget"
             return .init(puzzle: nil, report: report)
         }
-        let sizes = [4, 6, 8, 10].filter { target.boardSizeCurveTarget.contains(Double($0)) }
-        guard !sizes.isEmpty else { report.termination = "unsupported_size_range"; return .init(puzzle: nil, report: report) }
+        let allowedSizes = [4, 6, 8, 10].filter { target.boardSizeCurveTarget.contains(Double($0)) }
+        guard !allowedSizes.isEmpty else { report.termination = "unsupported_size_range"; return .init(puzzle: nil, report: report) }
+        let sizes = allowedSizes.filter { size in
+            let available = PuzzleAnswerCapacity.used(size: size, corpus: corpus) < PuzzleAnswerCapacity.total(size: size)
+            if !available { report.rejectionReasons["capacity:size_\(size)_answer_space_exhausted"] = 1 }
+            return available
+        }
+        guard !sizes.isEmpty else {
+            report.termination = "answer_space_exhausted"; report.elapsedMilliseconds = elapsed()
+            return .init(puzzle: nil, report: report)
+        }
         var best: Puzzle?, bestDistance = Double.infinity
         for index in 0..<requested {
             let remaining = Int(budget) - elapsed()

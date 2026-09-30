@@ -52,6 +52,7 @@ public struct DifficultyProfile: Codable, Equatable, Sendable {
     public var candidateBatchSize: Int
     public var provenance: DifficultyProvenance
     public static let provisionalVersion = "original-ch3-local-estimate-v1"
+    public static let provisionalEndlessVersion = "original-ch3-endless-capacity-v2"
     public static let endlessReasoningDepthCap = 3
 
     public var validationErrors: [String] {
@@ -131,10 +132,14 @@ public struct DifficultyProfile: Codable, Equatable, Sendable {
         }
         let depthMaximum: Double = level <= 5 ? 1 : ([.flow, .recovery, .medium].contains(band) ? 2 : 3)
         let depthMinimum: Double = band == .peak ? 3 : ([.hard, .preHard].contains(band) ? 2 : 0)
-        return DifficultyProfile(profileVersion: provisionalVersion, levelID: level,
+        // A fixed 6×6 pool has only 90 non-touching answer permutations. Keep
+        // the same effort/score caps while allowing other supported sizes; size
+        // alone never promotes a candidate into the requested difficulty band.
+        let maximumSize = level > 150 ? 10 : size
+        return DifficultyProfile(profileVersion: level > 150 ? provisionalEndlessVersion : provisionalVersion, levelID: level,
             referenceLevelRange: level <= 150 ? .init(Double(level), Double(level)) : nil,
             difficultyBand: band, difficultyRole: role, difficultyScoreTarget: .init(scoreCenter * 0.85, scoreCenter * 1.15), bandScoreRange: scores,
-            boardSizeCurveTarget: .init(Double(size), Double(size)), regionCountTarget: .init(Double(size), Double(size)),
+            boardSizeCurveTarget: .init(Double(size), Double(maximumSize)), regionCountTarget: .init(Double(size), Double(maximumSize)),
             regionComplexityTarget: .init(0, 1), forcedMoveDensityTarget: .init(level <= 5 ? 0.9 : (band == .recovery ? 0.6 : 0), 1),
             candidateDensityTarget: .init(0, 1), reasoningDepthTarget: .init(depthMinimum, depthMaximum),
             logicalStepCountTarget: .init(Double(size), 200), errorRiskTarget: .init(level == 15 ? 0.35 : 0, level <= 5 ? 0.35 : 1),

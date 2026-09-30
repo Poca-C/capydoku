@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "date": "2026-10-01",
-  "build": "0.2.13 (16)",
+  "build": "0.2.14 (17)",
   "status": "Partial original-spec alignment; remaining client, reference and release gaps open.",
   "originalSHA256": "274bbf15f031bd80bb8b360cf14c0266acff370a230d9cad1b1785461df54dd2",
   "currentPackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49",
@@ -16,12 +16,12 @@
     "minimumOSRuntime": "not tested; compile target iOS 15"
   },
   "core": {
-    "build": "0.2.12 (15)",
-    "passed": 129,
+    "build": "0.2.14 (17)",
+    "passed": 133,
     "failed": 0,
-    "seconds": 30.475,
-    "log": "Validation/test-runs/original-0212-core.log",
-    "scope": "Full Swift package suite; four new language migration/persistence tests. Original levels unchanged; not new difficulty acceptance."
+    "seconds": 48.93,
+    "log": "Validation/test-runs/original-0214-core.log",
+    "scope": "Full Swift package suite, four new capacity/profile tests. Packaged150 unchanged; new endless profile is provisional."
   },
   "pythonImport": {
     "passed": 6,
@@ -34,15 +34,24 @@
     "report": "Validation/independent-validation.json"
   },
   "generation": {
+    "build": "0.2.14 (17)",
     "fixed": 150,
-    "experimental": 30,
-    "uniqueAnswers": 180,
-    "uniqueRegionStructures": 180,
-    "all180UniqueSolutionAndConnected": true,
-    "logicOnlyFixedPlaythroughs": 150,
-    "metadataRebuilds": 150,
-    "exceptions": [],
-    "report": "Validation/original-generation/summary.json",
+    "experimental": 60,
+    "experimentalRanges": [
+      [
+        151,
+        180
+      ],
+      [
+        291,
+        320
+      ]
+    ],
+    "uniqueAnswers": 210,
+    "uniqueRegionStructures": 210,
+    "independentUniqueSolutionAndConnected": 210,
+    "report": "Validation/original-generation-0214-final/independent-audit.json",
+    "scope": "New 60 boards plus unchanged packaged150. 291–320 corpus adds synthetic census of all90 legal6x6 answers; not actual90 produced levels. 181–290 not generated. No claim of infinite generation.",
     "formalDifficultyCalibration": "missing frozen Pawdoku samples",
     "crossProductComparison": "missing other-product corpus"
   },
@@ -509,6 +518,33 @@
       "failed": 0,
       "seconds": 154.899,
       "scope": "Actual native single/double/horizontal/vertical/diagonal/outside recognizers then free Hint and simulated ad Hint; claimed day disabled and cold persistence; independent settings and mixed ON/OFF captures in English/Chinese; Chinese default, language switching and same-board cold restoration."
+    },
+    {
+      "build": "0.2.14 (17)",
+      "device": "iPhone 17 Pro",
+      "bundle": "Validation/test-runs/original-0214-app-final.xcresult",
+      "appTestsPassed": 246,
+      "failed": 0,
+      "seconds": 69.26,
+      "scope": "All AppTests except OriginalUIContractTests. Includes 20 production-default real-Keychain tests, 10 injected-native-pan path tests, two Welcome contrast tests and one hosted Welcome lifecycle test. Simulator uses local signing; not device Keychain acceptance."
+    },
+    {
+      "build": "0.2.14 (17)",
+      "device": "iPhone 17 Pro",
+      "bundle": "Validation/test-runs/original-0214-ui-pro-final.xcresult",
+      "uiTestsPassed": 3,
+      "failed": 0,
+      "seconds": 57.129,
+      "scope": "Current-pack nine-step tutorial; actual native swipe from found animal rejected and subsequent valid stroke works; English first-launch legal links/consent and relaunch."
+    },
+    {
+      "build": "0.2.14 (17)",
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-0214-ui-17e.xcresult",
+      "uiTestsPassed": 4,
+      "failed": 0,
+      "seconds": 78.625,
+      "scope": "Chinese first-launch legal UI; Chinese default/language switch/same-board relaunch; actual found-origin swipe rejection; English first-launch consent and relaunch."
     }
   ],
   "visualEvidence": {
@@ -534,12 +570,12 @@
   ],
   "historicalFailuresRetained": "Initial UI/app runs and first full-core run failed on changed fixture assumptions or real UI issues; these are retained under Validation/test-runs. Only explicitly listed successful reruns count. Old 88-item checklist completion counts are superseded.",
   "applicationTests": {
-    "build": "0.2.13 (16)",
-    "passed": 213,
+    "build": "0.2.14 (17)",
+    "passed": 246,
     "failed": 0,
-    "seconds": 63.421,
-    "bundle": "Validation/test-runs/original-0213-app-final.xcresult",
-    "scope": "All AppTests except OriginalUIContractTests. Twenty additions: six board recognizer activity/lifecycle, nine reward input gate/visibility, four functional contrast, one actual RootView configured-offer visual test."
+    "seconds": 69.26,
+    "bundle": "Validation/test-runs/original-0214-app-final.xcresult",
+    "scope": "All AppTests except OriginalUIContractTests. Includes 20 production-default real-Keychain tests, 10 injected-native-pan path tests, two Welcome contrast tests and one hosted Welcome lifecycle test. Simulator uses local signing; not device Keychain acceptance. Final UI correction removes only an unused container accessibility identifier after this run; UI tests explicitly reverify Accept."
   },
   "supersededOrInterruptedRuns": [
     "reward-readiness-final was intentionally interrupted to stop two runners targeting one simulator; not counted as success.",
@@ -582,43 +618,26 @@
     }
   ],
   "buildVerification": {
-    "bundleVersion": "0.2.13 (16)",
-    "simulatorDebug": "passed through app and UI test builds",
-    "simulatorLog": "Validation/test-runs/original-0213-app-final.log",
+    "bundleVersion": "0.2.14 (17)",
+    "simulatorDebug": "passed with CODE_SIGNING_ALLOWED=YES and simulator-only embedded Keychain entitlements",
+    "simulatorLog": "Validation/test-runs/original-0214-app-final.log",
     "genericIOSReleaseUnsigned": "passed",
-    "releaseLog": "Validation/test-runs/original-0213-release.log",
-    "signingAndDeviceExecution": "No physical device, minimum runtime, TestFlight or App Store execution in this run.",
-    "scope": "Original [88,97,299,303,305,306]: input gating, visible disabled offer, check-in state/focus and functional text contrast. Core/config schema/levels/audio unchanged.",
+    "releaseLog": "Validation/test-runs/original-0214-release-final.log",
+    "signingAndDeviceExecution": "Simulator locally signed; generic device Release compile is unsigned. Physical devices, minimum runtime, TestFlight and App Store remain unverified.",
     "sourceDocumentSHA256Unchanged": true,
-    "normalInstallEvidence": "Validation/test-runs/original-0213-install.json",
+    "normalInstallEvidence": "Validation/original-0214-install-audit.json",
     "normalInstallDevices": [
       {
         "device": "iPhone 17 Pro",
-        "id": "3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3",
-        "version": "0.2.13 (16)",
-        "installed": true,
-        "dataContainerChangedDuringUpdate": true,
+        "version": "0.2.14 (17)",
         "normalProgressBytesUnchanged": true,
-        "normalProgressSHA256": "fa5f31ec8c3ea6202656aec3617b39f9e0c82a50aa58dda295e7dd2e1c57421f",
-        "launchWithoutTestOrResetArguments": "com.capydoku.demo: 16272",
-        "purposeLocales": [
-          "zh-Hans.lproj",
-          "en.lproj"
-        ]
+        "launch": "com.capydoku.demo: 24721"
       },
       {
         "device": "iPhone 17e",
-        "id": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
-        "version": "0.2.13 (16)",
-        "installed": true,
-        "dataContainerChangedDuringUpdate": true,
+        "version": "0.2.14 (17)",
         "normalProgressBytesUnchanged": true,
-        "normalProgressSHA256": "7e8827414371c98c312b7dba72169b67c1bd64c7ef0e305a4541d40b0e7231e4",
-        "launchWithoutTestOrResetArguments": "com.capydoku.demo: 16291",
-        "purposeLocales": [
-          "zh-Hans.lproj",
-          "en.lproj"
-        ]
+        "launch": "com.capydoku.demo: 24868"
       }
     ]
   },
@@ -798,6 +817,14 @@
       "seconds": 60.157,
       "bundle": "Validation/test-runs/original-0212-app-final.xcresult",
       "scope": "All AppTests except OriginalUIContractTests. Includes eleven new localization tests and six language-state tests; actual hosted result/startup pages now use Chinese default."
+    },
+    {
+      "build": "0.2.13 (16)",
+      "passed": 213,
+      "failed": 0,
+      "seconds": 63.421,
+      "bundle": "Validation/test-runs/original-0213-app-final.xcresult",
+      "scope": "All AppTests except OriginalUIContractTests. Twenty additions: six board recognizer activity/lifecycle, nine reward input gate/visibility, four functional contrast, one actual RootView configured-offer visual test."
     }
   ],
   "remoteConfigurationContract": {
@@ -983,6 +1010,47 @@
       ],
       "normalLaunch": "0.2.12 / 15 Info.plist verified, existing normal progress kept byte-identical through installation after resolving changed simulator data containers, launched without reset or test arguments. See Validation/test-runs/original-0212-install.json.",
       "installEvidence": "Validation/test-runs/original-0212-install.json"
+    },
+    {
+      "bundleVersion": "0.2.13 (16)",
+      "simulatorDebug": "passed through app and UI test builds",
+      "simulatorLog": "Validation/test-runs/original-0213-app-final.log",
+      "genericIOSReleaseUnsigned": "passed",
+      "releaseLog": "Validation/test-runs/original-0213-release.log",
+      "signingAndDeviceExecution": "No physical device, minimum runtime, TestFlight or App Store execution in this run.",
+      "scope": "Original [88,97,299,303,305,306]: input gating, visible disabled offer, check-in state/focus and functional text contrast. Core/config schema/levels/audio unchanged.",
+      "sourceDocumentSHA256Unchanged": true,
+      "normalInstallEvidence": "Validation/test-runs/original-0213-install.json",
+      "normalInstallDevices": [
+        {
+          "device": "iPhone 17 Pro",
+          "id": "3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3",
+          "version": "0.2.13 (16)",
+          "installed": true,
+          "dataContainerChangedDuringUpdate": true,
+          "normalProgressBytesUnchanged": true,
+          "normalProgressSHA256": "fa5f31ec8c3ea6202656aec3617b39f9e0c82a50aa58dda295e7dd2e1c57421f",
+          "launchWithoutTestOrResetArguments": "com.capydoku.demo: 16272",
+          "purposeLocales": [
+            "zh-Hans.lproj",
+            "en.lproj"
+          ]
+        },
+        {
+          "device": "iPhone 17e",
+          "id": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+          "version": "0.2.13 (16)",
+          "installed": true,
+          "dataContainerChangedDuringUpdate": true,
+          "normalProgressBytesUnchanged": true,
+          "normalProgressSHA256": "7e8827414371c98c312b7dba72169b67c1bd64c7ef0e305a4541d40b0e7231e4",
+          "launchWithoutTestOrResetArguments": "com.capydoku.demo: 16291",
+          "purposeLocales": [
+            "zh-Hans.lproj",
+            "en.lproj"
+          ]
+        }
+      ]
     }
   ],
   "feedbackCorrection": {
@@ -1085,6 +1153,14 @@
       "seconds": 27.596,
       "log": "Validation/test-runs/original-0210-core-ad-events-final.log",
       "scope": "Full Swift package suite, including nine new reward observation persistence/migration/validation cases. Initial and final Core logs are copies of the same first successful run, not two runs. Production levels unchanged; not reference difficulty acceptance."
+    },
+    {
+      "build": "0.2.12 (15)",
+      "passed": 129,
+      "failed": 0,
+      "seconds": 30.475,
+      "log": "Validation/test-runs/original-0212-core.log",
+      "scope": "Full Swift package suite; four new language migration/persistence tests. Original levels unchanged; not new difficulty acceptance."
     }
   ],
   "levelResultCorrection": {
@@ -1529,5 +1605,94 @@
       "scope": "Eight selected UI tests, not a full UI suite. Pro run preceded an additional UI-test-only mixed-setting screenshot/Chinese switch assertion; 17e includes that assertion. Production source unchanged between runs."
     },
     "normalInstall": "Both simulators updated to 0.2.13 (16), data container re-resolved after installation, pre/post normal progress bytes identical, launched without UI-test/reset arguments. No acceptance of pending terms on behalf of user."
+  },
+  "generationHistory": [
+    {
+      "fixed": 150,
+      "experimental": 30,
+      "uniqueAnswers": 180,
+      "uniqueRegionStructures": 180,
+      "all180UniqueSolutionAndConnected": true,
+      "logicOnlyFixedPlaythroughs": 150,
+      "metadataRebuilds": 150,
+      "exceptions": [],
+      "report": "Validation/original-generation/summary.json",
+      "formalDifficultyCalibration": "missing frozen Pawdoku samples",
+      "crossProductComparison": "missing other-product corpus"
+    }
+  ],
+  "corrections0214": {
+    "build": "0.2.14 (17)",
+    "sourceParagraphs": [
+      133,
+      216,
+      228,
+      230,
+      232,
+      253,
+      306,
+      360,
+      381,
+      402,
+      407
+    ],
+    "changes": [
+      "Endless local profile v2 broadens supported size choices while preserving role, score, inference-depth and no-trial caps; exact answer capacity eliminates exhausted sizes before candidate construction. Fixed imported targets never expand. Exhaustion returns explicit failure, not duplicate boards.",
+      "Native pan stops adding marks once the finger leaves its original row or column; a new touch is required after reentry. Found animals cannot be swipe origins; prior legal marks remain.",
+      "Welcome uses readable theme colors and an isolated center-scale/fade transition with provisional 0.18s/0.88 values; lifecycle/Reduce Motion removes visual transition without altering consent or permissions.",
+      "After consent, anonymous identity resolves through a persistent opaque namespace and Keychain. Legacy migration preserves exact owner and event bytes. Pending/committed namespace phases avoid replacing an established identity when evidence is lost; ambiguous/corrupt state disables collection without blocking gameplay.",
+      "Simulator-only Keychain entitlement and local signing make the production storage path testable; no live analytics SDK or network transport added."
+    ],
+    "failedAttempts": [
+      {
+        "bundle": "Validation/test-runs/original-0214-app-first.xcresult",
+        "executedTests": 241,
+        "assertionFailures": 40,
+        "reason": "New real Keychain cases ran with CODE_SIGNING_ALLOWED=NO; injected-memory tests could not expose this configuration problem.",
+        "scope": "Other226 tests passed; all assertion failures in identity suite."
+      },
+      {
+        "bundle": "Validation/test-runs/original-0214-keychain-unsigned-probe.xcresult",
+        "executedTests": 1,
+        "reason": "Diagnostic SecItemAdd failed with OSStatus -34018, confirming missing entitlement."
+      },
+      {
+        "bundle": "Validation/test-runs/original-0214-app-signed-final.xcresult",
+        "executedTests": 246,
+        "assertionFailures": 1,
+        "reason": "Immediate hosted Welcome entrance capture occurred before first drawable frame and produced blank pixels. Production behavior unchanged; test now renders/validates Loading before resource release, then samples after40ms."
+      },
+      {
+        "bundle": "Validation/test-runs/original-0214-ui-pro.xcresult",
+        "executedTests": 3,
+        "passed": 2,
+        "failed": 1,
+        "reason": "New Welcome container accessibilityIdentifier propagated to child buttons, overriding accept_terms. Runtime hierarchy showed visible Accept with the wrong identifier. Removed unused container identifier; visual/layout/animation unchanged.",
+        "hierarchy": "Validation/test-runs/original-0214-pro-initial-attachments/BE987484-0574-4867-91BC-8A9F6FD70824.txt"
+      }
+    ],
+    "finalAppBundle": "Validation/test-runs/original-0214-app-final.xcresult",
+    "keychainEntitlementEvidence": "Validation/test-runs/original-0214-simulator-entitlements.json",
+    "generationEvidence": "Validation/original-generation-0214-final/independent-audit.json",
+    "visualManifest": "Docs/original-welcome-0214/manifest.json",
+    "limitations": [
+      "Native-pan turn samples are injected recognizer samples; actual system multi-segment and physical multi-touch remain unverified.",
+      "Hosted lifecycle/Reduce Motion evidence is not physical-device accessibility or frozen reference timing acceptance.",
+      "Identity tests do not define production uninstall identity policy or prove device provisioning/SDK transport.",
+      "Initial generation output had obsolete outer v1 report label; final CLI report/export derives actual profile-version set and both batches were regenerated."
+    ],
+    "actualUpdateEvidence": {
+      "report": "Validation/original-0214-install-audit.json",
+      "roundsPerDevice": 2,
+      "devices": 2,
+      "passed": true,
+      "scope": "UI-test consent and analytics queue populated by actual first-launch UI. Each simctl update changed data container; namespace/user/session attribution/history preserved, first_open remained1; normal progress byte-identical and normal app launched without test/reset arguments."
+    },
+    "initialGenerationOutput": "Validation/test-runs/original-generation-0214-initial",
+    "uiRegression": {
+      "passed": 7,
+      "failed": 0,
+      "scope": "Selected paths on two simulators, not the full UI suite."
+    }
   }
 }

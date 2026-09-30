@@ -33,5 +33,6 @@
   "Primary save could not be read: {0}": "主存档读取失败。",
   "Backup could not be read: {0}": "备份存档读取失败。",
   "No valid save could be recovered. Starting with initial progress; damaged or incompatible files have been retained.": "未找到可恢复的有效存档，已从初始进度开始。损坏或不兼容的文件已保留。",
-  "OK": "确定"
+  "OK": "确定",
+  "No unused board remains within the configured size range. Your current board is intact.": "当前尺寸范围内已没有未使用的棋盘，需要更新关卡配置。你的当前棋盘已保留。"
 }

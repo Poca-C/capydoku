@@ -519,6 +519,10 @@ final class AppModel: ObservableObject {
                 case .success(let generation):
                     self.lastGenerationReport = generation.report
                     guard let puzzle = generation.puzzle else {
+                        if generation.report.termination == "answer_space_exhausted" {
+                            self.errorMessage = "No unused board remains within the configured size range. Your current board is intact."
+                            return
+                        }
                         self.errorMessage = "Generation stopped safely. Your current board is intact. Please retry. \(generation.report.termination)"; return
                     }
                     self.progress.begin(puzzle: puzzle, config: configuration)

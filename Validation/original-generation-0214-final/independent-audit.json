@@ -1,0 +1,1760 @@
+{
+  "schemaVersion": 1,
+  "createdAtUTC": "2026-09-30T17:15:44.112674+00:00",
+  "status": "passed_with_scope_limits",
+  "method": "Independent Python row-by-row exhaustive enumeration with row/column/region/non-adjacency constraints, orthogonal flood-fill connectivity, and canonical region/answer comparisons. No Swift solver invoked. Pipeline acceptance/metrics/budgets checked against stored reports; heuristic difficulty metrics were not independently recalculated.",
+  "inputs": {
+    "pack": {
+      "path": "Resources/levels.json",
+      "bytes": 192292,
+      "sha256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+    },
+    "new151to180": {
+      "path": "Validation/original-generation-0214-final/Validation/experimental-levels.json",
+      "bytes": 39061,
+      "sha256": "cfbb1edfaab445ae03798110c36898170183d40e020024266c3f02c5fc7cbd6a"
+    },
+    "report151to180": {
+      "path": "Validation/original-generation-0214-final/Validation/experimental-levels-report.json",
+      "bytes": 226942,
+      "sha256": "c80c35140fa203898848e1e70a00a305d7cbd8f98d407b41fb2f75fa8b8c32ec"
+    },
+    "new291to320": {
+      "path": "Validation/original-generation-0214-final/exhausted-six/Validation/experimental-levels.json",
+      "bytes": 40034,
+      "sha256": "3a33d0014da8ef8c3bec4a03fe588dc75b623bf642bd735260bfe95c52807e45"
+    },
+    "report291to320": {
+      "path": "Validation/original-generation-0214-final/exhausted-six/Validation/experimental-levels-report.json",
+      "bytes": 240005,
+      "sha256": "2ecaffbfde2d2490cc62865abbc8233cd890a71f7534f87beddf0e160c724f1e"
+    },
+    "combinedHistory": {
+      "path": "Validation/original-generation-0214-final/history-with-151-180.json",
+      "bytes": 131749,
+      "sha256": "e1cf41804eeb90e722224336dae5f2939f6e2ec8b987727e0c2444d73542a172"
+    },
+    "syntheticSixBySixAnswers": {
+      "path": "Validation/original-generation-0214-final/synthetic-complete-6x6-answer-corpus.json",
+      "bytes": 31783,
+      "sha256": "87f2b6b4c220cd0366ca66c6f301d605a9d9ba3344cc00ac5d70fb959c8ea0c9"
+    },
+    "mixedProfileCatalog": {
+      "path": "Validation/original-generation-0214-final/mixed-profile-export/difficulty-profiles.json",
+      "bytes": 33323,
+      "sha256": "3588b87c3bb94408cf1f49da6578a033b1345c55bdda7284a2ae78aad35ca79c"
+    },
+    "log151to180": {
+      "path": "Validation/test-runs/original-0214-endless-151-180-final.log",
+      "bytes": 2194,
+      "sha256": "904d7a06925a275be8fa8d5f9fc1cc94dc10c1be250e959c8907ae91f436c0be"
+    },
+    "log291to320": {
+      "path": "Validation/test-runs/original-0214-endless-291-320-final.log",
+      "bytes": 1906,
+      "sha256": "5cd454b2ac3be6ace4f3c918201134d1f89a3e97f9803d4aa5823520c15905d9"
+    }
+  },
+  "independentPuzzleValidation": {
+    "count": 210,
+    "levelRanges": [
+      [
+        1,
+        180
+      ],
+      [
+        291,
+        320
+      ]
+    ],
+    "allValid": true,
+    "allUniqueSolution": true,
+    "allRegionsConnected": true,
+    "allStoredAnswersMatch": true,
+    "distinctCanonicalRegionMaps": 210,
+    "distinctAnswers": 210,
+    "newBoardsChecked": 60,
+    "sizeDistribution": {
+      "10": 53,
+      "4": 2,
+      "6": 49,
+      "8": 106
+    }
+  },
+  "newGenerationGroups": [
+    {
+      "firstLevel": 151,
+      "lastLevel": 180,
+      "count": 30,
+      "sizeDistribution": {
+        "10": 3,
+        "6": 1,
+        "8": 26
+      },
+      "reportedCompletedCandidateBatches": 30,
+      "reportedCandidatesPerAcceptedBatch": 100,
+      "reportedElapsedMillisecondsRange": [
+        20,
+        100
+      ],
+      "targetMetadataAndOuterVersion": "original-ch3-endless-capacity-v2",
+      "selectedDifficultyAndSimilarityAccepted": true,
+      "reportedMeasurementsInsideTargets": true,
+      "strictCrossProductAcceptance": false,
+      "historicalCorpusEntriesAtFirstLevel": 150,
+      "sixBySixCapacitySkipLevels": [],
+      "difficultyBlocks": [
+        {
+          "firstLevel": 151,
+          "lastLevel": 160,
+          "roles": {
+            "Challenge": 2,
+            "Flow": 2,
+            "Hard": 1,
+            "Medium": 3,
+            "Pre-Hard": 1,
+            "Recovery": 1
+          }
+        },
+        {
+          "firstLevel": 161,
+          "lastLevel": 170,
+          "roles": {
+            "Challenge": 2,
+            "Flow": 2,
+            "Hard": 1,
+            "Medium": 3,
+            "Pre-Hard": 1,
+            "Recovery": 1
+          }
+        },
+        {
+          "firstLevel": 171,
+          "lastLevel": 180,
+          "roles": {
+            "Challenge": 2,
+            "Flow": 2,
+            "Hard": 1,
+            "Medium": 3,
+            "Pre-Hard": 1,
+            "Recovery": 1
+          }
+        }
+      ],
+      "rejectedBatchesBeforeAcceptedBatches": []
+    },
+    {
+      "firstLevel": 291,
+      "lastLevel": 320,
+      "count": 30,
+      "sizeDistribution": {
+        "10": 5,
+        "8": 25
+      },
+      "reportedCompletedCandidateBatches": 30,
+      "reportedCandidatesPerAcceptedBatch": 100,
+      "reportedElapsedMillisecondsRange": [
+        22,
+        106
+      ],
+      "targetMetadataAndOuterVersion": "original-ch3-endless-capacity-v2",
+      "selectedDifficultyAndSimilarityAccepted": true,
+      "reportedMeasurementsInsideTargets": true,
+      "strictCrossProductAcceptance": false,
+      "historicalCorpusEntriesAtFirstLevel": 270,
+      "sixBySixCapacitySkipLevels": [
+        291,
+        292,
+        296,
+        301,
+        302,
+        306,
+        311,
+        312,
+        316
+      ],
+      "difficultyBlocks": [
+        {
+          "firstLevel": 291,
+          "lastLevel": 300,
+          "roles": {
+            "Challenge": 2,
+            "Flow": 2,
+            "Hard": 1,
+            "Medium": 3,
+            "Pre-Hard": 1,
+            "Recovery": 1
+          }
+        },
+        {
+          "firstLevel": 301,
+          "lastLevel": 310,
+          "roles": {
+            "Challenge": 2,
+            "Flow": 2,
+            "Hard": 1,
+            "Medium": 3,
+            "Pre-Hard": 1,
+            "Recovery": 1
+          }
+        },
+        {
+          "firstLevel": 311,
+          "lastLevel": 320,
+          "roles": {
+            "Challenge": 2,
+            "Flow": 2,
+            "Hard": 1,
+            "Medium": 3,
+            "Pre-Hard": 1,
+            "Recovery": 1
+          }
+        }
+      ],
+      "rejectedBatchesBeforeAcceptedBatches": [
+        {
+          "path": "Validation/original-generation-0214-final/exhausted-six/Validation/rejected-level-305-batch-0.json",
+          "sha256": "501e202bbe0642e4741829b31eb7e0c14dea6f08f3891428e3d2783c98658107",
+          "termination": "no_candidate_matched",
+          "generatedCandidates": 100,
+          "requestedCandidates": 100
+        },
+        {
+          "path": "Validation/original-generation-0214-final/exhausted-six/Validation/rejected-level-309-batch-0.json",
+          "sha256": "29da688a151f266c550cd8e74ca37f0bbd1f7144347d357df20dd4f9cd0a44ff",
+          "termination": "no_candidate_matched",
+          "generatedCandidates": 100,
+          "requestedCandidates": 100
+        },
+        {
+          "path": "Validation/original-generation-0214-final/exhausted-six/Validation/rejected-level-310-batch-0.json",
+          "sha256": "9a15b887fabfda0dedf8d8709fcd8e8be04844ca9cbb8b76e20b4bec06b57a35",
+          "termination": "no_candidate_matched",
+          "generatedCandidates": 100,
+          "requestedCandidates": 100
+        },
+        {
+          "path": "Validation/original-generation-0214-final/exhausted-six/Validation/rejected-level-310-batch-1.json",
+          "sha256": "2d78d5bf0de69cb0e55c9f7f5c7402f77d56ad30ce3082a24afab331f8dee281",
+          "termination": "no_candidate_matched",
+          "generatedCandidates": 100,
+          "requestedCandidates": 100
+        },
+        {
+          "path": "Validation/original-generation-0214-final/exhausted-six/Validation/rejected-level-310-batch-2.json",
+          "sha256": "9273415d41b2fadb6b4148c442fbff3fe9b839d38da3ca3e007adfbd313c5a4d",
+          "termination": "no_candidate_matched",
+          "generatedCandidates": 100,
+          "requestedCandidates": 100
+        },
+        {
+          "path": "Validation/original-generation-0214-final/exhausted-six/Validation/rejected-level-310-batch-3.json",
+          "sha256": "8033a6889f7e38fd40448b4d3dec45accec2dcbb60a26afd0755668ec896ea69",
+          "termination": "no_candidate_matched",
+          "generatedCandidates": 100,
+          "requestedCandidates": 100
+        }
+      ]
+    }
+  ],
+  "syntheticCapacityFixture": {
+    "count": 90,
+    "size": 6,
+    "completeIndependentNonAdjacentAnswerPermutationSet": true,
+    "independentlyEnumeratedCapacity": 90,
+    "matchesFixtureExactly": true,
+    "purpose": "Artificial fingerprints exhaust the 6x6 answer namespace only; these are not 90 generated unique-solution levels and are not counted among the 210 validated puzzles.",
+    "historyFor291Group": "Actual packaged L1–150 + actual newly generated L151–180 + 90 synthetic answer fingerprints, then each accepted L291–320 appended. The 90 entries include answer patterns already present in real history; capacity uses distinct patterns."
+  },
+  "mixedProfileExport": {
+    "catalogVersion": "original-ch3-endless-capacity-v2+original-ch3-local-estimate-v1",
+    "profileVersions": [
+      "original-ch3-endless-capacity-v2",
+      "original-ch3-local-estimate-v1"
+    ],
+    "levelRange": [
+      141,
+      160
+    ],
+    "count": 20,
+    "versionMatchesActualProfiles": true
+  },
+  "scopeLimits": [
+    "No levels 181–290 were generated or validated in this audit.",
+    "The 291–320 run is a targeted synthetic-capacity scenario, not a continuous playthrough from 151 through 320.",
+    "This proves these finite batches and exact historical de-duplication only; it does not prove unlimited generation, human difficulty, Pawdoku mirroring, cross-product similarity acceptance, device performance, or human playtesting.",
+    "Reported candidate counts, filter decisions, estimated metrics and timings were checked for consistency; the Python solver independently proves puzzle legality, connectivity and uniqueness, not the Swift candidate pipeline implementation."
+  ],
+  "levels": [
+    {
+      "level": 1,
+      "size": 4,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 2,
+      "size": 4,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 3,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 4,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 5,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 6,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 7,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 8,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 9,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 10,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 11,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 12,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 13,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 14,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 15,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 16,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 17,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 18,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 19,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 20,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 21,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 22,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 23,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 24,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 25,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 26,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 27,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 28,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 29,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 30,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 31,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 32,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 33,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 34,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 35,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 36,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 37,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 38,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 39,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 40,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 41,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 42,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 43,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 44,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 45,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 46,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 47,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 48,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 49,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 50,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 51,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 52,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 53,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 54,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 55,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 56,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 57,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 58,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 59,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 60,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 61,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 62,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 63,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 64,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 65,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 66,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 67,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 68,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 69,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 70,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 71,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 72,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 73,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 74,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 75,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 76,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 77,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 78,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 79,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 80,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 81,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 82,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 83,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 84,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 85,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 86,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 87,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 88,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 89,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 90,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 91,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 92,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 93,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 94,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 95,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 96,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 97,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 98,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 99,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 100,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 101,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 102,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 103,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 104,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 105,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 106,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 107,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 108,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 109,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 110,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 111,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 112,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 113,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 114,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 115,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 116,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 117,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 118,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 119,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 120,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 121,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 122,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 123,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 124,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 125,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 126,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 127,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 128,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 129,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 130,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 131,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 132,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 133,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 134,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 135,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 136,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 137,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 138,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 139,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 140,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 141,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 142,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 143,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 144,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 145,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 146,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 147,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 148,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 149,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 150,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 151,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 152,
+      "size": 6,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 153,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 154,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 155,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 156,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 157,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 158,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 159,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 160,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 161,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 162,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 163,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 164,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 165,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 166,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 167,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 168,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 169,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 170,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 171,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 172,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 173,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 174,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 175,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 176,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 177,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 178,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 179,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 180,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 291,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 292,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 293,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 294,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 295,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 296,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 297,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 298,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 299,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 300,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 301,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 302,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 303,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 304,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 305,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 306,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 307,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 308,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 309,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 310,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 311,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 312,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 313,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 314,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 315,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 316,
+      "size": 10,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 317,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 318,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 319,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    },
+    {
+      "level": 320,
+      "size": 8,
+      "solutionCount": 1,
+      "regionConnected": true,
+      "storedAnswerMatchesIndependentSolution": true
+    }
+  ]
+}

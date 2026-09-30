@@ -1,0 +1,1345 @@
+{
+  "profiles" : [
+    {
+      "bandScoreRange" : {
+        "maximum" : 36,
+        "minimum" : 0
+      },
+      "boardSizeCurveTarget" : {
+        "maximum" : 10,
+        "minimum" : 10
+      },
+      "candidateBatchSize" : 100,
+      "candidateDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "difficultyBand" : "Flow",
+      "difficultyRole" : "Flow",
+      "difficultyScoreTarget" : {
+        "maximum" : 34.5,
+        "minimum" : 25.5
+      },
+      "errorRiskTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "failPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "forcedMoveDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "hintPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "levelID" : 141,
+      "logicalStepCountTarget" : {
+        "maximum" : 200,
+        "minimum" : 10
+      },
+      "profileVersion" : "original-ch3-local-estimate-v1",
+      "provenance" : {
+        "source" : "Original Word chapter 3 role sequence; numeric targets are local solver estimates. Frozen Pawdoku sampling is missing.",
+        "status" : "unverified_local_demo"
+      },
+      "reasoningDepthTarget" : {
+        "maximum" : 2,
+        "minimum" : 0
+      },
+      "referenceLevelRange" : {
+        "maximum" : 141,
+        "minimum" : 141
+      },
+      "regionComplexityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "regionCountTarget" : {
+        "maximum" : 10,
+        "minimum" : 10
+      },
+      "solveTimeTarget" : {
+        "maximum" : 3600,
+        "minimum" : 0
+      },
+      "tolerancePercent" : 0.15,
+      "trialAllowed" : false
+    },
+    {
+      "bandScoreRange" : {
+        "maximum" : 36,
+        "minimum" : 0
+      },
+      "boardSizeCurveTarget" : {
+        "maximum" : 10,
+        "minimum" : 10
+      },
+      "candidateBatchSize" : 100,
+      "candidateDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "difficultyBand" : "Flow",
+      "difficultyRole" : "Flow",
+      "difficultyScoreTarget" : {
+        "maximum" : 34.5,
+        "minimum" : 25.5
+      },
+      "errorRiskTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "failPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "forcedMoveDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "hintPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "levelID" : 142,
+      "logicalStepCountTarget" : {
+        "maximum" : 200,
+        "minimum" : 10
+      },
+      "profileVersion" : "original-ch3-local-estimate-v1",
+      "provenance" : {
+        "source" : "Original Word chapter 3 role sequence; numeric targets are local solver estimates. Frozen Pawdoku sampling is missing.",
+        "status" : "unverified_local_demo"
+      },
+      "reasoningDepthTarget" : {
+        "maximum" : 2,
+        "minimum" : 0
+      },
+      "referenceLevelRange" : {
+        "maximum" : 142,
+        "minimum" : 142
+      },
+      "regionComplexityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "regionCountTarget" : {
+        "maximum" : 10,
+        "minimum" : 10
+      },
+      "solveTimeTarget" : {
+        "maximum" : 3600,
+        "minimum" : 0
+      },
+      "tolerancePercent" : 0.15,
+      "trialAllowed" : false
+    },
+    {
+      "bandScoreRange" : {
+        "maximum" : 48,
+        "minimum" : 30
+      },
+      "boardSizeCurveTarget" : {
+        "maximum" : 10,
+        "minimum" : 10
+      },
+      "candidateBatchSize" : 100,
+      "candidateDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "difficultyBand" : "Medium",
+      "difficultyRole" : "Medium",
+      "difficultyScoreTarget" : {
+        "maximum" : 46,
+        "minimum" : 34
+      },
+      "errorRiskTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "failPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "forcedMoveDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "hintPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "levelID" : 143,
+      "logicalStepCountTarget" : {
+        "maximum" : 200,
+        "minimum" : 10
+      },
+      "profileVersion" : "original-ch3-local-estimate-v1",
+      "provenance" : {
+        "source" : "Original Word chapter 3 role sequence; numeric targets are local solver estimates. Frozen Pawdoku sampling is missing.",
+        "status" : "unverified_local_demo"
+      },
+      "reasoningDepthTarget" : {
+        "maximum" : 2,
+        "minimum" : 0
+      },
+      "referenceLevelRange" : {
+        "maximum" : 143,
+        "minimum" : 143
+      },
+      "regionComplexityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "regionCountTarget" : {
+        "maximum" : 10,
+        "minimum" : 10
+      },
+      "solveTimeTarget" : {
+        "maximum" : 3600,
+        "minimum" : 0
+      },
+      "tolerancePercent" : 0.15,
+      "trialAllowed" : false
+    },
+    {
+      "bandScoreRange" : {
+        "maximum" : 48,
+        "minimum" : 30
+      },
+      "boardSizeCurveTarget" : {
+        "maximum" : 10,
+        "minimum" : 10
+      },
+      "candidateBatchSize" : 100,
+      "candidateDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "difficultyBand" : "Medium",
+      "difficultyRole" : "Medium",
+      "difficultyScoreTarget" : {
+        "maximum" : 46,
+        "minimum" : 34
+      },
+      "errorRiskTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "failPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "forcedMoveDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "hintPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "levelID" : 144,
+      "logicalStepCountTarget" : {
+        "maximum" : 200,
+        "minimum" : 10
+      },
+      "profileVersion" : "original-ch3-local-estimate-v1",
+      "provenance" : {
+        "source" : "Original Word chapter 3 role sequence; numeric targets are local solver estimates. Frozen Pawdoku sampling is missing.",
+        "status" : "unverified_local_demo"
+      },
+      "reasoningDepthTarget" : {
+        "maximum" : 2,
+        "minimum" : 0
+      },
+      "referenceLevelRange" : {
+        "maximum" : 144,
+        "minimum" : 144
+      },
+      "regionComplexityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "regionCountTarget" : {
+        "maximum" : 10,
+        "minimum" : 10
+      },
+      "solveTimeTarget" : {
+        "maximum" : 3600,
+        "minimum" : 0
+      },
+      "tolerancePercent" : 0.15,
+      "trialAllowed" : false
+    },
+    {
+      "bandScoreRange" : {
+        "maximum" : 60,
+        "minimum" : 44
+      },
+      "boardSizeCurveTarget" : {
+        "maximum" : 10,
+        "minimum" : 10
+      },
+      "candidateBatchSize" : 100,
+      "candidateDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "difficultyBand" : "Challenge",
+      "difficultyRole" : "Challenge",
+      "difficultyScoreTarget" : {
+        "maximum" : 57.49999999999999,
+        "minimum" : 42.5
+      },
+      "errorRiskTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "failPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "forcedMoveDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "hintPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "levelID" : 145,
+      "logicalStepCountTarget" : {
+        "maximum" : 200,
+        "minimum" : 10
+      },
+      "profileVersion" : "original-ch3-local-estimate-v1",
+      "provenance" : {
+        "source" : "Original Word chapter 3 role sequence; numeric targets are local solver estimates. Frozen Pawdoku sampling is missing.",
+        "status" : "unverified_local_demo"
+      },
+      "reasoningDepthTarget" : {
+        "maximum" : 3,
+        "minimum" : 0
+      },
+      "referenceLevelRange" : {
+        "maximum" : 145,
+        "minimum" : 145
+      },
+      "regionComplexityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "regionCountTarget" : {
+        "maximum" : 10,
+        "minimum" : 10
+      },
+      "solveTimeTarget" : {
+        "maximum" : 3600,
+        "minimum" : 0
+      },
+      "tolerancePercent" : 0.15,
+      "trialAllowed" : false
+    },
+    {
+      "bandScoreRange" : {
+        "maximum" : 36,
+        "minimum" : 0
+      },
+      "boardSizeCurveTarget" : {
+        "maximum" : 10,
+        "minimum" : 10
+      },
+      "candidateBatchSize" : 100,
+      "candidateDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "difficultyBand" : "Recovery",
+      "difficultyRole" : "Recovery",
+      "difficultyScoreTarget" : {
+        "maximum" : 34.5,
+        "minimum" : 25.5
+      },
+      "errorRiskTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "failPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "forcedMoveDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0.6
+      },
+      "hintPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "levelID" : 146,
+      "logicalStepCountTarget" : {
+        "maximum" : 200,
+        "minimum" : 10
+      },
+      "profileVersion" : "original-ch3-local-estimate-v1",
+      "provenance" : {
+        "source" : "Original Word chapter 3 role sequence; numeric targets are local solver estimates. Frozen Pawdoku sampling is missing.",
+        "status" : "unverified_local_demo"
+      },
+      "reasoningDepthTarget" : {
+        "maximum" : 2,
+        "minimum" : 0
+      },
+      "referenceLevelRange" : {
+        "maximum" : 146,
+        "minimum" : 146
+      },
+      "regionComplexityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "regionCountTarget" : {
+        "maximum" : 10,
+        "minimum" : 10
+      },
+      "solveTimeTarget" : {
+        "maximum" : 3600,
+        "minimum" : 0
+      },
+      "tolerancePercent" : 0.15,
+      "trialAllowed" : false
+    },
+    {
+      "bandScoreRange" : {
+        "maximum" : 48,
+        "minimum" : 30
+      },
+      "boardSizeCurveTarget" : {
+        "maximum" : 10,
+        "minimum" : 10
+      },
+      "candidateBatchSize" : 100,
+      "candidateDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "difficultyBand" : "Medium",
+      "difficultyRole" : "Medium",
+      "difficultyScoreTarget" : {
+        "maximum" : 46,
+        "minimum" : 34
+      },
+      "errorRiskTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "failPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "forcedMoveDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "hintPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "levelID" : 147,
+      "logicalStepCountTarget" : {
+        "maximum" : 200,
+        "minimum" : 10
+      },
+      "profileVersion" : "original-ch3-local-estimate-v1",
+      "provenance" : {
+        "source" : "Original Word chapter 3 role sequence; numeric targets are local solver estimates. Frozen Pawdoku sampling is missing.",
+        "status" : "unverified_local_demo"
+      },
+      "reasoningDepthTarget" : {
+        "maximum" : 2,
+        "minimum" : 0
+      },
+      "referenceLevelRange" : {
+        "maximum" : 147,
+        "minimum" : 147
+      },
+      "regionComplexityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "regionCountTarget" : {
+        "maximum" : 10,
+        "minimum" : 10
+      },
+      "solveTimeTarget" : {
+        "maximum" : 3600,
+        "minimum" : 0
+      },
+      "tolerancePercent" : 0.15,
+      "trialAllowed" : false
+    },
+    {
+      "bandScoreRange" : {
+        "maximum" : 60,
+        "minimum" : 44
+      },
+      "boardSizeCurveTarget" : {
+        "maximum" : 10,
+        "minimum" : 10
+      },
+      "candidateBatchSize" : 100,
+      "candidateDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "difficultyBand" : "Challenge",
+      "difficultyRole" : "Challenge",
+      "difficultyScoreTarget" : {
+        "maximum" : 57.49999999999999,
+        "minimum" : 42.5
+      },
+      "errorRiskTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "failPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "forcedMoveDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "hintPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "levelID" : 148,
+      "logicalStepCountTarget" : {
+        "maximum" : 200,
+        "minimum" : 10
+      },
+      "profileVersion" : "original-ch3-local-estimate-v1",
+      "provenance" : {
+        "source" : "Original Word chapter 3 role sequence; numeric targets are local solver estimates. Frozen Pawdoku sampling is missing.",
+        "status" : "unverified_local_demo"
+      },
+      "reasoningDepthTarget" : {
+        "maximum" : 3,
+        "minimum" : 0
+      },
+      "referenceLevelRange" : {
+        "maximum" : 148,
+        "minimum" : 148
+      },
+      "regionComplexityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "regionCountTarget" : {
+        "maximum" : 10,
+        "minimum" : 10
+      },
+      "solveTimeTarget" : {
+        "maximum" : 3600,
+        "minimum" : 0
+      },
+      "tolerancePercent" : 0.15,
+      "trialAllowed" : false
+    },
+    {
+      "bandScoreRange" : {
+        "maximum" : 65,
+        "minimum" : 50
+      },
+      "boardSizeCurveTarget" : {
+        "maximum" : 10,
+        "minimum" : 10
+      },
+      "candidateBatchSize" : 100,
+      "candidateDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "difficultyBand" : "Pre-Hard",
+      "difficultyRole" : "Pre-Hard",
+      "difficultyScoreTarget" : {
+        "maximum" : 65.55,
+        "minimum" : 48.449999999999996
+      },
+      "errorRiskTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "failPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "forcedMoveDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "hintPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "levelID" : 149,
+      "logicalStepCountTarget" : {
+        "maximum" : 200,
+        "minimum" : 10
+      },
+      "profileVersion" : "original-ch3-local-estimate-v1",
+      "provenance" : {
+        "source" : "Original Word chapter 3 role sequence; numeric targets are local solver estimates. Frozen Pawdoku sampling is missing.",
+        "status" : "unverified_local_demo"
+      },
+      "reasoningDepthTarget" : {
+        "maximum" : 3,
+        "minimum" : 2
+      },
+      "referenceLevelRange" : {
+        "maximum" : 149,
+        "minimum" : 149
+      },
+      "regionComplexityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "regionCountTarget" : {
+        "maximum" : 10,
+        "minimum" : 10
+      },
+      "solveTimeTarget" : {
+        "maximum" : 3600,
+        "minimum" : 0
+      },
+      "tolerancePercent" : 0.15,
+      "trialAllowed" : false
+    },
+    {
+      "bandScoreRange" : {
+        "maximum" : 100,
+        "minimum" : 60
+      },
+      "boardSizeCurveTarget" : {
+        "maximum" : 8,
+        "minimum" : 8
+      },
+      "candidateBatchSize" : 100,
+      "candidateDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "difficultyBand" : "Hard",
+      "difficultyRole" : "Hard",
+      "difficultyScoreTarget" : {
+        "maximum" : 80.5,
+        "minimum" : 59.5
+      },
+      "errorRiskTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "failPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "forcedMoveDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "hintPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "levelID" : 150,
+      "logicalStepCountTarget" : {
+        "maximum" : 200,
+        "minimum" : 8
+      },
+      "profileVersion" : "original-ch3-local-estimate-v1",
+      "provenance" : {
+        "source" : "Original Word chapter 3 role sequence; numeric targets are local solver estimates. Frozen Pawdoku sampling is missing.",
+        "status" : "unverified_local_demo"
+      },
+      "reasoningDepthTarget" : {
+        "maximum" : 3,
+        "minimum" : 2
+      },
+      "referenceLevelRange" : {
+        "maximum" : 150,
+        "minimum" : 150
+      },
+      "regionComplexityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "regionCountTarget" : {
+        "maximum" : 8,
+        "minimum" : 8
+      },
+      "solveTimeTarget" : {
+        "maximum" : 3600,
+        "minimum" : 0
+      },
+      "tolerancePercent" : 0.15,
+      "trialAllowed" : false
+    },
+    {
+      "bandScoreRange" : {
+        "maximum" : 36,
+        "minimum" : 0
+      },
+      "boardSizeCurveTarget" : {
+        "maximum" : 10,
+        "minimum" : 6
+      },
+      "candidateBatchSize" : 100,
+      "candidateDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "difficultyBand" : "Flow",
+      "difficultyRole" : "Flow",
+      "difficultyScoreTarget" : {
+        "maximum" : 34.5,
+        "minimum" : 25.5
+      },
+      "errorRiskTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "failPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "forcedMoveDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "hintPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "levelID" : 151,
+      "logicalStepCountTarget" : {
+        "maximum" : 200,
+        "minimum" : 6
+      },
+      "profileVersion" : "original-ch3-endless-capacity-v2",
+      "provenance" : {
+        "source" : "Original Word chapter 3 role sequence; numeric targets are local solver estimates. Frozen Pawdoku sampling is missing.",
+        "status" : "unverified_local_demo"
+      },
+      "reasoningDepthTarget" : {
+        "maximum" : 2,
+        "minimum" : 0
+      },
+      "regionComplexityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "regionCountTarget" : {
+        "maximum" : 10,
+        "minimum" : 6
+      },
+      "solveTimeTarget" : {
+        "maximum" : 3600,
+        "minimum" : 0
+      },
+      "tolerancePercent" : 0.15,
+      "trialAllowed" : false
+    },
+    {
+      "bandScoreRange" : {
+        "maximum" : 36,
+        "minimum" : 0
+      },
+      "boardSizeCurveTarget" : {
+        "maximum" : 10,
+        "minimum" : 6
+      },
+      "candidateBatchSize" : 100,
+      "candidateDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "difficultyBand" : "Flow",
+      "difficultyRole" : "Flow",
+      "difficultyScoreTarget" : {
+        "maximum" : 34.5,
+        "minimum" : 25.5
+      },
+      "errorRiskTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "failPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "forcedMoveDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "hintPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "levelID" : 152,
+      "logicalStepCountTarget" : {
+        "maximum" : 200,
+        "minimum" : 6
+      },
+      "profileVersion" : "original-ch3-endless-capacity-v2",
+      "provenance" : {
+        "source" : "Original Word chapter 3 role sequence; numeric targets are local solver estimates. Frozen Pawdoku sampling is missing.",
+        "status" : "unverified_local_demo"
+      },
+      "reasoningDepthTarget" : {
+        "maximum" : 2,
+        "minimum" : 0
+      },
+      "regionComplexityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "regionCountTarget" : {
+        "maximum" : 10,
+        "minimum" : 6
+      },
+      "solveTimeTarget" : {
+        "maximum" : 3600,
+        "minimum" : 0
+      },
+      "tolerancePercent" : 0.15,
+      "trialAllowed" : false
+    },
+    {
+      "bandScoreRange" : {
+        "maximum" : 48,
+        "minimum" : 30
+      },
+      "boardSizeCurveTarget" : {
+        "maximum" : 10,
+        "minimum" : 8
+      },
+      "candidateBatchSize" : 100,
+      "candidateDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "difficultyBand" : "Medium",
+      "difficultyRole" : "Medium",
+      "difficultyScoreTarget" : {
+        "maximum" : 46,
+        "minimum" : 34
+      },
+      "errorRiskTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "failPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "forcedMoveDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "hintPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "levelID" : 153,
+      "logicalStepCountTarget" : {
+        "maximum" : 200,
+        "minimum" : 8
+      },
+      "profileVersion" : "original-ch3-endless-capacity-v2",
+      "provenance" : {
+        "source" : "Original Word chapter 3 role sequence; numeric targets are local solver estimates. Frozen Pawdoku sampling is missing.",
+        "status" : "unverified_local_demo"
+      },
+      "reasoningDepthTarget" : {
+        "maximum" : 2,
+        "minimum" : 0
+      },
+      "regionComplexityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "regionCountTarget" : {
+        "maximum" : 10,
+        "minimum" : 8
+      },
+      "solveTimeTarget" : {
+        "maximum" : 3600,
+        "minimum" : 0
+      },
+      "tolerancePercent" : 0.15,
+      "trialAllowed" : false
+    },
+    {
+      "bandScoreRange" : {
+        "maximum" : 48,
+        "minimum" : 30
+      },
+      "boardSizeCurveTarget" : {
+        "maximum" : 10,
+        "minimum" : 8
+      },
+      "candidateBatchSize" : 100,
+      "candidateDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "difficultyBand" : "Medium",
+      "difficultyRole" : "Medium",
+      "difficultyScoreTarget" : {
+        "maximum" : 46,
+        "minimum" : 34
+      },
+      "errorRiskTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "failPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "forcedMoveDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "hintPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "levelID" : 154,
+      "logicalStepCountTarget" : {
+        "maximum" : 200,
+        "minimum" : 8
+      },
+      "profileVersion" : "original-ch3-endless-capacity-v2",
+      "provenance" : {
+        "source" : "Original Word chapter 3 role sequence; numeric targets are local solver estimates. Frozen Pawdoku sampling is missing.",
+        "status" : "unverified_local_demo"
+      },
+      "reasoningDepthTarget" : {
+        "maximum" : 2,
+        "minimum" : 0
+      },
+      "regionComplexityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "regionCountTarget" : {
+        "maximum" : 10,
+        "minimum" : 8
+      },
+      "solveTimeTarget" : {
+        "maximum" : 3600,
+        "minimum" : 0
+      },
+      "tolerancePercent" : 0.15,
+      "trialAllowed" : false
+    },
+    {
+      "bandScoreRange" : {
+        "maximum" : 60,
+        "minimum" : 44
+      },
+      "boardSizeCurveTarget" : {
+        "maximum" : 10,
+        "minimum" : 8
+      },
+      "candidateBatchSize" : 100,
+      "candidateDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "difficultyBand" : "Challenge",
+      "difficultyRole" : "Challenge",
+      "difficultyScoreTarget" : {
+        "maximum" : 57.49999999999999,
+        "minimum" : 42.5
+      },
+      "errorRiskTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "failPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "forcedMoveDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "hintPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "levelID" : 155,
+      "logicalStepCountTarget" : {
+        "maximum" : 200,
+        "minimum" : 8
+      },
+      "profileVersion" : "original-ch3-endless-capacity-v2",
+      "provenance" : {
+        "source" : "Original Word chapter 3 role sequence; numeric targets are local solver estimates. Frozen Pawdoku sampling is missing.",
+        "status" : "unverified_local_demo"
+      },
+      "reasoningDepthTarget" : {
+        "maximum" : 3,
+        "minimum" : 0
+      },
+      "regionComplexityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "regionCountTarget" : {
+        "maximum" : 10,
+        "minimum" : 8
+      },
+      "solveTimeTarget" : {
+        "maximum" : 3600,
+        "minimum" : 0
+      },
+      "tolerancePercent" : 0.15,
+      "trialAllowed" : false
+    },
+    {
+      "bandScoreRange" : {
+        "maximum" : 36,
+        "minimum" : 0
+      },
+      "boardSizeCurveTarget" : {
+        "maximum" : 10,
+        "minimum" : 6
+      },
+      "candidateBatchSize" : 100,
+      "candidateDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "difficultyBand" : "Recovery",
+      "difficultyRole" : "Recovery",
+      "difficultyScoreTarget" : {
+        "maximum" : 34.5,
+        "minimum" : 25.5
+      },
+      "errorRiskTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "failPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "forcedMoveDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0.6
+      },
+      "hintPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "levelID" : 156,
+      "logicalStepCountTarget" : {
+        "maximum" : 200,
+        "minimum" : 6
+      },
+      "profileVersion" : "original-ch3-endless-capacity-v2",
+      "provenance" : {
+        "source" : "Original Word chapter 3 role sequence; numeric targets are local solver estimates. Frozen Pawdoku sampling is missing.",
+        "status" : "unverified_local_demo"
+      },
+      "reasoningDepthTarget" : {
+        "maximum" : 2,
+        "minimum" : 0
+      },
+      "regionComplexityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "regionCountTarget" : {
+        "maximum" : 10,
+        "minimum" : 6
+      },
+      "solveTimeTarget" : {
+        "maximum" : 3600,
+        "minimum" : 0
+      },
+      "tolerancePercent" : 0.15,
+      "trialAllowed" : false
+    },
+    {
+      "bandScoreRange" : {
+        "maximum" : 48,
+        "minimum" : 30
+      },
+      "boardSizeCurveTarget" : {
+        "maximum" : 10,
+        "minimum" : 8
+      },
+      "candidateBatchSize" : 100,
+      "candidateDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "difficultyBand" : "Medium",
+      "difficultyRole" : "Medium",
+      "difficultyScoreTarget" : {
+        "maximum" : 46,
+        "minimum" : 34
+      },
+      "errorRiskTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "failPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "forcedMoveDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "hintPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "levelID" : 157,
+      "logicalStepCountTarget" : {
+        "maximum" : 200,
+        "minimum" : 8
+      },
+      "profileVersion" : "original-ch3-endless-capacity-v2",
+      "provenance" : {
+        "source" : "Original Word chapter 3 role sequence; numeric targets are local solver estimates. Frozen Pawdoku sampling is missing.",
+        "status" : "unverified_local_demo"
+      },
+      "reasoningDepthTarget" : {
+        "maximum" : 2,
+        "minimum" : 0
+      },
+      "regionComplexityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "regionCountTarget" : {
+        "maximum" : 10,
+        "minimum" : 8
+      },
+      "solveTimeTarget" : {
+        "maximum" : 3600,
+        "minimum" : 0
+      },
+      "tolerancePercent" : 0.15,
+      "trialAllowed" : false
+    },
+    {
+      "bandScoreRange" : {
+        "maximum" : 60,
+        "minimum" : 44
+      },
+      "boardSizeCurveTarget" : {
+        "maximum" : 10,
+        "minimum" : 8
+      },
+      "candidateBatchSize" : 100,
+      "candidateDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "difficultyBand" : "Challenge",
+      "difficultyRole" : "Challenge",
+      "difficultyScoreTarget" : {
+        "maximum" : 57.49999999999999,
+        "minimum" : 42.5
+      },
+      "errorRiskTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "failPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "forcedMoveDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "hintPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "levelID" : 158,
+      "logicalStepCountTarget" : {
+        "maximum" : 200,
+        "minimum" : 8
+      },
+      "profileVersion" : "original-ch3-endless-capacity-v2",
+      "provenance" : {
+        "source" : "Original Word chapter 3 role sequence; numeric targets are local solver estimates. Frozen Pawdoku sampling is missing.",
+        "status" : "unverified_local_demo"
+      },
+      "reasoningDepthTarget" : {
+        "maximum" : 3,
+        "minimum" : 0
+      },
+      "regionComplexityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "regionCountTarget" : {
+        "maximum" : 10,
+        "minimum" : 8
+      },
+      "solveTimeTarget" : {
+        "maximum" : 3600,
+        "minimum" : 0
+      },
+      "tolerancePercent" : 0.15,
+      "trialAllowed" : false
+    },
+    {
+      "bandScoreRange" : {
+        "maximum" : 65,
+        "minimum" : 50
+      },
+      "boardSizeCurveTarget" : {
+        "maximum" : 10,
+        "minimum" : 8
+      },
+      "candidateBatchSize" : 100,
+      "candidateDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "difficultyBand" : "Pre-Hard",
+      "difficultyRole" : "Pre-Hard",
+      "difficultyScoreTarget" : {
+        "maximum" : 65.55,
+        "minimum" : 48.449999999999996
+      },
+      "errorRiskTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "failPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "forcedMoveDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "hintPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "levelID" : 159,
+      "logicalStepCountTarget" : {
+        "maximum" : 200,
+        "minimum" : 8
+      },
+      "profileVersion" : "original-ch3-endless-capacity-v2",
+      "provenance" : {
+        "source" : "Original Word chapter 3 role sequence; numeric targets are local solver estimates. Frozen Pawdoku sampling is missing.",
+        "status" : "unverified_local_demo"
+      },
+      "reasoningDepthTarget" : {
+        "maximum" : 3,
+        "minimum" : 2
+      },
+      "regionComplexityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "regionCountTarget" : {
+        "maximum" : 10,
+        "minimum" : 8
+      },
+      "solveTimeTarget" : {
+        "maximum" : 3600,
+        "minimum" : 0
+      },
+      "tolerancePercent" : 0.15,
+      "trialAllowed" : false
+    },
+    {
+      "bandScoreRange" : {
+        "maximum" : 100,
+        "minimum" : 60
+      },
+      "boardSizeCurveTarget" : {
+        "maximum" : 10,
+        "minimum" : 8
+      },
+      "candidateBatchSize" : 100,
+      "candidateDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "difficultyBand" : "Hard",
+      "difficultyRole" : "Hard",
+      "difficultyScoreTarget" : {
+        "maximum" : 80.5,
+        "minimum" : 59.5
+      },
+      "errorRiskTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "failPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "forcedMoveDensityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "hintPressureTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "levelID" : 160,
+      "logicalStepCountTarget" : {
+        "maximum" : 200,
+        "minimum" : 8
+      },
+      "profileVersion" : "original-ch3-endless-capacity-v2",
+      "provenance" : {
+        "source" : "Original Word chapter 3 role sequence; numeric targets are local solver estimates. Frozen Pawdoku sampling is missing.",
+        "status" : "unverified_local_demo"
+      },
+      "reasoningDepthTarget" : {
+        "maximum" : 3,
+        "minimum" : 2
+      },
+      "regionComplexityTarget" : {
+        "maximum" : 1,
+        "minimum" : 0
+      },
+      "regionCountTarget" : {
+        "maximum" : 10,
+        "minimum" : 8
+      },
+      "solveTimeTarget" : {
+        "maximum" : 3600,
+        "minimum" : 0
+      },
+      "tolerancePercent" : 0.15,
+      "trialAllowed" : false
+    }
+  ],
+  "version" : "original-ch3-endless-capacity-v2+original-ch3-local-estimate-v1"
+}

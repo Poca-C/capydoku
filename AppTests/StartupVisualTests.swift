@@ -28,6 +28,35 @@ private final class StartupVisualRewards: RewardProvider {
     func tracking() async throws { calls.append("tracking") }
 }
 
+@MainActor private final class StartupVisualHeldPermissions: StartupPermissions {
+    private var notificationCompletion: CheckedContinuation<Void, Never>?
+    var calls: [String] = []
+    func notifications() async throws {
+        calls.append("notifications")
+        await withCheckedContinuation { notificationCompletion = $0 }
+    }
+    func tracking() async throws { calls.append("tracking") }
+    func completeNotifications() {
+        let pending = notificationCompletion
+        notificationCompletion = nil
+        pending?.resume()
+    }
+}
+
+@MainActor private final class StartupVisualLifecycle: ObservableObject {
+    @Published var phase: ScenePhase = .active
+    @Published var reduceMotion = false
+}
+
+private struct StartupVisualLifecycleHost: View {
+    let controller: StartupController
+    @ObservedObject var lifecycle: StartupVisualLifecycle
+    var body: some View {
+        StartupFlowView(controller: controller, reduceMotionOverride: lifecycle.reduceMotion)
+            .environment(\.scenePhase, lifecycle.phase)
+    }
+}
+
 @MainActor private final class StartupVisualResources: StartupResources {
     private var continuation: CheckedContinuation<Void, Error>?
     private var released = false
@@ -88,14 +117,14 @@ final class StartupVisualTests: XCTestCase {
         _ = try XCTUnwrap(condition() ? true : nil, message)
     }
 
-    @MainActor private func capture(_ rig: StartupVisualHost, name: String) throws -> Data {
+    @MainActor private func capture(_ rig: StartupVisualHost, name: String, afterScreenUpdates: Bool = false) throws -> Data {
         rig.host.view.layoutIfNeeded()
         XCTAssertEqual(rig.host.view.bounds.size, rig.window.bounds.size)
         XCTAssertGreaterThan(rig.window.bounds.width, 300)
         XCTAssertGreaterThan(rig.window.bounds.height, 500)
         var drawn = false
         let image = UIGraphicsImageRenderer(bounds: rig.window.bounds).image { _ in
-            drawn = rig.host.view.drawHierarchy(in: rig.host.view.bounds, afterScreenUpdates: false)
+            drawn = rig.host.view.drawHierarchy(in: rig.host.view.bounds, afterScreenUpdates: afterScreenUpdates)
         }
         XCTAssertTrue(drawn, "The actual hosted hierarchy must render successfully.")
         XCTAssertEqual(image.size, rig.window.bounds.size)
@@ -156,7 +185,8 @@ final class StartupVisualTests: XCTestCase {
         XCTAssertNotEqual(loading, brand, "The two startup stages must render different pages.")
 
         try await waitFor("The untouched first-launch flow must stop at Welcome.") { controller.stage == .welcome }
-        try await Task.sleep(nanoseconds: 80_000_000)
+        // Capture settled artwork after the explicit 0.18s Demo entrance.
+        try await Task.sleep(nanoseconds: 260_000_000)
         let welcome = try capture(rig, name: "startup-flow-03-welcome-before-accept")
         XCTAssertNotEqual(brand, welcome, "The real Welcome overlay must be present above the brand page.")
         XCTAssertNil(controller.consent.acceptedAt)
@@ -168,6 +198,85 @@ final class StartupVisualTests: XCTestCase {
         XCTAssertEqual(model.progress, before, "Rendering startup cannot change the saved board or inventory.")
         XCTAssertNil(controller.errorMessage)
         XCTAssertNil(model.errorMessage)
+    }
+
+    @MainActor func testWelcomePresentationLifecycleAndFailedAcceptDoNotAdvancePermissions() async throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent("startup-welcome-transition-" + UUID().uuidString)
+        let identity = StartupVisualIdentity(), rewards = StartupVisualRewards()
+        let model = AppModel(saveDirectory: directory, rewardProvider: rewards, runsTimer: false,
+                             feedbackEnabled: false, startupBypassForTesting: false,
+                             analyticsIdentityStore: identity)
+        let resources = StartupVisualResources(), permissions = StartupVisualHeldPermissions()
+        let controller = StartupController(directory: directory, permissions: permissions,
+            resources: resources, timing: .immediate, active: true)
+        let lifecycle = StartupVisualLifecycle()
+        let rig = try StartupVisualHost(StartupVisualLifecycleHost(controller: controller, lifecycle: lifecycle)
+            .environmentObject(model))
+        defer {
+            permissions.completeNotifications(); resources.release(); rig.close()
+            model.flushPendingSaves()
+            try? FileManager.default.removeItem(at: directory)
+        }
+        try await waitFor("The hosted flow must start its actual resource gate.") { resources.preparations == 1 }
+        // The model may reach its gate before the new hosting window commits
+        // its first frame. Prove that Loading is drawable before releasing it;
+        // otherwise an immediate Welcome sample can capture an empty window.
+        try await Task.sleep(nanoseconds: 80_000_000)
+        XCTAssertEqual(controller.stage, .loading)
+        _ = try capture(rig, name: "welcome-transition-00-loading-host-ready", afterScreenUpdates: true)
+        resources.release()
+        try await waitFor("The actual flow must stop for consent.") { controller.stage == .welcome }
+        // Yield briefly for the first transition frame, while targeting the
+        // early part of the 0.18s entrance for the background interruption.
+        try await Task.sleep(nanoseconds: 40_000_000)
+        _ = try capture(rig, name: "welcome-transition-01-entrance-sample")
+        // Interrupt an entrance using the view's real scenePhase input. This
+        // is a hosted lifecycle test, not an OS background or VoiceOver test.
+        lifecycle.phase = .background
+        try await Task.sleep(nanoseconds: 260_000_000)
+        let background = try capture(rig, name: "welcome-transition-02-background-settled")
+        XCTAssertEqual(controller.stage, .welcome)
+        XCTAssertNil(controller.consent.acceptedVersion)
+        XCTAssertTrue(permissions.calls.isEmpty)
+        lifecycle.phase = .active
+        lifecycle.reduceMotion = true
+        try await Task.sleep(nanoseconds: 260_000_000)
+        let reduced = try capture(rig, name: "welcome-transition-03-reduce-motion-view-override")
+        XCTAssertEqual(background, reduced, "Lifecycle cleanup must retain the complete unaccepted Welcome card.")
+        lifecycle.reduceMotion = false
+        try await Task.sleep(nanoseconds: 260_000_000)
+        let settled = try capture(rig, name: "welcome-transition-04-foreground-settled")
+        XCTAssertEqual(reduced, settled, "Re-enabling motion cannot restart loading, hide Welcome, or change its final layout.")
+        XCTAssertTrue(model.analytics.events.isEmpty)
+        XCTAssertTrue(rewards.loads.isEmpty)
+
+        // A directory at the consent file path creates a real persistence
+        // failure. Presentation must keep following the unchanged stage.
+        let consentURL = directory.appendingPathComponent("consent.json")
+        try FileManager.default.createDirectory(at: consentURL, withIntermediateDirectories: true)
+        await controller.accept()
+        XCTAssertNotNil(controller.errorMessage)
+        XCTAssertEqual(controller.stage, .welcome)
+        XCTAssertNil(controller.consent.acceptedVersion)
+        XCTAssertTrue(permissions.calls.isEmpty)
+        XCTAssertTrue(rewards.loads.isEmpty)
+        try FileManager.default.removeItem(at: consentURL)
+        controller.errorMessage = nil
+        let accepting = Task { await controller.accept() }
+        defer { accepting.cancel() }
+        try await waitFor("Successful persistence must lead to the real notification step.") { permissions.calls == ["notifications"] }
+        try await Task.sleep(nanoseconds: 260_000_000)
+        let permissionBackground = try capture(rig, name: "welcome-transition-05-notification-pending-brand-only")
+        XCTAssertNotEqual(settled, permissionBackground, "The accepted card must finish exiting while the brand page remains.")
+        XCTAssertEqual(controller.stage, .notifications, "Animation completion cannot skip a pending system permission.")
+        XCTAssertEqual(controller.consent.acceptedVersion, StartupController.consentVersion)
+        XCTAssertFalse(controller.consent.notificationsCompleted)
+        XCTAssertFalse(controller.consent.trackingCompleted)
+        XCTAssertTrue(rewards.loads.isEmpty)
+        permissions.completeNotifications()
+        await accepting.value
+        XCTAssertEqual(permissions.calls, ["notifications", "tracking"])
+        XCTAssertEqual(controller.stage, .ready)
     }
 
     @MainActor func testActualStartupArtworkAtDeviceSizeAndLargeTypeWithReducedMotionOverride() async throws {
