@@ -86,7 +86,7 @@ struct RootView: View {
                 Group {
                 switch model.screen {
                 case .home: HomeView()
-                case .game: GameView()
+                case .game: GameView(resultDecorationReady: resultDecorationReady)
                 case .checkIn: CheckInView(reduceMotionOverride: reduceMotionOverride)
                 }
                 }.environmentObject(model).foregroundColor(CapyPalette.ink)
@@ -267,6 +267,8 @@ struct IconButton: View {
 }
 
 struct GameView: View {
+    let resultDecorationReady: Bool
+    init(resultDecorationReady: Bool = false) { self.resultDecorationReady = resultDecorationReady }
     @EnvironmentObject private var model: AppModel
     @Environment(\.appLanguage) private var language
     @Environment(\.scenePhase) private var scenePhase
@@ -280,6 +282,10 @@ struct GameView: View {
     @State private var progressFrame = CGRect.zero
     @State private var gameWindowFrame = CGRect.zero
     @State private var boardWindowFrame = CGRect.zero
+    @State private var ruleWindowFrame = CGRect.zero
+    @State private var comboBandWindowFrame = CGRect.zero
+    @State private var comboBadgeWindowFrame = CGRect.zero
+    @State private var comboBadgeFrameRevision: UUID?
     @State private var directWindowFrame = CGRect.zero
     @State private var livesWindowFrame = CGRect.zero
     @State private var lifeFocusReturn: String?
@@ -287,6 +293,22 @@ struct GameView: View {
     private var canPresentFeedback: Bool {
         model.screen == .game && scenePhase == .active && model.hint == nil && model.sheet == nil && !model.loading && !model.rewardBusy && !model.interstitialBusy &&
         !model.challengePending && model.errorMessage == nil && model.notice == nil
+    }
+    private var flightTextFrames: [CGRect] {
+        var frames = [ruleWindowFrame]
+        if feedback.comboText != nil {
+            // A new badge uses the row only until its own current bounds arrive;
+            // an empty feedback band never hides a flying star.
+            let currentBadge = comboBadgeFrameRevision == feedback.comboRevision && !comboBadgeWindowFrame.isEmpty
+            frames.append(currentBadge ? comboBadgeWindowFrame : comboBandWindowFrame)
+        }
+        return frames.map {
+            $0.offsetBy(dx: -gameWindowFrame.minX, dy: -gameWindowFrame.minY).insetBy(dx: -5, dy: -5)
+        }
+    }
+    private var flightTextMeasurementsReady: Bool {
+        !ruleWindowFrame.isEmpty && !gameWindowFrame.isEmpty &&
+            (feedback.comboText == nil || !comboBandWindowFrame.isEmpty)
     }
     var body: some View {
         GeometryReader { geometry in
@@ -377,7 +399,9 @@ struct GameView: View {
                             }
                             else { RuleStrip(compact: compact, highlightedRules: hud.highlightedRules) }
                         }.frame(height: hintHeight).padding(.top, compact ? 4 : 8)
+                            .background(FeedbackWindowFrameReader { ruleWindowFrame = $0 })
                         comboBadge(compact: compact).frame(height: feedbackHeight)
+                            .background(FeedbackWindowFrameReader { comboBandWindowFrame = $0 })
                         PuzzleBoardView(puzzle: s.puzzle, found: s.found, marks: s.marks, errors: s.errors,
                                         sessionID: s.id, entranceID: model.boardEntranceID, lives: s.lives, score: s.score,
                                         effectsEnabled: canPresentFeedback,
@@ -446,7 +470,17 @@ struct GameView: View {
                         // Reserved in every state, so loading or hiding a banner never moves the board.
                         Color.clear.frame(height: bannerHeight).accessibilityIdentifier("banner_reservation")
                     }.disabled(s.status != .playing || lifeFocused).accessibilityElement(children: covered ? .ignore : .contain).accessibilityHidden(covered).padding(.horizontal, 14).padding(.top, 4).padding(.bottom, 4)
-                    ForEach(rewards.flights) { ProgressFlightStar(flight: $0) }
+                    ZStack {
+                        ForEach(rewards.flights) { ProgressFlightStar(flight: $0) }
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .mask {
+                        ProgressFlightTextMask(protectedFrames: flightTextFrames).fill(style: FillStyle(eoFill: true))
+                    }
+                    // Until real text bounds are measured, omit only the
+                    // decoration. Accepted state and its arrival still advance.
+                    .opacity(flightTextMeasurementsReady ? 1 : 0)
+                    .allowsHitTesting(false).accessibilityHidden(true)
                     ForEach(rewards.localScores) { CellScoreLabel(item: $0) }
                     if let reveal = rewards.toolReveal { DirectToolRevealView(reveal: reveal).id(reveal.id) }
                     if lifeFocused {
@@ -553,9 +587,10 @@ struct GameView: View {
             }
         }.padding(.horizontal, 9).padding(.vertical, 4).background(CapyPalette.paper).clipShape(Capsule())
             .background(FeedbackWindowFrameReader { progressFrame = $0 })
-            .scaleEffect(rewards.progressPulse && !reduceMotion ? 1.10 : 1)
             .overlay(Capsule().stroke(CapyPalette.orange.opacity(rewards.progressPulse ? 0.9 : 0), lineWidth: 2))
-            .animation(reduceMotion ? nil : .spring(response: 0.25, dampingFraction: 0.55), value: rewards.progressPulse)
+            .modifier(ProgressArrivalPulseModifier(sessionID: s.id, arrivalID: rewards.progressArrivalID,
+                                                  enabled: canPresentFeedback && !feedback.showLastLife,
+                                                  reduceMotion: reduceMotion))
             .accessibilityElement(children: .ignore).accessibilityLabel(language.text(s.lives == 1 ? "One heart left. \(s.found.count) of \(s.puzzle.size) found" : "\(s.found.count) of \(s.puzzle.size) found")).accessibilityIdentifier("found_count")
             .capyLayoutProbe("found_count")
 
@@ -567,12 +602,23 @@ struct GameView: View {
             if let combo = feedback.comboText {
                 ComboCelebrationView(text: language.text(combo), tier: ComboVisualTier(text: combo), compact: compact,
                                      reduceMotion: reduceMotion || ProcessInfo.processInfo.isLowPowerModeEnabled)
+                    .background(FeedbackWindowFrameReader { [revision = feedback.comboRevision] frame in
+                        comboBadgeWindowFrame = frame; comboBadgeFrameRevision = revision
+                    })
                     .accessibilityIdentifier("combo_feedback").capyLayoutProbe("combo_feedback")
                     .id(feedback.comboRevision)
                     .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
             }
         }.allowsHitTesting(false)
             .animation(reduceMotion ? nil : .spring(response: 0.25, dampingFraction: 0.6), value: feedback.comboRevision)
+            // Preserve the last find's board-phase Combo. Once result artwork
+            // starts, remove only this text so it cannot sit behind the title.
+            // The clear band still reserves the same board/HUD layout space.
+            .opacity(resultDecorationReady ? 0 : 1)
+            .accessibilityHidden(resultDecorationReady)
+            .transaction {
+                if resultDecorationReady { $0.animation = nil; $0.disablesAnimations = true }
+            }
     }
 
 }

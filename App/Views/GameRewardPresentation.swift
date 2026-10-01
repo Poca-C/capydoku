@@ -68,6 +68,7 @@ final class FeedbackWindowFrameView: UIView {
     typealias Schedule = (TimeInterval, @escaping () -> Void) -> Void
     @Published private(set) var flights: [Flight] = []
     @Published private(set) var progressPulse = false
+    @Published private(set) var progressArrivalID: UUID?
     @Published private(set) var scoreDelta: Int?
     /// Reuses the score expiry token so equal, consecutive awards still have
     /// distinct presentation identities without adding a gameplay event stream.
@@ -160,6 +161,7 @@ final class FeedbackWindowFrameView: UIView {
 
     private func pulseProgress() {
         pulseToken = UUID(); let token = pulseToken
+        progressArrivalID = token
         progressPulse = true
         schedule(0.16) { [weak self] in
             guard self?.pulseToken == token else { return }
@@ -169,7 +171,8 @@ final class FeedbackWindowFrameView: UIView {
 
     func clear() {
         generation = UUID(); scoreToken = UUID(); pulseToken = UUID()
-        flights = []; progressPulse = false; scoreDelta = nil; scorePulseID = nil; localScores = []; toolReveal = nil
+        flights = []; progressPulse = false; progressArrivalID = nil
+        scoreDelta = nil; scorePulseID = nil; localScores = []; toolReveal = nil
     }
 }
 
@@ -224,6 +227,49 @@ final class FeedbackWindowFrameView: UIView {
                 }
             }
         }
+    }
+}
+
+/// Only flying stars use this mask; the real board, text and hit rectangles
+/// remain unchanged. Partition the exact union into non-overlapping holes before
+/// even-odd filling: overlaps cannot reveal stars, and empty space stays visible.
+struct ProgressFlightTextMask: Shape {
+    var protectedFrames: [CGRect]
+
+    func path(in rect: CGRect) -> Path {
+        var path = Path(rect)
+        for frame in Self.mergedFrames(protectedFrames, inside: rect) {
+            path.addRect(frame)
+        }
+        return path
+    }
+
+    static func mergedFrames(_ frames: [CGRect], inside bounds: CGRect) -> [CGRect] {
+        var result: [CGRect] = []
+        for frame in frames {
+            guard [frame.minX, frame.minY, frame.width, frame.height].allSatisfy(\.isFinite),
+                  !frame.isEmpty else { continue }
+            let clipped = frame.intersection(bounds)
+            guard !clipped.isNull, !clipped.isEmpty else { continue }
+            var uncovered = [clipped]
+            for existing in result {
+                uncovered = uncovered.flatMap { subtract(existing, from: $0) }
+            }
+            result.append(contentsOf: uncovered)
+        }
+        return result
+    }
+
+    private static func subtract(_ covered: CGRect, from rect: CGRect) -> [CGRect] {
+        let overlap = rect.intersection(covered)
+        guard !overlap.isNull, !overlap.isEmpty else { return [rect] }
+        // Top/bottom take the full width. Side pieces use only the overlap's
+        // height, so all four residuals are disjoint and preserve the exact area.
+        return [CGRect(x: rect.minX, y: rect.minY, width: rect.width, height: overlap.minY - rect.minY),
+                CGRect(x: rect.minX, y: overlap.maxY, width: rect.width, height: rect.maxY - overlap.maxY),
+                CGRect(x: rect.minX, y: overlap.minY, width: overlap.minX - rect.minX, height: overlap.height),
+                CGRect(x: overlap.maxX, y: overlap.minY, width: rect.maxX - overlap.maxX, height: overlap.height)]
+            .filter { !$0.isEmpty }
     }
 }
 

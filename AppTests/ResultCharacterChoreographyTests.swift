@@ -87,7 +87,7 @@ final class ResultCharacterChoreographyTests: XCTestCase {
     }
 
     @MainActor private func layers(_ root: CALayer) -> [CALayer] {
-        [root] + (root.sublayers ?? []).flatMap(layers)
+        [root] + (root.sublayers ?? []).flatMap(layers) + (root.mask.map(layers) ?? [])
     }
 
     @MainActor private func modelPixels(_ view: UIView) throws -> Data {
@@ -171,9 +171,12 @@ final class ResultCharacterChoreographyTests: XCTestCase {
             let settled = try modelPixels(rig.view)
             let character = try XCTUnwrap(rig.view.layer.sublayers?.first { $0.name == "result-character" })
             XCTAssertNil(character.contents,"A valid rig never displays a complete-character fallback image")
-            let parts = try XCTUnwrap(character.sublayers)
+            let parts = try XCTUnwrap(character.sublayers).filter { $0.name?.hasPrefix("result-rig-") == true }
             XCTAssertEqual(parts.count,12)
-            XCTAssertEqual(parts.filter { $0.opacity > 0 }.count,performance == .starHug ? 11 : 10)
+            XCTAssertEqual(parts.filter { $0.opacity > 0 }.count,performance == .starHug ? 7 : 6)
+            let sleeves = try XCTUnwrap(character.sublayers).filter { $0.name?.hasPrefix("result-arm-") == true }
+            XCTAssertEqual(sleeves.count,4)
+            XCTAssertTrue(sleeves.allSatisfy { $0.opacity == 1 })
             let expectedHead = performance == .gentleRetry ? ResultRigPart.sadHead : .happyHead
             let head = try XCTUnwrap(parts.first { $0.name == expectedHead.layerName })
             let texture = try XCTUnwrap(head.contents) as AnyObject
@@ -190,16 +193,19 @@ final class ResultCharacterChoreographyTests: XCTestCase {
                 XCTAssertEqual(position.repeatCount,0)
                 XCTAssertLessThanOrEqual(position.duration,1.2)
             }
-            for part in [ResultRigPart.leftForearm,.rightForearm] {
+            for part in [ResultRigPart.leftUpperArm,.rightUpperArm,.leftForearm,.rightForearm] {
                 let piece = try XCTUnwrap(parts.first { $0.name == part.layerName })
-                let rotation = try XCTUnwrap(piece.animation(forKey:"result-rig-rotation") as? CAKeyframeAnimation)
-                let values = try XCTUnwrap(rotation.values as? [NSNumber]).map(\.doubleValue)
-                XCTAssertGreaterThan(try XCTUnwrap(values.max()) - XCTUnwrap(values.min()),0.1,
-                    "A forearm must articulate independently; whole-mascot motion alone is not a rig")
+                XCTAssertEqual(piece.opacity,0,"Legacy rounded cutouts must not add a second elbow contour")
+                XCTAssertTrue(piece.animationKeys()?.isEmpty ?? true)
             }
-            let lower = try XCTUnwrap(parts.firstIndex { $0.name == ResultRigPart.leftUpperArm.layerName })
-            let torso = try XCTUnwrap(parts.firstIndex { $0.name == ResultRigPart.torso.layerName })
-            XCTAssertLessThan(lower,torso,"Shoulder roots stay behind the body without changing layer order")
+            for sleeve in sleeves {
+                let outline = try XCTUnwrap(sleeve.sublayers?.first { $0.name?.hasSuffix("-outline") == true })
+                let animation = try XCTUnwrap(outline.animation(forKey:"result-arm-contour") as? CAKeyframeAnimation)
+                let values = try XCTUnwrap(animation.values as? [CGPath])
+                XCTAssertEqual(values.count,ResultRigMotion.sampleCount)
+                XCTAssertGreaterThan(Set(values.map { NSCoder.string(for: $0.boundingBoxOfPath) }).count,8,
+                    "Independent sleeve geometry must move; whole-mascot motion alone is not an articulated arm")
+            }
             rig.view.cancelPresentation()
             XCTAssertTrue(layers(rig.view.layer).allSatisfy { $0.animationKeys()?.isEmpty ?? true })
             XCTAssertNil(character.contents)
@@ -276,7 +282,9 @@ final class ResultCharacterChoreographyTests: XCTestCase {
                 try await Task.sleep(nanoseconds:380_000_000)
                 let root = try XCTUnwrap(rig.view.layer.presentation())
                 let character = try XCTUnwrap(root.sublayers?.first { $0.name == "result-character" })
-                for part in character.sublayers ?? [] where part.opacity > 0 {
+                // Native sleeves have a padded transparent canvas. Their
+                // actual stroked contour is checked in ResultArmPresentationTests.
+                for part in character.sublayers ?? [] where part.opacity > 0 && part.name?.hasPrefix("result-rig-") == true {
                     let occupied = character.convert(part.frame,to:root)
                     XCTAssertTrue(rig.view.bounds.insetBy(dx:-0.5,dy:-0.5).contains(occupied),
                         "\(performance) \(side) \(part.name ?? "part") frame \(occupied) exceeds the allocated result decoration \(rig.view.bounds)")

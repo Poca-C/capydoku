@@ -72,7 +72,10 @@ enum ResultRigMotion {
         let joy = performance == .joyfulRaise
         let hugging = performance == .starHug
         let shoulderL = point(joy ? 0.29 : (hugging ? 0.28 : 0.31), joy ? 0.59 : (hugging ? 0.61 : 0.54))
-        let shoulderR = point(joy ? 0.76 : (hugging ? 0.83 : 0.73), joy ? 0.59 : (hugging ? 0.67 : 0.53))
+        // The old hug shoulder at x=.83 sat on the torso's outer alpha edge,
+        // exposing its attachment as a hook. Move that joint into the body;
+        // the authored wrist/star path and both bone lengths remain unchanged.
+        let shoulderR = point(joy ? 0.76 : (hugging ? 0.78 : 0.73), joy ? 0.59 : (hugging ? 0.67 : 0.53))
         let wristL: CGPoint, wristR: CGPoint, nod: CGFloat, star: CGPoint?
         let pawAngleL: CGFloat, pawAngleR: CGFloat
         switch performance {

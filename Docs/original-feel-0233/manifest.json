@@ -1,0 +1,292 @@
+{
+  "build": "0.2.33 (36)",
+  "status": "reviewed_scoped_runtime_images_and_movie_samples",
+  "items": [
+    {
+      "file": "arrival-actual-root-cover-cancel-return-no-replay.png",
+      "test": "ProgressArrivalPresentationTests/testActualRootRapidFoundArrivalsAndCoverCancellationCaptures()",
+      "sourceAttachment": "2EAECB48-70A8-45DC-87BA-0A5B1A3F940A.png",
+      "sourceBundle": "Validation/test-runs/original-0233-app.xcresult",
+      "sha256": "77557c0e78b1e3a562ba516950aacd098bba264e0bb957f4af8b5273b369b4eb"
+    },
+    {
+      "file": "arrival-actual-root-second-hud-pulse-645ms.png",
+      "test": "ProgressArrivalPresentationTests/testActualRootRapidFoundArrivalsAndCoverCancellationCaptures()",
+      "sourceAttachment": "9FB5941E-82E4-4287-97E5-322929C3A874.png",
+      "sourceBundle": "Validation/test-runs/original-0233-app.xcresult",
+      "sha256": "04170a6808e82c0c407fc6637f9ebb6f7ae5130a9d35435587e03d379bb395fc"
+    },
+    {
+      "file": "arrival-actual-root-first-hud-pulse-515ms.png",
+      "test": "ProgressArrivalPresentationTests/testActualRootRapidFoundArrivalsAndCoverCancellationCaptures()",
+      "sourceAttachment": "551DC71C-93A3-4961-A706-FAD52EC77E26.png",
+      "sourceBundle": "Validation/test-runs/original-0233-app.xcresult",
+      "sha256": "bf7fa824a59179013ed68a6279e1312751cdaaf4bc6c23580258ffe6f74fb0b4"
+    },
+    {
+      "file": "arrival-actual-root-flight-through-protected-text-290ms.png",
+      "test": "ProgressArrivalPresentationTests/testActualRootRapidFoundArrivalsAndCoverCancellationCaptures()",
+      "sourceAttachment": "96DF8ABF-246D-468E-A8FA-6EF05924D4A9.png",
+      "sourceBundle": "Validation/test-runs/original-0233-app.xcresult",
+      "sha256": "4162d764eb09c822aa8958c87f60cc263db172cebf2c4b5c64a11feaf637786f"
+    },
+    {
+      "file": "arrival-actual-root-two-committed-before-hud-arrival.png",
+      "test": "ProgressArrivalPresentationTests/testActualRootRapidFoundArrivalsAndCoverCancellationCaptures()",
+      "sourceAttachment": "34A07DAD-2FE8-440B-8B2A-541C7AC26F18.png",
+      "sourceBundle": "Validation/test-runs/original-0233-app.xcresult",
+      "sha256": "749da4646148dcd55ebf1ab84545f41c529624ff8a8ac7558154c7138701bed1"
+    },
+    {
+      "file": "result-arm-continuous-gentleRetry-250pt-live-470ms.png",
+      "test": "ResultArmPresentationTests/testActualContinuousSleevesAtThreeSizesStayInsideViewportAndReachOriginalPaws()",
+      "sourceAttachment": "FC3A6577-E7A6-424A-AF9C-6B22A4A1B820.png",
+      "sourceBundle": "Validation/test-runs/original-0233-app.xcresult",
+      "sha256": "6490ce0fa7e74ab086b8f8ab8d2ff769ad2bc3de02629cbf2b645cf6453cc5a2"
+    },
+    {
+      "file": "result-arm-continuous-starHug-250pt-live-470ms.png",
+      "test": "ResultArmPresentationTests/testActualContinuousSleevesAtThreeSizesStayInsideViewportAndReachOriginalPaws()",
+      "sourceAttachment": "38167D07-22FB-4920-A991-7736F351E4EA.png",
+      "sourceBundle": "Validation/test-runs/original-0233-app.xcresult",
+      "sha256": "c306b291611e4ce50821e9b5f4cf61b48b77b7fa40673f483f855f0a23918b49"
+    },
+    {
+      "file": "result-arm-continuous-joyfulRaise-250pt-live-470ms.png",
+      "test": "ResultArmPresentationTests/testActualContinuousSleevesAtThreeSizesStayInsideViewportAndReachOriginalPaws()",
+      "sourceAttachment": "978A2E5B-0DF5-4D7B-82C0-E1C5B733A544.png",
+      "sourceBundle": "Validation/test-runs/original-0233-app.xcresult",
+      "sha256": "b433bc351e7f658a7c02c8b21a6e88daa561dd303830cf7790ece6107cc3410e"
+    },
+    {
+      "file": "result-arm-continuous-gentleRetry-168pt-live-470ms.png",
+      "test": "ResultArmPresentationTests/testActualContinuousSleevesAtThreeSizesStayInsideViewportAndReachOriginalPaws()",
+      "sourceAttachment": "6AB13C1C-D8FD-4C3C-8B59-5ECA7E415D9E.png",
+      "sourceBundle": "Validation/test-runs/original-0233-app.xcresult",
+      "sha256": "1a0a9717f94998ee74b44998c29bd75214b2f26d0ece1434a0688a34bdc1cfd8"
+    },
+    {
+      "file": "result-arm-continuous-starHug-168pt-live-470ms.png",
+      "test": "ResultArmPresentationTests/testActualContinuousSleevesAtThreeSizesStayInsideViewportAndReachOriginalPaws()",
+      "sourceAttachment": "9CC07DF8-EB29-4846-84F2-67D2AD4401A6.png",
+      "sourceBundle": "Validation/test-runs/original-0233-app.xcresult",
+      "sha256": "92f9a8547de36d6526037f4a1a95431af5f7cea95a9b5d0ca996488fc7ea5b1d"
+    },
+    {
+      "file": "result-arm-continuous-joyfulRaise-168pt-live-470ms.png",
+      "test": "ResultArmPresentationTests/testActualContinuousSleevesAtThreeSizesStayInsideViewportAndReachOriginalPaws()",
+      "sourceAttachment": "88DEC97F-8C8F-4089-A100-BF1A8FE7E63F.png",
+      "sourceBundle": "Validation/test-runs/original-0233-app.xcresult",
+      "sha256": "110a7ada9e877dc77f777c26b876b55c703661b15784e5d0736e87ae4639cac0"
+    },
+    {
+      "file": "result-arm-continuous-gentleRetry-140pt-live-470ms.png",
+      "test": "ResultArmPresentationTests/testActualContinuousSleevesAtThreeSizesStayInsideViewportAndReachOriginalPaws()",
+      "sourceAttachment": "AD7CF50E-DF91-4D36-972F-7827CA991E02.png",
+      "sourceBundle": "Validation/test-runs/original-0233-app.xcresult",
+      "sha256": "b19e7d062f383c20ef4b0c6e1c24155ba33dd25e8d2092819f896e110b5ca77c"
+    },
+    {
+      "file": "result-arm-continuous-starHug-140pt-live-470ms.png",
+      "test": "ResultArmPresentationTests/testActualContinuousSleevesAtThreeSizesStayInsideViewportAndReachOriginalPaws()",
+      "sourceAttachment": "DF321044-A24D-4256-81EA-996203C81EEC.png",
+      "sourceBundle": "Validation/test-runs/original-0233-app.xcresult",
+      "sha256": "74c10ff9716c725e883c9414a09a69c131f49c7292e4ecb0bee2d1b606d59be0"
+    },
+    {
+      "file": "result-arm-continuous-joyfulRaise-140pt-live-470ms.png",
+      "test": "ResultArmPresentationTests/testActualContinuousSleevesAtThreeSizesStayInsideViewportAndReachOriginalPaws()",
+      "sourceAttachment": "3BF4B05B-25C9-4830-ABDA-9CA655567B4F.png",
+      "sourceBundle": "Validation/test-runs/original-0233-app.xcresult",
+      "sha256": "3b26373597f8a5f55c97ec6a47e87a7479967a7bd64b3b082b95fc2c3d245b91"
+    },
+    {
+      "file": "result-settled-without-underlying-combo.png",
+      "test": "GameFeelVisualTests/testActualMovesAndResultPresentationCapture()",
+      "sourceAttachment": "56D6394A-1EA2-42C6-825F-7B8DF5F2F11D.png",
+      "originalName": "result-settled-without-underlying-combo_0_7EDC4D85-9203-478E-B9EA-B37259E09B23.png",
+      "sourceBundle": "Validation/test-runs/original-0233-title-fix.xcresult",
+      "sha256": "cd8dc2c4845c33a42836960fd15c4fc535043eb7e7daf8008c6298fa9e75a960"
+    },
+    {
+      "file": "result-title-entered-without-underlying-combo.png",
+      "test": "GameFeelVisualTests/testActualMovesAndResultPresentationCapture()",
+      "sourceAttachment": "87C735FB-EFD1-4A2B-A964-B62900A1056A.png",
+      "originalName": "result-title-entered-without-underlying-combo_0_35CE5A0E-635C-439D-8593-654059EF6232.png",
+      "sourceBundle": "Validation/test-runs/original-0233-title-fix.xcresult",
+      "sha256": "5cec433608f76010c767b4cecc0117084540e8765030072aa74e97cb6a7745d6"
+    },
+    {
+      "file": "win-celebration.png",
+      "test": "GameFeelVisualTests/testActualMovesAndResultPresentationCapture()",
+      "sourceAttachment": "A3F21859-86CD-44E3-8855-68A397E29C44.png",
+      "originalName": "win-celebration_0_1D0E2F29-2BE9-4C1F-9D32-BD6E7CF6372D.png",
+      "sourceBundle": "Validation/test-runs/original-0233-title-fix.xcresult",
+      "sha256": "b7008818034c57eb1ad4b351a53c466045409efa61700b9f9cc6b49b7f99d266"
+    },
+    {
+      "file": "result-decoration-starting.png",
+      "test": "GameFeelVisualTests/testActualMovesAndResultPresentationCapture()",
+      "sourceAttachment": "7FD60077-F5D0-40ED-B8CF-DA0C4F327EB1.png",
+      "originalName": "final-combo-board-phase-before-result-decoration_0_9E62B9DF-B2DF-46C3-9F5B-89997DCE55A1.png",
+      "sourceBundle": "Validation/test-runs/original-0233-title-fix.xcresult",
+      "sha256": "20ed93ba492605cc3b0dadd23a644cb27e223a7e462bacd848e489c25eda2837"
+    },
+    {
+      "file": "final-move-before-result.png",
+      "test": "GameFeelVisualTests/testActualMovesAndResultPresentationCapture()",
+      "sourceAttachment": "6AFFE8CC-2E9F-4AB9-AE95-FD4CAD691D08.png",
+      "originalName": "final-move-before-result_0_018083AB-DC6D-451A-80F1-9E65B04215CB.png",
+      "sourceBundle": "Validation/test-runs/original-0233-title-fix.xcresult",
+      "sha256": "e41c5e7d4e8669b7f5a25a96e34c6380dd78407e91b2722d32bc7ab22383d94f"
+    },
+    {
+      "file": "combo-progress-after-three.png",
+      "test": "GameFeelVisualTests/testActualMovesAndResultPresentationCapture()",
+      "sourceAttachment": "CC09C402-6A69-48D2-AF78-32A1F7CAA395.png",
+      "originalName": "combo-progress-after-three_0_59CF41E6-52A0-482A-B827-B064E9198A60.png",
+      "sourceBundle": "Validation/test-runs/original-0233-title-fix.xcresult",
+      "sha256": "c7e81a2787828abf9c909bcfb7c3cec6681e8bca07eb3db484830f8f18c5567d"
+    },
+    {
+      "file": "correct-progress-flight-17.png",
+      "test": "GameFeelVisualTests/testActualMovesAndResultPresentationCapture()",
+      "sourceAttachment": "41249B64-F0D3-48AB-905A-9C40104CA057.png",
+      "originalName": "correct-progress-flight-17_0_AA011B61-1812-4B56-A04D-31DEE5194B3B.png",
+      "sourceBundle": "Validation/test-runs/original-0233-title-fix.xcresult",
+      "sha256": "20dc6be9305c1c157e15b0665b3eefd40d5f5f4d7ce4d1f83641fd3c05656da2"
+    },
+    {
+      "file": "correct-progress-flight-8.png",
+      "test": "GameFeelVisualTests/testActualMovesAndResultPresentationCapture()",
+      "sourceAttachment": "BE7B921C-808A-412D-82E9-B43672A7C594.png",
+      "originalName": "correct-progress-flight-8_0_17AB5D94-8931-48DC-A45D-F1A7BE016E2E.png",
+      "sourceBundle": "Validation/test-runs/original-0233-title-fix.xcresult",
+      "sha256": "f46bc7bcf52045aedb765a33324098ddc64e3c56f5f55bd5a72a730fc877b8f6"
+    },
+    {
+      "file": "correct-progress-flight-0.png",
+      "test": "GameFeelVisualTests/testActualMovesAndResultPresentationCapture()",
+      "sourceAttachment": "4C0CE918-ADFB-4E1C-80BE-3EC876AE6EB5.png",
+      "originalName": "correct-progress-flight-0_0_EE44264F-421F-44A2-96E5-8EE94C70E87B.png",
+      "sourceBundle": "Validation/test-runs/original-0233-title-fix.xcresult",
+      "sha256": "8c234cfd811d5f5755de397ea64e108e031fd225a7bdd18d31ad1b4cba8e310b"
+    }
+  ],
+  "videos": [
+    {
+      "file": "continuous-result-performances.mov",
+      "sourceBundle": "Validation/test-runs/original-0233-app.xcresult",
+      "sha256": "752e8df25ec6d8f71c6fbae59050b6cbec29d08fbc60305be05e8a2af1510051",
+      "durationSeconds": 8.768333333333333,
+      "sampleIntervalSeconds": 0.2,
+      "sampledFrameCount": 44,
+      "sampling": "continuous-result-performances-sampling.json",
+      "contactSheet": "continuous-result-performances-frames.png",
+      "contactSheetSHA256": "5aaf66f750b7efb7964b93d8375044dc51852c19402aa79065a6e5f6754c05af",
+      "reviewedContactRangeSeconds": [
+        3.8,
+        8.0
+      ],
+      "contactStepSeconds": 0.2
+    },
+    {
+      "file": "continuous-progress-arrivals.mov",
+      "sourceBundle": "Validation/test-runs/original-0233-app.xcresult",
+      "sha256": "57456607cda095b293f397e4b0fd8ff99f8eade7a9749bdf90c58addd6cff8a1",
+      "durationSeconds": 3.26,
+      "sampleIntervalSeconds": 0.1,
+      "sampledFrameCount": 33,
+      "sampling": "continuous-progress-arrivals-sampling.json",
+      "contactSheet": "continuous-progress-arrivals-frames.png",
+      "contactSheetSHA256": "8ed02834c0df615732313c543759fd52a0ef7d17e8c45e6e20f67c8a84a3a233",
+      "reviewedContactRangeSeconds": [
+        0,
+        3.0
+      ],
+      "contactStepSeconds": 0.2
+    },
+    {
+      "file": "continuous-gameplay-feedback.mov",
+      "sourceBundle": "Validation/test-runs/original-0233-title-fix.xcresult",
+      "sha256": "560fadb83e31b2fd49b3ea1a2bd5bc9b8977311dab993fbe4236ba535d98eafb",
+      "durationSeconds": 6.258333333333334,
+      "sampleIntervalSeconds": 0.1,
+      "sampledFrameCount": 63,
+      "sampling": "continuous-gameplay-feedback-sampling.json",
+      "contactSheet": "continuous-gameplay-feedback-frames.png",
+      "contactSheetSHA256": "63003e5ad3b40c6ea43e169f944496b9cf4b83f598ea4096ed4529ffcac82b0a",
+      "reviewedContactRangeSeconds": [
+        3.0,
+        6.2
+      ],
+      "contactStepSeconds": 0.2
+    }
+  ],
+  "retainedFailure": {
+    "file": "pre-fix-result-combo-title-overlap.png",
+    "sourceBundle": "Validation/test-runs/original-0233-app.xcresult",
+    "sha256": "106fb83efeeb1965354bd2ab4ba758b84f371025e026d475a74f83bb47dc9cff",
+    "reason": "完整回归虽通过，图中结果标题与下层Combo仍重叠；最终小修已修复。"
+  },
+  "review": {
+    "root": "逐张审阅23张保留运行图。角色手腕尖角/肩部钩形与双肘边减弱；文字区域未见原飞星遮字，取消回位。最终结算抽样确认Combo先退出、标题后出现；保持下一关按钮与棋盘位置。",
+    "independentCodeReview": "只读复核未发现明确生命周期阻断点；明确保留曲线插值和实际遮罩全布局的测试盲区。最终标题小修由第二审阅者定位、实现，根复核差异及运行图。"
+  },
+  "limits": [
+    "23张保留运行图逐张核对，三段真实模拟器录屏仅按所列时段有限抽帧审阅；不是逐帧参考对标或真机手感验收。",
+    "角色9图来自三尺寸真实UIKit组件，14张游戏图来自实际Root页面和当前第6关；Root中的动作由模型提交，不把它们当原生触摸证据。原生手势证据见独立UI测试。",
+    "截图文件名中的470ms/515ms等为请求等待或阶段标签，截图本身有耗时，不是精确测量。原before-result-decoration附件实际已到遮罩入场，已在图册命名为result-decoration-starting。",
+    "手臂自动自交检查覆盖采样曲线端点折线，不能证明所有三次曲线与帧间插值均无自交；视口/腕对位自动验证为每动作名义470ms采样。",
+    "遮罩几何测试使用合成矩形；真实页面有限截图不能证明所有字号/语言/布局组合的飞星均不遮文字。",
+    "进度录屏后段白条为动画取消的像素验证宿主，不是产品界面。录屏没有用于听觉/触觉验收。"
+  ],
+  "applicationTestsBeforeLastCosmeticFix": {
+    "status": "Passed",
+    "cases": 495,
+    "passed": 495,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 199.201,
+    "scope": "17 Pro / iOS 26.5 full App target, before final Combo-under-result-title visibility fix. No exclusions or repeated test action.",
+    "summary": "Validation/test-runs/original-0233-app-summary.json",
+    "log": "Validation/test-runs/original-0233-app.log",
+    "bundle": "Validation/test-runs/original-0233-app.xcresult"
+  },
+  "uiTestsBeforeLastCosmeticFix": {
+    "status": "Passed",
+    "cases": 7,
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 233.354,
+    "scope": "17e / iOS 26.5 seven native UI cases before final title visibility fix: current L1 teaching, native gestures/tools, win/advance, lose/revive, four board sizes, largest text/hint in both languages, Chinese/English/relaunch. Other cases include historical fixtures.",
+    "summary": "Validation/test-runs/original-0233-17e-ui-summary.json",
+    "log": "Validation/test-runs/original-0233-17e-ui.log",
+    "bundle": "Validation/test-runs/original-0233-17e-ui.xcresult"
+  },
+  "finalTargetedTests": {
+    "status": "Passed",
+    "cases": 20,
+    "passed": 20,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 20.191,
+    "scope": "Final production code: 20 tests in GameFeelVisualTests, GameRewardPresentationTests, ProgressArrivalPresentationTests, ResultChoreographyTests, ResultAccessibilityFocusTests, 17 Pro.",
+    "summary": "Validation/test-runs/original-0233-title-fix-summary.json",
+    "log": "Validation/test-runs/original-0233-title-fix.log",
+    "bundle": "Validation/test-runs/original-0233-title-fix.xcresult"
+  },
+  "finalUITest": {
+    "status": "Passed",
+    "cases": 1,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 14.078,
+    "scope": "Final production code: native solve-entire-puzzle/advance, 17e. No full App/UI rerun after last cosmetic fix.",
+    "summary": "Validation/test-runs/original-0233-title-fix-17e-ui-summary.json",
+    "log": "Validation/test-runs/original-0233-title-fix-17e-ui.log",
+    "bundle": "Validation/test-runs/original-0233-title-fix-17e-ui.xcresult"
+  }
+}

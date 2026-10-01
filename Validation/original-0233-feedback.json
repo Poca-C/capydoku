@@ -1,0 +1,190 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.33 (36)",
+  "date": "2026-10-01",
+  "status": "scoped_visual_feedback_improvements_verified_simulator_only",
+  "previousReport": "Validation/original-0232-feedback.json",
+  "authority": "初始Word及既有Demo临时参数授权；原文与正式验收范围不被参考应用观察替换。",
+  "sourceParagraphs": [
+    127,
+    129,
+    136,
+    241,
+    249,
+    250,
+    252,
+    254
+  ],
+  "changes": [
+    {
+      "area": "连续奖励与文字保护",
+      "detail": "每次实际进度到达使用独立ID，0.32秒有限回弹可连续重触发；取消立即重置SwiftUI正在返回的插值。飞星对实际规则/Combo文字框做精确并集遮罩，不吞掉徽章两侧空白。不改分数、找到数提交或0.44秒飞行路径。"
+    },
+    {
+      "area": "手臂形状",
+      "detail": "四段旧切图的金色手臂改为连续封闭、收腕的原生轮廓，两层遮挡共用原73采样/时钟；躯干、头、手爪、脚、星素材及腕/星目标轨迹保持。抱星右肩x由.83内收到.78，避免连接点露在躯干透明边界外；最大宽.128、腕宽.074、描边.010均为Demo比例。"
+    },
+    {
+      "area": "通关衔接",
+      "detail": "最后一步的Combo在原棋盘反馈阶段保留；结果装饰开始时立即隐藏该文字，固定高度、奖励和按钮不变，解决暗罩下仍可见Combo与结果标题重叠。"
+    },
+    {
+      "area": "奖励直接答案通关",
+      "detail": "沿用4aedb74：最后一格的correct与win共享已接受上下文，避免结果输入锁吞掉成功触感；本轮完整App再次覆盖，不新增声音。",
+      "evidence": "Validation/meowdoku-implementation-review-0232.json"
+    }
+  ],
+  "applicationTestsBeforeLastCosmeticFix": {
+    "status": "Passed",
+    "cases": 495,
+    "passed": 495,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 199.201,
+    "scope": "17 Pro / iOS 26.5 full App target, before final Combo-under-result-title visibility fix. No exclusions or repeated test action.",
+    "summary": "Validation/test-runs/original-0233-app-summary.json",
+    "log": "Validation/test-runs/original-0233-app.log",
+    "bundle": "Validation/test-runs/original-0233-app.xcresult"
+  },
+  "uiTestsBeforeLastCosmeticFix": {
+    "status": "Passed",
+    "cases": 7,
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 233.354,
+    "scope": "17e / iOS 26.5 seven native UI cases before final title visibility fix: current L1 teaching, native gestures/tools, win/advance, lose/revive, four board sizes, largest text/hint in both languages, Chinese/English/relaunch. Other cases include historical fixtures.",
+    "summary": "Validation/test-runs/original-0233-17e-ui-summary.json",
+    "log": "Validation/test-runs/original-0233-17e-ui.log",
+    "bundle": "Validation/test-runs/original-0233-17e-ui.xcresult"
+  },
+  "finalTargetedTests": {
+    "status": "Passed",
+    "cases": 20,
+    "passed": 20,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 20.191,
+    "scope": "Final production code: 20 tests in GameFeelVisualTests, GameRewardPresentationTests, ProgressArrivalPresentationTests, ResultChoreographyTests, ResultAccessibilityFocusTests, 17 Pro.",
+    "summary": "Validation/test-runs/original-0233-title-fix-summary.json",
+    "log": "Validation/test-runs/original-0233-title-fix.log",
+    "bundle": "Validation/test-runs/original-0233-title-fix.xcresult"
+  },
+  "finalUITest": {
+    "status": "Passed",
+    "cases": 1,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 14.078,
+    "scope": "Final production code: native solve-entire-puzzle/advance, 17e. No full App/UI rerun after last cosmetic fix.",
+    "summary": "Validation/test-runs/original-0233-title-fix-17e-ui-summary.json",
+    "log": "Validation/test-runs/original-0233-title-fix-17e-ui.log",
+    "bundle": "Validation/test-runs/original-0233-title-fix-17e-ui.xcresult"
+  },
+  "iterationHistory": [
+    {
+      "evidence": "Validation/test-runs/original-0233-targeted-summary.json",
+      "status": "compile_failure_no_cases_executed",
+      "reason": "新测试调用旧CGRect格式函数，改为NSCoder.string(for:)。"
+    },
+    {
+      "evidence": "Validation/test-runs/original-0233-targeted-r2-summary.json",
+      "cases": 46,
+      "passed": 45,
+      "failed": 1,
+      "assertionFailures": 2,
+      "reason": "像素测试将抗锯齿后98像素误作100点，改为真实100点布局断言与同基线像素对照；同时发现返回阶段取消后仍在插值的真实生产问题，通过稳定宿主内重置装饰子树修复。"
+    },
+    {
+      "evidence": "Validation/test-runs/original-0233-hud-r3-summary.json",
+      "cases": 12,
+      "passed": 12,
+      "failed": 0,
+      "reason": "HUD取消修复复验通过；仍在最终精确并集与收腕轮廓之前。"
+    },
+    {
+      "status": "visual_rejection_despite_passing_arm_tests",
+      "reason": "首版连续轮廓仍等宽、手腕露尖角/抱星肩位平切；改为闭合收腕轮廓、柔化内弯并内收肩位。没有把自动通过当美术验收。"
+    },
+    {
+      "status": "visual_bug_after_full_regression",
+      "evidence": "Docs/original-feel-0233/pre-fix-result-combo-title-overlap.png",
+      "reason": "495项App及7项UI通过后，图中发现Combo与结果标题重叠；作最小可见性修复，再跑最终20项App与1项UI。"
+    }
+  ],
+  "visualEvidence": "Docs/original-feel-0233/manifest.json",
+  "visualVerificationLimits": [
+    "23张保留运行图逐张核对，三段真实模拟器录屏仅按所列时段有限抽帧审阅；不是逐帧参考对标或真机手感验收。",
+    "角色9图来自三尺寸真实UIKit组件，14张游戏图来自实际Root页面和当前第6关；Root中的动作由模型提交，不把它们当原生触摸证据。原生手势证据见独立UI测试。",
+    "截图文件名中的470ms/515ms等为请求等待或阶段标签，截图本身有耗时，不是精确测量。原before-result-decoration附件实际已到遮罩入场，已在图册命名为result-decoration-starting。",
+    "手臂自动自交检查覆盖采样曲线端点折线，不能证明所有三次曲线与帧间插值均无自交；视口/腕对位自动验证为每动作名义470ms采样。",
+    "遮罩几何测试使用合成矩形；真实页面有限截图不能证明所有字号/语言/布局组合的飞星均不遮文字。",
+    "进度录屏后段白条为动画取消的像素验证宿主，不是产品界面。录屏没有用于听觉/触觉验收。"
+  ],
+  "artwork": {
+    "newRasterAssets": false,
+    "existingAssetsModified": false,
+    "nativeArmContours": true,
+    "note": "原生轮廓与栅格身体的材质/自然度仍需持续体验评估，非专业网格动画。"
+  },
+  "audio": {
+    "sourceFilesModified": false,
+    "playbackModified": false,
+    "localTestWAVCount": 9,
+    "formalManifestClipsEmpty": true,
+    "formalReferenceVerified": false,
+    "currentDebugInventory": "Validation/audio-isolation-0233-debug.json",
+    "liveAuditoryAB": false,
+    "releaseExclusion": "Historical0.2.27 only; no Release build this round."
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "evidence": "Validation/test-runs/original-0224-core.log",
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "reference": {
+    "latestActualPlaytest": "Validation/meowdoku-playtest-comparison-0229.json",
+    "newPlaytestThisRound": false,
+    "preciseTimingOrAestheticEquivalenceClaimed": false
+  },
+  "referenceCoverage": {
+    "conclusion": "九类已观察方向均有Demo实现，未声称所有细节或参考品质已完成。",
+    "implementedDirections": [
+      "动态教学：手指、点击圈、横纵轨迹及目标暗化",
+      "角色反应：棋盘眨眼侧看、开心/惊讶、结果独立眼口和连续肢体",
+      "正确奖励：格内实际加分、顶部反馈、跨格彩粒、连续得分回弹",
+      "错误解释：依据可见冲突高亮行列/区域/邻接关系、连线和规则卡",
+      "扣命：爱心破裂及剩一命聚焦提醒",
+      "Combo及结算：三档装饰、整盘庆祝、两套胜利和一套失败演出",
+      "新盘：错峰入场、触摸撤下入场装饰、恢复不重播",
+      "道具：空心X预览、Apply实填、直接答案局部确认",
+      "签到：保存成功后点亮、连签日期与实际库存增量反馈"
+    ]
+  },
+  "baselineObservation": {
+    "build": "0.2.32 (35) plus rewarded-win feedback patch",
+    "detail": "本轮前通过可访问性确认动作继续L2并通关/到L3；录屏44.44秒，只看0–44秒每2秒汇总；非物理双击或参考应用新试玩。",
+    "localRecording": ".build/baseline-0232-live-play.mov"
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  },
+  "remaining": [
+    "角色动作自然度、连续落格到结算的整体节奏仍需实际A/B和真人试玩。",
+    "真机音画/触觉尚未验收；手机仍是0.2.29，033未安装。",
+    "鼓掌装饰、通关每只角色冒爱心等参考细节未加入，不自动成为正式需求。",
+    "正式参考/音频、难度、外部接入和上架验收仍待完成。"
+  ],
+  "formalSignOff": false,
+  "formalConformanceRowsUnchanged": 83,
+  "historicalChecklistCountUnchanged": 88
+}

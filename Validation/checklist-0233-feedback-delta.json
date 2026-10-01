@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.33 (36)",
+  "kind": "scoped_delta_to_88_item_audit",
+  "status": "verified_scoped_reward_and_character_improvements_simulator_only",
+  "baseAudit": "Validation/checklist-0221-audit.json",
+  "previousDelta": "Validation/checklist-0232-feedback-delta.json",
+  "sourceChecklist": "Validation/checklist-source.json",
+  "sourceCaseCount": 88,
+  "scopedRows": 3,
+  "formalSignOff": false,
+  "full88Reexecuted": false,
+  "overallCountsRecomputed": false,
+  "rows": [
+    {
+      "id": "05-06",
+      "title": "结算导航与继续",
+      "originalAcceptanceText": "操作  测试结算下一关、返回首页和继续游戏。\n通过  跳转、进度及反馈正确；主动退出保留策略、击败比例和Rank有确认依据。",
+      "originalRequirementIDs": [
+        "PLAY-10",
+        "UI-04"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "最终修复结算标题与底层Combo重叠；只隐藏装饰、棋盘位置与结果状态不变，按钮仍立即可用。最终胜利下一关原生UI通过。",
+      "evidence": [
+        "Validation/original-0233-feedback.json",
+        "Docs/original-feel-0233/manifest.json",
+        "Validation/test-runs/original-0233-title-fix-summary.json",
+        "Validation/test-runs/original-0233-title-fix-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "14-03",
+      "title": "游戏奖励动效与降级",
+      "originalAcceptanceText": "操作  触发正确、错误、Combo、通关及签到动效。\n通过  与业务状态同步，不阻碍后续操作；轻量特效在低性能设备可降级。",
+      "originalRequirementIDs": [
+        "ART-02"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "进度到达可连续回弹且取消立即回位；飞星避让文字；角色收腕连续轮廓与肩位修正。23图和三段录屏有限目视核对，非真机/参考品质验收。",
+      "evidence": [
+        "Validation/original-0233-feedback.json",
+        "Docs/original-feel-0233/manifest.json",
+        "Validation/test-runs/original-0233-title-fix-summary.json",
+        "Validation/test-runs/original-0233-title-fix-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "16-03",
+      "title": "最终构建全部问题复验",
+      "originalAcceptanceText": "操作  在最终构建复测所有失败用例及受影响流程。\n通过  每个Bug均有关联修复版本、复测结论和证据，旧版本通过不能代替复测。",
+      "originalRequirementIDs": [
+        "TECH-07"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "本轮495项App/7项UI通过后，目视发现文字重叠；最后小修后20项App/1项UI复验全部通过。完整回归明确属于小修之前，不重标。",
+      "evidence": [
+        "Validation/original-0233-feedback.json",
+        "Docs/original-feel-0233/manifest.json",
+        "Validation/test-runs/original-0233-title-fix-summary.json",
+        "Validation/test-runs/original-0233-title-fix-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    }
+  ],
+  "verificationSnapshot": {
+    "beforeLastCosmeticFix": {
+      "app": {
+        "status": "Passed",
+        "cases": 495,
+        "passed": 495,
+        "failed": 0,
+        "skipped": 0,
+        "seconds": 199.201,
+        "scope": "17 Pro / iOS 26.5 full App target, before final Combo-under-result-title visibility fix. No exclusions or repeated test action.",
+        "summary": "Validation/test-runs/original-0233-app-summary.json",
+        "log": "Validation/test-runs/original-0233-app.log",
+        "bundle": "Validation/test-runs/original-0233-app.xcresult"
+      },
+      "ui": {
+        "status": "Passed",
+        "cases": 7,
+        "passed": 7,
+        "failed": 0,
+        "skipped": 0,
+        "seconds": 233.354,
+        "scope": "17e / iOS 26.5 seven native UI cases before final title visibility fix: current L1 teaching, native gestures/tools, win/advance, lose/revive, four board sizes, largest text/hint in both languages, Chinese/English/relaunch. Other cases include historical fixtures.",
+        "summary": "Validation/test-runs/original-0233-17e-ui-summary.json",
+        "log": "Validation/test-runs/original-0233-17e-ui.log",
+        "bundle": "Validation/test-runs/original-0233-17e-ui.xcresult"
+      }
+    },
+    "final": {
+      "app": {
+        "status": "Passed",
+        "cases": 20,
+        "passed": 20,
+        "failed": 0,
+        "skipped": 0,
+        "seconds": 20.191,
+        "scope": "Final production code: 20 tests in GameFeelVisualTests, GameRewardPresentationTests, ProgressArrivalPresentationTests, ResultChoreographyTests, ResultAccessibilityFocusTests, 17 Pro.",
+        "summary": "Validation/test-runs/original-0233-title-fix-summary.json",
+        "log": "Validation/test-runs/original-0233-title-fix.log",
+        "bundle": "Validation/test-runs/original-0233-title-fix.xcresult"
+      },
+      "ui": {
+        "status": "Passed",
+        "cases": 1,
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "seconds": 14.078,
+        "scope": "Final production code: native solve-entire-puzzle/advance, 17e. No full App/UI rerun after last cosmetic fix.",
+        "summary": "Validation/test-runs/original-0233-title-fix-17e-ui-summary.json",
+        "log": "Validation/test-runs/original-0233-title-fix-17e-ui.log",
+        "bundle": "Validation/test-runs/original-0233-title-fix-17e-ui.xcresult"
+      }
+    }
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  },
+  "baselinePreservation": {
+    "sourceChecklist88AndAuditUnchanged": true,
+    "formalConformanceJSONAnd83TableRowsUnchanged": true,
+    "levelsAndArtworkUnchanged": true,
+    "scope": "仅当前版本/记录链接与本轮增量改变；无历史状态重算。"
+  }
+}

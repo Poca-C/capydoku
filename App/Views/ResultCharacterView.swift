@@ -50,6 +50,7 @@ final class ResultCharacterUIView: UIView {
     private let prepareRig: () -> Bool
     private let loadFace: (ResultCharacterPerformance) -> ResultFaceParts?
     private let facePresentation = ResultFacePresentation()
+    private let armPresentation = ResultArmPresentation()
     private var faceParts: ResultFaceParts?
     private let groundShadow = CAShapeLayer()
     private let crown = CALayer()
@@ -100,6 +101,10 @@ final class ResultCharacterUIView: UIView {
         for part in partOrder {
             let piece = CALayer(); piece.name = part.layerName; piece.contentsGravity = .resize
             character.addSublayer(piece); rigLayers[part] = piece
+        }
+        if let torso = rigLayers[.torso], let head = rigLayers[.happyHead] {
+            for sleeve in armPresentation.backLayers { character.insertSublayer(sleeve, below: torso) }
+            for sleeve in armPresentation.frontLayers { character.insertSublayer(sleeve, below: head) }
         }
         crown.name = "result-star-crown"; layer.addSublayer(crown)
         for index in 0..<3 {
@@ -178,6 +183,7 @@ final class ResultCharacterUIView: UIView {
         cleanup?.cancel(); cleanup = nil
         for target in allLayers { target.removeAllAnimations() }
         facePresentation.cancel()
+        armPresentation.cancel()
     }
 
     @objc private func suspend() { applicationActive = false; cancelPresentation() }
@@ -216,6 +222,7 @@ final class ResultCharacterUIView: UIView {
             character.contents = (ResultCharacterArtwork.poses(for: performance).last
                 ?? CapyExpressionArtwork.image(won ? .happy : .neutral))?.cgImage
             for piece in rigLayers.values { piece.opacity = 0 }
+            armPresentation.configure(performance: performance, size: character.bounds.size, enabled: false)
         }
         crown.opacity = won && variant == .proudCrown ? 1 : 0
         layoutSighs()
@@ -224,6 +231,12 @@ final class ResultCharacterUIView: UIView {
 
     private func applyRigPose(_ pose: ResultRigPose) {
         for (part,piece) in rigLayers {
+            // Continuous sleeves replace only the four golden cutouts. Keep
+            // their original decoded artwork available for the complete rig
+            // validation/fallback contract; they never overlap the new ink.
+            if [.leftUpperArm, .rightUpperArm, .leftForearm, .rightForearm].contains(part) {
+                piece.opacity = 0; continue
+            }
             guard let state = pose.parts[part] else { piece.opacity = 0; continue }
             piece.opacity = 1
             piece.bounds = CGRect(origin:.zero,size:CGSize(width:state.size.width * character.bounds.width,
@@ -231,6 +244,7 @@ final class ResultCharacterUIView: UIView {
             piece.position = CGPoint(x:state.center.x * character.bounds.width, y:state.center.y * character.bounds.height)
             piece.setAffineTransform(CGAffineTransform(rotationAngle:state.rotation))
         }
+        armPresentation.configure(performance: performance, size: character.bounds.size, enabled: rigReady)
     }
 
     private func layoutArtwork() {
@@ -308,6 +322,7 @@ final class ResultCharacterUIView: UIView {
         presentationStartTime = CACurrentMediaTime()
         let duration = won ? (variant == .joyfulBounce ? 1.05 : 1.20) : 0.92
         playRig(duration: duration)
+        armPresentation.play(duration: duration, startTime: presentationStartTime)
         facePresentation.play(performance: performance, duration: duration, startTime: presentationStartTime)
         if won && variant == .joyfulBounce { playBounce(duration: duration) }
         else if won { playCrown(duration: duration) }
@@ -324,6 +339,7 @@ final class ResultCharacterUIView: UIView {
         let poses = ResultRigMotion.samples(performance)
         let times = ResultRigMotion.phases.map { NSNumber(value:Double($0)) }
         for (part,piece) in rigLayers {
+            guard piece.opacity > 0 else { continue }
             let states = poses.compactMap { $0.parts[part] }
             guard states.count == poses.count else { continue }
             let position = CAKeyframeAnimation(keyPath:"position")

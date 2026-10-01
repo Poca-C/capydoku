@@ -30,11 +30,13 @@ final class GameRewardPresentationTests: XCTestCase {
         XCTAssertEqual(feedback.flights.count, 4)
         clock.advance(0.44)
         XCTAssertTrue(feedback.progressPulse)
+        XCTAssertNotNil(feedback.progressArrivalID)
         feedback.bind(sessionID: next, score: 100)
         feedback.found(index: 0, sessionID: id, origin: .zero, destination: .zero, reduceMotion: false)
         clock.advance(1)
         XCTAssertTrue(feedback.flights.isEmpty)
         XCTAssertFalse(feedback.progressPulse)
+        XCTAssertNil(feedback.progressArrivalID)
     }
 
     @MainActor func testHiddenFeedbackClearsFlightsAndStaleScoreExpiryCannotEraseNewReward() {
@@ -75,6 +77,14 @@ final class GameRewardPresentationTests: XCTestCase {
         feedback.found(index: 1, sessionID: id, origin: .zero, destination: .zero, reduceMotion: true)
         XCTAssertTrue(feedback.flights.isEmpty)
         XCTAssertTrue(feedback.progressPulse)
+        let firstArrival = feedback.progressArrivalID
+        XCTAssertNotNil(firstArrival)
+        clock.advance(0.04)
+        feedback.found(index: 2, sessionID: id, origin: .zero, destination: .zero, reduceMotion: true)
+        let nextArrival = feedback.progressArrivalID
+        XCTAssertNotEqual(nextArrival, firstArrival, "Arrivals inside the old Boolean's hold window still have distinct identities.")
+        feedback.found(index: 2, sessionID: id, origin: .zero, destination: .zero, reduceMotion: true)
+        XCTAssertEqual(feedback.progressArrivalID, nextArrival, "A duplicate find is not another HUD arrival.")
         clock.advance(1)
         XCTAssertFalse(feedback.progressPulse)
     }
@@ -173,8 +183,20 @@ final class GameFeelVisualTests: XCTestCase {
         try await Task.sleep(nanoseconds: 150_000_000)
         XCTAssertNotNil(frames["result_primary_action"], "Result actions must precede the decoration window.")
         capture("final-move-before-result")
-        try await Task.sleep(nanoseconds: 750_000_000)
+        // Requested sampling delays identify broad phases, not measured frame
+        // timestamps. Keep the existing win-celebration capture for comparison.
+        try await Task.sleep(nanoseconds: 500_000_000)
+        capture("final-combo-board-phase-before-result-decoration")
+        XCTAssertEqual(frames["puzzle_board"], board, "Preserving the Combo band must not shift the completed board.")
+        try await Task.sleep(nanoseconds: 250_000_000)
         capture("win-celebration")
+        try await Task.sleep(nanoseconds: 250_000_000)
+        capture("result-title-entered-without-underlying-combo")
+        try await Task.sleep(nanoseconds: 1_000_000_000)
+        capture("result-settled-without-underlying-combo")
+        XCTAssertEqual(frames["puzzle_board"], board)
+        XCTAssertNotNil(frames["result_primary_action"])
+        XCTAssertEqual(model.session, committedResult, "Hiding Combo decoration changes no result or reward state.")
         XCTAssertEqual(model.session?.found.count, solution.count)
     }
 }
