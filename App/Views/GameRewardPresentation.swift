@@ -150,7 +150,18 @@ final class FeedbackWindowFrameView: UIView {
         let id: UUID
         let origin: CGPoint
         let destination: CGPoint
+        let cellFrame: CGRect
+        let boardFrame: CGRect?
         let reduceMotion: Bool
+
+        func occupiedCells(_ indices: Set<Int>, size: Int) -> [CGRect] {
+            guard let boardFrame, (4...10).contains(size) else { return [cellFrame] }
+            let side = boardFrame.width / CGFloat(size)
+            return indices.sorted().filter { (0..<(size * size)).contains($0) }.map {
+                CGRect(x: boardFrame.minX + CGFloat($0 % size) * side,
+                       y: boardFrame.minY + CGFloat($0 / size) * side, width: side, height: side)
+            }
+        }
     }
     typealias Schedule = (TimeInterval, @escaping () -> Void) -> Void
     @Published private(set) var flights: [Flight] = []
@@ -252,11 +263,21 @@ final class FeedbackWindowFrameView: UIView {
         localScores.removeAll { item in frames.contains { $0.intersects(item.placement.sweptFrame) } }
     }
 
-    func directReveal(_ event: DirectRevealFeedback, origin: CGPoint, destination: CGPoint, reduceMotion: Bool) {
+    func directReveal(_ event: DirectRevealFeedback, origin: CGPoint, destination: CGPoint,
+                      cellFrame: CGRect? = nil, boardFrame: CGRect? = nil, reduceMotion: Bool) {
         guard sessionID == event.sessionID, acknowledgedTools.insert(event.id).inserted,
               presentationEnabled, [origin.x, origin.y, destination.x, destination.y].allSatisfy(\.isFinite) else { return }
+        let cell = cellFrame ?? CGRect(x: destination.x - 17, y: destination.y - 17, width: 34, height: 34)
+        guard [cell.minX, cell.minY, cell.width, cell.height].allSatisfy(\.isFinite),
+              !cell.isInfinite, !cell.isNull, cell.width > 4, cell.height > 4, cell.contains(destination) else { return }
+        if let boardFrame {
+            guard [boardFrame.minX, boardFrame.minY, boardFrame.width, boardFrame.height].allSatisfy(\.isFinite),
+                  !boardFrame.isInfinite, !boardFrame.isNull, !boardFrame.isEmpty,
+                  boardFrame.insetBy(dx: -0.001, dy: -0.001).contains(cell) else { return }
+        }
         let token = generation
-        toolReveal = ToolReveal(id: event.id, origin: origin, destination: destination, reduceMotion: reduceMotion)
+        toolReveal = ToolReveal(id: event.id, origin: origin, destination: destination,
+                                cellFrame: cell, boardFrame: boardFrame, reduceMotion: reduceMotion)
         schedule(0.52) { [weak self] in
             guard self?.generation == token, self?.toolReveal?.id == event.id else { return }
             self?.toolReveal = nil

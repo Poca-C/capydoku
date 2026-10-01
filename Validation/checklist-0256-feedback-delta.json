@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "kind": "scoped_delta_to_88_item_audit",
+  "baseAudit": "Validation/checklist-0221-audit.json",
+  "sourceChecklist": "Validation/checklist-source.json",
+  "sourceCaseCount": 88,
+  "formalSignOff": false,
+  "full88Reexecuted": false,
+  "overallCountsRecomputed": false,
+  "build": "0.2.56 (59)",
+  "status": "scoped_direct_tool_readability_verified_simulator_only",
+  "previousDelta": "Validation/checklist-0255-feedback-delta.json",
+  "scopedRows": 4,
+  "rows": [
+    {
+      "id": "07-02",
+      "title": "库存直接找答案",
+      "originalAcceptanceText": "操作  有库存时使用直接找答案并快速重复点击。\n通过  每次有效使用扣一次，只揭示一个正确目标；不扣血、不自动打叉。",
+      "originalRequirementIDs": [
+        "PLAY-06"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "道具确认框避开角色及标记，继续操作与最后答案/下一关衔接；46项相关App和4项UI通过。提示关闭/Apply属回归；未做正式全量或真机验收。",
+      "evidence": [
+        "Validation/original-0256-feedback.json",
+        "Docs/original-feel-0256/manifest.json",
+        "Validation/test-runs/original-0256-app-final-summary.json",
+        "Validation/test-runs/original-0256-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "07-03",
+      "title": "提示预览关闭与应用",
+      "originalAcceptanceText": "操作  打开Hint观察预览后关闭，再打开并Apply。\n通过  显示时扣次；关闭不改盘、不退款；Apply只写入预览中的建议X。",
+      "originalRequirementIDs": [
+        "PLAY-08"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "道具确认框避开角色及标记，继续操作与最后答案/下一关衔接；46项相关App和4项UI通过。提示关闭/Apply属回归；未做正式全量或真机验收。",
+      "evidence": [
+        "Validation/original-0256-feedback.json",
+        "Docs/original-feel-0256/manifest.json",
+        "Validation/test-runs/original-0256-app-final-summary.json",
+        "Validation/test-runs/original-0256-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "14-03",
+      "title": "游戏奖励动效与降级",
+      "originalAcceptanceText": "操作  触发正确、错误、Combo、通关及签到动效。\n通过  与业务状态同步，不阻碍后续操作；轻量特效在低性能设备可降级。",
+      "originalRequirementIDs": [
+        "ART-02"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "道具确认框避开角色及标记，继续操作与最后答案/下一关衔接；46项相关App和4项UI通过。提示关闭/Apply属回归；未做正式全量或真机验收。",
+      "evidence": [
+        "Validation/original-0256-feedback.json",
+        "Docs/original-feel-0256/manifest.json",
+        "Validation/test-runs/original-0256-app-final-summary.json",
+        "Validation/test-runs/original-0256-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "16-03",
+      "title": "最终构建全部问题复验",
+      "originalAcceptanceText": "操作  在最终构建复测所有失败用例及受影响流程。\n通过  每个Bug均有关联修复版本、复测结论和证据，旧版本通过不能代替复测。",
+      "originalRequirementIDs": [
+        "TECH-07"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "道具确认框避开角色及标记，继续操作与最后答案/下一关衔接；46项相关App和4项UI通过。提示关闭/Apply属回归；未做正式全量或真机验收。",
+      "evidence": [
+        "Validation/original-0256-feedback.json",
+        "Docs/original-feel-0256/manifest.json",
+        "Validation/test-runs/original-0256-app-final-summary.json",
+        "Validation/test-runs/original-0256-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    }
+  ],
+  "verificationSnapshot": {
+    "app": {
+      "status": "Passed",
+      "passed": 46,
+      "failed": 0,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0256-app-final-summary.json",
+      "log": "Validation/test-runs/original-0256-app-final.log",
+      "bundle": "Validation/test-runs/original-0256-app-final.xcresult"
+    },
+    "ui": {
+      "status": "Passed",
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0256-17e-ui-summary.json",
+      "log": "Validation/test-runs/original-0256-17e-ui.log",
+      "bundle": "Validation/test-runs/original-0256-17e-ui.xcresult"
+    }
+  }
+}

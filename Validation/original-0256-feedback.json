@@ -1,0 +1,198 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-02",
+  "build": "0.2.56 (59)",
+  "status": "scoped_direct_tool_readability_verified_simulator_only",
+  "previousReport": "Validation/original-0255-feedback.json",
+  "previousGoalTurn": {
+    "classification": "progress",
+    "reason": "Read-only audit confirmed the still-active fixed center reticle obscures the accepted face, using existing real Root pixels and current source; selected the next concrete repair."
+  },
+  "sourceParagraphs": [
+    69,
+    129,
+    136,
+    249,
+    252,
+    254
+  ],
+  "finding": "The fixed34pt center reticle covers the just-revealed happy face; old source and a fresh0.2.55 real Root capture agree.",
+  "changes": [
+    "Replace the center reticle with real-cell-sized corner strokes, retaining the magnifier flight and immediate committed tool effect.",
+    "Clip all tool decoration over visible occupied tile interiors. Current found/manual/error marks update the mask without replaying the event. Never inspect hidden answers for masking.",
+    "Deduplicate geometrically equivalent target holes to avoid even-odd cancellation; reject invalid source/board geometry and bound size before multiplication.",
+    "Preserve0.48second normal animation and0.52second lifetime; reduced motion keeps static corners with no flight; dismantling removes animations."
+  ],
+  "temporaryTuning": "Corner proportions/trace are Demo presentation choices, not measured or frozen Meowdoku timings.",
+  "verificationHistory": [
+    {
+      "status": "unknown",
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0256-direct-before-summary.json",
+      "log": "Validation/test-runs/original-0256-direct-before.log",
+      "bundle": "Validation/test-runs/original-0256-direct-before.xcresult"
+    },
+    {
+      "status": "Passed",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0256-direct-before-r2-summary.json",
+      "log": "Validation/test-runs/original-0256-direct-before-r2.log",
+      "bundle": "Validation/test-runs/original-0256-direct-before-r2.xcresult"
+    },
+    {
+      "status": "Passed",
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0256-direct-candidate-summary.json",
+      "log": "Validation/test-runs/original-0256-direct-candidate.log",
+      "bundle": "Validation/test-runs/original-0256-direct-candidate.xcresult"
+    },
+    {
+      "status": "Failed",
+      "passed": 1,
+      "failed": 1,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0256-direct-visual-summary.json",
+      "log": "Validation/test-runs/original-0256-direct-visual.log",
+      "bundle": "Validation/test-runs/original-0256-direct-visual.xcresult"
+    },
+    {
+      "status": "Failed",
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0256-direct-final-diagnostic-summary.json",
+      "log": "Validation/test-runs/original-0256-direct-final-diagnostic.log",
+      "bundle": "Validation/test-runs/original-0256-direct-final-diagnostic.xcresult"
+    },
+    {
+      "status": "Failed",
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0256-direct-callback-diagnostic-summary.json",
+      "log": "Validation/test-runs/original-0256-direct-callback-diagnostic.log",
+      "bundle": "Validation/test-runs/original-0256-direct-callback-diagnostic.xcresult"
+    },
+    {
+      "status": "Failed",
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0256-direct-ledger-diagnostic-summary.json",
+      "log": "Validation/test-runs/original-0256-direct-ledger-diagnostic.log",
+      "bundle": "Validation/test-runs/original-0256-direct-ledger-diagnostic.xcresult"
+    },
+    {
+      "status": "Failed",
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0256-direct-body-diagnostic-summary.json",
+      "log": "Validation/test-runs/original-0256-direct-body-diagnostic.log",
+      "bundle": "Validation/test-runs/original-0256-direct-body-diagnostic.xcresult"
+    },
+    {
+      "status": "Passed",
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0256-direct-prepared-summary.json",
+      "log": "Validation/test-runs/original-0256-direct-prepared.log",
+      "bundle": "Validation/test-runs/original-0256-direct-prepared.xcresult"
+    }
+  ],
+  "historyExplanation": "First baseline selector matched zero tests and is not verification; corrected selector captured the old behavior. New final-direct fixture initially failed only its first L6 normal120ms receipt assertion. Diagnostics showed callbacks accepted and reward state published. Fixture bypassed the real startup resource gate and cold-loaded result art on first win. Calling the existing BundledStartupResources.prepare before hosting matches StartupFlowView readiness. Original120ms assertion retained; production reward timing unchanged; temporary diagnostics removed.",
+  "applicationTests": {
+    "status": "Passed",
+    "passed": 46,
+    "failed": 0,
+    "skipped": 0,
+    "summary": "Validation/test-runs/original-0256-app-final-summary.json",
+    "log": "Validation/test-runs/original-0256-app-final.log",
+    "bundle": "Validation/test-runs/original-0256-app-final.xcresult"
+  },
+  "uiTests": {
+    "status": "Passed",
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "summary": "Validation/test-runs/original-0256-17e-ui-summary.json",
+    "log": "Validation/test-runs/original-0256-17e-ui.log",
+    "bundle": "Validation/test-runs/original-0256-17e-ui.xcresult"
+  },
+  "visualEvidence": "Docs/original-feel-0256/manifest.json",
+  "testedScope": [
+    "Six actual Root normal/reduced fixtures across6x6,8x8,10x10: single inventory consumption, no added X, lives/score preserved; mark/undo and another correct move usable while tool feedback exists.",
+    "Six final-direct wins with immediately available next action; new board first mark and no old receipt returning.",
+    "Tool-only sampled pixels stay transparent over occupied tiles and remain visible elsewhere; near-duplicate target mask and invalid geometry tested.",
+    "Related reward recovery, scene cancellation and full-level rhythm regression; four17e native UI paths cover recognizers, hint close/Apply and direct/restart."
+  ],
+  "reference": {
+    "latestSuccessfulPlaytest": "Validation/meowdoku-playtest-comparison-0249.json",
+    "newSuccessfulPlaytestThisRound": false,
+    "equivalenceClaimed": false,
+    "implementationSummary": {
+      "status": "Nine observed directions each have Demo implementation; this is not reference-quality sign-off.",
+      "implementedDirections": [
+        "动态手势教学",
+        "角色待机/正确/错误表情",
+        "浮分/彩粒/飞星/鼓掌及顶部联动",
+        "错误原因与规则可视化",
+        "扣命与一命提醒",
+        "Combo及分层胜败演出",
+        "新盘错峰入场",
+        "提示与找答案反馈",
+        "签到点亮与实际到账演出"
+      ],
+      "audio": "9 local Debug-only reference WAVs remain an authorized testing experiment; no live audio or physical haptic A/B in this round.",
+      "qualityGaps": [
+        "角色动作自然度与整段节奏",
+        "密集浮分离源距离",
+        "真机声音/震动配合",
+        "正式参考和发布资源验收"
+      ],
+      "notReplicatedFromLatestPlaytest": [
+        "Reference horn-playing character pose",
+        "Every observed praise phrase",
+        "Automatic check-in interstitial during victory; current Demo check-in entry remains on home"
+      ]
+    }
+  },
+  "audio": {
+    "modified": false,
+    "localTestWAVCount": 9,
+    "currentDebugInventory": "Validation/audio-isolation-0256-debug.json",
+    "inventoryIdenticalTo0255": true,
+    "formalManifestClipsEmpty": true,
+    "liveAuditoryAB": false,
+    "releaseRebuilt": false
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  },
+  "formalSignOff": false,
+  "formalConformanceRowsUnchanged": 83,
+  "historicalChecklistCountUnchanged": 88,
+  "remaining": [
+    "整体动作自然度、连续音画和真机触感仍待验；手机仍0.2.29，打包/GitHub暂停。",
+    "本轮不是全量App/Core、全88项或全部150关试玩，未作正式参考品质验收。"
+  ]
+}

@@ -506,6 +506,7 @@ struct GameView: View {
                                                     let tool = CGPoint(x: directWindowFrame.midX - gameWindowFrame.minX,
                                                                        y: directWindowFrame.midY - gameWindowFrame.minY)
                                                     rewards.directReveal(event, origin: tool, destination: source,
+                                                                         cellFrame: sourceCell, boardFrame: boardFrame,
                                                                          reduceMotion: reduceMotion || ProcessInfo.processInfo.isLowPowerModeEnabled)
                                                 }
                                             }
@@ -569,7 +570,12 @@ struct GameView: View {
                     .opacity(flightTextMeasurementsReady ? 1 : 0)
                     .allowsHitTesting(false).accessibilityHidden(true)
                     ForEach(ownsFeedback ? rewards.localScores : []) { CellScoreLabel(item: $0) }
-                    if ownsFeedback, let reveal = rewards.toolReveal { DirectToolRevealView(reveal: reveal).id(reveal.id) }
+                    if ownsFeedback, let reveal = rewards.toolReveal {
+                        DirectToolRevealView(reveal: reveal,
+                            protectedCells: reveal.occupiedCells(s.found.union(s.marks).union(s.errors), size: s.puzzle.size))
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .allowsHitTesting(false).accessibilityHidden(true).id(reveal.id)
+                    }
                     if lifeFocused {
                         LastLifeSpotlightView(livesFrame: livesWindowFrame.offsetBy(dx: -gameWindowFrame.minX, dy: -gameWindowFrame.minY)) {
                             feedback.dismissLastLife()

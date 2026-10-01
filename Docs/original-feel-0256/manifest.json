@@ -1,0 +1,182 @@
+{
+  "build": "0.2.56 (59)",
+  "baselineBuild": "0.2.55 (58)",
+  "items": [
+    {
+      "file": "before-current-level-6-direct-tool-120ms.png",
+      "sha256": "c8987dee02dd3e85289968fbcd389922b000f3f118e2d53e9ecf54b01adcef99",
+      "source": ".build/attachments-0256-before/99E6D16D-17FF-4141-B801-172C7D8C6F3A.png",
+      "scope": "Unedited XCTest attachment: CompletionFeedbackTests/testCurrentPackRootDirectAndCompleteBoardCaptureWithImmediateNextAction()"
+    },
+    {
+      "file": "final-direct-root-L101-320-reduced-true-new-mark-pixel-coverage.json",
+      "sha256": "eb781ad9dec3a30054b60447a134f2349f480b6a6c1b44d567c5519ef8e7e21f",
+      "source": ".build/attachments-0256-final/DF0C0CA3-3B99-4A11-ADAF-F54578D8EF67.json",
+      "scope": "Unedited XCTest attachment: DirectToolRevealVisualTests/testActualRootDirectReceiptProtectsCurrentPackFacesAndAcceptsImmediateMoves()"
+    },
+    {
+      "file": "final-direct-root-L101-320-reduced-true-initial-pixel-coverage.json",
+      "sha256": "7c4f02f09e1e2e4f5c92e1d0c491e201b0a21fc12e51077ef5be9cbe809ffd28",
+      "source": ".build/attachments-0256-final/E0D5567D-F697-4E2E-BD48-24B6ADBBB418.json",
+      "scope": "Unedited XCTest attachment: DirectToolRevealVisualTests/testActualRootDirectReceiptProtectsCurrentPackFacesAndAcceptsImmediateMoves()"
+    },
+    {
+      "file": "final-direct-root-L101-320-reduced-true-natural-120ms.png",
+      "sha256": "fbee3edd7ea94ee768c3c865f2dbf7c834eec6f5436294dd95d5e85f00156dea",
+      "source": ".build/attachments-0256-final/790AEC69-DAE1-4EAC-BF80-1651417C1911.png",
+      "scope": "Unedited XCTest attachment: DirectToolRevealVisualTests/testActualRootDirectReceiptProtectsCurrentPackFacesAndAcceptsImmediateMoves()"
+    },
+    {
+      "file": "final-direct-root-L101-320-reduced-false-new-mark-pixel-coverage.json",
+      "sha256": "50d456538f3b02b005b23b0e4c6d85019bea1f3a7b2df1f515e4eff2fff101e1",
+      "source": ".build/attachments-0256-final/CC5AE943-4E14-4A56-99F5-ED549654AC07.json",
+      "scope": "Unedited XCTest attachment: DirectToolRevealVisualTests/testActualRootDirectReceiptProtectsCurrentPackFacesAndAcceptsImmediateMoves()"
+    },
+    {
+      "file": "final-direct-root-L101-320-reduced-false-initial-pixel-coverage.json",
+      "sha256": "b8404d38a104a8051bd524aa3eaceb65dae4d20842c34825a08df1be5b161402",
+      "source": ".build/attachments-0256-final/77B980C6-7BB3-468B-AA3E-081FFB283FF8.json",
+      "scope": "Unedited XCTest attachment: DirectToolRevealVisualTests/testActualRootDirectReceiptProtectsCurrentPackFacesAndAcceptsImmediateMoves()"
+    },
+    {
+      "file": "final-direct-root-L101-320-reduced-false-natural-120ms.png",
+      "sha256": "f37985704dacd939640a65cbfd04dab0bbe3a16d0051cbae3d731dcfc4afce81",
+      "source": ".build/attachments-0256-final/4B0D0675-EFA9-4A42-821A-2004FD95F3B0.png",
+      "scope": "Unedited XCTest attachment: DirectToolRevealVisualTests/testActualRootDirectReceiptProtectsCurrentPackFacesAndAcceptsImmediateMoves()"
+    },
+    {
+      "file": "final-direct-root-L63-320-reduced-true-new-mark-pixel-coverage.json",
+      "sha256": "3db523999be19b189dc40c462c6b9d0ee45d9daf6e2b1a9242ab450a09ce97ff",
+      "source": ".build/attachments-0256-final/08DC4DCE-1BB2-445E-AECE-753E31C6961C.json",
+      "scope": "Unedited XCTest attachment: DirectToolRevealVisualTests/testActualRootDirectReceiptProtectsCurrentPackFacesAndAcceptsImmediateMoves()"
+    },
+    {
+      "file": "final-direct-root-L63-320-reduced-true-initial-pixel-coverage.json",
+      "sha256": "b388e638475b1d5809e081dd7dc93fe591c02986c39c22fb6dfc50f514d6ac65",
+      "source": ".build/attachments-0256-final/832F6F18-23EA-423D-A04C-35F85BB7417E.json",
+      "scope": "Unedited XCTest attachment: DirectToolRevealVisualTests/testActualRootDirectReceiptProtectsCurrentPackFacesAndAcceptsImmediateMoves()"
+    },
+    {
+      "file": "final-direct-root-L63-320-reduced-true-natural-120ms.png",
+      "sha256": "81372879dea5ef4e555e9e78b7df46f3c17a92d2243462c2d5f4447489562ccb",
+      "source": ".build/attachments-0256-final/254DD618-4466-4035-9221-3B7DF4000DE4.png",
+      "scope": "Unedited XCTest attachment: DirectToolRevealVisualTests/testActualRootDirectReceiptProtectsCurrentPackFacesAndAcceptsImmediateMoves()"
+    },
+    {
+      "file": "final-direct-root-L63-320-reduced-false-new-mark-pixel-coverage.json",
+      "sha256": "c7a5de9b55aa12d0029fb19640d823b347b7f5f6f7577327914ee7151fdd1100",
+      "source": ".build/attachments-0256-final/EB403BAF-A42B-482E-9E70-1159778AAD2C.json",
+      "scope": "Unedited XCTest attachment: DirectToolRevealVisualTests/testActualRootDirectReceiptProtectsCurrentPackFacesAndAcceptsImmediateMoves()"
+    },
+    {
+      "file": "final-direct-root-L63-320-reduced-false-initial-pixel-coverage.json",
+      "sha256": "015e93cccbd96a51f937a7332806cb3c0e1a254596d39e640014829dafdfdff1",
+      "source": ".build/attachments-0256-final/194A6539-FDE5-47C3-BB91-CE0A95A97FB3.json",
+      "scope": "Unedited XCTest attachment: DirectToolRevealVisualTests/testActualRootDirectReceiptProtectsCurrentPackFacesAndAcceptsImmediateMoves()"
+    },
+    {
+      "file": "final-direct-root-L63-320-reduced-false-natural-120ms.png",
+      "sha256": "c3fa76eb5589d03ca8145760bd1e0f5d32644886098027644e0c101935cdcaaa",
+      "source": ".build/attachments-0256-final/9E1E44C9-1EEC-48F7-8B24-7E975D7EAE13.png",
+      "scope": "Unedited XCTest attachment: DirectToolRevealVisualTests/testActualRootDirectReceiptProtectsCurrentPackFacesAndAcceptsImmediateMoves()"
+    },
+    {
+      "file": "final-direct-root-L6-402-reduced-true-new-mark-pixel-coverage.json",
+      "sha256": "673c5204119efe025b1ddbb17bbb40b8f3b71e2b0bae0dbb9e32972b01ac06b6",
+      "source": ".build/attachments-0256-final/06CDE1AD-6DA6-4167-B382-5ED0E85FAB3C.json",
+      "scope": "Unedited XCTest attachment: DirectToolRevealVisualTests/testActualRootDirectReceiptProtectsCurrentPackFacesAndAcceptsImmediateMoves()"
+    },
+    {
+      "file": "final-direct-root-L6-402-reduced-true-initial-pixel-coverage.json",
+      "sha256": "ae1782a7b8cb41fa059988b4739e7b1c18192b2848c625f211d8fe1b14706428",
+      "source": ".build/attachments-0256-final/A0DD4DCD-81E8-4CE2-A410-D09A4381C4E6.json",
+      "scope": "Unedited XCTest attachment: DirectToolRevealVisualTests/testActualRootDirectReceiptProtectsCurrentPackFacesAndAcceptsImmediateMoves()"
+    },
+    {
+      "file": "final-direct-root-L6-402-reduced-true-natural-120ms.png",
+      "sha256": "334e15246817e6c1c4cf5d38fe9ffd1f6a158bfe6b9095ad6c2da9d3219ff55a",
+      "source": ".build/attachments-0256-final/E2E6F29F-53D2-495C-9A8D-E8E1DEE62783.png",
+      "scope": "Unedited XCTest attachment: DirectToolRevealVisualTests/testActualRootDirectReceiptProtectsCurrentPackFacesAndAcceptsImmediateMoves()"
+    },
+    {
+      "file": "final-direct-root-L6-402-reduced-false-new-mark-pixel-coverage.json",
+      "sha256": "e9550bb78b46c1904764e346fc190993540383288a85afe200ad500daca4f1f3",
+      "source": ".build/attachments-0256-final/E53EBC1D-36B4-4004-BA62-4E8EA242706A.json",
+      "scope": "Unedited XCTest attachment: DirectToolRevealVisualTests/testActualRootDirectReceiptProtectsCurrentPackFacesAndAcceptsImmediateMoves()"
+    },
+    {
+      "file": "final-direct-root-L6-402-reduced-false-initial-pixel-coverage.json",
+      "sha256": "a0e02552a209275422342c3814fe176884a6d1d0334c729576591cbc95b20ce2",
+      "source": ".build/attachments-0256-final/C7CEBA5C-768D-4597-A785-514435B0BB53.json",
+      "scope": "Unedited XCTest attachment: DirectToolRevealVisualTests/testActualRootDirectReceiptProtectsCurrentPackFacesAndAcceptsImmediateMoves()"
+    },
+    {
+      "file": "final-direct-root-L6-402-reduced-false-natural-120ms.png",
+      "sha256": "fb74cae2feed236288c05f20b370c91f2021cfbba97cf29de0b6e40be91c35d2",
+      "source": ".build/attachments-0256-final/256429E0-CAB2-43AD-B717-F4FCF356FF3F.png",
+      "scope": "Unedited XCTest attachment: DirectToolRevealVisualTests/testActualRootDirectReceiptProtectsCurrentPackFacesAndAcceptsImmediateMoves()"
+    },
+    {
+      "file": "final-direct-final-L6-402-reduced-false-next-level-first-mark.png",
+      "sha256": "2c9f5f4b3ac77b4ce9f81ab1b5a5cddd519a714ea25d07003dc631eda04b00df",
+      "source": ".build/attachments-0256-final/A9D47597-F27D-4E46-AF0E-ABEED64AFD43.png",
+      "scope": "Unedited XCTest attachment: DirectToolRevealVisualTests/testActualRootFinalDirectCommitsWinAndImmediateNextClearsItsReceipt()"
+    },
+    {
+      "file": "final-direct-final-L6-402-reduced-false-win-before-receipt-expiry.png",
+      "sha256": "fe105136bf9501820430f96525fd2c010a643623aaa72009ea06ee26d5517474",
+      "source": ".build/attachments-0256-final/1F9CD40B-7858-4C54-835D-1567D430FCCF.png",
+      "scope": "Unedited XCTest attachment: DirectToolRevealVisualTests/testActualRootFinalDirectCommitsWinAndImmediateNextClearsItsReceipt()"
+    },
+    {
+      "file": "final-direct-reduced-near-duplicate-target-native-pixels.png",
+      "sha256": "62b1488909c3f5862384a47b40ea3a9631e36e7ea79de3ead1a07843353fcf35",
+      "source": ".build/attachments-0256-final/D02133F7-3810-4D48-A08B-DEB047D15D5A.png",
+      "scope": "Unedited XCTest attachment: DirectToolRevealVisualTests/testHostedReducedReceiptNearDuplicateTargetCannotReopenItsProtectedPixels()"
+    },
+    {
+      "file": "final-direct-receipt-and-continuation.mov",
+      "sha256": "eb5b5a98b52b7612c8652ffad91cdb4e20229cca86a924b2f54b3b23c72726ff",
+      "source": ".build/original-0256-app-final-direct-faces.mov",
+      "scope": "simctl recording of real Root test fixtures, L6/L63/L101 normal/reduced. Model tool action then native board activation; smaller hosted windows reveal the test app behind them. Not a normal-save or physical-device playthrough."
+    },
+    {
+      "file": "final-direct-win-and-next.mov",
+      "sha256": "6145b415a73f1648fba6589e451f77d67367f1504798f608a4c2106ce570e4bd",
+      "source": ".build/original-0256-app-final-direct-next.mov",
+      "scope": "simctl recording of real Root final-direct/early-next test fixtures; not physical touch or audible A/B."
+    }
+  ],
+  "visualReview": "Individually reviewed six final natural Root screenshots, L6 final-direct win screenshot, and current baseline. Before and after tool choices can differ; no same-cell pixel-difference claim.",
+  "videoReview": {
+    "file": "final-direct-receipt-and-continuation.mov",
+    "durationSeconds": 11.401666666666667,
+    "inspectedRequestedTimesSeconds": [
+      0.0,
+      0.5,
+      1.0,
+      1.5,
+      2.0,
+      2.5,
+      3.0,
+      3.5,
+      4.0,
+      4.5,
+      5.0,
+      5.5,
+      6.0,
+      6.5,
+      7.0,
+      7.5,
+      8.0,
+      8.5,
+      9.0,
+      9.5,
+      10.0,
+      10.5,
+      11.0
+    ],
+    "method": "23 full-frame contact-sheet samples from 0 through 11 seconds; no all-frame, frame-rate, or audio claim."
+  },
+  "verificationBoundary": "The transparent tool-layer pixel checks isolate only tool decoration at sampled running phases, including an updated mark mask. The reduced-motion near-duplicate test separately rasterizes the installed mask. These are finite simulator checks, not reference-quality or true-device sign-off."
+}
