@@ -13,6 +13,8 @@ final class BoardMistakeFeedbackView: UIView {
     private let rightHeart = CAShapeLayer()
     private let crossOutline = CAShapeLayer()
     private let cross = CAShapeLayer()
+    private var transitionTask: DispatchWorkItem?
+    private var cleanupTask: DispatchWorkItem?
 
     init(cellIndex: Int, frame: CGRect, tileColor: UIColor, reduceMotion: Bool) {
         self.cellIndex = cellIndex
@@ -35,7 +37,8 @@ final class BoardMistakeFeedbackView: UIView {
         presentation.addSublayer(cellRim)
 
         face.frame = bounds.insetBy(dx: bounds.width * 0.07, dy: bounds.height * 0.07)
-        face.contents = UIImage(named: "CapyFace")?.cgImage
+        face.name = "mistake-face-startled"
+        face.contents = CapyExpressionArtwork.image(.startled)?.cgImage
         face.contentsGravity = .resizeAspect
         face.opacity = 0
         presentation.addSublayer(face)
@@ -88,6 +91,7 @@ final class BoardMistakeFeedbackView: UIView {
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
     func play() {
+        transitionTask?.cancel(); cleanupTask?.cancel()
         if reduceMotion {
             // A static split-heart/X sequence preserves meaning without shake,
             // scale, rotation or travelling particles.
@@ -96,13 +100,15 @@ final class BoardMistakeFeedbackView: UIView {
             leftHeart.setAffineTransform(CGAffineTransform(translationX: -2, y: 0))
             rightHeart.setAffineTransform(CGAffineTransform(translationX: 2, y: 0))
             CATransaction.commit()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.38) { [weak self] in
+            let transition = DispatchWorkItem { [weak self] in
                 guard let self, self.superview != nil else { return }
                 CATransaction.begin(); CATransaction.setDisableActions(true)
                 self.leftHeart.opacity = 0; self.rightHeart.opacity = 0
                 self.crossOutline.opacity = 1; self.cross.opacity = 1
                 CATransaction.commit()
             }
+            transitionTask = transition
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.38, execute: transition)
         } else {
             // Original [252]: shake this cell's presentation, not the board's
             // frame, hit targets or persisted geometry. Settle within 0.25s.
@@ -123,7 +129,19 @@ final class BoardMistakeFeedbackView: UIView {
                 animate(target, key: "opacity", values: [0, 0, 1, 1], times: [0, 0.60, 0.88, 1])
             }
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [weak self] in self?.removeFromSuperview() }
+        let cleanup = DispatchWorkItem { [weak self] in self?.removeFromSuperview() }
+        cleanupTask = cleanup
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8, execute: cleanup)
+    }
+
+    override func willMove(toSuperview newSuperview: UIView?) {
+        if newSuperview == nil {
+            transitionTask?.cancel(); transitionTask = nil
+            cleanupTask?.cancel(); cleanupTask = nil
+            layer.removeAllAnimations(); presentation.removeAllAnimations()
+            presentation.sublayers?.forEach { $0.removeAllAnimations() }
+        }
+        super.willMove(toSuperview: newSuperview)
     }
 
     private func animate(_ target: CALayer, key: String, values: [CGFloat], times: [NSNumber]) {

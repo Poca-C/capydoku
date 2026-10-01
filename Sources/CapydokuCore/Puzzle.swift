@@ -65,3 +65,46 @@ public struct PuzzleValidationReport: Codable, Equatable, Sendable {
     public let errors: [String]
     public let logicalMetrics: PuzzleLogicalMetrics
 }
+
+/// Rules that can be explained using only the currently visible capybaras.
+public enum VisibleConflictKind: String, CaseIterable, Codable, Sendable {
+    case region, row, column, adjacent
+}
+
+public struct VisiblePuzzleConflict: Equatable, Sendable {
+    public let otherCell: Int
+    public let kinds: [VisibleConflictKind]
+
+    public init(otherCell: Int, kinds: [VisibleConflictKind]) {
+        self.otherCell = otherCell
+        self.kinds = kinds
+    }
+}
+
+public enum VisibleConflictAnalysis {
+    /// Explains a candidate against visible found/given cells without consulting the answer.
+    /// Results are ordered by cell index, with kinds in region/row/column/adjacent order.
+    /// An empty result means no *visible* conflict, not that the candidate is an answer.
+    public static func conflicts(size: Int, regions: [Int], candidate: Int,
+                                 found: Set<Int>) -> [VisiblePuzzleConflict] {
+        // Match the core board shape contract; bound size before multiplying to avoid overflow.
+        guard (1...16).contains(size), regions.count == size * size,
+              regions.allSatisfy({ (0..<size).contains($0) }), Set(regions).count == size,
+              regions.indices.contains(candidate),
+              found.allSatisfy({ regions.indices.contains($0) }),
+              !found.contains(candidate) else { return [] }
+
+        let row = candidate / size, column = candidate % size
+        return found.sorted().compactMap { otherCell in
+            let otherRow = otherCell / size, otherColumn = otherCell % size
+            var kinds: [VisibleConflictKind] = []
+            if regions[candidate] == regions[otherCell] { kinds.append(.region) }
+            if row == otherRow { kinds.append(.row) }
+            if column == otherColumn { kinds.append(.column) }
+            if abs(row - otherRow) <= 1 && abs(column - otherColumn) <= 1 {
+                kinds.append(.adjacent)
+            }
+            return kinds.isEmpty ? nil : VisiblePuzzleConflict(otherCell: otherCell, kinds: kinds)
+        }
+    }
+}

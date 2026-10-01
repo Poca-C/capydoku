@@ -53,16 +53,24 @@ final class FeedbackWindowFrameView: UIView {
         let origin: CGPoint
         let destination: CGPoint
     }
+    struct LocalScore: Identifiable {
+        let id = UUID()
+        let amount: Int
+        let origin: CGPoint
+        let reduceMotion: Bool
+    }
     typealias Schedule = (TimeInterval, @escaping () -> Void) -> Void
     @Published private(set) var flights: [Flight] = []
     @Published private(set) var progressPulse = false
     @Published private(set) var scoreDelta: Int?
+    @Published private(set) var localScores: [LocalScore] = []
     private var sessionID: UUID?
     private var lastScore = 0
     private var generation = UUID()
     private var scoreToken = UUID()
     private var pulseToken = UUID()
     private var acknowledged = Set<Int>()
+    private var presentationEnabled = true
     private let schedule: Schedule
 
     init(schedule: @escaping Schedule = { delay, action in
@@ -74,11 +82,16 @@ final class FeedbackWindowFrameView: UIView {
         clear(); self.sessionID = sessionID; lastScore = score; acknowledged = []
     }
 
+    func setPresentationEnabled(_ enabled: Bool) {
+        presentationEnabled = enabled
+        if !enabled { clear() }
+    }
+
     func scoreChanged(_ score: Int, sessionID: UUID, visible: Bool) {
         guard self.sessionID == sessionID else { bind(sessionID: sessionID, score: score); return }
         let change = score - lastScore
         lastScore = score
-        guard visible, change > 0 else { return }
+        guard visible, presentationEnabled, change > 0 else { return }
         scoreToken = UUID(); let token = scoreToken
         scoreDelta = change
         schedule(0.75) { [weak self] in
@@ -88,7 +101,7 @@ final class FeedbackWindowFrameView: UIView {
     }
 
     func found(index: Int, sessionID: UUID, origin: CGPoint, destination: CGPoint, reduceMotion: Bool) {
-        guard self.sessionID == sessionID, acknowledged.insert(index).inserted else { return }
+        guard self.sessionID == sessionID, acknowledged.insert(index).inserted, presentationEnabled else { return }
         let token = generation
         if reduceMotion {
             pulseProgress()
@@ -107,6 +120,20 @@ final class FeedbackWindowFrameView: UIView {
         }
     }
 
+    /// The board supplies its committed positive delta once, even if UIKit
+    /// coalesces several accepted moves into a single render transaction.
+    func scoreAward(_ amount: Int, sessionID: UUID, origin: CGPoint, reduceMotion: Bool) {
+        guard self.sessionID == sessionID, presentationEnabled, amount > 0,
+              origin.x.isFinite, origin.y.isFinite else { return }
+        let token = generation
+        let item = LocalScore(amount: amount, origin: origin, reduceMotion: reduceMotion)
+        localScores = Array((localScores + [item]).suffix(4))
+        schedule(0.72) { [weak self] in
+            guard self?.generation == token else { return }
+            self?.localScores.removeAll { $0.id == item.id }
+        }
+    }
+
     private func pulseProgress() {
         pulseToken = UUID(); let token = pulseToken
         progressPulse = true
@@ -118,7 +145,7 @@ final class FeedbackWindowFrameView: UIView {
 
     func clear() {
         generation = UUID(); scoreToken = UUID(); pulseToken = UUID()
-        flights = []; progressPulse = false; scoreDelta = nil
+        flights = []; progressPulse = false; scoreDelta = nil; localScores = []
     }
 }
 
@@ -186,6 +213,26 @@ struct ProgressFlightStar: View {
             .modifier(ProgressStarPath(progress: progress, origin: flight.origin, destination: flight.destination))
             .allowsHitTesting(false).accessibilityHidden(true)
             .onAppear { withAnimation(.easeInOut(duration: 0.44)) { progress = 1 } }
+    }
+}
+
+struct CellScoreLabel: View {
+    let item: GameRewardPresentation.LocalScore
+    @State private var lifted = false
+    var body: some View {
+        Text("+\(item.amount)")
+            .font(.system(size: 19, weight: .heavy, design: .rounded))
+            .foregroundColor(CapyPalette.actionOrange)
+            .padding(.horizontal, 6).padding(.vertical, 2)
+            .background(CapyPalette.paper.opacity(0.96)).clipShape(Capsule())
+            .fixedSize().shadow(color: CapyPalette.ink.opacity(0.12), radius: 2, y: 1)
+            .position(x: item.origin.x, y: item.origin.y - (lifted ? 12 : 0))
+            .opacity(lifted ? 0 : 1)
+            .allowsHitTesting(false).accessibilityHidden(true)
+            .onAppear {
+                guard !item.reduceMotion else { return }
+                withAnimation(.easeOut(duration: 0.68)) { lifted = true }
+            }
     }
 }
 

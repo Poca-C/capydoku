@@ -49,7 +49,10 @@ struct CapyMascot: View {
 
     var body: some View {
         Group {
-            if let artwork = UIImage(named: mood == .sad ? "CapySad" : size > 90 ? "CapyMascot" : "CapyFace") {
+            if size <= 90, mood != .sad,
+               let artwork = CapyExpressionArtwork.image(mood == .happy ? .happy : .neutral) {
+                Image(uiImage: artwork).resizable().scaledToFit()
+            } else if let artwork = UIImage(named: mood == .sad ? "CapySad" : size > 90 ? "CapyMascot" : "CapyFace") {
                 Image(uiImage: artwork).resizable().scaledToFit()
             } else { drawnFace }
         }.frame(width: size, height: size).accessibilityHidden(true)

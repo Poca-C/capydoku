@@ -29,7 +29,8 @@ final class BoardCellFeedbackView: UIView {
         if kind == .found {
             if !reduceMotion { makeFoundAccents() }
             symbol.frame = bounds.insetBy(dx: bounds.width * 0.07, dy: bounds.height * 0.07)
-            symbol.contents = UIImage(named: "CapyFace")?.cgImage
+            symbol.name = "found-face-happy"
+            symbol.contents = CapyExpressionArtwork.image(.happy)?.cgImage
             symbol.contentsGravity = .resizeAspect
             layer.addSublayer(symbol)
             ring.frame = bounds.insetBy(dx: bounds.width * 0.07, dy: bounds.height * 0.07)

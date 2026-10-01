@@ -14,9 +14,11 @@ struct PuzzleBoardView: UIViewRepresentable {
     let errors: Set<Int>
     var sessionID: UUID? = nil
     var lives: Int? = nil
+    var score: Int? = nil
     var effectsEnabled = true
     var preview: Set<Int> = []
     var tutorialTargets: Set<Int> = []
+    var tutorialAction: String? = nil
     var hideAccessibility: Bool = false
     let locked: Bool
     let onToggle: (Int) -> Void
@@ -27,6 +29,8 @@ struct PuzzleBoardView: UIViewRepresentable {
     var onInputActivityChange: (UUID, Bool) -> Void = { _, _ in }
     /// The point is in the board's UIWindow coordinates, not local grid space.
     var onFoundFeedback: (Int, CGPoint) -> Void = { _, _ in }
+    var onConflictFeedback: ([VisibleConflictKind]) -> Void = { _ in }
+    var onScoreFeedback: (Int, CGPoint) -> Void = { _, _ in }
 
     func makeUIView(context: Context) -> PuzzleGridUIView {
         let view = PuzzleGridUIView()
@@ -37,18 +41,19 @@ struct PuzzleBoardView: UIViewRepresentable {
     func updateUIView(_ uiView: PuzzleGridUIView, context: Context) {
         uiView.configure(size: puzzle.size, regions: puzzle.regions, found: found,
                          marks: marks, errors: errors, preview: preview,
-                         sessionID: sessionID, lives: lives, effectsEnabled: effectsEnabled,
+                         sessionID: sessionID, lives: lives, score: score, effectsEnabled: effectsEnabled,
                          reduceMotion: reduceMotion,
-                         tutorialTargets: tutorialTargets, locked: locked, hideAccessibility: hideAccessibility,
+                         tutorialTargets: tutorialTargets, tutorialAction: tutorialAction, locked: locked, hideAccessibility: hideAccessibility,
                          language: language,
                          onToggle: onToggle, onSubmit: onSubmit, onMark: onMark,
                          onBeginSwipe: onBeginSwipe, onEndSwipe: onEndSwipe,
                          onInputActivityChange: onInputActivityChange,
-                         onFoundFeedback: onFoundFeedback)
+                         onFoundFeedback: onFoundFeedback, onConflictFeedback: onConflictFeedback,
+                         onScoreFeedback: onScoreFeedback)
     }
 
     static func dismantleUIView(_ uiView: PuzzleGridUIView, coordinator: ()) {
-        uiView.cancelInputActivity()
+        uiView.cancelPresentation()
     }
 }
 
@@ -114,6 +119,8 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     private var errors = Set<Int>()
     private var preview = Set<Int>()
     private var tutorialTargets = Set<Int>()
+    private var tutorialAction: String?
+    private var tutorialGuide: BoardTutorialGuideView?
     private var locked = false
     private var hideAccessibility = false
     private var language: AppLanguage = .simplifiedChinese
@@ -124,6 +131,8 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     private var onEndSwipe: ((Bool) -> Void)?
     private var onInputActivityChange: ((UUID, Bool) -> Void)?
     private var onFoundFeedback: ((Int, CGPoint) -> Void)?
+    private var onConflictFeedback: (([VisibleConflictKind]) -> Void)?
+    private var onScoreFeedback: ((Int, CGPoint) -> Void)?
     let inputActivity = BoardInputActivity()
     private var inputRecognizers: [UIGestureRecognizer] = []
     private var swipeFeedbackActive = false
@@ -137,6 +146,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     private var hasConfigured = false
     private var sessionID: UUID?
     private var lives: Int?
+    private var score: Int?
     private var pendingSubmission: Int?
     private let feedbackOverlay = UIView()
     private var pressFeedback: BoardPressedCellView?
@@ -144,6 +154,14 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     private var effectsEnabled = true
     private var reduceMotionOverride: Bool?
     private var applicationAllowsPresentation = true
+    // One cancellable job for the whole board, rather than one timer per animal.
+    // Injectable only for deterministic host tests; no gameplay state depends on it.
+    var idleBlinkScheduler: (TimeInterval, DispatchWorkItem) -> Void = { delay, work in
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: work)
+    }
+    private var idleBlinkJob: DispatchWorkItem?
+    private var idleBlinkToken = UUID()
+    private var lastBlinkedCell: Int?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -183,25 +201,29 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(reduceMotionChanged), name: UIAccessibility.reduceMotionStatusDidChangeNotification, object: nil)
     }
 
-    deinit { NotificationCenter.default.removeObserver(self) }
+    deinit { idleBlinkJob?.cancel(); NotificationCenter.default.removeObserver(self) }
 
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
     func configure(size: Int, regions: [Int], found: Set<Int>, marks: Set<Int>, errors: Set<Int>,
-                   preview: Set<Int>, sessionID: UUID? = nil, lives: Int? = nil, effectsEnabled: Bool = true,
+                   preview: Set<Int>, sessionID: UUID? = nil, lives: Int? = nil, score: Int? = nil, effectsEnabled: Bool = true,
                    reduceMotion: Bool? = nil,
-                   tutorialTargets: Set<Int>, locked: Bool, hideAccessibility: Bool = false,
+                   tutorialTargets: Set<Int>, tutorialAction: String? = nil, locked: Bool, hideAccessibility: Bool = false,
                    language: AppLanguage = .simplifiedChinese,
                    onToggle: @escaping (Int) -> Void, onSubmit: @escaping (Int) -> Void,
                    onMark: @escaping ([Int]) -> Void,
                    onBeginSwipe: @escaping () -> Void = {}, onEndSwipe: @escaping (Bool) -> Void = { _ in },
                    onInputActivityChange: @escaping (UUID, Bool) -> Void = { _, _ in },
-                   onFoundFeedback: @escaping (Int, CGPoint) -> Void = { _, _ in }) {
+                   onFoundFeedback: @escaping (Int, CGPoint) -> Void = { _, _ in },
+                   onConflictFeedback: @escaping ([VisibleConflictKind]) -> Void = { _ in },
+                   onScoreFeedback: @escaping (Int, CGPoint) -> Void = { _, _ in }) {
         let sameBoard = self.size == size && self.regions == regions && self.sessionID == sessionID
         let addedFound = found.subtracting(self.found)
         let addedErrors = errors.subtracting(self.errors)
         let removedErrors = self.errors.subtracting(errors)
         let changedMarks = marks.symmetricDifference(self.marks).subtracting(found).subtracting(errors)
+        let scoreDelta = self.score.flatMap { before in score.map { $0 - before } } ?? 0
+        let scoreOrigin = pendingSubmission.flatMap { addedFound.contains($0) ? $0 : nil } ?? addedFound.sorted().last
         // A red X can be submitted again. Its set membership does not change,
         // so the actual life deduction, not insertion into errors, owns feedback.
         let lostLife = self.lives.map { before in lives.map { $0 < before } ?? false } ?? false
@@ -214,6 +236,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         }
         let motionPolicyChanged = reducesMotion != (reduceMotion ?? UIAccessibility.isReduceMotionEnabled)
         if !sameBoard || !effectsEnabled || motionPolicyChanged { clearFeedback() }
+        if locked || hideAccessibility || !preview.isEmpty { clearGuidance() }
         for effect in feedbackOverlay.subviews.compactMap({ $0 as? BoardCellFeedbackView }) {
             let valid = effect.kind == .found ? found.contains(effect.cellIndex)
                 : effect.kind == .markAdded ? marks.contains(effect.cellIndex) && !found.contains(effect.cellIndex) && !errors.contains(effect.cellIndex)
@@ -222,6 +245,14 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         }
         for effect in feedbackOverlay.subviews.compactMap({ $0 as? BoardMistakeFeedbackView }) where !errors.contains(effect.cellIndex) {
             effect.removeFromSuperview()
+        }
+        var clearedConflict = false
+        for effect in feedbackOverlay.subviews.compactMap({ $0 as? BoardConflictFeedbackView }) where !errors.contains(effect.candidate) {
+            let participants = Set(effect.conflicts.map(\.otherCell))
+            effect.removeFromSuperview(); clearedConflict = true
+            feedbackOverlay.subviews.compactMap { $0 as? CapyFaceExpressionView }
+                .filter { $0.expression == .startled && participants.contains($0.cellIndex) }
+                .forEach { $0.removeFromSuperview() }
         }
         if !sameBoard || locked {
             // Disable the actual recognizers as well as clearing our ledger:
@@ -232,6 +263,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         self.size = max(1, size)
         self.sessionID = sessionID
         self.lives = lives
+        self.score = score
         pendingSubmission = nil
         self.regions = regions
         self.found = found
@@ -239,6 +271,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         self.errors = errors
         self.preview = preview
         self.tutorialTargets = tutorialTargets
+        self.tutorialAction = tutorialAction
         self.locked = locked
         self.hideAccessibility = hideAccessibility
         self.language = language
@@ -254,10 +287,14 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         // Only subsequent attempts belong to this updated board configuration.
         self.onInputActivityChange = onInputActivityChange
         self.onFoundFeedback = onFoundFeedback
+        self.onConflictFeedback = onConflictFeedback
+        self.onScoreFeedback = onScoreFeedback
+        if clearedConflict { self.onConflictFeedback?([]) }
         if let pressed = pressFeedback?.cellIndex, !canPress(pressed) { endCellPress() }
         updateInputAvailability()
         refreshAccessibility()
         setNeedsDisplay()
+        updateTutorialGuide()
         if hasConfigured, sameBoard, canPresentEffects {
             for index in addedFound.sorted() where (0..<(size * size)).contains(index) {
                 cellFeedback(at: index, kind: .found)
@@ -270,11 +307,17 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
                 cellFeedback(at: index, kind: marks.contains(index) ? .markAdded : .markRemoved,
                              errorMark: removedErrors.contains(index))
             }
+            if scoreDelta > 0, let index = scoreOrigin, let window {
+                let cell = rect(for: index)
+                self.onScoreFeedback?(scoreDelta, convert(CGPoint(x: cell.midX, y: cell.midY), to: window))
+            }
         }
         if hasConfigured, sameBoard, canPresentEffects, let index = mistakeCell {
             mistake(at: index)
+            if !locked && !hideAccessibility && preview.isEmpty { explainMistake(at: index) }
         }
         hasConfigured = true
+        updateIdleBlinkScheduling()
     }
 
     private var canPresentEffects: Bool {
@@ -319,6 +362,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
 
     private func cellFeedback(at index: Int, kind: BoardCellFeedbackView.Kind, errorMark: Bool = false) {
         guard (0..<(size * size)).contains(index), cellSide > 0 else { return }
+        removeIdleBlinkExpression()
         for effect in feedbackOverlay.subviews.compactMap({ $0 as? BoardCellFeedbackView }) where effect.cellIndex == index { effect.removeFromSuperview() }
         let palette = ((region(index) % CapyPalette.regionColors.count) + CapyPalette.regionColors.count) % CapyPalette.regionColors.count
         let gap = max(1.1, min(2, cellSide * 0.028))
@@ -437,7 +481,11 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     override func didMoveToWindow() {
         super.didMoveToWindow()
         if window == nil { cancelInputActivity(); clearFeedback(); pendingSubmission = nil }
-        else { updateInputAvailability() }
+        else { updateInputAvailability(); updateTutorialGuide(); updateIdleBlinkScheduling() }
+    }
+
+    func cancelPresentation() {
+        cancelInputActivity(); clearFeedback(); pendingSubmission = nil
     }
 
     func cancelInputActivity() {
@@ -465,11 +513,15 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     @objc private func resumeBoardPresentation() {
         applicationAllowsPresentation = true
         updateInputAvailability()
+        updateTutorialGuide()
+        updateIdleBlinkScheduling()
         // Resuming never replays a found cell or changes the saved board.
     }
 
     @objc private func reduceMotionChanged() {
         clearFeedback()
+        updateTutorialGuide()
+        updateIdleBlinkScheduling()
     }
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool { false }
@@ -478,6 +530,8 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         super.layoutSubviews()
         if feedbackOverlay.bounds.size != bounds.size { clearFeedback() }
         feedbackOverlay.frame = bounds
+        updateTutorialGuide()
+        updateIdleBlinkScheduling()
         for (index, element) in cells.enumerated() { element.accessibilityFrameInContainerSpace = rect(for: index) }
     }
 
@@ -572,6 +626,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
 
     private func mistake(at index: Int) {
         guard (0..<(size * size)).contains(index), cellSide > 0 else { return }
+        removeIdleBlinkExpression()
         // Replace the same-cell transient effect. Rapid valid mistakes must not
         // stack several opaque hearts over the player's latest state.
         for view in feedbackOverlay.subviews.compactMap({ $0 as? BoardMistakeFeedbackView }) where view.cellIndex == index {
@@ -587,13 +642,109 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     }
 
     private func clearFeedback() {
+        cancelIdleBlink()
+        lastBlinkedCell = nil
         endCellPress()
         feedbackOverlay.subviews.forEach { $0.removeFromSuperview() }
         feedbackOverlay.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
+        tutorialGuide = nil
+    }
+
+    private func clearGuidance() {
+        tutorialGuide?.removeFromSuperview(); tutorialGuide = nil
+        feedbackOverlay.subviews.filter { $0 is BoardConflictFeedbackView || $0 is CapyFaceExpressionView }.forEach { $0.removeFromSuperview() }
+    }
+
+    private var canPresentIdleBlink: Bool {
+        hasConfigured && canPresentEffects && !locked && !hideAccessibility && preview.isEmpty
+            && tutorialAction == nil && tutorialTargets.isEmpty && !reducesMotion && !found.isEmpty
+    }
+
+    private func removeIdleBlinkExpression() {
+        feedbackOverlay.subviews.compactMap { $0 as? CapyFaceExpressionView }
+            .filter { $0.expression == .blink }.forEach { $0.removeFromSuperview() }
+    }
+
+    private func cancelIdleBlink() {
+        idleBlinkToken = UUID(); idleBlinkJob?.cancel(); idleBlinkJob = nil
+        removeIdleBlinkExpression()
+    }
+
+    private func updateIdleBlinkScheduling() {
+        guard canPresentIdleBlink else { cancelIdleBlink(); return }
+        // Repeated SwiftUI updates neither postpone the next blink nor create
+        // another scheduled job. A new attempt starts only after this one ends.
+        guard idleBlinkJob == nil else { return }
+        let token = UUID(); idleBlinkToken = token
+        let work = DispatchWorkItem { [weak self] in
+            guard let self, self.idleBlinkToken == token else { return }
+            self.idleBlinkJob = nil
+            self.presentIdleBlinkIfPossible()
+            self.updateIdleBlinkScheduling()
+        }
+        idleBlinkJob = work; idleBlinkScheduler(4, work)
+    }
+
+    private func presentIdleBlinkIfPossible() {
+        guard canPresentIdleBlink, !trackingContact, !inputActivity.isBusy,
+              !feedbackOverlay.subviews.contains(where: {
+                  $0 is BoardCellFeedbackView || $0 is BoardMistakeFeedbackView
+                      || $0 is BoardConflictFeedbackView || $0 is CapyFaceExpressionView
+              }) else { return }
+        let ordered = found.sorted()
+        guard let index = ordered.first(where: { $0 > (lastBlinkedCell ?? -1) }) ?? ordered.first else { return }
+        lastBlinkedCell = index
+        let palette = ((region(index) % CapyPalette.regionColors.count) + CapyPalette.regionColors.count) % CapyPalette.regionColors.count
+        let gap = max(1.1, min(2, cellSide * 0.028))
+        let blink = CapyFaceExpressionView(cellIndex: index, expression: .blink,
+            frame: rect(for: index).insetBy(dx: gap, dy: gap),
+            tileColor: UIColor(CapyPalette.regionColors[palette]), reduceMotion: false)
+        feedbackOverlay.addSubview(blink); blink.play()
+    }
+
+    private func updateTutorialGuide() {
+        guard applicationAllowsPresentation, window != nil, window?.isHidden == false, !isHidden, alpha > 0,
+              !hideAccessibility, preview.isEmpty, !tutorialTargets.isEmpty,
+              let action = tutorialAction, ["read", "tap", "swipe", "doubleTap"].contains(action),
+              !locked || action == "read", cellSide > 0 else {
+            tutorialGuide?.removeFromSuperview(); tutorialGuide = nil; return
+        }
+        let staticGuide = reducesMotion || !effectsEnabled
+        if let current = tutorialGuide, current.action == action, current.targetCells == tutorialTargets,
+           current.boardRect == boardRect, current.reduceMotion == staticGuide { return }
+        tutorialGuide?.removeFromSuperview()
+        let guide = BoardTutorialGuideView(frame: bounds, boardRect: boardRect, size: size,
+                                          targetCells: tutorialTargets, action: action, reduceMotion: staticGuide)
+        feedbackOverlay.insertSubview(guide, at: 0); tutorialGuide = guide; guide.play()
+    }
+
+    private func explainMistake(at index: Int) {
+        // This API deliberately receives no Puzzle/solution. An incorrect
+        // guess with no conflict against a visible animal gets no invented reason.
+        let conflicts = VisibleConflictAnalysis.conflicts(size: size, regions: regions, candidate: index, found: found)
+        feedbackOverlay.subviews.compactMap { $0 as? BoardConflictFeedbackView }.forEach { $0.removeFromSuperview() }
+        let kinds = Set(conflicts.flatMap(\.kinds))
+        // An empty explanation clears the previous rule emphasis as well.
+        onConflictFeedback?([.region, .row, .column, .adjacent].filter { kinds.contains($0) })
+        guard !conflicts.isEmpty else { return }
+        let explanation = BoardConflictFeedbackView(frame: bounds, boardRect: boardRect, size: size,
+            regions: regions, candidate: index, conflicts: conflicts, reduceMotion: reducesMotion)
+        feedbackOverlay.addSubview(explanation); explanation.play()
+        for other in Set(conflicts.map(\.otherCell)).sorted() {
+            feedbackOverlay.subviews.compactMap { $0 as? CapyFaceExpressionView }
+                .filter { $0.cellIndex == other }.forEach { $0.removeFromSuperview() }
+            let palette = ((region(other) % CapyPalette.regionColors.count) + CapyPalette.regionColors.count) % CapyPalette.regionColors.count
+            let gap = max(1.1, min(2, cellSide * 0.028))
+            let expression = CapyFaceExpressionView(cellIndex: other, expression: .startled,
+                frame: rect(for: other).insetBy(dx: gap, dy: gap),
+                tileColor: UIColor(CapyPalette.regionColors[palette]), reduceMotion: reducesMotion)
+            // Keep explanation outlines above the reacting animal.
+            feedbackOverlay.insertSubview(expression, belowSubview: explanation); expression.play()
+        }
     }
 
     private func drawCapy(in rect: CGRect, context: CGContext) {
-        if let image = UIImage(named: "CapyFace") {
+        if let image = CapyExpressionArtwork.image(.neutral) {
             image.draw(in: rect.insetBy(dx: rect.width * 0.07, dy: rect.height * 0.07)); return
         }
         let r = rect.insetBy(dx: rect.width * 0.11, dy: rect.height * 0.10)

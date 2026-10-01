@@ -1,0 +1,52 @@
+{
+  "build": "0.2.24 (27)",
+  "timestampUTC": "2026-10-01T08:56:20.509606+00:00",
+  "device": {
+    "model": "iPhone 14 Pro Max",
+    "os": "26.3.1",
+    "transport": "localNetwork"
+  },
+  "package": {
+    "version": "0.2.24",
+    "build": "27",
+    "bundle": "com.capydoku.demo",
+    "profileIncludesPhone": true,
+    "profileExpiresUTC": "2026-10-08 04:04:05",
+    "binarySHA256": "1852a618da4b88157900c4bc0e8d9415280514201ebaa1b818615c96761de824"
+  },
+  "signature": {
+    "strictVerification": true,
+    "buildLog": "Validation/test-runs/original-0224-physical-build.log"
+  },
+  "installation": {
+    "passed": true,
+    "resetOrUninstall": false,
+    "normalBundleIdentifier": "com.capydoku.demo",
+    "verifiedVersion": "0.2.24",
+    "verifiedBuild": "27",
+    "result": "Validation/test-runs/physical-0224-install.json"
+  },
+  "launch": {
+    "passed": true,
+    "noTestArguments": true,
+    "terminatedExistingProcess": false,
+    "result": "Validation/test-runs/physical-0224-launch.json"
+  },
+  "data": {
+    "installationPreservedAllEightObservedFilesByteForByte": true,
+    "validPrimaryAndBackupChecksumsAllThreeSnapshots": true,
+    "historicalEventsUnchanged": 120,
+    "eventsAfterLaunch": 133,
+    "identityNamespaceUnchanged": true,
+    "postLaunchFullPlayerEquality": false,
+    "reason": "Post-launch snapshot contains new local level/tool/reward events and changed found count on level 7. No scripted game input was sent to the phone. Therefore installation-time exact preservation and retained history/identity are asserted; equality after foreground activity or its precise origin is not asserted.",
+    "evidence": [
+      "Validation/test-runs/physical-0224-install-data-check.json",
+      "Validation/test-runs/physical-0224-before-copy.json",
+      "Validation/test-runs/physical-0224-after-install-copy.json",
+      "Validation/test-runs/physical-0224-after-launch-copy.json"
+    ]
+  },
+  "connectionHistory": "Initial discovery unavailable/disconnected; a later read-only details request established a connected local-network tunnel before backup and installation.",
+  "acceptanceBoundary": "Development installation, normal launch and install-time data preservation verified. No supervised physical gesture/haptic/audio acceptance, TestFlight or App Store upload. Private user/device identifiers omitted."
+}

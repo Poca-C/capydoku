@@ -1,0 +1,88 @@
+{
+  "build": "0.2.24 (27)",
+  "sourceBundle": "Validation/test-runs/original-0224-app-r2.xcresult",
+  "device": "iPhone 17 Pro simulator / iOS 26.5",
+  "method": "XCTest live UIKit/SwiftUI test-host captures and one runtime atlas contact sheet; exported unmodified, all 11 viewed. Labels describe intended sampling delays; not measured frame-perfect timing.",
+  "review": {
+    "passed": true,
+    "observations": [
+      "All four expression heads are centered, unclipped and transparent on different tile colors.",
+      "Current packaged level 6 shows local +100 and happy reveal; wrong submission shows rule borders, corresponding visible row/adjacent cells, dashed connection and splitting heart. After settling, the board has one found animal, one error X, two lives and score 100.",
+      "Horizontal guide differs between 280ms and 760ms samples; vertical guide points down the actual target column.",
+      "Small-cell bottom-edge sample is an isolated guide layer on a synthetic 190pt board; black areas indicate transparency in this standalone render. Hand remains in board bounds; not a full game layout.",
+      "Idle blink sample affects only one of two visible found animals. Conflict sample after 570ms has restored neutral expression and retains short-lived unit outline."
+    ],
+    "limitations": [
+      "Images and assertions are not physical haptic/audio testing, precise timing comparison or measured frame-rate evidence.",
+      "Board-only samples use synthetic 4x4 fixtures; only three level-6 RootView captures use the current production 150-level pack."
+    ]
+  },
+  "images": [
+    {
+      "file": "Docs/original-feel-0224/conflict-visible-units-570ms.png",
+      "test": "BoardGuidancePresentationTests/testActualHostSamplesTutorialMotionConflictExplanationAndSettledCleanup()",
+      "sha256": "7a01bba3e25b4865272716a3832aac11d013edb876c8f500fdc6ac0df02da56a",
+      "reviewed": true
+    },
+    {
+      "file": "Docs/original-feel-0224/conflict-visible-row-region-adjacency-150ms.png",
+      "test": "BoardGuidancePresentationTests/testActualHostSamplesTutorialMotionConflictExplanationAndSettledCleanup()",
+      "sha256": "56da486bca806cfc2694f999e03aa9206de96750724f11c0e842d4c722dca2e3",
+      "reviewed": true
+    },
+    {
+      "file": "Docs/original-feel-0224/tutorial-vertical-760ms-hand-travelling.png",
+      "test": "BoardGuidancePresentationTests/testActualHostSamplesTutorialMotionConflictExplanationAndSettledCleanup()",
+      "sha256": "5b2a6aea29ebb11d3391e5246414fdb25b5d754f0be9dd6168ff90f3865dae8a",
+      "reviewed": true
+    },
+    {
+      "file": "Docs/original-feel-0224/tutorial-horizontal-760ms-hand-travelling.png",
+      "test": "BoardGuidancePresentationTests/testActualHostSamplesTutorialMotionConflictExplanationAndSettledCleanup()",
+      "sha256": "db85aac71ad4d978f837992c3e5e1ffa271156d9f217c07f954eef439a2e0e95",
+      "reviewed": true
+    },
+    {
+      "file": "Docs/original-feel-0224/tutorial-horizontal-280ms-hand-at-start.png",
+      "test": "BoardGuidancePresentationTests/testActualHostSamplesTutorialMotionConflictExplanationAndSettledCleanup()",
+      "sha256": "eae35066cb9c32f40972ae83e40dcb51b52bb2f74908109d075441ba1d9a5249",
+      "reviewed": true
+    },
+    {
+      "file": "Docs/original-feel-0224/idle-blink-first-visible-animal.png",
+      "test": "BoardGuidancePresentationTests/testIdleBlinkHasOneBoardJobAcrossRedrawsAndRotatesOneFoundAnimalAtATime()",
+      "sha256": "d5dfde9fcbff73e4c7203f01214cd475fba38d907617097bb9281b1a8c7e29e7",
+      "reviewed": true
+    },
+    {
+      "file": "Docs/original-feel-0224/tutorial-small-cells-bottom-edge-static-model.png",
+      "test": "BoardGuidancePresentationTests/testSmallCellGuidesClipToBoardAndInvalidOrDiagonalTargetsInventNoSwipe()",
+      "sha256": "03ae09672f543fc1521f5165229cc9ffe532f9d1a0eac08531d3f174975ba1cc",
+      "reviewed": true
+    },
+    {
+      "file": "Docs/original-feel-0224/capy-expressions-runtime-normalized.png",
+      "test": "CapyExpressionTests/testBundledExpressionsHaveConsistentVisibleAnchorsAndTransparentCanvas()",
+      "sha256": "d24e438c1ca6e26a11d0401888b470508b00058b9994457d6cc15d70e6981e03",
+      "reviewed": true
+    },
+    {
+      "file": "Docs/original-feel-0224/current-level-6-conflict-settled-no-extra-deduction.png",
+      "test": "GameHUDVisualTests/testCurrentLevelSixRootCapturesHappyScoreAndVisibleConflictWithoutChangingCommittedGame()",
+      "sha256": "905cc3c85730e8cdde2b0e3da21d4f832e33546b66721de28f940b3170c464ed",
+      "reviewed": true
+    },
+    {
+      "file": "Docs/original-feel-0224/current-level-6-rules-links-heart-loss-120ms.png",
+      "test": "GameHUDVisualTests/testCurrentLevelSixRootCapturesHappyScoreAndVisibleConflictWithoutChangingCommittedGame()",
+      "sha256": "c541513f6e999083bd54f9b769b8647f6192607e38e8429d9af14d626f0d4bb4",
+      "reviewed": true
+    },
+    {
+      "file": "Docs/original-feel-0224/current-level-6-happy-local-score-120ms.png",
+      "test": "GameHUDVisualTests/testCurrentLevelSixRootCapturesHappyScoreAndVisibleConflictWithoutChangingCommittedGame()",
+      "sha256": "df1eb63b5a74933b0450851775dda59f62209dd4b2b209972ad2d349a154dfae",
+      "reviewed": true
+    }
+  ]
+}

@@ -257,11 +257,13 @@ struct GameView: View {
     private var reduceMotion: Bool { motionOverride ?? systemReduceMotion }
     @StateObject private var feedback = GameFeedbackPresentation()
     @StateObject private var rewards = GameRewardPresentation()
+    @StateObject private var hud = GameHUDPresentation()
     @State private var progressFrame = CGRect.zero
     @State private var gameWindowFrame = CGRect.zero
+    @State private var boardWindowFrame = CGRect.zero
     @State private var hintContentHeight: CGFloat = 66
     private var canPresentFeedback: Bool {
-        scenePhase == .active && model.hint == nil && model.sheet == nil && !model.loading &&
+        model.screen == .game && scenePhase == .active && model.hint == nil && model.sheet == nil && !model.loading &&
         !model.challengePending && model.errorMessage == nil && model.notice == nil
     }
     var body: some View {
@@ -302,22 +304,15 @@ struct GameView: View {
                                 Text("\(s.score)").font(.system(size: compact ? 22 : 25, weight: .heavy, design: .rounded)).accessibilityIdentifier("score")
                                     .scaleEffect(rewards.scoreDelta != nil && !reduceMotion ? 1.12 : 1)
                                     .animation(reduceMotion ? nil : .spring(response: 0.24, dampingFraction: 0.62), value: rewards.scoreDelta)
-                                    .overlay(alignment: .trailing) {
-                                        if let delta = rewards.scoreDelta {
-                                            Text("+\(delta)").font(.system(size: compact ? 13 : 16, weight: .heavy, design: .rounded))
-                                                .foregroundColor(CapyPalette.rewardTextGreen)
-                                                .fixedSize().offset(x: compact ? 32 : 42)
-                                                .transition(.opacity).allowsHitTesting(false).accessibilityHidden(true)
-                                        }
-                                    }
                             }
                         }.frame(height: compact ? 44 : 56).opacity(model.hint == nil ? 1 : 0.35).accessibilityHidden(covered || model.hint != nil)
                         HStack(spacing: compact ? 12 : 18) {
                             progress(s, compact: compact)
                             HStack(spacing: 4) {
                                 ForEach(0..<s.config.initialLives, id: \.self) { index in
-                                    Image(systemName: "heart.fill").font(.system(size: compact ? 19 : 22, weight: .bold))
-                                        .foregroundColor(index < s.lives ? CapyPalette.life : CapyPalette.orangeLight)
+                                    LifeHeartView(available: index < s.lives, size: compact ? 19 : 22,
+                                                  lossID: hud.lifeLosses.first(where: { $0.index == index })?.id,
+                                                  reduceMotion: reduceMotion)
                                 }
                             }.padding(.horizontal, 10).padding(.vertical, 5).background(CapyPalette.paper).clipShape(Capsule())
                                 .accessibilityElement(children: .ignore).accessibilityLabel(language.text("Lives")).accessibilityValue("\(s.lives)").accessibilityIdentifier("lives")
@@ -355,13 +350,14 @@ struct GameView: View {
                                         if !loading { model.hintDidAppear(useID: useID) }
                                     }
                             }
-                            else { RuleStrip(compact: compact) }
+                            else { RuleStrip(compact: compact, highlightedRules: hud.highlightedRules) }
                         }.frame(height: hintHeight).padding(.top, compact ? 4 : 8)
                         comboBadge(compact: compact).frame(height: feedbackHeight)
                         PuzzleBoardView(puzzle: s.puzzle, found: s.found, marks: s.marks, errors: s.errors,
-                                        sessionID: s.id, lives: s.lives,
+                                        sessionID: s.id, lives: s.lives, score: s.score,
                                         effectsEnabled: canPresentFeedback,
                                         preview: Set(model.hint?.cells ?? []), tutorialTargets: Set(model.tutorial?.targetCells ?? []),
+                                        tutorialAction: model.tutorial?.action,
                                         hideAccessibility: covered,
                                         locked: s.status != .playing || !canPresentFeedback || model.tutorial?.action == "read",
                                         onToggle: model.toggle, onSubmit: model.submit, onMark: model.mark,
@@ -381,8 +377,26 @@ struct GameView: View {
                                                 rewards.found(index: index, sessionID: s.id, origin: source, destination: target,
                                                               reduceMotion: reduceMotion || ProcessInfo.processInfo.isLowPowerModeEnabled)
                                             }
+                                        }, onConflictFeedback: { kinds in
+                                            DispatchQueue.main.async {
+                                                guard model.session?.id == s.id else { return }
+                                                hud.conflict(kinds, sessionID: s.id, visible: canPresentFeedback)
+                                            }
+                                        }, onScoreFeedback: { amount, location in
+                                            let area = boardWindowFrame.offsetBy(dx: -gameWindowFrame.minX, dy: -gameWindowFrame.minY)
+                                            let source = CGPoint(x: location.x - gameWindowFrame.minX,
+                                                                 y: location.y - gameWindowFrame.minY)
+                                            let labelPoint = CGPoint(x: min(max(source.x, area.minX + 44), area.maxX - 44),
+                                                                     y: max(area.minY + 32, source.y - boardSide / CGFloat(s.puzzle.size) * 0.4))
+                                            DispatchQueue.main.async {
+                                                guard model.session?.id == s.id, canPresentFeedback,
+                                                      !gameWindowFrame.isEmpty, !boardWindowFrame.isEmpty else { return }
+                                                rewards.scoreAward(amount, sessionID: s.id, origin: labelPoint,
+                                                                   reduceMotion: reduceMotion)
+                                            }
                                         })
                             .frame(width: boardSide, height: boardSide)
+                            .background(FeedbackWindowFrameReader { boardWindowFrame = $0 })
                             .capyLayoutProbe("puzzle_board")
                         Spacer(minLength: compact ? 4 : 10)
                         if model.hint != nil {
@@ -401,6 +415,7 @@ struct GameView: View {
                         Color.clear.frame(height: bannerHeight).accessibilityIdentifier("banner_reservation")
                     }.disabled(s.status != .playing).accessibilityElement(children: covered ? .ignore : .contain).accessibilityHidden(covered).padding(.horizontal, 14).padding(.top, 4).padding(.bottom, 4)
                     ForEach(rewards.flights) { ProgressFlightStar(flight: $0) }
+                    ForEach(rewards.localScores) { CellScoreLabel(item: $0) }
                     if feedback.showLastLife && s.status == .playing && model.hint == nil && model.sheet == nil {
                         VStack {
                             Text(language.text("Only one chance left!"))
@@ -421,15 +436,26 @@ struct GameView: View {
                 .onChange(of: s.lives) {
                     feedback.setPresentationEnabled(canPresentFeedback)
                     feedback.life($0)
+                    hud.lifeChanged($0, sessionID: s.id, visible: canPresentFeedback)
                 }
                 .onChange(of: s.score) { rewards.scoreChanged($0, sessionID: s.id, visible: canPresentFeedback) }
-                .onChange(of: s.id) { _ in feedback.clear(); rewards.bind(sessionID: s.id, score: s.score) }
+                .onChange(of: s.id) { _ in
+                    feedback.clear(); rewards.bind(sessionID: s.id, score: s.score)
+                    hud.bind(sessionID: s.id, lives: s.lives)
+                }
                 .onChange(of: canPresentFeedback) {
                     feedback.setPresentationEnabled($0)
-                    if !$0 { rewards.clear() }
+                    rewards.setPresentationEnabled($0); hud.setPresentationEnabled($0)
                 }
-                .onAppear { feedback.setPresentationEnabled(canPresentFeedback); rewards.bind(sessionID: s.id, score: s.score) }
-                .onDisappear { feedback.setPresentationEnabled(false); rewards.clear() }
+                .onAppear {
+                    feedback.setPresentationEnabled(canPresentFeedback); rewards.bind(sessionID: s.id, score: s.score)
+                    hud.bind(sessionID: s.id, lives: s.lives)
+                    rewards.setPresentationEnabled(canPresentFeedback); hud.setPresentationEnabled(canPresentFeedback)
+                }
+                .onDisappear {
+                    feedback.setPresentationEnabled(false)
+                    rewards.setPresentationEnabled(false); hud.setPresentationEnabled(false)
+                }
                 .animation(reduceMotion ? nil : .easeOut(duration: 0.15), value: feedback.showLastLife)
                 .accessibilityAddTraits(model.hint != nil ? .isModal : [])
             }
@@ -557,6 +583,7 @@ struct ToolButton: View {
 struct RuleStrip: View {
     @Environment(\.appLanguage) private var language
     var compact = false
+    var highlightedRules: Set<VisibleConflictKind> = []
     var body: some View {
         HStack(spacing: 4) {
             rule(0, "1 Capy per\ncolor")
@@ -581,7 +608,17 @@ struct RuleStrip: View {
             }
         }.frame(maxWidth: .infinity, alignment: compact ? .center : .leading)
             .padding(.horizontal, compact ? 2 : 3).padding(.vertical, compact ? 2 : 8)
-            .background(CapyPalette.cream).clipShape(RoundedRectangle(cornerRadius: 6))
+            .background(isHighlighted(kind) ? CapyPalette.life.opacity(0.18) : CapyPalette.cream)
+            .clipShape(RoundedRectangle(cornerRadius: 6))
+            .overlay(RoundedRectangle(cornerRadius: 6)
+                .stroke(isHighlighted(kind) ? CapyPalette.life : .clear, lineWidth: 2))
+    }
+    private func isHighlighted(_ kind: Int) -> Bool {
+        switch kind {
+        case 0: return highlightedRules.contains(.region)
+        case 1: return highlightedRules.contains(.row) || highlightedRules.contains(.column)
+        default: return highlightedRules.contains(.adjacent)
+        }
     }
     private func ruleText(_ title: String) -> some View {
         Text(language.text(title)).font(.system(size: 10, weight: .semibold, design: .rounded)).minimumScaleFactor(0.8)

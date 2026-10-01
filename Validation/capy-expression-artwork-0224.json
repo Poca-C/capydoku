@@ -1,0 +1,13 @@
+{
+  "build": "0.2.24 (27)",
+  "date": "2026-10-01",
+  "asset": "App/Resources/Assets.xcassets/CapyFaceExpressions.imageset/CapyFaceExpressions.png",
+  "sha256": "c4c69da4190dab2b070d855ac5e670c4daf08e7be26bc7dcafcdea387bc3a60e",
+  "source": "Built-in imagegen edit using existing original Capydoku CapyFace as identity reference",
+  "reference": "App/Resources/Assets.xcassets/CapyFace.imageset/CapyFace.png",
+  "atlas": "2x2: neutral, blink, happy, startled",
+  "packaging": "Original generated transparent atlas copied without external artwork extraction. Runtime alpha-bounds normalization aligns expression anchors; legacy CapyFace remains as fallback.",
+  "status": "Demo artwork; all four runtime-normalized expressions visually reviewed and 6 expression tests passed in the 358-test full App run.",
+  "originalAssetPreserved": true,
+  "runtimeEvidence": "Docs/original-feel-0224/capy-expressions-runtime-normalized.png"
+}

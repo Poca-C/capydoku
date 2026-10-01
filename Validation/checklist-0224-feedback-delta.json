@@ -1,0 +1,330 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.24 (27)",
+  "kind": "scoped_delta_to_88_item_audit",
+  "baseAudit": "Validation/checklist-0221-audit.json",
+  "previousDelta": "Validation/checklist-0223-feedback-delta.json",
+  "sourceChecklist": "Validation/checklist-source.json",
+  "sourceCaseCount": 88,
+  "formalSignOff": false,
+  "full88Reexecuted": false,
+  "overallCountsRecomputed": false,
+  "unchangedStatusReason": "仅为原88条中11项追加0.2.24范围证据；旧审计统计与历史增量不改，正式状态不升级，测试数量不是验收完成率。",
+  "originalParagraphs": [
+    127,
+    129,
+    130,
+    136,
+    159,
+    161,
+    162,
+    163,
+    164,
+    165,
+    166,
+    167,
+    168,
+    241,
+    252,
+    254
+  ],
+  "verificationSnapshot": {
+    "core": {
+      "status": "passed",
+      "tests": 177,
+      "failures": 0,
+      "newTests": 8,
+      "evidence": "Validation/test-runs/original-0224-core.log"
+    },
+    "appFinal": {
+      "status": "passed",
+      "device": "iPhone 17 Pro",
+      "os": "iOS 26.5",
+      "tests": 358,
+      "failures": 0,
+      "durationSeconds": 131.2,
+      "evidence": "Validation/test-runs/original-0224-app-r2.xcresult",
+      "skipped": 0,
+      "newTests": 31
+    },
+    "ui": {
+      "status": "passed",
+      "device": "iPhone 17e",
+      "os": "iOS 26.5",
+      "uniqueCases": 4,
+      "passed": 4,
+      "failures": 0,
+      "skipped": 0,
+      "scope": [
+        "当前关卡包L1九步教学",
+        "手势后道具恢复（固定夹具）",
+        "通关及下一关（固定夹具）",
+        "失败复活（固定夹具）"
+      ],
+      "evidence": "Validation/test-runs/original-0224-17e-ui.xcresult",
+      "log": "Validation/test-runs/original-0224-17e-ui.log",
+      "repeatExecution": {
+        "passed": 4,
+        "failures": 0,
+        "countedAsAdditionalUniqueTests": false,
+        "reason": "命令误含两个测试动作，同四项各通过一轮；结果摘要记录首轮，完整日志保留两轮。"
+      }
+    },
+    "visual": {
+      "status": "reviewed",
+      "reviewedImages": 11,
+      "currentPackRootImages": 3,
+      "scope": "3张当前包第6关实际Root截图；其余为组件与合成棋盘，采样标签不是精确时序测量。",
+      "evidence": "Docs/original-feel-0224/manifest.json"
+    },
+    "physical": {
+      "signedBuildVerified": true,
+      "installedThisRound": true,
+      "normalLaunchVerified": true,
+      "verifiedBuild": "0.2.24 (27)",
+      "transport": "localNetwork",
+      "observedFilesPreservedByteForByteAtInstallation": 8,
+      "validPrimaryAndBackupChecksumsAllThreeSnapshots": true,
+      "historicalEventsPreserved": 120,
+      "identityPreserved": true,
+      "postLaunchFullPlayerEqualityClaimed": false,
+      "acceptanceBoundary": "启动后存在新游戏事件与进度变化，安装阶段数据保留不等于启动后全状态不变或真机手感验收。",
+      "connectionHistory": "早先无线探测unavailable，后续只读details建立连接后完成备份、安装与启动。",
+      "evidence": "Validation/original-0224-physical-install.json"
+    },
+    "reference": {
+      "product": "Meowdoku",
+      "installedVersion": "1.19.1 (457)",
+      "firsthandGameplayVerified": true,
+      "audioAuditioned": false,
+      "formalBaselineUnchanged": true,
+      "evidence": "Validation/meowdoku-playtest-comparison-0223.json"
+    },
+    "artwork": {
+      "originalDemoAsset": true,
+      "referenceAssetsExtracted": false,
+      "evidence": "Validation/capy-expression-artwork-0224.json"
+    }
+  },
+  "failureHistory": "首次新增测试的CF图像条件转换导致编译失败，改为AnyObject身份比较；初次记录保留，最终358项App全量复验通过，0失败。",
+  "stillOpen": [
+    "完整胜败角色演出、新棋盘入场与正式节奏仍待后续",
+    "原音频仍未交付，空清单保持静音，未声称听感验收",
+    "原创图集属于Demo资产，Meowdoku观察不是冻结Pawdoku基线",
+    "本轮真机安装、启动和安装阶段数据保留已确认；完整真机手感、最低系统、低性能设备及系统减少动态效果仍待验",
+    "不重算旧88条统计，不将本轮测试通过等同正式上架验收"
+  ],
+  "rows": [
+    {
+      "id": "03-02",
+      "title": "四规则冲突判定",
+      "originalAcceptanceText": "操作  分别构造同行、同列、同区域及八邻格冲突。\n通过  全部正确识别；远距离同一斜线不会被单独判成违规。",
+      "originalRequirementIDs": [
+        "PLAY-01"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "新增只依据可见动物的四规则解释 API，8项新Core测试与全量177项Core通过；无可见冲突不假借隐藏答案解释。",
+      "evidence": [
+        "Validation/original-0224-feedback.json",
+        "Docs/original-feel-0224/manifest.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "PLAY-01",
+        "PLAY-13"
+      ]
+    },
+    {
+      "id": "04-02",
+      "title": "单击标记与撤销",
+      "originalAcceptanceText": "操作  单击空格，再次单击该X。\n通过  添加后可撤销；生命、分数和找到数量不变。",
+      "originalRequirementIDs": [
+        "PLAY-02"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "撤销错误X同时清理旧冲突覆盖层、同伴表情及规则卡强调；标记业务不因装饰改变。",
+      "evidence": [
+        "Validation/original-0224-feedback.json",
+        "Docs/original-feel-0224/manifest.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "PLAY-02",
+        "PLAY-13"
+      ]
+    },
+    {
+      "id": "04-03",
+      "title": "正确双击只提交一次",
+      "originalAcceptanceText": "操作  双击正确空格和带普通X的正确格。\n通过  各提交一次，清除原X并显示动物；不为其他格自动打叉。",
+      "originalRequirementIDs": [
+        "PLAY-02",
+        "PLAY-06"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "正确格使用原创开心表情，局部分数读取真实已提交delta；最多4条、旧回调隔离，不补造分数或自动标X。",
+      "evidence": [
+        "Validation/original-0224-feedback.json",
+        "Docs/original-feel-0224/manifest.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "PLAY-02",
+        "PLAY-13"
+      ]
+    },
+    {
+      "id": "04-04",
+      "title": "错误双击反馈幂等",
+      "originalAcceptanceText": "操作  双击错误格，观察整个手势和动画。\n通过  只扣一次生命并反馈一次；不出现额外提交或临时X残留。",
+      "originalRequirementIDs": [
+        "PLAY-02",
+        "PLAY-13"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "真实扣命触发惊讶、可见冲突连线/高亮、规则卡强调及顶部裂心；重复送达不增加扣命，未发现动物不泄漏隐藏答案。",
+      "evidence": [
+        "Validation/original-0224-feedback.json",
+        "Docs/original-feel-0224/manifest.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "PLAY-02",
+        "PLAY-13"
+      ]
+    },
+    {
+      "id": "04-06",
+      "title": "快速手势切换",
+      "originalAcceptanceText": "操作  快速切换单击、双击和滑动，并中途离开棋盘。\n通过  手势不串扰、不重复扣血；双击优先，滑动结束后不继续标记。",
+      "originalRequirementIDs": [
+        "PLAY-02"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "教学/冲突/表情装饰不截获手势；快速替换、撤销、遮挡与后台迟到回调清理覆盖层，识别器数量与提交路线不变。 17e真实手势后道具恢复用例通过，使用保留固定夹具。",
+      "evidence": [
+        "Validation/original-0224-feedback.json",
+        "Docs/original-feel-0224/manifest.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "PLAY-02",
+        "ART-02"
+      ]
+    },
+    {
+      "id": "05-01",
+      "title": "游戏信息与计分显示",
+      "originalAcceptanceText": "操作  核对Level、Score、进度、生命和规则卡。\n通过  显示与真实状态及冻结计分规则一致，不能只更新画面而不更新存档。",
+      "originalRequirementIDs": [
+        "UI-06",
+        "PLAY-10"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "实际分数增量在棋盘局部显示，生命按真实扣除位置裂开，规则卡对应可见冲突；隐藏分数和生命更新为恢复基准。正式计分数值仍待冻结。",
+      "evidence": [
+        "Validation/original-0224-feedback.json",
+        "Docs/original-feel-0224/manifest.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "UI-06",
+        "PLAY-13"
+      ]
+    },
+    {
+      "id": "08-01",
+      "title": "多种子动态教学目标",
+      "originalAcceptanceText": "操作  更换多个合格L1种子，完整完成教学。\n通过  均为4×4合格教学盘；目标随棋盘变化且明确，不依赖固定坐标。",
+      "originalRequirementIDs": [
+        "GEN-03"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "手指和遮罩使用已有动态教学目标，滑动依据真实横纵轴线，小格指示不超出棋盘；本轮没有改教学v1/v2目标或顺序。",
+      "evidence": [
+        "Validation/original-0224-feedback.json",
+        "Docs/original-feel-0224/manifest.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "GEN-03"
+      ]
+    },
+    {
+      "id": "08-02",
+      "title": "教学规则操作与拦截",
+      "originalAcceptanceText": "操作  逐项检查教学内容，并操作非目标格。\n通过  覆盖单击及撤销、横纵滑动、双击和四条规则；越权操作不破坏教学。",
+      "originalRequirementIDs": [
+        "GEN-04"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "补单击、撤销、双击与横纵滑动示范，阅读步骤维持锁定，减少动态效果保留静态方向/点击含义。 当前包L1九步教学在17e真实UI回归通过。",
+      "evidence": [
+        "Validation/original-0224-feedback.json",
+        "Docs/original-feel-0224/manifest.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "GEN-04",
+        "ART-02"
+      ]
+    },
+    {
+      "id": "14-01",
+      "title": "主题资源与全部状态",
+      "originalAcceptanceText": "操作  核对角色、Logo、图标、棋盘和弹窗全部状态。\n通过  资源完整，主题与尺寸统一；没有参考产品品牌或遗漏占位素材。",
+      "originalRequirementIDs": [
+        "ART-01"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "新增原创中性/眨眼/开心/惊讶图集，运行时统一透明边界和锚点，旧头像缺失回退；资源来源独立记录，完整胜败资源仍未齐。",
+      "evidence": [
+        "Validation/original-0224-feedback.json",
+        "Docs/original-feel-0224/manifest.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "ART-01"
+      ]
+    },
+    {
+      "id": "14-03",
+      "title": "游戏奖励动效与降级",
+      "originalAcceptanceText": "操作  触发正确、错误、Combo、通关及签到动效。\n通过  与业务状态同步，不阻碍后续操作；轻量特效在低性能设备可降级。",
+      "originalRequirementIDs": [
+        "ART-02"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "角色四表情、单棋盘轮换眨眼、可见冲突连线、教学手指、局部分数和生命裂开已实现；后台迟到回调门禁及恢复不重播。低性能设备、系统减少动态效果与完整演出仍待验。",
+      "evidence": [
+        "Validation/original-0224-feedback.json",
+        "Docs/original-feel-0224/manifest.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "ART-02"
+      ]
+    },
+    {
+      "id": "16-03",
+      "title": "最终构建全部问题复验",
+      "originalAcceptanceText": "操作  在最终构建复测所有失败用例及受影响流程。\n通过  每个Bug均有关联修复版本、复测结论和证据，旧版本通过不能代替复测。",
+      "originalRequirementIDs": [
+        "TECH-07"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "全量177项Core、17 Pro/iOS26.5最终358项App通过，均0失败；17e四个不同UI用例通过，同四项误重复执行一次不计额外用例。11张实测图目视通过。首次图像身份比较的编译失败及修正保留；0.2.24严格验签、无线安装启动成功，安装前后8份文件一致，历史120事件和身份保持；不声称完整真机体验验收。",
+      "evidence": [
+        "Validation/original-0224-feedback.json",
+        "Docs/original-feel-0224/manifest.json",
+        "Validation/test-runs/original-0224-app-r2.xcresult",
+        "Validation/test-runs/original-0224-17e-ui.xcresult",
+        "Validation/original-0224-physical-install.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "TECH-07"
+      ]
+    }
+  ]
+}

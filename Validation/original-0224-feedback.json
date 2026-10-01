@@ -1,0 +1,138 @@
+{
+  "build": "0.2.24 (27)",
+  "date": "2026-10-01",
+  "status": "verified_scoped_demo_feedback_not_formal_acceptance",
+  "authority": "Original Word remains authoritative; Chinese default is the explicit user override. Actual Meowdoku playtest informs feedback design but is not frozen formal Pawdoku parameters.",
+  "sourceParagraphs": [
+    127,
+    129,
+    130,
+    136,
+    159,
+    161,
+    162,
+    163,
+    164,
+    165,
+    166,
+    167,
+    168,
+    241,
+    252,
+    254
+  ],
+  "referenceObservation": "Validation/meowdoku-playtest-comparison-0223.json",
+  "changes": [
+    {
+      "area": "Visible mistakes",
+      "implementation": "Analyze only candidate, region topology and already found animals; highlight applicable region/row/column/adjacency cells and corresponding rule cards, connect visible conflicts and briefly show startled expressions. No solution lookup in explanation. Undoing the error clears its effects immediately; no visible conflict means no invented explanation."
+    },
+    {
+      "area": "Tutorial",
+      "implementation": "Action-aware tap/undo/double-tap/axis-derived swipe hand guide, touch rings and dimmed non-target cells. Small-cell hand clamped within board; touch location remains actual target. Does not intercept inputs or change tutorial state."
+    },
+    {
+      "area": "Expressions",
+      "implementation": "Original generated neutral/blink/happy/startled atlas with transparent runtime anchor normalization, caching and old-image fallback. Accepted finds smile, mistakes and visible conflicting animals startle, one visible animal blinks every four seconds. Board owns one cancellable idle job and pauses for hidden/background/locked/tutorial/hint/reduced-motion states."
+    },
+    {
+      "area": "Score and lives",
+      "implementation": "Committed positive score delta appears near the found cell; total score still pulses. Lost hearts split/fade. Presentation is bounded and session/visibility guarded, and changes no gameplay/reward ledger."
+    }
+  ],
+  "demoPresentationParameters": {
+    "formalReferenceValues": false,
+    "appliesOnlyToPresentation": true,
+    "ruleHighlightSeconds": 0.9,
+    "conflictUnitSeconds": 1.35,
+    "idleBlinkIntervalSeconds": 4,
+    "idleBlinkSeconds": 0.14,
+    "heartAnimationSeconds": 0.42,
+    "heartRemovalSeconds": 0.48,
+    "localScoreSeconds": 0.68,
+    "localScoreRemovalSeconds": 0.72,
+    "maximumConcurrentLocalScores": 4
+  },
+  "core": {
+    "build": "0.2.24 (27)",
+    "passed": 177,
+    "failed": 0,
+    "seconds": 59.426,
+    "log": "Validation/test-runs/original-0224-core.log",
+    "scope": "Full Swift package suite, including 8 new visible-conflict analysis cases. Added pure query only; gameplay rules, scoring and fixed 150 levels unchanged."
+  },
+  "applicationTests": {
+    "build": "0.2.24 (27)",
+    "device": "iPhone 17 Pro simulator / iOS 26.5",
+    "passed": 358,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 131.2,
+    "scope": "All CapydokuAppTests without exclusions. 31 new cases: 13 board guidance/lifecycle, 6 expression normalization/lifecycle, 11 HUD event-state and 1 current-pack Root visual integration.",
+    "bundle": "Validation/test-runs/original-0224-app-r2.xcresult",
+    "log": "Validation/test-runs/original-0224-app-r2.log"
+  },
+  "uiTests": {
+    "status": "passed",
+    "device": "iPhone 17e simulator / iOS 26.5",
+    "bundle": "Validation/test-runs/original-0224-17e-ui.xcresult",
+    "uniqueCases": 4,
+    "cases": [
+      "testGuidedTutorialCoversRulesTapUndoBothSwipesAndFind",
+      "testToolsResumeAfterNativeTapDoubleTapAndPanRecognizersFinish",
+      "testSolveEntirePuzzleAndAdvance",
+      "testLoseAndSimulatedRevivePreservesBoard"
+    ],
+    "fixtureBoundary": "Tutorial uses current packaged L1. Other three use a preserved deterministic fixture; not all-150 current-pack playthrough.",
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "log": "Validation/test-runs/original-0224-17e-ui.log",
+    "repeatExecution": {
+      "passed": 4,
+      "failed": 0,
+      "reason": "Command accidentally included both test-without-building and test actions. Four distinct cases passed in each action; repeat is not counted as four additional unique tests. Result summary records the first action; both action results remain in the complete log."
+    }
+  },
+  "visualEvidence": "Docs/original-feel-0224/manifest.json",
+  "visualReview": {
+    "imagesReviewed": 11,
+    "passed": true,
+    "scope": "3 live Root level-6 current-pack frames; remaining board-component/atlas captures. Correct local score, conflict/rules/life sequence, settled state, guide direction/edge clamp, expression anchors and idle blink reviewed. Not precise timing or frame-rate measurement."
+  },
+  "artwork": "Validation/capy-expression-artwork-0224.json",
+  "codeReview": {
+    "blockingFindings": 0,
+    "scope": "Board/expressions cross-reviewed; root/HUD/reward callback wiring independently reviewed for stale callbacks, reentry, session boundaries, input isolation, small-cell bounds and reduced motion. Small-cell hand clipping fixed before final full tests."
+  },
+  "historicalIterations": [
+    {
+      "bundle": "Validation/test-runs/original-0224-app.xcresult",
+      "status": "compile_failed_no_test_pass_claim",
+      "cause": "New test-only conditional CGImage downcast is rejected by Swift because it is a CoreFoundation type.",
+      "resolution": "Three assertions now unwrap existing layer contents as AnyObject and preserve identity comparison to the exact cached CGImage. Full 358-case rerun passed."
+    }
+  ],
+  "audio": {
+    "manifest": "Resources/audio-manifest.json",
+    "referenceVerified": false,
+    "newAudioAdded": false,
+    "soundAcceptance": "pending_original_resources_and_timing; no audio listening claim"
+  },
+  "coreAndLevels": {
+    "modified": "Added pure visible-conflict query only; fixed level pack and gameplay semantics unchanged.",
+    "coreRerunThisBuild": true,
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "physicalInstall": "Validation/original-0224-physical-install.json",
+  "remainingFeelWork": [
+    "FEEL-05: full-board victory celebration, two distinct result performances and stronger Combo tier differentiation.",
+    "FEEL-06: staggered board entrance and direct-tool anticipation/acknowledgement.",
+    "Original audio files and timing; supervised physical gesture/haptic/Reduce Motion review and measured frame rate."
+  ],
+  "notVerified": [
+    "No frozen reference timing/difficulty equivalence, cross-product acceptance or complete physical playthrough claimed.",
+    "External SDK/service integration, minimum-runtime verification, TestFlight and App Store acceptance remain open."
+  ],
+  "physicalInstallationResult": "0.2.24 (27) installed and launched over local network; all eight observed files byte-identical across installation, saved-data checksums and historical event/identity retention valid after launch. Full physical gameplay acceptance remains pending."
+}
