@@ -1,0 +1,65 @@
+{
+  "boundary" : "Actual Root normal\/compact viewport, native board.activate and normal\/reduced motion. No entrance screenshots; final screenshots only. Layout observation does not prove first rendered frame, physical touch latency or exact reference timing.",
+  "samples" : [
+    {
+      "actionFrame" : "{{40, 644.59333333333336}, {322, 60}}",
+      "boardFrame" : "{{37, 310}, {328, 328}}",
+      "exitAction" : "home",
+      "exitAtUptime" : 1197039.3919719167,
+      "firstActionObservationSeconds" : 0.074130583321675658,
+      "reduced" : false,
+      "retainedDecorationOwners" : 1,
+      "submittedAtUptime" : 1197037.4488984167,
+      "width" : 402,
+      "won" : true
+    },
+    {
+      "actionFrame" : "{{40, 462.35333333333335}, {240, 60}}",
+      "boardFrame" : "{{65, 270}, {190, 190}}",
+      "exitAction" : "next",
+      "exitAtUptime" : 1197042.5640654168,
+      "firstActionObservationSeconds" : 0.068928833352401853,
+      "reduced" : false,
+      "retainedDecorationOwners" : 1,
+      "submittedAtUptime" : 1197040.6932485835,
+      "width" : 320,
+      "won" : true
+    },
+    {
+      "actionFrame" : "{{40, 464.68666666666667}, {240, 60.000000000000057}}",
+      "boardFrame" : "{{65, 270}, {190, 190}}",
+      "exitAction" : "restart",
+      "exitAtUptime" : 1197045.5514232917,
+      "firstActionObservationSeconds" : 0.068730375031009316,
+      "reduced" : false,
+      "retainedDecorationOwners" : 1,
+      "submittedAtUptime" : 1197043.731872875,
+      "width" : 320,
+      "won" : false
+    },
+    {
+      "actionFrame" : "{{40, 462.35333333333335}, {240, 60}}",
+      "boardFrame" : "{{65, 270}, {190, 190}}",
+      "exitAction" : "next",
+      "exitAtUptime" : 1197048.6223492501,
+      "firstActionObservationSeconds" : 0.070423624943941832,
+      "reduced" : true,
+      "retainedDecorationOwners" : 1,
+      "submittedAtUptime" : 1197046.7711759584,
+      "width" : 320,
+      "won" : true
+    },
+    {
+      "actionFrame" : "{{40, 464.68666666666667}, {240, 60.000000000000057}}",
+      "boardFrame" : "{{65, 270}, {190, 190}}",
+      "exitAction" : "restart",
+      "exitAtUptime" : 1197051.692234125,
+      "firstActionObservationSeconds" : 0.068528875010088086,
+      "reduced" : true,
+      "retainedDecorationOwners" : 1,
+      "submittedAtUptime" : 1197049.8699730418,
+      "width" : 320,
+      "won" : false
+    }
+  ]
+}

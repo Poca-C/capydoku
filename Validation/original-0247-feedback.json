@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.47 (50)",
+  "date": "2026-10-02",
+  "status": "scoped_result_control_handoff_verified_simulator_only",
+  "previousReport": "Validation/original-0246-feedback.json",
+  "previousGoalTurn": {
+    "classification": "progress",
+    "reason": "0.2.46 improved dense local scores with104App/4UI and local commitfac14c9; runtime evidence exposed separate result-control layering issues."
+  },
+  "sourceParagraphs": [
+    129,
+    136,
+    249,
+    253,
+    254
+  ],
+  "finding": "Game home/tools remained drawn while the entire result host scaled/faded over them. Baseline normal-motion button frames were0.88 of final size and moved; the small-screen action entered over the board edge.",
+  "changes": [
+    "Hide only old game home/footer immediately at terminal status while retaining their geometry and final board feedback; restore them on next/restart/revive.",
+    "Result controls take their final positions immediately. Remove whole-host scaling and global result animations; localize the dim backdrop and decorative0.88-to1 entrance.",
+    "Keep a stable noninteractive result host with a last-terminal GameSession value snapshot solely for decorative exit. Controls and accessibility leave immediately; character/text can reverse-scale/fade while home/new board is already active.",
+    "Snapshot supplies variant, failure copy, level/score/found and victory detail; no new business state, save operation or timer. Existing event cancellation, staged reveal and reduce-motion behavior remain."
+  ],
+  "temporaryTuning": "Decorative scale0.88 and0.18s transition are Demo values; character delay0.82s win/0.60s loss and stage timings unchanged. No waiting added to next/revive/home.",
+  "verificationHistory": [
+    {
+      "status": "Failed",
+      "cases": 1,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "seconds": 33.42,
+      "scope": "Baseline production0.2.46 with read-only footer probe;1 test failed3 normal-motion frame assertions, exposing the issue.",
+      "summary": "Validation/test-runs/original-0247-handoff-before-summary.json",
+      "log": "Validation/test-runs/original-0247-handoff-before.log",
+      "bundle": "Validation/test-runs/original-0247-handoff-before.xcresult"
+    },
+    {
+      "status": "Passed",
+      "cases": 33,
+      "passed": 33,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 81.662,
+      "scope": "First candidate33 related App tests passed; then added decorative exit to preserve original253 before final verification.",
+      "summary": "Validation/test-runs/original-0247-app-candidate-summary.json",
+      "log": "Validation/test-runs/original-0247-app-candidate.log",
+      "bundle": "Validation/test-runs/original-0247-app-candidate.xcresult"
+    }
+  ],
+  "applicationTests": {
+    "status": "Passed",
+    "cases": 33,
+    "passed": 33,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 84.983,
+    "scope": "17Pro/iOS26.5; six affected Root/reward/choreography/accessibility/visual suites, not full App/Core.",
+    "summary": "Validation/test-runs/original-0247-app-final-summary.json",
+    "log": "Validation/test-runs/original-0247-app-final.log",
+    "bundle": "Validation/test-runs/original-0247-app-final.xcresult"
+  },
+  "uiTests": {
+    "status": "Passed",
+    "cases": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 180.366,
+    "scope": "17e/iOS26.5; result→home→settings→check-in→next board, native gestures/tools, solve/advance, simulated revive, hint preview/Apply.",
+    "summary": "Validation/test-runs/original-0247-17e-ui-summary.json",
+    "log": "Validation/test-runs/original-0247-17e-ui.log",
+    "bundle": "Validation/test-runs/original-0247-17e-ui.xcresult"
+  },
+  "visualEvidence": "Docs/original-feel-0247/manifest.json",
+  "reference": {
+    "latestSuccessfulPlaytest": "Validation/meowdoku-playtest-comparison-0229.json",
+    "newSuccessfulPlaytestThisRound": false,
+    "equivalenceClaimed": false
+  },
+  "audio": {
+    "modified": false,
+    "localTestWAVCount": 9,
+    "currentDebugInventory": "Validation/audio-isolation-0247-debug.json",
+    "formalManifestClipsEmpty": true,
+    "liveAuditoryAB": false,
+    "releaseRebuilt": false
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  },
+  "remaining": [
+    "角色动作自然度、整段游玩节奏及连续音画/触觉A/B仍待真人评估；不声称Meowdoku参考品质验收。",
+    "上轮密集浮分最远仍3.762格，本轮未改；飞星途经其他角色排列未穷尽。",
+    "独立GameView快速下一关截图中仍见旧浮分/鼓掌；可能是不同渲染层采样时序，需要真实Root连续早退录屏区分，尚未判定为实际运行缺陷。",
+    "本轮结算交接已有限验证，装饰短暂覆盖新目的页再淡出属当前Demo方案；未逐帧穷尽所有弹窗中断组合。",
+    "手机仍0.2.29；最低系统、冻结参考和正式上架验收未完成。"
+  ],
+  "formalSignOff": false,
+  "formalConformanceRowsUnchanged": 83,
+  "historicalChecklistCountUnchanged": 88
+}

@@ -1,12 +1,12 @@
 # Capydoku · 原文对齐 Demo
 
-原生 Swift / SwiftUI iPhone 应用，默认简体中文、可在设置中切换 English、竖屏，最低编译目标 iOS 15。当前本地开发版本 **0.2.46（49）**，尚未达到正式验收或上架状态。手机最近确认安装的是0.2.29；按用户要求，本轮暂停打包分发、手机更新和GitHub上传。
+原生 Swift / SwiftUI iPhone 应用，默认简体中文、可在设置中切换 English、竖屏，最低编译目标 iOS 15。当前本地开发版本 **0.2.47（50）**，尚未达到正式验收或上架状态。手机最近确认安装的是0.2.29；按用户要求，本轮暂停打包分发、手机更新和GitHub上传。
 
 ## 唯一需求基准
 
 以工作区原始《卡皮巴拉主题（Capydoku）区域逻辑小游戏需求说明 V1.3》的正文和内嵌截图为准。`Reference/Original/document.json` 保存源文件校验值与提取结果。后续报告及88条 Checklist只作核查，不能覆盖原文。用户于2026-10-01明确补充面向中文市场，语言条款按此更新为默认简体中文并内置英文切换；其他原文要求继续有效。0.1.x 的功能测试通过记录不证明符合原文。
 
-当前逐章对照与未完成项见 `Validation/original-conformance.md`；本轮进展与验证边界见 `Validation/original-0246-feedback.json`，综合历史记录保留在 `Validation/original-verification.json`。
+当前逐章对照与未完成项见 `Validation/original-conformance.md`；本轮进展与验证边界见 `Validation/original-0247-feedback.json`，综合历史记录保留在 `Validation/original-verification.json`。
 
 ## 运行和试玩
 
@@ -19,6 +19,12 @@
 下列主页面图册保留0.2.1的实测版本；0.2.4新增操作反馈，分时组件截图见 Docs/original-feedback/manifest.json，不能用旧图替代新构建验收：[首页](Docs/original-reference/01-home.png) · [游戏](Docs/original-reference/04-gameplay.png) · [提示](Docs/original-reference/05-hint.png) · [设置](Docs/original-reference/02-settings.png) · [签到](Docs/original-reference/03-check-in.png)。
 
 无需第三方依赖或真实广告 SDK。模拟器运行/测试须保留本地签名（CODE_SIGNING_ALLOWED=YES），工程仅为模拟器配置钥匙串权限；禁用签名只能验证编译，不能验证真实钥匙串。0.2.29（32）已无线覆盖安装并由设备查询确认。请求启动前的安装前后8份文件逐字节一致，第10关对局、287条事件、38条奖励及设置/签到/身份保持，见[真机记录](Validation/original-0229-physical-install.json)。本次自动启动被手机锁屏阻止，需解锁后打开App；未记录为启动成功或真机手感验收。
+
+## 0.2.47 结算控件与演出交接
+
+- 结算时旧返回与道具立即隐藏但保留占位；下一关/复活/返回原位显示，角色与文案单独缩放。退出时缓存只用于装饰淡出，新局与首页立即可操作，不增加业务等待。
+- 旧版1项实测暴露3处按钮框移动断言失败；最终33项相关App与17e五项UI通过，0失败/跳过。6组真实GameView像素、5组Root入/退出及跨页操作验证；未重跑全量App/Core、真机或参考品质验收。
+- [当前录屏](Docs/original-feel-0247/final-result-handoff.mov) · [前后画面与边界](Docs/original-feel-0247/manifest.json) · [记录](Validation/original-0247-feedback.json) · [Checklist增量](Validation/checklist-0247-feedback-delta.json)。9个本地测试原声与150关包保持；手机仍029，打包/GitHub暂停。
 
 ## 0.2.46 密集浮分可读性
 

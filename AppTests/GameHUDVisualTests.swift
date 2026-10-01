@@ -5,6 +5,106 @@ import CapydokuCore
 @testable import Capydoku
 
 final class GameHUDVisualTests: XCTestCase {
+    /// Continuous actual Root handoff; no screenshot readback during entrance.
+    /// Wall-clock observations describe this fixture, not touch latency or FPS.
+    @MainActor func testActualRootResultControlHandoffPlaysContinuously() async throws {
+        var samples: [[String: Any]] = []
+        let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
+        for (width, won, reduced) in [(402, true, false), (320, true, false), (320, false, false), (320, true, true), (320, false, true)] {
+            let directory = FileManager.default.temporaryDirectory.appendingPathComponent("result-handoff-" + UUID().uuidString)
+            let model = AppModel(saveDirectory: directory, runsTimer: false, feedbackEnabled: false)
+            model.progress.tutorialCompleted = true; model.start(level: 6)
+            let initial = try XCTUnwrap(model.session), solution = initial.puzzle.solution
+            let wrong = (0..<(initial.puzzle.size * initial.puzzle.size)).filter { !solution.contains($0) }
+            if won { for index in solution.dropLast() { model.submit(index) } }
+            else { for index in wrong.prefix(initial.lives - 1) { model.submit(index) } }
+            let previous = scene.windows.first(where: \.isKeyWindow), window = UIWindow(windowScene: scene)
+            let surround = UIWindow(windowScene: scene); surround.frame = scene.coordinateSpace.bounds
+            let backdrop = UIViewController(); backdrop.view.backgroundColor = .black
+            surround.rootViewController = backdrop; surround.windowLevel = UIWindow.Level(rawValue: 1)
+            surround.isHidden = false; window.windowLevel = UIWindow.Level(rawValue: 2)
+            window.frame = CGRect(x: 0, y: 0, width: width, height: width == 320 ? 568 : 874)
+            var frames: [String: CGRect] = [:]
+            let host = UIHostingController(rootView: RootView(reduceMotionOverride: reduced).environmentObject(model)
+                .environment(\.scenePhase, .active).environment(\.capyLayoutObserver, { frames[$0] = $1 }))
+            window.rootViewController = host; window.makeKeyAndVisible()
+            defer {
+                window.isHidden = true; window.rootViewController = nil
+                surround.isHidden = true; surround.rootViewController = nil; previous?.makeKeyAndVisible()
+                model.flushPendingSaves(); try? FileManager.default.removeItem(at: directory)
+            }
+            try await Task.sleep(nanoseconds: 620_000_000)
+            let board = try XCTUnwrap(descendants(host.view).compactMap { $0 as? PuzzleGridUIView }.first)
+            let boardFrame = try XCTUnwrap(frames["puzzle_board"])
+            let submittedAt = ProcessInfo.processInfo.systemUptime
+            XCTAssertTrue(board.activate(index: won ? solution.last! : wrong[initial.lives - 1], submit: true))
+            let committed = try XCTUnwrap(model.session)
+            XCTAssertEqual(committed.status, won ? .won : .lost)
+            try await Task.sleep(nanoseconds: 60_000_000)
+            for _ in 0..<10 where frames["result_primary_action"] == nil { try await Task.sleep(nanoseconds: 10_000_000) }
+            let action = try XCTUnwrap(frames["result_primary_action"])
+            XCTAssertGreaterThan(action.width, 44); XCTAssertGreaterThanOrEqual(action.height, 44)
+            XCTAssertGreaterThanOrEqual(action.minY, boardFrame.maxY,
+                "The active result button must not travel over the board's final feedback.")
+            samples.append(["width": width, "won": won, "reduced": reduced,
+                "submittedAtUptime": submittedAt,
+                "firstActionObservationSeconds": ProcessInfo.processInfo.systemUptime - submittedAt,
+                "actionFrame": NSCoder.string(for: action), "boardFrame": NSCoder.string(for: boardFrame)])
+            // Keep this interval free of screenshot readbacks so the recording
+            // can expose the control/decorative handoff in continuous playback.
+            try await Task.sleep(nanoseconds: 1_600_000_000)
+            XCTAssertEqual(model.session, committed)
+            XCTAssertEqual(frames["puzzle_board"], boardFrame)
+            XCTAssertEqual(frames["result_primary_action"], action)
+            let image = UIGraphicsImageRenderer(bounds: window.bounds).image { _ in
+                window.drawHierarchy(in: window.bounds, afterScreenUpdates: false)
+            }
+            let a = XCTAttachment(image: image); a.name = "result-handoff-\(width)-\(won ? "win" : "loss")-reduced-\(reduced)"
+            a.lifetime = .keepAlways; add(a)
+            let exitAt = ProcessInfo.processInfo.systemUptime
+            if width == 402 { model.home() }
+            else if won { model.next() }
+            else { model.restart() }
+            if width == 402 { XCTAssertEqual(model.screen, .home) }
+            else {
+                XCTAssertEqual(model.session?.status, .playing)
+                XCTAssertEqual(model.session?.puzzle.id, won ? 7 : 6)
+            }
+            // After leaving, the departing decoration must not own interaction.
+            try await Task.sleep(nanoseconds: 60_000_000)
+            let target = CGPoint(x: window.bounds.midX, y: window.bounds.midY)
+            let hit = try XCTUnwrap(window.hitTest(target, with: nil))
+            var ancestors: [UIView] = []; var current: UIView? = hit
+            while let view = current { ancestors.append(view); current = view.superview }
+            func controllers(_ controller: UIViewController) -> [UIViewController] {
+                [controller] + controller.children.flatMap(controllers)
+            }
+            let resultOwners = controllers(host).filter {
+                String(describing: type(of: $0)).hasPrefix("CapyAccessibilityController<") &&
+                String(describing: type(of: $0)).contains("ResultPanel")
+            }
+            for owner in resultOwners {
+                XCTAssertFalse(owner.view.isUserInteractionEnabled)
+                XCTAssertTrue(owner.view.accessibilityElementsHidden)
+                XCTAssertFalse(ancestors.contains(where: { $0 === owner.view }))
+            }
+            samples[samples.count - 1]["exitAtUptime"] = exitAt
+            samples[samples.count - 1]["exitAction"] = width == 402 ? "home" : won ? "next" : "restart"
+            samples[samples.count - 1]["retainedDecorationOwners"] = resultOwners.count
+            try await Task.sleep(nanoseconds: 350_000_000)
+            let exitImage = UIGraphicsImageRenderer(bounds: window.bounds).image { _ in
+                window.drawHierarchy(in: window.bounds, afterScreenUpdates: false)
+            }
+            let exitAttachment = XCTAttachment(image: exitImage)
+            exitAttachment.name = "result-exit-\(width)-\(won ? "win" : "loss")-reduced-\(reduced)"
+            exitAttachment.lifetime = .keepAlways; add(exitAttachment)
+        }
+        let data = try JSONSerialization.data(withJSONObject: ["samples": samples,
+            "boundary": "Actual Root normal/compact viewport, native board.activate and normal/reduced motion. No entrance screenshots; final screenshots only. Layout observation does not prove first rendered frame, physical touch latency or exact reference timing."], options: [.prettyPrinted, .sortedKeys])
+        let a = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+        a.name = "result-handoff-event-times"; a.lifetime = .keepAlways; add(a)
+    }
+
     @MainActor private func descendants(_ view: UIView) -> [UIView] {
         [view] + view.subviews.flatMap(descendants)
     }

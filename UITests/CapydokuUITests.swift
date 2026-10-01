@@ -286,6 +286,61 @@ final class CapydokuUITests: XCTestCase {
         expectValue(app.otherElements["lives"], "3")
     }
 
+    func testDepartedResultDoesNotBlockHomeSettingsCheckInOrTheNextBoard() {
+        launchGame()
+        for index in solution {
+            cell(index).doubleTap()
+            if index != solution.last { expectValue(cell(index), "found") }
+        }
+        XCTAssertTrue(app.staticTexts["win_result"].waitForExistence(timeout: 5))
+        tapButton("result_home")
+        XCTAssertTrue(app.buttons["play"].waitForExistence(timeout: 5))
+
+        func assertNoDepartedResult(_ screen: String) {
+            for identifier in ["result_home", "next_level", "revive", "result_restart"] {
+                XCTAssertFalse(app.buttons[identifier].exists,
+                               "The persistent decoration host must hide old \(identifier) accessibility on \(screen).")
+            }
+            for identifier in ["win_result", "loss_result"] {
+                XCTAssertFalse(app.staticTexts[identifier].exists,
+                               "An old result heading must not remain in the accessibility tree on \(screen).")
+            }
+        }
+
+        assertNoDepartedResult("Home")
+        tapButton("settings")
+        XCTAssertTrue(app.buttons["settings_done"].waitForExistence(timeout: 5))
+        assertNoDepartedResult("Home settings")
+        tapButton("settings_done")
+        XCTAssertTrue(app.buttons["play"].waitForExistence(timeout: 5))
+        assertNoDepartedResult("Home after settings")
+
+        tapButton("check_in")
+        XCTAssertTrue(app.staticTexts["checkin_streak"].waitForExistence(timeout: 5))
+        assertNoDepartedResult("Check-in")
+        tapButton("checkin_home")
+        XCTAssertTrue(app.buttons["play"].waitForExistence(timeout: 5))
+        assertNoDepartedResult("Home after check-in")
+        attachScreen("Departed result allows Home navigation")
+
+        tapButton("play")
+        let continued = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+            self.cell(0).exists || self.app.buttons["next_level"].isHittable
+        }, object: nil)
+        XCTAssertEqual(XCTWaiter.wait(for: [continued], timeout: 5), .completed)
+        // Home may resume the saved completed board before its explicit Next
+        // action; either route must reach the same unlocked second level.
+        if app.buttons["next_level"].exists { tapButton("next_level") }
+        XCTAssertTrue(cell(0).waitForExistence(timeout: 5))
+        XCTAssertEqual(app.staticTexts["level_title"].label, "Level 2")
+        assertNoDepartedResult("the next playable board")
+        XCTAssertEqual(boardValues(), Array(repeating: "empty", count: 16))
+        cell(0).tap(); expectValue(cell(0), "marked")
+        cell(0).tap(); expectValue(cell(0), "empty")
+        expectValue(app.otherElements["lives"], "3")
+        attachScreen("Next board receives taps after result Home")
+    }
+
     func testLoseAndSimulatedRevivePreservesBoard() {
         launchGame()
         cell(1).doubleTap()

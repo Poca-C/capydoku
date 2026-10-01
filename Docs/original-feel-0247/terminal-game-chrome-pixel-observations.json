@@ -1,0 +1,83 @@
+{
+  "boundary" : "Real GameView raster at native scale after its terminal native-board layout; screenshot readback can take time and is not an exact first-frame or touch-latency measurement. Full Root result hit testing and choreography are covered separately.",
+  "observations" : [
+    {
+      "action" : "next",
+      "boardFrame" : "{{43, 208}, {234, 234}}",
+      "footerBeforePixels" : 62392,
+      "footerFrame" : "{{72, 450}, {176, 70}}",
+      "footerTerminalPixels" : 0,
+      "homeBeforePixels" : 13115,
+      "homeFrame" : "{{22, 4}, {44, 44}}",
+      "homeTerminalPixels" : 0,
+      "nativeScale" : 3,
+      "reduceMotion" : false,
+      "terminalSnapshotReadbackSeconds" : 0.087478125002235174
+    },
+    {
+      "action" : "restart",
+      "boardFrame" : "{{43, 208}, {234, 234}}",
+      "footerBeforePixels" : 62392,
+      "footerFrame" : "{{72, 450}, {176, 70}}",
+      "footerTerminalPixels" : 0,
+      "homeBeforePixels" : 13115,
+      "homeFrame" : "{{22, 4}, {44, 44}}",
+      "homeTerminalPixels" : 0,
+      "nativeScale" : 3,
+      "reduceMotion" : false,
+      "terminalSnapshotReadbackSeconds" : 0.082606583368033171
+    },
+    {
+      "action" : "revive",
+      "boardFrame" : "{{43, 208}, {234, 234}}",
+      "footerBeforePixels" : 62392,
+      "footerFrame" : "{{72, 450}, {176, 70}}",
+      "footerTerminalPixels" : 0,
+      "homeBeforePixels" : 13115,
+      "homeFrame" : "{{22, 4}, {44, 44}}",
+      "homeTerminalPixels" : 0,
+      "nativeScale" : 3,
+      "reduceMotion" : false,
+      "terminalSnapshotReadbackSeconds" : 0.076347500085830688
+    },
+    {
+      "action" : "next",
+      "boardFrame" : "{{43, 208}, {234, 234}}",
+      "footerBeforePixels" : 62392,
+      "footerFrame" : "{{72, 450}, {176, 70}}",
+      "footerTerminalPixels" : 0,
+      "homeBeforePixels" : 13115,
+      "homeFrame" : "{{22, 4}, {44, 44}}",
+      "homeTerminalPixels" : 0,
+      "nativeScale" : 3,
+      "reduceMotion" : true,
+      "terminalSnapshotReadbackSeconds" : 0.076063750078901649
+    },
+    {
+      "action" : "restart",
+      "boardFrame" : "{{43, 208}, {234, 234}}",
+      "footerBeforePixels" : 62392,
+      "footerFrame" : "{{72, 450}, {176, 70}}",
+      "footerTerminalPixels" : 0,
+      "homeBeforePixels" : 13115,
+      "homeFrame" : "{{22, 4}, {44, 44}}",
+      "homeTerminalPixels" : 0,
+      "nativeScale" : 3,
+      "reduceMotion" : true,
+      "terminalSnapshotReadbackSeconds" : 0.068705416517332196
+    },
+    {
+      "action" : "revive",
+      "boardFrame" : "{{43, 208}, {234, 234}}",
+      "footerBeforePixels" : 62392,
+      "footerFrame" : "{{72, 450}, {176, 70}}",
+      "footerTerminalPixels" : 0,
+      "homeBeforePixels" : 13115,
+      "homeFrame" : "{{22, 4}, {44, 44}}",
+      "homeTerminalPixels" : 0,
+      "nativeScale" : 3,
+      "reduceMotion" : true,
+      "terminalSnapshotReadbackSeconds" : 0.077811666764318943
+    }
+  ]
+}

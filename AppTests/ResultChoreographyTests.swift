@@ -17,7 +17,182 @@ import CapydokuCore
     }
 }
 
+private struct ResultChromePixels {
+    let width: Int
+    let height: Int
+    let scale: CGFloat
+    let bytes: [UInt8]
+
+    init(_ image: UIImage) throws {
+        let source = try XCTUnwrap(image.cgImage)
+        width = source.width; height = source.height; scale = image.scale
+        var pixels = [UInt8](repeating: 0, count: source.width * source.height * 4)
+        let rendered = pixels.withUnsafeMutableBytes { storage -> Bool in
+            guard let context = CGContext(data: storage.baseAddress, width: source.width, height: source.height,
+                bitsPerComponent: 8, bytesPerRow: source.width * 4,
+                space: CGColorSpace(name: CGColorSpace.sRGB)!,
+                bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue | CGBitmapInfo.byteOrder32Big.rawValue) else { return false }
+            context.draw(source, in: CGRect(x: 0, y: 0, width: source.width, height: source.height))
+            return true
+        }
+        XCTAssertTrue(rendered); bytes = pixels
+    }
+
+    func nonBackgroundPixels(in frame: CGRect) -> Int {
+        // The hosting view has a flat cream background. Its 4pt corner lies
+        // outside GameView's 14pt horizontal padding and all of its controls.
+        let backgroundOffset = (min(height - 1, Int(4 * scale)) * width + min(width - 1, Int(4 * scale))) * 4
+        let sample = frame.insetBy(dx: 2, dy: 2)
+        let x0 = max(0, Int(ceil(sample.minX * scale)))
+        let x1 = min(width, Int(floor(sample.maxX * scale)))
+        let y0 = max(0, Int(ceil(sample.minY * scale)))
+        let y1 = min(height, Int(floor(sample.maxY * scale)))
+        guard x1 > x0, y1 > y0 else { return 0 }
+        var count = 0
+        for y in y0..<y1 { for x in x0..<x1 {
+            let offset = (y * width + x) * 4
+            if (0..<3).contains(where: { abs(Int(bytes[offset + $0]) - Int(bytes[backgroundOffset + $0])) > 8 }) {
+                count += 1
+            }
+        } }
+        return count
+    }
+}
+
 final class ResultChoreographyTests: XCTestCase {
+    @MainActor func testActualGameChromeHidesAtTerminalLayoutAndReturnsAfterNextRestartOrRevive() async throws {
+        let fixture = try XCTUnwrap(Bundle(for: Self.self).url(forResource: "reference-gameplay-synthetic-row", withExtension: "json"))
+        var reference = try JSONDecoder().decode(ReferenceLevelGameplay.self, from: Data(contentsOf: fixture))
+        reference.adsEnabled = false; reference.interstitial.enabled = false
+        reference.failure.restartCreatesNewBoard = false
+        reference.revive.freeCount = 1; reference.revive.resetPolicy = .oncePerLevel
+        var observations = [[String: Any]]()
+
+        for reduceMotion in [false, true] {
+            for action in ["next", "restart", "revive"] {
+                let name = "chrome-\(action)-\(reduceMotion ? "reduced" : "normal")"
+                let directory = FileManager.default.temporaryDirectory.appendingPathComponent(name + UUID().uuidString)
+                let model = AppModel(saveDirectory: directory, runsTimer: false, feedbackEnabled: false)
+                model.progress.tutorialCompleted = true; model.config = DemoConfig(referenceGameplay: reference)
+                model.start(level: 6)
+                let initial = try XCTUnwrap(model.session)
+                let lastCell: Int
+                if action == "next" {
+                    let remaining = initial.puzzle.solution.filter { !initial.found.contains($0) }
+                    lastCell = try XCTUnwrap(remaining.last)
+                    for cell in remaining.dropLast() { model.submit(cell) }
+                } else {
+                    let wrong = initial.puzzle.regions.indices.filter { !initial.puzzle.solution.contains($0) }
+                    let sequence = Array(wrong.prefix(initial.lives))
+                    lastCell = try XCTUnwrap(sequence.last)
+                    for cell in sequence.dropLast() { model.submit(cell) }
+                }
+                XCTAssertEqual(model.session?.status, .playing)
+
+                let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
+                let previous = scene.windows.first(where: \.isKeyWindow)
+                let window = UIWindow(windowScene: scene); window.frame = scene.coordinateSpace.bounds
+                window.overrideUserInterfaceStyle = .light
+                var frames = [String: CGRect]()
+                let host = UIHostingController(rootView: GameView().environmentObject(model)
+                    .environment(\.scenePhase, .active).environment(\.capyMotionOverride, reduceMotion)
+                    .environment(\.appLanguage, model.progress.settings.language)
+                    .environment(\.capyLayoutObserver, { frames[$0] = $1 })
+                    .frame(width: 320, height: 568).background(CapyPalette.cream).ignoresSafeArea())
+                let controller = UIViewController(); controller.view.backgroundColor = .black
+                window.rootViewController = controller; window.makeKeyAndVisible()
+                controller.addChild(host); controller.view.addSubview(host.view)
+                host.view.frame = CGRect(x: 0, y: 0, width: 320, height: 568)
+                host.didMove(toParent: controller)
+                defer {
+                    window.isHidden = true; window.rootViewController = nil; previous?.makeKeyAndVisible()
+                    model.flushPendingSaves(); try? FileManager.default.removeItem(at: directory)
+                }
+                func nativeBoard(in view: UIView) -> PuzzleGridUIView? {
+                    if let board = view as? PuzzleGridUIView { return board }
+                    for child in view.subviews { if let board = nativeBoard(in: child) { return board } }
+                    return nil
+                }
+                func snapshot(_ phase: String) throws -> ResultChromePixels {
+                    host.view.layoutIfNeeded()
+                    let format = UIGraphicsImageRendererFormat(); format.scale = window.screen.scale
+                    format.preferredRange = .standard; format.opaque = true
+                    var drawn = false
+                    let image = UIGraphicsImageRenderer(bounds: host.view.bounds, format: format).image { _ in
+                        drawn = host.view.drawHierarchy(in: host.view.bounds, afterScreenUpdates: true)
+                    }
+                    XCTAssertTrue(drawn)
+                    let attachment = XCTAttachment(image: image)
+                    attachment.name = name + "-" + phase; attachment.lifetime = .keepAlways; add(attachment)
+                    return try ResultChromePixels(image)
+                }
+                try await Task.sleep(nanoseconds: 250_000_000)
+                let board = try XCTUnwrap(nativeBoard(in: host.view))
+                let beforeFrames = try ["home", "game_footer", "puzzle_board"].map { try XCTUnwrap(frames[$0], $0) }
+                let before = try snapshot("playing")
+                let homeBefore = before.nonBackgroundPixels(in: beforeFrames[0])
+                let footerBefore = before.nonBackgroundPixels(in: beforeFrames[1])
+                XCTAssertGreaterThan(homeBefore, 50, "The real Home artwork must be present before finishing.")
+                XCTAssertGreaterThan(footerBefore, 100, "The real tool artwork must be present before finishing.")
+
+                let submittedAt = CACurrentMediaTime()
+                model.submit(lastCell)
+                let terminal = try XCTUnwrap(model.session)
+                XCTAssertEqual(terminal.status, action == "next" ? .won : .lost)
+                // Wait only for the native board to receive this terminal
+                // layout, not for the 0.60/0.82s result-decoration delay.
+                for _ in 0..<30 {
+                    if board.accessibilityElements?.isEmpty == true { break }
+                    try await Task.sleep(nanoseconds: 4_000_000)
+                }
+                XCTAssertTrue(board.accessibilityElements?.isEmpty == true)
+                let hidden = try snapshot("terminal-first-layout")
+                let readbackElapsed = CACurrentMediaTime() - submittedAt
+                let homeHidden = hidden.nonBackgroundPixels(in: beforeFrames[0])
+                let footerHidden = hidden.nonBackgroundPixels(in: beforeFrames[1])
+                XCTAssertLessThanOrEqual(homeHidden, 10, "The disabled Home must stop drawing when result owns navigation.")
+                XCTAssertLessThanOrEqual(footerHidden, 10, "Old tool contents must stop drawing under the result action.")
+                XCTAssertEqual(model.session, terminal)
+                for (index, identifier) in ["home", "game_footer", "puzzle_board"].enumerated() {
+                    XCTAssertEqual(frames[identifier], beforeFrames[index], "Hiding \(identifier) preserves the board and its reserved layout.")
+                }
+
+                if action == "next" { model.next() }
+                else if action == "restart" { model.restart() }
+                else {
+                    XCTAssertTrue(model.reviveAvailable); XCTAssertFalse(model.reviveNeedsVideo)
+                    model.revive()
+                }
+                XCTAssertEqual(model.session?.status, .playing)
+                XCTAssertEqual(model.session?.puzzle.id, action == "next" ? 7 : 6)
+                XCTAssertNil(model.sheet, "This fixture exercises free revival, not an ad delay.")
+                for _ in 0..<30 {
+                    if board.accessibilityElements?.isEmpty == false { break }
+                    try await Task.sleep(nanoseconds: 4_000_000)
+                }
+                XCTAssertTrue(board.accessibilityElements?.isEmpty == false)
+                let resumed = try snapshot("playing-restored")
+                XCTAssertGreaterThan(resumed.nonBackgroundPixels(in: beforeFrames[0]), 50)
+                XCTAssertGreaterThan(resumed.nonBackgroundPixels(in: beforeFrames[1]), 100)
+                for (index, identifier) in ["home", "game_footer", "puzzle_board"].enumerated() {
+                    XCTAssertEqual(frames[identifier], beforeFrames[index], "Restoring \(identifier) cannot shift the new or revived board.")
+                }
+                observations.append(["action": action, "reduceMotion": reduceMotion,
+                    "nativeScale": hidden.scale, "terminalSnapshotReadbackSeconds": readbackElapsed,
+                    "homeBeforePixels": homeBefore, "homeTerminalPixels": homeHidden,
+                    "footerBeforePixels": footerBefore, "footerTerminalPixels": footerHidden,
+                    "homeFrame": NSCoder.string(for: beforeFrames[0]),
+                    "footerFrame": NSCoder.string(for: beforeFrames[1]),
+                    "boardFrame": NSCoder.string(for: beforeFrames[2])])
+            }
+        }
+        let data = try JSONSerialization.data(withJSONObject: ["observations": observations,
+            "boundary": "Real GameView raster at native scale after its terminal native-board layout; screenshot readback can take time and is not an exact first-frame or touch-latency measurement. Full Root result hit testing and choreography are covered separately."],
+            options: [.prettyPrinted, .sortedKeys])
+        let attachment = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+        attachment.name = "terminal-game-chrome-pixel-observations"; attachment.lifetime = .keepAlways; add(attachment)
+    }
+
     @MainActor func testWinAndLossRevealCharacterThenTitleThenDetailWithoutChangingImmediateActionContract() {
         for outcome in [GameStatus.won, .lost] {
             let clock = ChoreographyClock(), id = UUID(), result = ResultEntrancePresentation(schedule: clock.schedule)

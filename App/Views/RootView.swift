@@ -50,13 +50,19 @@ struct RootView: View {
     @State private var modalOrigins: [String: String] = [:]
     @State private var lowPower = ProcessInfo.processInfo.isLowPowerModeEnabled
     @StateObject private var resultEntrance = ResultEntrancePresentation()
+    // A value snapshot keeps only the departing decoration coherent while the
+    // model immediately enters the next board/home. It never drives actions.
+    @State private var lastResultSession: GameSession?
     private var hasCard: Bool { model.sheet == .settings || model.sheet == .reward }
     private var hasResult: Bool { model.screen == .game && model.session?.status != .playing && model.session != nil }
-    private var animatesResult: Bool {
+    private var resultTransitionEnabled: Bool {
         !reduceMotion && !lowPower && scenePhase == .active &&
-        model.screen == .game && model.sheet == nil && !model.loading && !model.rewardBusy &&
+        model.sheet == nil && !model.loading && !model.rewardBusy &&
         !model.interstitialBusy && !model.challengePending && model.notice == nil && model.errorMessage == nil
     }
+    private var animatesResult: Bool { resultTransitionEnabled && model.screen == .game }
+    private var showsResultPanel: Bool { hasResult && model.sheet != .reward }
+    private var resultSessionForDisplay: GameSession? { hasResult ? model.session : lastResultSession }
     private var resultDecorationReady: Bool {
         guard hasResult, let session = model.session else { return false }
         return resultEntrance.shows(sessionID: session.id, status: session.status, animate: animatesResult)
@@ -97,11 +103,20 @@ struct RootView: View {
                     .environment(\.capyAccessibilityFocus, $focusedControl)
                     .environment(\.capyButtonActivation, activate)
             }
-            if hasResult && model.sheet != .reward {
-                Color.black.opacity(resultDecorationReady ? 0.78 : 0).ignoresSafeArea().accessibilityHidden(true)
-                CapyAccessibilityHost(hidden: hasCard || model.loading || model.challengePending) {
-                    ResultPanel(won: model.session?.status == .won, showsDecoration: resultDecorationReady,
+            Group {
+                if showsResultPanel {
+                    Color.black.opacity(resultDecorationReady ? 0.78 : 0).ignoresSafeArea()
+                        .allowsHitTesting(false).accessibilityHidden(true)
+                }
+            }
+            .animation(resultTransitionEnabled ? .easeOut(duration: 0.18) : nil, value: resultDecorationReady)
+            .animation(resultTransitionEnabled ? .easeOut(duration: 0.18) : nil, value: showsResultPanel)
+            if let resultSession = resultSessionForDisplay {
+                CapyAccessibilityHost(hidden: !showsResultPanel || hasCard || model.loading || model.challengePending) {
+                    ResultPanel(won: resultSession.status == .won, isPresented: showsResultPanel,
+                                displaySession: resultSession, showsDecoration: showsResultPanel && resultDecorationReady,
                                 animationID: resultEntrance.animationID, presentationEnabled: animatesResult,
+                                transitionEnabled: resultTransitionEnabled,
                                 stage: animatesResult ? resultEntrance.stage : .settled)
                         .environmentObject(model).foregroundColor(CapyPalette.ink)
                         .environment(\.scenePhase, scenePhase)
@@ -111,9 +126,11 @@ struct RootView: View {
                         .environment(\.capyAccessibilityFocus, $focusedControl)
                         .environment(\.capyButtonActivation, activate)
                 }
-                // Original [253]: result overlays use the same centered entrance
-                // and exit as the other cards. Timing remains a Demo value.
-                .transition(reduceMotion ? .opacity : .scale(scale: 0.88).combined(with: .opacity))
+                // Controls take over in place as soon as the result commits.
+                // Only the decorative content scales in (Original [253–254]);
+                // transforming this whole host also moves/fades active buttons.
+                .transition(.identity)
+                .allowsHitTesting(showsResultPanel)
             }
             if hasCard {
                 Color.black.opacity(0.68).ignoresSafeArea().contentShape(Rectangle())
@@ -144,6 +161,7 @@ struct RootView: View {
         .onAppear { updateResultEntrance(); moveFocus(to: modal) }
         .onChange(of: model.session?.id) { _ in updateResultEntrance() }
         .onChange(of: model.session?.status) { _ in updateResultEntrance() }
+        .onChange(of: model.screen) { _ in updateResultEntrance() }
         .onChange(of: animatesResult) { _ in updateResultEntrance() }
         .onChange(of: modal) { moveFocus(to: $0) }
         .onReceive(NotificationCenter.default.publisher(for: .NSProcessInfoPowerStateDidChange)) { _ in
@@ -152,8 +170,6 @@ struct RootView: View {
         .onChange(of: scenePhase) { phase in if phase == .active { requestFocus(modalHeading ?? focusedControl ?? defaultFocus) } }
         .foregroundColor(CapyPalette.ink)
         .animation(reduceMotion ? nil : .easeOut(duration: 0.18), value: hasCard)
-        .animation(reduceMotion ? nil : .easeOut(duration: 0.18), value: hasResult)
-        .animation(reduceMotion ? nil : .easeOut(duration: 0.18), value: resultDecorationReady)
         .animation(reduceMotion ? nil : .easeOut(duration: 0.18), value: model.challengePending)
         .sheet(isPresented: Binding(get: { model.sheet == .debug }, set: { if !$0 && model.sheet == .debug { model.sheet = nil } })) {
             DebugView().environment(\.appLanguage, language).environment(\.capyAccessibilityFocus, $focusedControl).environment(\.capyButtonActivation, activate)
@@ -165,6 +181,7 @@ struct RootView: View {
     }
     private var defaultFocus: String { model.screen == .game ? "level_title" : model.screen == .checkIn ? "checkin_streak" : "play" }
     private func updateResultEntrance() {
+        if hasResult { lastResultSession = model.session }
         resultEntrance.update(sessionID: model.session?.id, status: model.session?.status, animate: animatesResult)
     }
     private func activate(_ id: String?) {
@@ -367,6 +384,8 @@ struct GameView: View {
                             IconButton(symbol: "arrow.left", label: "Home", id: "home") {
                                 if model.hint != nil { model.closeHint() } else { model.home() }
                             }.capyLayoutProbe("home").accessibilityHidden(covered || model.hint != nil).disabled(model.hint != nil)
+                                .opacity(s.status == .playing ? 1 : 0)
+                                .animation(nil, value: s.status)
                             Spacer()
                             IconButton(symbol: model.hint == nil ? "gearshape.fill" : "xmark", label: model.hint == nil ? "Settings" : "Close hint", id: model.hint == nil ? "settings" : "hint_close") {
                                 if model.hint != nil { model.closeHint() } else { model.sheet = .settings }
@@ -494,7 +513,7 @@ struct GameView: View {
                             .frame(width: boardSide, height: boardSide)
                             .capyLayoutProbe("puzzle_board")
                         Spacer(minLength: compact ? 4 : 10)
-                        if model.hint != nil {
+                        Group { if model.hint != nil {
                             CapyButton(id: "hint_apply", action: model.applyHint) { Text(language.text("Apply")).frame(maxWidth: .infinity) }
                                 .buttonStyle(CapyButtonStyle()).frame(maxWidth: 280).accessibilityIdentifier("hint_apply").capyLayoutProbe("hint_apply").frame(height: footerHeight)
                         } else if let tutorial = model.tutorial {
@@ -506,6 +525,11 @@ struct GameView: View {
                                 }.frame(height: footerHeight)
                             } else { TutorialPanel(step: tutorial).padding(.top, 8) }
                         } else { tools(compact: compact).frame(height: footerHeight) }
+                        }.capyLayoutProbe("game_footer")
+                            // Keep the exact board/footer allocation, but never
+                            // show old tools underneath the new result action.
+                            .opacity(s.status == .playing ? 1 : 0)
+                            .animation(nil, value: s.status)
                         // Reserved in every state, so loading or hiding a banner never moves the board.
                         Color.clear.frame(height: bannerHeight).accessibilityIdentifier("banner_reservation")
                     }.disabled(s.status != .playing || lifeFocused).accessibilityElement(children: covered ? .ignore : .contain).accessibilityHidden(covered).padding(.horizontal, 14).padding(.top, 4).padding(.bottom, 4)
@@ -836,19 +860,23 @@ struct ResultPanel: View {
     @Environment(\.capyMotionOverride) private var motionOverride
     private var reduceMotion: Bool { motionOverride ?? systemReduceMotion }
     let won: Bool
+    var isPresented = true
+    var displaySession: GameSession? = nil
     var showsDecoration = true
     var animationID: UUID? = nil
     var presentationEnabled = true
+    var transitionEnabled = true
     var stage: ResultEntrancePresentation.Stage = .settled
+    private var session: GameSession? { displaySession ?? model.session }
     private var titleVisible: Bool { showsDecoration && (reduceMotion || stage >= .title) }
     private var detailVisible: Bool { showsDecoration && (reduceMotion || stage >= .detail) }
     private var variant: ResultCelebrationVariant {
-        (model.session?.id.uuid.0 ?? 0).isMultiple(of: 2) ? .joyfulBounce : .proudCrown
+        (session?.id.uuid.0 ?? 0).isMultiple(of: 2) ? .joyfulBounce : .proudCrown
     }
     private var praise: String { variant == .joyfulBounce ? "Nice Work" : "Intelligent" }
-    private var failure: ReferenceFailureConfiguration? { model.session?.config.referenceGameplay?.failure }
+    private var failure: ReferenceFailureConfiguration? { session?.config.referenceGameplay?.failure }
     private var victoryDetail: String {
-        guard let session = model.session else { return "All Capybaras found!" }
+        guard let session else { return "All Capybaras found!" }
         if session.attempt == 1 { return "A solid victory on your very first attempt!" }
         if !session.hasRevived && session.lives == session.config.initialLives { return "No mistakes!" }
         return "All Capybaras found!"
@@ -858,6 +886,7 @@ struct ResultPanel: View {
             ZStack {
                 ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 20) {
+                    VStack(spacing: 20) {
                     Text(language.text(won ? praise : (failure?.title ?? "So Close!")))
                         .font(.system(size: 39, weight: .heavy, design: .rounded)).foregroundColor(.white)
                         .multilineTextAlignment(.center).fixedSize(horizontal: false, vertical: true)
@@ -865,7 +894,7 @@ struct ResultPanel: View {
                         .accessibilityIdentifier(won ? "win_result" : "loss_result")
                         .capyLayoutProbe(won ? "win_result" : "loss_result")
                         .accessibilityAddTraits(.isHeader).capyFocus(won ? "win_result" : "loss_result")
-                        .accessibilityValue(language.text("Level \(model.session?.puzzle.id ?? 1). Score \(model.session?.score ?? 0). \(model.session?.found.count ?? 0) of \(model.session?.puzzle.size ?? 0) found."))
+                        .accessibilityValue(language.text("Level \(session?.puzzle.id ?? 1). Score \(session?.score ?? 0). \(session?.found.count ?? 0) of \(session?.puzzle.size ?? 0) found."))
                         .opacity(titleVisible ? 1 : 0).accessibilityHidden(!titleVisible)
                         .offset(y: titleVisible || reduceMotion ? 0 : 9)
                         .scaleEffect(titleVisible || reduceMotion ? 1 : 0.94)
@@ -885,10 +914,18 @@ struct ResultPanel: View {
                         .opacity(detailVisible ? 1 : 0).accessibilityHidden(!detailVisible)
                         .offset(y: detailVisible || reduceMotion ? 0 : 8)
                         .multilineTextAlignment(.center).fixedSize(horizontal: false, vertical: true)
+                    }
+                    .scaleEffect(showsDecoration || !transitionEnabled || reduceMotion ? 1 : 0.88)
+                    .opacity(showsDecoration ? 1 : 0)
+                    .animation(transitionEnabled && !reduceMotion ? .easeOut(duration: 0.18) : nil, value: showsDecoration)
+                    .transaction {
+                        if !transitionEnabled || reduceMotion { $0.animation = nil; $0.disablesAnimations = true }
+                    }
+                    Group {
                     CapyButton(id: won ? "next_level" : "revive") {
                         if won { model.next() } else { model.revive() }
                     } label: {
-                        Text(language.text(won ? "Level \((model.session?.puzzle.id ?? 1) + 1)" : (failure?.reviveButtonTitle ?? "Play On"))).frame(maxWidth: .infinity)
+                        Text(language.text(won ? "Level \((session?.puzzle.id ?? 1) + 1)" : (failure?.reviveButtonTitle ?? "Play On"))).frame(maxWidth: .infinity)
                     }.buttonStyle(CapyButtonStyle()).disabled(!won && !model.reviveAvailable).accessibilityIdentifier(won ? "next_level" : "revive")
                         .capyLayoutProbe("result_primary_action")
                         .overlay(alignment: .topTrailing) {
@@ -905,6 +942,8 @@ struct ResultPanel: View {
                         CapyButton(id: "result_restart", action: model.restart) { Text(language.text(failure?.restartButtonTitle ?? "Restart")).frame(maxWidth: .infinity) }
                             .buttonStyle(CapyButtonStyle(secondary: true, darkBackdrop: true)).accessibilityIdentifier("result_restart")
                     }
+                    }.opacity(isPresented ? 1 : 0).allowsHitTesting(isPresented).accessibilityHidden(!isPresented)
+                        .animation(nil, value: isPresented)
                 }.padding(.horizontal, 40).padding(.vertical, 24)
                     .frame(maxWidth: 440).frame(maxWidth: .infinity, minHeight: max(0, geometry.size.height - 52))
                     .animation(reduceMotion ? nil : .spring(response: 0.34, dampingFraction: 0.78), value: stage)
@@ -917,6 +956,8 @@ struct ResultPanel: View {
                         }
                         Spacer()
                     }.padding(.horizontal, 22).padding(.top, 4)
+                        .opacity(isPresented ? 1 : 0).allowsHitTesting(isPresented).accessibilityHidden(!isPresented)
+                        .animation(nil, value: isPresented)
                 }
             }
         }.accessibilityAddTraits(.isModal)

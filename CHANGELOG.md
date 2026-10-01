@@ -1,5 +1,11 @@
 # Demo 变更记录
 
+## 0.2.47 · 2026-10-02 · 结算控件与演出交接
+
+- 结算时旧返回与道具立即隐藏但保留占位；下一关/复活/返回原位显示，角色与文案单独缩放。退出时缓存只用于装饰淡出，新局与首页立即可操作，不增加业务等待。
+- 旧版1项实测暴露3处按钮框移动断言失败；最终33项相关App与17e五项UI通过，0失败/跳过。6组真实GameView像素、5组Root入/退出及跨页操作验证；未重跑全量App/Core、真机或参考品质验收。
+- [当前录屏](Docs/original-feel-0247/final-result-handoff.mov) · [前后画面与边界](Docs/original-feel-0247/manifest.json) · [记录](Validation/original-0247-feedback.json) · [Checklist增量](Validation/checklist-0247-feedback-delta.json)。9个本地测试原声与150关包保持；手机仍029，打包/GitHub暂停。
+
 ## 0.2.46 · 2026-10-02 · 密集浮分可读性
 
 - 密集棋盘浮分更靠近新找到的角色；保留15–19pt完整文字，并撤除路径冲突的旧浮分。分数与存档仍即时提交，原淡出/清理时长保持，参数为Demo。

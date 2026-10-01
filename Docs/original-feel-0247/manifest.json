@@ -1,0 +1,209 @@
+{
+  "build": "0.2.47 (50)",
+  "baselineBuild": "0.2.46 (49)",
+  "items": [
+    {
+      "file": "result-handoff-event-times.json",
+      "kind": "Unedited XCTest attachment",
+      "sha256": "0e161470d5a5003686680126aaf9d27a750f8e516704465f838f9c5f1cc31239",
+      "sourceBundle": "Validation/test-runs/original-0247-app-final.xcresult",
+      "test": "GameHUDVisualTests/testActualRootResultControlHandoffPlaysContinuously()",
+      "originalAttachment": "6AD9F820-58A2-45BC-962A-A119E8BF3F5F.json"
+    },
+    {
+      "file": "result-exit-320-loss-reduced-true.png",
+      "kind": "Unedited XCTest attachment",
+      "sha256": "6e69dd6b925d7c6ed94df492cbc7f2251a299ae0d6df3e1837eabb65cd3a7cfc",
+      "sourceBundle": "Validation/test-runs/original-0247-app-final.xcresult",
+      "test": "GameHUDVisualTests/testActualRootResultControlHandoffPlaysContinuously()",
+      "originalAttachment": "4F131B32-4FD7-492C-8D72-7068D83309C8.png"
+    },
+    {
+      "file": "result-handoff-320-loss-reduced-true.png",
+      "kind": "Unedited XCTest attachment",
+      "sha256": "417de87067c589068601f7694e578eff64ccfaaf5ca4e0950d7649aaa36e7f09",
+      "sourceBundle": "Validation/test-runs/original-0247-app-final.xcresult",
+      "test": "GameHUDVisualTests/testActualRootResultControlHandoffPlaysContinuously()",
+      "originalAttachment": "82C1B3D8-FEF9-4352-83DF-825029D4A2CD.png"
+    },
+    {
+      "file": "result-exit-320-win-reduced-true.png",
+      "kind": "Unedited XCTest attachment",
+      "sha256": "b290258c0d4ae3745b29ae4e84ed650934bb00cbeed056de6f362dcc68133ffe",
+      "sourceBundle": "Validation/test-runs/original-0247-app-final.xcresult",
+      "test": "GameHUDVisualTests/testActualRootResultControlHandoffPlaysContinuously()",
+      "originalAttachment": "49B7337E-F040-4939-AC6E-56AC54E6792E.png"
+    },
+    {
+      "file": "result-handoff-320-win-reduced-true.png",
+      "kind": "Unedited XCTest attachment",
+      "sha256": "f15bb6d36dc8a8615d8f2a590abeb9b471be681674b5a4e603cd826a61340f54",
+      "sourceBundle": "Validation/test-runs/original-0247-app-final.xcresult",
+      "test": "GameHUDVisualTests/testActualRootResultControlHandoffPlaysContinuously()",
+      "originalAttachment": "9FF17882-6DF4-4069-8092-5A274F33E50F.png"
+    },
+    {
+      "file": "result-exit-320-loss-reduced-false.png",
+      "kind": "Unedited XCTest attachment",
+      "sha256": "91c6b2af1c6e15a8a800fcff971527666fccee202b92e3de3bfb213465b49886",
+      "sourceBundle": "Validation/test-runs/original-0247-app-final.xcresult",
+      "test": "GameHUDVisualTests/testActualRootResultControlHandoffPlaysContinuously()",
+      "originalAttachment": "E0D5A76E-2C88-436C-BC2D-950768C725AD.png"
+    },
+    {
+      "file": "result-handoff-320-loss-reduced-false.png",
+      "kind": "Unedited XCTest attachment",
+      "sha256": "417de87067c589068601f7694e578eff64ccfaaf5ca4e0950d7649aaa36e7f09",
+      "sourceBundle": "Validation/test-runs/original-0247-app-final.xcresult",
+      "test": "GameHUDVisualTests/testActualRootResultControlHandoffPlaysContinuously()",
+      "originalAttachment": "9566A70A-B52D-4C5A-A407-319F92A10C0E.png"
+    },
+    {
+      "file": "result-exit-320-win-reduced-false.png",
+      "kind": "Unedited XCTest attachment",
+      "sha256": "b6cca24e51308726e533c69b108cdf6459139ec6baf17b65338644aabdf45f9a",
+      "sourceBundle": "Validation/test-runs/original-0247-app-final.xcresult",
+      "test": "GameHUDVisualTests/testActualRootResultControlHandoffPlaysContinuously()",
+      "originalAttachment": "0D2AE6A0-083D-493C-B562-9B720B97A1B2.png"
+    },
+    {
+      "file": "result-handoff-320-win-reduced-false.png",
+      "kind": "Unedited XCTest attachment",
+      "sha256": "1462654957fc8a23236663bb8523d24a708866a158af0aab482069272b44a935",
+      "sourceBundle": "Validation/test-runs/original-0247-app-final.xcresult",
+      "test": "GameHUDVisualTests/testActualRootResultControlHandoffPlaysContinuously()",
+      "originalAttachment": "50198EAC-D677-4797-A134-E5564CF29F74.png"
+    },
+    {
+      "file": "result-exit-402-win-reduced-false.png",
+      "kind": "Unedited XCTest attachment",
+      "sha256": "a1ecb0a22705345adae0ce0dc75fdca50a50a6cc061dfbd946ea10d0e42d4e4c",
+      "sourceBundle": "Validation/test-runs/original-0247-app-final.xcresult",
+      "test": "GameHUDVisualTests/testActualRootResultControlHandoffPlaysContinuously()",
+      "originalAttachment": "AA13D65B-6E66-4B31-8050-AF0B469E25A8.png"
+    },
+    {
+      "file": "result-handoff-402-win-reduced-false.png",
+      "kind": "Unedited XCTest attachment",
+      "sha256": "c9986d8d94dda50fb7983810b5349cd3161d0c1a837ee83270f6bbf083851070",
+      "sourceBundle": "Validation/test-runs/original-0247-app-final.xcresult",
+      "test": "GameHUDVisualTests/testActualRootResultControlHandoffPlaysContinuously()",
+      "originalAttachment": "2972BEB8-2421-4CCA-A797-2BA65385F2AA.png"
+    },
+    {
+      "file": "terminal-game-chrome-pixel-observations.json",
+      "kind": "Unedited XCTest attachment",
+      "sha256": "6e966f7f2ea6b4375428fc3bfb1c6ed795d3cb38cf1411d066c5abe1e14794f9",
+      "sourceBundle": "Validation/test-runs/original-0247-app-final.xcresult",
+      "test": "ResultChoreographyTests/testActualGameChromeHidesAtTerminalLayoutAndReturnsAfterNextRestartOrRevive()",
+      "originalAttachment": "7E1CDB34-AF4D-4283-A2F1-9A971428AF6A.json"
+    },
+    {
+      "file": "chrome-revive-normal-playing-restored.png",
+      "kind": "Unedited XCTest attachment",
+      "sha256": "6951425c303e0ec8a554de84e5f871e19df89119483190a46623a86785200967",
+      "sourceBundle": "Validation/test-runs/original-0247-app-final.xcresult",
+      "test": "ResultChoreographyTests/testActualGameChromeHidesAtTerminalLayoutAndReturnsAfterNextRestartOrRevive()",
+      "originalAttachment": "E758BC22-6706-48B1-98E7-ED9AAF0E2FF3.png"
+    },
+    {
+      "file": "chrome-revive-normal-terminal-first-layout.png",
+      "kind": "Unedited XCTest attachment",
+      "sha256": "8f695d4282e305887203b876ea909dc3cf93f08a6ee4d1f4796d5ec29d2e8d35",
+      "sourceBundle": "Validation/test-runs/original-0247-app-final.xcresult",
+      "test": "ResultChoreographyTests/testActualGameChromeHidesAtTerminalLayoutAndReturnsAfterNextRestartOrRevive()",
+      "originalAttachment": "758CECD8-3385-4825-A92C-163D82C5F95B.png"
+    },
+    {
+      "file": "chrome-next-normal-playing-restored.png",
+      "kind": "Unedited XCTest attachment",
+      "sha256": "ee57e4d17b452c9b22da6002e53295275e91a0bb1c34aad2abc8588366f416a3",
+      "sourceBundle": "Validation/test-runs/original-0247-app-final.xcresult",
+      "test": "ResultChoreographyTests/testActualGameChromeHidesAtTerminalLayoutAndReturnsAfterNextRestartOrRevive()",
+      "originalAttachment": "A4940781-58C1-4C18-B2B3-49E0C7825531.png"
+    },
+    {
+      "file": "chrome-next-normal-terminal-first-layout.png",
+      "kind": "Unedited XCTest attachment",
+      "sha256": "38a847784b3fb32d207c2375270b1bf8066286eea157df9e64c7d7116adf5296",
+      "sourceBundle": "Validation/test-runs/original-0247-app-final.xcresult",
+      "test": "ResultChoreographyTests/testActualGameChromeHidesAtTerminalLayoutAndReturnsAfterNextRestartOrRevive()",
+      "originalAttachment": "81167646-D96A-4126-BFB3-D45B02E6BD58.png"
+    },
+    {
+      "file": "chrome-next-normal-playing.png",
+      "kind": "Unedited XCTest attachment",
+      "sha256": "22b5d8d98a5e1671fac5f52648d023bd3e9b9600c75e0d1c8e43701837f332d5",
+      "sourceBundle": "Validation/test-runs/original-0247-app-final.xcresult",
+      "test": "ResultChoreographyTests/testActualGameChromeHidesAtTerminalLayoutAndReturnsAfterNextRestartOrRevive()",
+      "originalAttachment": "0EC6F933-2637-4620-A17D-37F9715DB295.png"
+    },
+    {
+      "file": "before-root-event-times.json",
+      "kind": "Original0.2.46 baseline layout observations.",
+      "sha256": "0424d5ed893fd1552cd8b314b2611f52b299a3df2a769f07c0e90edc7446ea92",
+      "sourceBundle": "Validation/test-runs/original-0247-handoff-before.xcresult",
+      "test": "GameHUDVisualTests/testActualRootResultControlHandoffPlaysContinuously()"
+    },
+    {
+      "file": "before-result-handoff.mov",
+      "kind": "Actual0.2.46 Root recording; baseline test exposed3 moving-button assertions.",
+      "sha256": "2f3b7695949f2a117b8a956ae5547374b87530e271fdb0369515cc1c99c48914"
+    },
+    {
+      "file": "before-extraction-index.json",
+      "kind": "Baseline finite extraction index.",
+      "sha256": "6d9e315ad321e494097bc7c28051f7846d16f09450379e0cc148f23b0ee30f3d"
+    },
+    {
+      "file": "before-double-controls.png",
+      "kind": "Unedited full video frame at requested3.6s; double back arrows and tool/button overlap reviewed.",
+      "sha256": "9edf4ecb07c01f2899ba82917d7dd93684efd2cbee8f243334702730e3f7f756"
+    },
+    {
+      "file": "before-win-entrance.png",
+      "kind": "Baseline3.0–4.2s contact sheet at0.2s intervals.",
+      "sha256": "6df24e20576a20b9c0a288864ebc8f561419d9ab379338fada727aa191ffa7a7"
+    },
+    {
+      "file": "final-result-handoff.mov",
+      "kind": "Actual final Root recording including home/next/restart exits; snapshots only at settled boundaries.",
+      "sha256": "1bd9cab8dd29b62ee07b002b601aba1f3a296a72d634f0d5341d7cffa23ce9ec"
+    },
+    {
+      "file": "final-extraction-index.json",
+      "kind": "Final finite extraction index.",
+      "sha256": "097705a7da81f2b97e010ba96b103cf320f18afbf47c7cb1db2054502f0852d8"
+    },
+    {
+      "file": "final-overview.png",
+      "kind": "Final0–15s overview at0.5s intervals; trailing15.5 slot is empty because recording ends15.2817s.",
+      "sha256": "4cb76a2ae770402f956cdbbc01c247e17224404458a083614a34613a47191cf9"
+    },
+    {
+      "file": "final-home-exit.png",
+      "kind": "Final2.35–2.95s exit contact sheet at0.05s requested intervals.",
+      "sha256": "77b1e64667a23d35209c41fbcc8ab81bb58e5b47c567fe5a6739d6826aaef264"
+    },
+    {
+      "file": "final-next-exit.png",
+      "kind": "Final5.35–6.05s next-board contact sheet at0.05s requested intervals.",
+      "sha256": "0973e95d21bc5793af13d789e0cf3b88033b479ed24c7eecb34bfaeafb77c52c"
+    },
+    {
+      "file": "final-win-entrance.png",
+      "kind": "Final3.65–4.15s compact entrance contact sheet at0.05s requested intervals.",
+      "sha256": "5a5a9d1ab7d7b1eb08ab9e01567b16fea0cc6cb927ec06fad261552574595b3f"
+    }
+  ],
+  "review": {
+    "fixture": "Five actual Root viewports:402pt win,320pt win/loss,320pt reduced-motion win/loss. Native board.activate, not physical touch. Compact viewport has black full-scene surround.",
+    "baseline": "One baseline test failed3 normal-motion button-frame stability assertions. Reduced-motion cases were stable. Video shows old game controls under the scaling/fading result host.",
+    "pixels": "Real GameView only: next/restart/free-revive crossed with normal/reduced motion. Measured home/footer interior pixels show content before,0 significant non-background pixels after terminal layout, and content again after resuming. All3 layout rectangles remain equal. Screenshot readback is not first-frame timing.",
+    "controls": "Final early and settled result action frames are equal and below the completed board. After leaving, retained result UIKit owner is noninteractive and AX-hidden; window hit target is outside it. UI navigation covers actual result-home/settings/check-in/next-board interactions separately.",
+    "visual": "Finite baseline/final overview and detailed entrance/home/next-exit sheets reviewed, plus selected full-frame and actual Root images. Not every frame or reference timing/FPS verification.",
+    "exit": "The old character/title briefly fade over the already active destination; no outgoing controls remain. The value snapshot is presentation-only, with no delayed business action or extra timer.",
+    "boundary": "No new Meowdoku playtest, audible A/B, physical haptics or low-end performance measurement. System reduced-motion branch is injected in fixtures; this is not system-setting validation.",
+    "fastResumeObservation": "The standalone GameView next/restored snapshot also shows an old +200/applause over the entering board. It was read immediately after native-board layout with afterScreenUpdates=false; this may be a mixed UIKit/SwiftUI snapshot and does not yet prove a user-visible runtime defect. The continuous Root exit fixture waits for settled result before leaving, so it does not resolve ultra-fast Next. Follow up with uninterrupted actual Root early-exit playback."
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "boundary" : "Actual Root normal\/compact viewport, native board.activate and normal\/reduced motion. No entrance screenshots; final screenshots only. Layout observation does not prove first rendered frame, physical touch latency or exact reference timing.",
+  "samples" : [
+    {
+      "actionFrame" : "{{59.32, 621.36213333333319}, {283.35999999999996, 52.800000000000068}}",
+      "boardFrame" : "{{37, 310}, {328, 328}}",
+      "firstActionObservationSeconds" : 0.14042966673150659,
+      "reduced" : false,
+      "submittedAtUptime" : 1196579.0148331667,
+      "width" : 402,
+      "won" : true
+    },
+    {
+      "actionFrame" : "{{54.399999999999984, 444.67093333333332}, {211.19999999999999, 52.799999999999955}}",
+      "boardFrame" : "{{65, 270}, {190, 190}}",
+      "firstActionObservationSeconds" : 0.069072958314791322,
+      "reduced" : false,
+      "submittedAtUptime" : 1196581.9683476251,
+      "width" : 320,
+      "won" : true
+    },
+    {
+      "actionFrame" : "{{54.399999999999984, 446.72426666666661}, {211.19999999999999, 52.799999999999955}}",
+      "boardFrame" : "{{65, 270}, {190, 190}}",
+      "firstActionObservationSeconds" : 0.11130395834334195,
+      "reduced" : false,
+      "submittedAtUptime" : 1196584.4747735418,
+      "width" : 320,
+      "won" : false
+    },
+    {
+      "actionFrame" : "{{40, 462.35333333333335}, {240, 60}}",
+      "boardFrame" : "{{65, 270}, {190, 190}}",
+      "firstActionObservationSeconds" : 0.070036208257079124,
+      "reduced" : true,
+      "submittedAtUptime" : 1196587.0387600418,
+      "width" : 320,
+      "won" : true
+    },
+    {
+      "actionFrame" : "{{40, 464.68666666666661}, {240, 60}}",
+      "boardFrame" : "{{65, 270}, {190, 190}}",
+      "firstActionObservationSeconds" : 0.071752791758626699,
+      "reduced" : true,
+      "submittedAtUptime" : 1196589.552559,
+      "width" : 320,
+      "won" : false
+    }
+  ]
+}
