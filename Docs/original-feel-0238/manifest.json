@@ -1,0 +1,123 @@
+{
+  "build": "0.2.38 (41)",
+  "items": [
+    {
+      "file": "star-hug-transit-250pt-phase-0.267.png",
+      "sourceAttachment": "B354DDAA-9787-40DA-9BDB-FD0BD5DC6D3C.png",
+      "test": "ResultCharacterChoreographyTests/testActualEarlyStarHugLiftKeepsSleevesAndStarGripInsideThreeViewports()",
+      "sourceBundle": "Validation/test-runs/original-0238-targeted.xcresult",
+      "sha256": "a2d625bbcc0ccfe1c6b3f69746f1f922f8eb11514e3e72f390927aa8bd84a67d"
+    },
+    {
+      "file": "star-hug-transit-250pt-phase-0.126.png",
+      "sourceAttachment": "A7CFAA08-AFBB-4B45-A6B8-27A21A2266CD.png",
+      "test": "ResultCharacterChoreographyTests/testActualEarlyStarHugLiftKeepsSleevesAndStarGripInsideThreeViewports()",
+      "sourceBundle": "Validation/test-runs/original-0238-targeted.xcresult",
+      "sha256": "f09a02e4819e2e040e304c0d8045d69fc262b23a8ee91e31e180cdb9b6223415"
+    },
+    {
+      "file": "star-hug-transit-250pt-phase-0.085.png",
+      "sourceAttachment": "333B9E57-726C-4F77-AD4C-3DB4FE4928DF.png",
+      "test": "ResultCharacterChoreographyTests/testActualEarlyStarHugLiftKeepsSleevesAndStarGripInsideThreeViewports()",
+      "sourceBundle": "Validation/test-runs/original-0238-targeted.xcresult",
+      "sha256": "b18031777cddc8180dd51485e4f02000df711bcfa396af870d4df0b8f59cef56"
+    },
+    {
+      "file": "star-hug-transit-168pt-phase-0.265.png",
+      "sourceAttachment": "27DD9F92-11B6-471A-B87A-3FA40F34159B.png",
+      "test": "ResultCharacterChoreographyTests/testActualEarlyStarHugLiftKeepsSleevesAndStarGripInsideThreeViewports()",
+      "sourceBundle": "Validation/test-runs/original-0238-targeted.xcresult",
+      "sha256": "5cdba8a030a9bf8905be4754ff18d95d5de1a7c6da862b676cce04ae19cece96"
+    },
+    {
+      "file": "star-hug-transit-168pt-phase-0.122.png",
+      "sourceAttachment": "A3BFEEE0-EB23-498D-AF8F-7C9148A17E61.png",
+      "test": "ResultCharacterChoreographyTests/testActualEarlyStarHugLiftKeepsSleevesAndStarGripInsideThreeViewports()",
+      "sourceBundle": "Validation/test-runs/original-0238-targeted.xcresult",
+      "sha256": "d8f9325f0a0e838761e978055cffafc9c5d744d3e706abd887598541328d5153"
+    },
+    {
+      "file": "star-hug-transit-168pt-phase-0.084.png",
+      "sourceAttachment": "08945CE0-E4BB-4999-8E3D-01C147873B13.png",
+      "test": "ResultCharacterChoreographyTests/testActualEarlyStarHugLiftKeepsSleevesAndStarGripInsideThreeViewports()",
+      "sourceBundle": "Validation/test-runs/original-0238-targeted.xcresult",
+      "sha256": "dd05841290b9b4a6b5bf62a156293dc3e43dd81ebe194e683f2f8f0969dd6589"
+    },
+    {
+      "file": "star-hug-transit-140pt-phase-0.267.png",
+      "sourceAttachment": "47F11C8A-EDF7-472D-AD87-05EB2D139DAC.png",
+      "test": "ResultCharacterChoreographyTests/testActualEarlyStarHugLiftKeepsSleevesAndStarGripInsideThreeViewports()",
+      "sourceBundle": "Validation/test-runs/original-0238-targeted.xcresult",
+      "sha256": "5e738da149272664ed4efbd11700294ff461760dd811affd60c1db79f47524d9"
+    },
+    {
+      "file": "star-hug-transit-140pt-phase-0.121.png",
+      "sourceAttachment": "1213FAF7-267E-4259-AA73-EBE43137D5F6.png",
+      "test": "ResultCharacterChoreographyTests/testActualEarlyStarHugLiftKeepsSleevesAndStarGripInsideThreeViewports()",
+      "sourceBundle": "Validation/test-runs/original-0238-targeted.xcresult",
+      "sha256": "543c14ab51bb5f85d80122adb01537a76b49cfab4b6ebac7cd1fc3e4b9f3084a"
+    },
+    {
+      "file": "star-hug-transit-140pt-phase-0.083.png",
+      "sourceAttachment": "6B0338EF-4BF6-4652-B083-EE11154E97CA.png",
+      "test": "ResultCharacterChoreographyTests/testActualEarlyStarHugLiftKeepsSleevesAndStarGripInsideThreeViewports()",
+      "sourceBundle": "Validation/test-runs/original-0238-targeted.xcresult",
+      "sha256": "9c0830057d64368970c4b5312ca1fda16a689e9bd9295459e3c9a179cc2e49ab"
+    }
+  ],
+  "naturalPlaybackSamples": "natural-playback-samples.json",
+  "review": "九张实际运行截图已逐张检查：140/168/250pt，起手、中途和抬起，双爪接星、袖口连接与视口内显示。",
+  "videos": [
+    {
+      "file": "baseline-0237-result-performances.mov",
+      "build": "0.2.37 (40)",
+      "sampling": "baseline-video-sampling.json",
+      "reviewedSeconds": [
+        1.3,
+        1.4,
+        1.5,
+        1.6,
+        1.7,
+        1.8,
+        1.9
+      ]
+    },
+    {
+      "file": "final-result-performances.mov",
+      "build": "0.2.38 (41)",
+      "sampling": "final-video-sampling.json",
+      "reviewedSeconds": [
+        0.0,
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1.0,
+        1.2,
+        1.3,
+        1.4,
+        1.5,
+        1.6,
+        1.7,
+        1.8,
+        1.9,
+        2.0,
+        2.2,
+        2.4,
+        2.6,
+        2.8,
+        3.0,
+        3.2,
+        3.4,
+        3.6,
+        3.8,
+        4.0
+      ]
+    }
+  ],
+  "limitations": [
+    "两段实际测试宿主录屏零点未精确对齐，不能按相同秒数作精确速度对照。",
+    "有限抽帧不能证明整体自然度、参考每帧时序、声音或真机体验。",
+    "无新图集或声音；几何回归证明新轨迹与握持，运行采样验证实际显示。"
+  ]
+}

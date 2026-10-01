@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.38 (41)",
+  "date": "2026-10-02",
+  "status": "scoped_star_hug_transit_verified_simulator_only",
+  "previousReport": "Validation/original-0237-feedback.json",
+  "previousGoalTurn": {
+    "classification": "progress",
+    "commit": "d03352e",
+    "evidence": "同帧正确/错误反馈修复，84项App及4项UI通过，符合性文档已更新。"
+  },
+  "sourceParagraphs": [
+    136,
+    241,
+    248,
+    249,
+    250,
+    254
+  ],
+  "referenceObservation": "Validation/meowdoku-playtest-comparison-0229.json#R0229-03",
+  "finding": "抱星设计曲线在phase .12把星心及双手的同向上举速度降到零；此点没有方向反转，也还未贴脸。实际73点插值不据此声称逐帧严格零速。",
+  "changes": [
+    "仅将抱星星心phase .12设为连续通过节点，双腕仍由同一星心派生；有界共享切线避免超出相邻关键位置。",
+    "贴脸/拥抱/收势停留、1.20秒总长、关键姿态、头/身体/表情、欢呼及失败动作保持。"
+  ],
+  "temporaryTuning": "Demo动作参数，非Meowdoku精确测量。",
+  "redRegression": {
+    "build": "0.2.37 production with new tests",
+    "cases": 2,
+    "passed": 1,
+    "failed": 1,
+    "assertionFailures": 1,
+    "seconds": 4.731,
+    "summary": "Validation/test-runs/original-0238-red-baseline-summary.json",
+    "note": "新速度回归按预期失败；旧三动作自然播放通过并录屏。"
+  },
+  "applicationTests": {
+    "status": "Passed",
+    "cases": 50,
+    "passed": 50,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 61.94,
+    "scope": "17 Pro / iOS26.5: result rig, arm/face integration, static/cancel policy, actual Root, completion and accessibility focus. No full App/Core rerun.",
+    "summary": "Validation/test-runs/original-0238-targeted-summary.json",
+    "log": "Validation/test-runs/original-0238-targeted.log",
+    "bundle": "Validation/test-runs/original-0238-targeted.xcresult"
+  },
+  "uiTests": {
+    "status": "Passed",
+    "cases": 2,
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 37.36,
+    "scope": "17e / iOS26.5: native solve/advance and lose/simulated revive, existing UI fixtures.",
+    "summary": "Validation/test-runs/original-0238-17e-ui-summary.json",
+    "log": "Validation/test-runs/original-0238-17e-ui.log",
+    "bundle": "Validation/test-runs/original-0238-17e-ui.xcresult"
+  },
+  "visualEvidence": "Docs/original-feel-0238/manifest.json",
+  "naturalPlaybackSampleCount": 85,
+  "reference": {
+    "latestSuccessfulPlaytest": "Validation/meowdoku-playtest-comparison-0229.json",
+    "newSuccessfulPlaytestThisRound": false,
+    "attempt": "CUA按正在运行的wrapper路径恢复参考窗口，读取L4、576分、2只已找到猫；两次坐标双击都返回noWindowsAvailable，未验证任何新操作。截图在本任务工具响应中。",
+    "equivalenceClaimed": false
+  },
+  "audio": {
+    "modified": false,
+    "localTestWAVCount": 9,
+    "currentDebugInventory": "Validation/audio-isolation-0238-debug.json",
+    "formalManifestClipsEmpty": true,
+    "liveAuditoryAB": false,
+    "releaseRebuilt": false
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  },
+  "remaining": [
+    "整体角色自然度仍需真人连续体验。",
+    "手机仍029，真机声音、画面、震动及正式参考验收未完成。"
+  ],
+  "formalSignOff": false,
+  "formalConformanceRowsUnchanged": 83,
+  "historicalChecklistCountUnchanged": 88
+}

@@ -27,6 +27,116 @@ import UIKit
 }
 
 final class ResultCharacterChoreographyTests: XCTestCase {
+    func testStarHugLiftPassesThroughItsEarlyWaypointWithoutLosingGripOrContactPauses() throws {
+        func star(_ phase: CGFloat) throws -> CGPoint {
+            try XCTUnwrap(ResultRigMotion.pose(.starHug, phase: phase).parts[.star]).center
+        }
+        let epsilon: CGFloat = 0.00001
+        let before = try star(0.12 - epsilon), at = try star(0.12), after = try star(0.12 + epsilon)
+        let incoming = CGPoint(x: (at.x - before.x) / epsilon, y: (at.y - before.y) / epsilon)
+        let outgoing = CGPoint(x: (after.x - at.x) / epsilon, y: (after.y - at.y) / epsilon)
+        XCTAssertGreaterThan(hypot(incoming.x, incoming.y), 0.15,
+            "The already-rising star must continue through the early waypoint instead of stopping before the lift.")
+        XCTAssertLessThan(hypot(incoming.x - outgoing.x, incoming.y - outgoing.y), 0.005,
+            "The star and both holding paws must join the two lift segments with continuous velocity.")
+
+        let beats: [CGFloat] = [0, 0.12, 0.34, 0.58, 0.80, 1]
+        let centers = [CGPoint(x:0.56,y:0.67), CGPoint(x:0.55,y:0.65), CGPoint(x:0.49,y:0.44),
+                       CGPoint(x:0.50,y:0.45), CGPoint(x:0.68,y:0.53), CGPoint(x:0.68,y:0.54)]
+        let nods: [CGFloat] = [0, 0.025, 0.085, 0.07, 0.015, 0]
+        for (index, beat) in beats.enumerated() {
+            let pose = ResultRigMotion.pose(.starHug, phase: beat)
+            let heldStar = try XCTUnwrap(pose.parts[.star])
+            XCTAssertEqual(heldStar.center.x, centers[index].x, accuracy:0.000001)
+            XCTAssertEqual(heldStar.center.y, centers[index].y, accuracy:0.000001)
+            XCTAssertEqual(try XCTUnwrap(pose.parts[.happyHead]).rotation, nods[index], accuracy:0.000001,
+                "Smoothing the lift must preserve the authored head poses and settled expression.")
+        }
+        for segment in 0..<(beats.count - 1) {
+            for sample in 0...100 {
+                let phase = beats[segment] + (beats[segment+1] - beats[segment]) * CGFloat(sample) / 100
+                let pose = ResultRigMotion.pose(.starHug, phase: phase)
+                let heldStar = try XCTUnwrap(pose.parts[.star]).center
+                let a = centers[segment], b = centers[segment+1]
+                XCTAssertTrue((min(a.x,b.x)-0.000001...max(a.x,b.x)+0.000001).contains(heldStar.x))
+                XCTAssertTrue((min(a.y,b.y)-0.000001...max(a.y,b.y)+0.000001).contains(heldStar.y))
+                for (arm, offset) in [(pose.leftArm, CGPoint(x:-0.11,y:0.035)),
+                                      (pose.rightArm, CGPoint(x:0.11,y:0.04))] {
+                    XCTAssertEqual(arm.wrist.x - heldStar.x, offset.x, accuracy:0.000001)
+                    XCTAssertEqual(arm.wrist.y - heldStar.y, offset.y, accuracy:0.000001,
+                        "The curved lift must not let an IK clamp separate a paw from its held star.")
+                }
+            }
+        }
+        for beat in [CGFloat(0.34), 0.58, 0.80] {
+            let a = try star(beat-epsilon), b = try star(beat+epsilon)
+            XCTAssertLessThan(hypot(b.x-a.x,b.y-a.y)/(2*epsilon),0.01,
+                "The cheek contact, hug and settling poses retain their authored pauses.")
+        }
+        for (a, b) in [(CGFloat(0), epsilon), (1-epsilon, CGFloat(1))] {
+            let start = try star(a), end = try star(b)
+            XCTAssertLessThan(hypot(end.x-start.x,end.y-start.y)/epsilon,0.01,
+                "The performance must still leave and return to rest without a velocity jump.")
+        }
+    }
+
+    @MainActor func testActualEarlyStarHugLiftKeepsSleevesAndStarGripInsideThreeViewports() async throws {
+        for side: CGFloat in [140,168,250] {
+            let rig = try CharacterChoreographyRig(side:side); defer { rig.close() }
+            rig.configure(.starHug,event:UUID())
+            let model = try XCTUnwrap(rig.view.layer.sublayers?.first { $0.name == "result-character" })
+            let modelStar = try XCTUnwrap(model.sublayers?.first { $0.name == "result-rig-star" })
+            let clock = try XCTUnwrap(modelStar.animation(forKey:"result-rig-position"))
+            XCTAssertEqual(clock.duration,1.20,accuracy:0.000001)
+            var phases: [Double] = [], captures: [(String,UIImage)] = []
+            let targets: [Double] = [0.08,0.12,0.26]
+            while true {
+                let phase = (modelStar.convertTime(CACurrentMediaTime(),from:nil)-clock.beginTime)/clock.duration
+                if phase > 0.30 { break }
+                if phase >= 0.06, let root = rig.view.layer.presentation(),
+                   let character = root.sublayers?.first(where:{ $0.name == "result-character" }) {
+                    phases.append(phase)
+                    let star = try XCTUnwrap(character.sublayers?.first { $0.name == "result-rig-star" })
+                    let viewport = rig.view.bounds.insetBy(dx:-0.5,dy:-0.5)
+                    XCTAssertTrue(viewport.contains(character.convert(star.frame,to:root)))
+                    for (hand, offset) in [("left",CGPoint(x:-0.11,y:0.035)),("right",CGPoint(x:0.11,y:0.04))] {
+                        let sleeve = try XCTUnwrap(character.sublayers?.first { $0.name == "result-arm-\(hand)-back" })
+                        let ink = try XCTUnwrap(sleeve.sublayers?.first { $0.name?.hasSuffix("-outline") == true } as? CAShapeLayer)
+                        let contour = try XCTUnwrap(ink.path)
+                        let occupied = contour.copy(strokingWithWidth:ink.lineWidth,lineCap:.round,lineJoin:.round,miterLimit:1).boundingBoxOfPath
+                        XCTAssertTrue(viewport.contains(ink.convert(occupied,to:root)))
+                        let front = try XCTUnwrap(character.sublayers?.first { $0.name == "result-arm-\(hand)-front" })
+                        let mask = try XCTUnwrap((front.mask?.presentation() ?? front.mask) as? CAShapeLayer)
+                        let wrist = mask.convert(try XCTUnwrap(mask.path).currentPoint,to:character)
+                        let paw = try XCTUnwrap(character.sublayers?.first { $0.name == "result-rig-\(hand)Paw" })
+                        XCTAssertLessThan(hypot(wrist.x-paw.position.x,wrist.y-paw.position.y),0.25)
+                        XCTAssertTrue(viewport.contains(character.convert(paw.frame,to:root)))
+                        XCTAssertEqual(paw.position.x-star.position.x,offset.x*character.bounds.width,accuracy:0.25)
+                        XCTAssertEqual(paw.position.y-star.position.y,offset.y*character.bounds.height,accuracy:0.25,
+                            "Actual Core Animation samples must keep both paws gripping the moving star.")
+                    }
+                    if captures.count < targets.count, phase >= targets[captures.count] {
+                        let format = UIGraphicsImageRendererFormat(); format.scale=2; format.opaque=true
+                        let image = UIGraphicsImageRenderer(size:rig.view.bounds.size,format:format).image {
+                            UIColor(CapyPalette.ink).setFill(); $0.fill(rig.view.bounds); root.render(in:$0.cgContext)
+                        }
+                        captures.append(("star-hug-transit-\(Int(side))pt-phase-\(String(format:"%.3f",phase))",image))
+                    }
+                }
+                try await Task.sleep(nanoseconds:8_000_000)
+            }
+            XCTAssertGreaterThan(phases.count,10,"Sample the changed lift during natural playback, without seeking its clock.")
+            XCTAssertTrue(phases.contains { $0 < 0.12 })
+            XCTAssertTrue(phases.contains { $0 > 0.12 })
+            XCTAssertEqual(captures.count,3)
+            for (name,image) in captures {
+                let attachment=XCTAttachment(image:image); attachment.name=name; attachment.lifetime = .keepAlways; add(attachment)
+            }
+            let log=XCTAttachment(string:phases.map { String(format:"%.6f",$0) }.joined(separator:","))
+            log.name="star-hug-transit-\(Int(side))pt-sampled-phases";log.lifetime = .keepAlways;add(log)
+        }
+    }
+
     func testCheerLiftPassesThroughItsMidpointWithoutStoppingOrOvershooting() throws {
         func wrists(_ phase: CGFloat) -> [CGPoint] {
             let pose = ResultRigMotion.pose(.joyfulRaise, phase: phase)

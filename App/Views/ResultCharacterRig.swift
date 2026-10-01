@@ -108,7 +108,8 @@ enum ResultRigMotion {
             pawAngleL = -.pi / 2; pawAngleR = .pi / 2; star = nil
         case .starHug:
             let beats: [CGFloat] = [0, 0.12, 0.34, 0.58, 0.80, 1]
-            let center = path(phase, times: beats, points: [point(0.56,0.67), point(0.55,0.65), point(0.49,0.44), point(0.50,0.45), point(0.68,0.53), point(0.68,0.54)])
+            // The early waypoint continues the lift; the cheek contact is the first hold.
+            let center = path(phase, times: beats, points: [point(0.56,0.67), point(0.55,0.65), point(0.49,0.44), point(0.50,0.45), point(0.68,0.53), point(0.68,0.54)], passingThrough: [1])
             star = center
             wristL = point(center.x - 0.11, center.y + 0.035)
             wristR = point(center.x + 0.11, center.y + 0.04)

@@ -41,7 +41,8 @@
     "0.2.35补0.56秒原创双掌鼓励，减少动态/低电量用0.20秒静态轮廓；运行画面发现正确后立即错误仍残留旧奖励，已清理旧飞星/浮分/鼓掌并用同步epoch拦截迟到正向回调，已获分数保持。最终56项相关App及17e四项UI通过，未全量App/Core重验。见[0.2.35记录](original-0235-feedback.json)。",
     "0.2.36只修欢呼双腕上举中途节点的停顿，保留蓄力、顶点、关键姿态及时长；48项相关App及17e两项UI通过，三尺寸运行画面和有限录屏抽样已审查。全部时序仍属Demo，不证明参考同等自然度、每帧一致或真机音画触觉。见[0.2.36记录](original-0236-feedback.json)。",
     "0.2.36历史验证中的9个本地测试WAV仍仅供Debug internal_demo，正式音频清单clips为空且referenceVerified=false。Debug包清单本轮通过，Release分发排除沿用0.2.27历史证据，本轮没有Release重建或真机听觉A/B。见[Debug清单](audio-isolation-0236-debug.json)。手机最近确认0.2.29（32）；用户已暂停手机构建/安装、打包分发和GitHub上传。",
-    "0.2.37修复同次UIView更新中新旧奖励与错误冲突，84项相关App及17e四项UI通过。四张实际Root截图检查两种顺序；普通存档L4录屏来自修复前036且主要使用辅助功能，不冒充当前真机验收。Debug9WAV核验通过，83行状态与88条原始Checklist不变。见Validation/original-0237-feedback.json。"
+    "0.2.37修复同次UIView更新中新旧奖励与错误冲突，84项相关App及17e四项UI通过。四张实际Root截图检查两种顺序；普通存档L4录屏来自修复前036且主要使用辅助功能，不冒充当前真机验收。Debug9WAV核验通过，83行状态与88条原始Checklist不变。见Validation/original-0237-feedback.json。",
+    "0.2.38只调整抱星初段连续通过，原关键位置/贴脸停留/1.20秒保持；50项相关App及17e两项UI通过。九张运行图和有限录像采样不代表整体自然度或真机验收；本地9WAV核验通过，未分发。见Validation/original-0238-feedback.json。"
   ],
   "priorityClientFollowUps": [
     {
@@ -1147,7 +1148,8 @@
         "Docs/original-feel-0234/manifest.json",
         "Docs/original-feel-0235/manifest.json",
         "Docs/original-feel-0236/manifest.json",
-        "Validation/original-0237-feedback.json"
+        "Validation/original-0237-feedback.json",
+        "Validation/original-0238-feedback.json"
       ],
       "gapHistory": [
         {
@@ -2430,8 +2432,8 @@
       ]
     }
   ],
-  "currentBuild": "0.2.37 (40)",
-  "currentVerification": "Validation/original-0237-feedback.json",
+  "currentBuild": "0.2.38 (41)",
+  "currentVerification": "Validation/original-0238-feedback.json",
   "latestVerifiedPhoneBuild": "0.2.29 (32)",
-  "currentStatusSummary": "当前0.2.37补齐同帧正确/错误的反馈顺序；84项相关App、4项UI通过，四张实际Root截图已检查。主要参考方向已有Demo实现，整体自然度与真机音画触感仍待验；正式83行及历史88项状态未提高。"
+  "currentStatusSummary": "当前0.2.38改善抱星上举中途停顿，50项相关App和2项UI通过，三尺寸运行采样与九张图已检查。主要参考方向已有Demo实现，整体自然度与真机音画触感仍待验；83行状态和88项历史Checklist未提高。"
 }
