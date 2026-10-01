@@ -1,0 +1,101 @@
+{
+  "build": "0.2.34 (37)",
+  "status": "reviewed_scoped_runtime_images_and_movie_samples",
+  "items": [
+    {
+      "file": "board-current-pack-L101-10x10-hearts-settled.png",
+      "test": "BoardSceneFeedbackTests/testCurrentPackVictoryHeartsUseNaturalPlaybackAtSixAndTenCells()",
+      "sourceAttachment": "DFB8A73B-F62D-465C-B7CD-9947F88AEA35.png",
+      "sourceBundle": "Validation/test-runs/original-0234-targeted.xcresult",
+      "sha256": "b6b1b8e27477958fc73e03740144714b35660dbcc8d830d8a5979f30ab063351"
+    },
+    {
+      "file": "board-current-pack-L101-10x10-hearts-finishing.png",
+      "test": "BoardSceneFeedbackTests/testCurrentPackVictoryHeartsUseNaturalPlaybackAtSixAndTenCells()",
+      "sourceAttachment": "A47D96BB-5D1F-4D73-BDC1-66A51E575325.png",
+      "sourceBundle": "Validation/test-runs/original-0234-targeted.xcresult",
+      "sha256": "8d14ddf5cc8ae57815fecd6010ed8847d31ddd9176056ee2225435894cfc87e9"
+    },
+    {
+      "file": "board-current-pack-L101-10x10-hearts-early.png",
+      "test": "BoardSceneFeedbackTests/testCurrentPackVictoryHeartsUseNaturalPlaybackAtSixAndTenCells()",
+      "sourceAttachment": "E5FD315E-A718-4987-A696-B2BE53B2296E.png",
+      "sourceBundle": "Validation/test-runs/original-0234-targeted.xcresult",
+      "sha256": "a230691fdf054f6c97864393bb3390dc74e2b65ab2d8178db10fe895c38ab0a0"
+    },
+    {
+      "file": "board-current-pack-L3-6x6-hearts-settled.png",
+      "test": "BoardSceneFeedbackTests/testCurrentPackVictoryHeartsUseNaturalPlaybackAtSixAndTenCells()",
+      "sourceAttachment": "71B99CDF-B8CD-4A14-AEE8-0F00E7AE8DA9.png",
+      "sourceBundle": "Validation/test-runs/original-0234-targeted.xcresult",
+      "sha256": "0d149076a3058c3c4e792155bcb444c9923d7c511e62da715020eaa359f48700"
+    },
+    {
+      "file": "board-current-pack-L3-6x6-hearts-finishing.png",
+      "test": "BoardSceneFeedbackTests/testCurrentPackVictoryHeartsUseNaturalPlaybackAtSixAndTenCells()",
+      "sourceAttachment": "1E59543D-A315-4637-ACF6-45AAB3826D7C.png",
+      "sourceBundle": "Validation/test-runs/original-0234-targeted.xcresult",
+      "sha256": "10da038c4d66113b81c32eb35e20fbb8654efd4e64282ef5dc1b8c7755e96dfd"
+    },
+    {
+      "file": "board-current-pack-L3-6x6-hearts-early.png",
+      "test": "BoardSceneFeedbackTests/testCurrentPackVictoryHeartsUseNaturalPlaybackAtSixAndTenCells()",
+      "sourceAttachment": "376ED517-8487-4AC2-BF17-8396289F0264.png",
+      "sourceBundle": "Validation/test-runs/original-0234-targeted.xcresult",
+      "sha256": "4b82c9ef58c9d25966928d8594439b3fc49c2632abe14ae458bfc2aaf8f7d360"
+    },
+    {
+      "file": "current-level-6-full-board-victory-220ms.png",
+      "test": "CompletionFeedbackTests/testCurrentPackRootDirectAndCompleteBoardCaptureWithImmediateNextAction()",
+      "sourceAttachment": "7B0C654C-E6D3-493E-9797-27E7DD899DE2.png",
+      "sourceBundle": "Validation/test-runs/original-0234-targeted.xcresult",
+      "sha256": "3169d5985b60147d79838ff93f243cdfebcbdca2b396b040b1e732c398a47239"
+    },
+    {
+      "file": "result-title-entered-without-underlying-combo.png",
+      "test": "GameFeelVisualTests/testActualMovesAndResultPresentationCapture()",
+      "sourceAttachment": "41573DD6-EB48-4A07-AE48-C2BCF03D0173.png",
+      "sourceBundle": "Validation/test-runs/original-0234-targeted.xcresult",
+      "sha256": "cca15ba144c889939b683646579b0795b0a6cd5c1521fa17fdc1226d850380c4"
+    },
+    {
+      "file": "final-move-before-result.png",
+      "test": "GameFeelVisualTests/testActualMovesAndResultPresentationCapture()",
+      "sourceAttachment": "1170F942-4B84-48D8-B875-14001A0B7038.png",
+      "sourceBundle": "Validation/test-runs/original-0234-targeted.xcresult",
+      "sha256": "67fe9a70d95378319bad4f789c9395d649230c15e6620c38073ca0729c47e554"
+    }
+  ],
+  "imageScope": "6张当前包L3/L101真实UIWindow棋盘组件自然播放图，末格经board.activate提交；3张当前包L6实际Root页面图，其动作由模型提交。均非真机触摸证据。",
+  "visualReview": "九张保留图逐张核对；爱心在小格内且位于主要五官上方，末格稍后单独收尾，结束无残留。",
+  "movies": [
+    {
+      "file": "normal-level-3-win-and-advance.mov",
+      "sha256": "20da0a4dfb843cf28acea7b9debee5816adafeb3abb95c897dd14205bd5c2445",
+      "durationSeconds": 39.38166666666667,
+      "scope": "17 Pro模拟器正常启动，恢复真实L3 4/6、520分；经可访问性确认12、8两格，700→900分、6/6，点击下一关到L4 0/6、0分、3生命。无模型注入或跳关。",
+      "sampleManifests": [
+        "normal-play-samples-1s.json",
+        "normal-win-samples-100ms.json"
+      ],
+      "reviewedWindows": [
+        {
+          "startSeconds": 0,
+          "endSeconds": 39,
+          "stepSeconds": 1
+        },
+        {
+          "startSeconds": 14.8,
+          "endSeconds": 17.3,
+          "stepSeconds": 0.1
+        }
+      ],
+      "reviewLimit": "有限抽帧检查，不是全帧/参考逐帧对标或物理双击、听感、震感测试。操作间空闲来自人工工具调用间隔。"
+    }
+  ],
+  "limits": [
+    "early/finishing/settled及毫秒截图名仅为阶段或请求等待，采集本身耗时，不能作精确实测时序。",
+    "自动边界测试覆盖4–10尺寸/190与340pt每格几何、上浮端点和峰值缩放；不是低性能实机帧率测试。",
+    "本轮未成功进入Meowdoku新关；旧第3关胜利页只读可见，点击接口返回noWindowsAvailable。"
+  ]
+}

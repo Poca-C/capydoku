@@ -12,6 +12,7 @@ final class BoardSceneFeedbackView: UIView {
     private var cleanup: DispatchWorkItem?
     private var tileAnimations = [(CALayer, TimeInterval)]()
     private var faceAnimations = [(CALayer, TimeInterval)]()
+    private var heartAnimations = [(CALayer, TimeInterval, CGFloat)]()
     private var stars = [CALayer]()
     private let glow = CAGradientLayer()
 
@@ -58,7 +59,9 @@ final class BoardSceneFeedbackView: UIView {
             glow.colors = [UIColor(CapyPalette.orange).withAlphaComponent(0.34).cgColor,
                            UIColor(CapyPalette.orangeLight).withAlphaComponent(0.12).cgColor, UIColor.clear.cgColor]
             glow.locations = [0, 0.55, 1]; glow.opacity = 0; layer.addSublayer(glow)
-            let animals = found.filter { (0..<count).contains($0) }.sorted()
+            // A valid board has at most one found animal per row. Also cap
+            // malformed drawing snapshots so decorative work remains bounded.
+            let animals = found.filter { (0..<count).contains($0) }.sorted().prefix(size)
             for (rank, index) in animals.enumerated() {
                 let tile = makeTile(index: index, frame: frames[index], regions: regions)
                 let face = addFace(to: tile, expression: .happy)
@@ -68,6 +71,7 @@ final class BoardSceneFeedbackView: UIView {
                 // overlay; its second little cheer starts after that pop ends.
                 let delay = finishingCells.contains(index) ? 0.33 : min(0.20, Double(rank) * 0.024)
                 faceAnimations.append((face, delay))
+                addHeart(index: index, tile: frames[index], delay: delay)
                 let radius = max(1.5, min(3.2, side * 0.07))
                 let star = CAShapeLayer(); star.name = "victory-star-\(index)"
                 star.frame = CGRect(x: frames[index].minX + frames[index].width * 0.17 - radius,
@@ -84,7 +88,7 @@ final class BoardSceneFeedbackView: UIView {
                 star.fillColor = UIColor(CapyPalette.orange).cgColor; star.strokeColor = UIColor.white.cgColor
                 star.lineWidth = 0.75; star.opacity = 0; layer.addSublayer(star); stars.append(star)
             }
-            particleCount = stars.count
+            particleCount = stars.count + heartAnimations.count
         }
     }
 
@@ -103,6 +107,31 @@ final class BoardSceneFeedbackView: UIView {
         face.frame = tile.bounds.insetBy(dx: tile.bounds.width * 0.07, dy: tile.bounds.height * 0.07)
         face.contents = CapyExpressionArtwork.image(expression)?.cgImage; face.contentsGravity = .resizeAspect
         tile.addSublayer(face); return face
+    }
+
+    private func addHeart(index: Int, tile: CGRect, delay: TimeInterval) {
+        // R0229-03, original vectors in Capydoku's palette. These size/timing
+        // values are Demo tuning; the heart occupies the space above the eyes.
+        let side = min(10, max(3, tile.width * 0.17))
+        let stroke: CGFloat = 0.7
+        let radius = side * 0.53 + stroke / 2 + 0.1 // Includes the 1.06 peak scale.
+        let lift = min(1.8, tile.height * 0.055)
+        let heart = CAShapeLayer(); heart.name = "victory-heart-\(index)"
+        heart.bounds = CGRect(x: 0, y: 0, width: side, height: side)
+        heart.position = CGPoint(x: min(tile.maxX - radius, max(tile.minX + radius, tile.minX + tile.width * 0.79)),
+                                 y: max(tile.minY + radius + lift, tile.minY + tile.height * 0.18))
+        let path = UIBezierPath()
+        path.move(to: CGPoint(x: 0.5, y: 0.91))
+        path.addCurve(to: CGPoint(x: 0.07, y: 0.37), controlPoint1: CGPoint(x: 0.33, y: 0.76), controlPoint2: CGPoint(x: 0.07, y: 0.56))
+        path.addCurve(to: CGPoint(x: 0.5, y: 0.25), controlPoint1: CGPoint(x: 0.07, y: 0.10), controlPoint2: CGPoint(x: 0.37, y: 0.08))
+        path.addCurve(to: CGPoint(x: 0.93, y: 0.37), controlPoint1: CGPoint(x: 0.63, y: 0.08), controlPoint2: CGPoint(x: 0.93, y: 0.10))
+        path.addCurve(to: CGPoint(x: 0.5, y: 0.91), controlPoint1: CGPoint(x: 0.93, y: 0.56), controlPoint2: CGPoint(x: 0.67, y: 0.76))
+        path.close(); path.apply(CGAffineTransform(scaleX: side, y: side))
+        heart.path = path.cgPath
+        heart.fillColor = UIColor(CapyPalette.regionColors[9]).cgColor
+        heart.strokeColor = UIColor(CapyPalette.paper).cgColor; heart.lineWidth = stroke
+        heart.opacity = 0; layer.addSublayer(heart)
+        heartAnimations.append((heart, delay, lift))
     }
 
     func play() {
@@ -129,6 +158,13 @@ final class BoardSceneFeedbackView: UIView {
                     let delay = min(0.20, Double(rank) * 0.024)
                     add(star, key: "opacity", values: [0, 1, 0], times: [0, 0.25, 1], duration: 0.48, beginTime: now + delay)
                     add(star, key: "transform.scale", values: [0.4, 1, 0.7], times: [0, 0.35, 1], duration: 0.48, beginTime: now + delay)
+                }
+                for (heart, delay, lift) in heartAnimations {
+                    // The final-cell heart starts after its existing 0.32s pop.
+                    // All hearts finish by 0.75s, inside the unchanged 0.78s scene.
+                    add(heart, key: "opacity", values: [0, 1, 1, 0], times: [0, 0.14, 0.70, 1], duration: 0.42, beginTime: now + delay)
+                    add(heart, key: "transform.scale", values: [0.72, 1.06, 1, 0.9], times: [0, 0.30, 0.70, 1], duration: 0.42, beginTime: now + delay)
+                    add(heart, key: "transform.translation.y", values: [0, -lift], times: [0, 1], duration: 0.42, beginTime: now + delay)
                 }
             }
         }

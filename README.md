@@ -1,12 +1,12 @@
 # Capydoku · 原文对齐 Demo
 
-原生 Swift / SwiftUI iPhone 应用，默认简体中文、可在设置中切换 English、竖屏，最低编译目标 iOS 15。当前本地开发版本 **0.2.33（36）**，尚未达到正式验收或上架状态。手机最近确认安装的是0.2.29；按用户要求，本轮暂停打包分发、手机更新和GitHub上传。
+原生 Swift / SwiftUI iPhone 应用，默认简体中文、可在设置中切换 English、竖屏，最低编译目标 iOS 15。当前本地开发版本 **0.2.34（37）**，尚未达到正式验收或上架状态。手机最近确认安装的是0.2.29；按用户要求，本轮暂停打包分发、手机更新和GitHub上传。
 
 ## 唯一需求基准
 
 以工作区原始《卡皮巴拉主题（Capydoku）区域逻辑小游戏需求说明 V1.3》的正文和内嵌截图为准。`Reference/Original/document.json` 保存源文件校验值与提取结果。后续报告及88条 Checklist只作核查，不能覆盖原文。用户于2026-10-01明确补充面向中文市场，语言条款按此更新为默认简体中文并内置英文切换；其他原文要求继续有效。0.1.x 的功能测试通过记录不证明符合原文。
 
-当前逐章对照与未完成项见 `Validation/original-conformance.md`；本轮进展与验证边界见 `Validation/original-0233-feedback.json`，综合历史记录保留在 `Validation/original-verification.json`。
+当前逐章对照与未完成项见 `Validation/original-conformance.md`；本轮进展与验证边界见 `Validation/original-0234-feedback.json`，综合历史记录保留在 `Validation/original-verification.json`。
 
 ## 运行和试玩
 
@@ -19,6 +19,13 @@
 下列主页面图册保留0.2.1的实测版本；0.2.4新增操作反馈，分时组件截图见 Docs/original-feedback/manifest.json，不能用旧图替代新构建验收：[首页](Docs/original-reference/01-home.png) · [游戏](Docs/original-reference/04-gameplay.png) · [提示](Docs/original-reference/05-hint.png) · [设置](Docs/original-reference/02-settings.png) · [签到](Docs/original-reference/03-check-in.png)。
 
 无需第三方依赖或真实广告 SDK。模拟器运行/测试须保留本地签名（CODE_SIGNING_ALLOWED=YES），工程仅为模拟器配置钥匙串权限；禁用签名只能验证编译，不能验证真实钥匙串。0.2.29（32）已无线覆盖安装并由设备查询确认。请求启动前的安装前后8份文件逐字节一致，第10关对局、287条事件、38条奖励及设置/签到/身份保持，见[真机记录](Validation/original-0229-physical-install.json)。本次自动启动被手机锁屏阻止，需解锁后打开App；未记录为启动成功或真机手感验收。
+
+## 0.2.34 整盘角色爱心
+
+- 找齐后每只角色错峰冒出柔粉小爱心；末格稍后响应，避开原落格爱心。保留原0.78秒整盘庆祝和即时下一关操作，减少动态、低电量及取消继续采用原策略。尺寸与时长均为Demo参数。
+- 48项相关App测试（28.507秒）、17e两项UI（32.972秒）全部通过，0失败/跳过。九张运行图已核对，包含当前包6×6和紧凑10×10；本轮未重跑全量App/Core。
+- 正常存档从L3的4/6、520分恢复，实际确认两格至900分并进入L4。[39.38秒录屏](Docs/original-feel-0234/normal-level-3-win-and-advance.mov)经过有限抽帧检查，使用可访问性确认动作，不代表物理双击或真机音画/触觉验收。[图册与采样边界](Docs/original-feel-0234/manifest.json)。
+- 主要参考方向已有Demo实现，鼓掌装饰和动作自然度仍有差距；同9个本地测试原声保持。正式83行及历史88项状态不提升。[本轮记录](Validation/original-0234-feedback.json) · [Checklist增量](Validation/checklist-0234-feedback-delta.json)。
 
 ## 0.2.33 连续奖励与角色轮廓
 

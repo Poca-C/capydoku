@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.34 (37)",
+  "date": "2026-10-01",
+  "status": "scoped_board_heart_feedback_verified_simulator_only",
+  "previousReport": "Validation/original-0233-feedback.json",
+  "authority": "初始Word及既有Demo临时参数授权；参考应用观察不替代原文或正式验收。",
+  "sourceParagraphs": [
+    129,
+    136,
+    241,
+    248,
+    249,
+    250,
+    254
+  ],
+  "referenceObservation": "Validation/meowdoku-playtest-comparison-0229.json#R0229-03",
+  "changes": [
+    {
+      "area": "整盘胜利小爱心",
+      "detail": "每只已找到角色增加一枚完整柔粉小爱心，与该角色共享开始时刻。一般错峰0–0.20秒，末格0.33秒起，避开原0.32秒落格爱心；每枚0.42秒，最晚0.75秒结束，原整盘0.78秒及结果/下一关操作时序不变。"
+    },
+    {
+      "area": "有界与取消",
+      "detail": "原生轮廓3–10pt、最多上浮1.8pt，每格1星1心，总量不超过2×size；异常found快照也上限size。减少动态/低电量仅原静态轮廓；后台、遮挡、换局、移除和提示取消延迟爱心，恢复不重播。"
+    }
+  ],
+  "temporaryTuning": "上述尺寸/时长为Demo调参，未称参考应用精确测量。没有修改规则、奖励、音频、栅格素材或关卡。",
+  "applicationTests": {
+    "status": "Passed",
+    "cases": 48,
+    "passed": 48,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 28.507,
+    "scope": "17 Pro / iOS26.5, seven affected groups: board scene/cell/burst, scene event, completion, actual game page, result choreography. No full App rerun this round.",
+    "summary": "Validation/test-runs/original-0234-targeted-summary.json",
+    "log": "Validation/test-runs/original-0234-targeted.log",
+    "bundle": "Validation/test-runs/original-0234-targeted.xcresult"
+  },
+  "uiTests": {
+    "status": "Passed",
+    "cases": 2,
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 32.972,
+    "scope": "17e / iOS26.5, native solve/advance and four-board-size navigation/rules/tools checks. Historical UI fixtures, distinct from current-pack component captures.",
+    "summary": "Validation/test-runs/original-0234-17e-ui-summary.json",
+    "log": "Validation/test-runs/original-0234-17e-ui.log",
+    "bundle": "Validation/test-runs/original-0234-17e-ui.xcresult"
+  },
+  "iterationHistory": "本轮两组首次运行均通过，无放宽断言或测试排除；48项仅受影响专项，不重标旧495项全量结果。",
+  "visualEvidence": "Docs/original-feel-0234/manifest.json",
+  "normalFlow": {
+    "baseline": "改动前0.2.33经可访问性操作由旧L2通关页到L3，连续找到四只，520分。",
+    "current": "0.2.34正常启动恢复L3 4/6、520分，确认两格得700/900分，通关后进入L4 0/6、0分、3生命。",
+    "recording": "Docs/original-feel-0234/normal-level-3-win-and-advance.mov",
+    "limits": "可访问性确认动作及普通下一关点击，不是物理双击/真机听觉触觉评估；有限抽帧而非逐帧观看。"
+  },
+  "reference": {
+    "latestSuccessfulPlaytest": "Validation/meowdoku-playtest-comparison-0229.json",
+    "newSuccessfulPlaytestThisRound": false,
+    "attempt": "可读取官方应用旧L3胜利页；点击返回noWindowsAvailable，未声称进入L4。",
+    "equivalenceClaimed": false
+  },
+  "coverageConclusion": "九类已观察方向已有Demo实现，补齐整盘爱心这一细节；不表示全部参考细节或同等品质完成。",
+  "audio": {
+    "modified": false,
+    "localTestWAVCount": 9,
+    "formalManifestClipsEmpty": true,
+    "formalReferenceVerified": false,
+    "currentDebugInventory": "Validation/audio-isolation-0234-debug.json",
+    "liveAuditoryAB": false,
+    "releaseExclusion": "沿用0.2.27历史；本轮未做Release构建。"
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  },
+  "remaining": [
+    "角色动作自然度、连续落格到结果页的节奏仍待真人体验与实际A/B。",
+    "鼓掌等参考装饰尚未加入；参考服装与文案未照搬，不自动成为正式需求。",
+    "9个原声仅本地测试；真机音画/触觉未验收，手机仍为0.2.29。",
+    "正式参考/音频、难度、外部接入和上架验收仍待完成。"
+  ],
+  "formalSignOff": false,
+  "formalConformanceRowsUnchanged": 83,
+  "historicalChecklistCountUnchanged": 88
+}

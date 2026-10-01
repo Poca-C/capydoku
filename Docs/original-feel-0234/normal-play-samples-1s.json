@@ -1,0 +1,207 @@
+{
+  "durationSeconds": 39.38166666666667,
+  "frames": [
+    {
+      "actualSeconds": 0,
+      "file": "frame-000.000.png",
+      "requestedSeconds": 0
+    },
+    {
+      "actualSeconds": 0,
+      "file": "frame-001.000.png",
+      "requestedSeconds": 1
+    },
+    {
+      "actualSeconds": 1.7933333333333332,
+      "file": "frame-002.000.png",
+      "requestedSeconds": 2
+    },
+    {
+      "actualSeconds": 1.7933333333333332,
+      "file": "frame-003.000.png",
+      "requestedSeconds": 3
+    },
+    {
+      "actualSeconds": 1.7933333333333332,
+      "file": "frame-004.000.png",
+      "requestedSeconds": 4
+    },
+    {
+      "actualSeconds": 1.7933333333333332,
+      "file": "frame-005.000.png",
+      "requestedSeconds": 5
+    },
+    {
+      "actualSeconds": 5.925,
+      "file": "frame-006.000.png",
+      "requestedSeconds": 6
+    },
+    {
+      "actualSeconds": 6.995,
+      "file": "frame-007.000.png",
+      "requestedSeconds": 7
+    },
+    {
+      "actualSeconds": 7.658333333333333,
+      "file": "frame-008.000.png",
+      "requestedSeconds": 8
+    },
+    {
+      "actualSeconds": 8.236666666666666,
+      "file": "frame-009.000.png",
+      "requestedSeconds": 9
+    },
+    {
+      "actualSeconds": 8.236666666666666,
+      "file": "frame-010.000.png",
+      "requestedSeconds": 10
+    },
+    {
+      "actualSeconds": 10.161666666666667,
+      "file": "frame-011.000.png",
+      "requestedSeconds": 11
+    },
+    {
+      "actualSeconds": 10.161666666666667,
+      "file": "frame-012.000.png",
+      "requestedSeconds": 12
+    },
+    {
+      "actualSeconds": 10.161666666666667,
+      "file": "frame-013.000.png",
+      "requestedSeconds": 13
+    },
+    {
+      "actualSeconds": 10.161666666666667,
+      "file": "frame-014.000.png",
+      "requestedSeconds": 14
+    },
+    {
+      "actualSeconds": 14.995,
+      "file": "frame-015.000.png",
+      "requestedSeconds": 15
+    },
+    {
+      "actualSeconds": 15.995,
+      "file": "frame-016.000.png",
+      "requestedSeconds": 16
+    },
+    {
+      "actualSeconds": 16.78,
+      "file": "frame-017.000.png",
+      "requestedSeconds": 17
+    },
+    {
+      "actualSeconds": 16.78,
+      "file": "frame-018.000.png",
+      "requestedSeconds": 18
+    },
+    {
+      "actualSeconds": 16.78,
+      "file": "frame-019.000.png",
+      "requestedSeconds": 19
+    },
+    {
+      "actualSeconds": 16.78,
+      "file": "frame-020.000.png",
+      "requestedSeconds": 20
+    },
+    {
+      "actualSeconds": 16.78,
+      "file": "frame-021.000.png",
+      "requestedSeconds": 21
+    },
+    {
+      "actualSeconds": 16.78,
+      "file": "frame-022.000.png",
+      "requestedSeconds": 22
+    },
+    {
+      "actualSeconds": 16.78,
+      "file": "frame-023.000.png",
+      "requestedSeconds": 23
+    },
+    {
+      "actualSeconds": 16.78,
+      "file": "frame-024.000.png",
+      "requestedSeconds": 24
+    },
+    {
+      "actualSeconds": 16.78,
+      "file": "frame-025.000.png",
+      "requestedSeconds": 25
+    },
+    {
+      "actualSeconds": 16.78,
+      "file": "frame-026.000.png",
+      "requestedSeconds": 26
+    },
+    {
+      "actualSeconds": 16.78,
+      "file": "frame-027.000.png",
+      "requestedSeconds": 27
+    },
+    {
+      "actualSeconds": 27.996666666666666,
+      "file": "frame-028.000.png",
+      "requestedSeconds": 28
+    },
+    {
+      "actualSeconds": 28.243333333333332,
+      "file": "frame-029.000.png",
+      "requestedSeconds": 29
+    },
+    {
+      "actualSeconds": 28.243333333333332,
+      "file": "frame-030.000.png",
+      "requestedSeconds": 30
+    },
+    {
+      "actualSeconds": 28.243333333333332,
+      "file": "frame-031.000.png",
+      "requestedSeconds": 31
+    },
+    {
+      "actualSeconds": 28.243333333333332,
+      "file": "frame-032.000.png",
+      "requestedSeconds": 32
+    },
+    {
+      "actualSeconds": 28.243333333333332,
+      "file": "frame-033.000.png",
+      "requestedSeconds": 33
+    },
+    {
+      "actualSeconds": 28.243333333333332,
+      "file": "frame-034.000.png",
+      "requestedSeconds": 34
+    },
+    {
+      "actualSeconds": 34.611666666666665,
+      "file": "frame-035.000.png",
+      "requestedSeconds": 35
+    },
+    {
+      "actualSeconds": 34.611666666666665,
+      "file": "frame-036.000.png",
+      "requestedSeconds": 36
+    },
+    {
+      "actualSeconds": 34.611666666666665,
+      "file": "frame-037.000.png",
+      "requestedSeconds": 37
+    },
+    {
+      "actualSeconds": 34.611666666666665,
+      "file": "frame-038.000.png",
+      "requestedSeconds": 38
+    },
+    {
+      "actualSeconds": 34.611666666666665,
+      "file": "frame-039.000.png",
+      "requestedSeconds": 39
+    }
+  ],
+  "sampleIntervalSeconds": 1,
+  "source": "normal-level-3-win-and-advance.mov"
+}

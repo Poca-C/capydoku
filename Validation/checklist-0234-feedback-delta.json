@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "kind": "scoped_delta_to_88_item_audit",
+  "baseAudit": "Validation/checklist-0221-audit.json",
+  "sourceChecklist": "Validation/checklist-source.json",
+  "sourceCaseCount": 88,
+  "formalSignOff": false,
+  "full88Reexecuted": false,
+  "overallCountsRecomputed": false,
+  "build": "0.2.34 (37)",
+  "status": "verified_scoped_board_heart_improvement_simulator_only",
+  "previousDelta": "Validation/checklist-0233-feedback-delta.json",
+  "scopedRows": 3,
+  "rows": [
+    {
+      "id": "05-06",
+      "title": "结算导航与继续",
+      "originalAcceptanceText": "操作  测试结算下一关、返回首页和继续游戏。\n通过  跳转、进度及反馈正确；主动退出保留策略、击败比例和Rank有确认依据。",
+      "originalRequirementIDs": [
+        "PLAY-10",
+        "UI-04"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "当前正常L3存档恢复、两步通关到L4实际走通；17e原生通关/下一关通过，不据此验收正式排名和退出规则。",
+      "evidence": [
+        "Validation/original-0234-feedback.json",
+        "Docs/original-feel-0234/manifest.json",
+        "Validation/test-runs/original-0234-targeted-summary.json",
+        "Validation/test-runs/original-0234-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "14-03",
+      "title": "游戏奖励动效与降级",
+      "originalAcceptanceText": "操作  触发正确、错误、Combo、通关及签到动效。\n通过  与业务状态同步，不阻碍后续操作；轻量特效在低性能设备可降级。",
+      "originalRequirementIDs": [
+        "ART-02"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "整盘角色错峰冒心，末格延后避开局部落格反馈；有限/降级/生命周期取消验证通过，6×6及10×10实际运行图核对。",
+      "evidence": [
+        "Validation/original-0234-feedback.json",
+        "Docs/original-feel-0234/manifest.json",
+        "Validation/test-runs/original-0234-targeted-summary.json",
+        "Validation/test-runs/original-0234-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "16-03",
+      "title": "最终构建全部问题复验",
+      "originalAcceptanceText": "操作  在最终构建复测所有失败用例及受影响流程。\n通过  每个Bug均有关联修复版本、复测结论和证据，旧版本通过不能代替复测。",
+      "originalRequirementIDs": [
+        "TECH-07"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "034最终代码48项受影响App和2项UI首次运行通过；九图与正常存档录屏有限核对，未重跑或冒用旧全量/真机结果。",
+      "evidence": [
+        "Validation/original-0234-feedback.json",
+        "Docs/original-feel-0234/manifest.json",
+        "Validation/test-runs/original-0234-targeted-summary.json",
+        "Validation/test-runs/original-0234-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    }
+  ],
+  "verificationSnapshot": {
+    "app": {
+      "status": "Passed",
+      "cases": 48,
+      "passed": 48,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 28.507,
+      "scope": "17 Pro / iOS26.5, seven affected groups: board scene/cell/burst, scene event, completion, actual game page, result choreography. No full App rerun this round.",
+      "summary": "Validation/test-runs/original-0234-targeted-summary.json",
+      "log": "Validation/test-runs/original-0234-targeted.log",
+      "bundle": "Validation/test-runs/original-0234-targeted.xcresult"
+    },
+    "ui": {
+      "status": "Passed",
+      "cases": 2,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 32.972,
+      "scope": "17e / iOS26.5, native solve/advance and four-board-size navigation/rules/tools checks. Historical UI fixtures, distinct from current-pack component captures.",
+      "summary": "Validation/test-runs/original-0234-17e-ui-summary.json",
+      "log": "Validation/test-runs/original-0234-17e-ui.log",
+      "bundle": "Validation/test-runs/original-0234-17e-ui.xcresult"
+    }
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  },
+  "baselinePreservation": {
+    "sourceChecklist88AndAuditUnchanged": true,
+    "formalConformanceJSONAnd83TableRowsUnchanged": true,
+    "levelsAndArtworkUnchanged": true
+  }
+}
