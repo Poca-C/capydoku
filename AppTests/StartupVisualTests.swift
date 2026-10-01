@@ -46,6 +46,17 @@ private final class StartupVisualRewards: RewardProvider {
 @MainActor private final class StartupVisualLifecycle: ObservableObject {
     @Published var phase: ScenePhase = .active
     @Published var reduceMotion = false
+    @Published var lowPower = false
+}
+
+private struct HomeVisualLifecycleHost: View {
+    @ObservedObject var lifecycle: StartupVisualLifecycle
+    var body: some View {
+        HomeView(lowPowerOverride: lifecycle.lowPower)
+            .environment(\.scenePhase, lifecycle.phase)
+            .environment(\.capyMotionOverride, lifecycle.reduceMotion)
+            .background(CapyPalette.cream.ignoresSafeArea())
+    }
 }
 
 private struct StartupVisualLifecycleHost: View {
@@ -109,6 +120,161 @@ private struct StartupVisualLifecycleHost: View {
 /// original timing, readable glyph bounds, device VoiceOver, or real Reduce Motion.
 /// The controller's one-second brand hold below is an explicit test fixture.
 final class StartupVisualTests: XCTestCase {
+    @MainActor private func homeMascotPixels(_ rig: StartupVisualHost, frame: CGRect, name: String? = nil) throws -> WelcomeRaster {
+        rig.host.view.layoutIfNeeded()
+        var drawn = false
+        let image = UIGraphicsImageRenderer(bounds: rig.host.view.bounds).image { _ in
+            drawn = rig.host.view.drawHierarchy(in: rig.host.view.bounds, afterScreenUpdates: false)
+        }
+        XCTAssertTrue(drawn)
+        if let name {
+            let attachment = XCTAttachment(image: image)
+            attachment.name = name; attachment.lifetime = .keepAlways; add(attachment)
+        }
+        let cgImage = try XCTUnwrap(image.cgImage)
+        let scale = CGFloat(cgImage.width) / rig.host.view.bounds.width
+        // Fixed region around the upper face/body; the title below cannot
+        // create a false movement result. Normalize the crop into its own
+        // pixel buffer so retained source row strides cannot include the page.
+        let area = CGRect(x: frame.minX - 6, y: frame.minY - 10, width: frame.width + 12, height: frame.height - 12)
+        let pixels = CGRect(x: area.minX * scale, y: area.minY * scale,
+                            width: area.width * scale, height: area.height * scale).integral
+        return try WelcomeRaster(XCTUnwrap(cgImage.cropping(to: pixels)))
+    }
+
+    private func homeInkCenter(_ raster: WelcomeRaster) throws -> CGFloat {
+        var total = 0, yTotal = 0
+        for y in 0..<raster.height {
+            for x in 0..<raster.width {
+                let offset = (y * raster.width + x) * 4
+                let r = Int(raster.pixels[offset]), g = Int(raster.pixels[offset + 1]), b = Int(raster.pixels[offset + 2])
+                if r - g > 20 && g - b > 10 && b < 190 && r > 80 {
+                    total += 1; yTotal += y
+                }
+            }
+        }
+        XCTAssertGreaterThan(total, 100, "The sampled region must contain visible mascot ink.")
+        return CGFloat(yTotal) / CGFloat(max(1, total))
+    }
+
+    @MainActor private func assertHomeStill(_ rig: StartupVisualHost, frame: CGRect, reason: String) async throws {
+        try await Task.sleep(nanoseconds: 180_000_000)
+        let first = try homeMascotPixels(rig, frame: frame)
+        try await Task.sleep(nanoseconds: 700_000_000)
+        let second = try homeMascotPixels(rig, frame: frame)
+        XCTAssertTrue(first.pixels == second.pixels, "The actually rendered mascot must stop: " + reason)
+    }
+
+    @MainActor private func assertHomeMovesWithinOriginalRange(_ rig: StartupVisualHost, frame: CGRect, name: String? = nil) async throws {
+        try await Task.sleep(nanoseconds: 180_000_000)
+        let first = try homeMascotPixels(rig, frame: frame, name: name.map { $0 + "-early" })
+        try await Task.sleep(nanoseconds: 1_000_000_000)
+        let second = try homeMascotPixels(rig, frame: frame, name: name.map { $0 + "-later" })
+        XCTAssertTrue(first.pixels != second.pixels, "Visible normal Home must retain its actual gentle float.")
+        let scale = CGFloat(first.width) / (frame.width + 12)
+        let distance = abs(try homeInkCenter(first) - homeInkCenter(second)) / scale
+        XCTAssertGreaterThan(distance, 0.35, "Actual mascot ink must move, rather than a predicate merely allowing motion.")
+        XCTAssertLessThanOrEqual(distance, 6.5, "Returning from coverage must not accumulate a larger displacement than the original six-point range.")
+    }
+
+    @MainActor func testActualHomeHonorsRootReducedMotionOverrideAcrossRenderedFrames() async throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent("home-motion-" + UUID().uuidString)
+        let model = AppModel(saveDirectory: directory, runsTimer: false, feedbackEnabled: false)
+        XCTAssertFalse(UIAccessibility.isReduceMotionEnabled,
+            "This hosted regression requires the simulator's existing system setting to allow motion; the test does not change it.")
+        var mascotFrame: CGRect?
+        let rig = try StartupVisualHost(RootView(reduceMotionOverride: true)
+            .environmentObject(model).environment(\.scenePhase, .active)
+            .environment(\.capyLayoutObserver, { name, frame in
+                if name == "home_mascot" { mascotFrame = frame }
+            }))
+        defer {
+            rig.close(); model.flushPendingSaves()
+            try? FileManager.default.removeItem(at: directory)
+        }
+        try await Task.sleep(nanoseconds: 180_000_000)
+        let frame = try XCTUnwrap(mascotFrame)
+        XCTAssertEqual(frame.width, 98, accuracy: 0.5)
+        XCTAssertEqual(frame.height, 98, accuracy: 0.5)
+        let first = try homeMascotPixels(rig, frame: frame, name: "home-reduced-override-early")
+        try await Task.sleep(nanoseconds: 1_200_000_000)
+        let second = try homeMascotPixels(rig, frame: frame, name: "home-reduced-override-later")
+        XCTAssertTrue(first.pixels == second.pixels, "Root's reduced-motion override must keep the actual Home mascot still even when the system setting allows motion.")
+        XCTAssertEqual(model.screen, .home)
+    }
+
+    @MainActor func testActualHomeFloatStopsForMotionCoverageSceneAndPowerThenResumesWithoutAccumulation() async throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent("home-lifecycle-" + UUID().uuidString)
+        let model = AppModel(saveDirectory: directory, runsTimer: false, feedbackEnabled: false)
+        let before = model.progress
+        let lifecycle = StartupVisualLifecycle()
+        var mascotFrame: CGRect?
+        // This real HomeView remains visible while model coverage flags change;
+        // an opaque Root modal cannot conceal an incorrectly running loop.
+        let rig = try StartupVisualHost(HomeVisualLifecycleHost(lifecycle: lifecycle)
+            .environmentObject(model).environment(\.appLanguage, .simplifiedChinese)
+            .environment(\.capyLayoutObserver, { name, frame in if name == "home_mascot" { mascotFrame = frame } }))
+        defer {
+            rig.close(); model.flushPendingSaves()
+            try? FileManager.default.removeItem(at: directory)
+        }
+        try await Task.sleep(nanoseconds: 100_000_000)
+        let frame = try XCTUnwrap(mascotFrame)
+        XCTAssertEqual(frame.size, CGSize(width: 98, height: 98))
+        try await assertHomeMovesWithinOriginalRange(rig, frame: frame, name: "home-normal-float")
+        lifecycle.reduceMotion = true
+        try await assertHomeStill(rig, frame: frame, reason: "reduced motion after an active loop")
+        lifecycle.reduceMotion = false; model.sheet = .settings
+        try await assertHomeStill(rig, frame: frame, reason: "settings covers Home")
+        model.sheet = .debug
+        try await assertHomeStill(rig, frame: frame, reason: "debug covers Home")
+        model.sheet = nil
+        try await assertHomeMovesWithinOriginalRange(rig, frame: frame)
+        model.loading = true
+        try await assertHomeStill(rig, frame: frame, reason: "loading covers Home")
+        model.loading = false; model.notice = "Home lifecycle test"
+        try await assertHomeStill(rig, frame: frame, reason: "an alert covers Home")
+        model.notice = nil; lifecycle.phase = .background
+        try await assertHomeStill(rig, frame: frame, reason: "the hosted scene is in the background")
+        lifecycle.phase = .active; lifecycle.lowPower = true
+        try await assertHomeStill(rig, frame: frame, reason: "low power is enabled")
+        lifecycle.lowPower = false
+        try await assertHomeMovesWithinOriginalRange(rig, frame: frame, name: "home-resumed-float")
+        model.screen = .checkIn
+        try await assertHomeStill(rig, frame: frame, reason: "Home is no longer the selected screen")
+        model.screen = .home
+        try await assertHomeMovesWithinOriginalRange(rig, frame: frame)
+        XCTAssertEqual(model.progress, before, "Decorative lifecycle changes cannot create a board, spend inventory or change saved settings.")
+        XCTAssertTrue(rig.host.view.isUserInteractionEnabled)
+    }
+
+    @MainActor func testActualRootHomeFloatsAgainAfterLeavingAndReturning() async throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent("home-root-return-" + UUID().uuidString)
+        let model = AppModel(saveDirectory: directory, runsTimer: false, feedbackEnabled: false)
+        model.progress.tutorialCompleted = true
+        var mascotFrame: CGRect?
+        let rig = try StartupVisualHost(RootView(reduceMotionOverride: false)
+            .environmentObject(model).environment(\.scenePhase, .active)
+            .environment(\.capyLayoutObserver, { name, frame in if name == "home_mascot" { mascotFrame = frame } }))
+        defer {
+            rig.close(); model.flushPendingSaves()
+            try? FileManager.default.removeItem(at: directory)
+        }
+        try await Task.sleep(nanoseconds: 100_000_000)
+        try await assertHomeMovesWithinOriginalRange(rig, frame: XCTUnwrap(mascotFrame))
+        model.start(level: 6)
+        try await Task.sleep(nanoseconds: 150_000_000)
+        let session = try XCTUnwrap(model.session)
+        XCTAssertEqual(model.screen, .game)
+        model.home()
+        try await Task.sleep(nanoseconds: 100_000_000)
+        try await assertHomeMovesWithinOriginalRange(rig, frame: XCTUnwrap(mascotFrame), name: "home-root-return")
+        XCTAssertEqual(model.screen, .home)
+        XCTAssertEqual(model.session?.id, session.id)
+        XCTAssertEqual(model.session?.found, session.found)
+        XCTAssertEqual(model.session?.score, session.score)
+    }
+
     @MainActor private func waitFor(_ message: String, condition: () -> Bool) async throws {
         let deadline = ProcessInfo.processInfo.systemUptime + 4
         while !condition(), ProcessInfo.processInfo.systemUptime < deadline {

@@ -1,0 +1,92 @@
+{
+  "build": "0.2.39 (42)",
+  "items": [
+    {
+      "file": "home-resumed-float-later.png",
+      "build": "0.2.39 (42)",
+      "test": "StartupVisualTests/testActualHomeFloatStopsForMotionCoverageSceneAndPowerThenResumesWithoutAccumulation()",
+      "sourceAttachment": "91BAA9E8-4263-481E-9F5C-FDA1520992D2.png",
+      "sourceBundle": "Validation/test-runs/original-0239-app-r2.xcresult",
+      "sha256": "1559d1979825f0d0a365ff370ed0859f97deb8d8998bc310dc7781778624de72"
+    },
+    {
+      "file": "home-resumed-float-early.png",
+      "build": "0.2.39 (42)",
+      "test": "StartupVisualTests/testActualHomeFloatStopsForMotionCoverageSceneAndPowerThenResumesWithoutAccumulation()",
+      "sourceAttachment": "983D2241-9491-42CE-893B-11CD29356A28.png",
+      "sourceBundle": "Validation/test-runs/original-0239-app-r2.xcresult",
+      "sha256": "a6ec2100a27fa1f043819255c4cc4f068b7e9ece2871f1bcf4d544ebcbd44944"
+    },
+    {
+      "file": "home-normal-float-later.png",
+      "build": "0.2.39 (42)",
+      "test": "StartupVisualTests/testActualHomeFloatStopsForMotionCoverageSceneAndPowerThenResumesWithoutAccumulation()",
+      "sourceAttachment": "2BA1391C-DEFF-4670-A593-01B56458B589.png",
+      "sourceBundle": "Validation/test-runs/original-0239-app-r2.xcresult",
+      "sha256": "47783fcfbde93b7a003d25e0c4c13de5506059b1763f94343f89537282f00b5d"
+    },
+    {
+      "file": "home-normal-float-early.png",
+      "build": "0.2.39 (42)",
+      "test": "StartupVisualTests/testActualHomeFloatStopsForMotionCoverageSceneAndPowerThenResumesWithoutAccumulation()",
+      "sourceAttachment": "E7AD3FB0-C961-4F7A-BEAF-770D7897680F.png",
+      "sourceBundle": "Validation/test-runs/original-0239-app-r2.xcresult",
+      "sha256": "f933444ec675a5791343c169a41fb42668d9e606ab981a580797b2cdb1e8a2ab"
+    },
+    {
+      "file": "home-reduced-override-later.png",
+      "build": "0.2.39 (42)",
+      "test": "StartupVisualTests/testActualHomeHonorsRootReducedMotionOverrideAcrossRenderedFrames()",
+      "sourceAttachment": "365B39BC-9389-4E54-A6E7-A90612B98644.png",
+      "sourceBundle": "Validation/test-runs/original-0239-app-r2.xcresult",
+      "sha256": "7f611151a8eefb179543573da79a3b3318849888ba67552fcf520502a7640ec7"
+    },
+    {
+      "file": "home-reduced-override-early.png",
+      "build": "0.2.39 (42)",
+      "test": "StartupVisualTests/testActualHomeHonorsRootReducedMotionOverrideAcrossRenderedFrames()",
+      "sourceAttachment": "7B77D537-89EE-4164-A2A6-07C12A578570.png",
+      "sourceBundle": "Validation/test-runs/original-0239-app-r2.xcresult",
+      "sha256": "7f611151a8eefb179543573da79a3b3318849888ba67552fcf520502a7640ec7"
+    },
+    {
+      "file": "home-root-return-later.png",
+      "build": "0.2.39 (42)",
+      "test": "StartupVisualTests/testActualRootHomeFloatsAgainAfterLeavingAndReturning()",
+      "sourceAttachment": "502E5336-C7DD-4C67-80E9-D8EBB85B7678.png",
+      "sourceBundle": "Validation/test-runs/original-0239-app-r2.xcresult",
+      "sha256": "4c32e0e0ac3885349a6ea30811e14bc286aeb5c5035dd580b214bcf9a41c7299"
+    },
+    {
+      "file": "home-root-return-early.png",
+      "build": "0.2.39 (42)",
+      "test": "StartupVisualTests/testActualRootHomeFloatsAgainAfterLeavingAndReturning()",
+      "sourceAttachment": "C88795DE-F173-4952-83D7-F9F23DC2E1A2.png",
+      "sourceBundle": "Validation/test-runs/original-0239-app-r2.xcresult",
+      "sha256": "128301f680aff5e6d2bb880545fcf691eff6510a0cb0b3a9dcd4c6802b85693c"
+    },
+    {
+      "file": "baseline-home-reduced-override-later.png",
+      "build": "0.2.38 (41), original Home with new regression",
+      "test": "StartupVisualTests/testActualHomeHonorsRootReducedMotionOverrideAcrossRenderedFrames()",
+      "sourceAttachment": "9BBA27E4-BB8D-4E43-B441-7A2AC7800B74.png",
+      "sourceBundle": "Validation/test-runs/original-0239-red-r2.xcresult",
+      "sha256": "533ed6aab67054fb8eb7f73389df984e6ad11067ec20d6563497dade3dd05755"
+    },
+    {
+      "file": "baseline-home-reduced-override-early.png",
+      "build": "0.2.38 (41), original Home with new regression",
+      "test": "StartupVisualTests/testActualHomeHonorsRootReducedMotionOverrideAcrossRenderedFrames()",
+      "sourceAttachment": "610C852D-ED0D-4913-93D3-3A6856D63930.png",
+      "sourceBundle": "Validation/test-runs/original-0239-red-r2.xcresult",
+      "sha256": "f58818ead94f3aa649aa10440e55932306531a7ba5d0d8e29657d666e1a3ba73"
+    }
+  ],
+  "review": "Actual Home screenshots: normal float, reduced-motion static, resumed float and Root return. Baseline override failure retained separately. Reviewed individually; no video or auditory claim.",
+  "limitations": [
+    "Scene phase, reduced motion and low power are injected test states; this does not verify physical OS notification delivery or power usage.",
+    "Pixel comparisons use the same fixed visible mascot area. No opaque overlay conceals the loop in lifecycle tests.",
+    "No new Meowdoku playtest, frame-accurate comparison or phone test.",
+    "Normal/resumed float samples use the isolated Home host, so toolbar tint differs from Root-hosted reduced-motion/return samples. Layout and mascot movement are the scoped evidence, not pixel-identical whole-page comparison between hosts."
+  ]
+}

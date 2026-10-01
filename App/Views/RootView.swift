@@ -208,8 +208,19 @@ struct RootView: View {
 struct HomeView: View {
     @EnvironmentObject private var model: AppModel
     @Environment(\.appLanguage) private var language
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @State private var breathing = false
+    @Environment(\.accessibilityReduceMotion) private var systemReduceMotion
+    @Environment(\.capyMotionOverride) private var motionOverride
+    @Environment(\.scenePhase) private var scenePhase
+    // Hosted verification can exercise the real static branch without changing
+    // the device's power setting. Normal callers leave this nil.
+    var lowPowerOverride: Bool? = nil
+    @State private var lowPower = ProcessInfo.processInfo.isLowPowerModeEnabled
+    @State private var appeared = false
+    private var shouldAnimate: Bool {
+        appeared && !(motionOverride ?? systemReduceMotion) && !(lowPowerOverride ?? lowPower) && scenePhase == .active &&
+        model.screen == .home && model.sheet == nil && !model.loading && !model.rewardBusy && !model.interstitialBusy &&
+        !model.challengePending && model.errorMessage == nil && model.notice == nil
+    }
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -222,8 +233,12 @@ struct HomeView: View {
                     }
                     Spacer(minLength: 30)
                     VStack(spacing: -4) {
-                        CapyMascot(mood: .happy, size: 98)
-                            .offset(y: breathing ? -4 : 2)
+                        HomeFloatingMascot(animates: shouldAnimate)
+                            // SwiftUI's existing repeatForever animation survives
+                            // a no-animation state reset. Retire only this leaf
+                            // when its policy changes, removing that render loop.
+                            .id(shouldAnimate).transition(.identity)
+                            .capyLayoutProbe("home_mascot")
                         (Text("Capy").foregroundColor(CapyPalette.orange) + Text("doku").foregroundColor(CapyPalette.ink))
                             .font(.system(size: min(geometry.size.width * 0.132, 57), weight: .heavy, design: .rounded))
                             .tracking(-2).accessibilityLabel(language.text("Capydoku"))
@@ -247,9 +262,27 @@ struct HomeView: View {
                 }.padding(.horizontal, 20).padding(.top, 8)
             }
         }
-        .onAppear {
-            if !reduceMotion { withAnimation(.easeInOut(duration: 2.2).repeatForever(autoreverses: true)) { breathing = true } }
+        .onAppear { appeared = true }
+        .onDisappear { appeared = false }
+        .onReceive(NotificationCenter.default.publisher(for: .NSProcessInfoPowerStateDidChange)) { _ in
+            lowPower = ProcessInfo.processInfo.isLowPowerModeEnabled
         }
+    }
+}
+
+/// One replaceable decorative leaf owns one loop; the surrounding Home layout
+/// and its buttons keep their identities when motion is stopped or resumed.
+private struct HomeFloatingMascot: View {
+    let animates: Bool
+    @State private var breathing = false
+    var body: some View {
+        CapyMascot(mood: .happy, size: 98)
+            .offset(y: breathing ? -4 : 2)
+            .allowsHitTesting(false)
+            .onAppear {
+                guard animates else { return }
+                withAnimation(.easeInOut(duration: 2.2).repeatForever(autoreverses: true)) { breathing = true }
+            }
     }
 }
 

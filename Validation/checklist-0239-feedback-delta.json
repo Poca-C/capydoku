@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "kind": "scoped_delta_to_88_item_audit",
+  "baseAudit": "Validation/checklist-0221-audit.json",
+  "sourceChecklist": "Validation/checklist-source.json",
+  "sourceCaseCount": 88,
+  "formalSignOff": false,
+  "full88Reexecuted": false,
+  "overallCountsRecomputed": false,
+  "build": "0.2.39 (42)",
+  "status": "scoped_home_motion_lifecycle_verified_simulator_only",
+  "previousDelta": "Validation/checklist-0238-feedback-delta.json",
+  "scopedRows": 3,
+  "rows": [
+    {
+      "id": "11-03",
+      "title": "首页游戏页与排除功能",
+      "originalAcceptanceText": "操作  检查首页、当前关卡按钮及游戏页返回和设置。\n通过  入口与布局齐全，当前进度正确；无个人资料、头像编辑等排除功能。",
+      "originalRequirementIDs": [
+        "UI-01",
+        "UI-02",
+        "UI-03",
+        "UI-06"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "首页真实装饰暂停/恢复与Root进出对局，首页结构和重开恢复专项通过；非全设备端到端验收。",
+      "evidence": [
+        "Validation/original-0239-feedback.json",
+        "Docs/original-feel-0239/manifest.json",
+        "Validation/test-runs/original-0239-app-r2-summary.json",
+        "Validation/test-runs/original-0239-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "11-05",
+      "title": "设置反馈重开与弹层",
+      "originalAcceptanceText": "操作  测试设置关闭、Restart、Feedback及各种弹层。\n通过  遮罩不穿透，焦点与页面恢复正确；无对局重开和反馈去向符合F4／F5。",
+      "originalRequirementIDs": [
+        "UI-07",
+        "UI-09"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "设置/调试/提示等覆盖时取消首页装饰；三项UI复核设置签到、重开及Hint保存。未提高VoiceOver或正式反馈去向状态。",
+      "evidence": [
+        "Validation/original-0239-feedback.json",
+        "Docs/original-feel-0239/manifest.json",
+        "Validation/test-runs/original-0239-app-r2-summary.json",
+        "Validation/test-runs/original-0239-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "16-03",
+      "title": "最终构建全部问题复验",
+      "originalAcceptanceText": "操作  在最终构建复测所有失败用例及受影响流程。\n通过  每个Bug均有关联修复版本、复测结论和证据，旧版本通过不能代替复测。",
+      "originalRequirementIDs": [
+        "TECH-07"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "保留初次编译错误、原行为红测与取消候选失败；最终同16项App及3项UI通过。未重跑全量App/Core。",
+      "evidence": [
+        "Validation/original-0239-feedback.json",
+        "Docs/original-feel-0239/manifest.json",
+        "Validation/test-runs/original-0239-app-r2-summary.json",
+        "Validation/test-runs/original-0239-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    }
+  ],
+  "verificationSnapshot": {
+    "app": {
+      "status": "Passed",
+      "cases": 16,
+      "passed": 16,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 57.049,
+      "scope": "17 Pro / iOS26.5: StartupVisualTests, CompactLayoutTests, OriginalUIContractTests, GameFeelVisualTests. Not full App/Core.",
+      "summary": "Validation/test-runs/original-0239-app-r2-summary.json",
+      "log": "Validation/test-runs/original-0239-app-r2.log",
+      "bundle": "Validation/test-runs/original-0239-app-r2.xcresult"
+    },
+    "ui": {
+      "status": "Passed",
+      "cases": 3,
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 57.93,
+      "scope": "17e / iOS26.5: Home/Settings/Check-in hierarchy, Home restart and restore, current-pack Hint termination/Apply persistence.",
+      "summary": "Validation/test-runs/original-0239-17e-ui-summary.json",
+      "log": "Validation/test-runs/original-0239-17e-ui.log",
+      "bundle": "Validation/test-runs/original-0239-17e-ui.xcresult"
+    }
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  },
+  "baselinePreservation": {
+    "sourceChecklist88AndAuditUnchanged": true,
+    "formal83IDsAndStatusesUnchanged": true,
+    "levelsAndArtworkUnchanged": true,
+    "homeMotionLifecycleChanged": true
+  }
+}

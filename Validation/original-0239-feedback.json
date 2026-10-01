@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.39 (42)",
+  "date": "2026-10-02",
+  "status": "scoped_home_motion_lifecycle_verified_simulator_only",
+  "previousReport": "Validation/original-0238-feedback.json",
+  "previousGoalTurn": {
+    "classification": "progress",
+    "commit": "8456c9b",
+    "evidence": "抱星初段连续上举；50项相关App及2项UI通过，有限动作采样已检查。"
+  },
+  "sourceParagraphs": [
+    241,
+    249,
+    256,
+    258,
+    260,
+    262
+  ],
+  "sourceInterpretation": "首页装饰生命周期与轻量效果的实现修复；原文未规定此98pt/2.2秒浮动数值，保留既有Demo参数。中文依用户明确补充要求。",
+  "finding": "Home只在首次出现读取系统减少动态效果，忽略Root override且无遮挡/场景/低电量门禁。首次实际像素红测复现；候选状态复位仍无法停止已经运行的SwiftUI repeatForever。",
+  "changes": [
+    "Home按Root override或系统减少动态效果、场景活跃、选中页面、弹层/加载/奖励/提示遮挡和低电量控制装饰。",
+    "仅98pt角色叶子以运动许可切换identity，移除旧repeatForever渲染节点；恢复从原位置启动原单程2.2秒（往返约4.4秒）、六点范围浮动，首页按钮不重建。",
+    "三个真实渲染回归检查初始静止、活动循环取消/恢复及Root进入对局再返回，状态与存档不因装饰改变。"
+  ],
+  "verificationHistory": [
+    {
+      "stage": "red compile attempt",
+      "log": "Validation/test-runs/original-0239-red.log",
+      "executed": false,
+      "note": "测试试图写入只读accessibilityReduceMotion环境；改为使用Root已有override并断言模拟器原系统设置允许运动。"
+    },
+    {
+      "stage": "original behavior red",
+      "cases": 1,
+      "passed": 0,
+      "failed": 1,
+      "assertionFailures": 1,
+      "seconds": 2.986,
+      "summary": "Validation/test-runs/original-0239-red-r2-summary.json",
+      "note": "原Home未消费Root override，两个实际图像不相等；裁剪随后归一化为独立buffer避免源图行跨度。"
+    },
+    {
+      "stage": "first cancellation candidate",
+      "status": "Failed",
+      "cases": 16,
+      "passed": 15,
+      "failed": 1,
+      "skipped": 0,
+      "seconds": 59.1,
+      "scope": "Same four suites; state-only reset candidate.",
+      "summary": "Validation/test-runs/original-0239-app-summary.json",
+      "log": "Validation/test-runs/original-0239-app.log",
+      "bundle": "Validation/test-runs/original-0239-app.xcresult"
+    }
+  ],
+  "candidateFailure": "16项中15过/1失败，8个暂停边界实际像素仍变化。改为销毁角色动画叶子，精确相等断言未放宽；只将数组打印改为布尔判断避免巨量日志。",
+  "applicationTests": {
+    "status": "Passed",
+    "cases": 16,
+    "passed": 16,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 57.049,
+    "scope": "17 Pro / iOS26.5: StartupVisualTests, CompactLayoutTests, OriginalUIContractTests, GameFeelVisualTests. Not full App/Core.",
+    "summary": "Validation/test-runs/original-0239-app-r2-summary.json",
+    "log": "Validation/test-runs/original-0239-app-r2.log",
+    "bundle": "Validation/test-runs/original-0239-app-r2.xcresult"
+  },
+  "uiTests": {
+    "status": "Passed",
+    "cases": 3,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 57.93,
+    "scope": "17e / iOS26.5: Home/Settings/Check-in hierarchy, Home restart and restore, current-pack Hint termination/Apply persistence.",
+    "summary": "Validation/test-runs/original-0239-17e-ui-summary.json",
+    "log": "Validation/test-runs/original-0239-17e-ui.log",
+    "bundle": "Validation/test-runs/original-0239-17e-ui.xcresult"
+  },
+  "visualEvidence": "Docs/original-feel-0239/manifest.json",
+  "reference": {
+    "latestSuccessfulPlaytest": "Validation/meowdoku-playtest-comparison-0229.json",
+    "newSuccessfulPlaytestThisRound": false,
+    "attempt": "本轮按/Applications/Meowdoku.app恢复时返回Running application not found，未新增参考操作或听觉结论。",
+    "equivalenceClaimed": false
+  },
+  "audio": {
+    "modified": false,
+    "localTestWAVCount": 9,
+    "currentDebugInventory": "Validation/audio-isolation-0239-debug.json",
+    "formalManifestClipsEmpty": true,
+    "liveAuditoryAB": false,
+    "releaseRebuilt": false,
+    "readOnlyAudit": "未发现新的明确播放策略缺陷；Combo语音替换、跟随场景音效取消、后台清理和返回不补播保留。正确/错误accepted cue按已有完成策略，未擅自增加跨事件取消。"
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  },
+  "remaining": [
+    "整体角色自然度、连续音画和触觉仍待真人体验。",
+    "手机仍为0.2.29；本轮不是完整真机、最低系统或正式参考验收。"
+  ],
+  "formalSignOff": false,
+  "formalConformanceRowsUnchanged": 83,
+  "historicalChecklistCountUnchanged": 88
+}
