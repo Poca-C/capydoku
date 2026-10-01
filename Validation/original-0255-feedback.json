@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.55 (58)",
+  "date": "2026-10-02",
+  "status": "scoped_conflict_ink_separation_verified_simulator_only",
+  "previousReport": "Validation/original-0254-feedback.json",
+  "previousGoalTurn": {
+    "classification": "progress",
+    "reason": "b1c0aba repaired one-life focus preempting the same error;44 related App and2UI scoped evidence."
+  },
+  "sourceParagraphs": [
+    129,
+    136,
+    249,
+    252,
+    254
+  ],
+  "finding": "Center-to-center conflict links crossed reacting portraits and the current mistake. Real L63 found62/51 candidate40 also crosses unrelated visible51; L6 rapid wrong1→3 crosses the earlier error, and a marked51 also needs protection.",
+  "changes": [
+    "Clip both connector strokes over occupied tile interiors; keep original connections, conflict partners, rule highlights, participant rings and1.35second duration.",
+    "Pass only already-visible found/marks/errors. Never read answers for presentation or label an unrelated crossed cell as a conflict.",
+    "Update the clipping in place when marks are added/removed during the explanation; do not restart its identity, clock or callbacks.",
+    "A newer mistake retires earlier mark-erasure decoration, including coalesced state updates; ordinary erasure and committed state remain unchanged."
+  ],
+  "temporaryTuning": "Original local presentation adjustment, not measured Meowdoku timing or frozen-reference quality acceptance.",
+  "verificationHistory": [
+    {
+      "status": "Failed",
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0255-conflict-before-summary.json",
+      "log": "Validation/test-runs/original-0255-conflict-before.log",
+      "bundle": "Validation/test-runs/original-0255-conflict-before.xcresult"
+    },
+    {
+      "status": "Failed",
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0255-conflict-candidate-summary.json",
+      "log": "Validation/test-runs/original-0255-conflict-candidate.log",
+      "bundle": "Validation/test-runs/original-0255-conflict-candidate.xcresult"
+    },
+    {
+      "status": "Passed",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0255-conflict-final-summary.json",
+      "log": "Validation/test-runs/original-0255-conflict-final.log",
+      "bundle": "Validation/test-runs/original-0255-conflict-final.xcresult"
+    },
+    {
+      "status": "Failed",
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0255-marks-before-summary.json",
+      "log": "Validation/test-runs/original-0255-marks-before.log",
+      "bundle": "Validation/test-runs/original-0255-marks-before.xcresult"
+    },
+    {
+      "status": "Passed",
+      "passed": 49,
+      "failed": 0,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0255-app-final-summary.json",
+      "log": "Validation/test-runs/original-0255-app-final.log",
+      "bundle": "Validation/test-runs/original-0255-app-final.xcresult"
+    }
+  ],
+  "measurementCorrection": "Initial pixel crop used7% of the raw cell and rounded outward. The dense candidate reported32/24/80 channel differences at tile borders. Corrected to the actual painted tile then7% artwork inset and fully contained pixels, retaining zero-difference assertion. Also matched connector/mask contentsScale to the view. Original baseline8failures and later mark/error2failures remain recorded.",
+  "applicationTests": {
+    "status": "Passed",
+    "passed": 50,
+    "failed": 0,
+    "skipped": 0,
+    "summary": "Validation/test-runs/original-0255-app-final-v2-summary.json",
+    "log": "Validation/test-runs/original-0255-app-final-v2.log",
+    "bundle": "Validation/test-runs/original-0255-app-final-v2.xcresult"
+  },
+  "uiTests": {
+    "status": "Passed",
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0,
+    "summary": "Validation/test-runs/original-0255-17e-ui-summary.json",
+    "log": "Validation/test-runs/original-0255-17e-ui.log",
+    "bundle": "Validation/test-runs/original-0255-17e-ui.xcresult"
+  },
+  "visualEvidence": "Docs/original-feel-0255/manifest.json",
+  "visualVerification": "Seven actual Root fixtures: L6 normal; L63 compact normal/reduced; dense L101; rapid successive mistakes; preexisting manual X; X added and removed while the same explanation lives. Connector strokes remain visible outside protected cells. Not exhaustive per-frame coverage.",
+  "reference": {
+    "latestSuccessfulPlaytest": "Validation/meowdoku-playtest-comparison-0249.json",
+    "newSuccessfulPlaytestThisRound": false,
+    "equivalenceClaimed": false,
+    "implementationSummary": {
+      "status": "Nine observed directions each have Demo implementation; this is not reference-quality sign-off.",
+      "implementedDirections": [
+        "动态手势教学",
+        "角色待机/正确/错误表情",
+        "浮分/彩粒/飞星/鼓掌及顶部联动",
+        "错误原因与规则可视化",
+        "扣命与一命提醒",
+        "Combo及分层胜败演出",
+        "新盘错峰入场",
+        "提示与找答案反馈",
+        "签到点亮与实际到账演出"
+      ],
+      "audio": "9 local Debug-only reference WAVs remain an authorized testing experiment; no live audio or physical haptic A/B in this round.",
+      "qualityGaps": [
+        "角色动作自然度与整段节奏",
+        "密集浮分离源距离",
+        "真机声音/震动配合",
+        "正式参考和发布资源验收"
+      ],
+      "notReplicatedFromLatestPlaytest": [
+        "Reference horn-playing character pose",
+        "Every observed praise phrase",
+        "Automatic check-in interstitial during victory; current Demo check-in entry remains on home"
+      ]
+    }
+  },
+  "audio": {
+    "modified": false,
+    "localTestWAVCount": 9,
+    "currentDebugInventory": "Validation/audio-isolation-0255-debug.json",
+    "formalManifestClipsEmpty": true,
+    "liveAuditoryAB": false,
+    "releaseRebuilt": false
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  },
+  "formalSignOff": false,
+  "formalConformanceRowsUnchanged": 83,
+  "historicalChecklistCountUnchanged": 88,
+  "remaining": [
+    "整体角色自然度、连续音画与真机触感仍待验；手机仍0.2.29，分发/GitHub暂停。",
+    "本轮是相关App/UI与有限真实Root画面，不是全量App/Core、全部150关试玩或参考品质验收。"
+  ]
+}

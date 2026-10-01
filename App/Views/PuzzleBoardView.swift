@@ -302,7 +302,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         for effect in feedbackOverlay.subviews.compactMap({ $0 as? BoardCellFeedbackView }) {
             let valid = effect.kind == .found ? found.contains(effect.cellIndex) && !receivedMistake
                 : effect.kind == .markAdded ? marks.contains(effect.cellIndex) && !found.contains(effect.cellIndex) && !errors.contains(effect.cellIndex)
-                : !marks.contains(effect.cellIndex) && !found.contains(effect.cellIndex) && !errors.contains(effect.cellIndex)
+                : !receivedMistake && !marks.contains(effect.cellIndex) && !found.contains(effect.cellIndex) && !errors.contains(effect.cellIndex)
             if !valid { effect.removeFromSuperview() }
         }
         for effect in feedbackOverlay.subviews.compactMap({ $0 as? BoardMistakeFeedbackView }) where newCorrectOwnsFeedback || !errors.contains(effect.cellIndex) {
@@ -315,6 +315,9 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
             feedbackOverlay.subviews.compactMap { $0 as? CapyFaceExpressionView }
                 .filter { $0.expression == .startled && participants.contains($0.cellIndex) }
                 .forEach { $0.removeFromSuperview() }
+        }
+        for effect in feedbackOverlay.subviews.compactMap({ $0 as? BoardConflictFeedbackView }) {
+            effect.updateOccupiedCells(found.union(marks).union(errors))
         }
         if !sameBoard || locked {
             // Disable the actual recognizers as well as clearing our ledger:
@@ -372,6 +375,9 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
                 }
             }
             for index in changedMarks.sorted() {
+                // The newer error owns the scene, including coalesced updates.
+                // Do not place an old erasing X under its explanation links.
+                if receivedMistake && !marks.contains(index) { continue }
                 cellFeedback(at: index, kind: marks.contains(index) ? .markAdded : .markRemoved,
                              errorMark: removedErrors.contains(index))
             }
@@ -914,7 +920,8 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         onConflictFeedback?([.region, .row, .column, .adjacent].filter { kinds.contains($0) })
         guard !conflicts.isEmpty else { return }
         let explanation = BoardConflictFeedbackView(frame: bounds, boardRect: boardRect, size: size,
-            regions: regions, candidate: index, conflicts: conflicts, reduceMotion: reducesMotion)
+            regions: regions, candidate: index, conflicts: conflicts,
+            occupiedCells: found.union(marks).union(errors), reduceMotion: reducesMotion)
         feedbackOverlay.addSubview(explanation); explanation.play()
         for other in Set(conflicts.map(\.otherCell)).sorted() {
             feedbackOverlay.subviews.compactMap { $0 as? CapyFaceExpressionView }

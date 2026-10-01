@@ -1,0 +1,78 @@
+{
+  "build": "0.2.55 (58)",
+  "artifacts": [
+    {
+      "path": "Docs/original-feel-0255/before-conflict-faces-L63-320-reduced-true.png",
+      "source": ".build/attachments-0255-before/A17EC20B-E193-471E-B942-F6EE4E12FFCB.png",
+      "test": "GameHUDVisualTests/testActualRootConflictLinksPreserveFacesIncludingUnrelatedVisibleAnimal()",
+      "phase": "before"
+    },
+    {
+      "path": "Docs/original-feel-0255/before-conflict-faces-L63-320-reduced-false.png",
+      "source": ".build/attachments-0255-before/E9B24A47-1C0C-4F68-BB8B-0B0AF2BA4A19.png",
+      "test": "GameHUDVisualTests/testActualRootConflictLinksPreserveFacesIncludingUnrelatedVisibleAnimal()",
+      "phase": "before"
+    },
+    {
+      "path": "Docs/original-feel-0255/before-conflict-faces-L6-402-reduced-false.png",
+      "source": ".build/attachments-0255-before/666C5F59-57CA-43CA-A310-FD13C33BAE20.png",
+      "test": "GameHUDVisualTests/testActualRootConflictLinksPreserveFacesIncludingUnrelatedVisibleAnimal()",
+      "phase": "before"
+    },
+    {
+      "path": "Docs/original-feel-0255/intermediate-conflict-faces-L63-320-reduced-false-marked.png",
+      "source": ".build/attachments-0255-marks-before/CF686DB6-B530-4269-9E35-7208D92EDF51.png",
+      "test": "GameHUDVisualTests/testActualRootConflictLinksPreserveFacesIncludingUnrelatedVisibleAnimal()",
+      "phase": "intermediate"
+    },
+    {
+      "path": "Docs/original-feel-0255/intermediate-conflict-faces-L6-320-reduced-false-successive.png",
+      "source": ".build/attachments-0255-marks-before/E7BC5135-D978-48FF-AE38-AAD3AB17865B.png",
+      "test": "GameHUDVisualTests/testActualRootConflictLinksPreserveFacesIncludingUnrelatedVisibleAnimal()",
+      "phase": "intermediate"
+    },
+    {
+      "path": "Docs/original-feel-0255/final-conflict-faces-L63-320-reduced-false-mark-later.png",
+      "source": ".build/attachments-0255-final/DB938669-75B7-4385-AF2F-8322CBD269CC.png",
+      "test": "GameHUDVisualTests/testActualRootConflictLinksPreserveFacesIncludingUnrelatedVisibleAnimal()",
+      "phase": "final"
+    },
+    {
+      "path": "Docs/original-feel-0255/final-conflict-faces-L63-320-reduced-false-marked.png",
+      "source": ".build/attachments-0255-final/AB0B794C-0991-4A62-81E3-681F38CA9E6A.png",
+      "test": "GameHUDVisualTests/testActualRootConflictLinksPreserveFacesIncludingUnrelatedVisibleAnimal()",
+      "phase": "final"
+    },
+    {
+      "path": "Docs/original-feel-0255/final-conflict-faces-L6-320-reduced-false-successive.png",
+      "source": ".build/attachments-0255-final/EE65FE38-0E38-4150-B42A-9369EF4DC579.png",
+      "test": "GameHUDVisualTests/testActualRootConflictLinksPreserveFacesIncludingUnrelatedVisibleAnimal()",
+      "phase": "final"
+    },
+    {
+      "path": "Docs/original-feel-0255/final-conflict-faces-L101-320-reduced-false-single.png",
+      "source": ".build/attachments-0255-final/0F63D90A-CEF4-4F1D-8AE4-13A52139F7AD.png",
+      "test": "GameHUDVisualTests/testActualRootConflictLinksPreserveFacesIncludingUnrelatedVisibleAnimal()",
+      "phase": "final"
+    },
+    {
+      "path": "Docs/original-feel-0255/final-conflict-faces-L63-320-reduced-true-single.png",
+      "source": ".build/attachments-0255-final/119674F6-DBBB-46B0-AEC3-B97A628877D8.png",
+      "test": "GameHUDVisualTests/testActualRootConflictLinksPreserveFacesIncludingUnrelatedVisibleAnimal()",
+      "phase": "final"
+    },
+    {
+      "path": "Docs/original-feel-0255/final-conflict-faces-L63-320-reduced-false-single.png",
+      "source": ".build/attachments-0255-final/7A6C6F27-1174-4069-95E4-83E4B65DA379.png",
+      "test": "GameHUDVisualTests/testActualRootConflictLinksPreserveFacesIncludingUnrelatedVisibleAnimal()",
+      "phase": "final"
+    },
+    {
+      "path": "Docs/original-feel-0255/final-conflict-faces-L6-402-reduced-false-single.png",
+      "source": ".build/attachments-0255-final/0989DD33-7FBA-4C2F-AFC6-17C5DBA10786.png",
+      "test": "GameHUDVisualTests/testActualRootConflictLinksPreserveFacesIncludingUnrelatedVisibleAnimal()",
+      "phase": "final"
+    }
+  ],
+  "boundary": "Actual Root natural screenshot checkpoints followed by static-model connector-layer pixel differences. Not continuous per-frame timing, physical touch, audio or haptic verification. Before is0.2.54; intermediate is the incomplete portrait-only mask. No new reference playtest."
+}

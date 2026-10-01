@@ -58,7 +58,8 @@
     "0.2.51使用当前游戏内容横界与棋盘纵界改善浮分距离；六组实际Root和全包有限顺逆采样不代表全部操作顺序或真机品质验收。见Validation/original-0251-feedback.json。",
     "0.2.52验证已完成棋盘的持续开心表情、整关到下一关演出；像素及有限模拟器录屏不替代真机音画触感与参考品质验收。见Validation/original-0252-feedback.json。",
     "0.2.53拍爪轮廓与接触强调经真实宿主和有界几何检查；音频仅只读路由复核，未完成真人听觉或真机参考品质验收。见Validation/original-0253-feedback.json。",
-    "0.2.54一命提醒等待现有错误解释且继续操作会取消，属于Demo节奏选择；当前Root截图、生命周期和2项UI证据不替代参考时序、全量或真机验收。见Validation/original-0254-feedback.json。"
+    "0.2.54一命提醒等待现有错误解释且继续操作会取消，属于Demo节奏选择；当前Root截图、生命周期和2项UI证据不替代参考时序、全量或真机验收。见Validation/original-0254-feedback.json。",
+    "0.2.55七组实际Root画面和静态描线像素差验证角色/X保护；不是所有逐帧画面、真机或参考品质验收。早期裁图范围修正及失败记录保留，见Validation/original-0255-feedback.json。"
   ],
   "priorityClientFollowUps": [
     {
@@ -700,7 +701,9 @@
         "App/Views/BoardSceneFeedbackView.swift",
         "App/Views/DirectToolRevealView.swift",
         "Validation/original-0254-feedback.json",
-        "Docs/original-feel-0254/manifest.json"
+        "Docs/original-feel-0254/manifest.json",
+        "Validation/original-0255-feedback.json",
+        "Docs/original-feel-0255/manifest.json"
       ]
     },
     {
@@ -1194,7 +1197,9 @@
         "Validation/original-0253-feedback.json",
         "Docs/original-feel-0253/manifest.json",
         "Validation/original-0254-feedback.json",
-        "Docs/original-feel-0254/manifest.json"
+        "Docs/original-feel-0254/manifest.json",
+        "Validation/original-0255-feedback.json",
+        "Docs/original-feel-0255/manifest.json"
       ],
       "gapHistory": [
         {
@@ -2501,8 +2506,8 @@
       ]
     }
   ],
-  "currentBuild": "0.2.54 (57)",
-  "currentVerification": "Validation/original-0254-feedback.json",
+  "currentBuild": "0.2.55 (58)",
+  "currentVerification": "Validation/original-0255-feedback.json",
   "latestVerifiedPhoneBuild": "0.2.29 (32)",
-  "currentStatusSummary": "0.2.54修复一命提醒抢占错误解释；44项相关App经修正1项旧时序断言后通过，17e2项UI通过。83/88正式状态保持。"
+  "currentStatusSummary": "0.2.55使冲突线避开可见角色和X，标记增删同步保护；最终50项相关App/2项UI通过，83/88正式状态保持。"
 }

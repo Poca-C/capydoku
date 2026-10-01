@@ -16,6 +16,117 @@ import CapydokuCore
 }
 
 final class GameHUDVisualTests: XCTestCase {
+    @MainActor func testActualRootConflictLinksPreserveFacesIncludingUnrelatedVisibleAnimal() async throws {
+        let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
+        for (level, width, reduced, variant) in [(6, 402, false, "single"), (63, 320, false, "single"),
+                (63, 320, true, "single"), (101, 320, false, "single"),
+                (6, 320, false, "successive"), (63, 320, false, "marked"), (63, 320, false, "mark-later")] {
+            let directory = FileManager.default.temporaryDirectory.appendingPathComponent("conflict-face-" + UUID().uuidString)
+            let model = AppModel(saveDirectory: directory, runsTimer: false, feedbackEnabled: false)
+            model.progress.tutorialCompleted = true; model.start(level: level)
+            let initial = try XCTUnwrap(model.session)
+            let found: [Int] = level == 63 ? (variant.hasPrefix("mark") ? [62] : [62, 51]) : level == 101 ? Array(initial.puzzle.solution.dropLast())
+                : [try XCTUnwrap(initial.puzzle.solution.first)]
+            var candidate = level == 63 ? 40 : try XCTUnwrap(initial.puzzle.regions.indices.first {
+                $0 / initial.puzzle.size == found[0] / initial.puzzle.size && !initial.puzzle.solution.contains($0)
+            })
+            XCTAssertTrue(found.allSatisfy { initial.puzzle.solution.contains($0) })
+            for index in found { model.submit(index) }
+            if variant == "marked" { model.toggle(51) }
+            let previous = scene.windows.first(where: \.isKeyWindow), window = UIWindow(windowScene: scene)
+            window.frame = CGRect(x: 0, y: 0, width: width, height: width == 320 ? 568 : 874)
+            let host = UIHostingController(rootView: RootView(reduceMotionOverride: reduced).environmentObject(model)
+                .environment(\.scenePhase, .active))
+            window.rootViewController = host; window.makeKeyAndVisible()
+            defer {
+                window.isHidden = true; window.rootViewController = nil; previous?.makeKeyAndVisible()
+                model.flushPendingSaves(); try? FileManager.default.removeItem(at: directory)
+            }
+            try await Task.sleep(nanoseconds: 620_000_000)
+            let board = try XCTUnwrap(descendants(host.view).compactMap { $0 as? PuzzleGridUIView }.first)
+            XCTAssertTrue(board.activate(index: candidate, submit: true))
+            if variant == "successive" {
+                try await Task.sleep(nanoseconds: 120_000_000)
+                candidate = 3
+                XCTAssertFalse(initial.puzzle.solution.contains(candidate))
+                XCTAssertTrue(board.activate(index: candidate, submit: true))
+            }
+            var originalExplanation: BoardConflictFeedbackView?
+            if variant == "mark-later" {
+                try await Task.sleep(nanoseconds: 100_000_000)
+                originalExplanation = try XCTUnwrap(descendants(board).compactMap { $0 as? BoardConflictFeedbackView }.first)
+                XCTAssertTrue(board.activate(index: 51, submit: false))
+            }
+            let committed = try XCTUnwrap(model.session)
+            try await Task.sleep(nanoseconds: 300_000_000)
+            let effect = try XCTUnwrap(descendants(board).compactMap { $0 as? BoardConflictFeedbackView }.first)
+            if let originalExplanation { XCTAssertTrue(effect === originalExplanation) }
+            if level == 63 {
+                XCTAssertEqual(effect.conflicts.map(\.otherCell), [62], "The animal crossed by the line is not a conflict partner.")
+                XCTAssertEqual(effect.conflicts.first?.kinds, [.region])
+            }
+            let label = "conflict-faces-L\(level)-\(width)-reduced-\(reduced)-\(variant)"
+            let screenshot = UIGraphicsImageRenderer(bounds: window.bounds).image { _ in
+                window.drawHierarchy(in: window.bounds, afterScreenUpdates: false)
+            }
+            let attachment = XCTAttachment(image: screenshot); attachment.name = label
+            attachment.lifetime = .keepAlways; add(attachment)
+            // Pixel comparison uses a static copy of this actual explanation's
+            // current model layers after the natural screenshot. Toggle only
+            // the two connector strokes: region tint/rings must remain equal.
+            effect.layer.removeAllAnimations(); effect.layer.opacity = 1
+            let lines = (effect.layer.sublayers ?? []).filter { $0.name?.hasPrefix("conflict-link") == true }
+            XCTAssertEqual(lines.count, 2)
+            let format = UIGraphicsImageRendererFormat(); format.scale = 3
+            let renderer = UIGraphicsImageRenderer(bounds: effect.bounds, format: format)
+            let linked = try XCTUnwrap(renderer.image { effect.layer.render(in: $0.cgContext) }.cgImage)
+            lines.forEach { $0.isHidden = true }
+            let plain = try XCTUnwrap(renderer.image { effect.layer.render(in: $0.cgContext) }.cgImage)
+            func bytes(_ image: CGImage) -> [UInt8] {
+                var result = [UInt8](repeating: 0, count: image.width * image.height * 4)
+                result.withUnsafeMutableBytes { buffer in
+                    let context = CGContext(data: buffer.baseAddress, width: image.width, height: image.height,
+                        bitsPerComponent: 8, bytesPerRow: image.width * 4, space: CGColorSpaceCreateDeviceRGB(),
+                        bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+                    context.draw(image, in: CGRect(x: 0, y: 0, width: image.width, height: image.height))
+                }
+                return result
+            }
+            XCTAssertGreaterThan(zip(bytes(linked), bytes(plain)).filter { abs(Int($0) - Int($1)) > 2 }.count, 0,
+                "Connections must remain visible between cells; hiding all strokes is not a fix.")
+            var protectedRects = [Int: CGRect]()
+            for index in committed.found.union(committed.marks).union(committed.errors).sorted() {
+                let cell = try XCTUnwrap(board.accessibilityElements?[index] as? UIAccessibilityElement).accessibilityFrameInContainerSpace
+                // The actual artwork is inset inside the painted tile, which
+                // itself excludes the grid gap. Compare fully covered pixels,
+                // without expanding the crop into the unrelated gutter.
+                let gap = max(1.1, min(2, cell.width * 0.028))
+                let tile = cell.insetBy(dx: gap, dy: gap)
+                let scaled = tile.insetBy(dx: tile.width * 0.07, dy: tile.height * 0.07)
+                    .applying(CGAffineTransform(scaleX: 3, y: 3))
+                let portrait = CGRect(x: ceil(scaled.minX), y: ceil(scaled.minY),
+                    width: floor(scaled.maxX) - ceil(scaled.minX), height: floor(scaled.maxY) - ceil(scaled.minY))
+                protectedRects[index] = portrait
+                let a = try XCTUnwrap(linked.cropping(to: portrait)), b = try XCTUnwrap(plain.cropping(to: portrait))
+                XCTAssertEqual(zip(bytes(a), bytes(b)).filter { abs(Int($0) - Int($1)) > 2 }.count, 0,
+                    "\(label) cell\(index): connector ink must not cross a visible face, mark or error.")
+            }
+            if variant == "mark-later" {
+                lines.forEach { $0.isHidden = false }
+                XCTAssertTrue(board.activate(index: 51, submit: false))
+                try await Task.sleep(nanoseconds: 80_000_000)
+                XCTAssertTrue(descendants(board).contains { $0 === effect }, "A new mark must not restart the explanation.")
+                let unmarked = try XCTUnwrap(renderer.image { effect.layer.render(in: $0.cgContext) }.cgImage)
+                let crop = try XCTUnwrap(protectedRects[51])
+                let a = try XCTUnwrap(unmarked.cropping(to: crop)), b = try XCTUnwrap(plain.cropping(to: crop))
+                XCTAssertGreaterThan(zip(bytes(a), bytes(b)).filter { abs(Int($0) - Int($1)) > 2 }.count, 0,
+                    "An erased mark must not leave a stale hole in the connector.")
+                var expected = committed; expected.toggleMark(at: 51)
+                XCTAssertEqual(model.session, expected)
+            } else { XCTAssertEqual(model.session, committed) }
+        }
+    }
+
     @MainActor func testActualRootContinuingBeforeLastLifeReminderCancelsOldFocus() async throws {
         let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
         for action in ["correct", "mark", "lose", "cover", "replace"] {

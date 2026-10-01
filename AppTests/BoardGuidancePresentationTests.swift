@@ -79,6 +79,29 @@ import CapydokuCore
 }
 
 final class BoardGuidancePresentationTests: XCTestCase {
+    @MainActor func testNewMistakeRetiresEarlierMarkErasureIncludingCoalescedChanges() throws {
+        for reduced in [false, true] { for coalesced in [false, true] {
+            let rig = try GuidanceRig(); defer { rig.close() }
+            rig.reduceMotion = reduced; rig.refresh()
+            rig.board.activate(index: 1, submit: true)
+            rig.board.activate(index: 2, submit: false)
+            if coalesced {
+                rig.session.toggleMark(at: 2); _ = rig.session.submit(cell: 3); rig.refresh()
+            } else {
+                rig.board.activate(index: 2, submit: false)
+                XCTAssertTrue(rig.board.subviews.flatMap(\.subviews).contains {
+                    ($0 as? BoardCellFeedbackView)?.kind == .markRemoved
+                })
+                rig.board.activate(index: 3, submit: true)
+            }
+            XCTAssertFalse(rig.board.subviews.flatMap(\.subviews).contains {
+                ($0 as? BoardCellFeedbackView)?.kind == .markRemoved
+            }, "The newer mistake owns the scene; no erased X remains beneath its connection.")
+            XCTAssertFalse(rig.session.marks.contains(2)); XCTAssertEqual(rig.session.errors, [3])
+            XCTAssertEqual(rig.session.lives, 2); XCTAssertEqual(rig.conflicts.first?.candidate, 3)
+        } }
+    }
+
     @MainActor private func animations(_ layer: CALayer) -> [CAAnimation] {
         (layer.animationKeys() ?? []).compactMap { layer.animation(forKey: $0) }
             + (layer.sublayers ?? []).flatMap(animations)

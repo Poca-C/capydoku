@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "kind": "scoped_delta_to_88_item_audit",
+  "baseAudit": "Validation/checklist-0221-audit.json",
+  "sourceChecklist": "Validation/checklist-source.json",
+  "sourceCaseCount": 88,
+  "formalSignOff": false,
+  "full88Reexecuted": false,
+  "overallCountsRecomputed": false,
+  "build": "0.2.55 (58)",
+  "status": "scoped_conflict_ink_separation_verified_simulator_only",
+  "previousDelta": "Validation/checklist-0254-feedback-delta.json",
+  "scopedRows": 2,
+  "rows": [
+    {
+      "id": "14-03",
+      "title": "游戏奖励动效与降级",
+      "originalAcceptanceText": "操作  触发正确、错误、Combo、通关及签到动效。\n通过  与业务状态同步，不阻碍后续操作；轻量特效在低性能设备可降级。",
+      "originalRequirementIDs": [
+        "ART-02"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "冲突线避开可见角色/标记/错误，标记变化原位同步；最终50项相关App与2项UI通过。非全量/真机或参考品质验收。",
+      "evidence": [
+        "Validation/original-0255-feedback.json",
+        "Docs/original-feel-0255/manifest.json",
+        "Validation/test-runs/original-0255-app-final-v2-summary.json",
+        "Validation/test-runs/original-0255-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "16-03",
+      "title": "最终构建全部问题复验",
+      "originalAcceptanceText": "操作  在最终构建复测所有失败用例及受影响流程。\n通过  每个Bug均有关联修复版本、复测结论和证据，旧版本通过不能代替复测。",
+      "originalRequirementIDs": [
+        "TECH-07"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "冲突线避开可见角色/标记/错误，标记变化原位同步；最终50项相关App与2项UI通过。非全量/真机或参考品质验收。",
+      "evidence": [
+        "Validation/original-0255-feedback.json",
+        "Docs/original-feel-0255/manifest.json",
+        "Validation/test-runs/original-0255-app-final-v2-summary.json",
+        "Validation/test-runs/original-0255-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    }
+  ],
+  "verificationSnapshot": {
+    "app": {
+      "status": "Passed",
+      "passed": 50,
+      "failed": 0,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0255-app-final-v2-summary.json",
+      "log": "Validation/test-runs/original-0255-app-final-v2.log",
+      "bundle": "Validation/test-runs/original-0255-app-final-v2.xcresult"
+    },
+    "ui": {
+      "status": "Passed",
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0255-17e-ui-summary.json",
+      "log": "Validation/test-runs/original-0255-17e-ui.log",
+      "bundle": "Validation/test-runs/original-0255-17e-ui.xcresult"
+    }
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  }
+}
