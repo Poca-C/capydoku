@@ -1,0 +1,276 @@
+{
+  "build": "0.2.27 (30)",
+  "date": "2026-10-01",
+  "status": "verified_scoped_demo_optimization_not_formal_acceptance",
+  "authority": "Original Word and explicit Chinese-market amendment remain authoritative. Existing user authorization permits local reference-audio testing only; no GitHub publication, packaging or distribution performed.",
+  "sourceParagraphs": [
+    127,
+    130,
+    133,
+    134,
+    241,
+    249,
+    303,
+    304,
+    305,
+    306,
+    314,
+    327,
+    328,
+    329,
+    330,
+    331,
+    332,
+    333,
+    334,
+    335,
+    336,
+    337,
+    338,
+    339,
+    341,
+    342,
+    343,
+    344,
+    346,
+    347,
+    348,
+    349,
+    412,
+    414,
+    416
+  ],
+  "changes": [
+    {
+      "area": "Board refresh work",
+      "implementation": "PuzzleGridUIView always refreshes action callbacks, but unchanged/HUD-only configure calls skip cell accessibility rebuild and display invalidation. Actual found/mark/error/preview/tutorial-target changes update affected cells’ spoken state and still request board redraw; language/lock/board replacement refresh full spoken state; geometry only updates when its rectangle changes.",
+      "evidence": [
+        "App/Views/PuzzleBoardView.swift",
+        "AppTests/BoardRefreshEfficiencyTests.swift"
+      ]
+    },
+    {
+      "area": "Expression preparation",
+      "implementation": "Validate the exact bundled sheet alpha plane with SHA-256 and native Accelerate extraction, then use known transparent bounds. RGB color conversion no longer invalidates geometry. Changed sheets safely use the old scanner. All four output images remain byte-for-byte pixel-identical to the scanning path, with zero alpha scans for the bundled sheet.",
+      "evidence": [
+        "App/Views/CapyExpressionArtwork.swift",
+        "AppTests/CapyExpressionTests.swift"
+      ]
+    },
+    {
+      "area": "Local audio concurrency and swipe release",
+      "implementation": "Optional explicit concurrencyGroup supports shared effect channels while omitted groups retain per-event limits. Local Nice/Great/Excellent share one stop-oldest voice channel. A normal finishCurrent lift preserves active natural clip endings and can play at most one already-due cue from the same callback; future queue entries are discarded. Cancellation, background/lock/mute and a new gesture clear pending/old cues immediately.",
+      "evidence": [
+        "App/Services/FeedbackPlayer.swift",
+        "App/Services/ReferenceAudioPolicy.swift",
+        "AppTests/AudioPolicyTests.swift"
+      ]
+    }
+  ],
+  "targetedTests": {
+    "status": "passed",
+    "device": "iPhone 17 Pro simulator / iOS26.5",
+    "passed": 47,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 3.4,
+    "groups": {
+      "BoardRefreshEfficiencyTests": 5,
+      "CapyExpressionTests": 9,
+      "AudioPolicyTests": 26,
+      "LocalTestAudioImportTests": 7
+    },
+    "newTests": 21,
+    "bundle": "Validation/test-runs/original-0227-targeted-r2.xcresult",
+    "log": "Validation/test-runs/original-0227-targeted-r2.log"
+  },
+  "applicationTests": {
+    "status": "passed",
+    "build": "0.2.27 (30)",
+    "device": "iPhone 17 Pro simulator / iOS26.5",
+    "passed": 441,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 163.417,
+    "bundle": "Validation/test-runs/original-0227-app.xcresult",
+    "log": "Validation/test-runs/original-0227-app.log",
+    "scope": "Full441 CapydokuAppTests, including21 new cases; no exclusions.",
+    "summary": "Validation/test-runs/original-0227-app-summary.json"
+  },
+  "uiTests": {
+    "status": "passed",
+    "build": "0.2.27 (30)",
+    "device": "iPhone 17e simulator / iOS26.5",
+    "passed": 9,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 240.96,
+    "expectedCases": 9,
+    "bundle": "Validation/test-runs/original-0227-17e-ui.xcresult",
+    "log": "Validation/test-runs/original-0227-17e-ui.log",
+    "scope": "Nine selected actual UI cases, no skips/repeats: tutorial; gesture/tool recovery; solve/advance; loss/revive; last-life restore; mixed gestures; leave-board swipe; modal accessibility;4/6/8/10 boards. Fixture boundaries remain those of the individual tests, not an all150-level playthrough.",
+    "suiteSecondsIncludingOverhead": 240.97,
+    "summary": "Validation/test-runs/original-0227-17e-ui-summary.json",
+    "repeatedTestAction": false,
+    "cases": [
+      "CapydokuUITests.CapydokuUITests testGuidedTutorialCoversRulesTapUndoBothSwipesAndFind",
+      "CapydokuUITests.CapydokuUITests testLastLifeSpotlightDismissalDoesNotSpendLifeOrMarkAndColdRestoreDoesNotReplayIt",
+      "CapydokuUITests.CapydokuUITests testLoseAndSimulatedRevivePreservesBoard",
+      "CapydokuUITests.CapydokuUITests testSolveEntirePuzzleAndAdvance",
+      "CapydokuUITests.CapydokuUITests testToolsResumeAfterNativeTapDoubleTapAndPanRecognizersFinish",
+      "CapydokuUITests.HardeningUITests testMixedBackToBackGesturesNeverRepeatDamageOrScore",
+      "CapydokuUITests.HardeningUITests testSwipeStopsWhenFingerLeavesBoard",
+      "CapydokuUITests.OriginalReferenceUITests testAllFourBoardSizesKeepNavigationRulesAndToolsInOrder",
+      "CapydokuUITests.OriginalReferenceUITests testModalControlsExcludeBackgroundAndReturnToTheSameBoard"
+    ]
+  },
+  "diagnosticEvidence": {
+    "report": "Validation/rendering-efficiency-0227.json",
+    "expressionPreparation": {
+      "samplesPerPath": 8,
+      "referenceMedianMs": 104.27520831581205,
+      "optimizedMedianMs": 14.977145823650062,
+      "referenceP95Ms": 137.81774998642504,
+      "optimizedP95Ms": 15.597708290442824,
+      "boundary": "Fresh normalization caches in alternating order from warm UIImage; includes alpha validation, not cold decode/physicalFPS."
+    },
+    "boardRefresh": {
+      "boardSize": 10,
+      "samplesPerCase": 200,
+      "unchangedMedianMs": 0.003375,
+      "unchangedP95Ms": 0.004125,
+      "singleCellMedianMs": 0.036917,
+      "singleCellP95Ms": 0.039291,
+      "unchangedAccessibilityUpdates": 0,
+      "unchangedDisplayRequests": 0,
+      "singleCellTotalUpdates": 200,
+      "boundary": "Actual UIView configure without display commit; no measured old-code timing baseline or physical frame claim."
+    }
+  },
+  "baselineAndInitialFailures": [
+    {
+      "area": "Audio baseline",
+      "passed": 19,
+      "failed": 0,
+      "log": "Validation/test-runs/original-0227-audio-baseline.log",
+      "bundle": "Validation/test-runs/original-0227-audio-baseline.xcresult",
+      "meaning": "Diagnostic tests passed while exposing undesirable current behavior: three concurrent Combo voices, natural182ms swipe clips cut at normal lift, and zero clips for accepted marks sharing the end callback. Passing diagnostics were not acceptable-experience sign-off.",
+      "audioOutput": "Controlled handles use real file durations; no device auditory A/B."
+    },
+    {
+      "area": "Initial rendering targeted run",
+      "cases": 14,
+      "failedCases": 2,
+      "assertionFailures": 9,
+      "log": "Validation/test-runs/original-0227-rendering-targeted.log",
+      "bundle": "Validation/test-runs/original-0227-rendering-targeted.xcresult",
+      "cause": "Full RGBA hash differed after asset compilation/color conversion, so safe fallback preserved pixels but did not remove alpha scans. Fixed alpha-only validation using native extraction.",
+      "finalEvidence": "Validation/test-runs/original-0227-targeted-r2.xcresult"
+    }
+  ],
+  "audio": {
+    "files": 9,
+    "wavBytesChanged": false,
+    "localOnlyGitIgnored": true,
+    "formalManifest": "Resources/audio-manifest.json",
+    "referenceVerified": false,
+    "formalClipCount": 0,
+    "localPolicy": {
+      "comboChannel": "local-combo-voice",
+      "maximumVoices": 1,
+      "overflow": "stopOldest",
+      "swipeEnd": "finishCurrent",
+      "swipeCancel": "immediately",
+      "maximumDueCueOnNormalLift": 1
+    },
+    "pythonIsolation": {
+      "status": "passed",
+      "passed": 8,
+      "failed": 0,
+      "log": "Validation/test-runs/original-0227-audio-python.log"
+    },
+    "releaseResourceExclusion": {
+      "status": "passed",
+      "report": "Validation/test-runs/original-0227-audio-release-inventory.json",
+      "localFiles": 0,
+      "formalManifestEmpty": true,
+      "referenceVerified": false
+    },
+    "auditoryAB": "not_performed",
+    "sourceEvidence": "Validation/meowdoku-audio-test-0226.json",
+    "currentBuildInventories": {
+      "debugSimulator": "Validation/test-runs/original-0227-audio-debug-inventory.json",
+      "debugPhysical": "Validation/test-runs/original-0227-audio-physical-inventory.json",
+      "release": "Validation/test-runs/original-0227-audio-release-inventory.json",
+      "allPassed": true,
+      "localWAVsInDebug": 9,
+      "scope": "This round rebuilt Debug simulator/phone and unsigned Release. Previous six-artifact matrix remains0.2.26 history; no new archive or distribution upload."
+    }
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "evidence": "Validation/test-runs/original-0224-core.log",
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "referenceObservation": {
+    "newSuccessfulMeowdokuPlaytest": false,
+    "priorEvidence": "Validation/meowdoku-playtest-comparison-0223.json"
+  },
+  "physicalUpdate": {
+    "status": "installed_queried_and_automatically_launched",
+    "installedThisRound": true,
+    "verifiedVersion": "0.2.27 (30)",
+    "strictSignaturePassed": true,
+    "automatedLaunchSucceeded": true,
+    "dataScope": "Snapshots immediately before and after in-place update, before requested launch.",
+    "observedFilesIdentical": 8,
+    "historicalEventsUnchanged": 194,
+    "rewardEntriesUnchanged": 24,
+    "primaryAndBackupChecksumsValid": 4,
+    "sessionCompletedLevelsSettingsCheckInIdentityPreserved": true,
+    "resetUninstallOrRollback": false,
+    "report": "Validation/original-0227-physical-install.json",
+    "summary": "0.2.27（30）已通过新签名构建、严格验签、无线覆盖安装、版本查询及自动启动。请求启动前取得的安装前后8份文件逐字节一致，194条历史事件、24条奖励、已完成关卡、当前对局、设置、签到与身份保持，4份主备校验有效；无卸载、重置或恢复旧档。真机声音/触觉与完整手感未验。"
+  },
+  "remaining": [
+    "模拟器暖图准备和UIView配置耗时只代表列明工作，不是冷启动解码、帧提交、真机帧率或F7正式性能验收。",
+    "本地原声9个WAV保持原哈希、Git忽略及正式referenceVerified=false；并发/滑动策略仍是显式Demo配置，未做实际听觉A/B或本轮成功的新Meowdoku试玩。",
+    "待机侧看、正确小爱心/区域彩粒和三姿态衔接自然度仍需继续打磨，不能把主要方向已实现写成细节全部对齐。"
+  ],
+  "formalSignOff": false,
+  "builds": {
+    "signedPhysicalDebug": {
+      "status": "passed",
+      "log": "Validation/test-runs/original-0227-physical-build.log",
+      "strictSignaturePassed": true,
+      "signatureLog": "Validation/test-runs/original-0227-codesign.log"
+    },
+    "unsignedRelease": {
+      "status": "passed",
+      "log": "Validation/test-runs/original-0227-release-build.log"
+    }
+  },
+  "visualEvidence": {
+    "status": "reviewed_passed_scoped_static_rendering",
+    "manifest": "Docs/original-feel-0227/manifest.json",
+    "imagesReviewed": 6,
+    "scope": "One four-expression contact sheet, two current-L6 Root direct/victory frames, two synthetic4x4 conflict/tutorial frames and one current-L51 early entrance frame. Static rendering only; L51 is not a settled board or complete playthrough."
+  },
+  "remainingObservedPolish": {
+    "sourceObservations": [
+      "OBS-02",
+      "OBS-03",
+      "OBS-06"
+    ],
+    "sourceReport": "Validation/meowdoku-playtest-comparison-0223.json",
+    "items": [
+      "待机侧看尚未补齐；目前已有眨眼和状态表情。",
+      "正确反馈的小爱心与区域对应彩粒仍为简化表现。",
+      "已有三姿态全身动作，衔接自然度和精确节奏仍需对照调整。"
+    ],
+    "boundary": "Main observed directions being implemented does not close every sampled detail. No new successful reference playtest or live auditory A/B this round."
+  }
+}

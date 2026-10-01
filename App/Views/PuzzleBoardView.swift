@@ -113,6 +113,16 @@ private final class BoardActivityPanRecognizer: UIPanGestureRecognizer {
 
 /// UIKit owns all three recognizers, so a double tap can never leak a single-tap X.
 final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
+    /// Read-only work counters for hosted efficiency checks, never gameplay state.
+    struct RefreshDiagnostics: Equatable {
+        var configurations = 0
+        var accessibilityPasses = 0
+        var updatedAccessibilityCells = 0
+        var customActionsCreated = 0
+        var displayInvalidations = 0
+        var geometryCellUpdates = 0
+    }
+    private(set) var refreshDiagnostics = RefreshDiagnostics()
     private var size = 4
     private var regions: [Int] = []
     private var found = Set<Int>()
@@ -138,6 +148,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     private var inputRecognizers: [UIGestureRecognizer] = []
     private var swipeFeedbackActive = false
     private var cells: [PuzzleCellAccessibilityElement] = []
+    private var accessibilityGeometry: CGRect?
     private enum DragAxis { case pending, horizontal, vertical, invalid }
     private var dragAxis: DragAxis = .pending
     private var dragStart: Int?
@@ -221,7 +232,15 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
                    onFoundFeedback: @escaping (Int, CGPoint) -> Void = { _, _ in },
                    onConflictFeedback: @escaping ([VisibleConflictKind]) -> Void = { _ in },
                    onScoreFeedback: @escaping (Int, CGPoint) -> Void = { _, _ in }) {
+        refreshDiagnostics.configurations += 1
         let sameBoard = self.size == size && self.regions == regions && self.sessionID == sessionID
+        let fullAccessibilityRefresh = !hasConfigured || !sameBoard || self.language != language || self.locked != locked
+        let changedAccessibilityCells = found.symmetricDifference(self.found)
+            .union(marks.symmetricDifference(self.marks)).union(errors.symmetricDifference(self.errors))
+            .union(preview.symmetricDifference(self.preview)).union(tutorialTargets.symmetricDifference(self.tutorialTargets))
+        let refreshAccessibilityVisibility = self.hideAccessibility != hideAccessibility
+        let redrawBoard = !hasConfigured || !sameBoard || self.found != found || self.marks != marks
+            || self.errors != errors || self.preview != preview || self.tutorialTargets != tutorialTargets
         let addedFound = found.subtracting(self.found)
         let addedErrors = errors.subtracting(self.errors)
         let removedErrors = self.errors.subtracting(errors)
@@ -302,8 +321,12 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         if clearedConflict { self.onConflictFeedback?([]) }
         if let pressed = pressFeedback?.cellIndex, !canPress(pressed) { endCellPress() }
         updateInputAvailability()
-        refreshAccessibility()
-        setNeedsDisplay()
+        // Clock/HUD/closure updates do not change any board pixels or spoken
+        // cell state. Keep callbacks fresh without rebuilding every cell action.
+        if fullAccessibilityRefresh || refreshAccessibilityVisibility || !changedAccessibilityCells.isEmpty {
+            refreshAccessibility(indices: fullAccessibilityRefresh ? nil : changedAccessibilityCells)
+        }
+        if redrawBoard { refreshDiagnostics.displayInvalidations += 1; setNeedsDisplay() }
         updateTutorialGuide()
         if hasConfigured, sameBoard, canPresentEffects {
             for index in addedFound.sorted() where (0..<(size * size)).contains(index) {
@@ -561,10 +584,15 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         updateTutorialGuide()
         updateIdleBlinkScheduling()
         presentPendingEntranceIfPossible()
-        for (index, element) in cells.enumerated() { element.accessibilityFrameInContainerSpace = rect(for: index) }
+        if accessibilityGeometry != boardRect {
+            for (index, element) in cells.enumerated() { element.accessibilityFrameInContainerSpace = rect(for: index) }
+            refreshDiagnostics.geometryCellUpdates += cells.count
+            accessibilityGeometry = boardRect
+        }
     }
 
-    private func refreshAccessibility() {
+    private func refreshAccessibility(indices: Set<Int>? = nil) {
+        refreshDiagnostics.accessibilityPasses += 1
         if cells.count != size * size {
             cells = (0..<(size * size)).map { index in
                 let element = PuzzleCellAccessibilityElement(accessibilityContainer: self)
@@ -577,7 +605,10 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         // SwiftUI's ancestor accessibilityHidden does not reliably hide custom
         // UIAccessibilityElement arrays owned by UIViewRepresentable children.
         accessibilityElements = hideAccessibility ? [] : cells
-        for (index, element) in cells.enumerated() {
+        let indicesToUpdate = indices?.sorted() ?? Array(cells.indices)
+        for index in indicesToUpdate where cells.indices.contains(index) {
+            let element = cells[index]
+            refreshDiagnostics.updatedAccessibilityCells += 1
             let state = found.contains(index) ? "found" : errors.contains(index) ? "error" : marks.contains(index) ? "marked" : "empty"
             let position = language.text("Row \(index / size + 1), column \(index % size + 1), region \(region(index) + 1)")
             // Keep the existing machine-readable state used by UI tests. The
@@ -591,9 +622,11 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
                 UIAccessibilityCustomAction(name: language.text("Confirm capybara"), target: element, selector: #selector(PuzzleCellAccessibilityElement.submit)),
                 UIAccessibilityCustomAction(name: language.text("Toggle exclusion mark"), target: element, selector: #selector(PuzzleCellAccessibilityElement.toggle))
             ]
+            if !locked && !found.contains(index) { refreshDiagnostics.customActionsCreated += 2 }
             element.accessibilityTraits = locked || found.contains(index) ? [.button, .notEnabled] : .button
             element.accessibilityFrameInContainerSpace = rect(for: index)
         }
+        if indices == nil { accessibilityGeometry = boardRect }
     }
 
     @discardableResult func activate(index: Int, submit: Bool) -> Bool {

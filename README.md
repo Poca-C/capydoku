@@ -1,6 +1,6 @@
 # Capydoku · 原文对齐 Demo
 
-原生 Swift / SwiftUI iPhone 应用，默认简体中文、可在设置中切换 English、竖屏，最低编译目标 iOS 15。当前版本 **0.2.26（29）**，可内部试玩，尚未达到正式验收或上架状态。
+原生 Swift / SwiftUI iPhone 应用，默认简体中文、可在设置中切换 English、竖屏，最低编译目标 iOS 15。当前版本 **0.2.27（30）**，可内部试玩，尚未达到正式验收或上架状态。
 
 ## 唯一需求基准
 
@@ -18,7 +18,15 @@
 
 下列主页面图册保留0.2.1的实测版本；0.2.4新增操作反馈，分时组件截图见 Docs/original-feedback/manifest.json，不能用旧图替代新构建验收：[首页](Docs/original-reference/01-home.png) · [游戏](Docs/original-reference/04-gameplay.png) · [提示](Docs/original-reference/05-hint.png) · [设置](Docs/original-reference/02-settings.png) · [签到](Docs/original-reference/03-check-in.png)。
 
-无需第三方依赖或真实广告 SDK。模拟器运行/测试须保留本地签名（CODE_SIGNING_ALLOWED=YES），工程仅为模拟器配置钥匙串权限；禁用签名只能验证编译，不能验证真实钥匙串。0.2.26（29）最终修复包已无线覆盖安装，并查到最终安装路径中的运行进程。首次自动启动锁屏失败保留；升级期间新试玩进度继续保留，历史事件、奖励、设置和签到核验见[真机记录](Validation/original-0226-physical-install.json)。声音听测及完整真机手感仍待验。
+无需第三方依赖或真实广告 SDK。模拟器运行/测试须保留本地签名（CODE_SIGNING_ALLOWED=YES），工程仅为模拟器配置钥匙串权限；禁用签名只能验证编译，不能验证真实钥匙串。0.2.27（30）已无线覆盖安装并自动启动。请求启动前的安装前后8份文件逐字节一致，原对局、194条事件、24条奖励及设置/签到/身份保持，见[真机记录](Validation/original-0227-physical-install.json)。声音听测及完整真机手感仍待验。
+
+## 0.2.27 棋盘刷新与声音衔接
+
+- 棋盘状态不变时跳过重绘请求和读屏动作重建；有变化时只刷新相关格子的读屏信息，并照常重绘棋盘。点击回调、锁定、语言和尺寸变化仍即时同步。表情透明边界增加校验缓存，四种表情输出像素保持完全一致。
+- 本地测试Combo语音共用单通道，避免Nice/Great/Excellent同时叠播。正常滑动抬手保留已开始短音的自然结尾，并处理同回调结束时的到期提示；取消或新手势立即清理，未来队列不会拖尾。
+- 441项全量App、17e九项UI、47项专项与8项音频隔离脚本测试通过。模拟器暖图的四表情准备中位数由104.275降至14.977毫秒；10×10棋盘无变化配置不刷新格子或请求重绘。[测量记录](Validation/rendering-efficiency-0227.json)注明暖图与未提交绘制的范围，不代表冷解码或真机帧率。Release测试音频排除已验证；手机已覆盖安装并自动启动，安装阶段存档保持。
+- [6张本轮运行截图](Docs/original-feel-0227/manifest.json)已核对；包含组件、当前第6关及第51关入场早期画面，不代表整段动画流畅度。待机侧看、小爱心/区域彩粒和三姿态衔接仍有简化。
+- 原声仍为同9个本地测试文件，正式清单未确认。详见[本轮记录](Validation/original-0227-feedback.json)与[Checklist增量](Validation/checklist-0227-feedback-delta.json)；177项Core沿用0.2.24，正式状态保持。
 
 ## 0.2.26 角色姿态、结果节奏、签到与原声测试
 

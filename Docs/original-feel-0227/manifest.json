@@ -1,0 +1,61 @@
+{
+  "build": "0.2.27 (30)",
+  "sourceBundle": "Validation/test-runs/original-0227-app.xcresult",
+  "sourceTests": {
+    "passed": 441,
+    "failed": 0,
+    "skipped": 0
+  },
+  "reviewedImages": 6,
+  "reviewScope": "Manual inspection of six actual hosted-test captures. Static samples verify rendering; not full animation smoothness or physical FPS. Full expression pixel equality independently asserted in tests.",
+  "images": [
+    {
+      "file": "conflict-visible-units.png",
+      "sourceTest": "BoardGuidancePresentationTests/testActualHostSamplesTutorialMotionConflictExplanationAndSettledCleanup()",
+      "sourceAttachment": "1F236D04-BB08-4F11-AFE0-D733027DF23E.png",
+      "scope": "Hosted 4x4 fixture component; region, row and adjacency conflict visualization.",
+      "sha256": "41baebf74b06299d96ce270815b1cf78e86bd148fdd74912875cb93c4e45aed9",
+      "visualReview": "passed; no clipping, stale board state, expression displacement or duplicated controls observed in this frame"
+    },
+    {
+      "file": "tutorial-vertical-motion.png",
+      "sourceTest": "BoardGuidancePresentationTests/testActualHostSamplesTutorialMotionConflictExplanationAndSettledCleanup()",
+      "sourceAttachment": "4AE231DF-625F-408D-8C2B-BDDCBFC5BC20.png",
+      "scope": "Hosted 4x4 fixture component; vertical swipe tutorial guide in motion.",
+      "sha256": "57dfd8c9566ff98ccc68bc58476a28dd5b4e2dbe957e365542500000a5bcf7bf",
+      "visualReview": "passed; no clipping, stale board state, expression displacement or duplicated controls observed in this frame"
+    },
+    {
+      "file": "expressions-pixel-identical.png",
+      "sourceTest": "CapyExpressionTests/testBundledExpressionsHaveConsistentVisibleAnchorsAndTransparentCanvas()",
+      "sourceAttachment": "8AE65EAD-D55A-4DD8-BE9B-FFE96E834A7F.png",
+      "scope": "Component contact sheet; same four bundled expressions after optimized preparation.",
+      "sha256": "d24e438c1ca6e26a11d0401888b470508b00058b9994457d6cc15d70e6981e03",
+      "visualReview": "passed; no clipping, stale board state, expression displacement or duplicated controls observed in this frame"
+    },
+    {
+      "file": "current-L6-full-board-victory.png",
+      "sourceTest": "CompletionFeedbackTests/testCurrentPackRootDirectAndCompleteBoardCaptureWithImmediateNextAction()",
+      "sourceAttachment": "749CF3EB-2AE3-4B95-99F0-D7EC38E516FA.png",
+      "scope": "Actual current-pack Level 6 Root, full-board victory and next-level action.",
+      "sha256": "a7b4e88672d77a86e2f222ae64450ac6f75fe22a7354cd724708e11a47ba8d22",
+      "visualReview": "passed; no clipping, stale board state, expression displacement or duplicated controls observed in this frame"
+    },
+    {
+      "file": "current-L6-direct-tool.png",
+      "sourceTest": "CompletionFeedbackTests/testCurrentPackRootDirectAndCompleteBoardCaptureWithImmediateNextAction()",
+      "sourceAttachment": "45B65F28-0D7D-490C-AA17-95F49A64232B.png",
+      "scope": "Actual current-pack Level 6 Root, direct-tool landing and committed score.",
+      "sha256": "8121fa213edc8bedd3b4ea2428c582f171e6b0fd7bcaa83002dc5693ba21f7d3",
+      "visualReview": "passed; no clipping, stale board state, expression displacement or duplicated controls observed in this frame"
+    },
+    {
+      "file": "current-L51-early-entrance.png",
+      "sourceTest": "OriginalRewardVisualTests/testCurrentPackEightByEightProgressLayoutIsCapturedWithoutChangingTheBoard()",
+      "sourceAttachment": "D91047E8-F919-47A4-98AC-6186AD1ADB34.png",
+      "scope": "Actual current-pack Level 51 Root; early staggered entrance, not the settled board.",
+      "sha256": "90af3ca1f9201570489e2d74421811090c18114c6257d9f1f73fe11999f9129d",
+      "visualReview": "passed; no clipping, stale board state, expression displacement or duplicated controls observed in this frame"
+    }
+  ]
+}

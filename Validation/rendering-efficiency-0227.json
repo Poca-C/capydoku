@@ -1,0 +1,67 @@
+{
+  "build": "0.2.27 (30)",
+  "scope": "iPhone 17 Pro / iOS 26.5 Simulator, Debug hosted UIKit tests. Not physical-device frame timing, cold resource decoding, display commit timing or audible latency.",
+  "evidence": "Validation/test-runs/original-0227-targeted-r2.xcresult",
+  "expressionPreparation": {
+    "method": "Actual UIKit normalization of all four expressions from the same bundled image; fresh cache each pass, alternating execution order. Includes the optimized whole-image validation hash. UIImage resource decode is already warm. No hardware frame-rate or audio latency claim.",
+    "optimized": {
+      "medianMilliseconds": 14.977145823650062,
+      "p95Milliseconds": 15.597708290442824,
+      "samplesMilliseconds": [
+        15.282625099644065,
+        15.597708290442824,
+        14.163625193759799,
+        14.67166654765606,
+        15.516166808083653,
+        15.412458451464772,
+        12.556875124573708,
+        12.354000005871058
+      ]
+    },
+    "reference": {
+      "medianMilliseconds": 104.27520831581205,
+      "p95Milliseconds": 137.81774998642504,
+      "samplesMilliseconds": [
+        137.81774998642504,
+        103.25108328834176,
+        102.03862492926419,
+        105.29933334328234,
+        108.82216668687761,
+        109.41233346238732,
+        100.75050010345876,
+        99.9167081899941
+      ]
+    }
+  },
+  "boardRefresh": {
+    "boardSize": 10,
+    "changedAccessibilityCells": 200,
+    "changedDisplayRequests": 200,
+    "sampleCountPerCase": 200,
+    "scope": "Actual PuzzleGridUIView configure on the test host; no display commit; simulator timing is not physical iPhone frame timing",
+    "singleCellMedianMs": 0.036917,
+    "singleCellP95Ms": 0.039291,
+    "unchangedAccessibilityCells": 0,
+    "unchangedDisplayRequests": 0,
+    "unchangedMedianMs": 0.003375,
+    "unchangedP95Ms": 0.004125
+  },
+  "correctness": {
+    "allFourExpressionOutputPixelsMatchPreviousAlgorithm": true,
+    "optimizedAlphaScans": 0,
+    "previousAlphaScans": 4,
+    "replacementAssetFallsBack": true,
+    "unchangedHUDUpdatesTested": 500,
+    "staleCallbacksReplaced": true,
+    "languageLockGeometryTutorialAndVisibilityCovered": true
+  },
+  "initialFailure": {
+    "evidence": "Validation/test-runs/original-0227-rendering-targeted.xcresult",
+    "cause": "Full RGBA hash differed for the compiled asset, so validation safely fell back to the scanner. Output still matched; optimization did not take effect. Replaced RGB-sensitive signature with exact alpha-plane hash and reran all targeted tests.",
+    "passedCases": 12,
+    "failedCases": 2,
+    "assertionFailures": 9
+  },
+  "alphaSignature": "293e8a38ed7e6c9a334045fa2c11e8acebc79ae2c654e35bd1085022eccfbf8c",
+  "primaryAPIDocumentation": "https://developer.apple.com/documentation/accelerate/vimageextractchannel_argb8888(_:_:_:_:)"
+}

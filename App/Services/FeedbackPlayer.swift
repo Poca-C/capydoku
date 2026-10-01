@@ -49,7 +49,13 @@ final class FeedbackPlayer {
             self.key = key; self.clip = clip; self.handle = handle; self.started = started; remainingLoops = clip.loops
         }
     }
-    private struct Pending { let key: String; let swipe: Bool; let task: AudioScheduledTask }
+    private struct Pending {
+        let key: String
+        let swipe: Bool
+        let dueAt: TimeInterval
+        let task: AudioScheduledTask
+        let action: () -> Void
+    }
     private(set) var settings = Settings()
     private(set) var validationErrors: [String] = []
     private(set) var usesLocalTestAudio = false
@@ -236,10 +242,18 @@ final class FeedbackPlayer {
         }
     }
     func endSwipe(cancelled: Bool = false) {
+        let policy = cancelled ? manifest.swipe?.cancel : manifest.swipe?.end
+        // A normal finishCurrent lift may share the same main-queue turn as the
+        // last accepted marks. Complete at most one already-due cue before
+        // discarding the queue; never play future cells early or drain a long tail.
+        if !cancelled, swiping, policy == .finishCurrent,
+           let due = pending.values.filter({ $0.swipe && $0.dueAt <= clock() }).min(by: { $0.dueAt < $1.dueAt }) {
+            due.task.cancel()
+            due.action()
+        }
         swiping = false
         for (id, item) in pending where item.swipe { item.task.cancel(); pending.removeValue(forKey: id) }
         swipeQueue.cancel()
-        let policy = cancelled ? manifest.swipe?.cancel : manifest.swipe?.end
         // An infinite loop cannot finish naturally, so finishCurrent ends it at the next loop boundary.
         for (id, item) in effects where item.key == "swipe_x" {
             if policy == .finishCurrent {
@@ -283,7 +297,8 @@ final class FeedbackPlayer {
     }
     private func scheduleClip(_ key: String, after delay: TimeInterval, swipe: Bool, acceptedIn context: FeedbackEnvironment? = nil) {
         let id = UUID(), triggerContext = context ?? environment
-        let task = schedule(delay) { [weak self] in
+        let dueAt = clock() + max(0, delay)
+        let action = { [weak self] in
             guard let self, self.pending.removeValue(forKey: id) != nil else { return }
             if swipe { self.swipeQueue.consumed() }
             guard let clip = self.playable(key, acceptedIn: triggerContext), (!swipe || self.swiping) else { return }
@@ -292,14 +307,18 @@ final class FeedbackPlayer {
                     item.loopTask?.cancel(); item.naturalFadeTask?.cancel(); item.fadeCompletionTask?.cancel(); return false
                 }; return true
             }
-            let existing = self.effects.filter { $0.value.key == key }
+            let existing = self.effects.filter {
+                if let group = clip.concurrencyGroup { return $0.value.clip.concurrencyGroup == group }
+                return $0.value.key == key
+            }
             if existing.count >= clip.maximumConcurrent {
                 if clip.overflow == .dropNewest { return }
                 if let oldest = existing.min(by: { $0.value.started < $1.value.started }) { self.stop(oldest.value); self.effects.removeValue(forKey: oldest.key) }
             }
             if let playing = self.newPlayer(key: key, clip: clip) { self.effects[id] = playing; self.start(playing, restart: false) }
         }
-        pending[id] = Pending(key: key, swipe: swipe, task: task)
+        let task = schedule(delay, action)
+        pending[id] = Pending(key: key, swipe: swipe, dueAt: dueAt, task: task, action: action)
     }
     private func newPlayer(key: String, clip: AudioClipPolicy) -> Playing? {
         guard trusted, let url = resource(clip.file), let handle = makePlayer(url), handle.duration.isFinite, handle.duration > 0 else { return nil }

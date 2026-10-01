@@ -1,4 +1,5 @@
 import XCTest
+import AVFoundation
 @testable import Capydoku
 
 @MainActor
@@ -19,6 +20,237 @@ private final class AudioTestClock {
             if !job.cancelled { job.action() }
         }
         now = target
+    }
+}
+
+// Integration diagnostics for the user's local, unverified audio experiment.
+// Pre-fix evidence: Validation/test-runs/original-0227-audio-baseline.log
+// and the matching original-0227-audio-baseline.xcresult bundle.
+// These verify the chosen local behavior, not source-game timing acceptance.
+@MainActor
+private final class AudioExperienceDiagnosticRig {
+    let clock = AudioTestClock()
+    var handles: [AudioTestHandle] = []
+    var resources: [String] = []
+    var sessionChanges: [Bool] = []
+    func player() throws -> FeedbackPlayer {
+        guard let local = LocalTestAudioImport.load() else { throw XCTSkip("Local-only audio is deliberately absent from clean clones and distribution builds") }
+        XCTAssertFalse(local.manifest.referenceVerified)
+        let player = FeedbackPlayer(playerFactory: { [unowned self] url in
+            let handle = AudioTestHandle(clock)
+            // Read the real file's duration, but never send audio to an output device.
+            handle.duration = (try? AVAudioPlayer(contentsOf: url).duration) ?? 0
+            handles.append(handle); resources.append(url.lastPathComponent)
+            return handle
+        }, scheduler: clock.schedule, clock: { [unowned self] in clock.now },
+           sessionControl: { [unowned self] active in sessionChanges.append(active); return true }, observeSystem: false)
+        XCTAssertTrue(player.usesLocalTestAudio)
+        XCTAssertTrue(player.validationErrors.isEmpty)
+        XCTAssertFalse(player.hasVerifiedComboConfiguration)
+        player.apply(settings: .init(sound: true, haptic: false, voice: true, music: false))
+        player.setContext(page: .game, level: 1)
+        return player
+    }
+}
+
+extension AudioPolicyTests {
+    private func groupedVoiceManifest() -> ReferenceAudioManifest {
+        var voice = clip(group: .voice)
+        voice.delay = 0; voice.minimumInterval = 0; voice.maximumConcurrent = 1
+        voice.overflow = .stopOldest; voice.concurrencyGroup = "test-combo"
+        return ReferenceAudioManifest(version: "synthetic-group-contract", referenceVerified: true,
+            clips: ["nice": voice, "great": voice, "excellent": voice],
+            combo: .init(cues: [.init(count: 2, event: "nice"), .init(count: 3, event: "great"), .init(count: 4, event: "excellent")], repeatLast: true))
+    }
+    private func finishingSwipeManifest(delay: Double = 0, end: AudioSwipeStop = .finishCurrent,
+                                        cadence: Double = 0.075) -> ReferenceAudioManifest {
+        var effect = clip(); effect.delay = delay; effect.minimumInterval = 0
+        effect.maximumConcurrent = 3; effect.overflow = .stopOldest
+        return ReferenceAudioManifest(version: "synthetic-swipe-contract", referenceVerified: true, clips: ["swipe_x": effect],
+            swipe: .init(mode: .perCell, cadenceSeconds: cadence, maximumQueued: 12, end: end, cancel: .immediately))
+    }
+
+    func testConcurrencyGroupsValidateNamesCategoriesAndSharedLimitPolicy() throws {
+        let valid = groupedVoiceManifest()
+        XCTAssertTrue(valid.validationErrors { _ in true }.isEmpty)
+        for name in ["", "white space", "../other", String(repeating: "x", count: 65), "语音"] {
+            var invalid = valid; invalid.clips["nice"]?.concurrencyGroup = name
+            XCTAssertTrue(invalid.validationErrors { _ in true }.contains { $0.hasPrefix("invalid concurrency group:") })
+        }
+        for mismatch in 0..<3 {
+            var invalid = valid
+            if mismatch == 0 { invalid.clips["nice"]?.group = .sound }
+            if mismatch == 1 { invalid.clips["nice"]?.maximumConcurrent = 2 }
+            if mismatch == 2 { invalid.clips["nice"]?.overflow = .dropNewest }
+            XCTAssertTrue(invalid.validationErrors { _ in true }.contains("inconsistent concurrency group policy: test-combo"))
+        }
+        var music = musicManifest(); music.clips["background_music"]?.concurrencyGroup = "test-music"
+        XCTAssertTrue(music.validationErrors { _ in true }.contains { $0.hasPrefix("music cannot share") })
+        let old = ReferenceAudioManifest(version: "old-contract", referenceVerified: true, clips: ["mark_x": clip()])
+        let decoded = try JSONDecoder().decode(ReferenceAudioManifest.self, from: JSONEncoder().encode(old))
+        XCTAssertNil(decoded.clips["mark_x"]?.concurrencyGroup)
+    }
+
+    @MainActor func testExplicitSharedChannelReplacesOldVoiceWithoutStoppingOtherGroupsOrSound() {
+        var manifest = groupedVoiceManifest()
+        manifest.clips["excellent"]?.concurrencyGroup = "other-voice"
+        var sound = clip(); sound.delay = 0; sound.minimumInterval = 0
+        manifest.clips["double_tap_correct"] = sound
+        let rig = AudioTestRig(), player = rig.player(manifest)
+        player.apply(settings: .init(haptic: false, voice: true)); player.setContext(page: .game)
+        player.play(.combo(2)); rig.clock.advance(0)
+        player.play(.correct); player.play(.combo(4)); rig.clock.advance(0)
+        player.play(.combo(3)); rig.clock.advance(0)
+        XCTAssertEqual(rig.handles.count, 4)
+        XCTAssertEqual(rig.handles.map(\.stopCount), [1, 0, 0, 0])
+        XCTAssertEqual(rig.handles.filter(\.isPlaying).count, 3)
+        player.apply(settings: .init(haptic: false, voice: false))
+        XCTAssertTrue(rig.handles[1].isPlaying)
+        XCTAssertFalse(rig.handles[2].isPlaying); XCTAssertFalse(rig.handles[3].isPlaying)
+        player.setBlocked(.background, active: true)
+        XCTAssertTrue(rig.handles.allSatisfy { !$0.isPlaying })
+    }
+
+    @MainActor func testAbsentConcurrencyGroupKeepsDistinctVoiceKeysIndependent() {
+        var manifest = groupedVoiceManifest()
+        for key in manifest.clips.keys { manifest.clips[key]?.concurrencyGroup = nil }
+        let rig = AudioTestRig(), player = rig.player(manifest)
+        player.apply(settings: .init(haptic: false, voice: true)); player.setContext(page: .game)
+        for count in [2, 3, 4] { player.play(.combo(count)); rig.clock.advance(0) }
+        XCTAssertEqual(rig.handles.filter(\.isPlaying).count, 3)
+        XCTAssertTrue(rig.handles.allSatisfy { $0.stopCount == 0 })
+    }
+
+    @MainActor func testSharedChannelDropNewestAndMutedPendingVoiceHonorExplicitPolicy() {
+        var manifest = groupedVoiceManifest()
+        for key in manifest.clips.keys { manifest.clips[key]?.overflow = .dropNewest }
+        let rig = AudioTestRig(), player = rig.player(manifest)
+        player.apply(settings: .init(haptic: false, voice: true)); player.setContext(page: .game)
+        player.play(.combo(2)); rig.clock.advance(0)
+        player.play(.combo(3)); rig.clock.advance(0)
+        XCTAssertEqual(rig.handles.count, 1); XCTAssertTrue(rig.handles[0].isPlaying)
+        player.play(.combo(4)); player.apply(settings: .init(haptic: false, voice: false)); rig.clock.advance(0)
+        XCTAssertEqual(rig.handles.count, 1); XCTAssertFalse(rig.handles[0].isPlaying)
+    }
+
+    @MainActor func testFinishCurrentSwipeCompletesAtMostOneDueCueAndNeverDrainsFutureQueue() {
+        for cadence in [0.0, 0.075] {
+            let rig = AudioTestRig(), player = rig.player(finishingSwipeManifest(cadence: cadence))
+            player.setContext(page: .game); player.beginSwipe(); player.playMarks(count: 12)
+            player.endSwipe(); XCTAssertEqual(rig.handles.count, 1)
+            XCTAssertEqual(rig.handles[0].stopCount, 0)
+            rig.clock.advance(2)
+            XCTAssertEqual(rig.handles.count, 1, "Normal release cannot drain the 12-cell queue, even if every cue was already due")
+        }
+        let rig = AudioTestRig(), player = rig.player(finishingSwipeManifest(delay: 0.1))
+        player.setContext(page: .game); player.beginSwipe(); player.playMarks(count: 4); player.endSwipe()
+        rig.clock.advance(1); XCTAssertTrue(rig.handles.isEmpty, "Future cues must not be played early")
+    }
+
+    @MainActor func testFinishCurrentSwipeCancellationMuteLockBackgroundAndNewGestureCannotFlushCue() {
+        for stop in 0..<5 {
+            let rig = AudioTestRig(), player = rig.player(finishingSwipeManifest())
+            player.setContext(page: .game); player.beginSwipe(); player.playMarks(count: 3)
+            switch stop {
+            case 0: player.endSwipe(cancelled: true) // Includes leaving the board.
+            case 1: player.apply(settings: .init(sound: false, haptic: false))
+            case 2: player.setBlocked(.inputLocked, active: true)
+            case 3: player.setBlocked(.background, active: true)
+            default: player.beginSwipe()
+            }
+            rig.clock.advance(1); XCTAssertTrue(rig.handles.isEmpty)
+        }
+        let rig = AudioTestRig(), player = rig.player(finishingSwipeManifest())
+        player.setContext(page: .game); player.beginSwipe(); player.playMarks(count: 1); player.endSwipe()
+        XCTAssertEqual(rig.handles.count, 1); XCTAssertTrue(rig.handles[0].isPlaying)
+        player.beginSwipe()
+        XCTAssertFalse(rig.handles[0].isPlaying, "A new gesture stops the previous finishing clip")
+    }
+
+    @MainActor func testImmediateSwipeStillDropsAllPendingCuesOnNormalRelease() {
+        let rig = AudioTestRig(), player = rig.player(finishingSwipeManifest(end: .immediately))
+        player.setContext(page: .game); player.beginSwipe(); player.playMarks(count: 3); player.endSwipe()
+        rig.clock.advance(1); XCTAssertTrue(rig.handles.isEmpty)
+    }
+
+    @MainActor func testExperienceDiagnosticLocalComboSharesOneVoiceChannel() throws {
+        let rig = AudioExperienceDiagnosticRig(), player = try rig.player()
+        player.play(.combo(2)); rig.clock.advance(0.2)
+        player.play(.combo(3)); rig.clock.advance(0.2)
+        player.play(.combo(4)); rig.clock.advance(0)
+        XCTAssertEqual(rig.resources, ["meow-test-combo_nice_s6.wav", "meow-test-combo_great_s6.wav", "meow-test-combo_excellent_s6.wav"])
+        XCTAssertEqual(rig.handles.filter(\.isPlaying).count, 1)
+        XCTAssertEqual(rig.handles.map(\.stopCount), [1, 1, 0])
+        XCTAssertTrue(rig.handles[2].isPlaying)
+        XCTAssertTrue(rig.handles.allSatisfy { $0.currentTime < $0.duration })
+        print("AUDIO_DIAGNOSTIC combo: only latest Excellent remains playing at t=0.400; preceding Nice and Great each stopped once")
+    }
+
+    @MainActor func testExperienceDiagnosticLocalSwipeLiftPreservesActiveClipsWithoutFutureTail() throws {
+        let rig = AudioExperienceDiagnosticRig(), player = try rig.player()
+        player.beginSwipe(); player.playMarks(count: 5)
+        rig.clock.advance(0.08)
+        XCTAssertEqual(rig.handles.count, 2)
+        XCTAssertTrue(rig.handles.allSatisfy { $0.isPlaying && $0.currentTime < $0.duration })
+        player.endSwipe(cancelled: false); rig.clock.advance(1)
+        XCTAssertEqual(rig.handles.count, 2)
+        XCTAssertTrue(rig.handles.allSatisfy { $0.stopCount == 0 })
+        print("AUDIO_DIAGNOSTIC swipe: five accepted cells, lift at 80ms: two active 182ms clips are not stopped; three future cues discarded, no long tail")
+    }
+
+    @MainActor func testExperienceDiagnosticLocalSwipeEndingInSameCallbackCompletesOneDueClip() throws {
+        let rig = AudioExperienceDiagnosticRig(), player = try rig.player()
+        // PuzzleBoardUIView.pan(.ended) can mark fresh cells and finish the swipe
+        // in the same callback; delay zero still schedules a later main-queue job.
+        player.beginSwipe(); player.playMarks(count: 3); player.endSwipe(cancelled: false)
+        rig.clock.advance(1)
+        XCTAssertEqual(rig.handles.count, 1)
+        XCTAssertEqual(rig.handles[0].playCount, 1); XCTAssertEqual(rig.handles[0].stopCount, 0)
+        print("AUDIO_DIAGNOSTIC swipe: three newly accepted cells in ending callback: one already-due short clip starts, future cues discarded")
+    }
+
+    @MainActor func testExperienceDiagnosticLocalFinalHitAndComboSurviveWonOverlay() throws {
+        let rig = AudioExperienceDiagnosticRig(), player = try rig.player()
+        player.play(.correct); player.play(.combo(4))
+        player.setEnvironment(.init(page: .game, level: 1, overlay: .won, blocks: [.inputLocked]))
+        rig.clock.advance(0)
+        XCTAssertEqual(Set(rig.resources), ["meow-test-mark_cat.wav", "meow-test-combo_excellent_s6.wav"])
+        XCTAssertTrue(rig.handles.allSatisfy { $0.isPlaying && $0.stopCount == 0 })
+        rig.clock.advance(0.5)
+        XCTAssertTrue(rig.handles.allSatisfy { $0.isPlaying && $0.stopCount == 0 })
+        print("AUDIO_DIAGNOSTIC final hit: correct and Excellent both start after won/inputLocked and remain uncut at 500ms")
+    }
+
+    @MainActor func testExperienceDiagnosticLocalEveryShortEffectCreatesPlayerAtDeferredTrigger() throws {
+        let rig = AudioExperienceDiagnosticRig(), player = try rig.player()
+        XCTAssertTrue(rig.handles.isEmpty); XCTAssertTrue(rig.sessionChanges.isEmpty)
+        player.play(.mark)
+        XCTAssertTrue(rig.handles.isEmpty, "Zero-delay cue still waits for its scheduled callback")
+        rig.clock.advance(0)
+        XCTAssertEqual(rig.handles.count, 1); XCTAssertEqual(rig.sessionChanges, [true])
+        rig.clock.advance(0.25); player.play(.mark); rig.clock.advance(0)
+        XCTAssertEqual(rig.handles.count, 2)
+        XCTAssertEqual(rig.resources, ["meow-test-mark_x_2.wav", "meow-test-mark_x_2.wav"])
+        print("AUDIO_DIAGNOSTIC latency architecture: no prepared player at first event; both marks create fresh players inside the scheduled callback; device latency not measured")
+    }
+
+    @MainActor func testExperienceDiagnosticLocalMusicCoexistsWithEffectsAndSettingsBackgroundResume() throws {
+        let rig = AudioExperienceDiagnosticRig(), player = try rig.player()
+        player.apply(settings: .init(sound: true, haptic: false, voice: true, music: true)); rig.clock.advance(0)
+        player.play(.correct); player.play(.combo(2)); rig.clock.advance(0)
+        XCTAssertEqual(rig.handles.filter(\.isPlaying).count, 3)
+        let music = try XCTUnwrap(zip(rig.resources, rig.handles).first { $0.0.contains("bgm_") }?.1)
+        XCTAssertEqual(music.volume, 0.4)
+        XCTAssertEqual(music.fades.last?.0, 0.4, "No voice ducking is currently configured")
+        player.apply(settings: .init(sound: true, haptic: false, voice: false, music: true))
+        XCTAssertEqual(rig.handles.filter(\.isPlaying).count, 2)
+        player.setBlocked(.background, active: true); rig.clock.advance(0.16)
+        XCTAssertTrue(rig.handles.allSatisfy { !$0.isPlaying })
+        XCTAssertEqual(rig.sessionChanges.last, false)
+        player.setBlocked(.background, active: false); rig.clock.advance(0)
+        XCTAssertTrue(music.isPlaying); XCTAssertEqual(music.playCount, 2)
+        XCTAssertEqual(rig.handles.filter(\.isPlaying).count, 1)
+        print("AUDIO_DIAGNOSTIC routing: BGM+correct+Nice coexist; voice mute stops voice only; background stops effects and pauses BGM; foreground resumes existing BGM only")
     }
 }
 @MainActor

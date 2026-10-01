@@ -38,6 +38,65 @@ private struct ExpressionPixels {
 }
 
 final class CapyExpressionTests: XCTestCase {
+    @MainActor func testValidatedBuiltInBoundsAvoidScanningAndPreserveEveryRenderedPixel() throws {
+        let lookup: (String) -> UIImage? = { UIImage(named: $0) }
+        let optimized = CapyExpressionImageCache(contentBounds: CapyExpressionSheetMetrics.bounds, load: lookup)
+        let reference = CapyExpressionImageCache(load: lookup)
+        for expression in CapyFaceExpression.allCases {
+            let actual = try ExpressionPixels(XCTUnwrap(optimized.image(for: expression)))
+            let expected = try ExpressionPixels(XCTUnwrap(reference.image(for: expression)))
+            XCTAssertEqual(actual.width, expected.width); XCTAssertEqual(actual.height, expected.height)
+            XCTAssertTrue(actual.bytes == expected.bytes, "The optimization must not change even one rendered pixel for \(expression)")
+        }
+        XCTAssertEqual(optimized.alphaScanCount, 0)
+        XCTAssertEqual(reference.alphaScanCount, 4)
+    }
+
+    @MainActor func testSameSizedReplacementCannotReuseStaleBuiltInBounds() throws {
+        let replacement = image(size: CGSize(width: 1254, height: 1254)) { context in
+            context.setFillColor(UIColor.blue.cgColor)
+            context.fill(CGRect(x: 240, y: 230, width: 80, height: 60))
+        }
+        XCTAssertNil(CapyExpressionSheetMetrics.bounds(in: try XCTUnwrap(replacement.cgImage)))
+        let lookup: (String) -> UIImage? = { $0 == "CapyFaceExpressions" ? replacement : nil }
+        let optimized = CapyExpressionImageCache(contentBounds: CapyExpressionSheetMetrics.bounds, load: lookup)
+        let reference = CapyExpressionImageCache(load: lookup)
+        let actual = try ExpressionPixels(XCTUnwrap(optimized.image(for: .neutral)))
+        let expected = try ExpressionPixels(XCTUnwrap(reference.image(for: .neutral)))
+        XCTAssertTrue(actual.bytes == expected.bytes)
+        XCTAssertEqual(optimized.alphaScanCount, 1)
+        XCTAssertTrue(optimized.image(for: .neutral) === optimized.image(for: .neutral))
+        XCTAssertEqual(optimized.alphaScanCount, 1, "Replacement assets retain the ordinary once-per-expression cache")
+    }
+
+    @MainActor func testExpressionPreparationMeasurementUsesActualBundledPixels() throws {
+        let sheet = try XCTUnwrap(UIImage(named: "CapyFaceExpressions"))
+        let fallback = UIImage(named: "CapyFace")
+        let lookup: (String) -> UIImage? = { $0 == "CapyFaceExpressions" ? sheet : fallback }
+        var referenceSamples: [Double] = [], optimizedSamples: [Double] = []
+        for iteration in 0..<8 {
+            for optimized in iteration.isMultiple(of: 2) ? [false, true] : [true, false] {
+                let cache = CapyExpressionImageCache(contentBounds: optimized ? CapyExpressionSheetMetrics.bounds : nil, load: lookup)
+                let begin = ProcessInfo.processInfo.systemUptime
+                for expression in CapyFaceExpression.allCases { XCTAssertNotNil(cache.image(for: expression)) }
+                let milliseconds = (ProcessInfo.processInfo.systemUptime - begin) * 1_000
+                if optimized { optimizedSamples.append(milliseconds) } else { referenceSamples.append(milliseconds) }
+                XCTAssertEqual(cache.alphaScanCount, optimized ? 0 : 4)
+            }
+        }
+        func summary(_ samples: [Double]) -> [String: Any] {
+            let sorted = samples.sorted()
+            return ["samplesMilliseconds": samples, "medianMilliseconds": (sorted[3] + sorted[4]) / 2,
+                    "p95Milliseconds": sorted[7]]
+        }
+        let report: [String: Any] = ["method": "Actual UIKit normalization of all four expressions from the same bundled image; fresh cache each pass, alternating execution order. Includes the optimized whole-image validation hash. UIImage resource decode is already warm. No hardware frame-rate or audio latency claim.",
+            "reference": summary(referenceSamples), "optimized": summary(optimizedSamples)]
+        let data = try JSONSerialization.data(withJSONObject: report, options: [.prettyPrinted, .sortedKeys])
+        print("EXPRESSION_PREPARATION_DIAGNOSTIC " + String(decoding: data, as: UTF8.self))
+        let attachment = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+        attachment.name = "expression-preparation-cost"; attachment.lifetime = .keepAlways; add(attachment)
+    }
+
     @MainActor private func image(size: CGSize, draw: (CGContext) -> Void) -> UIImage {
         let format = UIGraphicsImageRendererFormat(); format.scale = 1; format.opaque = false
         return UIGraphicsImageRenderer(size: size, format: format).image { draw($0.cgContext) }

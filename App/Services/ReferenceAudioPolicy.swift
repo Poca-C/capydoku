@@ -48,6 +48,8 @@ struct AudioClipPolicy: Codable, Equatable {
     var fadeOut: Double
     var contextChange: AudioContextChange
     var scope: AudioScope
+    /// Optional shared effect channel. Absence retains the original per-event limit.
+    var concurrencyGroup: String? = nil
 }
 struct AudioSwipePolicy: Codable, Equatable {
     var mode: AudioSwipeMode
@@ -102,6 +104,13 @@ struct ReferenceAudioManifest: Codable {
             }
             // Operational bounds reject unsupported imports; they are not reference defaults.
             if !(1...256).contains(clip.maximumConcurrent) { errors.append("unsupported concurrency: \(key)") }
+            if let group = clip.concurrencyGroup {
+                let permitted = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-")
+                if group.isEmpty || group.count > 64 || group.unicodeScalars.contains(where: { !permitted.contains($0) }) {
+                    errors.append("invalid concurrency group: \(key)")
+                }
+                if clip.group == .music { errors.append("music cannot share an effect concurrency group: \(key)") }
+            }
             if clip.loops < -1 { errors.append("invalid loop count: \(key)") }
             if let range = clip.loopRange, !range.start.isFinite || !range.end.isFinite || range.start < 0 || range.end <= range.start || clip.loops == 0 {
                 errors.append("invalid loop range: \(key)")
@@ -110,6 +119,13 @@ struct ReferenceAudioManifest: Codable {
                 || clip.scope.overlays.isEmpty || Set(clip.scope.overlays).count != clip.scope.overlays.count
                 || clip.scope.levels.map({ $0.isEmpty || $0.contains(where: { $0 < 1 }) || Set($0).count != $0.count }) == true {
                 errors.append("invalid scope: \(key)")
+            }
+        }
+        let groups = Dictionary(grouping: clips.values.filter { $0.concurrencyGroup != nil }, by: { $0.concurrencyGroup! })
+        for (name, members) in groups {
+            if Set(members.map(\.group.rawValue)).count != 1 || Set(members.map(\.maximumConcurrent)).count != 1
+                || Set(members.map(\.overflow.rawValue)).count != 1 {
+                errors.append("inconsistent concurrency group policy: \(name)")
             }
         }
         if clips["background_music"] != nil {
