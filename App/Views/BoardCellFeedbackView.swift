@@ -48,14 +48,8 @@ final class BoardCellFeedbackView: UIView {
             ring.opacity = reduceMotion ? 0.7 : 0
             layer.insertSublayer(ring, below: symbol)
         } else {
-            let inset = bounds.insetBy(dx: bounds.width * 0.23, dy: bounds.height * 0.23)
-            let path = UIBezierPath()
-            path.move(to: CGPoint(x: inset.minX, y: inset.minY)); path.addLine(to: CGPoint(x: inset.maxX, y: inset.maxY))
-            path.move(to: CGPoint(x: inset.maxX, y: inset.minY)); path.addLine(to: CGPoint(x: inset.minX, y: inset.maxY))
             for target in [crossOutline, cross] {
-                target.frame = bounds; target.path = path.cgPath
                 target.fillColor = UIColor.clear.cgColor; target.lineCap = .round
-                target.lineWidth = max(3.2, bounds.width * 0.11) + (target === crossOutline ? 2 : 0)
                 target.strokeColor = target === crossOutline ? UIColor(CapyPalette.markOutline).cgColor
                     : errorMark ? UIColor(CapyPalette.life).cgColor : UIColor.white.cgColor
                 // For undo, the committed board is already empty. Keep that
@@ -63,10 +57,33 @@ final class BoardCellFeedbackView: UIView {
                 target.strokeEnd = kind == .markRemoved ? 0 : 1
                 layer.addSublayer(target)
             }
+            updateCrossGeometry()
         }
     }
 
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+
+    /// Hint dismissal can resize the board in the same update that commits X.
+    /// Retarget only geometry, preserving the running stroke and its deadline.
+    func updateMarkFrame(_ frame: CGRect) {
+        guard kind != .found else { return }
+        CATransaction.begin(); CATransaction.setDisableActions(true)
+        self.frame = frame
+        layer.cornerRadius = max(3, bounds.width * 0.05)
+        updateCrossGeometry()
+        CATransaction.commit()
+    }
+
+    private func updateCrossGeometry() {
+        let inset = bounds.insetBy(dx: bounds.width * 0.23, dy: bounds.height * 0.23)
+        let path = UIBezierPath()
+        path.move(to: CGPoint(x: inset.minX, y: inset.minY)); path.addLine(to: CGPoint(x: inset.maxX, y: inset.maxY))
+        path.move(to: CGPoint(x: inset.maxX, y: inset.minY)); path.addLine(to: CGPoint(x: inset.minX, y: inset.maxY))
+        for target in [crossOutline, cross] {
+            target.frame = bounds; target.path = path.cgPath
+            target.lineWidth = max(3.2, bounds.width * 0.11) + (target === crossOutline ? 2 : 0)
+        }
+    }
 
     func play() {
         cleanupTask?.cancel()

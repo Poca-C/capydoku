@@ -1,0 +1,82 @@
+{
+  "boundary" : "Actual Root; no manual configure\/layout or CA clock changes. Display-link observations precede screenshot readback.",
+  "displayLinkSamples" : [
+    {
+      "boardSize" : [
+        328,
+        328
+      ],
+      "drawingAnimationCount" : 0,
+      "elapsedSeconds" : 0.019312916556373239,
+      "presentationStrokeEnds" : [
+
+      ],
+      "visibleMarkAddedCells" : [
+
+      ]
+    },
+    {
+      "boardSize" : [
+        328,
+        328
+      ],
+      "drawingAnimationCount" : 0,
+      "elapsedSeconds" : 0.036518791690468788,
+      "presentationStrokeEnds" : [
+
+      ],
+      "visibleMarkAddedCells" : [
+
+      ]
+    },
+    {
+      "boardSize" : [
+        328,
+        328
+      ],
+      "drawingAnimationCount" : 0,
+      "elapsedSeconds" : 0.053199458168819547,
+      "presentationStrokeEnds" : [
+
+      ],
+      "visibleMarkAddedCells" : [
+
+      ]
+    },
+    {
+      "boardSize" : [
+        328,
+        328
+      ],
+      "drawingAnimationCount" : 0,
+      "elapsedSeconds" : 0.069268291583284736,
+      "presentationStrokeEnds" : [
+
+      ],
+      "visibleMarkAddedCells" : [
+
+      ]
+    }
+  ],
+  "fixture" : "long-hint-apply-402-reduced-false",
+  "playingSize" : [
+    328,
+    328
+  ],
+  "previewSize" : [
+    190,
+    190
+  ],
+  "screenshotRequestedAfterSeconds" : 0.081029916647821665,
+  "source" : "Existing long-copy saved-preview fixture; original hint cells\/rule\/use retained",
+  "targets" : [
+    0,
+    4,
+    5,
+    9,
+    10,
+    11,
+    12,
+    13
+  ]
+}

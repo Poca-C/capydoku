@@ -1,0 +1,21 @@
+{
+  "boundary" : "Mounted native board; natural CA clock and original cleanup. Root trigger is covered by OriginalUIContractTests.",
+  "duration" : 0.16,
+  "expiryObservedAfterSeconds" : 0.18741454160772264,
+  "kind" : "markAdded",
+  "resizeAfterSeconds" : 0.057120749959722161,
+  "strokeAfterResize" : [
+    0.56381648778915405,
+    0.56381648778915405
+  ],
+  "strokeBeforeResize" : [
+    0.42369642853736877,
+    0.42369642853736877
+  ],
+  "targetFrame" : [
+    9,
+    9,
+    74.5,
+    74.5
+  ]
+}

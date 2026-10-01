@@ -648,7 +648,17 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         super.layoutSubviews()
         if feedbackOverlay.bounds.size != bounds.size {
             let mountingEntrance = pendingEntranceID
-            clearFeedback()
+            // A long hint releases space at the same time Apply commits its X.
+            // Keep valid short mark/erase strokes on their original clock;
+            // other feedback has board-wide geometry and still cancels here.
+            let marksToKeep = canPresentEffects && !locked && !hideAccessibility && preview.isEmpty
+                ? feedbackOverlay.subviews.compactMap { $0 as? BoardCellFeedbackView }.filter { $0.kind != .found }
+                : []
+            clearFeedback(preserving: marksToKeep)
+            let gap = max(1.1, min(2, cellSide * 0.028))
+            for effect in marksToKeep {
+                effect.updateMarkFrame(rect(for: effect.cellIndex).insetBy(dx: gap, dy: gap))
+            }
             pendingEntranceID = mountingEntrance
         }
         feedbackOverlay.frame = bounds
@@ -775,14 +785,16 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         effect.play()
     }
 
-    private func clearFeedback() {
+    private func clearFeedback(preserving marks: [BoardCellFeedbackView] = []) {
         pendingEntranceID = nil
         cancelIdleBlink()
         lastBlinkedCell = nil
         idleReactionOrdinal = 0
         endCellPress()
-        feedbackOverlay.subviews.forEach { $0.removeFromSuperview() }
-        feedbackOverlay.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
+        let views = Set(marks.map { ObjectIdentifier($0) })
+        let layers = Set(marks.map { ObjectIdentifier($0.layer) })
+        feedbackOverlay.subviews.filter { !views.contains(ObjectIdentifier($0)) }.forEach { $0.removeFromSuperview() }
+        feedbackOverlay.layer.sublayers?.filter { !layers.contains(ObjectIdentifier($0)) }.forEach { $0.removeFromSuperlayer() }
         tutorialGuide = nil
     }
 

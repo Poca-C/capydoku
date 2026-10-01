@@ -1,0 +1,170 @@
+{
+  "boundary" : "Actual Root; no manual configure\/layout or CA clock changes. Display-link observations precede screenshot readback.",
+  "displayLinkSamples" : [
+    {
+      "boardSize" : [
+        190,
+        190
+      ],
+      "drawingAnimationCount" : 0,
+      "elapsedSeconds" : 0.024374375119805336,
+      "presentationStrokeEnds" : [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "visibleMarkAddedCells" : [
+        0,
+        4,
+        5,
+        9,
+        10,
+        11,
+        12,
+        13
+      ]
+    },
+    {
+      "boardSize" : [
+        190,
+        190
+      ],
+      "drawingAnimationCount" : 0,
+      "elapsedSeconds" : 0.041100833332166076,
+      "presentationStrokeEnds" : [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "visibleMarkAddedCells" : [
+        0,
+        4,
+        5,
+        9,
+        10,
+        11,
+        12,
+        13
+      ]
+    },
+    {
+      "boardSize" : [
+        190,
+        190
+      ],
+      "drawingAnimationCount" : 0,
+      "elapsedSeconds" : 0.057749416679143906,
+      "presentationStrokeEnds" : [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "visibleMarkAddedCells" : [
+        0,
+        4,
+        5,
+        9,
+        10,
+        11,
+        12,
+        13
+      ]
+    },
+    {
+      "boardSize" : [
+        190,
+        190
+      ],
+      "drawingAnimationCount" : 0,
+      "elapsedSeconds" : 0.07441424997523427,
+      "presentationStrokeEnds" : [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "visibleMarkAddedCells" : [
+        0,
+        4,
+        5,
+        9,
+        10,
+        11,
+        12,
+        13
+      ]
+    }
+  ],
+  "fixture" : "long-hint-apply-320-reduced-true",
+  "playingSize" : [
+    190,
+    190
+  ],
+  "previewSize" : [
+    190,
+    190
+  ],
+  "screenshotRequestedAfterSeconds" : 0.081784875132143497,
+  "source" : "Existing long-copy saved-preview fixture; original hint cells\/rule\/use retained",
+  "targets" : [
+    0,
+    4,
+    5,
+    9,
+    10,
+    11,
+    12,
+    13
+  ]
+}

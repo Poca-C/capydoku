@@ -172,6 +172,108 @@ final class BoardCellPresentationTests: XCTestCase {
         }
     }
 
+    @MainActor func testResizingActualBoardRetargetsMarkAndEraseWithoutRestartingTheirClocks() async throws {
+        for kind in [BoardCellFeedbackView.Kind.markAdded, .markRemoved] {
+            let rig = try CellPresentationRig(); defer { rig.close() }
+            rig.board.frame.size = CGSize(width: 190, height: 190)
+            rig.board.layoutIfNeeded()
+            if kind == .markRemoved { XCTAssertTrue(rig.board.activate(index: 0, submit: false)) }
+            let started = CACurrentMediaTime()
+            XCTAssertTrue(rig.board.activate(index: 0, submit: false))
+            let accepted = rig.session
+            let view = try XCTUnwrap(rig.effects.first { $0.cellIndex == 0 && $0.kind == kind })
+            let duration = view.duration
+            let strokes = try XCTUnwrap(view.layer.sublayers?.compactMap { $0 as? CAShapeLayer })
+            XCTAssertEqual(strokes.count, 2)
+            let originalAnimations = try strokes.map { try XCTUnwrap($0.animation(forKey: "strokeEnd") as? CABasicAnimation) }
+            let originalKeys = strokes.map { Set($0.animationKeys() ?? []) }
+            try await Task.sleep(nanoseconds: 55_000_000)
+            let beforeStroke = try strokes.map { Double(try XCTUnwrap($0.presentation() as? CAShapeLayer).strokeEnd) }
+            XCTAssertTrue(beforeStroke.allSatisfy { $0 > 0 && $0 < 1 }, "Observe a real in-flight stroke before changing geometry.")
+
+            let resizedAt = CACurrentMediaTime() - started
+            rig.board.frame.size = CGSize(width: 328, height: 328)
+            rig.board.layoutIfNeeded()
+            XCTAssertTrue(rig.effects.contains { $0 === view }, "Resize must retain the accepted mark/erase view, not replay a replacement.")
+            XCTAssertEqual(view.duration, duration)
+            let cell = try XCTUnwrap(rig.board.accessibilityElements?[0] as? UIAccessibilityElement).accessibilityFrameInContainerSpace
+            let gap = max(1.1, min(2, cell.width * 0.028))
+            let target = cell.insetBy(dx: gap, dy: gap)
+            for (actual, expected) in zip([view.frame.minX, view.frame.minY, view.frame.width, view.frame.height],
+                                           [target.minX, target.minY, target.width, target.height]) {
+                XCTAssertEqual(actual, expected, accuracy: 0.001, "The retained drawing must cover its new real cell, not its old coordinates.")
+            }
+            for (index, stroke) in strokes.enumerated() {
+                let running = try XCTUnwrap(stroke.animation(forKey: "strokeEnd") as? CABasicAnimation)
+                XCTAssertEqual(running.beginTime, originalAnimations[index].beginTime)
+                XCTAssertEqual(running.duration, originalAnimations[index].duration)
+                XCTAssertEqual(Set(stroke.animationKeys() ?? []), originalKeys[index], "Retargeting must not add bounds/path/position animations.")
+                XCTAssertEqual(stroke.bounds, view.bounds)
+                let path = try XCTUnwrap(stroke.path).boundingBoxOfPath
+                XCTAssertEqual(path.midX, view.bounds.midX, accuracy: 0.001)
+                XCTAssertEqual(path.midY, view.bounds.midY, accuracy: 0.001)
+                XCTAssertGreaterThan(path.width, view.bounds.width * 0.5)
+                XCTAssertLessThan(path.width, view.bounds.width * 0.6)
+                XCTAssertTrue(view.bounds.contains(path))
+            }
+            XCTAssertTrue(rig.board.hitTest(try rig.center(0), with: nil) === rig.board)
+            try await Task.sleep(nanoseconds: 15_000_000)
+            let afterStroke = try strokes.map { Double(try XCTUnwrap($0.presentation() as? CAShapeLayer).strokeEnd) }
+            for (before, after) in zip(beforeStroke, afterStroke) {
+                if kind == .markAdded { XCTAssertGreaterThanOrEqual(after, before, "A resized X must continue drawing, never restart at an earlier point.") }
+                else { XCTAssertLessThanOrEqual(after, before, "A resized undo must continue withdrawing, never restore its erased stroke.") }
+            }
+            XCTAssertEqual(rig.session, accepted, "Changing display geometry cannot change the saved mark state.")
+
+            // Observe shortly after the original deadline, while a timer reset
+            // at resize would still be live. Do not freeze Core Animation.
+            let remaining = max(0, duration + 0.020 - (CACurrentMediaTime() - started))
+            try await Task.sleep(nanoseconds: UInt64(remaining * 1_000_000_000))
+            let expiryObservedAt = CACurrentMediaTime() - started
+            XCTAssertLessThan(expiryObservedAt, resizedAt + duration,
+                              "A late test observation cannot prove that resize preserved the original deadline.")
+            XCTAssertNil(view.superview, "Cleanup must use the original start time, not the most recent resize.")
+            XCTAssertTrue(animations(view.layer).isEmpty)
+            XCTAssertEqual(rig.session, accepted)
+            let data = try JSONSerialization.data(withJSONObject: [
+                "kind": kind == .markAdded ? "markAdded" : "markRemoved", "duration": duration,
+                "resizeAfterSeconds": resizedAt, "expiryObservedAfterSeconds": expiryObservedAt,
+                "strokeBeforeResize": beforeStroke, "strokeAfterResize": afterStroke,
+                "targetFrame": [target.minX, target.minY, target.width, target.height],
+                "boundary": "Mounted native board; natural CA clock and original cleanup. Root trigger is covered by OriginalUIContractTests."
+            ], options: [.prettyPrinted, .sortedKeys])
+            let attachment = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+            attachment.name = kind == .markAdded ? "mark-resize-original-clock" : "erase-resize-original-clock"
+            attachment.lifetime = .keepAlways; add(attachment)
+        }
+    }
+
+    @MainActor func testRetargetedMarkAndEraseStillClearOnCancellationAndSessionReplacement() async throws {
+        for kind in [BoardCellFeedbackView.Kind.markAdded, .markRemoved] {
+            for replaceSession in [false, true] {
+                let rig = try CellPresentationRig(); defer { rig.close() }
+                if kind == .markRemoved { XCTAssertTrue(rig.board.activate(index: 0, submit: false)) }
+                XCTAssertTrue(rig.board.activate(index: 0, submit: false))
+                let view = try XCTUnwrap(rig.effects.first { $0.cellIndex == 0 && $0.kind == kind })
+                let accepted = rig.session
+                rig.board.frame.size = CGSize(width: 190, height: 190); rig.board.layoutIfNeeded()
+                XCTAssertTrue(rig.effects.contains { $0 === view })
+                if replaceSession {
+                    rig.session = GameSession(puzzle: CellPresentationRig.puzzle)
+                    XCTAssertNotEqual(rig.session.id, accepted.id)
+                    rig.refresh()
+                } else { rig.board.cancelPresentation() }
+                XCTAssertNil(view.superview); XCTAssertTrue(animations(view.layer).isEmpty)
+                rig.board.frame.size = CGSize(width: 328, height: 328); rig.board.layoutIfNeeded()
+                XCTAssertTrue(rig.effects.isEmpty, "Another layout cannot resurrect cancelled or previous-session X feedback.")
+                if !replaceSession { XCTAssertEqual(rig.session, accepted) }
+                let current = rig.session
+                try await Task.sleep(nanoseconds: 210_000_000)
+                XCTAssertTrue(rig.effects.isEmpty); XCTAssertEqual(rig.session, current)
+            }
+        }
+    }
+
     @MainActor func testFoundStarsStayLocalAndAllAccentsEndWithinExistingDuration() async throws {
         let view = effect(.found), host = UIView(frame: CGRect(x: 0, y: 0, width: 72, height: 72))
         host.addSubview(view); view.play()

@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-02",
+  "build": "0.2.58 (61)",
+  "status": "scoped_hint_apply_geometry_handoff_verified_simulator_only",
+  "previousReport": "Validation/original-0257-feedback.json",
+  "previousGoalTurn": {
+    "classification": "progress",
+    "reason": "Committed a4885cf fixed accepted-move audio cue loss and passed79 related App tests; current-state inspection confirmed the commit and continued with normal play."
+  },
+  "sourceParagraphs": [
+    76,
+    136,
+    249,
+    252,
+    254
+  ],
+  "finding": "Actual Root long-hint fixture shrinks board328→190pt; Apply restores328pt and commits8 X, but pre-fix layout cleared all drawing feedback before the first observed display opportunity (19–69ms). Short/minimum-size control and reduced-motion final marks were already correct.",
+  "changes": [
+    "Preserve valid active mark/erase feedback across board resize; recompute its cell frame, cross geometry and line width without replaying animations or resetting cleanup.",
+    "Keep existing cancellation for found/burst/scene geometry, unavailable/covered input, new sessions, background and explicit presentation cancellation.",
+    "Hint Apply remains synchronous and uses the existing0.16s stroke (0.13s erase); no new audio, reward, delayed commit or changes to hint inventory."
+  ],
+  "verificationHistory": [
+    {
+      "status": "Failed",
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0258-hint-baseline-summary.json",
+      "log": "Validation/test-runs/original-0258-hint-baseline.log",
+      "bundle": "Validation/test-runs/original-0258-hint-baseline.xcresult"
+    },
+    {
+      "status": "Passed",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0258-hint-candidate-summary.json",
+      "log": "Validation/test-runs/original-0258-hint-candidate.log",
+      "bundle": "Validation/test-runs/original-0258-hint-candidate.xcresult"
+    }
+  ],
+  "applicationTests": {
+    "status": "Passed",
+    "passed": 51,
+    "failed": 0,
+    "skipped": 0,
+    "summary": "Validation/test-runs/original-0258-app-final-summary.json",
+    "log": "Validation/test-runs/original-0258-app-final.log",
+    "bundle": "Validation/test-runs/original-0258-app-final.xcresult"
+  },
+  "uiTests": {
+    "status": "Passed",
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "summary": "Validation/test-runs/original-0258-17e-ui-summary.json",
+    "log": "Validation/test-runs/original-0258-17e-ui.log",
+    "bundle": "Validation/test-runs/original-0258-17e-ui.xcresult"
+  },
+  "visualEvidence": "Docs/original-feel-0258/manifest.json",
+  "testedScope": [
+    "Real Root four fixtures:320x568/402x874 × normal/reduced; original hint cells/use retained, test-only long English explanation and accessibility5; Apply only adds intended marks and returns normal input.",
+    "Natural display-link samples capture intermediate stroke while board is restored; reduced-motion actual window pixels show final white X with no drawing animation.",
+    "Mark/erase resize geometry, lifetime and cancellation regression; existing board cell, scene, burst, refresh, direct-tool suites and full-level-to-next-board rhythm.",
+    "Native17e tap/double-tap/pan, hint close/Apply and direct/restart flows."
+  ],
+  "normalPlayBeforeFix": {
+    "newSuccessfulSimulatorPlay": true,
+    "physicalDevice": false,
+    "referenceAppReplayed": false,
+    "observed": [
+      {
+        "build": "0.2.56 (59)",
+        "flow": "Normal L1 save: rewarded hint preview→Apply→correct find→final direct win→L2→first mark. Later restart showed the new mark persisted.",
+        "localRecording": ".build/original-0258-normal-before.mov"
+      },
+      {
+        "build": "0.2.57 (60)",
+        "flow": "Confirmed simulator installed version; normal L2 save restored. Three wrong cells→one-life reminder→loss→clearly labeled simulated video→revive with3 lives/same board→direct→hint Apply.",
+        "localRecording": ".build/original-0258-normal-0257.mov"
+      }
+    ],
+    "evidenceBoundary": "Observed through live CUA snapshots and actions. Recordings retained locally; full videos not reviewed frame-by-frame, no listening or haptic claim. These are explicitly pre-fix builds."
+  },
+  "reference": {
+    "latestSuccessfulPlaytest": "Validation/meowdoku-playtest-comparison-0249.json",
+    "newSuccessfulPlaytestThisRound": false,
+    "equivalenceClaimed": false,
+    "implementationSummary": {
+      "status": "Nine observed directions each have Demo implementation; this is not reference-quality sign-off.",
+      "implementedDirections": [
+        "动态手势教学",
+        "角色待机/正确/错误表情",
+        "浮分/彩粒/飞星/鼓掌及顶部联动",
+        "错误原因与规则可视化",
+        "扣命与一命提醒",
+        "Combo及分层胜败演出",
+        "新盘错峰入场",
+        "提示与找答案反馈",
+        "签到点亮与实际到账演出"
+      ],
+      "audio": "9 local Debug-only reference WAVs remain an authorized testing experiment; no live audio or physical haptic A/B in this round.",
+      "qualityGaps": [
+        "角色动作自然度与整段节奏",
+        "密集浮分离源距离",
+        "真机声音/震动配合",
+        "正式参考和发布资源验收"
+      ],
+      "notReplicatedFromLatestPlaytest": [
+        "Reference horn-playing character pose",
+        "Every observed praise phrase",
+        "Automatic check-in interstitial during victory; current Demo check-in entry remains on home"
+      ]
+    }
+  },
+  "audio": {
+    "modified": false,
+    "localTestWAVCount": 9,
+    "currentDebugInventory": "Validation/audio-isolation-0258-debug.json",
+    "inventoryIdenticalTo0257": true,
+    "formalManifestClipsEmpty": true,
+    "liveAuditoryAB": false,
+    "releaseRebuilt": false
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  },
+  "formalSignOff": false,
+  "formalConformanceRowsUnchanged": 83,
+  "historicalChecklistCountUnchanged": 88,
+  "remaining": [
+    "整体动作自然度、连续音画与真机触感仍待验；手机仍0.2.29，打包/GitHub暂停。",
+    "模拟奖励退场是否遮住直接答案早段反馈仍是待验证候选，不能计为已确认缺陷。",
+    "本轮不是全量App/Core、全88条、全150关试玩或参考品质验收。"
+  ]
+}

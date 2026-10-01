@@ -3,6 +3,20 @@ import SwiftUI
 import CapydokuCore
 @testable import Capydoku
 
+@MainActor private final class HintApplyDisplayObserver: NSObject {
+    private var link: CADisplayLink?
+    private let observe: () -> Void
+    init(observe: @escaping () -> Void) {
+        self.observe = observe
+        super.init()
+        let link = CADisplayLink(target: self, selector: #selector(tick))
+        self.link = link
+        link.add(to: .main, forMode: .common)
+    }
+    @objc private func tick() { observe() }
+    func stop() { link?.invalidate(); link = nil }
+}
+
 /// Synthetic copy stresses the real imported-configuration rendering path; it is
 /// deliberately confined to the test bundle and never added to product startup.
 final class OriginalUIContractTests: XCTestCase {
@@ -88,6 +102,170 @@ final class OriginalUIContractTests: XCTestCase {
             for index in 1..<heights.count { XCTAssertGreaterThanOrEqual(heights[index], heights[index - 1]) }
             XCTAssertGreaterThan(try XCTUnwrap(heights.last), heights[3] * 2,
                                  "Hint text must follow the requested accessibility size, rather than remain fixed at 13pt.")
+        }
+    }
+
+    @MainActor func testActualRootLongHintApplyKeepsVisibleMarkFeedbackAfterNaturalLayout() async throws {
+        // Root is below the real app's loading gate. Match that preparation so
+        // a first atlas decode cannot consume the short feedback observation.
+        try await BundledStartupResources().prepare()
+        let explanation = Array(repeating: "Every highlighted cell conflicts with the remaining candidates. Check its row, column, colored region and all touching neighbors before applying these marks.", count: 4).joined(separator: "\n\n")
+
+        for size in [CGSize(width: 320, height: 568), CGSize(width: 402, height: 874)] {
+            for reduced in [false, true] {
+                let name = "long-hint-apply-\(Int(size.width))-reduced-\(reduced)"
+                let directory = FileManager.default.temporaryDirectory.appendingPathComponent(name + UUID().uuidString)
+                let model = AppModel(saveDirectory: directory, runsTimer: false, feedbackEnabled: false)
+                model.progress.settings.language = .english
+                model.progress.tutorialCompleted = true
+                model.start(level: 1)
+                let host = UIHostingController(rootView: RootView(reduceMotionOverride: reduced).environmentObject(model)
+                    .environment(\.scenePhase, .active).dynamicTypeSize(.accessibility5))
+                let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
+                let previous = scene.windows.first(where: \.isKeyWindow)
+                let window = UIWindow(windowScene: scene)
+                window.frame = CGRect(origin: .zero, size: size)
+                window.overrideUserInterfaceStyle = .light
+                window.rootViewController = host; window.makeKeyAndVisible()
+                host.view.frame = window.bounds
+                defer {
+                    window.isHidden = true; window.rootViewController = nil; previous?.makeKeyAndVisible()
+                    model.flushPendingSaves(); try? FileManager.default.removeItem(at: directory)
+                }
+                func descendants(_ view: UIView) -> [UIView] { [view] + view.subviews.flatMap(descendants) }
+                @discardableResult func capture(_ label: String) -> UIImage {
+                    let format = UIGraphicsImageRendererFormat()
+                    format.scale = window.screen.scale; format.preferredRange = .standard
+                    var drawn = false
+                    let image = UIGraphicsImageRenderer(bounds: window.bounds, format: format).image { _ in
+                        drawn = window.drawHierarchy(in: window.bounds, afterScreenUpdates: false)
+                    }
+                    XCTAssertTrue(drawn)
+                    let attachment = XCTAttachment(image: image)
+                    attachment.name = name + "-" + label; attachment.lifetime = .keepAlways; add(attachment)
+                    return image
+                }
+                // All geometry below comes from normal Root updates and the
+                // run loop. Never force configure/layout ordering in this test.
+                try await Task.sleep(nanoseconds: 620_000_000)
+                let board = try XCTUnwrap(descendants(host.view).compactMap { $0 as? PuzzleGridUIView }.first)
+                let playingSize = board.bounds.size
+                model.showHint()
+                let originalUse = try XCTUnwrap(model.progress.activeHintUse)
+                // Same synthetic saved-preview fixture as the long-copy test
+                // above. Only the explanation changes; cells/rule/use stay real.
+                model.progress.activeHintUse?.hint = PuzzleHint(cells: originalUse.hint.cells,
+                    explanation: explanation, rule: originalUse.hint.rule)
+                model.screen = .game
+                try await Task.sleep(nanoseconds: 250_000_000)
+                let previewSize = board.bounds.size
+                let before = try XCTUnwrap(model.session)
+                let inventory = model.progress.availableHints
+                let targets = Set(originalUse.hint.cells).subtracting(before.marks)
+                XCTAssertFalse(targets.isEmpty)
+                XCTAssertEqual(model.progress.activeHintUse?.id, originalUse.id)
+                XCTAssertNotNil(model.hint)
+                if size.width > 360 {
+                    XCTAssertLessThan(previewSize.width, playingSize.width - 10,
+                                      "The ordinary-screen fixture must actually shrink the board for its long preview.")
+                }
+                capture("preview-before-apply")
+
+                struct Sample {
+                    let elapsed: Double
+                    let boardSize: CGSize
+                    let cells: Set<Int>
+                    let strokeEnds: [Double]
+                    let drawingAnimationCount: Int
+                }
+                var samples: [Sample] = []
+                let started = CACurrentMediaTime()
+                let observer = HintApplyDisplayObserver {
+                    let effects = descendants(board).compactMap { $0 as? BoardCellFeedbackView }.filter {
+                        $0.kind == .markAdded && targets.contains($0.cellIndex) && $0.window === window &&
+                        !$0.isHidden && $0.alpha > 0 && !$0.bounds.isEmpty &&
+                        ($0.layer.presentation()?.opacity ?? $0.layer.opacity) > 0
+                    }
+                    let strokes = effects.flatMap { ($0.layer.sublayers ?? []).compactMap { $0 as? CAShapeLayer } }
+                    samples.append(Sample(elapsed: CACurrentMediaTime() - started, boardSize: board.bounds.size,
+                        cells: Set(effects.map(\.cellIndex)),
+                        strokeEnds: strokes.map { Double(($0.presentation() as? CAShapeLayer)?.strokeEnd ?? $0.strokeEnd) },
+                        drawingAnimationCount: strokes.reduce(0) { $0 + ($1.animationKeys()?.count ?? 0) }))
+                }
+                defer { observer.stop() }
+                model.applyHint()
+                let applied = try XCTUnwrap(model.session)
+                XCTAssertNil(model.hint); XCTAssertNil(model.progress.activeHintUse)
+                XCTAssertEqual(applied.marks, before.marks.union(targets), "Apply commits all suggested X marks immediately.")
+                XCTAssertEqual(applied.found, before.found); XCTAssertEqual(applied.errors, before.errors)
+                XCTAssertEqual(applied.lives, before.lives); XCTAssertEqual(applied.score, before.score)
+                XCTAssertEqual(model.progress.availableHints, inventory, "Apply cannot spend the preview a second time.")
+
+                // Observe actual display opportunities without screenshot
+                // readback, layer time offsets or forced layout in the window.
+                try await Task.sleep(nanoseconds: 75_000_000)
+                observer.stop()
+                let captureElapsed = CACurrentMediaTime() - started
+                let afterImage = capture("after-apply-natural-\(Int(captureElapsed * 1_000))ms")
+                let restored = samples.filter {
+                    abs($0.boardSize.width - playingSize.width) < 0.5 &&
+                    abs($0.boardSize.height - playingSize.height) < 0.5
+                }
+                XCTAssertFalse(restored.isEmpty, "\(name): Root must naturally restore its playing layout.")
+                if reduced {
+                    XCTAssertTrue(restored.filter { !$0.cells.isEmpty }.allSatisfy { $0.drawingAnimationCount == 0 },
+                                  "Reduced motion keeps a static confirmation rather than an animated stroke.")
+                    // A reduced-motion cover is optional: its final X is the
+                    // same as the committed board. Check real window pixels,
+                    // not the presence of an unnecessary decoration view.
+                    let bitmap = try XCTUnwrap(afterImage.cgImage)
+                    for index in targets.sorted() {
+                        let cell = try XCTUnwrap(board.accessibilityElements?[index] as? UIAccessibilityElement)
+                        let frame = board.convert(cell.accessibilityFrameInContainerSpace, to: window)
+                        let center = CGRect(x: floor(frame.midX * afterImage.scale),
+                            y: floor(frame.midY * afterImage.scale), width: 1, height: 1)
+                        let pixel = try XCTUnwrap(bitmap.cropping(to: center))
+                        var rgba = [UInt8](repeating: 0, count: 4)
+                        let rendered = rgba.withUnsafeMutableBytes { bytes -> Bool in
+                            guard let context = CGContext(data: bytes.baseAddress, width: 1, height: 1,
+                                bitsPerComponent: 8, bytesPerRow: 4, space: CGColorSpaceCreateDeviceRGB(),
+                                bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue | CGBitmapInfo.byteOrder32Big.rawValue) else { return false }
+                            context.draw(pixel, in: CGRect(x: 0, y: 0, width: 1, height: 1)); return true
+                        }
+                        XCTAssertTrue(rendered)
+                        XCTAssertTrue(rgba.prefix(3).allSatisfy { $0 > 235 } && rgba[3] > 250,
+                                      "\(name) cell \(index): the actual window must already show the white center of the committed X.")
+                    }
+                } else {
+                    XCTAssertTrue(restored.contains { $0.cells == targets },
+                                  "\(name): committed X feedback must survive the preview-to-board layout handoff for a real display frame.")
+                    XCTAssertTrue(restored.contains { $0.cells == targets && $0.strokeEnds.contains { $0 > 0 && $0 < 1 } },
+                                  "\(name): the visible feedback must include the actual drawing stroke, not only final-state X marks.")
+                }
+                let rows: [[String: Any]] = samples.map {
+                    ["elapsedSeconds": $0.elapsed, "boardSize": [$0.boardSize.width, $0.boardSize.height],
+                     "visibleMarkAddedCells": $0.cells.sorted(), "presentationStrokeEnds": $0.strokeEnds,
+                     "drawingAnimationCount": $0.drawingAnimationCount]
+                }
+                let data = try JSONSerialization.data(withJSONObject: [
+                    "fixture": name, "source": "Existing long-copy saved-preview fixture; original hint cells/rule/use retained",
+                    "playingSize": [playingSize.width, playingSize.height],
+                    "previewSize": [previewSize.width, previewSize.height], "targets": targets.sorted(),
+                    "screenshotRequestedAfterSeconds": captureElapsed, "displayLinkSamples": rows,
+                    "boundary": "Actual Root; no manual configure/layout or CA clock changes. Display-link observations precede screenshot readback."
+                ], options: [.prettyPrinted, .sortedKeys])
+                let attachment = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+                attachment.name = name + "-natural-handoff"; attachment.lifetime = .keepAlways; add(attachment)
+
+                try await Task.sleep(nanoseconds: 220_000_000)
+                XCTAssertEqual(model.session, applied, "Finite feedback cannot change the committed board.")
+                XCTAssertTrue(descendants(board).compactMap { $0 as? BoardCellFeedbackView }.filter { $0.kind == .markAdded }.isEmpty)
+                let nextMark = try XCTUnwrap(applied.puzzle.regions.indices.first {
+                    !applied.found.contains($0) && !applied.marks.contains($0)
+                })
+                XCTAssertTrue(board.activate(index: nextMark, submit: false))
+                XCTAssertTrue(try XCTUnwrap(model.session).marks.contains(nextMark), "Apply must leave normal board input available.")
+            }
         }
     }
 

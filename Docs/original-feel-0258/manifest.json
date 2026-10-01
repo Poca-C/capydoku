@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.58 (61)",
+  "scope": "Hint Apply geometry handoff on real Root, small/ordinary sizes and normal/reduced motion",
+  "visualReview": "Baseline ordinary normal before/after, and all four final after-Apply screenshots inspected. Long explanation is synthetic English accessibility5 stress content; default product language remains Chinese.",
+  "boundary": "Screenshot filenames record requested capture time, not exact display time. Display-link records precede screenshot readback. Not a physical phone, reference A/B, audio or full frame-rate verification.",
+  "artifacts": [
+    {
+      "path": "Docs/original-feel-0258/baseline-long-hint-apply-402-reduced-false-natural-handoff.json",
+      "sha256": "99a8cbed0b6c11d67454ac047be58c57960c78db5c5b670ee4e1fee805e9b678",
+      "sourceRun": "original-0258-hint-baseline",
+      "fixture": "Existing synthetic long-copy saved-preview test, real hint cells/rule/use",
+      "kind": "display_link_samples"
+    },
+    {
+      "path": "Docs/original-feel-0258/baseline-long-hint-apply-402-reduced-false-after-apply-natural-81ms.png",
+      "sha256": "60a509dfd42ce17fb2eef1df7a591919ee791a10c1043abb7251460fbaba29b1",
+      "sourceRun": "original-0258-hint-baseline",
+      "fixture": "Existing synthetic long-copy saved-preview test, real hint cells/rule/use",
+      "kind": "natural_root_frame"
+    },
+    {
+      "path": "Docs/original-feel-0258/baseline-long-hint-apply-402-reduced-false-preview-before-apply.png",
+      "sha256": "5107c31cc49705d88cf7e9158b7466e59bc3d7de6f2e891f5aeb2e0abdba9c0a",
+      "sourceRun": "original-0258-hint-baseline",
+      "fixture": "Existing synthetic long-copy saved-preview test, real hint cells/rule/use",
+      "kind": "natural_root_frame"
+    },
+    {
+      "path": "Docs/original-feel-0258/final-erase-resize-original-clock.json",
+      "sha256": "23efd338ae3ee25c5fc8215954f08128686395ec1272f23b96632089a71f2ac7",
+      "sourceRun": "original-0258-app-final",
+      "fixture": "Mounted native board with natural mark/erase resize",
+      "kind": "natural_clock_observation"
+    },
+    {
+      "path": "Docs/original-feel-0258/final-mark-resize-original-clock.json",
+      "sha256": "36b300770664ac53157d7c6f50442200b99130754a375e9c00ae22168a5a80b0",
+      "sourceRun": "original-0258-app-final",
+      "fixture": "Mounted native board with natural mark/erase resize",
+      "kind": "natural_clock_observation"
+    },
+    {
+      "path": "Docs/original-feel-0258/final-long-hint-apply-402-reduced-true-natural-handoff.json",
+      "sha256": "8fdf9fc7566b0dcb4f094df5dabacb2e1eadbe68463e21b17b818f0110acca42",
+      "sourceRun": "original-0258-app-final",
+      "fixture": "Existing synthetic long-copy saved-preview test, real hint cells/rule/use",
+      "kind": "display_link_samples"
+    },
+    {
+      "path": "Docs/original-feel-0258/final-long-hint-apply-402-reduced-true-after-apply-natural-79ms.png",
+      "sha256": "a92837c9c5106414647f842ecbfb0fdc09f50b4e3550f70e6b1462b60f6766bf",
+      "sourceRun": "original-0258-app-final",
+      "fixture": "Existing synthetic long-copy saved-preview test, real hint cells/rule/use",
+      "kind": "natural_root_frame"
+    },
+    {
+      "path": "Docs/original-feel-0258/final-long-hint-apply-402-reduced-true-preview-before-apply.png",
+      "sha256": "5107c31cc49705d88cf7e9158b7466e59bc3d7de6f2e891f5aeb2e0abdba9c0a",
+      "sourceRun": "original-0258-app-final",
+      "fixture": "Existing synthetic long-copy saved-preview test, real hint cells/rule/use",
+      "kind": "natural_root_frame"
+    },
+    {
+      "path": "Docs/original-feel-0258/final-long-hint-apply-402-reduced-false-natural-handoff.json",
+      "sha256": "0ee1f4731b64cb234a6faebb5df71904c8187f5f9895275a440c46c536c9912b",
+      "sourceRun": "original-0258-app-final",
+      "fixture": "Existing synthetic long-copy saved-preview test, real hint cells/rule/use",
+      "kind": "display_link_samples"
+    },
+    {
+      "path": "Docs/original-feel-0258/final-long-hint-apply-402-reduced-false-after-apply-natural-78ms.png",
+      "sha256": "792d84e3e6fe79475149da78a752071f8166c484168452e9254eeec566dd8122",
+      "sourceRun": "original-0258-app-final",
+      "fixture": "Existing synthetic long-copy saved-preview test, real hint cells/rule/use",
+      "kind": "natural_root_frame"
+    },
+    {
+      "path": "Docs/original-feel-0258/final-long-hint-apply-402-reduced-false-preview-before-apply.png",
+      "sha256": "5107c31cc49705d88cf7e9158b7466e59bc3d7de6f2e891f5aeb2e0abdba9c0a",
+      "sourceRun": "original-0258-app-final",
+      "fixture": "Existing synthetic long-copy saved-preview test, real hint cells/rule/use",
+      "kind": "natural_root_frame"
+    },
+    {
+      "path": "Docs/original-feel-0258/final-long-hint-apply-320-reduced-true-natural-handoff.json",
+      "sha256": "8d8c92c8f3fb09bf42ec0077b83ade5e463ef9c029cf397c5c2899507413a67d",
+      "sourceRun": "original-0258-app-final",
+      "fixture": "Existing synthetic long-copy saved-preview test, real hint cells/rule/use",
+      "kind": "display_link_samples"
+    },
+    {
+      "path": "Docs/original-feel-0258/final-long-hint-apply-320-reduced-true-after-apply-natural-81ms.png",
+      "sha256": "3eac71074b679855ce296537c608e13e12ebdc4452a2e6a49544c1249b501012",
+      "sourceRun": "original-0258-app-final",
+      "fixture": "Existing synthetic long-copy saved-preview test, real hint cells/rule/use",
+      "kind": "natural_root_frame"
+    },
+    {
+      "path": "Docs/original-feel-0258/final-long-hint-apply-320-reduced-true-preview-before-apply.png",
+      "sha256": "5f9c5ac3005f8baac3fc878a0940c405670cf4d2ce6ba5d66476ffe683a0603e",
+      "sourceRun": "original-0258-app-final",
+      "fixture": "Existing synthetic long-copy saved-preview test, real hint cells/rule/use",
+      "kind": "natural_root_frame"
+    },
+    {
+      "path": "Docs/original-feel-0258/final-long-hint-apply-320-reduced-false-natural-handoff.json",
+      "sha256": "f13927db1b1ee601c8d68da669c9ec1c6688ad3a5e083363caca6e023cf6050a",
+      "sourceRun": "original-0258-app-final",
+      "fixture": "Existing synthetic long-copy saved-preview test, real hint cells/rule/use",
+      "kind": "display_link_samples"
+    },
+    {
+      "path": "Docs/original-feel-0258/final-long-hint-apply-320-reduced-false-after-apply-natural-78ms.png",
+      "sha256": "ca1e22d1ec41d8567db4052252c4e41f503f879c019f085d57dd81d73d3c13b7",
+      "sourceRun": "original-0258-app-final",
+      "fixture": "Existing synthetic long-copy saved-preview test, real hint cells/rule/use",
+      "kind": "natural_root_frame"
+    },
+    {
+      "path": "Docs/original-feel-0258/final-long-hint-apply-320-reduced-false-preview-before-apply.png",
+      "sha256": "5f9c5ac3005f8baac3fc878a0940c405670cf4d2ce6ba5d66476ffe683a0603e",
+      "sourceRun": "original-0258-app-final",
+      "fixture": "Existing synthetic long-copy saved-preview test, real hint cells/rule/use",
+      "kind": "natural_root_frame"
+    },
+    {
+      "path": "Docs/original-feel-0258/final-long-hint-apply.mov",
+      "sha256": "6d975489f1a0f730a45aa00f1d690447cc6790f5912c4a46409fc56566384a2a",
+      "sourceRun": "original-0258-app-final",
+      "kind": "simulator_test_host_video",
+      "inspection": "Individual before/after Root screenshots and display-link samples inspected; entire movie not frame-by-frame reviewed."
+    }
+  ]
+}
