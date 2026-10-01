@@ -1,0 +1,124 @@
+{
+  "build": "0.2.22 (25)",
+  "date": "2026-10-01",
+  "status": "verified_scoped_demo_feedback_not_formal_acceptance",
+  "authority": "Original Word remains authoritative; Chinese default is the explicit user override. Checklist guides verification. Meowdoku observation is not a frozen Pawdoku baseline.",
+  "sourceParagraphs": [
+    127,
+    129,
+    130,
+    133,
+    134,
+    136,
+    252,
+    253,
+    254,
+    303,
+    304,
+    305,
+    306,
+    337,
+    338,
+    339,
+    341,
+    342,
+    343
+  ],
+  "changes": [
+    "Immediate non-writing contact highlight uses the existing recognizers; committed X draws in and removal fades/shrinks. Double-tap arbitration and Core are unchanged.",
+    "Correct committed cells pop with a ring and up to four stars travel to the found-count pill; pill pulses on arrival. Actual positive score deltas and repeated same-tier Combo acknowledgement are shown.",
+    "Combo moved to a reserved slot above the board after screenshot review found overlap with the level number. Board remains square with no scroll ancestor.",
+    "Next/revive/restart actions enter immediately. Only result decoration waits briefly to expose final-cell feedback; Core state, saving and input locking remain immediate. Restored/background/reduced-motion results bypass decorative waiting.",
+    "Retained prepared UIKit haptic generators; light mark/undo/swipe throttle, distinct accepted correct/error/win patterns, no extra Combo pulse; switches and page/overlay/ad/background/interruption gates apply.",
+    "Session replacement, background and hiding clear transient feedback; old callbacks cannot remove new effects. Internal motion override and UIKit reduce-motion configuration are connected."
+  ],
+  "demoPresentationParameters": {
+    "cellPopSeconds": 0.32,
+    "markAddSeconds": 0.16,
+    "markRemoveSeconds": 0.13,
+    "starFlightSeconds": 0.44,
+    "starRemovalSeconds": 0.58,
+    "resultDecorationWonSeconds": 0.48,
+    "resultDecorationLostSeconds": 0.6,
+    "lightHapticMinimumSeconds": 0.06,
+    "formalReferenceValues": false,
+    "appliesOnlyToPresentation": true
+  },
+  "applicationTests": {
+    "device": "iPhone 17 Pro simulator / iOS 26.5",
+    "passed": 319,
+    "failed": 0,
+    "skipped": 0,
+    "scope": "All CapydokuAppTests, no exclusions; includes 24 new feedback tests (7 board, 10 haptic, 6 presentation, 1 actual-view visual/layout test).",
+    "bundle": "Validation/test-runs/original-0222-app-layout-final.xcresult",
+    "log": "Validation/test-runs/original-0222-app-layout-final.log"
+  },
+  "uiTests": {
+    "device": "iPhone 17e simulator / iOS 26.5",
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "bundle": "Validation/test-runs/original-0222-17e-ui.xcresult",
+    "cases": [
+      "testGuidedTutorialCoversRulesTapUndoBothSwipesAndFind",
+      "testToolsResumeAfterNativeTapDoubleTapAndPanRecognizersFinish",
+      "testSolveEntirePuzzleAndAdvance",
+      "testLoseAndSimulatedRevivePreservesBoard"
+    ],
+    "fixtureBoundary": "Guided tutorial uses current packaged L1. Other three use the preserved deterministic test fixture; not an all-150 current-pack playthrough."
+  },
+  "visualEvidence": "Docs/original-feel-0222/manifest.json",
+  "referenceObservation": "Validation/meowdoku-reference-observation-0222.md",
+  "audio": {
+    "manifest": "Resources/audio-manifest.json",
+    "referenceVerified": false,
+    "newAudioAdded": false,
+    "soundAcceptance": "pending_original_resources_and_timing; haptic tests are not audio listening tests"
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "latestCoreEvidenceBuild": "0.2.21 (24)",
+    "latestCorePassed": 169,
+    "rerunThisBuild": false,
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "historicalIterations": [
+    {
+      "log": "Validation/test-runs/original-0222-build-initial.log",
+      "result": "build_failed_during_parallel_board_edit",
+      "resolution": "Completed missing lifecycle methods before final build."
+    },
+    {
+      "log": "Validation/test-runs/original-0222-app.log",
+      "result": "compile_failed",
+      "resolution": "Test used private canTouchBoard; replaced with actual attempts to mutate terminal board and unchanged-state assertion."
+    },
+    {
+      "log": "Validation/test-runs/original-0222-app-r2.log",
+      "result": "compile_failed",
+      "resolution": "Corrected new test call from nonexistent tap to AppModel.toggle."
+    },
+    {
+      "log": "Validation/test-runs/original-0222-app-r3.log",
+      "result": "compile_failed",
+      "resolution": "SwiftUI system reduce-motion environment is read-only; used custom optional override with system fallback."
+    },
+    {
+      "bundle": "Validation/test-runs/original-0222-app-r4.xcresult",
+      "passed": 319,
+      "role": "Intermediate build; result actions were delayed and screenshot review found Combo overlap."
+    },
+    {
+      "bundle": "Validation/test-runs/original-0222-app-final.xcresult",
+      "passed": 319,
+      "role": "Result actions fixed; superseded by final Combo layout correction and visual assertions."
+    }
+  ],
+  "physicalInstall": "Validation/original-0222-physical-install.json",
+  "notVerified": [
+    "Reference app installation/play: local store region unavailable; only third-party visual observations acquired. Exact user-selected app still awaits share link.",
+    "Original audio files, sound/voice mix and audiovisual timing.",
+    "Physical haptic feel, complete gesture/gameplay/recovery, system Reduce Motion, old iOS or measured low-end frame rate.",
+    "Frozen difficulty, external SDK/service integration, TestFlight/App Store release."
+  ]
+}

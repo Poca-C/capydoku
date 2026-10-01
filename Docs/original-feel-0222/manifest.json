@@ -1,0 +1,56 @@
+{
+  "build": "0.2.22 (25)",
+  "sourceBundle": "Validation/test-runs/original-0222-app-layout-final.xcresult",
+  "device": "iPhone 17 Pro simulator / iOS 26.5",
+  "method": "Actual RootView hosted on UIWindow, real AppModel actions; 7 selected samples visually reviewed. GameFeelVisualTests uses current L6 and OriginalRewardVisualTests current L1 with tutorial completed. Sampling time is not a measured animation duration.",
+  "findings": [
+    "Initial Combo badge overlapped the level number; final dedicated slot stays above board and below rule strip. Layout assertions added.",
+    "Star/cell feedback remain visible on final move; next/revive controls appear before decorative darkening and character entrance.",
+    "Flight source/destination share UIKit window coordinates.",
+    "Temporary Demo timings; no frozen-reference, audio listening, physical haptic, or frame-rate acceptance claim."
+  ],
+  "images": [
+    {
+      "file": "01-correct-flight.png",
+      "sourceAttachment": "Validation/test-runs/original-0222-visual-final/F39E04C1-F214-42DA-9264-55105C735955.png",
+      "sha256": "d1cd0cb2ec03fb0a190b0cdf514c328161b634f3bf02813d56d92b2a0504761d",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "02-correct-combo.png",
+      "sourceAttachment": "Validation/test-runs/original-0222-visual-final/3463C43A-3BEC-41D3-8FA9-B14961B202F0.png",
+      "sha256": "3f2aef8c9605d0f68e466ab94a670aae63d1adba201c78673bf42e14ba1281a4",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "03-combo-settled.png",
+      "sourceAttachment": "Validation/test-runs/original-0222-visual-final/76CBC8E1-2C72-408F-9F71-CC044CC5F510.png",
+      "sha256": "83cce5589130476c56e8b93022ca3d8d5e7e58d96229afbb80729ce0db9a3612",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "04-final-move-actions-ready.png",
+      "sourceAttachment": "Validation/test-runs/original-0222-visual-final/71138040-FA03-4E60-871F-FE45058D3DC5.png",
+      "sha256": "1ec7097f14870be94627741ac338c62752b27a86324c4fe3a55ac5ece65bda4c",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "05-win.png",
+      "sourceAttachment": "Validation/test-runs/original-0222-visual-final/6319C027-4F6D-4E68-868C-9AB70FD87A8B.png",
+      "sha256": "be118dcbc748f3e3e99be8a46154f267fbc3b3dd22619c405d4afbe34e540473",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "06-final-error-actions-ready.png",
+      "sourceAttachment": "Validation/test-runs/original-0222-result-final/F2F33450-AEF3-489B-960F-4C2B158C26F7.png",
+      "sha256": "aa76b595a74ccf245ae844311ac7f8438112221d3ea4a5cc516f2a6e6178c868",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "07-loss.png",
+      "sourceAttachment": "Validation/test-runs/original-0222-result-final/A09F186E-A83E-4977-AA33-08F366AE696B.png",
+      "sha256": "82b0d14263a155be76a037b435ac70e9652dfa3ee3956f308564be54c20dbdd1",
+      "visuallyReviewed": true
+    }
+  ]
+}

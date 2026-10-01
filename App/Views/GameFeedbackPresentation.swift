@@ -6,6 +6,7 @@ import Combine
 @MainActor final class GameFeedbackPresentation: ObservableObject {
     typealias Schedule = (TimeInterval, @escaping () -> Void) -> Void
     @Published private(set) var comboText: String?
+    @Published private(set) var comboRevision = UUID()
     @Published private(set) var showLastLife = false
     private var comboToken = UUID()
     private var lifeToken = UUID()
@@ -29,6 +30,7 @@ import Combine
         guard presentationEnabled, let presentation else { return }
         let show = { [weak self] in
             guard let self, self.comboToken == token else { return }
+            self.comboRevision = UUID()
             self.comboText = presentation.text
             // This visible duration is still temporary; only the starting delay
             // comes from the verified audio mapping when it has been supplied.

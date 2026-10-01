@@ -1,0 +1,51 @@
+{
+  "build": "0.2.22 (25)",
+  "timestampUTC": "2026-10-01T05:36:39.850517+00:00",
+  "device": {
+    "model": "iPhone 14 Pro Max",
+    "os": "26.3.1",
+    "transport": "localNetwork"
+  },
+  "package": {
+    "version": "0.2.22",
+    "build": "25",
+    "bundle": "com.capydoku.demo",
+    "profileIncludesPhone": true,
+    "profileExpiresUTC": "2026-10-08 04:04:05",
+    "binarySHA256": "e7e339bef6dfd81de83309fe27ab5e89f7f78386e40f5bbfe93421d976bc1fe6"
+  },
+  "signature": {
+    "strictVerification": true,
+    "buildLog": "Validation/test-runs/original-0222-physical-layout-final.log"
+  },
+  "installation": {
+    "passed": true,
+    "resetOrUninstall": false,
+    "normalBundleIdentifier": "com.capydoku.demo",
+    "verifiedVersion": "0.2.22",
+    "verifiedBuild": "25",
+    "result": "Validation/test-runs/physical-0222-install.json"
+  },
+  "launch": {
+    "passed": true,
+    "noTestArguments": true,
+    "terminatedExistingProcess": false,
+    "result": "Validation/test-runs/physical-0222-launch.json"
+  },
+  "data": {
+    "installationPreservedAllEightObservedFilesByteForByte": true,
+    "validPrimaryAndBackupChecksumsAllThreeSnapshots": true,
+    "historicalEventsUnchanged": 71,
+    "eventsAfterLaunch": 96,
+    "identityNamespaceUnchanged": true,
+    "postLaunchFullPlayerEquality": false,
+    "reason": "Snapshot after launch contains new foreground game activity: level 5 to 6, tool/reward and level events. No scripted game input was sent to the phone. Therefore only installation-time exact preservation and retained history/identity are asserted, not equality after active play.",
+    "evidence": [
+      "Validation/test-runs/physical-0222-install-data-check.json",
+      "Validation/test-runs/physical-0222-before-copy.json",
+      "Validation/test-runs/physical-0222-after-install-copy.json",
+      "Validation/test-runs/physical-0222-after-launch-copy.json"
+    ]
+  },
+  "acceptanceBoundary": "Development install and normal launch verified; local post-launch game events are observation, not supervised physical gesture, haptic or audiovisual acceptance. No TestFlight/App Store upload. Private device and user identifiers omitted."
+}

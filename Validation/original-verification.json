@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "date": "2026-10-01",
-  "build": "0.2.21 (24)",
+  "build": "0.2.22 (25)",
   "status": "Partial original-spec alignment; remaining client, reference and release gaps open.",
   "originalSHA256": "274bbf15f031bd80bb8b360cf14c0266acff370a230d9cad1b1785461df54dd2",
   "currentPackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49",
@@ -672,14 +672,14 @@
   ],
   "historicalFailuresRetained": "Initial UI/app runs and first full-core run failed on changed fixture assumptions or real UI issues; these are retained under Validation/test-runs. Only explicitly listed successful reruns count. Old 88-item checklist completion counts are superseded.",
   "applicationTests": {
-    "build": "0.2.20 (23)",
-    "passed": 293,
+    "build": "0.2.22 (25)",
+    "device": "iPhone 17 Pro simulator / iOS 26.5",
+    "passed": 319,
     "failed": 0,
     "skipped": 0,
-    "seconds": 115.191,
-    "bundle": "Validation/test-runs/original-0220-app.xcresult",
-    "scope": "All AppTests, no exclusions, on iPhone 17 Pro. Includes 12 new build/identity tests: cross-environment queues and prepared/related events with shared identity, real Keychain non-adoption and container move, hand-authored pre-change Demo queue, fail-closed service settings. No real service transport.",
-    "currentBuildScope": "Latest complete App suite remains 293 tests from 0.2.20. Version 0.2.21 ran the nine targeted check-in/reward tests listed in corrections0221; do not relabel this full run."
+    "scope": "All CapydokuAppTests, no exclusions; includes 24 new feedback tests (7 board, 10 haptic, 6 presentation, 1 actual-view visual/layout test).",
+    "bundle": "Validation/test-runs/original-0222-app-layout-final.xcresult",
+    "log": "Validation/test-runs/original-0222-app-layout-final.log"
   },
   "supersededOrInterruptedRuns": [
     "reward-readiness-final was intentionally interrupted to stop two runners targeting one simulator; not counted as success.",
@@ -722,95 +722,13 @@
     }
   ],
   "buildVerification": {
-    "bundleVersion": "0.2.21 (24)",
-    "simulatorDebug": "passed with local simulator signing",
-    "simulatorLog": "Validation/test-runs/original-0221-checkin-app-final.log",
-    "genericIOSReleaseUnsigned": "passed",
-    "releaseLog": "Validation/test-runs/original-0221-release.log",
-    "resolvedBuildSettings": "Validation/original-0221-build-settings.json",
-    "sourceDocumentSHA256Unchanged": true,
-    "normalInstallEvidence": "Validation/original-0221-install-audit.json",
-    "normalInstallDevices": [
-      {
-        "device": "iPhone 17 Pro",
-        "deviceID": "3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3",
-        "version": "0.2.21 (24)",
-        "dataContainerChanged": true,
-        "launch": "com.capydoku.demo: 72704",
-        "installBytesUnchanged": true,
-        "launchPlayerStateUnchanged": true,
-        "allEnvelopeChecksumsValid": true,
-        "primarySchemaAfterLaunch": 4,
-        "tutorialPlanVersionAfterLaunch": 1,
-        "analyticsHistoryUnchanged": true,
-        "firstOpenNotDuplicated": true,
-        "identityNamespaceUnchanged": true,
-        "launchBytesUnchanged": false,
-        "before": {
-          "progress.json": {
-            "bytes": 3778,
-            "sha256": "8be2d1ba89dfb61d97191819806dd0e4024453344c034178e385805015a96e55"
-          },
-          "progress.backup.json": {
-            "bytes": 3778,
-            "sha256": "00bd9fec2adcbbc7e4b5319b113afd3f4b2c854450df63bc4a8ccb336e709f07"
-          }
-        },
-        "afterLaunch": {
-          "progress.json": {
-            "bytes": 3778,
-            "sha256": "e15ab1b31803df0d58f94d03b316d7833caae19dc6bf9e7003c8a0e555a727aa"
-          },
-          "progress.backup.json": {
-            "bytes": 3778,
-            "sha256": "8be2d1ba89dfb61d97191819806dd0e4024453344c034178e385805015a96e55"
-          }
-        }
-      },
-      {
-        "device": "iPhone 17e",
-        "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
-        "version": "0.2.21 (24)",
-        "dataContainerChanged": true,
-        "launch": "com.capydoku.demo: 72744",
-        "installBytesUnchanged": true,
-        "launchPlayerStateUnchanged": true,
-        "allEnvelopeChecksumsValid": true,
-        "primarySchemaAfterLaunch": 4,
-        "tutorialPlanVersionAfterLaunch": 1,
-        "analyticsHistoryUnchanged": null,
-        "firstOpenNotDuplicated": null,
-        "identityNamespaceUnchanged": null,
-        "launchBytesUnchanged": true,
-        "before": {
-          "progress.json": {
-            "bytes": 1110,
-            "sha256": "0d93a250abca328e2616bd599035c05d823cfe5cf9f7248907d620f9b827243c"
-          },
-          "progress.backup.json": {
-            "bytes": 1110,
-            "sha256": "0d93a250abca328e2616bd599035c05d823cfe5cf9f7248907d620f9b827243c"
-          }
-        },
-        "afterLaunch": {
-          "progress.json": {
-            "bytes": 1110,
-            "sha256": "0d93a250abca328e2616bd599035c05d823cfe5cf9f7248907d620f9b827243c"
-          },
-          "progress.backup.json": {
-            "bytes": 1110,
-            "sha256": "0d93a250abca328e2616bd599035c05d823cfe5cf9f7248907d620f9b827243c"
-          }
-        }
-      }
-    ],
-    "signingAndDeviceExecution": "Demo Debug normally updated on both simulators; unsigned device Release and historical generic signed Debug compile passed. A fresh device-targeted Debug rebuild passed strict local codesign verification with a new profile containing KKKiPhone. Wireless installation succeeded and the device reports 0.2.21 (24). Initial automatic launch failed pending developer trust; after the user confirmed trust and manually opened the app, a read-only query verified Capydoku running (PID 11651). This confirms physical installation and launch, not successful automatic-launch retry, full physical gameplay, minimum-runtime, TestFlight distribution or App Store acceptance.",
-    "candidateSupplement": "0.2.21 optimized three-candidate rebuild/normal-install and recorded L1 playthrough verified separately in candidatePlaythrough0221; previous device Production build remains 0.2.20.",
-    "genericIOSSignedDebug": "passed in the historical preflight with the previous profile, which excluded the phone; superseded for the current device-install state by physicalInstall0221",
-    "signedDebugLog": "Validation/test-runs/original-0221-signed-device-build.log",
-    "physicalIOSSignedDebug": "fresh device-targeted Debug build and strict local signature verification passed; new embedded profile includes the target phone",
-    "physicalDebugLog": "Validation/test-runs/original-0221-iphone-wireless-fresh-build.log",
-    "physicalInstallEvidence": "Validation/original-0221-physical-install.json"
+    "bundleVersion": "0.2.22 (25)",
+    "simulatorDebug": "passed locally signed, full App test host and selected UI tests",
+    "physicalDebugSigned": "passed strict codesign verification",
+    "physicalBuildLog": "Validation/test-runs/original-0222-physical-layout-final.log",
+    "physicalInstallEvidence": "Validation/original-0222-physical-install.json",
+    "genericIOSReleaseUnsigned": "not rerun this version; latest evidence 0.2.21",
+    "normalSimulatorInstall": "No normal launch claimed this round; test bundles installed by Xcode use dedicated test data directories."
   },
   "audioContract": {
     "policyTestsPassed": 13,
@@ -1049,6 +967,16 @@
       "seconds": 104.114,
       "bundle": "Validation/test-runs/original-0219-app-final-recheck.xcresult",
       "scope": "Complete AppTests on iPhone 17 Pro with no exclusions. New schema3 absent-field migration tests preserve each legacy step/target and partial swipe; v2 restores every step over packaged and eight generated boards. Chinese/English copy checked for both plan versions."
+    },
+    {
+      "build": "0.2.20 (23)",
+      "passed": 293,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 115.191,
+      "bundle": "Validation/test-runs/original-0220-app.xcresult",
+      "scope": "All AppTests, no exclusions, on iPhone 17 Pro. Includes 12 new build/identity tests: cross-environment queues and prepared/related events with shared identity, real Keychain non-adoption and container move, hand-authored pre-change Demo queue, fail-closed service settings. No real service transport.",
+      "currentBuildScope": "Latest complete App suite remains 293 tests from 0.2.20. Version 0.2.21 ran the nine targeted check-in/reward tests listed in corrections0221; do not relabel this full run."
     }
   ],
   "remoteConfigurationContract": {
@@ -1716,6 +1644,97 @@
       ],
       "sourceDocumentSHA256Unchanged": true,
       "signingAndDeviceExecution": "Demo Debug and three optimized candidates locally signed for simulator. Device Release and Production candidate compile unsigned. Three new IDs are placeholders, not publisher registrations. No physical device, TestFlight upload or App Store claim."
+    },
+    {
+      "bundleVersion": "0.2.21 (24)",
+      "simulatorDebug": "passed with local simulator signing",
+      "simulatorLog": "Validation/test-runs/original-0221-checkin-app-final.log",
+      "genericIOSReleaseUnsigned": "passed",
+      "releaseLog": "Validation/test-runs/original-0221-release.log",
+      "resolvedBuildSettings": "Validation/original-0221-build-settings.json",
+      "sourceDocumentSHA256Unchanged": true,
+      "normalInstallEvidence": "Validation/original-0221-install-audit.json",
+      "normalInstallDevices": [
+        {
+          "device": "iPhone 17 Pro",
+          "deviceID": "3AF0BBC2-7448-4A6A-8ECE-A8DC1032A7B3",
+          "version": "0.2.21 (24)",
+          "dataContainerChanged": true,
+          "launch": "com.capydoku.demo: 72704",
+          "installBytesUnchanged": true,
+          "launchPlayerStateUnchanged": true,
+          "allEnvelopeChecksumsValid": true,
+          "primarySchemaAfterLaunch": 4,
+          "tutorialPlanVersionAfterLaunch": 1,
+          "analyticsHistoryUnchanged": true,
+          "firstOpenNotDuplicated": true,
+          "identityNamespaceUnchanged": true,
+          "launchBytesUnchanged": false,
+          "before": {
+            "progress.json": {
+              "bytes": 3778,
+              "sha256": "8be2d1ba89dfb61d97191819806dd0e4024453344c034178e385805015a96e55"
+            },
+            "progress.backup.json": {
+              "bytes": 3778,
+              "sha256": "00bd9fec2adcbbc7e4b5319b113afd3f4b2c854450df63bc4a8ccb336e709f07"
+            }
+          },
+          "afterLaunch": {
+            "progress.json": {
+              "bytes": 3778,
+              "sha256": "e15ab1b31803df0d58f94d03b316d7833caae19dc6bf9e7003c8a0e555a727aa"
+            },
+            "progress.backup.json": {
+              "bytes": 3778,
+              "sha256": "8be2d1ba89dfb61d97191819806dd0e4024453344c034178e385805015a96e55"
+            }
+          }
+        },
+        {
+          "device": "iPhone 17e",
+          "deviceID": "D0DDFE2D-ADC4-47F8-A78A-37AAF5A5443A",
+          "version": "0.2.21 (24)",
+          "dataContainerChanged": true,
+          "launch": "com.capydoku.demo: 72744",
+          "installBytesUnchanged": true,
+          "launchPlayerStateUnchanged": true,
+          "allEnvelopeChecksumsValid": true,
+          "primarySchemaAfterLaunch": 4,
+          "tutorialPlanVersionAfterLaunch": 1,
+          "analyticsHistoryUnchanged": null,
+          "firstOpenNotDuplicated": null,
+          "identityNamespaceUnchanged": null,
+          "launchBytesUnchanged": true,
+          "before": {
+            "progress.json": {
+              "bytes": 1110,
+              "sha256": "0d93a250abca328e2616bd599035c05d823cfe5cf9f7248907d620f9b827243c"
+            },
+            "progress.backup.json": {
+              "bytes": 1110,
+              "sha256": "0d93a250abca328e2616bd599035c05d823cfe5cf9f7248907d620f9b827243c"
+            }
+          },
+          "afterLaunch": {
+            "progress.json": {
+              "bytes": 1110,
+              "sha256": "0d93a250abca328e2616bd599035c05d823cfe5cf9f7248907d620f9b827243c"
+            },
+            "progress.backup.json": {
+              "bytes": 1110,
+              "sha256": "0d93a250abca328e2616bd599035c05d823cfe5cf9f7248907d620f9b827243c"
+            }
+          }
+        }
+      ],
+      "signingAndDeviceExecution": "Demo Debug normally updated on both simulators; unsigned device Release and historical generic signed Debug compile passed. A fresh device-targeted Debug rebuild passed strict local codesign verification with a new profile containing KKKiPhone. Wireless installation succeeded and the device reports 0.2.21 (24). Initial automatic launch failed pending developer trust; after the user confirmed trust and manually opened the app, a read-only query verified Capydoku running (PID 11651). This confirms physical installation and launch, not successful automatic-launch retry, full physical gameplay, minimum-runtime, TestFlight distribution or App Store acceptance.",
+      "candidateSupplement": "0.2.21 optimized three-candidate rebuild/normal-install and recorded L1 playthrough verified separately in candidatePlaythrough0221; previous device Production build remains 0.2.20.",
+      "genericIOSSignedDebug": "passed in the historical preflight with the previous profile, which excluded the phone; superseded for the current device-install state by physicalInstall0221",
+      "signedDebugLog": "Validation/test-runs/original-0221-signed-device-build.log",
+      "physicalIOSSignedDebug": "fresh device-targeted Debug build and strict local signature verification passed; new embedded profile includes the target phone",
+      "physicalDebugLog": "Validation/test-runs/original-0221-iphone-wireless-fresh-build.log",
+      "physicalInstallEvidence": "Validation/original-0221-physical-install.json"
     }
   ],
   "feedbackCorrection": {
@@ -3037,5 +3056,10 @@
       "automaticLaunchRetry": "not claimed"
     },
     "diagnosis": "Initial developer trust was incomplete. The user then confirmed trust and opening the app; a read-only process query verified it was running."
+  },
+  "feedbackUpdate0222": {
+    "evidence": "Validation/original-0222-feedback.json",
+    "checklistDelta": "Validation/checklist-0222-feedback-delta.json",
+    "referenceObservation": "Validation/meowdoku-reference-observation-0222.md"
   }
 }

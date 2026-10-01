@@ -1,0 +1,208 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.22 (25)",
+  "kind": "scoped_delta_to_88_item_audit",
+  "baseAudit": "Validation/checklist-0221-audit.json",
+  "sourceChecklist": "Validation/checklist-source.json",
+  "sourceCaseCount": 88,
+  "formalSignOff": false,
+  "full88Reexecuted": false,
+  "overallCountsRecomputed": false,
+  "unchangedStatusReason": "本轮补已实现反馈的测试证据，不将参考/原音/真机性能缺口自动勾为完成；0.2.21只读历史记录保留。",
+  "stillOpen": [
+    "14-04原音频仍pending",
+    "14-03动效精确节奏/角色帧/真机仍partial",
+    "11-04原音频及真实听感仍partial",
+    "16-01/16-02完整真机和性能不由模拟器结果替代",
+    "REF-01未因Meowdoku第三方录像而通过"
+  ],
+  "rows": [
+    {
+      "id": "04-02",
+      "title": "单击标记与撤销",
+      "originalAcceptanceText": "操作  单击空格，再次单击该X。\n通过  添加后可撤销；生命、分数和找到数量不变。",
+      "originalRequirementIDs": [
+        "PLAY-02"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "7项棋盘与10项触感测试；真实UIKit手势后道具恢复及当前包九步教学通过。即时按压只改视觉，双击优先和Core判定保持。",
+      "evidence": [
+        "Validation/original-0222-feedback.json",
+        "Docs/original-feel-0222/manifest.json"
+      ]
+    },
+    {
+      "id": "04-03",
+      "title": "正确双击只提交一次",
+      "originalAcceptanceText": "操作  双击正确空格和带普通X的正确格。\n通过  各提交一次，清除原X并显示动物；不为其他格自动打叉。",
+      "originalRequirementIDs": [
+        "PLAY-02",
+        "PLAY-06"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "7项棋盘与10项触感测试；真实UIKit手势后道具恢复及当前包九步教学通过。即时按压只改视觉，双击优先和Core判定保持。",
+      "evidence": [
+        "Validation/original-0222-feedback.json",
+        "Docs/original-feel-0222/manifest.json"
+      ]
+    },
+    {
+      "id": "04-04",
+      "title": "错误双击反馈幂等",
+      "originalAcceptanceText": "操作  双击错误格，观察整个手势和动画。\n通过  只扣一次生命并反馈一次；不出现额外提交或临时X残留。",
+      "originalRequirementIDs": [
+        "PLAY-02",
+        "PLAY-13"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "7项棋盘与10项触感测试；真实UIKit手势后道具恢复及当前包九步教学通过。即时按压只改视觉，双击优先和Core判定保持。",
+      "evidence": [
+        "Validation/original-0222-feedback.json",
+        "Docs/original-feel-0222/manifest.json"
+      ]
+    },
+    {
+      "id": "04-05",
+      "title": "横纵滑动与保护格",
+      "originalAcceptanceText": "操作  横纵滑过空格、已有X、动物及锁定格，再斜滑。\n通过  只新增允许的X，不覆盖保护格；斜向不批量标记。",
+      "originalRequirementIDs": [
+        "PLAY-02"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "7项棋盘与10项触感测试；真实UIKit手势后道具恢复及当前包九步教学通过。即时按压只改视觉，双击优先和Core判定保持。",
+      "evidence": [
+        "Validation/original-0222-feedback.json",
+        "Docs/original-feel-0222/manifest.json"
+      ]
+    },
+    {
+      "id": "04-06",
+      "title": "快速手势切换",
+      "originalAcceptanceText": "操作  快速切换单击、双击和滑动，并中途离开棋盘。\n通过  手势不串扰、不重复扣血；双击优先，滑动结束后不继续标记。",
+      "originalRequirementIDs": [
+        "PLAY-02"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "7项棋盘与10项触感测试；真实UIKit手势后道具恢复及当前包九步教学通过。即时按压只改视觉，双击优先和Core判定保持。",
+      "evidence": [
+        "Validation/original-0222-feedback.json",
+        "Docs/original-feel-0222/manifest.json"
+      ]
+    },
+    {
+      "id": "05-01",
+      "title": "游戏信息与计分显示",
+      "originalAcceptanceText": "操作  核对Level、Score、进度、生命和规则卡。\n通过  显示与真实状态及冻结计分规则一致，不能只更新画面而不更新存档。",
+      "originalRequirementIDs": [
+        "UI-06",
+        "PLAY-10"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "实际正向分数、飞星汇入、重复Combo、终局锁输入与恢复不重播通过；下一关/复活立即可用，仅装饰延后。通关和模拟复活真实UI通过。",
+      "evidence": [
+        "Validation/original-0222-feedback.json",
+        "Docs/original-feel-0222/manifest.json"
+      ]
+    },
+    {
+      "id": "05-02",
+      "title": "最后一命通关幂等",
+      "originalAcceptanceText": "操作  剩一条命时找到最后一只动物，再快速点击。\n通过  仍判胜利且立即锁定输入；奖励、分数和结算只执行一次。",
+      "originalRequirementIDs": [
+        "PLAY-10"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "实际正向分数、飞星汇入、重复Combo、终局锁输入与恢复不重播通过；下一关/复活立即可用，仅装饰延后。通关和模拟复活真实UI通过。",
+      "evidence": [
+        "Validation/original-0222-feedback.json",
+        "Docs/original-feel-0222/manifest.json"
+      ]
+    },
+    {
+      "id": "05-03",
+      "title": "一命提醒与失败",
+      "originalAcceptanceText": "操作  观察仅剩一条命的提示，再扣完最后一条命。\n通过  提示与基线一致；生命停在0，失败弹层仅出现一次。",
+      "originalRequirementIDs": [
+        "PLAY-12",
+        "PLAY-11"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "实际正向分数、飞星汇入、重复Combo、终局锁输入与恢复不重播通过；下一关/复活立即可用，仅装饰延后。通关和模拟复活真实UI通过。",
+      "evidence": [
+        "Validation/original-0222-feedback.json",
+        "Docs/original-feel-0222/manifest.json"
+      ]
+    },
+    {
+      "id": "05-06",
+      "title": "结算导航与继续",
+      "originalAcceptanceText": "操作  测试结算下一关、返回首页和继续游戏。\n通过  跳转、进度及反馈正确；主动退出保留策略、击败比例和Rank有确认依据。",
+      "originalRequirementIDs": [
+        "PLAY-10",
+        "UI-04"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "实际正向分数、飞星汇入、重复Combo、终局锁输入与恢复不重播通过；下一关/复活立即可用，仅装饰延后。通关和模拟复活真实UI通过。",
+      "evidence": [
+        "Validation/original-0222-feedback.json",
+        "Docs/original-feel-0222/manifest.json"
+      ]
+    },
+    {
+      "id": "11-04",
+      "title": "四开关生效与保存",
+      "originalAcceptanceText": "操作  切换音乐、音效、语音、震动，再关闭重开App。\n通过  即时生效且状态保存；各开关仅控制约定范围。",
+      "originalRequirementIDs": [
+        "UI-07",
+        "AUDIO-01",
+        "AUDIO-05"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "触感开关、后台/广告/中断门禁和轻触节流通过；缺原音频，四开关的完整真实视听验收仍未完成。",
+      "evidence": [
+        "Validation/original-0222-feedback.json",
+        "Docs/original-feel-0222/manifest.json"
+      ]
+    },
+    {
+      "id": "14-03",
+      "title": "游戏奖励动效与降级",
+      "originalAcceptanceText": "操作  触发正确、错误、Combo、通关及签到动效。\n通过  与业务状态同步，不阻碍后续操作；轻量特效在低性能设备可降级。",
+      "originalRequirementIDs": [
+        "ART-02"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "头像/光圈、X出现撤销、飞星、Combo独立区域和胜败分层入场已实现；7张实际Root宿主截图已核对，时序是Demo值。",
+      "evidence": [
+        "Validation/original-0222-feedback.json",
+        "Docs/original-feel-0222/manifest.json"
+      ]
+    },
+    {
+      "id": "16-03",
+      "title": "最终构建全部问题复验",
+      "originalAcceptanceText": "操作  在最终构建复测所有失败用例及受影响流程。\n通过  每个Bug均有关联修复版本、复测结论和证据，旧版本通过不能代替复测。",
+      "originalRequirementIDs": [
+        "TECH-07"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "17 Pro全量319项App和17e四项真实UI通过；设备Debug签名构建通过。Core和关卡未改，169项Core仍属0.2.21。",
+      "evidence": [
+        "Validation/original-0222-feedback.json",
+        "Docs/original-feel-0222/manifest.json"
+      ]
+    }
+  ]
+}

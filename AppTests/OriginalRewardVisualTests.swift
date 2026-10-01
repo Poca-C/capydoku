@@ -19,13 +19,17 @@ private final class OriginalVisualIdentity: AnalyticsIdentityStore {
 private struct OriginalRewardVisualHarness: View {
     @ObservedObject var model: AppModel
     @ObservedObject var environment: OriginalVisualEnvironment
+    let layoutObserver: (String, CGRect) -> Void
     var body: some View {
         RootView(reduceMotionOverride: environment.reduceMotion).environmentObject(model)
             .environment(\.scenePhase, environment.phase)
+            .environment(\.capyLayoutObserver, layoutObserver)
     }
 }
 
 @MainActor private final class OriginalRewardVisualRig {
+    final class Measurements { var frames: [String: CGRect] = [:] }
+    let measurements = Measurements()
     let directory: URL
     let identity = OriginalVisualIdentity()
     let model: AppModel
@@ -41,7 +45,9 @@ private struct OriginalRewardVisualHarness: View {
         model.start(level: 1)
         try configure?(model)
         environment = OriginalVisualEnvironment(reduceMotion: reduceMotion)
-        host = UIHostingController(rootView: OriginalRewardVisualHarness(model: model, environment: environment))
+        let measured = measurements
+        host = UIHostingController(rootView: OriginalRewardVisualHarness(model: model, environment: environment,
+            layoutObserver: { measured.frames[$0] = $1 }))
         let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
         previousWindow = scene.windows.first(where: \.isKeyWindow)
         window = UIWindow(windowScene: scene)
@@ -133,8 +139,11 @@ final class OriginalRewardVisualTests: XCTestCase {
             try capture(rig, "result-\(label)-01-before")
             try finish(rig.model, won: won)
             try await pause(60)
+            XCTAssertNotNil(rig.measurements.frames["result_primary_action"], "Next/revive must be laid out immediately while decoration is delayed.")
             try capture(rig, "result-\(label)-02-early-sample")
-            try await pause(260)
+            try await pause(850)
+            XCTAssertNotNil(rig.measurements.frames[won ? "win_result" : "loss_result"],
+                            "Settled evidence must contain the actual result heading after the final-move feedback window.")
             try capture(rig, "result-\(label)-03-settled")
             let result = try XCTUnwrap(rig.model.session)
             rig.model.submit(result.puzzle.solution[0])

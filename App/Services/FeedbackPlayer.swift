@@ -58,7 +58,7 @@ final class FeedbackPlayer {
     private let schedule: Scheduler
     private let clock: () -> TimeInterval
     private let sessionControl: (Bool) -> Bool
-    private let hapticEmitter: ((FeedbackEvent) -> Void)?
+    private let haptics: HapticFeedbackPlayer
     private let suppressProductionAudio: Bool
     private(set) var environment = FeedbackEnvironment(page: .startup)
     private var blocks: Set<FeedbackAudioBlock> { environment.blocks }
@@ -77,7 +77,8 @@ final class FeedbackPlayer {
     init(manifest: ReferenceAudioManifest? = nil, resourceResolver: ((String) -> URL?)? = nil,
          playerFactory: ((URL) -> AudioPlaybackHandle?)? = nil, scheduler: Scheduler? = nil,
          clock: (() -> TimeInterval)? = nil, sessionControl: ((Bool) -> Bool)? = nil,
-         observeSystem: Bool = true, hapticEmitter: ((FeedbackEvent) -> Void)? = nil) {
+         observeSystem: Bool = true, hapticEmitter: ((FeedbackEvent) -> Void)? = nil,
+         hapticDriver: HapticFeedbackDriver? = nil) {
         self.manifest = manifest ?? Bundle.main.url(forResource: "audio-manifest", withExtension: "json")
             .flatMap { try? Data(contentsOf: $0) }
             .flatMap { try? JSONDecoder().decode(ReferenceAudioManifest.self, from: $0) } ?? .silent
@@ -92,8 +93,11 @@ final class FeedbackPlayer {
             DispatchQueue.main.asyncAfter(deadline: .now() + max(0, delay), execute: work)
             return AudioScheduledTask { work.cancel() }
         }
-        self.clock = clock ?? { ProcessInfo.processInfo.systemUptime }
-        self.hapticEmitter = hapticEmitter
+        let feedbackClock = clock ?? { ProcessInfo.processInfo.systemUptime }
+        self.clock = feedbackClock
+        haptics = HapticFeedbackPlayer(
+            driver: hapticDriver ?? (Self.isTesting || hapticEmitter != nil ? nil : UIKitHapticFeedbackDriver()),
+            clock: feedbackClock, observer: hapticEmitter)
         self.sessionControl = sessionControl ?? { active in
             do {
                 let session = AVAudioSession.sharedInstance()
@@ -130,6 +134,7 @@ final class FeedbackPlayer {
             if settings.music { interrupted = false } // Explicit user re-enable may resume after a non-resumable interruption.
             transition(settings.music ? .musicEnabled : .musicDisabled)
         }
+        syncHaptics()
     }
     func setContext(page: FeedbackAudioPage, level: Int? = nil, overlay: FeedbackAudioOverlay = .none) {
         setEnvironment(FeedbackEnvironment(page: page, level: level, overlay: overlay, blocks: blocks))
@@ -140,6 +145,7 @@ final class FeedbackPlayer {
         let old = environment
         guard old != updated else { return }
         environment = updated
+        syncHaptics()
         let contextChanged = old.page != updated.page || old.level != updated.level || old.overlay != updated.overlay
         let newBlocks = updated.blocks.subtracting(old.blocks)
         if !newBlocks.intersection([.paused, .advertisement, .background]).isEmpty { cancelTransient() }
@@ -200,12 +206,7 @@ final class FeedbackPlayer {
     func play(_ event: FeedbackEvent, acceptedIn context: FeedbackEnvironment? = nil) {
         if case .tap = event { playButton(id: "generic"); return }
         guard context == nil ? blocks.isEmpty : !musicBlocked, !interrupted else { return }
-        // A Combo is an optional configured audio cue, not another physical move.
-        // Dispatching every count must not add a second vibration to correct moves.
-        if case .combo = event {} else if settings.haptic {
-            if let hapticEmitter { hapticEmitter(event) }
-            else if !Self.isTesting { haptic(event) }
-        }
+        haptics.play(event, acceptedIn: context)
         switch event {
         case .tap: break
         case .mark: enqueue("mark_x", acceptedIn: context)
@@ -216,10 +217,10 @@ final class FeedbackPlayer {
         case .win: break // No victory clip is allowed by original chapter 5.
         }
     }
-    func beginSwipe() { endSwipe(cancelled: true); swiping = true }
+    func beginSwipe() { endSwipe(cancelled: true); swiping = true; haptics.prepareForInput() }
     func playMarks(count: Int) {
         guard count > 0, blocks.isEmpty, !interrupted else { return }
-        if settings.haptic && !Self.isTesting { UISelectionFeedbackGenerator().selectionChanged() }
+        haptics.playMarks(count: count)
         guard let clip = playable("swipe_x"), let policy = manifest.swipe else { return }
         if !swiping { swiping = true }
         if policy.mode == .continuous {
@@ -246,6 +247,7 @@ final class FeedbackPlayer {
         sessionReady = false
         if began { interrupted = true; cancelTransient(); transition(.interruptionBegan) }
         else if shouldResume { interrupted = false; transition(.interruptionEnded) }
+        syncHaptics()
         // No shouldResume means no automatic restart, even if a later settings refresh occurs.
     }
     func handleMediaServicesReset() {
@@ -390,13 +392,7 @@ final class FeedbackPlayer {
     private func deactivateIfBlocked() {
         if (musicBlocked || interrupted) && sessionReady { _ = sessionControl(false); sessionReady = false }
     }
-    private func haptic(_ event: FeedbackEvent) {
-        switch event {
-        case .wrong: UINotificationFeedbackGenerator().notificationOccurred(.error)
-        case .win: UINotificationFeedbackGenerator().notificationOccurred(.success)
-        case .correct: UIImpactFeedbackGenerator(style: .light).impactOccurred(intensity: 0.75)
-        case .combo: break
-        case .tap, .mark, .erase: UISelectionFeedbackGenerator().selectionChanged()
-        }
+    private func syncHaptics() {
+        haptics.update(enabled: settings.haptic, environment: environment, interrupted: interrupted)
     }
 }
