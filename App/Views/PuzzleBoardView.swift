@@ -276,6 +276,11 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         let receivedMistake = lostLife || mistakeCell != nil
         let latestFindWins = receivedMistake && !addedFound.isEmpty && knownLatestSubmissionSucceeded == true
         let suppressPositiveFeedback = receivedMistake && !latestFindWins
+        // The previous error may already be on screen when a later correct
+        // move arrives. Retire its transient explanation in that case too,
+        // keeping the saved red X and the same-frame damage priority intact.
+        let newCorrectOwnsFeedback = hasConfigured && sameBoard && !addedFound.isEmpty
+            && !suppressPositiveFeedback && knownLatestSubmissionSucceeded != false
         let motionPolicyChanged = reducesMotion != (reduceMotion ?? UIAccessibility.isReduceMotionEnabled)
         if !sameBoard || !effectsEnabled || motionPolicyChanged { clearFeedback() }
         if (locked && tutorialAction != "read") || hideAccessibility || !preview.isEmpty || !addedFound.isEmpty || !changedMarks.isEmpty || !addedErrors.isEmpty {
@@ -293,11 +298,11 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
                 : !marks.contains(effect.cellIndex) && !found.contains(effect.cellIndex) && !errors.contains(effect.cellIndex)
             if !valid { effect.removeFromSuperview() }
         }
-        for effect in feedbackOverlay.subviews.compactMap({ $0 as? BoardMistakeFeedbackView }) where latestFindWins || !errors.contains(effect.cellIndex) {
+        for effect in feedbackOverlay.subviews.compactMap({ $0 as? BoardMistakeFeedbackView }) where newCorrectOwnsFeedback || !errors.contains(effect.cellIndex) {
             effect.removeFromSuperview()
         }
         var clearedConflict = false
-        for effect in feedbackOverlay.subviews.compactMap({ $0 as? BoardConflictFeedbackView }) where latestFindWins || !errors.contains(effect.candidate) {
+        for effect in feedbackOverlay.subviews.compactMap({ $0 as? BoardConflictFeedbackView }) where newCorrectOwnsFeedback || !errors.contains(effect.candidate) {
             let participants = Set(effect.conflicts.map(\.otherCell))
             effect.removeFromSuperview(); clearedConflict = true
             feedbackOverlay.subviews.compactMap { $0 as? CapyFaceExpressionView }
@@ -885,6 +890,10 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         // guess with no conflict against a visible animal gets no invented reason.
         let conflicts = VisibleConflictAnalysis.conflicts(size: size, regions: regions, candidate: index, found: found)
         feedbackOverlay.subviews.compactMap { $0 as? BoardConflictFeedbackView }.forEach { $0.removeFromSuperview() }
+        // Expressions belong to that explanation, including partners that do
+        // not participate in the replacement (or an empty explanation).
+        feedbackOverlay.subviews.compactMap { $0 as? CapyFaceExpressionView }
+            .filter { $0.expression == .startled }.forEach { $0.removeFromSuperview() }
         let kinds = Set(conflicts.flatMap(\.kinds))
         // An empty explanation clears the previous rule emphasis as well.
         onConflictFeedback?([.region, .row, .column, .adjacent].filter { kinds.contains($0) })

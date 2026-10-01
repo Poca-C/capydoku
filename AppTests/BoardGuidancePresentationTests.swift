@@ -142,6 +142,110 @@ final class BoardGuidancePresentationTests: XCTestCase {
         rig.refresh(); XCTAssertEqual(rig.callbacks.count, count + 1)
     }
 
+    @MainActor func testRenderedMistakeYieldsToTheNextCorrectMoveWithoutLosingItsReward() async throws {
+        let rig = try GuidanceRig(); defer { rig.close() }
+        rig.board.activate(index: 1, submit: true)
+        try await Task.sleep(nanoseconds: 80_000_000)
+        rig.board.activate(index: 0, submit: true)
+        // Let the wrong action reach the display before the next submission.
+        // This is distinct from correct/wrong moves coalesced into one update.
+        try await Task.sleep(nanoseconds: 120_000_000)
+        let explanation = try XCTUnwrap(rig.conflicts.first)
+        let oldReactions = rig.board.subviews.flatMap(\.subviews).compactMap { $0 as? CapyFaceExpressionView }
+            .filter { $0.expression == .startled }
+        XCTAssertEqual(explanation.candidate, 0)
+        XCTAssertEqual(oldReactions.map(\.cellIndex), [1])
+        XCTAssertEqual(Set(try XCTUnwrap(rig.callbacks.last)), [.region, .row, .adjacent])
+        capture(rig.window, "sequential-feedback-rendered-mistake")
+        let callbacksBeforeCorrect = rig.callbacks.count
+        let scoreBeforeCorrect = rig.session.score
+
+        rig.board.activate(index: 7, submit: true)
+        try await Task.sleep(nanoseconds: 90_000_000)
+        let effects = rig.board.subviews.flatMap(\.subviews)
+        capture(rig.window, "sequential-feedback-new-correct")
+        XCTAssertEqual(rig.session.found, [1, 7])
+        XCTAssertEqual(rig.session.errors, [0], "The saved red X remains; only its old explanation retires.")
+        XCTAssertEqual(rig.session.lives, 2)
+        XCTAssertGreaterThan(rig.session.score, scoreBeforeCorrect)
+        XCTAssertTrue(effects.contains { ($0 as? BoardCellFeedbackView)?.cellIndex == 7 && ($0 as? BoardCellFeedbackView)?.kind == .found })
+        XCTAssertTrue(effects.contains { ($0 as? BoardPlacementBurstView)?.cellIndex == 7 }, "The new correct response must still play.")
+        XCTAssertTrue(rig.conflicts.isEmpty, "A later accepted correct move owns the transient explanation.")
+        XCTAssertNil(explanation.superview)
+        XCTAssertTrue(oldReactions.allSatisfy { $0.superview == nil }, "The old conflict partners must stop looking startled.")
+        XCTAssertFalse(effects.contains { $0 is BoardMistakeFeedbackView }, "The previous wrong placement cannot compete with the new reward.")
+        XCTAssertEqual(rig.callbacks.count, callbacksBeforeCorrect + 1)
+        XCTAssertEqual(rig.callbacks.last, [], "The board must also retire the old rule-strip emphasis.")
+        rig.refresh()
+        XCTAssertEqual(rig.callbacks.count, callbacksBeforeCorrect + 1, "A refresh cannot publish another clear event.")
+    }
+
+    @MainActor func testAnOrdinaryMarkPreservesTheMistakeAndANewWrongMoveReplacesItsExplanation() throws {
+        let rig = try GuidanceRig(); defer { rig.close() }
+        rig.board.activate(index: 1, submit: true)
+        rig.board.activate(index: 0, submit: true)
+        let first = try XCTUnwrap(rig.conflicts.first)
+        let firstCallbacks = rig.callbacks
+        let score = rig.session.score
+        rig.board.activate(index: 5, submit: false)
+        XCTAssertEqual(rig.session.marks, [0, 5])
+        XCTAssertEqual(rig.session.errors, [0]); XCTAssertEqual(rig.session.lives, 2)
+        XCTAssertTrue(rig.conflicts.first === first, "An ordinary exclusion is not a newly accepted answer.")
+        XCTAssertEqual(rig.callbacks, firstCallbacks, "Marking another cell cannot clear the rule explanation.")
+
+        rig.board.activate(index: 2, submit: true)
+        let next = try XCTUnwrap(rig.conflicts.first)
+        XCTAssertFalse(next === first); XCTAssertNil(first.superview)
+        XCTAssertEqual(next.candidate, 2)
+        XCTAssertEqual(next.conflicts.map(\.otherCell), [1])
+        XCTAssertEqual(Set(try XCTUnwrap(rig.callbacks.last)), [.row, .adjacent])
+        XCTAssertEqual(rig.callbacks.count, firstCallbacks.count + 1)
+        XCTAssertEqual(rig.session.found, [1]); XCTAssertEqual(rig.session.errors, [0, 2])
+        XCTAssertEqual(rig.session.lives, 1); XCTAssertEqual(rig.session.score, score)
+        let effects = rig.board.subviews.flatMap(\.subviews)
+        XCTAssertTrue(effects.contains { ($0 as? BoardMistakeFeedbackView)?.cellIndex == 2 })
+        XCTAssertTrue(effects.contains { ($0 as? CapyFaceExpressionView)?.expression == .startled })
+        XCTAssertFalse(effects.contains { $0 is BoardPlacementBurstView || ($0 as? BoardCellFeedbackView)?.kind == .found })
+    }
+
+    @MainActor func testReplacingConflictPartnersCannotLeaveAnOldStartledFaceAfterTheNextCorrectMove() async throws {
+        // Component coverage: the Root's one-life spotlight is intentionally
+        // absent, so it cannot hide a stale board expression after two errors.
+        let rig = try GuidanceRig(); defer { rig.close() }
+        func startled() -> [CapyFaceExpressionView] {
+            rig.board.subviews.flatMap(\.subviews).compactMap { $0 as? CapyFaceExpressionView }
+                .filter { $0.expression == .startled }
+        }
+        rig.board.activate(index: 1, submit: true)
+        rig.board.activate(index: 7, submit: true)
+        let firstErrorTime = CACurrentMediaTime()
+        rig.board.activate(index: 0, submit: true)
+        let first = try XCTUnwrap(rig.conflicts.first)
+        let firstFace = try XCTUnwrap(startled().first)
+        XCTAssertEqual(first.conflicts.map(\.otherCell), [1]); XCTAssertEqual(firstFace.cellIndex, 1)
+        try await Task.sleep(nanoseconds: 40_000_000)
+
+        rig.board.activate(index: 11, submit: true)
+        try await Task.sleep(nanoseconds: 40_000_000)
+        let second = try XCTUnwrap(rig.conflicts.first)
+        XCTAssertEqual(second.candidate, 11); XCTAssertEqual(second.conflicts.map(\.otherCell), [7])
+        XCTAssertNil(first.superview)
+        XCTAssertEqual(Set(startled().map(\.cellIndex)), [7], "Replacing the explanation must retire participants from its predecessor.")
+        capture(rig.window, "sequential-feedback-replaced-conflict-partners")
+
+        rig.board.activate(index: 8, submit: true)
+        XCTAssertLessThan(CACurrentMediaTime() - firstErrorTime, firstFace.duration,
+                          "This fixture must examine cleanup before natural expression expiry can hide the omission.")
+        XCTAssertEqual(rig.session.found, [1, 7, 8]); XCTAssertEqual(rig.session.errors, [0, 11])
+        XCTAssertEqual(rig.session.lives, 1); XCTAssertEqual(rig.session.status, .playing)
+        XCTAssertTrue(rig.conflicts.isEmpty); XCTAssertNil(second.superview)
+        XCTAssertTrue(startled().isEmpty, "A correct move cannot leave a face reacting to an older, replaced conflict.")
+        XCTAssertNil(firstFace.superview)
+        XCTAssertEqual(rig.callbacks.count, 3); XCTAssertEqual(rig.callbacks.last, [])
+        XCTAssertTrue(rig.board.subviews.flatMap(\.subviews).contains { ($0 as? BoardPlacementBurstView)?.cellIndex == 8 })
+        capture(rig.window, "sequential-feedback-replaced-conflict-new-correct")
+    }
+
     @MainActor func testDynamicSwipeGuideUsesActualAxisAndChangingTargetsCancelsPreviousAnimation() throws {
         let rig = try GuidanceRig(); defer { rig.close() }
         rig.targets = [8, 9]; rig.action = "swipe"; rig.refresh()

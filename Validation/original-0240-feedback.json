@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.40 (43)",
+  "date": "2026-10-02",
+  "status": "scoped_sequential_mistake_correct_feedback_verified_simulator_only",
+  "previousReport": "Validation/original-0239-feedback.json",
+  "previousGoalTurn": {
+    "classification": "progress",
+    "commit": "51613f5",
+    "evidence": "首页装饰循环取消/恢复修复，16项App及3项UI通过。"
+  },
+  "sourceParagraphs": [
+    127,
+    129,
+    130,
+    136,
+    241,
+    249,
+    254
+  ],
+  "finding": "错误已渲染后，下一次正确操作不满足既有同帧latestFindWins条件，旧错误连线/惊讶/错格演出仍与新奖励叠加。正常存档录像及实际UIKit红测均复现。",
+  "changes": [
+    "新正确操作撤下旧错误说明并通过既有回调清除规则高亮；保留红X、已扣生命、已得分及新的正向奖励。",
+    "连续错误更新解释时清掉旧参与者反应，避免随后正确时残留不属于当前解释的惊讶角色。",
+    "普通排除标记保持错误说明，新的错误正常替换；同帧先对后错/先错后对及终局规则保持。"
+  ],
+  "temporaryTuning": "未改动声音、素材或动画时长；最新有效提交决定瞬时解释的衔接策略属于Demo实现。",
+  "verificationHistory": [
+    {
+      "status": "Failed",
+      "cases": 1,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "seconds": 0.765,
+      "scope": "0.2.39 with new sequential regression: expected failure, seven assertions.",
+      "summary": "Validation/test-runs/original-0240-red-summary.json",
+      "log": "Validation/test-runs/original-0240-red.log",
+      "bundle": "Validation/test-runs/original-0240-red.xcresult",
+      "assertionFailures": 7
+    },
+    {
+      "status": "Passed",
+      "cases": 78,
+      "passed": 78,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 35.098,
+      "scope": "First candidate: 78 related cases passed; before orphan-participant boundary correction.",
+      "summary": "Validation/test-runs/original-0240-app-summary.json",
+      "log": "Validation/test-runs/original-0240-app.log",
+      "bundle": "Validation/test-runs/original-0240-app.xcresult"
+    },
+    {
+      "status": "Failed",
+      "cases": 1,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "seconds": 0.31,
+      "scope": "Additional renderer-only sequence: two errors involving different found animals, then a correct action.",
+      "summary": "Validation/test-runs/original-0240-orphan-red-summary.json",
+      "log": "Validation/test-runs/original-0240-orphan-red.log",
+      "bundle": "Validation/test-runs/original-0240-orphan-red.xcresult",
+      "assertionFailures": 3
+    }
+  ],
+  "applicationTests": {
+    "status": "Passed",
+    "cases": 79,
+    "passed": 79,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 35.1,
+    "scope": "17 Pro / iOS26.5: board guidance, interaction, cell/mistake/placement/scene feedback, HUD/reward, actual Root and applause. No full App/Core rerun.",
+    "summary": "Validation/test-runs/original-0240-app-final-summary.json",
+    "log": "Validation/test-runs/original-0240-app-final.log",
+    "bundle": "Validation/test-runs/original-0240-app-final.xcresult"
+  },
+  "uiTests": {
+    "status": "Passed",
+    "cases": 4,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 138.94,
+    "scope": "17e / iOS26.5: native tap/double-tap/pan then tools, solve/advance, lose/simulated revive, Hint preview/Apply; existing UI fixtures.",
+    "summary": "Validation/test-runs/original-0240-17e-ui-summary.json",
+    "log": "Validation/test-runs/original-0240-17e-ui.log",
+    "bundle": "Validation/test-runs/original-0240-17e-ui.xcresult"
+  },
+  "visualEvidence": "Docs/original-feel-0240/manifest.json",
+  "reference": {
+    "latestSuccessfulPlaytest": "Validation/meowdoku-playtest-comparison-0229.json",
+    "newSuccessfulPlaytestThisRound": false,
+    "equivalenceClaimed": false
+  },
+  "audio": {
+    "modified": false,
+    "localTestWAVCount": 9,
+    "currentDebugInventory": "Validation/audio-isolation-0240-debug.json",
+    "formalManifestClipsEmpty": true,
+    "liveAuditoryAB": false,
+    "releaseRebuilt": false
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  },
+  "remaining": [
+    "整体角色自然度与连续音画/触觉仍需真人验证。",
+    "手机仍0.2.29；未完成真机、最低系统、正式冻结参考或上架验收。"
+  ],
+  "formalSignOff": false,
+  "formalConformanceRowsUnchanged": 83,
+  "historicalChecklistCountUnchanged": 88
+}

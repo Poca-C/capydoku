@@ -232,6 +232,23 @@ final class GameFeelVisualTests: XCTestCase {
                 $0 is BoardPlacementBurstView || ($0 as? BoardCellFeedbackView)?.kind == .found
             })
             capture("mistake-no-applause")
+            let precedingConflicts = boardView.subviews.flatMap(\.subviews).compactMap { $0 as? BoardConflictFeedbackView }
+            XCTAssertFalse(precedingConflicts.isEmpty, "The wrong action must actually render its explanation before the next correct move.")
+            model.submit(solution[3])
+            try await Task.sleep(nanoseconds: 120_000_000)
+            let recoveredEffects = boardView.subviews.flatMap(\.subviews)
+            XCTAssertEqual(model.session?.found.count, 4)
+            XCTAssertEqual(model.session?.lives, 2)
+            XCTAssertTrue(model.session?.errors.contains(wrong) == true, "Clearing old decoration must retain the recorded wrong X.")
+            XCTAssertGreaterThan(model.session?.score ?? 0, accepted.score)
+            XCTAssertTrue(precedingConflicts.allSatisfy { $0.superview == nil })
+            XCTAssertFalse(recoveredEffects.contains {
+                $0 is BoardMistakeFeedbackView || $0 is BoardConflictFeedbackView || ($0 as? CapyFaceExpressionView)?.expression == .startled
+            }, "A separately rendered correct action must replace the previous error explanation.")
+            XCTAssertTrue(recoveredEffects.contains { ($0 as? BoardPlacementBurstView)?.cellIndex == solution[3] })
+            XCTAssertNotNil(firstView.activeEventID, "The newer correct action retains its encouragement.")
+            XCTAssertEqual(frames["puzzle_board"], boardBefore)
+            capture("sequential-wrong-correct-latest-success")
             model.start(level: 6)
             try await Task.sleep(nanoseconds: 120_000_000)
             // Deliberately coalesce a real correct and incorrect submission.

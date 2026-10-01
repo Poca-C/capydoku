@@ -1,0 +1,121 @@
+{
+  "build": "0.2.40 (43)",
+  "items": [
+    {
+      "file": "sequential-feedback-new-correct.png",
+      "build": "0.2.40 (43)",
+      "sourceBundle": "Validation/test-runs/original-0240-app-final.xcresult",
+      "test": "BoardGuidancePresentationTests/testRenderedMistakeYieldsToTheNextCorrectMoveWithoutLosingItsReward()",
+      "sourceAttachment": "6FFF54BB-2AC2-4868-B2FF-8CE4DEA888D7.png",
+      "sha256": "d83980ceba0aeaafa358edb9b6b0902061c08b7a10e89f8580cbc9c3e66c599f"
+    },
+    {
+      "file": "sequential-feedback-rendered-mistake.png",
+      "build": "0.2.40 (43)",
+      "sourceBundle": "Validation/test-runs/original-0240-app-final.xcresult",
+      "test": "BoardGuidancePresentationTests/testRenderedMistakeYieldsToTheNextCorrectMoveWithoutLosingItsReward()",
+      "sourceAttachment": "852A6E8E-3CFD-482D-8D94-5DDC0B3E2915.png",
+      "sha256": "02884ccd0f8c386be81a371f7eba71636a272530ccfe996a7e9408751dbff545"
+    },
+    {
+      "file": "sequential-feedback-replaced-conflict-new-correct.png",
+      "build": "0.2.40 (43)",
+      "sourceBundle": "Validation/test-runs/original-0240-app-final.xcresult",
+      "test": "BoardGuidancePresentationTests/testReplacingConflictPartnersCannotLeaveAnOldStartledFaceAfterTheNextCorrectMove()",
+      "sourceAttachment": "50427365-F286-4112-80D2-67D9D68217A8.png",
+      "sha256": "876e5cc6212b56d6c36c24fd066fadb68bdfbf473d9ae5701af6c829ff2744e2"
+    },
+    {
+      "file": "sequential-feedback-replaced-conflict-partners.png",
+      "build": "0.2.40 (43)",
+      "sourceBundle": "Validation/test-runs/original-0240-app-final.xcresult",
+      "test": "BoardGuidancePresentationTests/testReplacingConflictPartnersCannotLeaveAnOldStartledFaceAfterTheNextCorrectMove()",
+      "sourceAttachment": "526A801E-FF0C-4AA9-8BE5-66FE637D6E35.png",
+      "sha256": "464d53b7f1af2ef69b970998f24a7671ea43afd8ee63183a3f3a428722dcb839"
+    },
+    {
+      "file": "applause-root-402pt-sequential-wrong-correct-latest-success.png",
+      "build": "0.2.40 (43)",
+      "sourceBundle": "Validation/test-runs/original-0240-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualRootApplauseFitsBesideComboAndStopsForLaterMistake()",
+      "sourceAttachment": "09F9EBE6-F3BD-45FA-89DC-505CE372A9F2.png",
+      "sha256": "b4082993debac39d51775f4751041688d9f80d07693372cc9676504f6acbb14d"
+    },
+    {
+      "file": "applause-root-402pt-mistake-no-applause.png",
+      "build": "0.2.40 (43)",
+      "sourceBundle": "Validation/test-runs/original-0240-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualRootApplauseFitsBesideComboAndStopsForLaterMistake()",
+      "sourceAttachment": "96D2D57A-822E-4F0A-9B5F-E37BB54C8305.png",
+      "sha256": "6c1f794d9f03c85005cf4f1b173a89f352cb030a06b3010bdd2c310ec4f13fd3"
+    },
+    {
+      "file": "applause-root-320pt-sequential-wrong-correct-latest-success.png",
+      "build": "0.2.40 (43)",
+      "sourceBundle": "Validation/test-runs/original-0240-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualRootApplauseFitsBesideComboAndStopsForLaterMistake()",
+      "sourceAttachment": "61969D52-7A20-4378-B1F9-608645DA8FB6.png",
+      "sha256": "87991d347689bb6b4b35e61756d9b93b0960144358bfee840794ddfd9cc98bc9"
+    },
+    {
+      "file": "applause-root-320pt-mistake-no-applause.png",
+      "build": "0.2.40 (43)",
+      "sourceBundle": "Validation/test-runs/original-0240-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualRootApplauseFitsBesideComboAndStopsForLaterMistake()",
+      "sourceAttachment": "2DC520D8-C76D-4F1B-A1D7-26169B08476D.png",
+      "sha256": "1dbd44cf99e368b9578eddb474a1d77462929133322727be01a4252063d1fa93"
+    },
+    {
+      "file": "baseline-sequential-feedback-new-correct.png",
+      "build": "0.2.39 (42)",
+      "sourceBundle": "Validation/test-runs/original-0240-red.xcresult",
+      "test": "BoardGuidancePresentationTests/testRenderedMistakeYieldsToTheNextCorrectMoveWithoutLosingItsReward()",
+      "sourceAttachment": "8331F7E5-5C7D-4C1A-85E2-20A4D191EFE1.png",
+      "sha256": "2cff66b54dcc6ab4821ff53cb4804fd889075252c6a76aa99a4c4b7bb5913712"
+    },
+    {
+      "file": "baseline-sequential-feedback-rendered-mistake.png",
+      "build": "0.2.39 (42)",
+      "sourceBundle": "Validation/test-runs/original-0240-red.xcresult",
+      "test": "BoardGuidancePresentationTests/testRenderedMistakeYieldsToTheNextCorrectMoveWithoutLosingItsReward()",
+      "sourceAttachment": "51BA2FCB-6E6D-4B09-A355-EC1931B0F356.png",
+      "sha256": "a75d8876c88a9ae27bd7249eb57b5fb8720f0d87f0365e1c885322e81840edff"
+    },
+    {
+      "file": "candidate-sequential-feedback-replaced-conflict-new-correct.png",
+      "build": "0.2.40 (43), before orphan-participant correction",
+      "sourceBundle": "Validation/test-runs/original-0240-orphan-red.xcresult",
+      "test": "BoardGuidancePresentationTests/testReplacingConflictPartnersCannotLeaveAnOldStartledFaceAfterTheNextCorrectMove()",
+      "sourceAttachment": "47D62FE0-9641-401A-9C95-C718B8C223E5.png",
+      "sha256": "2d71a08e1206808c6079c62c80c4a54f00febe5caca26875901338670eb5b02b"
+    },
+    {
+      "file": "candidate-sequential-feedback-replaced-conflict-partners.png",
+      "build": "0.2.40 (43), before orphan-participant correction",
+      "sourceBundle": "Validation/test-runs/original-0240-orphan-red.xcresult",
+      "test": "BoardGuidancePresentationTests/testReplacingConflictPartnersCannotLeaveAnOldStartledFaceAfterTheNextCorrectMove()",
+      "sourceAttachment": "FFFAB1CB-65B8-4F87-87E9-685A7928CF3E.png",
+      "sha256": "701de3a429e7b9481a5e34917bf07d141344ba673c57d982c4fa0ab690de5975"
+    }
+  ],
+  "review": "Selected actual runtime screenshots reviewed individually: error shown, subsequent correct reaction, compact Chinese and regular English Root. Baseline failure is explicitly separate.",
+  "video": {
+    "file": "baseline-0239-normal-level4.mov",
+    "build": "0.2.39 (42)",
+    "durationSeconds": 20.286666666666665,
+    "sampling": "baseline-video-sampling.json",
+    "sha256": "56a1ca9acb2dc1bc9bc63f0b92119ca018e665e482afb15da3d36da424e033c4",
+    "observation": "正常存档L4恢复2/6、220分、3命；通过可访问性确认错误0和正确14，得到3/6、320分、2命。11秒抽帧可见新浮分/彩粒与旧错误连线并存。",
+    "snapshot": {
+      "file": "baseline-0239-normal-level4-11s.png",
+      "requestedSeconds": 11,
+      "sha256": "44c404d0f3b41293c5a49a5fd8650c7645cdab53684c71eb75a4e06297ac926c"
+    }
+  },
+  "limitations": [
+    "录屏为修复前039普通存档，操作使用辅助功能确认，不冒充物理双击或当前构建验证。",
+    "最终Root画面使用当前包L6；UIKit小棋盘使用固定4×4测试夹具。有限截图不代表完整自然度、参考逐帧节奏或真机验收。",
+    "本轮无新的Meowdoku试玩、听觉A/B、真机安装或分发。",
+    "replaced-conflict-new-correct是提交后的即时组件画面，新角色处于入场起点；该图用于检查旧表情移除，不用来声称新角色已经显示到终态。新奖励可见性另由延后90/120毫秒的组件和Root截图核对。"
+  ]
+}
