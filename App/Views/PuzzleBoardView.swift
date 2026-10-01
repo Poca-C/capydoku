@@ -377,6 +377,8 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         }
         if becameComplete, canPresentEffects, preview.isEmpty {
             presentScene(.victory, finishingCells: addedFound)
+            feedbackOverlay.subviews.compactMap { $0 as? BoardCellFeedbackView }
+                .filter { $0.kind == .found }.forEach { $0.handoffToCelebration() }
         }
         hasConfigured = true
         receiveEntranceEvent(entranceID)
@@ -440,7 +442,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         let effect = BoardCellFeedbackView(cellIndex: index, kind: kind,
             frame: rect(for: index).insetBy(dx: gap, dy: gap), tileColor: UIColor(CapyPalette.regionColors[palette]),
             reduceMotion: reducesMotion, lowPower: lowPower,
-            errorMark: errorMark, localParticles: !expanded)
+            errorMark: errorMark, localParticles: !expanded, settlesToRest: found.count != size)
         feedbackOverlay.addSubview(effect); effect.play()
         if expanded {
             let current = feedbackOverlay.subviews.compactMap { $0 as? BoardPlacementBurstView }
@@ -619,6 +621,8 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         // a new policy; the underlying board already contains the final state.
         clearScenePresentation()
         clearPlacementBursts()
+        feedbackOverlay.subviews.compactMap { $0 as? BoardCellFeedbackView }
+            .filter { $0.kind == .found }.forEach { $0.removeFromSuperview() }
     }
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool { false }

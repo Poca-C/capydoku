@@ -166,6 +166,58 @@ final class GameRewardPresentationTests: XCTestCase {
 }
 
 final class GameFeelVisualTests: XCTestCase {
+    /// Continuous real Root playback for visual review. Capture only outside
+    /// the moving sequence so snapshot readback cannot stall the expression.
+    @MainActor func testActualRootCorrectFacePlaysContinuouslyIntoRest() async throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent("correct-face-" + UUID().uuidString)
+        let model = AppModel(saveDirectory: directory, runsTimer: false, feedbackEnabled: false)
+        model.progress.tutorialCompleted = true; model.start(level: 6)
+        let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
+        let previous = scene.windows.first(where: \.isKeyWindow), window = UIWindow(windowScene: scene)
+        window.frame = CGRect(x: 0, y: 0, width: 402, height: 874)
+        let host = UIHostingController(rootView: RootView(reduceMotionOverride: false).environmentObject(model)
+            .environment(\.scenePhase, .active))
+        window.rootViewController = host; window.makeKeyAndVisible()
+        defer {
+            window.isHidden = true; window.rootViewController = nil; previous?.makeKeyAndVisible()
+            model.flushPendingSaves(); try? FileManager.default.removeItem(at: directory)
+        }
+        try await Task.sleep(nanoseconds: 500_000_000)
+        let solution = try XCTUnwrap(model.session).puzzle.solution
+        let board = try XCTUnwrap(grid(in: host.view))
+        let start = ProcessInfo.processInfo.systemUptime
+        var events: [[String: Any]] = []
+        func record(_ name: String) {
+            events.append(["name": name, "secondsFromFirstSubmission": ProcessInfo.processInfo.systemUptime - start,
+                           "found": model.session!.found.sorted(), "lives": model.session!.lives])
+        }
+        model.submit(solution[0]); record("first-correct")
+        try await Task.sleep(nanoseconds: 1_000_000_000)
+        model.submit(solution[1]); record("second-correct")
+        try await Task.sleep(nanoseconds: 380_000_000)
+        // A real mark uses the native board endpoint while the face settles.
+        let mark = try XCTUnwrap((0..<36).first { !solution.contains($0) })
+        XCTAssertTrue(board.activate(index: mark, submit: false))
+        XCTAssertTrue(model.session!.marks.contains(mark)); record("mark-during-settle")
+        try await Task.sleep(nanoseconds: 620_000_000)
+        model.submit(solution[2]); record("third-correct")
+        try await Task.sleep(nanoseconds: 370_000_000)
+        model.submit(mark); record("mistake-during-settle")
+        XCTAssertEqual(model.session?.found.count, 3); XCTAssertEqual(model.session?.lives, 2)
+        try await Task.sleep(nanoseconds: 800_000_000)
+        let image = UIGraphicsImageRenderer(bounds: window.bounds).image { _ in
+            window.drawHierarchy(in: window.bounds, afterScreenUpdates: false)
+        }
+        let picture = XCTAttachment(image: image); picture.name = "correct-face-continuous-sequence-end"
+        picture.lifetime = .keepAlways; add(picture)
+        let data = try JSONSerialization.data(withJSONObject: [
+            "timing": "Live Root on current packaged L6; no frozen animation or mid-sequence snapshots. Video zero is independent of these process-relative event times.",
+            "events": events
+        ], options: [.prettyPrinted, .sortedKeys])
+        let metadata = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+        metadata.name = "correct-face-continuous-event-times"; metadata.lifetime = .keepAlways; add(metadata)
+    }
+
     @MainActor private func applause(in view: UIView) -> ApplauseFeedbackUIView? {
         (view as? ApplauseFeedbackUIView) ?? view.subviews.lazy.compactMap { self.applause(in: $0) }.first
     }

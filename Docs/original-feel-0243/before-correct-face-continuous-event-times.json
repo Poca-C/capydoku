@@ -1,0 +1,51 @@
+{
+  "events" : [
+    {
+      "found" : [
+        0
+      ],
+      "lives" : 3,
+      "name" : "first-correct",
+      "secondsFromFirstSubmission" : 0.0016642084810882807
+    },
+    {
+      "found" : [
+        0,
+        8
+      ],
+      "lives" : 3,
+      "name" : "second-correct",
+      "secondsFromFirstSubmission" : 1.0284407085273415
+    },
+    {
+      "found" : [
+        0,
+        8
+      ],
+      "lives" : 3,
+      "name" : "mark-during-settle",
+      "secondsFromFirstSubmission" : 1.4149354167748243
+    },
+    {
+      "found" : [
+        0,
+        8,
+        17
+      ],
+      "lives" : 3,
+      "name" : "third-correct",
+      "secondsFromFirstSubmission" : 2.0474083335138857
+    },
+    {
+      "found" : [
+        0,
+        8,
+        17
+      ],
+      "lives" : 2,
+      "name" : "mistake-during-settle",
+      "secondsFromFirstSubmission" : 2.4289193751756102
+    }
+  ],
+  "timing" : "Live Root on current packaged L6; no frozen animation or mid-sequence snapshots. Video zero is independent of these process-relative event times."
+}

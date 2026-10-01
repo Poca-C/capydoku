@@ -1,0 +1,44 @@
+{
+  "boardBackingScale" : 3,
+  "boardTargetFrameInWindowPoints" : [
+    110.575,
+    154.07499999999999,
+    62.350000000000009,
+    62.350000000000023
+  ],
+  "boardTargetFramePoints" : [
+    90.575000000000003,
+    14.074999999999999,
+    62.350000000000001,
+    62.350000000000001
+  ],
+  "comparedChannels" : "premultiplied RGBA in sRGB",
+  "cropPixels" : [
+    274,
+    45,
+    182,
+    182
+  ],
+  "differenceBoundsInCropPixels" : [
+
+  ],
+  "differentPixelCount" : 0,
+  "faceContentsScale" : 1,
+  "faceFrameInBoardPoints" : [
+    90.575000000000003,
+    14.074999999999999,
+    62.350000000000009,
+    62.349999999999994
+  ],
+  "faceFrameInWindowPoints" : [
+    110.575,
+    154.07499999999999,
+    62.350000000000009,
+    62.349999999999994
+  ],
+  "maximumAbsoluteChannelDifference0To255" : 0,
+  "meanAbsoluteChannelError0To255" : 0,
+  "pixelCount" : 33124,
+  "rendering" : "Complete model board layer rendered at its original origin with native screen scale, then integer-pixel crop; no per-crop translation or 1x downsampling.",
+  "screenScale" : 3
+}

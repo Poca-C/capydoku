@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.43 (46)",
+  "date": "2026-10-02",
+  "status": "scoped_correct_face_settling_verified_simulator_only",
+  "previousReport": "Validation/original-0242-feedback.json",
+  "previousGoalTurn": {
+    "classification": "progress",
+    "reason": "0.2.42已修复并提交连续Combo可读性；本轮继续正确角色与奖励衔接。"
+  },
+  "sourceParagraphs": [
+    129,
+    136,
+    241,
+    249,
+    254
+  ],
+  "finding": "普通正确的开心脸在原0.32秒结束时直接切回普通表情，飞星和浮分尚在继续；实际Root录屏确认。最后一格本来交给整盘开心庆祝，需要单独保留。",
+  "changes": [
+    "普通正确保留0.32秒弹出/光圈/粒子速度，开心保持至0.42秒，闭眼收势至0.52秒，普通表情稳定至0.60秒再撤层；同一图层离散切换，未交叉淡化整脸。",
+    "末格仍0.32秒交给整盘庆祝；先前正确尚在收势时，按原始pop截止交接，不重新播放pop或盖住欢呼。",
+    "低电初始态保持0.32秒、减少动态保持0.10秒；功耗政策通知立即清理在场正确层，后台/新错误/换局沿用取消。",
+    "输入、规则、分数、奖励提交和音频不等待表情完成。"
+  ],
+  "temporaryTuning": "0.42/0.52/0.60秒为可调整原创Demo时程，不是参考逐帧测量或正式冻结值。",
+  "verificationHistory": [
+    {
+      "status": "Passed",
+      "cases": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 13.154,
+      "scope": "0.2.42 baseline continuous Root diagnostic; observed abrupt expression change, state assertions passed.",
+      "summary": "Validation/test-runs/original-0243-face-before-summary.json",
+      "log": "Validation/test-runs/original-0243-face-before.log",
+      "bundle": "Validation/test-runs/original-0243-face-before.xcresult"
+    },
+    {
+      "status": "Passed",
+      "cases": 2,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 10.702,
+      "scope": "Working candidate before version bump and later power-policy cleanup; natural sequence and expression source checks.",
+      "summary": "Validation/test-runs/original-0243-face-candidate-summary.json",
+      "log": "Validation/test-runs/original-0243-face-candidate.log",
+      "bundle": "Validation/test-runs/original-0243-face-candidate.xcresult"
+    },
+    {
+      "status": "Failed",
+      "cases": 78,
+      "passed": 77,
+      "failed": 1,
+      "skipped": 0,
+      "seconds": 90.756,
+      "scope": "First0.2.43 affected run:77passed/1failed; new1x translated offscreen pixel comparison failed. No production change made solely to force pixel equality.",
+      "summary": "Validation/test-runs/original-0243-app-final-summary.json",
+      "log": "Validation/test-runs/original-0243-app-final.log",
+      "bundle": "Validation/test-runs/original-0243-app-final.xcresult"
+    },
+    {
+      "status": "BuildFailed",
+      "testCountUnavailable": true,
+      "log": "Validation/test-runs/original-0243-handoff-native.log",
+      "reason": "Native pixel diagnostic helper values was shadowed by local array values; renamed rectComponents before execution."
+    },
+    {
+      "status": "Passed",
+      "cases": 2,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 5.606,
+      "scope": "Native3x original-origin capture retained exact equality assertion:0different pixels; power-notification cancellation also passed.",
+      "summary": "Validation/test-runs/original-0243-handoff-native-r2-summary.json",
+      "log": "Validation/test-runs/original-0243-handoff-native-r2.log",
+      "bundle": "Validation/test-runs/original-0243-handoff-native-r2.xcresult"
+    }
+  ],
+  "applicationTests": {
+    "status": "Passed",
+    "cases": 79,
+    "passed": 79,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 76.676,
+    "scope": "17 Pro / iOS26.5; nine affected board/character/presentation suites, no full App/Core rerun.",
+    "summary": "Validation/test-runs/original-0243-app-final-r2-summary.json",
+    "log": "Validation/test-runs/original-0243-app-final-r2.log",
+    "bundle": "Validation/test-runs/original-0243-app-final-r2.xcresult"
+  },
+  "uiTests": {
+    "status": "Passed",
+    "cases": 4,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 146.667,
+    "scope": "17e / iOS26.5; native tap/double-tap/pan then tools, solve/advance, lose/simulated revive, hint preview/Apply.",
+    "summary": "Validation/test-runs/original-0243-17e-ui-summary.json",
+    "log": "Validation/test-runs/original-0243-17e-ui.log",
+    "bundle": "Validation/test-runs/original-0243-17e-ui.xcresult"
+  },
+  "visualEvidence": "Docs/original-feel-0243/manifest.json",
+  "testAuditCorrection": {
+    "finding": "初始1x局部平移截图将底层backing与上层原图按不同路径重采样，导致不相等，不能据此认定轮廓跳动。",
+    "correction": "改为屏幕原生3x、完整棋盘原点绘制后整数像素裁剪；保留完全相等断言，附前后像素与几何目标记录。",
+    "differentPixelsFinal": 0,
+    "comparedPixelsFinal": 33124,
+    "scope": "模型层的稳定格内像素；真实播放另有不中途截屏的录屏与presentation内容检查。"
+  },
+  "reference": {
+    "latestSuccessfulPlaytest": "Validation/meowdoku-playtest-comparison-0229.json",
+    "newSuccessfulPlaytestThisRound": false,
+    "equivalenceClaimed": false
+  },
+  "audio": {
+    "modified": false,
+    "localTestWAVCount": 9,
+    "currentDebugInventory": "Validation/audio-isolation-0243-debug.json",
+    "formalManifestClipsEmpty": true,
+    "liveAuditoryAB": false,
+    "releaseRebuilt": false
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  },
+  "remaining": [
+    "整体连续节奏、角色自然度与真机音画/触觉仍需真人验证；本轮仍是离散表情素材的有限收势。",
+    "局部浮分仍会短暂经过角色脸部，整体层次是否需要进一步错位尚未决定。",
+    "手机仍0.2.29，最低系统、冻结参考与正式上架未验。"
+  ],
+  "formalSignOff": false,
+  "formalConformanceRowsUnchanged": 83,
+  "historicalChecklistCountUnchanged": 88
+}

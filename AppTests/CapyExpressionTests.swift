@@ -274,9 +274,12 @@ final class CapyExpressionTests: XCTestCase {
         let found = BoardCellFeedbackView(cellIndex: 1, kind: .found, frame: rect, tileColor: .cyan, reduceMotion: false)
         let mistake = BoardMistakeFeedbackView(cellIndex: 2, frame: rect, tileColor: .cyan, reduceMotion: false)
         host.addSubview(found); host.addSubview(mistake); found.play(); mistake.play()
-        let happy = try XCTUnwrap(allLayers(found.layer).first { $0.name == "found-face-happy" }?.contents) as AnyObject
+        let face = try XCTUnwrap(allLayers(found.layer).first { $0.name == "found-face-happy" })
+        let settle = try XCTUnwrap(face.animation(forKey: "found-expression-settle") as? CAKeyframeAnimation)
+        let happy = try XCTUnwrap(settle.values?.first) as AnyObject
         let startled = try XCTUnwrap(allLayers(mistake.layer).first { $0.name == "mistake-face-startled" }?.contents) as AnyObject
         XCTAssertTrue(happy === CapyExpressionArtwork.image(.happy)?.cgImage)
+        XCTAssertTrue((face.contents as AnyObject?) === CapyExpressionArtwork.image(.neutral)?.cgImage)
         XCTAssertTrue(startled === CapyExpressionArtwork.image(.startled)?.cgImage)
         XCTAssertFalse(allLayers(mistake.layer).allSatisfy { ($0.animationKeys() ?? []).isEmpty })
         found.removeFromSuperview(); mistake.removeFromSuperview()

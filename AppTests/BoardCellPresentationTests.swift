@@ -62,6 +62,24 @@ final class BoardCellPresentationTests: XCTestCase {
         XCTAssertTrue(animations(reward.layer).isEmpty)
     }
 
+    @MainActor func testMistakeDuringExpressionSettleImmediatelyRetiresTheCorrectFace() async throws {
+        let rig = try CellPresentationRig(); defer { rig.close() }
+        rig.board.activate(index: 1, submit: true)
+        let face = try XCTUnwrap(rig.effects.first { $0.kind == .found })
+        let earned = rig.session.score
+        try await Task.sleep(nanoseconds: 370_000_000)
+        XCTAssertNotNil(face.superview, "The accepted happy reaction outlives its quick pop.")
+        rig.board.activate(index: 0, submit: true)
+        XCTAssertNil(face.superview); XCTAssertTrue(animations(face.layer).isEmpty)
+        XCTAssertEqual(rig.session.lives, 2); XCTAssertEqual(rig.session.found, [1])
+        XCTAssertEqual(rig.session.score, earned)
+        rig.board.activate(index: 7, submit: true)
+        let replacement = try XCTUnwrap(rig.effects.first { $0.cellIndex == 7 })
+        try await Task.sleep(nanoseconds: 300_000_000)
+        XCTAssertNotNil(replacement.superview, "The cancelled 0.60s cleanup of the older correct face cannot remove a newer one.")
+        XCTAssertEqual(rig.session.found, [1, 7]); XCTAssertEqual(rig.session.lives, 2)
+    }
+
     @MainActor func testNextContactKeepsCommittedRewardAliveWhileFurtherFindsAndMarksApplyImmediately() async throws {
         let rig = try CellPresentationRig(); defer { rig.close() }
         rig.board.activate(index: 1, submit: true)
@@ -108,9 +126,10 @@ final class BoardCellPresentationTests: XCTestCase {
             + (layer.sublayers ?? []).flatMap(animations)
     }
 
-    @MainActor private func effect(_ kind: BoardCellFeedbackView.Kind, reduceMotion: Bool = false, lowPower: Bool = false, errorMark: Bool = false) -> BoardCellFeedbackView {
+    @MainActor private func effect(_ kind: BoardCellFeedbackView.Kind, reduceMotion: Bool = false, lowPower: Bool = false, errorMark: Bool = false, settlesToRest: Bool = true) -> BoardCellFeedbackView {
         BoardCellFeedbackView(cellIndex: 0, kind: kind, frame: CGRect(x: 0, y: 0, width: 72, height: 72),
-            tileColor: UIColor(CapyPalette.regionColors[0]), reduceMotion: reduceMotion, lowPower: lowPower, errorMark: errorMark)
+            tileColor: UIColor(CapyPalette.regionColors[0]), reduceMotion: reduceMotion, lowPower: lowPower, errorMark: errorMark,
+            settlesToRest: settlesToRest)
     }
 
     @MainActor private func pixels(_ view: UIView) throws -> Data {
@@ -158,7 +177,7 @@ final class BoardCellPresentationTests: XCTestCase {
         host.addSubview(view); view.play()
         let stars = (view.layer.sublayers ?? []).filter { $0.name?.hasPrefix("found-local-star-") == true }
         XCTAssertEqual(stars.count, 4)
-        XCTAssertEqual(view.duration, 0.32)
+        XCTAssertEqual(view.duration, 0.60)
         XCTAssertEqual((view.layer.sublayers ?? []).filter { $0.name == "found-local-glow" }.count, 1)
         let heart = try XCTUnwrap((view.layer.sublayers ?? []).first { $0.name == "found-local-heart" } as? CAShapeLayer)
         XCTAssertNotNil(heart.path); XCTAssertNotEqual(heart.fillColor, UIColor(CapyPalette.life).cgColor)
@@ -175,6 +194,8 @@ final class BoardCellPresentationTests: XCTestCase {
             XCTAssertEqual(star.opacity, 0, "No particle remains in the final drawing")
         }
         XCTAssertTrue(animations(view.layer).allSatisfy { $0.duration <= view.duration && $0.repeatCount == 0 && !$0.autoreverses })
+        XCTAssertTrue(animations(view.layer).filter { ($0 as? CAPropertyAnimation)?.keyPath != "contents" }.allSatisfy { $0.duration <= 0.32 },
+                      "Expression settling must not slow the existing pop, ring or particles.")
         let lowPower = effect(.found, lowPower: true)
         host.addSubview(lowPower); lowPower.play()
         let lowPowerLayers = lowPower.layer.sublayers ?? []
@@ -183,13 +204,123 @@ final class BoardCellPresentationTests: XCTestCase {
         XCTAssertFalse(lowPowerLayers.contains { $0.name?.hasPrefix("found-local-") == true || $0.name?.hasPrefix("found-region-fragment-") == true })
         let lowPowerFace = try XCTUnwrap(lowPowerLayers.first { $0.name == "found-face-happy" })
         XCTAssertNotNil(lowPowerFace.animation(forKey: "found-pop"))
+        XCTAssertNil(lowPowerFace.animation(forKey: "found-expression-settle"))
         let lowPowerRing = try XCTUnwrap(lowPowerLayers.first { $0 !== lowPowerFace })
         XCTAssertNotNil(lowPowerRing.animation(forKey: "transform.scale"))
         XCTAssertTrue(animations(lowPower.layer).allSatisfy { $0.duration <= lowPower.duration && $0.repeatCount == 0 && !$0.autoreverses })
         XCTAssertFalse(lowPower.isUserInteractionEnabled)
-        try await Task.sleep(nanoseconds: 410_000_000)
+        try await Task.sleep(nanoseconds: 680_000_000)
         XCTAssertNil(view.superview); XCTAssertTrue(animations(view.layer).isEmpty)
         XCTAssertNil(lowPower.superview); XCTAssertTrue(animations(lowPower.layer).isEmpty)
+    }
+
+    @MainActor func testFoundExpressionSettlesOnOneFaceAndItsFinalPixelsMatchTheUncoveredBoard() async throws {
+        let rig = try CellPresentationRig(); defer { rig.close() }
+        rig.board.activate(index: 1, submit: true)
+        let view = try XCTUnwrap(rig.effects.first { $0.kind == .found })
+        let faceLayers = (view.layer.sublayers ?? []).filter { $0.name == "found-face-happy" }
+        XCTAssertEqual(faceLayers.count, 1, "The expression transition must not cross-fade two complete faces.")
+        let face = try XCTUnwrap(faceLayers.first)
+        let poses = try XCTUnwrap(face.animation(forKey: "found-expression-settle") as? CAKeyframeAnimation)
+        XCTAssertEqual(poses.calculationMode, .discrete)
+        XCTAssertEqual(poses.duration, 0.60); XCTAssertEqual(poses.repeatCount, 0)
+        let times = try XCTUnwrap(poses.keyTimes).map(\.doubleValue)
+        let values = try XCTUnwrap(poses.values)
+        XCTAssertEqual(times.count, values.count)
+        for (seconds, expected) in [(0.35, CapyFaceExpression.happy), (0.47, .blink), (0.55, .neutral)] {
+            let index = try XCTUnwrap(times.indices.last { times[$0] <= seconds / poses.duration })
+            XCTAssertTrue((values[index] as AnyObject) === CapyExpressionArtwork.image(expected)?.cgImage,
+                          "The short expression sequence must hold happiness, blink, then settle before removal.")
+        }
+        XCTAssertTrue((try XCTUnwrap(face.contents) as AnyObject) === CapyExpressionArtwork.image(.neutral)?.cgImage,
+                      "Removing the contents animation must leave the same face as the committed board.")
+        XCTAssertTrue(CATransform3DIsIdentity(face.transform)); XCTAssertEqual(face.opacity, 1)
+        let accepted = rig.session
+        try await Task.sleep(nanoseconds: 545_000_000)
+        XCTAssertNotNil(view.superview, "The neutral ending must be displayed briefly before the cover is removed.")
+        let presentation = try XCTUnwrap(face.presentation())
+        XCTAssertTrue((try XCTUnwrap(presentation.contents) as AnyObject) === CapyExpressionArtwork.image(.neutral)?.cgImage)
+        capture(rig.board, name: "cell-found-resting-before-cover-removal")
+        // Render the complete board at its original origin and native screen
+        // scale before cropping integer pixels. Rendering a translated 1x
+        // interior would resample the board's backing and the live image layer
+        // differently. These are model-layer diagnostics, not compositor/video
+        // frames; the natural presentation contents were checked just above.
+        let interior = rig.board.convert(view.bounds.insetBy(dx: 6, dy: 6), from: view)
+        let scale = rig.window.screen.scale
+        let crop = CGRect(x: floor(interior.minX * scale), y: floor(interior.minY * scale),
+                          width: ceil(interior.maxX * scale) - floor(interior.minX * scale),
+                          height: ceil(interior.maxY * scale) - floor(interior.minY * scale))
+        let faceInBoard = face.convert(face.bounds, to: rig.board.layer)
+        let faceInWindow = face.convert(face.bounds, to: rig.window.layer)
+        let cell = try XCTUnwrap(rig.board.accessibilityElements?[1] as? UIAccessibilityElement).accessibilityFrameInContainerSpace
+        let gap = max(1.1, min(2, cell.width * 0.028))
+        let tile = cell.insetBy(dx: gap, dy: gap)
+        let boardTarget = tile.insetBy(dx: tile.width * 0.07, dy: tile.height * 0.07)
+        let targetInWindow = rig.board.convert(boardTarget, to: rig.window)
+        func interiorImage() throws -> CGImage {
+            let format = UIGraphicsImageRendererFormat(); format.scale = scale; format.preferredRange = .standard
+            let image = UIGraphicsImageRenderer(bounds: rig.board.bounds, format: format).image { context in
+                rig.board.layer.render(in: context.cgContext)
+            }
+            return try XCTUnwrap(image.cgImage?.cropping(to: crop))
+        }
+        let coveredImage = try interiorImage()
+        view.removeFromSuperview()
+        let uncoveredImage = try interiorImage()
+        for (name, image) in [("before", coveredImage), ("after", uncoveredImage)] {
+            let attachment = XCTAttachment(image: UIImage(cgImage: image, scale: scale, orientation: .up))
+            attachment.name = "cell-found-native-handoff-" + name; attachment.lifetime = .keepAlways; add(attachment)
+        }
+        func rgba(_ image: CGImage) throws -> [UInt8] {
+            var bytes = [UInt8](repeating: 0, count: image.width * image.height * 4)
+            let drew = bytes.withUnsafeMutableBytes { storage -> Bool in
+                guard let space = CGColorSpace(name: CGColorSpace.sRGB),
+                      let context = CGContext(data: storage.baseAddress, width: image.width, height: image.height,
+                        bitsPerComponent: 8, bytesPerRow: image.width * 4, space: space,
+                        bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue | CGBitmapInfo.byteOrder32Big.rawValue) else { return false }
+                context.draw(image, in: CGRect(x: 0, y: 0, width: image.width, height: image.height))
+                return true
+            }
+            XCTAssertTrue(drew)
+            return bytes
+        }
+        let covered = try rgba(coveredImage), uncovered = try rgba(uncoveredImage)
+        XCTAssertEqual(coveredImage.width, uncoveredImage.width); XCTAssertEqual(coveredImage.height, uncoveredImage.height)
+        var differentPixels = 0, absoluteSum = 0, maximumDifference = 0
+        var minX = coveredImage.width, minY = coveredImage.height, maxX = -1, maxY = -1
+        for pixel in 0..<(coveredImage.width * coveredImage.height) {
+            var changed = false
+            for channel in 0..<4 {
+                let difference = abs(Int(covered[pixel * 4 + channel]) - Int(uncovered[pixel * 4 + channel]))
+                absoluteSum += difference; maximumDifference = max(maximumDifference, difference)
+                changed = changed || difference != 0
+            }
+            if changed {
+                differentPixels += 1
+                let x = pixel % coveredImage.width, y = pixel / coveredImage.width
+                minX = min(minX, x); minY = min(minY, y); maxX = max(maxX, x); maxY = max(maxY, y)
+            }
+        }
+        func rectComponents(_ rect: CGRect) -> [Double] { [Double(rect.minX), Double(rect.minY), Double(rect.width), Double(rect.height)] }
+        let diagnostics: [String: Any] = [
+            "rendering": "Complete model board layer rendered at its original origin with native screen scale, then integer-pixel crop; no per-crop translation or 1x downsampling.",
+            "screenScale": Double(scale), "boardBackingScale": Double(rig.board.layer.contentsScale),
+            "faceContentsScale": Double(face.contentsScale), "cropPixels": rectComponents(crop),
+            "faceFrameInBoardPoints": rectComponents(faceInBoard), "boardTargetFramePoints": rectComponents(boardTarget),
+            "faceFrameInWindowPoints": rectComponents(faceInWindow), "boardTargetFrameInWindowPoints": rectComponents(targetInWindow),
+            "pixelCount": coveredImage.width * coveredImage.height, "differentPixelCount": differentPixels,
+            "comparedChannels": "premultiplied RGBA in sRGB",
+            "meanAbsoluteChannelError0To255": Double(absoluteSum) / Double(covered.count),
+            "maximumAbsoluteChannelDifference0To255": maximumDifference,
+            "differenceBoundsInCropPixels": maxX >= minX ? [minX, minY, maxX - minX + 1, maxY - minY + 1] : []
+        ]
+        let report = XCTAttachment(data: try JSONSerialization.data(withJSONObject: diagnostics, options: [.prettyPrinted, .sortedKeys]),
+                                   uniformTypeIdentifier: "public.json")
+        report.name = "cell-found-native-handoff-diagnostics"; report.lifetime = .keepAlways; add(report)
+        XCTAssertTrue(covered == uncovered, "Removing a settled face cannot change the committed character pixels; inspect native handoff attachments before deciding whether a residual is geometric or rasterization-only.")
+        XCTAssertEqual(rig.session, accepted)
+        XCTAssertTrue(animations(view.layer).isEmpty)
     }
 
     @MainActor func testReduceMotionCreatesNoParticlesOrHiddenMotionAndStillCleansUp() async throws {
@@ -216,10 +347,27 @@ final class BoardCellPresentationTests: XCTestCase {
         XCTAssertTrue(animations(old.layer).isEmpty)
         try await Task.sleep(nanoseconds: 200_000_000)
         let replacement = effect(.found); host.addSubview(replacement); replacement.play()
-        try await Task.sleep(nanoseconds: 170_000_000)
+        try await Task.sleep(nanoseconds: 450_000_000)
         XCTAssertTrue(replacement.superview === host, "The removed view's former cleanup deadline must not affect the new feedback")
         try await Task.sleep(nanoseconds: 210_000_000)
         XCTAssertNil(replacement.superview); XCTAssertTrue(animations(replacement.layer).isEmpty)
+    }
+
+    @MainActor func testFinalCellAndLowPowerKeepTheQuickHappyHandoffWithoutASettleTrack() async throws {
+        let host = UIView(frame: CGRect(x: 0, y: 0, width: 72, height: 72))
+        let finishing = effect(.found, settlesToRest: false)
+        let lowPower = effect(.found, lowPower: true)
+        for view in [finishing, lowPower] {
+            host.addSubview(view); view.play()
+            XCTAssertEqual(view.duration, 0.32)
+            let face = try XCTUnwrap(view.layer.sublayers?.first { $0.name == "found-face-happy" })
+            XCTAssertNil(face.animation(forKey: "found-expression-settle"))
+            XCTAssertTrue((try XCTUnwrap(face.contents) as AnyObject) === CapyExpressionArtwork.image(.happy)?.cgImage)
+            XCTAssertEqual(face.animation(forKey: "found-pop")?.duration, 0.32)
+            XCTAssertFalse(view.isUserInteractionEnabled)
+        }
+        try await Task.sleep(nanoseconds: 400_000_000)
+        XCTAssertTrue([finishing, lowPower].allSatisfy { $0.superview == nil && animations($0.layer).isEmpty })
     }
 
     @MainActor func testMulticolorSparklesAndRegionalFragmentsStayInsideFourThroughTenCellBoards() throws {
@@ -288,7 +436,8 @@ final class BoardCellPresentationTests: XCTestCase {
         capture(rig.board, name: "cell-found-070ms-heart-arriving-and-regional-fragments")
         try await Task.sleep(nanoseconds: 100_000_000)
         capture(rig.board, name: "cell-found-170ms-intact-heart-multicolor-sparkles-regional-fragments")
-        // The local face ends at320ms; the board-level reward arc ends at620ms.
+        // The local pop ends at320ms, its expression settles by600ms, and the
+        // independent board-level reward arc ends at620ms.
         try await Task.sleep(nanoseconds: 540_000_000)
         capture(rig.window, name: "cell-found-710ms-settled-board")
         XCTAssertTrue(rig.effects.isEmpty); XCTAssertEqual(rig.session, committed)

@@ -1,0 +1,124 @@
+{
+  "build": "0.2.43 (46)",
+  "items": [
+    {
+      "file": "before-correct-face.mov",
+      "sha256": "48b6289b0134f51a80ff97b7fc0ccb7e302f00924c94982b7d92af39157c0390",
+      "build": "0.2.42 (45)",
+      "source": ".build/original-0243-face-before-correct-face.mov",
+      "kind": "Actual simulator screen recording during continuous Root L6 test; no animation freeze or mid-sequence screenshot."
+    },
+    {
+      "file": "before-extraction-index.json",
+      "sha256": "f080726950ea4136c130c25da5111a25bb92085396a128c44a59d3036d914105",
+      "build": "0.2.42 (45)",
+      "kind": "Requested and actual video sample timestamps; extracted PNGs retained in ignored local folder."
+    },
+    {
+      "file": "before-face-contact.png",
+      "sha256": "6a079fd3f12f6190f7b1c983d154e88606d29605651c52bff658c5d67d4f88c7",
+      "build": "0.2.42 (45)",
+      "kind": "Aspect-preserving166px crop of the first found cell from actual video, sampled every0.05s between0.45 and1.20s. Movie zeros are independent."
+    },
+    {
+      "file": "before-correct-face-continuous-event-times.json",
+      "sha256": "3f0acbaf7ec195cdc524838a56d57eec4b9b6a4d2ea31a83c27d97a68bd0f4bc",
+      "build": "0.2.42 (45)",
+      "sourceBundle": "Validation/test-runs/original-0243-face-before.xcresult",
+      "test": "GameFeelVisualTests/testActualRootCorrectFacePlaysContinuouslyIntoRest()",
+      "sourceAttachment": "5C74FDED-639C-4971-B4CF-0D187C126644.json"
+    },
+    {
+      "file": "before-correct-face-continuous-sequence-end.png",
+      "sha256": "95d24524e0fc07604663e3327f609b439691d684ed24e6b4734d88855affbfa8",
+      "build": "0.2.42 (45)",
+      "sourceBundle": "Validation/test-runs/original-0243-face-before.xcresult",
+      "test": "GameFeelVisualTests/testActualRootCorrectFacePlaysContinuouslyIntoRest()",
+      "sourceAttachment": "EBABA340-E4B9-4473-A302-2039177B33E8.png"
+    },
+    {
+      "file": "final-correct-face.mov",
+      "sha256": "49030e525461233474b78c10f96f068658f8463995e1db34ff05c13cdb903bbd",
+      "build": "0.2.43 (46)",
+      "source": ".build/original-0243-app-final-r2-correct-face.mov",
+      "kind": "Actual simulator screen recording during continuous Root L6 test; no animation freeze or mid-sequence screenshot."
+    },
+    {
+      "file": "final-extraction-index.json",
+      "sha256": "f8d21ddfa17d3aad492855cc3a626f0e199325757d29fdc8cea48f09a9112476",
+      "build": "0.2.43 (46)",
+      "kind": "Requested and actual video sample timestamps; extracted PNGs retained in ignored local folder."
+    },
+    {
+      "file": "final-face-contact.png",
+      "sha256": "377359ebdbab8685aacfb9964678eac5f7e2a482c34b3a824f5ddd7560206b2d",
+      "build": "0.2.43 (46)",
+      "kind": "Aspect-preserving166px crop of the first found cell from actual video, sampled every0.05s between0.45 and1.20s. Movie zeros are independent."
+    },
+    {
+      "file": "final-cell-found-native-handoff-diagnostics.json",
+      "sha256": "2cb9e26e97aea5ad627c32c6e64f9099df6312ea47173ac44ad480a56e6deef4",
+      "build": "0.2.43 (46)",
+      "sourceBundle": "Validation/test-runs/original-0243-app-final-r2.xcresult",
+      "test": "BoardCellPresentationTests/testFoundExpressionSettlesOnOneFaceAndItsFinalPixelsMatchTheUncoveredBoard()",
+      "sourceAttachment": "20A5766F-DD78-4A6D-A1E5-533619E08609.json"
+    },
+    {
+      "file": "final-cell-found-native-handoff-after.png",
+      "sha256": "3847262fd62f03e9df9584644a3499d3fc39ebfc477cae0dcba3fe8889aeaf72",
+      "build": "0.2.43 (46)",
+      "sourceBundle": "Validation/test-runs/original-0243-app-final-r2.xcresult",
+      "test": "BoardCellPresentationTests/testFoundExpressionSettlesOnOneFaceAndItsFinalPixelsMatchTheUncoveredBoard()",
+      "sourceAttachment": "3EDE825D-A47B-4BE2-A8D1-A8FD4C33D0CD.png"
+    },
+    {
+      "file": "final-cell-found-native-handoff-before.png",
+      "sha256": "3847262fd62f03e9df9584644a3499d3fc39ebfc477cae0dcba3fe8889aeaf72",
+      "build": "0.2.43 (46)",
+      "sourceBundle": "Validation/test-runs/original-0243-app-final-r2.xcresult",
+      "test": "BoardCellPresentationTests/testFoundExpressionSettlesOnOneFaceAndItsFinalPixelsMatchTheUncoveredBoard()",
+      "sourceAttachment": "7F97D22A-D589-476A-9485-2F8F4AE8CE6D.png"
+    },
+    {
+      "file": "final-board-victory-earlier-expression-handoff-440ms.png",
+      "sha256": "927b8592ab71d1b34894a6d89fb9491e2bde74331fb0af12ab61cd67f5afce4b",
+      "build": "0.2.43 (46)",
+      "sourceBundle": "Validation/test-runs/original-0243-app-final-r2.xcresult",
+      "test": "BoardSceneFeedbackTests/testRapidFinalTwoFindsHandEarlierExpressionToVictoryWithoutRestartingItsPop()",
+      "sourceAttachment": "D86B442D-D394-4293-BEF5-044D5F5B223C.png"
+    },
+    {
+      "file": "final-board-victory-earlier-expression-handoff-120ms.png",
+      "sha256": "e6e0f350510a787e0a3eb2a0d5b000b908587b330ef60f2c80fda04418aa7afa",
+      "build": "0.2.43 (46)",
+      "sourceBundle": "Validation/test-runs/original-0243-app-final-r2.xcresult",
+      "test": "BoardSceneFeedbackTests/testRapidFinalTwoFindsHandEarlierExpressionToVictoryWithoutRestartingItsPop()",
+      "sourceAttachment": "D98F2DA1-AB2D-4116-A5E4-7E69306BDAB3.png"
+    },
+    {
+      "file": "final-correct-face-continuous-event-times.json",
+      "sha256": "bf881e078c7662e40c18ac018103b6cf70603beed4b1b8f95cdbff601bd00306",
+      "build": "0.2.43 (46)",
+      "sourceBundle": "Validation/test-runs/original-0243-app-final-r2.xcresult",
+      "test": "GameFeelVisualTests/testActualRootCorrectFacePlaysContinuouslyIntoRest()",
+      "sourceAttachment": "7DF339A4-2E68-467F-8C97-DDF7DEEF3AAD.json"
+    },
+    {
+      "file": "final-correct-face-continuous-sequence-end.png",
+      "sha256": "95d24524e0fc07604663e3327f609b439691d684ed24e6b4734d88855affbfa8",
+      "build": "0.2.43 (46)",
+      "sourceBundle": "Validation/test-runs/original-0243-app-final-r2.xcresult",
+      "test": "GameFeelVisualTests/testActualRootCorrectFacePlaysContinuouslyIntoRest()",
+      "sourceAttachment": "0EFAF69E-B6AA-415E-A425-AF5BE434854A.png"
+    }
+  ],
+  "review": {
+    "baseline": "Original recording shows happy immediately replaced with neutral while the reward continues. First cell cropped samples and full frames inspected.",
+    "final": "First-cell0.45–1.20s crop every0.05s inspected; full-sequence overview0–3.6s every0.2s inspected with full source frames at0.85/1.60/3.20s. Actual play shows happy, closed-eye rest, neutral; mark and subsequent mistake still commit.",
+    "handoff": "Native3x original-origin model board render, integer-pixel crop:33124pixels with0difference before/after settled cover removal. This proves only that captured cell interior; it does not prove all animation frames or devices equal.",
+    "timing": "No CA speed/timeOffset modification or snapshot during the recorded moving sequence. Video zeros vary across recordings; event logs are process-relative and do not calibrate screen latency.50ms extraction is finite sampling, not exhaustive frame review.",
+    "rapidWinCapture": "120ms case screenshot shows the full-board happy celebration.440ms case is captured immediately after submission and still displays the preceding compositor state with three faces; this image alone does not prove final-state appearance. Submission state and cleanup assertions passed in both cases.",
+    "reference": "No new Meowdoku playtest or audible A/B this round; all new timing values are Demo decisions.",
+    "scope": "Simulator/test-host evidence only; no manual finger play, physical haptic review or phone installation this round."
+  }
+}

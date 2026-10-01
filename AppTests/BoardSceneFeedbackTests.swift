@@ -136,6 +136,54 @@ final class BoardSceneFeedbackTests: XCTestCase {
         rig.refresh(); XCTAssertTrue(rig.scenes.isEmpty); XCTAssertEqual(rig.session, committed)
     }
 
+    @MainActor func testRapidFinalTwoFindsHandEarlierExpressionToVictoryWithoutRestartingItsPop() async throws {
+        // Exercise both an unfinished pop and a pop already in its expression
+        // tail. These are separate real submissions, not a fabricated overlay.
+        for delay in [UInt64(120_000_000), UInt64(440_000_000)] {
+            var saved = GameSession(puzzle: BoardSceneRig.puzzle)
+            for index in [1, 7] { _ = saved.submit(cell: index) }
+            let rig = try BoardSceneRig(session: saved); defer { rig.close() }
+            rig.board.activate(index: 8, submit: true)
+            let earlier = try XCTUnwrap(rig.board.subviews.flatMap(\.subviews)
+                .compactMap { $0 as? BoardCellFeedbackView }.first { $0.cellIndex == 8 })
+            let oldFace = try XCTUnwrap(earlier.layer.sublayers?.first { $0.name == "found-face-happy" })
+            let oldPop = try XCTUnwrap(oldFace.animation(forKey: "found-pop"))
+            XCTAssertNotNil(oldFace.animation(forKey: "found-expression-settle"))
+            try await Task.sleep(nanoseconds: delay)
+            XCTAssertNotNil(earlier.superview)
+            rig.board.activate(index: 14, submit: true)
+            let committed = rig.session
+            XCTAssertEqual(committed.status, .won)
+            let celebration = try XCTUnwrap(rig.scenes.first)
+            let overlay = try XCTUnwrap(celebration.superview)
+            let finishing = try XCTUnwrap(overlay.subviews.compactMap { $0 as? BoardCellFeedbackView }.first { $0.cellIndex == 14 })
+            XCTAssertEqual(finishing.duration, 0.32)
+            let newFace = try XCTUnwrap(finishing.layer.sublayers?.first { $0.name == "found-face-happy" })
+            XCTAssertNil(newFace.animation(forKey: "found-expression-settle"), "The winning cell hands off directly to the scene's happy face.")
+            XCTAssertNil(oldFace.animation(forKey: "found-expression-settle"), "An earlier late blink must not cover the victory cheer.")
+            if delay < 320_000_000 {
+                XCTAssertNotNil(earlier.superview, "An unfinished accepted pop may finish at its original deadline.")
+                XCTAssertEqual(oldFace.animation(forKey: "found-pop")?.beginTime, oldPop.beginTime)
+                XCTAssertEqual(oldFace.animation(forKey: "found-pop")?.duration, oldPop.duration)
+                XCTAssertTrue((try XCTUnwrap(oldFace.contents) as AnyObject) === CapyExpressionArtwork.image(.happy)?.cgImage)
+                try await Task.sleep(nanoseconds: 245_000_000)
+                XCTAssertNil(earlier.superview, "The old pop must finish from its original start, not 0.32s after the last find.")
+            } else {
+                XCTAssertNil(earlier.superview, "A completed pop relinquishes its entire settling cover immediately.")
+                XCTAssertTrue(animations(earlier.layer).isEmpty)
+            }
+            XCTAssertNotNil(celebration.superview)
+            capture(rig.window, "board-victory-earlier-expression-handoff-\(delay / 1_000_000)ms")
+            rig.refresh()
+            XCTAssertEqual(rig.session, committed); XCTAssertTrue(rig.scenes.first === celebration)
+            try await Task.sleep(nanoseconds: 850_000_000)
+            XCTAssertTrue(rig.scenes.isEmpty)
+            XCTAssertFalse(overlay.subviews.contains { $0 is BoardCellFeedbackView })
+            XCTAssertTrue(animations(earlier.layer).isEmpty); XCTAssertTrue(animations(finishing.layer).isEmpty)
+            XCTAssertEqual(rig.session, committed)
+        }
+    }
+
     @MainActor func testCompletedRestoreAndHiddenCompletionDoNotReplayOnResumeOrNextSession() throws {
         var won = GameSession(puzzle: BoardSceneRig.puzzle)
         for index in [1, 7, 8, 14] { _ = won.submit(cell: index) }

@@ -68,6 +68,20 @@ import CapydokuCore
 }
 
 final class BoardInteractionFeedbackTests: XCTestCase {
+    @MainActor func testPowerPolicyNotificationCancelsSettlingFaceWithoutReplayingOrChangingTheMove() async throws {
+        let rig = try InteractionFeedbackRig(); defer { rig.close() }
+        rig.board.activate(index: 1, submit: true)
+        let face = try XCTUnwrap(rig.cells.first { $0.kind == .found })
+        let accepted = rig.session
+        try await Task.sleep(nanoseconds: 370_000_000)
+        XCTAssertNotNil(face.superview)
+        NotificationCenter.default.post(name: .NSProcessInfoPowerStateDidChange, object: nil)
+        XCTAssertNil(face.superview); XCTAssertTrue(rig.cells.isEmpty)
+        XCTAssertTrue(face.layer.sublayers?.allSatisfy { ($0.animationKeys() ?? []).isEmpty } == true)
+        rig.refresh(); XCTAssertTrue(rig.cells.isEmpty)
+        XCTAssertEqual(rig.session, accepted); XCTAssertEqual(rig.arrivals.count, 1)
+    }
+
     @MainActor private func capture(_ view: UIView, _ name: String) {
         let image = UIGraphicsImageRenderer(bounds: view.bounds).image { context in
             (view.layer.presentation() ?? view.layer).render(in: context.cgContext)

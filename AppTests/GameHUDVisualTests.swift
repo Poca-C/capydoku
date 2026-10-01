@@ -65,7 +65,8 @@ final class GameHUDVisualTests: XCTestCase {
         try await Task.sleep(nanoseconds: 120_000_000)
         let happy = try XCTUnwrap(descendants(board).compactMap { $0 as? BoardCellFeedbackView }
             .first { $0.cellIndex == solutionCell && $0.kind == .found })
-        let happyImage = try XCTUnwrap(layers(happy.layer).first { $0.name == "found-face-happy" }?.contents) as AnyObject
+        let happyFace = try XCTUnwrap(layers(happy.layer).first { $0.name == "found-face-happy" })
+        let happyImage = try XCTUnwrap(happyFace.presentation()?.contents) as AnyObject
         XCTAssertTrue(happyImage === CapyExpressionArtwork.image(.happy)?.cgImage)
         try capture("current-level-6-happy-local-score-120ms")
         XCTAssertEqual(model.session, accepted, "Happy artwork and local score text only acknowledge the accepted move.")

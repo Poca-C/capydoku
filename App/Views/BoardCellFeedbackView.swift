@@ -7,8 +7,11 @@ final class BoardCellFeedbackView: UIView {
     enum Kind { case found, markAdded, markRemoved }
     let cellIndex: Int
     let kind: Kind
-    let duration: TimeInterval
+    private(set) var duration: TimeInterval
     private let reduceMotion: Bool
+    private let settlesToRest: Bool
+    private let accentDuration: TimeInterval
+    private var startedAt: TimeInterval?
     private let symbol = CALayer()
     private let crossOutline = CAShapeLayer()
     private let cross = CAShapeLayer()
@@ -19,9 +22,11 @@ final class BoardCellFeedbackView: UIView {
     private var fragments: [CAShapeLayer] = []
     private var cleanupTask: DispatchWorkItem?
 
-    init(cellIndex: Int, kind: Kind, frame: CGRect, tileColor: UIColor, reduceMotion: Bool, lowPower: Bool = false, errorMark: Bool = false, localParticles: Bool = true) {
+    init(cellIndex: Int, kind: Kind, frame: CGRect, tileColor: UIColor, reduceMotion: Bool, lowPower: Bool = false, errorMark: Bool = false, localParticles: Bool = true, settlesToRest: Bool = true) {
         self.cellIndex = cellIndex; self.kind = kind; self.reduceMotion = reduceMotion
-        duration = reduceMotion ? 0.10 : kind == .found ? 0.32 : kind == .markAdded ? 0.16 : 0.13
+        self.settlesToRest = kind == .found && settlesToRest && !reduceMotion && !lowPower
+        accentDuration = reduceMotion ? 0.10 : kind == .found ? 0.32 : kind == .markAdded ? 0.16 : 0.13
+        duration = self.settlesToRest ? 0.60 : accentDuration
         super.init(frame: frame)
         isUserInteractionEnabled = false
         isAccessibilityElement = false; accessibilityElementsHidden = true
@@ -65,16 +70,18 @@ final class BoardCellFeedbackView: UIView {
 
     func play() {
         cleanupTask?.cancel()
+        startedAt = CACurrentMediaTime()
         if !reduceMotion {
             if kind == .found {
                 let pop = CAKeyframeAnimation(keyPath: "transform.scale")
                 pop.values = [0.28, 1.14, 0.96, 1]; pop.keyTimes = [0, 0.5, 0.8, 1]
-                pop.duration = duration; pop.timingFunction = CAMediaTimingFunction(name: .easeOut)
+                pop.duration = accentDuration; pop.timingFunction = CAMediaTimingFunction(name: .easeOut)
                 symbol.add(pop, forKey: "found-pop")
                 animate(symbol, key: "opacity", from: 0.25, to: 1, duration: 0.10)
-                animate(ring, key: "opacity", from: 0.85, to: 0, duration: duration)
-                animate(ring, key: "transform.scale", from: 0.55, to: 1.25, duration: duration)
+                animate(ring, key: "opacity", from: 0.85, to: 0, duration: accentDuration)
+                animate(ring, key: "transform.scale", from: 0.55, to: 1.25, duration: accentDuration)
                 playFoundAccents()
+                if settlesToRest { playExpressionSettle() }
             } else {
                 for target in [crossOutline, cross] {
                     if kind == .markAdded {
@@ -88,14 +95,52 @@ final class BoardCellFeedbackView: UIView {
                 }
             }
         }
+        scheduleCleanup(after: duration)
+    }
+
+    private func playExpressionSettle() {
+        guard let happy = CapyExpressionArtwork.image(.happy)?.cgImage,
+              let blink = CapyExpressionArtwork.image(.blink)?.cgImage,
+              let neutral = CapyExpressionArtwork.image(.neutral)?.cgImage else { return }
+        // A single image layer closes the smile before reopening its eyes.
+        // Keep neutral visible before removing this opaque tile, so removal
+        // reveals the identical board face instead of changing expression.
+        CATransaction.begin(); CATransaction.setDisableActions(true)
+        symbol.contents = neutral
+        let expression = CAKeyframeAnimation(keyPath: "contents")
+        expression.values = [happy, blink, neutral, neutral]
+        expression.keyTimes = [0, 0.70, NSNumber(value: 0.52 / 0.60), 1]
+        expression.calculationMode = .discrete; expression.duration = duration
+        symbol.add(expression, forKey: "found-expression-settle")
+        CATransaction.commit()
+    }
+
+    /// A later find can complete the board while this earlier face is settling.
+    /// Preserve only any unfinished original pop, then reveal the scene's happy
+    /// face. Never cover the whole-board cheer with a late blink/neutral image.
+    func handoffToCelebration() {
+        guard kind == .found, let startedAt else { return }
+        CATransaction.begin(); CATransaction.setDisableActions(true)
+        symbol.removeAnimation(forKey: "found-expression-settle")
+        symbol.contents = CapyExpressionArtwork.image(.happy)?.cgImage
+        CATransaction.commit()
+        duration = accentDuration
+        let remaining = startedAt + duration - CACurrentMediaTime()
+        if remaining <= 0 { removeFromSuperview() }
+        else { scheduleCleanup(after: remaining) }
+    }
+
+    private func scheduleCleanup(after delay: TimeInterval) {
+        cleanupTask?.cancel()
         let cleanup = DispatchWorkItem { [weak self] in self?.removeFromSuperview() }
         cleanupTask = cleanup
-        DispatchQueue.main.asyncAfter(deadline: .now() + duration, execute: cleanup)
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: cleanup)
     }
 
     override func willMove(toSuperview newSuperview: UIView?) {
         if newSuperview == nil {
             cleanupTask?.cancel(); cleanupTask = nil
+            startedAt = nil
             layer.removeAllAnimations()
             layer.sublayers?.forEach { $0.removeAllAnimations() }
         }
@@ -176,45 +221,45 @@ final class BoardCellFeedbackView: UIView {
     private func playFoundAccents() {
         guard let glow, let heart else { return }
         let light = CAKeyframeAnimation(keyPath: "opacity")
-        light.values = [0, 1, 0]; light.keyTimes = [0, 0.32, 1]; light.duration = duration
+        light.values = [0, 1, 0]; light.keyTimes = [0, 0.32, 1]; light.duration = accentDuration
         glow.add(light, forKey: "found-light")
         for (index, star) in stars.enumerated() {
             let visible = CAKeyframeAnimation(keyPath: "opacity")
             visible.values = [0, 1, 1, 0]
             visible.keyTimes = [0, NSNumber(value: 0.15 + Double(index) * 0.035), 0.53, 1]
-            visible.duration = duration; star.add(visible, forKey: "found-sparkle")
+            visible.duration = accentDuration; star.add(visible, forKey: "found-sparkle")
             let travel = CABasicAnimation(keyPath: "position")
             travel.fromValue = NSValue(cgPoint: CGPoint(x: bounds.midX + (star.position.x - bounds.midX) * 0.64,
                                                        y: bounds.midY + (star.position.y - bounds.midY) * 0.64))
-            travel.toValue = NSValue(cgPoint: star.position); travel.duration = duration
+            travel.toValue = NSValue(cgPoint: star.position); travel.duration = accentDuration
             travel.timingFunction = CAMediaTimingFunction(name: .easeOut)
             star.add(travel, forKey: "found-local-travel")
-            animate(star, key: "transform.scale", from: 0.4, to: 1, duration: duration)
+            animate(star, key: "transform.scale", from: 0.4, to: 1, duration: accentDuration)
         }
         for (index, fragment) in fragments.enumerated() {
             let visible = CAKeyframeAnimation(keyPath: "opacity")
             visible.values = [0, 1, 0.9, 0]; visible.keyTimes = [0, 0.19, 0.58, 1]
-            visible.duration = duration; fragment.add(visible, forKey: "found-fragment-visible")
+            visible.duration = accentDuration; fragment.add(visible, forKey: "found-fragment-visible")
             let travel = CABasicAnimation(keyPath: "position")
             let radius = hypot(fragment.bounds.width, fragment.bounds.height) / 2 + 0.7
             let start = bounded(CGPoint(x: bounds.midX + (fragment.position.x - bounds.midX) * 0.55,
                                         y: bounds.midY + (fragment.position.y - bounds.midY) * 0.55), margin: radius)
             travel.fromValue = NSValue(cgPoint: start); travel.toValue = NSValue(cgPoint: fragment.position)
-            travel.duration = duration; travel.timingFunction = CAMediaTimingFunction(name: .easeOut)
+            travel.duration = accentDuration; travel.timingFunction = CAMediaTimingFunction(name: .easeOut)
             fragment.add(travel, forKey: "found-fragment-travel")
             let direction: CGFloat = index.isMultiple(of: 2) ? -1 : 1
-            animate(fragment, key: "transform.rotation.z", from: direction * 0.15, to: direction * 1.1, duration: duration)
+            animate(fragment, key: "transform.rotation.z", from: direction * 0.15, to: direction * 1.1, duration: accentDuration)
         }
         let affection = CAKeyframeAnimation(keyPath: "opacity")
         affection.values = [0, 0, 1, 1, 0]; affection.keyTimes = [0, 0.13, 0.32, 0.68, 1]
-        affection.duration = duration; heart.add(affection, forKey: "found-heart-visible")
+        affection.duration = accentDuration; heart.add(affection, forKey: "found-heart-visible")
         let pop = CAKeyframeAnimation(keyPath: "transform.scale")
         pop.values = [0.48, 1.08, 1, 0.92]; pop.keyTimes = [0, 0.4, 0.68, 1]
-        pop.duration = duration; heart.add(pop, forKey: "found-heart-pop")
+        pop.duration = accentDuration; heart.add(pop, forKey: "found-heart-pop")
         let float = CABasicAnimation(keyPath: "position")
         float.fromValue = NSValue(cgPoint: bounded(CGPoint(x: heart.position.x, y: heart.position.y + min(5, bounds.height * 0.10)),
                                                    margin: heart.bounds.width * 0.54 + 0.7))
-        float.toValue = NSValue(cgPoint: heart.position); float.duration = duration
+        float.toValue = NSValue(cgPoint: heart.position); float.duration = accentDuration
         float.timingFunction = CAMediaTimingFunction(name: .easeOut)
         heart.add(float, forKey: "found-heart-lift")
     }
