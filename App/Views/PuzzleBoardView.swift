@@ -23,6 +23,7 @@ struct PuzzleBoardView: UIViewRepresentable {
     var entranceID: UUID? = nil
     var lives: Int? = nil
     var score: Int? = nil
+    var scoreAwards: [ScoreFeedbackAward]? = nil
     var latestSubmissionSucceeded: Bool? = nil
     var effectsEnabled = true
     var preview: Set<Int> = []
@@ -51,6 +52,7 @@ struct PuzzleBoardView: UIViewRepresentable {
         uiView.configure(size: puzzle.size, regions: puzzle.regions, found: found,
                          marks: marks, errors: errors, preview: preview,
                          sessionID: sessionID, entranceID: entranceID, lives: lives, score: score,
+                         scoreAwards: scoreAwards,
                          latestSubmissionSucceeded: latestSubmissionSucceeded, effectsEnabled: effectsEnabled,
                          reduceMotion: reduceMotion,
                          tutorialTargets: tutorialTargets, tutorialAction: tutorialAction, locked: locked, hideAccessibility: hideAccessibility,
@@ -232,6 +234,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
 
     func configure(size: Int, regions: [Int], found: Set<Int>, marks: Set<Int>, errors: Set<Int>,
                    preview: Set<Int>, sessionID: UUID? = nil, entranceID: UUID? = nil, lives: Int? = nil, score: Int? = nil,
+                   scoreAwards: [ScoreFeedbackAward]? = nil,
                    latestSubmissionSucceeded: Bool? = nil, effectsEnabled: Bool = true,
                    reduceMotion: Bool? = nil,
                    tutorialTargets: Set<Int>, tutorialAction: String? = nil, locked: Bool, hideAccessibility: Bool = false,
@@ -381,11 +384,30 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
                 cellFeedback(at: index, kind: marks.contains(index) ? .markAdded : .markRemoved,
                              errorMark: removedErrors.contains(index))
             }
-            if !suppressPositiveFeedback, scoreDelta > 0, let index = scoreOrigin, let window {
-                let cell = rect(for: index)
-                self.onScoreFeedback?(scoreDelta, BoardFeedbackAnchor(cellFrame: convert(cell, to: window),
-                    boardFrame: convert(boardRect, to: window),
-                    foundFrames: found.sorted().map { convert(rect(for: $0), to: window) }))
+            if !suppressPositiveFeedback, let window {
+                let awards: [(Int, Int)]
+                if let scoreAwards {
+                    // Production carries actual accepted amounts, including
+                    // their order. An empty list means cancelled/old feedback,
+                    // never permission to guess a split from the total score.
+                    var seen = Set<Int>()
+                    awards = scoreAwards.compactMap { award in
+                        guard award.sessionID == sessionID, addedFound.contains(award.cell),
+                              (0..<(size * size)).contains(award.cell), award.amount > 0,
+                              seen.insert(award.cell).inserted else { return nil }
+                        return (award.cell, award.amount)
+                    }
+                } else {
+                    // Standalone board hosts without model receipts retain
+                    // their aggregate compatibility path.
+                    awards = scoreDelta > 0 ? scoreOrigin.map { [($0, scoreDelta)] } ?? [] : []
+                }
+                for (index, amount) in awards {
+                    let cell = rect(for: index)
+                    self.onScoreFeedback?(amount, BoardFeedbackAnchor(cellFrame: convert(cell, to: window),
+                        boardFrame: convert(boardRect, to: window),
+                        foundFrames: found.sorted().map { convert(rect(for: $0), to: window) }))
+                }
             }
         }
         if hasConfigured, sameBoard, canPresentEffects, !latestFindWins, let index = mistakeCell {

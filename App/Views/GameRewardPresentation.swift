@@ -238,8 +238,8 @@ final class FeedbackWindowFrameView: UIView {
         }
     }
 
-    /// The board supplies its committed positive delta once, even if UIKit
-    /// coalesces several accepted moves into a single render transaction.
+    /// Production supplies each accepted find's actual points and source even
+    /// when UIKit coalesces several moves into a single render transaction.
     func scoreAward(_ amount: Int, sessionID: UUID, placement: CellScorePlacement, reduceMotion: Bool) {
         guard self.sessionID == sessionID, presentationEnabled, amount > 0,
               placement.center.x.isFinite, placement.center.y.isFinite else { return }

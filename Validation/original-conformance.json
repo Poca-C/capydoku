@@ -61,7 +61,8 @@
     "0.2.54一命提醒等待现有错误解释且继续操作会取消，属于Demo节奏选择；当前Root截图、生命周期和2项UI证据不替代参考时序、全量或真机验收。见Validation/original-0254-feedback.json。",
     "0.2.55七组实际Root画面和静态描线像素差验证角色/X保护；不是所有逐帧画面、真机或参考品质验收。早期裁图范围修正及失败记录保留，见Validation/original-0255-feedback.json。",
     "0.2.56道具遮挡使用六组实际Root与工具层透明像素检查；末格/下一关、近重复遮罩、非法几何和手势回归通过。首次夹具跳过真实启动预热导致的时限失败及修正保留；非全量、真机或参考品质验收。见Validation/original-0256-feedback.json。",
-    "0.2.59在真实Root修复奖励卡白幕遮挡答案起始反馈；120ms前无截图的两尺寸/减少动态像素与实际命中检查，29项App和5项UI通过。不代表精确屏幕退场时长、真机或参考品质验收。见Validation/original-0259-feedback.json。"
+    "0.2.59在真实Root修复奖励卡白幕遮挡答案起始反馈；120ms前无截图的两尺寸/减少动态像素与实际命中检查，29项App和5项UI通过。不代表精确屏幕退场时长、真机或参考品质验收。见Validation/original-0259-feedback.json。",
+    "0.2.60五组实际Root快速操作分别显示160/180，旧版为合计340；业务计分未变。68项相关App与4项UI通过，不代替真机、全88条或参考品质验收。0259整关测试选择器的范围更正见Validation/original-0259-feedback.json。"
   ],
   "priorityClientFollowUps": [
     {
@@ -2525,8 +2526,8 @@
       ]
     }
   ],
-  "currentBuild": "0.2.59 (62)",
-  "currentVerification": "Validation/original-0259-feedback.json",
+  "currentBuild": "0.2.60 (63)",
+  "currentVerification": "Validation/original-0260-feedback.json",
   "latestVerifiedPhoneBuild": "0.2.29 (32)",
-  "currentStatusSummary": "0.2.59缩短奖励卡退场并隔离动画/命中；旧版两条视觉断言失败后，29项相关App与5项UI通过，83/88正式状态保持。"
+  "currentStatusSummary": "0.2.60把连续找对合并浮分改为逐笔实际得分；68项相关App与4项UI通过。九类参考方向均有Demo实现，整体自然度与最新真机音画触感仍待验，83/88正式状态保持。"
 }

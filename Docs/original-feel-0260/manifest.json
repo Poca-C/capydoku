@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.60 (63)",
+  "baselineBuild": "0.2.59 (62)",
+  "method": "Actual Root L3 after Hint Apply:402x874 forward/reverse and320x568 forward, plus reduced-motion402/320. Two native board activations in one main-thread turn; layout IDs and OCR of actual screenshots verify +160/+180 rather than aggregate+340.",
+  "reviewed": "Individually reviewed the402 normal forward baseline screenshot and all five final screenshots: both actual amounts are visible and associated with their accepted cells; compact placement uses existing fallback below the source. Remaining baseline files are retained evidence, not claimed individually reviewed. No complete video or sound review this round.",
+  "boundary": "Finite simulator fixtures, not all cell arrangements, exact timing, live audio or physical haptics.",
+  "artifacts": [
+    {
+      "path": "Docs/original-feel-0260/baseline-rapid-scores-320-reduced-true-reverse-false-observations.json",
+      "sha256": "1ef91d1e6b8f2becedc967714f0fd9e98d8807d371ae829c727604be79f81dba",
+      "stage": "baseline",
+      "sourceBundle": "Validation/test-runs/original-0260-rapid-baseline-r2.xcresult",
+      "attachment": "rapid-scores-320-reduced-true-reverse-false-observations_0_0E02F6B7-6E7C-461B-9869-B69C7BD46D05.json"
+    },
+    {
+      "path": "Docs/original-feel-0260/baseline-rapid-scores-320-reduced-true-reverse-false.png",
+      "sha256": "59f529c6b2f63d914c0c4fe26c05919909a971228a19932ebbaff2371df2a2ca",
+      "stage": "baseline",
+      "sourceBundle": "Validation/test-runs/original-0260-rapid-baseline-r2.xcresult",
+      "attachment": "rapid-scores-320-reduced-true-reverse-false_0_D83BEBC8-4B38-4210-A79C-99F3D68E448C.png"
+    },
+    {
+      "path": "Docs/original-feel-0260/baseline-rapid-scores-402-reduced-true-reverse-false-observations.json",
+      "sha256": "ab102966e839e49194978088a5460734519004bf39742b6b6ab79bcca9ca9964",
+      "stage": "baseline",
+      "sourceBundle": "Validation/test-runs/original-0260-rapid-baseline-r2.xcresult",
+      "attachment": "rapid-scores-402-reduced-true-reverse-false-observations_0_BABD401B-DB1E-4B68-8D91-6F72DEFA075C.json"
+    },
+    {
+      "path": "Docs/original-feel-0260/baseline-rapid-scores-402-reduced-true-reverse-false.png",
+      "sha256": "e335fe5ee18754ce41db6bfa2fa74446b8ff87204d18f63debb4cebd70de8cde",
+      "stage": "baseline",
+      "sourceBundle": "Validation/test-runs/original-0260-rapid-baseline-r2.xcresult",
+      "attachment": "rapid-scores-402-reduced-true-reverse-false_0_FCBACE93-C1FD-4645-B996-CD6633338C26.png"
+    },
+    {
+      "path": "Docs/original-feel-0260/baseline-rapid-scores-320-reduced-false-reverse-false-observations.json",
+      "sha256": "1d3fe82180890f39ff003c8f770458180e6dcc5890acd82a34d2d4608f1f8680",
+      "stage": "baseline",
+      "sourceBundle": "Validation/test-runs/original-0260-rapid-baseline-r2.xcresult",
+      "attachment": "rapid-scores-320-reduced-false-reverse-false-observations_0_1B1C5FF9-A10E-42B7-AF08-B7D4F3486E2A.json"
+    },
+    {
+      "path": "Docs/original-feel-0260/baseline-rapid-scores-320-reduced-false-reverse-false.png",
+      "sha256": "39d357b3994bdbc5717eb49a98762a5d94abd0cb015b68b534d56c1aa25431cd",
+      "stage": "baseline",
+      "sourceBundle": "Validation/test-runs/original-0260-rapid-baseline-r2.xcresult",
+      "attachment": "rapid-scores-320-reduced-false-reverse-false_0_9BD8ECD3-58BF-4964-88B2-CC391942D9C3.png"
+    },
+    {
+      "path": "Docs/original-feel-0260/baseline-rapid-scores-402-reduced-false-reverse-true-observations.json",
+      "sha256": "67ba2593db211133b981ba7f7bc0f1be0cf02c30e987e6cba544f8b972dfb80b",
+      "stage": "baseline",
+      "sourceBundle": "Validation/test-runs/original-0260-rapid-baseline-r2.xcresult",
+      "attachment": "rapid-scores-402-reduced-false-reverse-true-observations_0_8F5C8B3D-51D5-49B2-A965-F8794E3A49B9.json"
+    },
+    {
+      "path": "Docs/original-feel-0260/baseline-rapid-scores-402-reduced-false-reverse-true.png",
+      "sha256": "8b079cc4432e11833736380483256e562635cd2686e60538f33d6607663c1b7d",
+      "stage": "baseline",
+      "sourceBundle": "Validation/test-runs/original-0260-rapid-baseline-r2.xcresult",
+      "attachment": "rapid-scores-402-reduced-false-reverse-true_0_20AED7F4-F449-4A96-8AEF-7A90FFE4FE2A.png"
+    },
+    {
+      "path": "Docs/original-feel-0260/baseline-rapid-scores-402-reduced-false-reverse-false-observations.json",
+      "sha256": "f4e43d5d7ceaa0a9ac32d9d210e3cc78a86104b730df57e1df685d0ba7e1d55f",
+      "stage": "baseline",
+      "sourceBundle": "Validation/test-runs/original-0260-rapid-baseline-r2.xcresult",
+      "attachment": "rapid-scores-402-reduced-false-reverse-false-observations_0_FB76FE29-1B0C-4BDE-9598-92A2C9531EFF.json"
+    },
+    {
+      "path": "Docs/original-feel-0260/baseline-rapid-scores-402-reduced-false-reverse-false.png",
+      "sha256": "17035ad9ae5cb54d0dd2ed02e88269c6d5dab9fc33aa6d8b08325954352e7e79",
+      "stage": "baseline",
+      "sourceBundle": "Validation/test-runs/original-0260-rapid-baseline-r2.xcresult",
+      "attachment": "rapid-scores-402-reduced-false-reverse-false_0_A4B0BF01-95DE-4537-8F1B-816005B63B46.png"
+    },
+    {
+      "path": "Docs/original-feel-0260/final-rapid-scores-320-reduced-true-reverse-false-observations.json",
+      "sha256": "5ee27d450064d9aa2003d599820d260c1d7a1ca227133076fa1c6a7ef6664676",
+      "stage": "final",
+      "sourceBundle": "Validation/test-runs/original-0260-app-final.xcresult",
+      "attachment": "rapid-scores-320-reduced-true-reverse-false-observations_0_440C5AEA-317A-45BB-926B-D1EA84AE9E4E.json"
+    },
+    {
+      "path": "Docs/original-feel-0260/final-rapid-scores-320-reduced-true-reverse-false.png",
+      "sha256": "74b2f3124f7041829304d708abec7697570c3829c9cb5bc2573368c8c068b2f9",
+      "stage": "final",
+      "sourceBundle": "Validation/test-runs/original-0260-app-final.xcresult",
+      "attachment": "rapid-scores-320-reduced-true-reverse-false_0_BBB21AC3-C5A3-4B8E-B542-E4CC76D26E85.png"
+    },
+    {
+      "path": "Docs/original-feel-0260/final-rapid-scores-402-reduced-true-reverse-false-observations.json",
+      "sha256": "b49f1ca15ac1261413fa1979e507c5b1fc8b106292cabdd0276b5ed67ac1f120",
+      "stage": "final",
+      "sourceBundle": "Validation/test-runs/original-0260-app-final.xcresult",
+      "attachment": "rapid-scores-402-reduced-true-reverse-false-observations_0_21B3EB3B-FA63-417B-AFCD-5A5D07ECC6CF.json"
+    },
+    {
+      "path": "Docs/original-feel-0260/final-rapid-scores-402-reduced-true-reverse-false.png",
+      "sha256": "6b18f5b6042ec675a8795b7fb1a031012534ce7bdf15a8bd7747080f35a056d5",
+      "stage": "final",
+      "sourceBundle": "Validation/test-runs/original-0260-app-final.xcresult",
+      "attachment": "rapid-scores-402-reduced-true-reverse-false_0_4CDBC492-9C25-4246-ACF0-26CB804486F0.png"
+    },
+    {
+      "path": "Docs/original-feel-0260/final-rapid-scores-320-reduced-false-reverse-false-observations.json",
+      "sha256": "56028ee9b06887607f14b64cd9c04c40e09759db78a256c9f6b90729a7d51451",
+      "stage": "final",
+      "sourceBundle": "Validation/test-runs/original-0260-app-final.xcresult",
+      "attachment": "rapid-scores-320-reduced-false-reverse-false-observations_0_817C685A-8B54-499C-89B4-63B5494C6AEF.json"
+    },
+    {
+      "path": "Docs/original-feel-0260/final-rapid-scores-320-reduced-false-reverse-false.png",
+      "sha256": "30d977a235944120288d541ed229eeb45982f454b09b186ecdeb411e4f4a41bd",
+      "stage": "final",
+      "sourceBundle": "Validation/test-runs/original-0260-app-final.xcresult",
+      "attachment": "rapid-scores-320-reduced-false-reverse-false_0_9B814C44-4AF8-4268-AA8F-8D3E51FCF765.png"
+    },
+    {
+      "path": "Docs/original-feel-0260/final-rapid-scores-402-reduced-false-reverse-true-observations.json",
+      "sha256": "89e2e4523f58c3368c8946366a7dfe5102173fd69428d7604dad9c8c81c05459",
+      "stage": "final",
+      "sourceBundle": "Validation/test-runs/original-0260-app-final.xcresult",
+      "attachment": "rapid-scores-402-reduced-false-reverse-true-observations_0_814526E6-1725-43F4-B08C-277CF3885833.json"
+    },
+    {
+      "path": "Docs/original-feel-0260/final-rapid-scores-402-reduced-false-reverse-true.png",
+      "sha256": "f9e1d39af3a7d56f5a515718c0aa5342fdb23a1f80104576069453b5584cf1c0",
+      "stage": "final",
+      "sourceBundle": "Validation/test-runs/original-0260-app-final.xcresult",
+      "attachment": "rapid-scores-402-reduced-false-reverse-true_0_781E486D-2E4B-4C91-8003-A5F74FB8F5BA.png"
+    },
+    {
+      "path": "Docs/original-feel-0260/final-rapid-scores-402-reduced-false-reverse-false-observations.json",
+      "sha256": "752eb83218f7c94a935dc06e317c7c04c4ec4ce0e64b0fed8da45f251f384646",
+      "stage": "final",
+      "sourceBundle": "Validation/test-runs/original-0260-app-final.xcresult",
+      "attachment": "rapid-scores-402-reduced-false-reverse-false-observations_0_A991DBB4-0978-4D96-A52F-C567A4265C87.json"
+    },
+    {
+      "path": "Docs/original-feel-0260/final-rapid-scores-402-reduced-false-reverse-false.png",
+      "sha256": "e20f1ccf9e31506184232ca1c5b036c8da098de8beb09521ced09c838583d433",
+      "stage": "final",
+      "sourceBundle": "Validation/test-runs/original-0260-app-final.xcresult",
+      "attachment": "rapid-scores-402-reduced-false-reverse-false_0_ADC32BCF-47CD-4CDF-BCC0-5C6646C1C633.png"
+    }
+  ]
+}

@@ -10,6 +10,14 @@ struct DirectRevealFeedback: Equatable {
     let cell: Int
 }
 
+/// A presentation-only receipt for one accepted find. Never infer per-cell
+/// points from a later combined render or persist these across restoration.
+struct ScoreFeedbackAward: Equatable {
+    let sessionID: UUID
+    let cell: Int
+    let amount: Int
+}
+
 @MainActor
 final class AppModel: ObservableObject {
     @Published var progress = PlayerProgress()
@@ -17,6 +25,7 @@ final class AppModel: ObservableObject {
     // restore or a return from Home must never look like a freshly generated board.
     @Published private(set) var boardEntranceID: UUID?
     @Published private(set) var directRevealFeedback: DirectRevealFeedback?
+    @Published private(set) var scoreFeedbackAwards: [ScoreFeedbackAward] = []
     // Synchronous presentation invalidation, including cover/return pairs that
     // SwiftUI may coalesce before an already-queued board callback executes.
     private(set) var sceneFeedbackEpoch = UUID()
@@ -830,9 +839,11 @@ final class AppModel: ObservableObject {
         // Ignore a duplicated delivery of this gesture, not all future attempts at this cell.
         if let last = lastSubmission, last.sessionID == sessionID, last.cell == cell, timestamp - last.time < 0.28 { return }
         lastSubmission = (sessionID, cell, timestamp)
+        let before = session
         let result = progress.session?.submit(cell: cell)
         switch result {
         case .correct:
+            recordScoreAward(cell: cell, before: before)
             playRevealFeedback()
             if tutorial != nil { advanceTutorial() }
             afterAction()
@@ -854,6 +865,7 @@ final class AppModel: ObservableObject {
         guard !boardInputInProgress, canTouchBoard, tutorial == nil, directVisible, directEnabled, time - lastDirectTime > 0.35 else { return }
         if progress.availableDirect == 0 { lastDirectTime = time; offer(.direct); return }
         let source = progress.nextDirectSource
+        let before = session
         flushPendingSaves(); saveRevision += 1
         do {
             let revealed = try store.transaction(progress: &progress) { candidate -> Int? in
@@ -866,6 +878,7 @@ final class AppModel: ObservableObject {
             }
             guard let revealed else { return }
             lastDirectTime = time
+            recordScoreAward(cell: revealed, before: before)
             publishDirectReveal(cell: revealed)
             if source == nil { unattributedToolUseCount += 1 }
             playRevealFeedback()
@@ -1094,6 +1107,7 @@ final class AppModel: ObservableObject {
             switch signal {
             case .started: return // Nonterminal presentation signals are handled above.
             case .earned:
+                let before = session
                 let result = try store.grantReward(offerID: offerID, progress: &progress, completionEvent: pendingRewardCompletion,
                     pendingEvents: pendingRewardObservations[offerID, default: [:]]) { candidate, outcome in
                     self.finalizeRewardResult(outcome, in: &candidate, offerID: offerID)
@@ -1106,6 +1120,7 @@ final class AppModel: ObservableObject {
                     deferredRewardHintSessionID = session?.id
                     resumeConfirmedRewardHint()
                 case .directRevealed(let cell):
+                    recordScoreAward(cell: cell, before: before)
                     publishDirectReveal(cell: cell)
                     if screen == .game {
                         let accepted = FeedbackEnvironment(page: .game, level: session?.puzzle.id)
@@ -1156,6 +1171,7 @@ final class AppModel: ObservableObject {
         sceneFeedbackEpoch = UUID()
         boardEntranceID = nil
         directRevealFeedback = nil
+        scoreFeedbackAwards = []
     }
     func canPresentPositiveFeedback(from snapshot: GameSession, epoch: UUID) -> Bool {
         guard epoch == sceneFeedbackEpoch, canShowSceneFeedback, let current = session else { return false }
@@ -1171,11 +1187,18 @@ final class AppModel: ObservableObject {
     }
     private func publishBoardEntrance() {
         directRevealFeedback = nil
+        scoreFeedbackAwards = []
         boardEntranceID = canShowSceneFeedback ? session?.id : nil
     }
     private func publishDirectReveal(cell: Int) {
         guard canShowSceneFeedback, let session, session.found.contains(cell) else { return }
         directRevealFeedback = DirectRevealFeedback(sessionID: session.id, cell: cell)
+    }
+    private func recordScoreAward(cell: Int, before: GameSession?) {
+        guard canShowSceneFeedback, let before, let session, before.id == session.id,
+              !before.found.contains(cell), session.found.contains(cell), session.score > before.score else { return }
+        scoreFeedbackAwards = scoreFeedbackAwards.filter { $0.sessionID == session.id && $0.cell != cell }
+        scoreFeedbackAwards.append(ScoreFeedbackAward(sessionID: session.id, cell: cell, amount: session.score - before.score))
     }
 
     var boardInputInProgress: Bool {

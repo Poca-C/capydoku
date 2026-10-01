@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-02",
+  "build": "0.2.60 (63)",
+  "status": "scoped_individual_score_feedback_verified_simulator_only",
+  "previousReport": "Validation/original-0259-feedback.json",
+  "sourceParagraphs": [
+    129,
+    136,
+    248,
+    249,
+    250,
+    254
+  ],
+  "finding": "Normal-save L3 play after Hint Apply showed one+340 badge for two accepted finds worth160 and180. Business score was correct; the old render-coalescing presentation intentionally aggregated both. This change makes each accepted find visually distinct, not a fix to scoring rules or a claim of formal reference violation.",
+  "changes": [
+    "Capture the actual accepted cell and before/after score delta at manual, inventory-direct and rewarded-direct AppModel paths. Presentation receipts are current-session memory only; no persistence/schema or scoring change.",
+    "Production Root always supplies the receipt array; each newly found valid cell emits its actual amount in accepted order. Explicit empty arrays never infer aggregate feedback. Standalone hosts with no receipt input retain the old aggregate compatibility path.",
+    "Mistake, cover, background, navigation and new-session handling cancel old receipts. Reward delivery in the background still commits business state without replaying presentation on return. Existing badge bounds/collision retirement and animation duration remain.",
+    "Correct the0259 report: its old full-level selector used the wrong test class. The original29 tests did not include that method; the actual full-level test passed separately on unchanged0259 production during the0260 baseline."
+  ],
+  "verificationHistory": [
+    {
+      "status": "Not validation",
+      "passed": 0,
+      "failed": 0,
+      "summary": "Validation/test-runs/original-0260-rapid-baseline-summary.json",
+      "reason": "Initial selector used the file-name class rather than GameFeelVisualTests; zero tests ran. Replaced with the actual class."
+    },
+    {
+      "status": "Failed",
+      "passed": 1,
+      "failed": 1,
+      "skipped": 0,
+      "seconds": 17.972,
+      "summary": "Validation/test-runs/original-0260-rapid-baseline-r2-summary.json",
+      "log": "Validation/test-runs/original-0260-rapid-baseline-r2.log",
+      "bundle": "Validation/test-runs/original-0260-rapid-baseline-r2.xcresult",
+      "assertionFailures": 25,
+      "scope": "Unchanged0259 production: full-level test passed6.460s; new rapid-score test failed across all five fixtures, showing aggregate+340 instead of160/180."
+    }
+  ],
+  "applicationTests": {
+    "status": "Passed",
+    "passed": 68,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 133.619,
+    "summary": "Validation/test-runs/original-0260-app-final-summary.json",
+    "log": "Validation/test-runs/original-0260-app-final.log",
+    "bundle": "Validation/test-runs/original-0260-app-final.xcresult"
+  },
+  "uiTests": {
+    "status": "Passed",
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 137.039,
+    "summary": "Validation/test-runs/original-0260-17e-ui-summary.json",
+    "log": "Validation/test-runs/original-0260-17e-ui.log",
+    "bundle": "Validation/test-runs/original-0260-17e-ui.xcresult"
+  },
+  "visualEvidence": "Docs/original-feel-0260/manifest.json",
+  "testedScope": [
+    "Seven model tests: input-order amounts, duplicate/manual marks, correct-error-correct cancellation, settings/hint/background/home/load/new game/cold restoration, inventory and rewarded direct including the final cell, repeated callbacks and background delivery.",
+    "Four added board regressions: coalesced receipts in inverse-cell order, actual mistake epoch, foreign/duplicate/non-added/non-positive rejection and explicit-empty/restore/uncover behavior. Existing board guidance, scene, pulse, contract, tool and reward handoff tests also ran.",
+    "Real Root current L3 after Hint Apply:402x874 normal forward/reverse,320x568 normal forward,402/320 reduced forward. Two native-board actions execute without an intervening render. Actual before/after deltas are160/180; layout IDs and Vision OCR both show each amount. All five screenshots individually checked.",
+    "Actual full-level rhythm through victory and next board ran in the correct GameFeelVisualTests class. These hosted actions do not establish physical finger timing.",
+    "17e native UI: tools after tap/double-tap/pan; Hint Apply; direct tool use/restart; failure and simulated revive. Four passed; no all-88/full-App/Core claim."
+  ],
+  "naturalPlayEvidence": {
+    "newSuccessfulSimulatorPlay": true,
+    "build": "0.2.59 (62), before this change",
+    "scope": "CUA normal-save L2 rewarded final answer→L3 fast corrects→Hint Apply→+340→win→L4. Source screenshots observed live; recording retained locally but not fully reviewed.",
+    "recording": ".build/original-0260-normal-play.mov",
+    "newSuccessfulPhysicalPlay": false
+  },
+  "reference": {
+    "latestSuccessfulPlaytest": "Validation/meowdoku-playtest-comparison-0249.json",
+    "newSuccessfulPlaytestThisRound": false,
+    "equivalenceClaimed": false,
+    "implementationSummary": {
+      "status": "Nine major observed directions have Demo implementations, including clapping and whole-board hearts that were missing in the historical0232 review. Quality equivalence has not been established.",
+      "implementedDirections": [
+        "动态手势教学",
+        "角色待机/正确/错误表情",
+        "浮分/彩粒/飞星/鼓掌及顶部联动",
+        "错误原因与规则可视化",
+        "扣命与一命提醒",
+        "Combo及分层胜败演出",
+        "新盘错峰入场",
+        "提示与找答案反馈",
+        "签到点亮与实际到账演出"
+      ],
+      "audio": "9 local Debug-only reference WAVs remain an authorized testing experiment; no live audio or physical haptic A/B in this round.",
+      "qualityGaps": [
+        "角色动作自然度与整段连续操作节奏",
+        "密集布局的奖励位置仍需更多实际试玩",
+        "最新真机声音、震动与音画同步",
+        "正式参考配置与发布资源验收"
+      ],
+      "notReplicatedFromLatestPlaytest": [
+        "Reference horn-playing character pose",
+        "Every observed praise phrase",
+        "Automatic check-in interstitial during victory; current Demo check-in entry remains on home"
+      ]
+    }
+  },
+  "audio": {
+    "modified": false,
+    "localTestWAVCount": 9,
+    "currentDebugInventory": "Validation/audio-isolation-0260-debug.json",
+    "inventoryIdenticalTo0259": true,
+    "formalManifestClipsEmpty": true,
+    "liveAuditoryAB": false,
+    "releaseRebuilt": false
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  },
+  "formalSignOff": false,
+  "formalConformanceRowsUnchanged": 83,
+  "historicalChecklistCountUnchanged": 88,
+  "remaining": [
+    "主要参考方向已有实现，整体自然度和最新真机音画触感仍待验。",
+    "本轮没有新参考试玩、听觉A/B、真机安装、打包分发或GitHub上传。",
+    "不是全部布局、全88条、全量App/Core或150关试玩验收。"
+  ]
+}

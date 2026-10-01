@@ -67,7 +67,7 @@
     "Real Root L6:402x874 and320x568 × normal/reduced × rewarded/inventory direct; immediate one-cell commit, preserved lives/marks/errors, no accumulated inventory, duplicate reward, and finite cleanup.",
     "Final four rewarded early samples started120–127ms after callback; each same-target early/settled maximum channel change was0–2/255, under25 threshold. Exact times and pixels are stored in artifact JSON.",
     "Real window hit testing: busy modal blocks the same empty-cell point; normal/reduced both reached board at actual32ms and122/125ms after callback, with restored cell geometry/accessibility.30ms is diagnostic;120ms is the bounded routing requirement. No touch injection in this test.",
-    "Reward success/cancel/failure/old callback, saved receipt recovery, duplicate interstitial→Challenge→L11, result focus, long hint Apply, board gesture gating, and full-level next-board rhythm.",
+    "Reward success/cancel/failure/old callback, saved receipt recovery, duplicate interstitial→Challenge→L11, result focus, long hint Apply, board gesture gating.",
     "17e native UI: settings and dismissed hint, reward loading timeout/retry, loss and simulated revive, modal isolation/return, firstL10 win→Challenge→L11."
   ],
   "naturalPlayEvidence": {
@@ -137,5 +137,12 @@
     "整体角色自然度、连续操作节奏和真机音画触感仍待验；本轮不证明参考同等品质。",
     "正式参考配置/音频及发行验收仍待完成；本地原声仅测试，手机仍0.2.29，打包/GitHub暂停。",
     "本轮不是全量App/Core、全88条、全150关试玩或真实广告SDK验证。"
-  ]
+  ],
+  "verificationCorrection0260": {
+    "finding": "The original0259 selector named GameRewardPresentationTests/testActualRootFullLevelRhythmThroughVictoryAndNextBoard, but the method belongs to GameFeelVisualTests. The29 actual passed tests remain valid; they did not include that full-level test.",
+    "followUp": "Before0260 production changes were restored, the actual GameFeelVisualTests full-level method passed on unchanged0.2.59 production in6.460s. The same mixed baseline run intentionally failed the new rapid-score expectation.",
+    "evidence": "Validation/test-runs/original-0260-rapid-baseline-r2.log",
+    "testIdentifier": "GameFeelVisualTests/testActualRootFullLevelRhythmThroughVictoryAndNextBoard",
+    "boundary": "Supplementary0.2.59 check, not silently counted among the original29."
+  }
 }

@@ -1,0 +1,35 @@
+{
+  "actualAmounts" : [
+    160,
+    180
+  ],
+  "boundary" : "Real Root\/native board action endpoints, no intervening render. OCR checks actual visible amounts; this is not physical gesture timing or an aesthetic score.",
+  "captureEndedAfterSeconds" : 0.18342199991457164,
+  "captureStartedAfterSeconds" : 0.15173641662113369,
+  "cellsInAcceptedOrder" : [
+    8,
+    12
+  ],
+  "fixture" : "rapid-scores-320-reduced-false-reverse-false",
+  "recognizedText" : [
+    "3",
+    "700",
+    "А‡ İž",
+    "v *Е]!",
+    "TÁE+EEB",
+    "+3403",
+    "XXX",
+    "X",
+    "X",
+    "XXX",
+    "XXXX"
+  ],
+  "scoreLayouts" : {
+    "local_score_340" : [
+      56.166666666666657,
+      292.66666666666663,
+      61,
+      27
+    ]
+  }
+}

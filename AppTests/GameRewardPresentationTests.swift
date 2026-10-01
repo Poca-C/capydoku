@@ -1,4 +1,5 @@
 import XCTest
+import Vision
 import SwiftUI
 import UIKit
 import CapydokuCore
@@ -323,6 +324,80 @@ final class GameFeelVisualTests: XCTestCase {
         ], options: [.prettyPrinted, .sortedKeys])
         let metadata = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
         metadata.name = "correct-face-continuous-event-times"; metadata.lifetime = .keepAlways; add(metadata)
+    }
+
+    @MainActor func testActualRootRapidFindsAfterHintKeepTheirIndividualVisibleScoreAmounts() async throws {
+        try await BundledStartupResources().prepare()
+        for (width, height, reduced, reverse) in [(402, 874, false, false), (402, 874, false, true),
+                                                 (320, 568, false, false), (402, 874, true, false), (320, 568, true, false)] {
+            let name = "rapid-scores-\(width)-reduced-\(reduced)-reverse-\(reverse)"
+            let directory = FileManager.default.temporaryDirectory.appendingPathComponent(name + UUID().uuidString)
+            let model = AppModel(saveDirectory: directory, runsTimer: false, feedbackEnabled: false)
+            model.progress.tutorialCompleted = true; model.start(level: 3)
+            let initial = try XCTUnwrap(model.session)
+            XCTAssertEqual(Set(initial.puzzle.solution), Set([5, 8, 12, 21, 25, 34]))
+            for cell in [5, 21, 25] { model.submit(cell) }
+            let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
+            let previous = scene.windows.first(where: \.isKeyWindow), window = UIWindow(windowScene: scene)
+            window.frame = CGRect(x: 0, y: 0, width: width, height: height)
+            var frames: [String: CGRect] = [:]
+            let host = UIHostingController(rootView: RootView(reduceMotionOverride: reduced).environmentObject(model)
+                .environment(\.scenePhase, .active).environment(\.capyLayoutObserver, { frames[$0] = $1 }))
+            window.rootViewController = host; window.makeKeyAndVisible()
+            defer {
+                window.isHidden = true; window.rootViewController = nil; previous?.makeKeyAndVisible()
+                model.flushPendingSaves(); try? FileManager.default.removeItem(at: directory)
+            }
+            try await Task.sleep(nanoseconds: 620_000_000)
+            model.showHint(); XCTAssertNotNil(model.hint)
+            try await Task.sleep(nanoseconds: 160_000_000)
+            model.applyHint()
+            try await Task.sleep(nanoseconds: 240_000_000)
+            let before = try XCTUnwrap(model.session), board = try XCTUnwrap(grid(in: host.view))
+            frames = [:]
+            let started = CACurrentMediaTime()
+            let cells = reverse ? [12, 8] : [8, 12]
+            var amounts: [Int] = []
+            // No render opportunity between these real board action endpoints.
+            for cell in cells {
+                let score = try XCTUnwrap(model.session).score
+                XCTAssertTrue(board.activate(index: cell, submit: true))
+                amounts.append(try XCTUnwrap(model.session).score - score)
+            }
+            XCTAssertEqual(amounts, [160, 180])
+            let accepted = try XCTUnwrap(model.session)
+            XCTAssertEqual(accepted.found.subtracting(before.found), Set(cells))
+            XCTAssertEqual(accepted.score - before.score, amounts.reduce(0, +))
+            XCTAssertEqual(accepted.lives, before.lives); XCTAssertEqual(accepted.marks, before.marks)
+            try await Task.sleep(nanoseconds: 140_000_000)
+            let captureStarted = CACurrentMediaTime() - started
+            let format = UIGraphicsImageRendererFormat(); format.scale = window.screen.scale
+            let image = UIGraphicsImageRenderer(bounds: window.bounds, format: format).image { _ in
+                XCTAssertTrue(window.drawHierarchy(in: window.bounds, afterScreenUpdates: false))
+            }
+            let captureEnded = CACurrentMediaTime() - started
+            let attachment = XCTAttachment(image: image); attachment.name = name; attachment.lifetime = .keepAlways; add(attachment)
+            // Layout callbacks alone could remember a label already retired by
+            // collision avoidance. Require both amounts in the actual pixels.
+            let request = VNRecognizeTextRequest()
+            request.recognitionLevel = .accurate; request.usesLanguageCorrection = false
+            request.recognitionLanguages = ["en-US"]; request.minimumTextHeight = 0.005
+            try VNImageRequestHandler(cgImage: XCTUnwrap(image.cgImage), options: [:]).perform([request])
+            let texts = (request.results ?? []).compactMap { $0.topCandidates(1).first?.string }
+            let normalized = texts.map { $0.replacingOccurrences(of: " ", with: "") }
+            for amount in amounts {
+                XCTAssertNotNil(frames["local_score_\(amount)"], "Each accepted find needs its own layout source.")
+                XCTAssertTrue(normalized.contains { $0.contains("+\(amount)") }, "\(name): missing rendered +\(amount); OCR=\(texts)")
+            }
+            XCTAssertNil(frames["local_score_340"], "A render batch must not combine two finds into an invented single-cell amount.")
+            let report: [String: Any] = ["fixture": name, "cellsInAcceptedOrder": cells, "actualAmounts": amounts,
+                "captureStartedAfterSeconds": captureStarted, "captureEndedAfterSeconds": captureEnded, "recognizedText": texts,
+                "scoreLayouts": frames.filter { $0.key.hasPrefix("local_score_") }.mapValues { [$0.minX, $0.minY, $0.width, $0.height] },
+                "boundary": "Real Root/native board action endpoints, no intervening render. OCR checks actual visible amounts; this is not physical gesture timing or an aesthetic score."]
+            let data = XCTAttachment(data: try JSONSerialization.data(withJSONObject: report, options: [.prettyPrinted, .sortedKeys]), uniformTypeIdentifier: "public.json")
+            data.name = name + "-observations"; data.lifetime = .keepAlways; add(data)
+            XCTAssertEqual(model.session, accepted)
+        }
     }
 
     /// One uninterrupted level: marking, undo, ordinary and rapid corrects,

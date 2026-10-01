@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "kind": "scoped_delta_to_88_item_audit",
+  "baseAudit": "Validation/checklist-0221-audit.json",
+  "sourceChecklist": "Validation/checklist-source.json",
+  "sourceCaseCount": 88,
+  "formalSignOff": false,
+  "full88Reexecuted": false,
+  "overallCountsRecomputed": false,
+  "build": "0.2.60 (63)",
+  "status": "scoped_individual_score_feedback_verified_simulator_only",
+  "previousDelta": "Validation/checklist-0259-feedback-delta.json",
+  "scopedRows": 6,
+  "rows": [
+    {
+      "id": "04-03",
+      "title": "正确双击只提交一次",
+      "originalAcceptanceText": "操作  双击正确空格和带普通X的正确格。\n通过  各提交一次，清除原X并显示动物；不为其他格自动打叉。",
+      "originalRequirementIDs": [
+        "PLAY-02",
+        "PLAY-06"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "原生双击/手势回归及实际模型连续正确按接受顺序绑定得分；不是所有触点真机验收。",
+      "evidence": [
+        "Validation/original-0260-feedback.json",
+        "Docs/original-feel-0260/manifest.json",
+        "Validation/test-runs/original-0260-app-final-summary.json",
+        "Validation/test-runs/original-0260-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "07-02",
+      "title": "库存直接找答案",
+      "originalAcceptanceText": "操作  有库存时使用直接找答案并快速重复点击。\n通过  每次有效使用扣一次，只揭示一个正确目标；不扣血、不自动打叉。",
+      "originalRequirementIDs": [
+        "PLAY-06"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "库存找答案普通及末格只记录实际揭示和分差；原生使用后重开回归。",
+      "evidence": [
+        "Validation/original-0260-feedback.json",
+        "Docs/original-feel-0260/manifest.json",
+        "Validation/test-runs/original-0260-app-final-summary.json",
+        "Validation/test-runs/original-0260-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "07-03",
+      "title": "提示预览关闭与应用",
+      "originalAcceptanceText": "操作  打开Hint观察预览后关闭，再打开并Apply。\n通过  显示时扣次；关闭不改盘、不退款；Apply只写入预览中的建议X。",
+      "originalRequirementIDs": [
+        "PLAY-08"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "Hint Apply后快速连续正确的实际Root视觉与原生Apply回归；关闭/遮挡后旧反馈不补播。",
+      "evidence": [
+        "Validation/original-0260-feedback.json",
+        "Docs/original-feel-0260/manifest.json",
+        "Validation/test-runs/original-0260-app-final-summary.json",
+        "Validation/test-runs/original-0260-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "07-06",
+      "title": "重复奖励回调",
+      "originalAcceptanceText": "操作  向同一offer_id重复发送有效奖励回调。\n通过  奖励及功能只执行一次，不多揭示动物、不额外累积库存。",
+      "originalRequirementIDs": [
+        "ADS-07"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "奖励找答案重复started/earned回调不增加揭示、库存或浮分收据。",
+      "evidence": [
+        "Validation/original-0260-feedback.json",
+        "Docs/original-feel-0260/manifest.json",
+        "Validation/test-runs/original-0260-app-final-summary.json",
+        "Validation/test-runs/original-0260-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "14-03",
+      "title": "游戏奖励动效与降级",
+      "originalAcceptanceText": "操作  触发正确、错误、Combo、通关及签到动效。\n通过  与业务状态同步，不阻碍后续操作；轻量特效在低性能设备可降级。",
+      "originalRequirementIDs": [
+        "ART-02"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "五组实际Root正常/减少动态画面中逐笔显示160与180；错误/遮挡/后台/跨局隔离，正式手感状态不提升。",
+      "evidence": [
+        "Validation/original-0260-feedback.json",
+        "Docs/original-feel-0260/manifest.json",
+        "Validation/test-runs/original-0260-app-final-summary.json",
+        "Validation/test-runs/original-0260-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "16-03",
+      "title": "最终构建全部问题复验",
+      "originalAcceptanceText": "操作  在最终构建复测所有失败用例及受影响流程。\n通过  每个Bug均有关联修复版本、复测结论和证据，旧版本通过不能代替复测。",
+      "originalRequirementIDs": [
+        "TECH-07"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "新期望先在旧生产复现25条失败断言，最终68项相关App和4项UI通过；未重跑全部既有缺口。",
+      "evidence": [
+        "Validation/original-0260-feedback.json",
+        "Docs/original-feel-0260/manifest.json",
+        "Validation/test-runs/original-0260-app-final-summary.json",
+        "Validation/test-runs/original-0260-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    }
+  ],
+  "verificationSnapshot": {
+    "app": {
+      "status": "Passed",
+      "passed": 68,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 133.619,
+      "summary": "Validation/test-runs/original-0260-app-final-summary.json",
+      "log": "Validation/test-runs/original-0260-app-final.log",
+      "bundle": "Validation/test-runs/original-0260-app-final.xcresult"
+    },
+    "ui": {
+      "status": "Passed",
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 137.039,
+      "summary": "Validation/test-runs/original-0260-17e-ui-summary.json",
+      "log": "Validation/test-runs/original-0260-17e-ui.log",
+      "bundle": "Validation/test-runs/original-0260-17e-ui.xcresult"
+    }
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  }
+}

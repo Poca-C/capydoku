@@ -19,6 +19,8 @@ import CapydokuCore
     var preview = Set<Int>()
     var reduceMotion = false
     var effectsEnabled = true
+    var scoreAwards: [ScoreFeedbackAward]?
+    var latestSubmissionSucceeded: Bool?
     var callbacks = [[VisibleConflictKind]]()
     var scores = [(Int, BoardFeedbackAnchor)]()
     var foundAnchors = [(Int, BoardFeedbackAnchor)]()
@@ -37,7 +39,8 @@ import CapydokuCore
     func refresh() {
         board.configure(size: session.puzzle.size, regions: session.puzzle.regions,
             found: session.found, marks: session.marks, errors: session.errors, preview: preview,
-            sessionID: session.id, lives: session.lives, score: session.score, effectsEnabled: effectsEnabled,
+            sessionID: session.id, lives: session.lives, score: session.score,
+            scoreAwards: scoreAwards, latestSubmissionSucceeded: latestSubmissionSucceeded, effectsEnabled: effectsEnabled,
             reduceMotion: reduceMotion, tutorialTargets: targets, tutorialAction: action,
             locked: locked, hideAccessibility: hidden,
             onToggle: { [weak self] index in
@@ -431,6 +434,128 @@ final class BoardGuidancePresentationTests: XCTestCase {
         rig.effectsEnabled = false; _ = rig.session.submit(cell: 1); rig.refresh()
         rig.effectsEnabled = true; rig.refresh(); XCTAssertEqual(rig.scores.count, 2)
         XCTAssertEqual(rig.foundAnchors.count, 3, "Restoration and hidden finds cannot schedule a deferred flight.")
+    }
+
+    @MainActor private func acceptForScoreReceipt(_ index: Int, in rig: GuidanceRig) -> ScoreFeedbackAward {
+        let before = rig.session.score
+        let result = rig.session.submit(cell: index)
+        let amount = rig.session.score - before
+        XCTAssertGreaterThan(amount, 0)
+        XCTAssertEqual(result, .correct(cell: index, points: amount, won: rig.session.status == .won))
+        return ScoreFeedbackAward(sessionID: rig.session.id, cell: index, amount: amount)
+    }
+
+    @MainActor private func assertScoreOrigin(_ anchor: BoardFeedbackAnchor, cell: Int, in rig: GuidanceRig) throws {
+        let measured = rig.board.convert(try rig.center(cell), to: rig.window)
+        XCTAssertEqual(anchor.cellFrame.midX, measured.x, accuracy: 0.0001)
+        XCTAssertEqual(anchor.cellFrame.midY, measured.y, accuracy: 0.0001)
+        XCTAssertEqual(anchor.foundFrames.count, rig.session.found.count)
+    }
+
+    @MainActor func testCoalescedAcceptedScoreReceiptsKeepActualAmountsAndInputOrderWithoutReplay() throws {
+        let rig = try GuidanceRig(); defer { rig.close() }
+        rig.scoreAwards = []; rig.refresh()
+        // Deliberately reverse spatial order. A sorted-found loop or one total
+        // at the final sorted cell cannot satisfy this per-action contract.
+        let first = acceptForScoreReceipt(8, in: rig)
+        let second = acceptForScoreReceipt(1, in: rig)
+        XCTAssertNotEqual(first.amount, second.amount, "These real consecutive moves exercise the combo increment.")
+        rig.scoreAwards = [first, second]; rig.latestSubmissionSucceeded = true
+        let committed = rig.session
+        rig.refresh()
+        XCTAssertEqual(rig.scores.map(\.0), [first.amount, second.amount])
+        XCTAssertEqual(rig.scores.count, 2)
+        if rig.scores.count == 2 {
+            try assertScoreOrigin(rig.scores[0].1, cell: first.cell, in: rig)
+            try assertScoreOrigin(rig.scores[1].1, cell: second.cell, in: rig)
+        }
+        for _ in 0..<3 { rig.refresh(); rig.board.setNeedsDisplay(); rig.board.layoutIfNeeded() }
+        rig.scoreAwards = [second, first]; rig.refresh()
+        XCTAssertEqual(rig.scores.map(\.0), [first.amount, second.amount], "Receipt refresh/reordering cannot replay already rendered cells.")
+        XCTAssertEqual(rig.session, committed)
+    }
+
+    @MainActor func testCoalescedMistakeEpochLeavesOnlyTheNewAcceptedScoreReceipt() throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent("board-score-receipts-" + UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let model = AppModel(saveDirectory: directory, runsTimer: false, feedbackEnabled: false)
+        model.progress.tutorialCompleted = true; model.config = DemoConfig(); model.start(level: 1)
+        let initial = try XCTUnwrap(model.session)
+        let rig = try GuidanceRig(session: initial); defer { rig.close() }
+        rig.scoreAwards = model.scoreFeedbackAwards; rig.refresh()
+        let beforeErrorCell = initial.puzzle.solution[2], afterErrorCell = initial.puzzle.solution[0]
+        let wrong = try XCTUnwrap(initial.puzzle.regions.indices.first { !initial.puzzle.solution.contains($0) })
+        model.submit(beforeErrorCell)
+        XCTAssertEqual(model.scoreFeedbackAwards.count, 1)
+        let oldEpoch = model.sceneFeedbackEpoch
+        model.submit(wrong)
+        XCTAssertNotEqual(model.sceneFeedbackEpoch, oldEpoch)
+        XCTAssertTrue(model.scoreFeedbackAwards.isEmpty)
+        let beforeLastScore = try XCTUnwrap(model.session).score
+        model.submit(afterErrorCell)
+        let combined = try XCTUnwrap(model.session)
+        let expected = combined.score - beforeLastScore
+        XCTAssertGreaterThan(expected, 0); XCTAssertGreaterThan(combined.score, expected)
+        XCTAssertEqual(model.scoreFeedbackAwards, [ScoreFeedbackAward(sessionID: combined.id, cell: afterErrorCell, amount: expected)])
+        // One render sees both finds and the damage. The explicit latest result
+        // allows the new correct move; the old epoch's points remain cancelled.
+        rig.session = combined; rig.scoreAwards = model.scoreFeedbackAwards
+        rig.latestSubmissionSucceeded = true; rig.refresh()
+        XCTAssertEqual(rig.scores.map(\.0), [expected])
+        if let callback = rig.scores.first { try assertScoreOrigin(callback.1, cell: afterErrorCell, in: rig) }
+        rig.refresh(); XCTAssertEqual(rig.scores.count, 1)
+        XCTAssertEqual(rig.session, combined)
+    }
+
+    @MainActor func testScoreReceiptsRejectForeignDuplicateNonAddedAndNonPositiveEntries() throws {
+        var saved = GameSession(puzzle: GuidanceRig.puzzle)
+        _ = saved.submit(cell: 7)
+        let rig = try GuidanceRig(session: saved); defer { rig.close() }
+        let accepted = acceptForScoreReceipt(1, in: rig)
+        rig.scoreAwards = [
+            ScoreFeedbackAward(sessionID: UUID(), cell: accepted.cell, amount: accepted.amount),
+            ScoreFeedbackAward(sessionID: saved.id, cell: 7, amount: saved.score),
+            ScoreFeedbackAward(sessionID: saved.id, cell: 0, amount: 700),
+            ScoreFeedbackAward(sessionID: saved.id, cell: accepted.cell, amount: 0),
+            ScoreFeedbackAward(sessionID: saved.id, cell: accepted.cell, amount: -20),
+            accepted, accepted,
+            ScoreFeedbackAward(sessionID: saved.id, cell: accepted.cell, amount: accepted.amount + 500)
+        ]
+        rig.refresh()
+        XCTAssertEqual(rig.scores.map(\.0), [accepted.amount], "Only the first valid receipt for an actually added cell may publish.")
+        if let callback = rig.scores.first { try assertScoreOrigin(callback.1, cell: accepted.cell, in: rig) }
+        rig.refresh(); XCTAssertEqual(rig.scores.count, 1)
+        let next = acceptForScoreReceipt(8, in: rig)
+        rig.scoreAwards = [
+            ScoreFeedbackAward(sessionID: UUID(), cell: next.cell, amount: next.amount),
+            accepted,
+            ScoreFeedbackAward(sessionID: saved.id, cell: 0, amount: 700),
+            ScoreFeedbackAward(sessionID: saved.id, cell: next.cell, amount: 0)
+        ]
+        rig.refresh()
+        XCTAssertEqual(rig.scores.map(\.0), [accepted.amount],
+                       "A nonempty but entirely ineligible receipt list cannot fall back to the new aggregate increase.")
+    }
+
+    @MainActor func testExplicitEmptyScoreReceiptsNeverInventAnAggregateOrReplayOnRestoreAndUncover() throws {
+        let rig = try GuidanceRig(); defer { rig.close() }
+        rig.scoreAwards = []; rig.refresh()
+        let accepted = acceptForScoreReceipt(1, in: rig)
+        rig.refresh()
+        XCTAssertGreaterThan(rig.session.score, 0); XCTAssertEqual(rig.session.found, [1])
+        XCTAssertTrue(rig.scores.isEmpty, "An explicitly empty receipt list is cancellation, not the legacy nil fallback.")
+        rig.scoreAwards = [accepted]; rig.refresh()
+        XCTAssertTrue(rig.scores.isEmpty, "A late receipt cannot revive a find already consumed by the board.")
+
+        rig.session = GameSession(puzzle: GuidanceRig.puzzle)
+        let restored = acceptForScoreReceipt(7, in: rig)
+        rig.scoreAwards = [restored]; rig.refresh()
+        XCTAssertTrue(rig.scores.isEmpty, "Replacing/restoring a session must establish a baseline even when receipts are present.")
+        rig.effectsEnabled = false
+        let hidden = acceptForScoreReceipt(8, in: rig)
+        rig.scoreAwards = [restored, hidden]; rig.refresh()
+        rig.effectsEnabled = true; rig.refresh()
+        XCTAssertTrue(rig.scores.isEmpty, "Uncovering the board cannot replay a hidden award.")
     }
 
     @MainActor func testActualHostSamplesTutorialMotionConflictExplanationAndSettledCleanup() async throws {
