@@ -1,0 +1,54 @@
+{
+  "build": "0.2.37 (40)",
+  "items": [
+    {
+      "file": "applause-root-402pt-coalesced-wrong-correct-latest-success.png",
+      "sourceAttachment": "26E75498-351A-41F8-8031-49BA3F8DAC74.png",
+      "test": "GameFeelVisualTests/testActualRootApplauseFitsBesideComboAndStopsForLaterMistake()",
+      "sourceBundle": "Validation/test-runs/original-0237-targeted.xcresult",
+      "sha256": "31decf13fd04663596d61c00b8eb152cf9781b9072b19f844e9eb1c305083a0f",
+      "reviewed": true
+    },
+    {
+      "file": "applause-root-402pt-coalesced-correct-wrong-no-applause.png",
+      "sourceAttachment": "BAD94B9D-C9D7-4BBA-BC38-8CB93FE2C178.png",
+      "test": "GameFeelVisualTests/testActualRootApplauseFitsBesideComboAndStopsForLaterMistake()",
+      "sourceBundle": "Validation/test-runs/original-0237-targeted.xcresult",
+      "sha256": "c4e29760249530975b9fb37f931860431104e7b0e472b24092682f3b0a84efe9",
+      "reviewed": true
+    },
+    {
+      "file": "applause-root-320pt-coalesced-wrong-correct-latest-success.png",
+      "sourceAttachment": "BD1E0944-F635-4465-8647-687388F242FF.png",
+      "test": "GameFeelVisualTests/testActualRootApplauseFitsBesideComboAndStopsForLaterMistake()",
+      "sourceBundle": "Validation/test-runs/original-0237-targeted.xcresult",
+      "sha256": "caa29bd7a7a8491bb50ab13e8de007133d4258169c5406c139278928394ab971",
+      "reviewed": true
+    },
+    {
+      "file": "applause-root-320pt-coalesced-correct-wrong-no-applause.png",
+      "sourceAttachment": "C0BB3D0E-2B33-4A4D-99BE-7C9D1AEAE33B.png",
+      "test": "GameFeelVisualTests/testActualRootApplauseFitsBesideComboAndStopsForLaterMistake()",
+      "sourceBundle": "Validation/test-runs/original-0237-targeted.xcresult",
+      "sha256": "3c1e52137e28af12933d09235770bab043ce54560767bee9ba350741fa1f1efe",
+      "reviewed": true
+    }
+  ],
+  "review": "四张实际Root运行截图逐张检查：320pt中文、402pt英文，对→错无成功彩粒/浮分/鼓掌，错→对有新的成功反馈且旧冲突强调撤下。截图不能证明连续帧率或声音。",
+  "finalMovie": {
+    "file": "mixed-feedback-gameplay.mov",
+    "sha256": "f1230f5da26243c167510326dd4aa815274b5335123f249c06159de528df1944",
+    "source": "GameFeelVisualTests live simulator recording",
+    "sampledForContinuousMotion": false,
+    "limitation": "保存完整测试录屏，含宿主切换；本轮画面结论以四张明确附件及状态断言为准，不声称已逐帧核验。"
+  },
+  "baselineMovie": {
+    "file": "baseline-0236-normal-level4.mov",
+    "build": "0.2.36 (39)",
+    "sha256": "65a478aff13950b69df474b10d1f3ef1dc35a5618fab6cc6b2471edc8a8b17ef",
+    "sampling": "baseline-0236-sampling.json",
+    "reviewedSampleCount": 31,
+    "scope": "正常存档L4：提示预览/关闭不改盘；辅助功能确认正确，单击X并撤销，找答案后2/6、220分、3命。",
+    "limitation": "修复前普通存档，操作主要为辅助功能动作；原生坐标双击请求失败，无Apply/失败/下一关覆盖，不充当037修复、物理双击或真机音画证据。"
+  }
+}

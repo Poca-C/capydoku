@@ -10,7 +10,12 @@ private final class PlacementBurstRig {
     let previousWindow: UIWindow?
     var id = UUID()
     var found: Set<Int> = []
+    var errors: Set<Int> = []
+    var lives = 3, score = 0
+    var latestSubmissionSucceeded: Bool?
+    var deferredSubmit: ((Int) -> Void)?
     var callbacks = 0
+    var foundCallbacks: [Int] = [], scoreCallbacks: [Int] = []
     var locked = false, hidden = false, enabled = true, reduced = false
     var preview: Set<Int> = []
     let regions = [0, 0, 1, 1, 0, 0, 0, 1, 2, 3, 0, 1, 3, 3, 3, 1]
@@ -23,11 +28,19 @@ private final class PlacementBurstRig {
         controller.view.addSubview(board); refresh(); board.layoutIfNeeded()
     }
     func refresh() {
-        board.configure(size: 4, regions: regions, found: found, marks: [], errors: [], preview: preview,
-            sessionID: id, lives: 3, effectsEnabled: enabled, reduceMotion: reduced,
+        board.configure(size: 4, regions: regions, found: found, marks: [], errors: errors, preview: preview,
+            sessionID: id, lives: lives, score: score, latestSubmissionSucceeded: latestSubmissionSucceeded,
+            effectsEnabled: enabled, reduceMotion: reduced,
             tutorialTargets: [], locked: locked, hideAccessibility: hidden,
             onToggle: { [weak self] _ in self?.callbacks += 1 },
-            onSubmit: { [weak self] _ in self?.callbacks += 1 }, onMark: { [weak self] _ in self?.callbacks += 1 })
+            onSubmit: { [weak self] cell in self?.callbacks += 1; self?.deferredSubmit?(cell) },
+            onMark: { [weak self] _ in self?.callbacks += 1 },
+            onFoundFeedback: { [weak self] cell, _ in self?.foundCallbacks.append(cell) },
+            onScoreFeedback: { [weak self] amount, _ in self?.scoreCallbacks.append(amount) })
+    }
+    func refresh(_ session: GameSession) {
+        id = session.id; found = session.found; errors = session.errors
+        lives = session.lives; score = session.score; refresh()
     }
     var bursts: [BoardPlacementBurstView] { board.subviews.flatMap(\.subviews).compactMap { $0 as? BoardPlacementBurstView } }
     func close() {
@@ -94,6 +107,142 @@ final class BoardPlacementBurstTests: XCTestCase {
         let restored = try PlacementBurstRig(); defer { restored.close() }
         restored.found = [1, 7]; restored.id = UUID(); restored.refresh()
         XCTAssertTrue(restored.bursts.isEmpty)
+    }
+
+    @MainActor func testCoalescedCorrectThenMistakeCancelsOldAndNewPositiveDecorationButNextCorrectStillResponds() throws {
+        for reduced in [false, true] {
+            for hasPreviousFind in [false, true] {
+                let rig = try PlacementBurstRig(); defer { rig.close() }
+                rig.reduced = reduced
+                let puzzle = Puzzle(id: 1, size: 4, regions: rig.regions, solution: [1, 7, 8, 14],
+                    seed: 11400714819535654101, generatorVersion: "original-pipeline-v3", difficulty: "easy")
+                var session = GameSession(puzzle: puzzle)
+                rig.refresh(session)
+                if hasPreviousFind {
+                    _ = session.submit(cell: 1); rig.refresh(session)
+                }
+                let previousEffects = rig.board.subviews.flatMap(\.subviews).filter {
+                    ($0 as? BoardCellFeedbackView)?.kind == .found || $0 is BoardPlacementBurstView
+                }
+                let previousFoundCallbacks = rig.foundCallbacks, previousScoreCallbacks = rig.scoreCallbacks
+
+                // Two real accepted actions arrive before the next UIView update.
+                // The later mistake owns this frame, while both committed state
+                // changes remain visible on the board and score counter.
+                _ = session.submit(cell: 7)
+                let earned = session.score
+                _ = session.submit(cell: 0)
+                rig.refresh(session)
+                XCTAssertEqual(session.score, earned); XCTAssertEqual(session.lives, 2)
+                XCTAssertEqual(session.found, hasPreviousFind ? [1, 7] : [7])
+                XCTAssertEqual(rig.found, session.found); XCTAssertEqual(rig.score, earned)
+                XCTAssertTrue(rig.bursts.isEmpty, "A coalesced correct action must not rebuild particles after damage cancels them.")
+                XCTAssertFalse(rig.board.subviews.flatMap(\.subviews).contains { ($0 as? BoardCellFeedbackView)?.kind == .found },
+                    "The happy pop, ring and local heart must also yield to the latest mistake.")
+                XCTAssertTrue(rig.board.subviews.flatMap(\.subviews).contains { $0 is BoardMistakeFeedbackView })
+                XCTAssertTrue(previousEffects.allSatisfy { $0.superview == nil && animations($0.layer).isEmpty })
+                XCTAssertEqual(rig.foundCallbacks, previousFoundCallbacks)
+                XCTAssertEqual(rig.scoreCallbacks, previousScoreCallbacks)
+                rig.refresh(session)
+                XCTAssertTrue(rig.bursts.isEmpty, "An ordinary refresh must not replay the suppressed reward.")
+
+                _ = session.submit(cell: 8); rig.refresh(session)
+                XCTAssertEqual(rig.foundCallbacks, previousFoundCallbacks + [8])
+                XCTAssertEqual(rig.scoreCallbacks, previousScoreCallbacks + [session.score - earned])
+                XCTAssertTrue(rig.board.subviews.flatMap(\.subviews).contains { ($0 as? BoardCellFeedbackView)?.kind == .found })
+                XCTAssertEqual(rig.bursts.map(\.cellIndex), reduced ? [] : [8])
+                XCTAssertEqual(rig.callbacks, 0, "Presentation may not submit, mark or toggle another gameplay action.")
+            }
+        }
+    }
+
+    @MainActor func testCoalescedMoveOrderUsesLatestModelResultAndNeverReplaysOnOrdinaryRefresh() throws {
+        for reduced in [false, true] {
+            for lastSucceeded in [false, true] {
+                let rig = try PlacementBurstRig(); defer { rig.close() }
+                rig.reduced = reduced
+                let puzzle = Puzzle(id: 1, size: 4, regions: rig.regions, solution: [1, 7, 8, 14],
+                    seed: 11400714819535654101, generatorVersion: "original-pipeline-v3", difficulty: "easy")
+                var session = GameSession(puzzle: puzzle)
+                rig.refresh(session)
+                _ = session.submit(cell: 1); rig.latestSubmissionSucceeded = true; rig.refresh(session)
+                let older = rig.board.subviews.flatMap(\.subviews).filter {
+                    ($0 as? BoardCellFeedbackView)?.kind == .found || $0 is BoardPlacementBurstView
+                }
+                let beforeScore = session.score
+                for cell in lastSucceeded ? [0, 7] : [7, 0] { _ = session.submit(cell: cell) }
+                rig.latestSubmissionSucceeded = session.combo > 0
+                rig.refresh(session)
+                XCTAssertEqual(session.lives, 2); XCTAssertEqual(session.found, [1, 7])
+                XCTAssertEqual((rig.board.accessibilityElements?[1] as? UIAccessibilityElement)?.accessibilityValue, "found")
+                XCTAssertEqual((rig.board.accessibilityElements?[7] as? UIAccessibilityElement)?.accessibilityValue, "found")
+                XCTAssertEqual((rig.board.accessibilityElements?[0] as? UIAccessibilityElement)?.accessibilityValue, "error")
+                XCTAssertTrue(older.allSatisfy { $0.superview == nil && animations($0.layer).isEmpty })
+                let current = rig.board.subviews.flatMap(\.subviews)
+                XCTAssertEqual(current.compactMap { $0 as? BoardCellFeedbackView }.filter { $0.kind == .found }.map(\.cellIndex), lastSucceeded ? [7] : [])
+                XCTAssertEqual(current.compactMap { $0 as? BoardMistakeFeedbackView }.map(\.cellIndex), lastSucceeded ? [] : [0])
+                XCTAssertEqual(rig.bursts.map(\.cellIndex), lastSucceeded && !reduced ? [7] : [])
+                XCTAssertEqual(rig.foundCallbacks, lastSucceeded ? [1, 7] : [1])
+                XCTAssertEqual(rig.scoreCallbacks, lastSucceeded ? [beforeScore, session.score - beforeScore] : [beforeScore])
+                let identities = current.map(ObjectIdentifier.init)
+                rig.refresh(session)
+                XCTAssertEqual(rig.board.subviews.flatMap(\.subviews).map(ObjectIdentifier.init), identities,
+                    "A clock/layout refresh must preserve the current presentation without replaying either action.")
+                XCTAssertEqual(rig.foundCallbacks, lastSucceeded ? [1, 7] : [1])
+            }
+        }
+    }
+
+    @MainActor func testCoalescedOrderFallsBackToActualPendingSubmissionAndUnknownOrderPrefersDamage() throws {
+        for source in ["pending", "unknown"] {
+            for lastSucceeded in [false, true] {
+                let rig = try PlacementBurstRig(); defer { rig.close() }
+                let puzzle = Puzzle(id: 1, size: 4, regions: rig.regions, solution: [1, 7, 8, 14],
+                    seed: 11400714819535654101, generatorVersion: "original-pipeline-v3", difficulty: "easy")
+                var session = GameSession(puzzle: puzzle)
+                rig.refresh(session)
+                rig.deferredSubmit = { cell in _ = session.submit(cell: cell) }
+                for cell in lastSucceeded ? [0, 7] : [7, 0] {
+                    if source == "pending" { XCTAssertTrue(rig.board.activate(index: cell, submit: true)) }
+                    else { _ = session.submit(cell: cell) }
+                }
+                rig.refresh(session)
+                let shouldCelebrate = source == "pending" && lastSucceeded
+                XCTAssertEqual(rig.bursts.map(\.cellIndex), shouldCelebrate ? [7] : [])
+                XCTAssertEqual(rig.foundCallbacks, shouldCelebrate ? [7] : [])
+                XCTAssertEqual(rig.board.subviews.flatMap(\.subviews).compactMap { $0 as? BoardMistakeFeedbackView }.map(\.cellIndex), shouldCelebrate ? [] : [0])
+                XCTAssertEqual(session.found, [7]); XCTAssertEqual(session.lives, 2)
+                let ids = rig.board.subviews.flatMap(\.subviews).map(ObjectIdentifier.init)
+                rig.refresh(session)
+                XCTAssertEqual(rig.board.subviews.flatMap(\.subviews).map(ObjectIdentifier.init), ids)
+                XCTAssertEqual(rig.callbacks, source == "pending" ? 2 : 0)
+            }
+        }
+    }
+
+    @MainActor func testCoalescedMistakeThenFinalCorrectKeepsLastCellAndWholeBoardVictory() throws {
+        let rig = try PlacementBurstRig(); defer { rig.close() }
+        let puzzle = Puzzle(id: 1, size: 4, regions: rig.regions, solution: [1, 7, 8, 14],
+            seed: 11400714819535654101, generatorVersion: "original-pipeline-v3", difficulty: "easy")
+        var session = GameSession(puzzle: puzzle)
+        rig.refresh(session)
+        for cell in [1, 7, 8] { _ = session.submit(cell: cell) }
+        rig.latestSubmissionSucceeded = true; rig.refresh(session)
+        _ = session.submit(cell: 0); _ = session.submit(cell: 14)
+        rig.locked = true; rig.hidden = true
+        rig.latestSubmissionSucceeded = session.combo > 0; rig.refresh(session)
+        XCTAssertEqual(session.status, .won); XCTAssertEqual(session.lives, 2)
+        XCTAssertEqual(session.found, [1, 7, 8, 14])
+        let current = rig.board.subviews.flatMap(\.subviews)
+        XCTAssertEqual(current.compactMap { $0 as? BoardCellFeedbackView }.filter { $0.kind == .found }.map(\.cellIndex), [14])
+        XCTAssertEqual(rig.bursts.map(\.cellIndex), [14])
+        XCTAssertEqual(current.compactMap { $0 as? BoardSceneFeedbackView }.map(\.kind), [.victory])
+        XCTAssertFalse(current.contains { $0 is BoardMistakeFeedbackView })
+        XCTAssertEqual(rig.foundCallbacks, [1, 7, 8, 14])
+        let ids = current.map(ObjectIdentifier.init)
+        rig.refresh(session)
+        XCTAssertEqual(rig.board.subviews.flatMap(\.subviews).map(ObjectIdentifier.init), ids)
+        XCTAssertEqual(rig.foundCallbacks, [1, 7, 8, 14])
     }
 
     @MainActor func testCoveringBackgroundPolicyAndBoardReplacementCancelWithoutGameplayCallbacks() throws {

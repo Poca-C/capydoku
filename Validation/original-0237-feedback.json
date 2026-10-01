@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.37 (40)",
+  "date": "2026-10-02",
+  "status": "scoped_coalesced_feedback_verified_simulator_only",
+  "previousReport": "Validation/original-0236-feedback.json",
+  "sourceParagraphs": [
+    127,
+    129,
+    130,
+    134,
+    136,
+    252,
+    253,
+    254
+  ],
+  "finding": "SwiftUI合并同帧正确和错误后，旧代码先清理成功彩粒，又按新增found重建局部开心/光圈/爱心/彩粒并发送成功回调，导致扣命时仍出现成功奖励。035只解决了顶部奖励及晚到回调，没有完整解决棋盘局部此路径。",
+  "changes": [
+    "混合快照由最后一次有效提交决定瞬时反馈；Root传combo>0，未提供时使用原生pendingSubmission，无顺序证据则错误优先。",
+    "扣命清理旧成功反馈；对→错抑制新成功装饰，错→对保留新成功装饰并撤掉旧错误强调。",
+    "已提交分数、找到位置、生命和红X保持；普通刷新不重播，下一次正确和最后一格通关继续响应。",
+    "修正符合性报告过时的当前版本和独立五官缺口，保留全部83行ID/正式状态及88条Checklist。"
+  ],
+  "redRegression": {
+    "build": "0.2.36 production code with new regression",
+    "cases": 1,
+    "failed": 1,
+    "assertionFailures": 28,
+    "summary": "Validation/test-runs/original-0237-red-summary.json",
+    "seconds": 0.436,
+    "note": "先复现旧行为，再修生产代码；28为断言失败数，不是28个用例。"
+  },
+  "applicationTests": {
+    "status": "Passed",
+    "cases": 84,
+    "passed": 84,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 37.107,
+    "scope": "17 Pro / iOS26.5: board correct/error, gestures and refresh, guidance, lifecycle, rewards, actual Root, completion and applause. Targeted run, not full App/Core.",
+    "summary": "Validation/test-runs/original-0237-targeted-summary.json",
+    "log": "Validation/test-runs/original-0237-targeted.log",
+    "bundle": "Validation/test-runs/original-0237-targeted.xcresult"
+  },
+  "uiTests": {
+    "status": "Passed",
+    "cases": 4,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 139.106,
+    "scope": "17e / iOS26.5: native tap/double-tap/pan then tools; solve/advance; lose/simulated revive; hint close/Apply. Existing UI fixtures.",
+    "summary": "Validation/test-runs/original-0237-17e-ui-summary.json",
+    "log": "Validation/test-runs/original-0237-17e-ui.log",
+    "bundle": "Validation/test-runs/original-0237-17e-ui.xcresult"
+  },
+  "visualEvidence": "Docs/original-feel-0237/manifest.json",
+  "independentReview": "只读独立审查未发现影响真实用户的新缺陷；确认不回写业务、末格胜利保留、移除效果取消任务与动画。",
+  "referenceCoverage": {
+    "conclusion": "九类已观察方向均有Demo实现，未声称所有细节或参考品质已完成。",
+    "implementedDirections": [
+      "动态教学：手指、点击圈、横纵轨迹及目标暗化",
+      "角色反应：棋盘眨眼侧看、开心/惊讶、结果独立眼口和连续肢体",
+      "正确奖励：格内实际加分、顶部反馈、跨格彩粒、连续得分回弹",
+      "错误解释：依据可见冲突高亮行列/区域/邻接关系、连线和规则卡",
+      "扣命：爱心破裂及剩一命聚焦提醒",
+      "Combo及结算：三档装饰、整盘庆祝、两套胜利和一套失败演出",
+      "新盘：错峰入场、触摸撤下入场装饰、恢复不重播",
+      "道具：空心X预览、Apply实填、直接答案局部确认",
+      "签到：保存成功后点亮、连签日期与实际库存增量反馈"
+    ]
+  },
+  "reference": {
+    "latestSuccessfulPlaytest": "Validation/meowdoku-playtest-comparison-0229.json",
+    "newSuccessfulPlaytestThisRound": false,
+    "equivalenceClaimed": false,
+    "currentDifferences": [
+      "粒子限制在棋盘内，参考可飞至下方。",
+      "没有照搬全部参考文案、分值/阈值或派对猫素材。"
+    ]
+  },
+  "audio": {
+    "modified": false,
+    "localTestWAVCount": 9,
+    "debugVerification": "Validation/audio-isolation-0237-debug.json",
+    "formalManifestClipsEmpty": true,
+    "audibleABPerformed": false,
+    "releaseRebuilt": false
+  },
+  "preservation": {
+    "levelsSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49",
+    "coreRerun": false,
+    "lastCoreVerification": "0.2.24: 177 passed",
+    "formal83StatusesUnchanged": true,
+    "historical88SourceUnchanged": true
+  },
+  "remaining": [
+    "整体角色动作自然度和参考完成度尚未验收。",
+    "真机连续操作的声音、画面及触感配合未验；手机仍029。",
+    "参考逐帧时序、后期连续试玩及正式冻结参数仍缺证据；不能把专项绿测当完整验收。"
+  ],
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  }
+}

@@ -169,6 +169,9 @@ final class GameFeelVisualTests: XCTestCase {
     @MainActor private func applause(in view: UIView) -> ApplauseFeedbackUIView? {
         (view as? ApplauseFeedbackUIView) ?? view.subviews.lazy.compactMap { self.applause(in: $0) }.first
     }
+    @MainActor private func grid(in view: UIView) -> PuzzleGridUIView? {
+        (view as? PuzzleGridUIView) ?? view.subviews.lazy.compactMap { self.grid(in: $0) }.first
+    }
 
     @MainActor func testActualRootApplauseFitsBesideComboAndStopsForLaterMistake() async throws {
         for (width, language) in [(CGFloat(320), AppLanguage.simplifiedChinese), (CGFloat(402), AppLanguage.english)] {
@@ -224,6 +227,10 @@ final class GameFeelVisualTests: XCTestCase {
             XCTAssertNil(firstView.activeEventID)
             XCTAssertEqual(model.session?.found, accepted.found); XCTAssertEqual(model.session?.score, accepted.score)
             XCTAssertEqual(model.session?.lives, 2)
+            let boardView = try XCTUnwrap(grid(in: host.view))
+            XCTAssertFalse(boardView.subviews.flatMap(\.subviews).contains {
+                $0 is BoardPlacementBurstView || ($0 as? BoardCellFeedbackView)?.kind == .found
+            })
             capture("mistake-no-applause")
             model.start(level: 6)
             try await Task.sleep(nanoseconds: 120_000_000)
@@ -234,7 +241,24 @@ final class GameFeelVisualTests: XCTestCase {
             XCTAssertFalse(firstView === nextView, "Consumed event storage is scoped to one board.")
             XCTAssertNil(nextView.activeEventID)
             XCTAssertEqual(model.session?.found.count, 1); XCTAssertEqual(model.session?.lives, 2)
+            let coalescedBoard = try XCTUnwrap(grid(in: host.view))
+            XCTAssertFalse(coalescedBoard.subviews.flatMap(\.subviews).contains {
+                $0 is BoardPlacementBurstView || ($0 as? BoardCellFeedbackView)?.kind == .found
+            }, "The actual Root must pass the latest wrong result to local board feedback as well as the HUD.")
             capture("coalesced-correct-wrong-no-applause")
+
+            model.start(level: 6)
+            try await Task.sleep(nanoseconds: 120_000_000)
+            model.submit(wrong); model.submit(solution[0])
+            try await Task.sleep(nanoseconds: 120_000_000)
+            XCTAssertNotNil(applause(in: host.view)?.activeEventID)
+            XCTAssertEqual(model.session?.found, [solution[0]]); XCTAssertEqual(model.session?.lives, 2)
+            let latestBoard = try XCTUnwrap(grid(in: host.view))
+            let latestEffects = latestBoard.subviews.flatMap(\.subviews)
+            XCTAssertTrue(latestEffects.contains { $0 is BoardPlacementBurstView })
+            XCTAssertFalse(latestEffects.contains { $0 is BoardMistakeFeedbackView || $0 is BoardConflictFeedbackView },
+                "The actual Root must preserve a newer correct action rather than let earlier damage win the shared frame.")
+            capture("coalesced-wrong-correct-latest-success")
         }
     }
 

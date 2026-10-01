@@ -1,0 +1,162 @@
+{
+  "durationSeconds": 91.37166666666667,
+  "frames": [
+    {
+      "actualSeconds": 0,
+      "file": "frame-000.000.png",
+      "requestedSeconds": 0
+    },
+    {
+      "actualSeconds": 0,
+      "file": "frame-003.000.png",
+      "requestedSeconds": 3
+    },
+    {
+      "actualSeconds": 0,
+      "file": "frame-006.000.png",
+      "requestedSeconds": 6
+    },
+    {
+      "actualSeconds": 0,
+      "file": "frame-009.000.png",
+      "requestedSeconds": 9
+    },
+    {
+      "actualSeconds": 0,
+      "file": "frame-012.000.png",
+      "requestedSeconds": 12
+    },
+    {
+      "actualSeconds": 12.921666666666667,
+      "file": "frame-015.000.png",
+      "requestedSeconds": 15
+    },
+    {
+      "actualSeconds": 12.921666666666667,
+      "file": "frame-018.000.png",
+      "requestedSeconds": 18
+    },
+    {
+      "actualSeconds": 12.921666666666667,
+      "file": "frame-021.000.png",
+      "requestedSeconds": 21
+    },
+    {
+      "actualSeconds": 12.921666666666667,
+      "file": "frame-024.000.png",
+      "requestedSeconds": 24
+    },
+    {
+      "actualSeconds": 26.55666666666667,
+      "file": "frame-027.000.png",
+      "requestedSeconds": 27
+    },
+    {
+      "actualSeconds": 27.161666666666665,
+      "file": "frame-030.000.png",
+      "requestedSeconds": 30
+    },
+    {
+      "actualSeconds": 27.161666666666665,
+      "file": "frame-033.000.png",
+      "requestedSeconds": 33
+    },
+    {
+      "actualSeconds": 27.161666666666665,
+      "file": "frame-036.000.png",
+      "requestedSeconds": 36
+    },
+    {
+      "actualSeconds": 27.161666666666665,
+      "file": "frame-039.000.png",
+      "requestedSeconds": 39
+    },
+    {
+      "actualSeconds": 27.161666666666665,
+      "file": "frame-042.000.png",
+      "requestedSeconds": 42
+    },
+    {
+      "actualSeconds": 27.161666666666665,
+      "file": "frame-045.000.png",
+      "requestedSeconds": 45
+    },
+    {
+      "actualSeconds": 27.161666666666665,
+      "file": "frame-048.000.png",
+      "requestedSeconds": 48
+    },
+    {
+      "actualSeconds": 27.161666666666665,
+      "file": "frame-051.000.png",
+      "requestedSeconds": 51
+    },
+    {
+      "actualSeconds": 27.161666666666665,
+      "file": "frame-054.000.png",
+      "requestedSeconds": 54
+    },
+    {
+      "actualSeconds": 56.958333333333336,
+      "file": "frame-057.000.png",
+      "requestedSeconds": 57
+    },
+    {
+      "actualSeconds": 56.958333333333336,
+      "file": "frame-060.000.png",
+      "requestedSeconds": 60
+    },
+    {
+      "actualSeconds": 60.56333333333333,
+      "file": "frame-063.000.png",
+      "requestedSeconds": 63
+    },
+    {
+      "actualSeconds": 65.985,
+      "file": "frame-066.000.png",
+      "requestedSeconds": 66
+    },
+    {
+      "actualSeconds": 68.95666666666666,
+      "file": "frame-069.000.png",
+      "requestedSeconds": 69
+    },
+    {
+      "actualSeconds": 68.95666666666666,
+      "file": "frame-072.000.png",
+      "requestedSeconds": 72
+    },
+    {
+      "actualSeconds": 73.87,
+      "file": "frame-075.000.png",
+      "requestedSeconds": 75
+    },
+    {
+      "actualSeconds": 77.99666666666667,
+      "file": "frame-078.000.png",
+      "requestedSeconds": 78
+    },
+    {
+      "actualSeconds": 78.66666666666667,
+      "file": "frame-081.000.png",
+      "requestedSeconds": 81
+    },
+    {
+      "actualSeconds": 82.27,
+      "file": "frame-084.000.png",
+      "requestedSeconds": 84
+    },
+    {
+      "actualSeconds": 85.765,
+      "file": "frame-087.000.png",
+      "requestedSeconds": 87
+    },
+    {
+      "actualSeconds": 89.89666666666666,
+      "file": "frame-090.000.png",
+      "requestedSeconds": 90
+    }
+  ],
+  "sampleIntervalSeconds": 3,
+  "source": "/Users/poca/Documents/ChatGPT/capydoku开发/.build/normal-level4-0236-review.mov"
+}

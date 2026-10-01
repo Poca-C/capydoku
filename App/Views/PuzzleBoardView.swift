@@ -16,6 +16,7 @@ struct PuzzleBoardView: UIViewRepresentable {
     var entranceID: UUID? = nil
     var lives: Int? = nil
     var score: Int? = nil
+    var latestSubmissionSucceeded: Bool? = nil
     var effectsEnabled = true
     var preview: Set<Int> = []
     var tutorialTargets: Set<Int> = []
@@ -42,7 +43,8 @@ struct PuzzleBoardView: UIViewRepresentable {
     func updateUIView(_ uiView: PuzzleGridUIView, context: Context) {
         uiView.configure(size: puzzle.size, regions: puzzle.regions, found: found,
                          marks: marks, errors: errors, preview: preview,
-                         sessionID: sessionID, entranceID: entranceID, lives: lives, score: score, effectsEnabled: effectsEnabled,
+                         sessionID: sessionID, entranceID: entranceID, lives: lives, score: score,
+                         latestSubmissionSucceeded: latestSubmissionSucceeded, effectsEnabled: effectsEnabled,
                          reduceMotion: reduceMotion,
                          tutorialTargets: tutorialTargets, tutorialAction: tutorialAction, locked: locked, hideAccessibility: hideAccessibility,
                          language: language,
@@ -222,7 +224,8 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
     func configure(size: Int, regions: [Int], found: Set<Int>, marks: Set<Int>, errors: Set<Int>,
-                   preview: Set<Int>, sessionID: UUID? = nil, entranceID: UUID? = nil, lives: Int? = nil, score: Int? = nil, effectsEnabled: Bool = true,
+                   preview: Set<Int>, sessionID: UUID? = nil, entranceID: UUID? = nil, lives: Int? = nil, score: Int? = nil,
+                   latestSubmissionSucceeded: Bool? = nil, effectsEnabled: Bool = true,
                    reduceMotion: Bool? = nil,
                    tutorialTargets: Set<Int>, tutorialAction: String? = nil, locked: Bool, hideAccessibility: Bool = false,
                    language: AppLanguage = .simplifiedChinese,
@@ -260,6 +263,19 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         } else if self.lives == nil && lives == nil {
             mistakeCell = addedErrors.sorted().first
         }
+        // SwiftUI can combine multiple accepted moves into one board update.
+        // The model's latest result owns that frame's transient explanation;
+        // component hosts can fall back to their last native submission. If
+        // order is unknown, damage takes priority over celebration. Neither
+        // choice changes the committed face, mark, life or score state.
+        let knownLatestSubmissionSucceeded = latestSubmissionSucceeded ?? pendingSubmission.flatMap { index -> Bool? in
+            if addedFound.contains(index) { return true }
+            if errors.contains(index) { return false }
+            return nil
+        }
+        let receivedMistake = lostLife || mistakeCell != nil
+        let latestFindWins = receivedMistake && !addedFound.isEmpty && knownLatestSubmissionSucceeded == true
+        let suppressPositiveFeedback = receivedMistake && !latestFindWins
         let motionPolicyChanged = reducesMotion != (reduceMotion ?? UIAccessibility.isReduceMotionEnabled)
         if !sameBoard || !effectsEnabled || motionPolicyChanged { clearFeedback() }
         if (locked && tutorialAction != "read") || hideAccessibility || !preview.isEmpty || !addedFound.isEmpty || !changedMarks.isEmpty || !addedErrors.isEmpty {
@@ -267,21 +283,21 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         }
         if !preview.isEmpty || (hideAccessibility && found.count != size) { clearScenePresentation() }
         if locked || hideAccessibility || !preview.isEmpty { clearGuidance() }
-        if mistakeCell != nil || !preview.isEmpty || ((locked || hideAccessibility) && found.count != size) { clearPlacementBursts() }
+        if receivedMistake || !preview.isEmpty || ((locked || hideAccessibility) && found.count != size) { clearPlacementBursts() }
         for effect in feedbackOverlay.subviews.compactMap({ $0 as? BoardPlacementBurstView }) where !found.contains(effect.cellIndex) {
             effect.removeFromSuperview()
         }
         for effect in feedbackOverlay.subviews.compactMap({ $0 as? BoardCellFeedbackView }) {
-            let valid = effect.kind == .found ? found.contains(effect.cellIndex)
+            let valid = effect.kind == .found ? found.contains(effect.cellIndex) && !receivedMistake
                 : effect.kind == .markAdded ? marks.contains(effect.cellIndex) && !found.contains(effect.cellIndex) && !errors.contains(effect.cellIndex)
                 : !marks.contains(effect.cellIndex) && !found.contains(effect.cellIndex) && !errors.contains(effect.cellIndex)
             if !valid { effect.removeFromSuperview() }
         }
-        for effect in feedbackOverlay.subviews.compactMap({ $0 as? BoardMistakeFeedbackView }) where !errors.contains(effect.cellIndex) {
+        for effect in feedbackOverlay.subviews.compactMap({ $0 as? BoardMistakeFeedbackView }) where latestFindWins || !errors.contains(effect.cellIndex) {
             effect.removeFromSuperview()
         }
         var clearedConflict = false
-        for effect in feedbackOverlay.subviews.compactMap({ $0 as? BoardConflictFeedbackView }) where !errors.contains(effect.candidate) {
+        for effect in feedbackOverlay.subviews.compactMap({ $0 as? BoardConflictFeedbackView }) where latestFindWins || !errors.contains(effect.candidate) {
             let participants = Set(effect.conflicts.map(\.otherCell))
             effect.removeFromSuperview(); clearedConflict = true
             feedbackOverlay.subviews.compactMap { $0 as? CapyFaceExpressionView }
@@ -334,7 +350,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         if redrawBoard { refreshDiagnostics.displayInvalidations += 1; setNeedsDisplay() }
         updateTutorialGuide()
         if hasConfigured, sameBoard, canPresentEffects {
-            for index in addedFound.sorted() where (0..<(size * size)).contains(index) {
+            for index in addedFound.sorted() where !suppressPositiveFeedback && (0..<(size * size)).contains(index) {
                 cellFeedback(at: index, kind: .found)
                 if let window {
                     let cell = rect(for: index)
@@ -345,12 +361,12 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
                 cellFeedback(at: index, kind: marks.contains(index) ? .markAdded : .markRemoved,
                              errorMark: removedErrors.contains(index))
             }
-            if scoreDelta > 0, let index = scoreOrigin, let window {
+            if !suppressPositiveFeedback, scoreDelta > 0, let index = scoreOrigin, let window {
                 let cell = rect(for: index)
                 self.onScoreFeedback?(scoreDelta, convert(CGPoint(x: cell.midX, y: cell.midY), to: window))
             }
         }
-        if hasConfigured, sameBoard, canPresentEffects, let index = mistakeCell {
+        if hasConfigured, sameBoard, canPresentEffects, !latestFindWins, let index = mistakeCell {
             mistake(at: index)
             if !locked && !hideAccessibility && preview.isEmpty { explainMistake(at: index) }
         }

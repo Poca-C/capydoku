@@ -404,6 +404,7 @@ struct GameView: View {
                             .background(FeedbackWindowFrameReader { comboBandWindowFrame = $0 })
                         PuzzleBoardView(puzzle: s.puzzle, found: s.found, marks: s.marks, errors: s.errors,
                                         sessionID: s.id, entranceID: model.boardEntranceID, lives: s.lives, score: s.score,
+                                        latestSubmissionSucceeded: s.combo > 0,
                                         effectsEnabled: canPresentFeedback,
                                         preview: Set(model.hint?.cells ?? []), tutorialTargets: Set(model.tutorial?.targetCells ?? []),
                                         tutorialAction: model.tutorial?.action,
