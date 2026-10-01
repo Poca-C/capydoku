@@ -1,0 +1,179 @@
+{
+  "build": "0.2.32 (35)",
+  "sourceBundle": "Validation/test-runs/original-0232-targeted.xcresult",
+  "status": "reviewed_scoped_runtime_images_and_movie_samples",
+  "items": [
+    {
+      "file": "face-0232-gentleRetry-actual-samples.json",
+      "sourceAttachment": "FBE9E795-4366-4B2D-8871-529A7DA3881E.json",
+      "originalName": "face-0232-gentleRetry-actual-samples_0_DEF0BF8C-3ECF-475A-A65A-17CB51A55F45.json",
+      "test": "ResultFacePresentationTests/testRealRunningTransitionsNeverShowTwoEyesOrMouthsAndKeepTheHeadFixed()",
+      "sha256": "330eef5ea419ecf653c80fd2bf931b99c1507b6415843e1cf4a44b5352be9db1"
+    },
+    {
+      "file": "face-0232-gentleRetry-settled.png",
+      "sourceAttachment": "6B51AC27-087F-47A7-9E86-3A0A10202DFB.png",
+      "originalName": "face-0232-gentleRetry-settled_0_20308B48-2BDF-45F7-AC82-AEF3DC1FA5F6.png",
+      "test": "ResultFacePresentationTests/testRealRunningTransitionsNeverShowTwoEyesOrMouthsAndKeepTheHeadFixed()",
+      "sha256": "074b62de780019821381a67710cde3241ca040bf4eaa355f6e13f28be7901e1a"
+    },
+    {
+      "file": "face-0232-gentleRetry-mouth-compressed.png",
+      "sourceAttachment": "E81718DB-9F66-4688-95FB-96FCA8F342D2.png",
+      "originalName": "face-0232-gentleRetry-mouth-compressed_0_28D5EA97-7D26-47DA-9431-93A9CA6305DD.png",
+      "test": "ResultFacePresentationTests/testRealRunningTransitionsNeverShowTwoEyesOrMouthsAndKeepTheHeadFixed()",
+      "sha256": "5b4b28c5c3ec6bbe63ce5def396e29f6696f231658ce9685611227020094fe22"
+    },
+    {
+      "file": "face-0232-gentleRetry-eyes-compressed.png",
+      "sourceAttachment": "B0202912-33A3-4900-826A-BD0EB8011B4D.png",
+      "originalName": "face-0232-gentleRetry-eyes-compressed_0_2E8381B6-A151-4EEE-BF86-0327BB411894.png",
+      "test": "ResultFacePresentationTests/testRealRunningTransitionsNeverShowTwoEyesOrMouthsAndKeepTheHeadFixed()",
+      "sha256": "d3139ff22a33ad816d8bc2359988e226e6cc02a615132a48b431e233845c7aa9"
+    },
+    {
+      "file": "face-0232-starHug-actual-samples.json",
+      "sourceAttachment": "242B4D95-7D61-4D91-9BD5-1C5465A35159.json",
+      "originalName": "face-0232-starHug-actual-samples_0_F7E12297-0007-4129-9D8B-A3E22E491123.json",
+      "test": "ResultFacePresentationTests/testRealRunningTransitionsNeverShowTwoEyesOrMouthsAndKeepTheHeadFixed()",
+      "sha256": "cefefe3fd2d8cd676cd3cf72527c87b0c20a5e58799ace3be8e69008b0251993"
+    },
+    {
+      "file": "face-0232-starHug-settled.png",
+      "sourceAttachment": "757A727D-8F5A-4DB7-B16D-DD3A824010DF.png",
+      "originalName": "face-0232-starHug-settled_0_B2CD715A-E50D-46C4-8382-2BDE2BA5748A.png",
+      "test": "ResultFacePresentationTests/testRealRunningTransitionsNeverShowTwoEyesOrMouthsAndKeepTheHeadFixed()",
+      "sha256": "5e09c9a0ccf11f30b51773c0b112d9aeeb78d5981d50f80805a3b927eaa541ef"
+    },
+    {
+      "file": "face-0232-starHug-eyes-compressed.png",
+      "sourceAttachment": "8CD0BDCB-DF0A-4551-8362-4BB328382832.png",
+      "originalName": "face-0232-starHug-eyes-compressed_0_4C70D4AF-7223-46EA-AE8A-B15FB4A56415.png",
+      "test": "ResultFacePresentationTests/testRealRunningTransitionsNeverShowTwoEyesOrMouthsAndKeepTheHeadFixed()",
+      "sha256": "b4f86cec34d21df98fd2e088d133c581fd14b61effae03617e9cfd3a103a6665"
+    },
+    {
+      "file": "face-0232-starHug-mouth-compressed.png",
+      "sourceAttachment": "188AFDD8-FD97-40DE-A6D5-08EC67001326.png",
+      "originalName": "face-0232-starHug-mouth-compressed_0_90096BD8-1D41-416E-A31D-54ED5BDD646F.png",
+      "test": "ResultFacePresentationTests/testRealRunningTransitionsNeverShowTwoEyesOrMouthsAndKeepTheHeadFixed()",
+      "sha256": "c3bfec9cc41927308381ceafdf8a6611349aff5c571b58a8542cbc5b765bb54b"
+    },
+    {
+      "file": "face-0232-joyfulRaise-actual-samples.json",
+      "sourceAttachment": "5ED86040-0FE6-4AF0-A143-C3539426C9F6.json",
+      "originalName": "face-0232-joyfulRaise-actual-samples_0_25792AC0-BA87-40E0-8CC0-23F34A1FEE0D.json",
+      "test": "ResultFacePresentationTests/testRealRunningTransitionsNeverShowTwoEyesOrMouthsAndKeepTheHeadFixed()",
+      "sha256": "97453865ab7f478344e882142c040d0601c2e1df621baeae2c51033c349e7412"
+    },
+    {
+      "file": "face-0232-joyfulRaise-settled.png",
+      "sourceAttachment": "F72B3222-8259-42DF-8092-72C6A28647CE.png",
+      "originalName": "face-0232-joyfulRaise-settled_0_8AE2E995-BFBE-4BA0-BA59-8C74548D1D3B.png",
+      "test": "ResultFacePresentationTests/testRealRunningTransitionsNeverShowTwoEyesOrMouthsAndKeepTheHeadFixed()",
+      "sha256": "5e09c9a0ccf11f30b51773c0b112d9aeeb78d5981d50f80805a3b927eaa541ef"
+    },
+    {
+      "file": "face-0232-joyfulRaise-mouth-compressed.png",
+      "sourceAttachment": "4601D68F-1119-4F90-AA6B-03B9F4B6FE40.png",
+      "originalName": "face-0232-joyfulRaise-mouth-compressed_0_8525FAB1-6B2B-48A2-B70B-992E264A0069.png",
+      "test": "ResultFacePresentationTests/testRealRunningTransitionsNeverShowTwoEyesOrMouthsAndKeepTheHeadFixed()",
+      "sha256": "63162acb29266684efc1f9bf32a5083f5c28c2c64a291704a46561cdbace0b85"
+    },
+    {
+      "file": "face-0232-joyfulRaise-eyes-compressed.png",
+      "sourceAttachment": "35C7D991-796C-4DD2-ACA1-D271992A3DC5.png",
+      "originalName": "face-0232-joyfulRaise-eyes-compressed_0_DE956E8D-7505-4416-B118-1F2102239BCE.png",
+      "test": "ResultFacePresentationTests/testRealRunningTransitionsNeverShowTwoEyesOrMouthsAndKeepTheHeadFixed()",
+      "sha256": "63162acb29266684efc1f9bf32a5083f5c28c2c64a291704a46561cdbace0b85"
+    }
+  ],
+  "videos": [
+    {
+      "file": "continuous-result-performances.mov",
+      "sha256": "c759f53bf6fd488e7ffd1578aa3f9812d066b96d059c76c77b02babace47e8f8",
+      "durationSeconds": 8.668333333333333,
+      "sampling": "continuous-result-performances-sampling.json",
+      "sampleIntervalSeconds": 0.2,
+      "sampledFrameCount": 44,
+      "contactSheet": "continuous-result-performances-frames.png",
+      "contactSheetSHA256": "9f64ffcb2c878f89b93e88e8f6560fe8e2de25a4bc15b6a63dbee8132df8dafb",
+      "reviewedContactRangeSeconds": [
+        3.8,
+        7.8
+      ],
+      "contactStepSeconds": 0.2
+    },
+    {
+      "file": "single-state-face-transitions.mov",
+      "sha256": "73b314267c772dfb0d51da7548b71daba9d0d5538fdc0c049a5cda191854c8fb",
+      "durationSeconds": 8.913333333333334,
+      "sampling": "single-state-face-transitions-sampling.json",
+      "sampleIntervalSeconds": 0.1,
+      "sampledFrameCount": 90,
+      "contactSheet": "single-state-face-transitions-frames.png",
+      "contactSheetSHA256": "e16a297470041003466411b590c7e7d1a3a955ae23b1a7990cb5381d5697649d",
+      "reviewedContactRangeSeconds": [
+        0,
+        3.6
+      ],
+      "contactStepSeconds": 0.2
+    }
+  ],
+  "sampleStatistics": [
+    {
+      "file": "face-0232-gentleRetry-actual-samples.json",
+      "samples": 103,
+      "eyesMinVisibleScaleY": 0.8410695482045412,
+      "mouthMinVisibleScaleY": 0.9006398656405509,
+      "pairsExclusiveInAllSamples": true
+    },
+    {
+      "file": "face-0232-starHug-actual-samples.json",
+      "samples": 133,
+      "eyesMinVisibleScaleY": 0.8434762477874755,
+      "mouthMinVisibleScaleY": 0.9,
+      "pairsExclusiveInAllSamples": true
+    },
+    {
+      "file": "face-0232-joyfulRaise-actual-samples.json",
+      "samples": 119,
+      "eyesMinVisibleScaleY": 0.8499664890766143,
+      "mouthMinVisibleScaleY": 0.9004442069679499,
+      "pairsExclusiveInAllSamples": true
+    }
+  ],
+  "review": {
+    "root": "逐张查看9张本轮收拢/恢复图；查看脸部视频0–3.6秒19帧汇总及全身视频3.8–7.8秒21帧汇总。未见031交叉淡化双眼/双嘴轮廓，原头底及肢体关系保持。",
+    "independentCodeReview": "另一个agent只读审查轨道、生命周期和新测试，未见阻塞缺陷；没有另跑Xcode或声称旧代码mutation测试已执行。"
+  },
+  "limits": [
+    "355次实际presentation-layer采样不是355个独立显示帧，也不是逐帧参考对标。",
+    "9张图片与有限视频抽样来自真实UIKit组件宿主，无timeOffset seek；不是正常导航全过程或真机声音/触觉验收。",
+    "表情仍为两个栅格状态的互斥切换加轻微压缩，非眼皮几何变形或专业骨骼/网格动画；整体自然度继续待真人评审。"
+  ],
+  "applicationTests": {
+    "status": "passed",
+    "cases": 29,
+    "passed": 29,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 28.538,
+    "scope": "29 character choreography, integration, real artwork and face presentation tests on iPhone17 Pro/iOS26.5. Not a full App rerun.",
+    "summary": "Validation/test-runs/original-0232-targeted-summary.json",
+    "log": "Validation/test-runs/original-0232-targeted.log",
+    "bundle": "Validation/test-runs/original-0232-targeted.xcresult"
+  },
+  "uiTests": {
+    "status": "passed",
+    "cases": 2,
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 36.635,
+    "scope": "Two selected native UI tests on iPhone17e/iOS26.5: lose/simulated revive preserves board; solve whole puzzle/advance. One test action, no repeats.",
+    "summary": "Validation/test-runs/original-0232-17e-ui-summary.json",
+    "log": "Validation/test-runs/original-0232-17e-ui.log",
+    "bundle": "Validation/test-runs/original-0232-17e-ui.xcresult"
+  }
+}

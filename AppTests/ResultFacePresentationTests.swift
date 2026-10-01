@@ -139,6 +139,81 @@ final class ResultFacePresentationTests: XCTestCase {
         XCTAssertTrue(host.features.allSatisfy { ($0.animationKeys() ?? []).isEmpty }, "Layout after cancellation is not another result event.")
     }
 
+    @MainActor func testRealRunningTransitionsNeverShowTwoEyesOrMouthsAndKeepTheHeadFixed() async throws {
+        for performance in ResultCharacterPerformance.allCases {
+            let host = try FacePresentationHost(performance); defer { host.close() }
+            try await Task.sleep(nanoseconds: 100_000_000)
+            let baseline = try modelPixels(host.head)
+            let headTexture = try XCTUnwrap(host.head.contents) as AnyObject
+            let duration = performance == .joyfulRaise ? 1.05 : performance == .starHug ? 1.2 : 0.92
+            let start = CACurrentMediaTime()
+            host.presentation.play(performance: performance, duration: duration, startTime: start)
+            var samples: [[String: Double]] = []
+            var activeSeen = Set<String>(), compressedSeen = Set<String>()
+            while CACurrentMediaTime() - start < duration + 0.06 {
+                try await Task.sleep(nanoseconds: 8_000_000)
+                let current = try XCTUnwrap(host.head.presentation())
+                let texture = try XCTUnwrap(host.head.contents) as AnyObject
+                XCTAssertTrue(texture === headTexture, "Transitions only affect features, never the head base.")
+                var sample: [String: Double] = ["elapsed": CACurrentMediaTime() - start]
+                for (name, restName, activeName) in [("eyes", "eyes-open", "eyes-closed"), ("mouth", "mouth-rest", "mouth-active")] {
+                    let rest = try feature(restName, in: current), active = try feature(activeName, in: current)
+                    XCTAssertEqual(rest.opacity + active.opacity, 1, accuracy: 0.001, "No missing or doubled feature pair.")
+                    XCTAssertTrue(rest.opacity < 0.001 || rest.opacity > 0.999, "A transparent double-state blend is the regression being prevented.")
+                    XCTAssertTrue(active.opacity < 0.001 || active.opacity > 0.999)
+                    let visible = rest.opacity > 0.5 ? rest : active
+                    let scale = visible.transform.m22
+                    XCTAssertTrue(scale.isFinite && scale > 0 && scale <= 1.001)
+                    if active.opacity > 0.999 { activeSeen.insert(name) }
+                    if scale < 0.97 && !compressedSeen.contains(name) {
+                        compressedSeen.insert(name)
+                        try capture(host.head, name: "face-0232-\(performance.rawValue)-\(name)-compressed")
+                    }
+                    sample[name + "RestOpacity"] = Double(rest.opacity)
+                    sample[name + "ActiveOpacity"] = Double(active.opacity)
+                    sample[name + "VisibleScaleY"] = Double(scale)
+                }
+                samples.append(sample)
+            }
+            XCTAssertGreaterThan(samples.count, 20, "Inspect the live transition, not just chosen endpoint snapshots.")
+            XCTAssertEqual(activeSeen, Set(["eyes", "mouth"]))
+            XCTAssertEqual(compressedSeen, Set(["eyes", "mouth"]))
+            XCTAssertEqual(try modelPixels(host.head), baseline)
+            XCTAssertTrue(host.features.allSatisfy { ($0.animationKeys() ?? []).isEmpty })
+            assertRest(host.features)
+            try capture(host.head, name: "face-0232-\(performance.rawValue)-settled")
+            let data = try JSONSerialization.data(withJSONObject: samples, options: [.sortedKeys])
+            let trace = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+            trace.name = "face-0232-\(performance.rawValue)-actual-samples"; trace.lifetime = .keepAlways; add(trace)
+        }
+    }
+
+    @MainActor func testCancellationDuringVisibleContractionRestoresExactBaselineWithoutReplay() async throws {
+        let host = try FacePresentationHost(.gentleRetry); defer { host.close() }
+        try await Task.sleep(nanoseconds: 100_000_000)
+        let baseline = try modelPixels(host.head)
+        host.presentation.play(performance: .gentleRetry, duration: 0.92, startTime: CACurrentMediaTime())
+        let deadline = CACurrentMediaTime() + 0.85
+        var caughtContraction = false
+        while CACurrentMediaTime() < deadline {
+            try await Task.sleep(nanoseconds: 8_000_000)
+            let current = try XCTUnwrap(host.head.presentation())
+            let eyes = try [feature("eyes-open", in: current), feature("eyes-closed", in: current)]
+            if eyes.contains(where: { $0.opacity > 0.999 && $0.transform.m22 < 0.97 }) {
+                caughtContraction = true; break
+            }
+        }
+        XCTAssertTrue(caughtContraction, "The interruption must occur while a real visible feature is deformed.")
+        host.presentation.cancel()
+        assertRest(host.features)
+        XCTAssertTrue(host.features.allSatisfy { ($0.animationKeys() ?? []).isEmpty })
+        XCTAssertEqual(try modelPixels(host.head), baseline)
+        host.presentation.configure(parts: host.parts, on: host.head)
+        try await Task.sleep(nanoseconds: 80_000_000)
+        XCTAssertTrue(host.features.allSatisfy { ($0.animationKeys() ?? []).isEmpty })
+        XCTAssertEqual(try modelPixels(host.head), baseline)
+    }
+
     @MainActor func testHeadReplacementAndNilDetachOnlyOwnedFeaturesAndDoNotReplay() throws {
         let host = try FacePresentationHost(.gentleRetry); defer { host.close() }
         let unrelated = CALayer(); unrelated.name = "owner-sigh-anchor"; host.head.addSublayer(unrelated)

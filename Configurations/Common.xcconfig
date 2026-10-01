@@ -1,3 +1,3 @@
 // Shared version only. Capabilities must be enabled separately per environment.
-MARKETING_VERSION = 0.2.31
-CURRENT_PROJECT_VERSION = 34
+MARKETING_VERSION = 0.2.32
+CURRENT_PROJECT_VERSION = 35

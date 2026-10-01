@@ -1,6 +1,6 @@
 # Capydoku · 原文对齐 Demo
 
-原生 Swift / SwiftUI iPhone 应用，默认简体中文、可在设置中切换 English、竖屏，最低编译目标 iOS 15。当前本地开发版本 **0.2.31（34）**，尚未达到正式验收或上架状态。手机最近确认安装的是0.2.29；按用户要求，本轮暂停打包分发、手机更新和GitHub上传。
+原生 Swift / SwiftUI iPhone 应用，默认简体中文、可在设置中切换 English、竖屏，最低编译目标 iOS 15。当前本地开发版本 **0.2.32（35）**，尚未达到正式验收或上架状态。手机最近确认安装的是0.2.29；按用户要求，本轮暂停打包分发、手机更新和GitHub上传。
 
 ## 唯一需求基准
 
@@ -19,6 +19,13 @@
 下列主页面图册保留0.2.1的实测版本；0.2.4新增操作反馈，分时组件截图见 Docs/original-feedback/manifest.json，不能用旧图替代新构建验收：[首页](Docs/original-reference/01-home.png) · [游戏](Docs/original-reference/04-gameplay.png) · [提示](Docs/original-reference/05-hint.png) · [设置](Docs/original-reference/02-settings.png) · [签到](Docs/original-reference/03-check-in.png)。
 
 无需第三方依赖或真实广告 SDK。模拟器运行/测试须保留本地签名（CODE_SIGNING_ALLOWED=YES），工程仅为模拟器配置钥匙串权限；禁用签名只能验证编译，不能验证真实钥匙串。0.2.29（32）已无线覆盖安装并由设备查询确认。请求启动前的安装前后8份文件逐字节一致，第10关对局、287条事件、38条奖励及设置/签到/身份保持，见[真机记录](Validation/original-0229-physical-install.json)。本次自动启动被手机锁屏阻止，需解锁后打开App；未记录为启动成功或真机手感验收。
+
+## 0.2.32 表情过渡去重影
+
+- 修正0.2.31录屏中眼口交叉淡化的双态叠影：在原过渡窗口内轻微纵向收拢、中点互斥切换、再展开。头底、素材注册、身体和动作时长保持，取消立即恢复原像素状态。
+- 29项角色/五官专项（28.538秒）及17e胜利下一关、失败复活两项UI（36.635秒）通过，0失败/跳过。355次实际运行采样中眼/嘴各保持单态可见，并观察到收拢与正常归位。完整482项App和九项UI仍为0.2.31历史结果，本轮未重跑全量。
+- [9张运行图、两段录屏与采样记录](Docs/original-feel-0232/manifest.json)已有限目视核查，不再见上轮双重轮廓；仍是栅格态切换与刚性身体，并非参考品质/真机验收。[本轮记录](Validation/original-0232-feedback.json) · [Checklist增量](Validation/checklist-0232-feedback-delta.json)。
+- 本轮没有生成新美术或修改音频；当前Debug包含原9个本地测试原声，正式音频清单仍空。手机仍为0.2.29，分发与GitHub暂停；83/88验收状态不提升。
 
 ## 0.2.31 胜败角色独立五官
 

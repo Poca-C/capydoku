@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.32 (35)",
+  "kind": "scoped_delta_to_88_item_audit",
+  "status": "verified_scoped_face_transition_improvement_simulator_only",
+  "baseAudit": "Validation/checklist-0221-audit.json",
+  "previousDelta": "Validation/checklist-0231-feedback-delta.json",
+  "sourceChecklist": "Validation/checklist-source.json",
+  "sourceCaseCount": 88,
+  "scopedRows": 3,
+  "formalSignOff": false,
+  "full88Reexecuted": false,
+  "overallCountsRecomputed": false,
+  "rows": [
+    {
+      "id": "05-06",
+      "title": "结算导航与继续",
+      "originalAcceptanceText": "操作  测试结算下一关、返回首页和继续游戏。\n通过  跳转、进度及反馈正确；主动退出保留策略、击败比例和Rank有确认依据。",
+      "originalRequirementIDs": [
+        "PLAY-10",
+        "UI-04"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "胜败表情衔接调整；本轮两条实际胜败/复活UI通过，按钮仍可操作。",
+      "evidence": [
+        "Validation/original-0232-feedback.json",
+        "Docs/original-feel-0232/manifest.json",
+        "Validation/test-runs/original-0232-targeted-summary.json",
+        "Validation/test-runs/original-0232-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "14-03",
+      "title": "游戏奖励动效与降级",
+      "originalAcceptanceText": "操作  触发正确、错误、Combo、通关及签到动效。\n通过  与业务状态同步，不阻碍后续操作；轻量特效在低性能设备可降级。",
+      "originalRequirementIDs": [
+        "ART-02"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "原交叉淡化改为互斥栅格态与轻微收拢；355次实际采样未发现双态/缺态，取消恢复基线。9图与2录屏有限抽样通过，非真机/参考等效。",
+      "evidence": [
+        "Validation/original-0232-feedback.json",
+        "Docs/original-feel-0232/manifest.json",
+        "Validation/test-runs/original-0232-targeted-summary.json",
+        "Validation/test-runs/original-0232-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "16-03",
+      "title": "最终构建全部问题复验",
+      "originalAcceptanceText": "操作  在最终构建复测所有失败用例及受影响流程。\n通过  每个Bug均有关联修复版本、复测结论和证据，旧版本通过不能代替复测。",
+      "originalRequirementIDs": [
+        "TECH-07"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "本轮29项受影响角色/五官专项与两项UI通过，0失败/跳过；完整482/9属031历史证据，没有重标。",
+      "evidence": [
+        "Validation/original-0232-feedback.json",
+        "Docs/original-feel-0232/manifest.json",
+        "Validation/test-runs/original-0232-targeted-summary.json",
+        "Validation/test-runs/original-0232-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    }
+  ],
+  "verificationSnapshot": {
+    "targeted": {
+      "status": "passed",
+      "cases": 29,
+      "passed": 29,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 28.538,
+      "scope": "29 character choreography, integration, real artwork and face presentation tests on iPhone17 Pro/iOS26.5. Not a full App rerun.",
+      "summary": "Validation/test-runs/original-0232-targeted-summary.json",
+      "log": "Validation/test-runs/original-0232-targeted.log",
+      "bundle": "Validation/test-runs/original-0232-targeted.xcresult"
+    },
+    "ui": {
+      "status": "passed",
+      "cases": 2,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 36.635,
+      "scope": "Two selected native UI tests on iPhone17e/iOS26.5: lose/simulated revive preserves board; solve whole puzzle/advance. One test action, no repeats.",
+      "summary": "Validation/test-runs/original-0232-17e-ui-summary.json",
+      "log": "Validation/test-runs/original-0232-17e-ui.log",
+      "bundle": "Validation/test-runs/original-0232-17e-ui.xcresult"
+    }
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "boundary": "本轮仅本地研发与模拟器验证；不制作手机包、不安装、不归档、不打包分发、不上传GitHub。"
+  },
+  "baselinePreservation": {
+    "sourceChecklist88AndAuditUnchanged": true,
+    "formalConformanceJSONAnd83TableRowsUnchanged": true,
+    "levelsAndArtworkUnchanged": true,
+    "scope": "仅当前版本/记录链接与本轮增量改变；无历史状态重算。"
+  }
+}

@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.32 (35)",
+  "date": "2026-10-01",
+  "status": "verified_scoped_face_transition_improvement_simulator_only",
+  "previousReport": "Validation/original-0231-feedback.json",
+  "authority": "初始Word[241,249,254]与既有Demo调参授权；修复上一轮实际录屏中可见的双态交叉淡化，不替换正式要求。",
+  "sourceParagraphs": [
+    241,
+    249,
+    254
+  ],
+  "changes": [
+    {
+      "area": "消除眼口交叉淡化叠影",
+      "detail": "原过渡窗口保留，先局部y方向收拢，到中点用同clock互补0/1透明度切换，再展开。眼最低84%、嘴最低90%为临时值；头底、注册、身体、动作1.05/1.20/0.92秒和原平台区间均保持。",
+      "files": [
+        "App/Views/ResultFacePresentation.swift"
+      ]
+    },
+    {
+      "area": "过渡中断回归",
+      "detail": "新实际运行用例连续检查每对至少且最多一个状态可见，并观察确有收拢；另在实际收拢中取消，验证像素恢复基线且布局不重播。缓存、缺资源回退、三尺寸集成及有限角色生命周期用例仍通过。",
+      "files": [
+        "AppTests/ResultFacePresentationTests.swift"
+      ]
+    }
+  ],
+  "targetedTests": {
+    "status": "passed",
+    "cases": 29,
+    "passed": 29,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 28.538,
+    "scope": "29 character choreography, integration, real artwork and face presentation tests on iPhone17 Pro/iOS26.5. Not a full App rerun.",
+    "summary": "Validation/test-runs/original-0232-targeted-summary.json",
+    "log": "Validation/test-runs/original-0232-targeted.log",
+    "bundle": "Validation/test-runs/original-0232-targeted.xcresult"
+  },
+  "uiTests": {
+    "status": "passed",
+    "cases": 2,
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 36.635,
+    "scope": "Two selected native UI tests on iPhone17e/iOS26.5: lose/simulated revive preserves board; solve whole puzzle/advance. One test action, no repeats.",
+    "summary": "Validation/test-runs/original-0232-17e-ui-summary.json",
+    "log": "Validation/test-runs/original-0232-17e-ui.log",
+    "bundle": "Validation/test-runs/original-0232-17e-ui.xcresult"
+  },
+  "initialFailures": [],
+  "visualEvidence": {
+    "manifest": "Docs/original-feel-0232/manifest.json",
+    "sampleStatistics": [
+      {
+        "file": "face-0232-gentleRetry-actual-samples.json",
+        "samples": 103,
+        "eyesMinVisibleScaleY": 0.8410695482045412,
+        "mouthMinVisibleScaleY": 0.9006398656405509,
+        "pairsExclusiveInAllSamples": true
+      },
+      {
+        "file": "face-0232-starHug-actual-samples.json",
+        "samples": 133,
+        "eyesMinVisibleScaleY": 0.8434762477874755,
+        "mouthMinVisibleScaleY": 0.9,
+        "pairsExclusiveInAllSamples": true
+      },
+      {
+        "file": "face-0232-joyfulRaise-actual-samples.json",
+        "samples": 119,
+        "eyesMinVisibleScaleY": 0.8499664890766143,
+        "mouthMinVisibleScaleY": 0.9004442069679499,
+        "pairsExclusiveInAllSamples": true
+      }
+    ],
+    "samplesTotal": 355,
+    "imagesReviewed": 9,
+    "review": {
+      "root": "逐张查看9张本轮收拢/恢复图；查看脸部视频0–3.6秒19帧汇总及全身视频3.8–7.8秒21帧汇总。未见031交叉淡化双眼/双嘴轮廓，原头底及肢体关系保持。",
+      "independentCodeReview": "另一个agent只读审查轨道、生命周期和新测试，未见阻塞缺陷；没有另跑Xcode或声称旧代码mutation测试已执行。"
+    },
+    "limits": [
+      "355次实际presentation-layer采样不是355个独立显示帧，也不是逐帧参考对标。",
+      "9张图片与有限视频抽样来自真实UIKit组件宿主，无timeOffset seek；不是正常导航全过程或真机声音/触觉验收。",
+      "表情仍为两个栅格状态的互斥切换加轻微压缩，非眼皮几何变形或专业骨骼/网格动画；整体自然度继续待真人评审。"
+    ]
+  },
+  "previousVerification": {
+    "build": "0.2.31 (34)",
+    "fullAppPassed": 482,
+    "selectedUIPassed": 9,
+    "rerunInFullThisBuild": false,
+    "reason": "本轮仅改局部眼口呈现；执行全部受影响角色/五官组与胜败界面流程，不把历史482/9标为本轮结果。"
+  },
+  "artwork": {
+    "modified": false,
+    "sourceReport": "Validation/capy-face-artwork-0231.json",
+    "newImageGenerationPerformed": false
+  },
+  "audio": {
+    "sourceFilesModified": false,
+    "playbackModified": false,
+    "localTestWAVCount": 9,
+    "formalManifestClipsEmpty": true,
+    "formalReferenceVerified": false,
+    "currentDebugInventory": "Validation/test-runs/original-0232-audio-debug-inventory.json",
+    "liveAuditoryAB": false,
+    "releaseExclusion": "Historical0.2.27 only; no Release build this round."
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "evidence": "Validation/test-runs/original-0224-core.log",
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "physicalUpdate": {
+    "status": "not_built_or_installed_this_round_user_paused_distribution",
+    "installedThisRound": false,
+    "physicalBuildCreatedThisRound": false,
+    "latestVerifiedVersion": "0.2.29 (32)",
+    "latestEvidence": "Validation/original-0229-physical-install.json",
+    "latestEvidenceBoundary": "手机最近确认安装0.2.29，本轮未制作手机构建、安装或进行真机手感测试。"
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "boundary": "本轮仅本地研发与模拟器验证；不制作手机包、不安装、不归档、不打包分发、不上传GitHub。"
+  },
+  "reference": {
+    "latestActualPlaytest": "Validation/meowdoku-playtest-comparison-0229.json",
+    "newPlaytestThisRound": false,
+    "preciseTimingOrAestheticEquivalenceClaimed": false
+  },
+  "remaining": [
+    "整体身体仍为刚性部件，眼口仍有状态切换；需要真人连续体验判断自然度及爽感。",
+    "本轮未更新手机，真机音画/触觉配合未验；最近手机安装仍0.2.29。",
+    "正式参考、音频、难度、外部服务及上架验收保持待验。"
+  ],
+  "formalSignOff": false,
+  "formalConformanceRowsUnchanged": 83,
+  "historicalChecklistCountUnchanged": 88
+}
