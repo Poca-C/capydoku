@@ -1,0 +1,89 @@
+{
+  "build": "0.2.28 (31)",
+  "timestampUTC": "2026-10-01T11:34:00.049202+00:00",
+  "device": {
+    "model": "iPhone 14 Pro Max",
+    "os": "26.3.1",
+    "transport": "localNetwork"
+  },
+  "package": {
+    "version": "0.2.28",
+    "build": "31",
+    "bundle": "com.capydoku.demo",
+    "profileIncludesPhone": true,
+    "profileExpiresUTC": "2026-10-08 04:04:05",
+    "binarySHA256": "b08eb1ff806386f36b91c5ac2cfc83a010f47fffd2d8cc136db0211a46a2929f"
+  },
+  "signature": {
+    "strictVerification": true,
+    "buildLog": "Validation/test-runs/original-0228-physical-build.log",
+    "signatureLog": "Validation/test-runs/original-0228-codesign.log"
+  },
+  "installation": {
+    "passed": true,
+    "resetOrUninstall": false,
+    "normalBundleIdentifier": "com.capydoku.demo",
+    "verifiedVersion": "0.2.28",
+    "verifiedBuild": "31",
+    "result": "Validation/test-runs/physical-0228-install.json",
+    "queriedVersionEvidence": "Validation/test-runs/physical-0228-final-apps.json"
+  },
+  "launch": {
+    "passed": true,
+    "automatedLaunchSucceeded": true,
+    "status": "launched_final_installed_application",
+    "evidence": "Validation/test-runs/physical-0228-launch.json",
+    "terminatedExistingProcess": false,
+    "continuousOperation": "not_observed"
+  },
+  "data": {
+    "observedFilesBefore": 8,
+    "observedFilesAfter": 8,
+    "allFilesIdentical": true,
+    "changedFiles": [],
+    "primaryAndBackupChecksums": [
+      {
+        "snapshot": "before",
+        "file": "progress.json",
+        "valid": true
+      },
+      {
+        "snapshot": "before",
+        "file": "progress.backup.json",
+        "valid": true
+      },
+      {
+        "snapshot": "after",
+        "file": "progress.json",
+        "valid": true
+      },
+      {
+        "snapshot": "after",
+        "file": "progress.backup.json",
+        "valid": true
+      }
+    ],
+    "historicalEventsCount": 285,
+    "eventsAfter": 285,
+    "allHistoricalEventsUnchanged": true,
+    "previousRewardEntries": 38,
+    "rewardEntriesAfter": 38,
+    "allPreviousRewardEntriesUnchanged": true,
+    "completedLevelsRetained": true,
+    "settingsUnchanged": true,
+    "checkInUnchanged": true,
+    "identityNamespaceUnchanged": true,
+    "currentLevelBefore": 10,
+    "currentLevelAfter": 10,
+    "sessionUnchanged": true,
+    "comparisonNote": "Read-only snapshots immediately before and after in-place update, before requested launch. No uninstall, reset or data restore.",
+    "evidence": "Validation/test-runs/physical-0228-install-data-check.json"
+  },
+  "audio": {
+    "debugLocalTestResourcesPresent": true,
+    "files": 9,
+    "inventory": "Validation/test-runs/original-0228-audio-physical-inventory.json",
+    "audiblePlaybackOnDevice": "not_verified_by_assistant"
+  },
+  "acceptanceBoundary": "Development signature, wireless in-place installation, queried version and automatic launch verified. Eight before/after install files were byte-identical before requested launch. No physical gesture/haptic/audio acceptance or continuous-running claim. No distribution archive, TestFlight/App Store upload or GitHub publication."
+}

@@ -1,6 +1,6 @@
 # Capydoku · 原文对齐 Demo
 
-原生 Swift / SwiftUI iPhone 应用，默认简体中文、可在设置中切换 English、竖屏，最低编译目标 iOS 15。当前版本 **0.2.27（30）**，可内部试玩，尚未达到正式验收或上架状态。
+原生 Swift / SwiftUI iPhone 应用，默认简体中文、可在设置中切换 English、竖屏，最低编译目标 iOS 15。当前版本 **0.2.28（31）**，可内部试玩，尚未达到正式验收或上架状态。
 
 ## 唯一需求基准
 
@@ -18,7 +18,15 @@
 
 下列主页面图册保留0.2.1的实测版本；0.2.4新增操作反馈，分时组件截图见 Docs/original-feedback/manifest.json，不能用旧图替代新构建验收：[首页](Docs/original-reference/01-home.png) · [游戏](Docs/original-reference/04-gameplay.png) · [提示](Docs/original-reference/05-hint.png) · [设置](Docs/original-reference/02-settings.png) · [签到](Docs/original-reference/03-check-in.png)。
 
-无需第三方依赖或真实广告 SDK。模拟器运行/测试须保留本地签名（CODE_SIGNING_ALLOWED=YES），工程仅为模拟器配置钥匙串权限；禁用签名只能验证编译，不能验证真实钥匙串。0.2.27（30）已无线覆盖安装并自动启动。请求启动前的安装前后8份文件逐字节一致，原对局、194条事件、24条奖励及设置/签到/身份保持，见[真机记录](Validation/original-0227-physical-install.json)。声音听测及完整真机手感仍待验。
+无需第三方依赖或真实广告 SDK。模拟器运行/测试须保留本地签名（CODE_SIGNING_ALLOWED=YES），工程仅为模拟器配置钥匙串权限；禁用签名只能验证编译，不能验证真实钥匙串。0.2.28（31）已无线覆盖安装并自动启动。请求启动前的安装前后8份文件逐字节一致，第10关对局、285条事件、38条奖励及设置/签到/身份保持，见[真机记录](Validation/original-0228-physical-install.json)。声音听测及完整真机手感仍待验。
+
+## 0.2.28 待机侧看、正确细节与姿态衔接
+
+- 已找到的卡皮巴拉在同一4秒待机任务中轮换眨眼、左看和右看；触碰、教学、提示、遮挡、后台或换局即取消。新增两帧沿用本项目角色，见[素材记录](Validation/capy-idle-gaze-artwork-0228.json)。加载阶段预热表情，保留取消检查与让出任务。
+- 正确格补上小爱心、多色星点和实际区域色碎片，0.32秒内结束且留在格内；减少动态效果和低电量简化。全身演出改用脚部锚点、分轴预备/落地和共同起始时钟，原姿态、时长与即时操作保持。
+- 最终449项App与17e九项UI通过，均0失败/跳过（168.081/240.892秒）；首轮编译和采样问题、7项角色复验记录保留。[10张最终运行样本与3份动作时刻](Docs/original-feel-0228/manifest.json)已核对，含侧看、爱心和三套动作对比。动作对比是在当前宿主重放旧身体参数，不是旧App录屏。
+- 已采样的九个Meowdoku观察方向都有Demo实现；全身仍为三姿态离散换图，完整自然度、参考逐帧节奏和真机声音/触感尚未验收。手机0.2.28已保留数据覆盖安装并自动启动，同9个本地测试WAV未改；本轮Debug资源核验通过，Release排除沿用0.2.27历史。
+- [本轮记录](Validation/original-0228-feedback.json) · [Checklist增量](Validation/checklist-0228-feedback-delta.json)。177项Core仍属0.2.24，83项正式状态与88项历史统计保持。
 
 ## 0.2.27 棋盘刷新与声音衔接
 

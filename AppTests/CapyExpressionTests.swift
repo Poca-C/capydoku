@@ -38,6 +38,89 @@ private struct ExpressionPixels {
 }
 
 final class CapyExpressionTests: XCTestCase {
+    @MainActor func testIdleGazeAtlasCachesAlignedDistinctEyesAndMatchesTheGeneralScanner() throws {
+        var loads: [String: Int] = [:]
+        let cache = CapyIdleGazeImageCache { name in
+            loads[name, default: 0] += 1; return UIImage(named: name)
+        }
+        let source = try XCTUnwrap(UIImage(named: "CapyIdleGaze0228")?.cgImage)
+        var images: [UIImage] = [], pixels: [ExpressionPixels] = []
+        for direction in CapyIdleGazeDirection.allCases {
+            let image = try XCTUnwrap(cache.image(direction)); images.append(image)
+            XCTAssertTrue(image === cache.image(direction))
+            let actual = try ExpressionPixels(image); pixels.append(actual)
+            let crop = try XCTUnwrap(source.cropping(to: CGRect(x: direction.rawValue * source.height, y: 0,
+                                                               width: source.height, height: source.height)))
+            let scanned = try ExpressionPixels(XCTUnwrap(CapyExpressionImageCache.normalized(crop, bounds: nil)))
+            XCTAssertTrue(actual.bytes == scanned.bytes)
+            let rect = try XCTUnwrap(actual.alphaBounds)
+            XCTAssertEqual(rect.midX, 256, accuracy: 1.5); XCTAssertEqual(rect.midY, 256, accuracy: 1.5)
+            XCTAssertEqual(actual.rgba(x: 0, y: 0)[3], 0)
+        }
+        XCTAssertEqual(cache.alphaScanCount, 0)
+        XCTAssertEqual(loads, ["CapyIdleGaze0228": 1, "CapyFace": 1])
+        XCTAssertNotEqual(pixels[0].bytes, pixels[1].bytes)
+        XCTAssertEqual(pixels[0].alphaBounds, pixels[1].alphaBounds)
+        let preview = image(size: CGSize(width: 480, height: 180)) { context in
+            for (index, face) in ([CapyExpressionArtwork.image(.neutral)] + images.map(Optional.some)).enumerated() {
+                context.setFillColor(UIColor(CapyPalette.cream).cgColor)
+                context.fill(CGRect(x: index * 160, y: 0, width: 160, height: 180))
+                face?.draw(in: CGRect(x: index * 160, y: 0, width: 160, height: 160))
+                (["Neutral", "Look left", "Look right"][index] as NSString).draw(
+                    at: CGPoint(x: index * 160 + 48, y: 160),
+                    withAttributes: [.font: UIFont.systemFont(ofSize: 12), .foregroundColor: UIColor.brown])
+            }
+        }
+        let attachment = XCTAttachment(image: preview); attachment.name = "capy-idle-gaze-normalized-contact-sheet"
+        attachment.lifetime = .keepAlways; add(attachment)
+    }
+
+    @MainActor func testMissingMalformedAndReplacedGazeAssetsNeverReuseStaleGeometry() throws {
+        let fallback = image(size: CGSize(width: 12, height: 12)) { $0.setFillColor(UIColor.orange.cgColor); $0.fill(CGRect(x: 0, y: 0, width: 12, height: 12)) }
+        for sheet in [nil, image(size: CGSize(width: 20, height: 20)) { _ in }] as [UIImage?] {
+            let cache = CapyIdleGazeImageCache { $0 == "CapyFace" ? fallback : sheet }
+            for direction in CapyIdleGazeDirection.allCases { XCTAssertTrue(cache.image(direction) === fallback) }
+            XCTAssertEqual(cache.alphaScanCount, 0)
+        }
+        let replacement = image(size: CGSize(width: 1774, height: 887)) { context in
+            context.setFillColor(UIColor.cyan.cgColor)
+            context.fill(CGRect(x: 400, y: 410, width: 20, height: 10))
+            context.fill(CGRect(x: 980, y: 180, width: 20, height: 10))
+        }
+        XCTAssertNil(CapyIdleGazeSheetMetrics.bounds(in: try XCTUnwrap(replacement.cgImage)))
+        let cache = CapyIdleGazeImageCache { $0 == "CapyFace" ? fallback : replacement }
+        for direction in CapyIdleGazeDirection.allCases {
+            let actual = try ExpressionPixels(XCTUnwrap(cache.image(direction)))
+            XCTAssertEqual(actual.rgba(x: 256, y: 256), [0, 255, 255, 255])
+            XCTAssertTrue(cache.image(direction) === cache.image(direction))
+        }
+        XCTAssertEqual(cache.alphaScanCount, 2)
+    }
+
+    @MainActor func testIdleGazeHasFiniteBlinkBookendsAndOldCleanupCannotRemoveAReusedView() async throws {
+        let parent = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        let gaze = CapyIdleGazeView(cellIndex: 1, direction: .left, frame: parent.bounds,
+                                   tileColor: .cyan, reduceMotion: false)
+        parent.addSubview(gaze); gaze.play()
+        XCTAssertFalse(gaze.isUserInteractionEnabled); XCTAssertTrue(gaze.accessibilityElementsHidden)
+        let face = try XCTUnwrap(gaze.layer.sublayers?.first)
+        let poses = try XCTUnwrap(face.animation(forKey: "idle-look-poses") as? CAKeyframeAnimation)
+        XCTAssertEqual(poses.calculationMode, .discrete); XCTAssertEqual(poses.repeatCount, 0)
+        XCTAssertEqual(poses.values?.count, 4); XCTAssertEqual(poses.duration, 0.82)
+        try await Task.sleep(nanoseconds: 550_000_000)
+        gaze.removeFromSuperview(); XCTAssertTrue(allLayers(gaze.layer).allSatisfy { ($0.animationKeys() ?? []).isEmpty })
+        parent.addSubview(gaze); gaze.play()
+        try await Task.sleep(nanoseconds: 350_000_000)
+        XCTAssertTrue(gaze.superview === parent, "The canceled first ending cannot remove the later presentation")
+        gaze.removeFromSuperview()
+        let reduced = CapyIdleGazeView(cellIndex: 1, direction: .right, frame: parent.bounds,
+                                     tileColor: .cyan, reduceMotion: true)
+        parent.addSubview(reduced); reduced.play()
+        XCTAssertTrue(allLayers(reduced.layer).allSatisfy { ($0.animationKeys() ?? []).isEmpty })
+        try await Task.sleep(nanoseconds: 240_000_000)
+        XCTAssertNil(reduced.superview)
+    }
+
     @MainActor func testValidatedBuiltInBoundsAvoidScanningAndPreserveEveryRenderedPixel() throws {
         let lookup: (String) -> UIImage? = { UIImage(named: $0) }
         let optimized = CapyExpressionImageCache(contentBounds: CapyExpressionSheetMetrics.bounds, load: lookup)

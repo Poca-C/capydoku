@@ -84,7 +84,7 @@ final class CapyExpressionImageCache {
         return result
     }
 
-    private static func normalized(_ bitmap: CGImage, bounds: CGRect?) -> UIImage? {
+    static func normalized(_ bitmap: CGImage, bounds: CGRect?) -> UIImage? {
         guard let content = bounds ?? alphaBounds(in: bitmap), let trimmed = bitmap.cropping(to: content) else { return nil }
         // Generated expressions can have different transparent margins. Place
         // visible artwork on one common anchor, preserving its aspect ratio.
@@ -133,7 +133,18 @@ final class CapyExpressionImageCache {
 /// conversion does not change bounds and must not invalidate this geometry cache.
 enum CapyExpressionSheetMetrics {
     static func bounds(in bitmap: CGImage) -> [CapyFaceExpression: CGRect]? {
-        guard bitmap.width == 1254, bitmap.height == 1254 else { return nil }
+        guard bitmap.width == 1254, bitmap.height == 1254,
+              CapyAlphaPlane.digest(in: bitmap) == "293e8a38ed7e6c9a334045fa2c11e8acebc79ae2c654e35bd1085022eccfbf8c" else { return nil }
+        return [.neutral: CGRect(x: 14, y: 119, width: 613, height: 459),
+                .blink: CGRect(x: 0, y: 119, width: 623, height: 459),
+                .happy: CGRect(x: 14, y: 59, width: 613, height: 459),
+                .startled: CGRect(x: 0, y: 59, width: 623, height: 459)]
+    }
+}
+
+/// Color-independent signature shared by the two original Capydoku atlases.
+enum CapyAlphaPlane {
+    static func digest(in bitmap: CGImage) -> String? {
         var pixels = [UInt8](repeating: 0, count: bitmap.width * bitmap.height * 4)
         let drawn = pixels.withUnsafeMutableBytes { storage -> Bool in
             guard let context = CGContext(data: storage.baseAddress, width: bitmap.width, height: bitmap.height,
@@ -155,12 +166,7 @@ enum CapyExpressionSheetMetrics {
                 return vImageExtractChannel_ARGB8888(&source, &destination, 3, vImage_Flags(kvImageNoFlags))
             }
         }
-        guard extracted == kvImageNoError,
-              SHA256.hash(data: alpha).map({ String(format: "%02x", $0) }).joined()
-                == "293e8a38ed7e6c9a334045fa2c11e8acebc79ae2c654e35bd1085022eccfbf8c" else { return nil }
-        return [.neutral: CGRect(x: 14, y: 119, width: 613, height: 459),
-                .blink: CGRect(x: 0, y: 119, width: 623, height: 459),
-                .happy: CGRect(x: 14, y: 59, width: 613, height: 459),
-                .startled: CGRect(x: 0, y: 59, width: 623, height: 459)]
+        guard extracted == kvImageNoError else { return nil }
+        return SHA256.hash(data: alpha).map({ String(format: "%02x", $0) }).joined()
     }
 }

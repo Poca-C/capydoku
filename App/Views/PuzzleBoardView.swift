@@ -176,6 +176,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     private var idleBlinkJob: DispatchWorkItem?
     private var idleBlinkToken = UUID()
     private var lastBlinkedCell: Int?
+    private var idleReactionOrdinal = 0
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -371,6 +372,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     /// Called from raw contacts on the existing pan recognizer, before either
     /// tap is recognized. These methods only own a transient highlight.
     func beginCellPress(at point: CGPoint) {
+        removeIdleExpressions()
         clearEntrancePresentation()
         endCellPress()
         guard let index = cell(at: point), canPress(index) else { return }
@@ -400,13 +402,14 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
 
     private func cellFeedback(at index: Int, kind: BoardCellFeedbackView.Kind, errorMark: Bool = false) {
         guard (0..<(size * size)).contains(index), cellSide > 0 else { return }
-        removeIdleBlinkExpression()
+        removeIdleExpressions()
         for effect in feedbackOverlay.subviews.compactMap({ $0 as? BoardCellFeedbackView }) where effect.cellIndex == index { effect.removeFromSuperview() }
         let palette = ((region(index) % CapyPalette.regionColors.count) + CapyPalette.regionColors.count) % CapyPalette.regionColors.count
         let gap = max(1.1, min(2, cellSide * 0.028))
         let effect = BoardCellFeedbackView(cellIndex: index, kind: kind,
             frame: rect(for: index).insetBy(dx: gap, dy: gap), tileColor: UIColor(CapyPalette.regionColors[palette]),
-            reduceMotion: reducesMotion, errorMark: errorMark)
+            reduceMotion: reducesMotion, lowPower: ProcessInfo.processInfo.isLowPowerModeEnabled,
+            errorMark: errorMark)
         feedbackOverlay.addSubview(effect); effect.play()
     }
 
@@ -689,7 +692,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
 
     private func mistake(at index: Int) {
         guard (0..<(size * size)).contains(index), cellSide > 0 else { return }
-        removeIdleBlinkExpression()
+        removeIdleExpressions()
         // Replace the same-cell transient effect. Rapid valid mistakes must not
         // stack several opaque hearts over the player's latest state.
         for view in feedbackOverlay.subviews.compactMap({ $0 as? BoardMistakeFeedbackView }) where view.cellIndex == index {
@@ -708,6 +711,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         pendingEntranceID = nil
         cancelIdleBlink()
         lastBlinkedCell = nil
+        idleReactionOrdinal = 0
         endCellPress()
         feedbackOverlay.subviews.forEach { $0.removeFromSuperview() }
         feedbackOverlay.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
@@ -716,7 +720,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
 
     private func clearGuidance() {
         tutorialGuide?.removeFromSuperview(); tutorialGuide = nil
-        feedbackOverlay.subviews.filter { $0 is BoardConflictFeedbackView || $0 is CapyFaceExpressionView }.forEach { $0.removeFromSuperview() }
+        feedbackOverlay.subviews.filter { $0 is BoardConflictFeedbackView || $0 is CapyFaceExpressionView || $0 is CapyIdleGazeView }.forEach { $0.removeFromSuperview() }
     }
 
     private func clearEntrancePresentation() {
@@ -764,14 +768,15 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
             && tutorialAction == nil && tutorialTargets.isEmpty && !reducesMotion && !found.isEmpty
     }
 
-    private func removeIdleBlinkExpression() {
-        feedbackOverlay.subviews.compactMap { $0 as? CapyFaceExpressionView }
-            .filter { $0.expression == .blink }.forEach { $0.removeFromSuperview() }
+    private func removeIdleExpressions() {
+        feedbackOverlay.subviews.filter {
+            ($0 as? CapyFaceExpressionView)?.expression == .blink || $0 is CapyIdleGazeView
+        }.forEach { $0.removeFromSuperview() }
     }
 
     private func cancelIdleBlink() {
         idleBlinkToken = UUID(); idleBlinkJob?.cancel(); idleBlinkJob = nil
-        removeIdleBlinkExpression()
+        removeIdleExpressions()
     }
 
     private func updateIdleBlinkScheduling() {
@@ -793,17 +798,28 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         guard canPresentIdleBlink, !trackingContact, !inputActivity.isBusy,
               !feedbackOverlay.subviews.contains(where: {
                   $0 is BoardCellFeedbackView || $0 is BoardMistakeFeedbackView
-                      || $0 is BoardConflictFeedbackView || $0 is CapyFaceExpressionView || $0 is BoardSceneFeedbackView
+                      || $0 is BoardConflictFeedbackView || $0 is CapyFaceExpressionView || $0 is CapyIdleGazeView || $0 is BoardSceneFeedbackView
               }) else { return }
         let ordered = found.sorted()
         guard let index = ordered.first(where: { $0 > (lastBlinkedCell ?? -1) }) ?? ordered.first else { return }
         lastBlinkedCell = index
         let palette = ((region(index) % CapyPalette.regionColors.count) + CapyPalette.regionColors.count) % CapyPalette.regionColors.count
         let gap = max(1.1, min(2, cellSide * 0.028))
-        let blink = CapyFaceExpressionView(cellIndex: index, expression: .blink,
-            frame: rect(for: index).insetBy(dx: gap, dy: gap),
-            tileColor: UIColor(CapyPalette.regionColors[palette]), reduceMotion: false)
-        feedbackOverlay.addSubview(blink); blink.play()
+        let frame = rect(for: index).insetBy(dx: gap, dy: gap)
+        let color = UIColor(CapyPalette.regionColors[palette])
+        // Alternate a tiny blink with an occasional look. The existing one-job
+        // cadence is unchanged; direction/animal order never depends on answers.
+        if idleReactionOrdinal.isMultiple(of: 2) {
+            let blink = CapyFaceExpressionView(cellIndex: index, expression: .blink,
+                frame: frame, tileColor: color, reduceMotion: false)
+            feedbackOverlay.addSubview(blink); blink.play()
+        } else {
+            let look = CapyIdleGazeView(cellIndex: index,
+                direction: idleReactionOrdinal == 1 ? .left : .right,
+                frame: frame, tileColor: color, reduceMotion: false)
+            feedbackOverlay.addSubview(look); look.play()
+        }
+        idleReactionOrdinal = (idleReactionOrdinal + 1) % 4
     }
 
     private func updateTutorialGuide() {

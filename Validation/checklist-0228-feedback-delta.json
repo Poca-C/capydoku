@@ -1,0 +1,347 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.28 (31)",
+  "kind": "scoped_delta_to_88_item_audit",
+  "status": "verified_scoped_demo_improvements_formal_acceptance_unchanged",
+  "baseAudit": "Validation/checklist-0221-audit.json",
+  "previousDelta": "Validation/checklist-0227-feedback-delta.json",
+  "sourceChecklist": "Validation/checklist-source.json",
+  "sourceCaseCount": 88,
+  "formalSignOff": false,
+  "full88Reexecuted": false,
+  "overallCountsRecomputed": false,
+  "unchangedStatusReason": "本轮只追加8项相关范围，不改83行正式状态或88项历史统计。",
+  "originalParagraphs": [
+    241,
+    249,
+    252,
+    254
+  ],
+  "verificationSnapshot": {
+    "targeted": {
+      "status": "historical_r2_failure_resolved_in_character_r3_and_final_app",
+      "device": "iPhone 17 Pro simulator / iOS26.5",
+      "cases": 47,
+      "passedCases": 46,
+      "failedCases": 1,
+      "skipped": 0,
+      "assertionFailures": 3,
+      "seconds": 21.8,
+      "groups": {
+        "BoardCellPresentationTests": 6,
+        "BoardGuidancePresentationTests": 15,
+        "CapyExpressionTests": 12,
+        "ResultCharacterChoreographyTests": 7,
+        "ResultCharacterTests": 7
+      },
+      "log": "Validation/test-runs/original-0228-targeted-r2.log",
+      "summary": "Validation/test-runs/original-0228-targeted-r2-summary.json",
+      "bundle": "Validation/test-runs/original-0228-targeted-r2.xcresult",
+      "scope": "r2共47例，46通过、1个结果对照采样用例失败；后由r3角色7项和最终449项App完整复验通过，不改写首次失败。"
+    },
+    "appFinal": {
+      "status": "passed",
+      "build": "0.2.28 (31)",
+      "device": "iPhone 17 Pro simulator / iOS26.5",
+      "passed": 449,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 168.081,
+      "suiteSecondsIncludingOverhead": 168.223,
+      "scope": "Full449 CapydokuAppTests, including8 new cases versus0.2.27; no exclusions. Includes final startup atlas warm-up and corrected result capture.",
+      "log": "Validation/test-runs/original-0228-app.log",
+      "summary": "Validation/test-runs/original-0228-app-summary.json",
+      "bundle": "Validation/test-runs/original-0228-app.xcresult"
+    },
+    "ui": {
+      "status": "passed",
+      "build": "0.2.28 (31)",
+      "device": "iPhone 17e simulator / iOS26.5",
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 240.892,
+      "suiteSecondsIncludingOverhead": 240.903,
+      "log": "Validation/test-runs/original-0228-17e-ui.log",
+      "summary": "Validation/test-runs/original-0228-17e-ui-summary.json",
+      "bundle": "Validation/test-runs/original-0228-17e-ui.xcresult",
+      "repeatedTestAction": false,
+      "scope": "Same nine selected UI cases as0.2.27, no repeat or skipped case; tutorial, gesture/tools, solve/advance, loss/revive, last-life restore, mixed gestures, leave-board swipe, modal accessibility and4/6/8/10 board sizes. Fixture boundaries are unchanged; not an all150-level playthrough.",
+      "cases": [
+        "CapydokuUITests.CapydokuUITests testGuidedTutorialCoversRulesTapUndoBothSwipesAndFind",
+        "CapydokuUITests.CapydokuUITests testLastLifeSpotlightDismissalDoesNotSpendLifeOrMarkAndColdRestoreDoesNotReplayIt",
+        "CapydokuUITests.CapydokuUITests testLoseAndSimulatedRevivePreservesBoard",
+        "CapydokuUITests.CapydokuUITests testSolveEntirePuzzleAndAdvance",
+        "CapydokuUITests.CapydokuUITests testToolsResumeAfterNativeTapDoubleTapAndPanRecognizersFinish",
+        "CapydokuUITests.HardeningUITests testMixedBackToBackGesturesNeverRepeatDamageOrScore",
+        "CapydokuUITests.HardeningUITests testSwipeStopsWhenFingerLeavesBoard",
+        "CapydokuUITests.OriginalReferenceUITests testAllFourBoardSizesKeepNavigationRulesAndToolsInOrder",
+        "CapydokuUITests.OriginalReferenceUITests testModalControlsExcludeBackgroundAndReturnToTheSameBoard"
+      ]
+    },
+    "physical": {
+      "status": "installed_queried_and_automatically_launched",
+      "installedThisRound": true,
+      "verifiedVersion": "0.2.28 (31)",
+      "strictSignaturePassed": true,
+      "automatedLaunchSucceeded": true,
+      "dataScope": "Snapshots immediately before and after in-place update, before requested launch.",
+      "observedFilesIdentical": 8,
+      "historicalEventsUnchanged": 285,
+      "rewardEntriesUnchanged": 38,
+      "primaryAndBackupChecksumsValid": 4,
+      "currentLevel": 10,
+      "sessionCompletedLevelsSettingsCheckInIdentityPreserved": true,
+      "resetUninstallOrRollback": false,
+      "continuousOperationVerified": false,
+      "physicalGestureHapticAudioAccepted": false,
+      "report": "Validation/original-0228-physical-install.json",
+      "summary": "0.2.28（31）签名构建、严格验签、无线覆盖安装、版本查询及自动启动通过。请求启动前的安装快照8文件字节一致，第10关对局、285条事件、38条奖励、已完成关卡、设置/签到/身份保持，4份主备校验有效；未清档、卸载或回滚。不代表真机连续运行或声音/触觉/手感验收。"
+    },
+    "core": {
+      "modified": false,
+      "rerunThisBuild": false,
+      "latestCoreBuild": "0.2.24 (27)",
+      "latestCorePassed": 177,
+      "evidence": "Validation/test-runs/original-0224-core.log",
+      "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+    },
+    "visual": {
+      "status": "reviewed_passed_scoped_static_samples",
+      "manifest": "Docs/original-feel-0228/manifest.json",
+      "imagesReviewed": 10,
+      "timingTextFiles": 3,
+      "sourceBundle": "Validation/test-runs/original-0228-app.xcresult",
+      "scope": "标准化眼神图、4×4实际测试棋盘左右/中性3图、正确爱心70/170毫秒2图、三套结果BODY前后对照、当前包L6实际Root胜利页；均来自最终449项全量App附件。",
+      "comparisonMethod": "对照上排在当前宿主重放0.2.27身体参数，下排为0.2.28，不是旧App或Meowdoku录屏。",
+      "boundary": "逐张目视确认所选帧布局、边界与动作阶段；三关键姿态离散切换，不能证明完整动画顺滑度、真机帧率/手感或参考审美节奏等效。"
+    },
+    "characterRetest": {
+      "status": "passed",
+      "run": "r3",
+      "device": "iPhone 17 Pro simulator / iOS26.5",
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 7.912,
+      "suiteSecondsIncludingOverhead": 7.915,
+      "log": "Validation/test-runs/original-0228-character-r3.log",
+      "bundle": "Validation/test-runs/original-0228-character-r3.xcresult",
+      "attachments": ".build/0228-character-r3-attachments/manifest.json",
+      "scope": "只复验7项ResultCharacterChoreographyTests；不是重新执行r2全部47项。三套有效前后动作对照已由root与角色agent实际审阅。"
+    },
+    "builds": {
+      "signedPhysicalDebug": {
+        "status": "passed",
+        "log": "Validation/test-runs/original-0228-physical-build.log",
+        "strictSignaturePassed": true,
+        "signatureLog": "Validation/test-runs/original-0228-codesign.log"
+      },
+      "unsignedRelease": {
+        "status": "not_run_this_round",
+        "reason": "本轮音频及构建打包逻辑未改；0.2.27 Release排除测试资源是最近历史证据，不标为本轮重建。",
+        "latestBuild": "0.2.27 (30)",
+        "latestEvidence": "Validation/test-runs/original-0227-audio-release-inventory.json"
+      }
+    },
+    "audioResourceAudit": {
+      "status": "passed",
+      "scope": "final Debug simulator and signed physical internal_demo",
+      "localWAVFilesPerArtifact": 9,
+      "reports": [
+        "Validation/test-runs/original-0228-audio-debug-inventory.json",
+        "Validation/test-runs/original-0228-audio-physical-inventory.json"
+      ],
+      "formalReferenceVerified": false
+    }
+  },
+  "stillOpen": [
+    "全身角色仍是三张关键姿态离散切换，位移/形变连续；完整自然度、冻结参考逐帧节奏与审美等效尚未验收。",
+    "真机声音/触觉与连续试玩、低性能设备和系统减少动态效果专项仍待验；安装启动及模拟器样本不能替代这些结论。",
+    "正式素材全集、参考参数/音频清单及上架验收保持待验；参考Excellent未在先前实际试玩中观察到，本轮没有新的成功Meowdoku试玩或听觉A/B。"
+  ],
+  "rows": [
+    {
+      "id": "04-03",
+      "title": "正确双击只提交一次",
+      "originalAcceptanceText": "操作  双击正确空格和带普通X的正确格。\n通过  各提交一次，清除原X并显示动物；不为其他格自动打叉。",
+      "originalRequirementIDs": [
+        "PLAY-02",
+        "PLAY-06"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "正确格新增爱心/星点/区域碎片，只随真实成功反馈展示；业务提交保持，r2格内6项通过。",
+      "evidence": [
+        "Validation/original-0228-feedback.json",
+        "Validation/test-runs/original-0228-targeted-r2-summary.json",
+        "Validation/test-runs/original-0228-app.xcresult",
+        "Validation/test-runs/original-0228-17e-ui.xcresult"
+      ],
+      "thisRoundRequirementIDs": [
+        "PLAY-02",
+        "ART-02"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "04-06",
+      "title": "快速手势切换",
+      "originalAcceptanceText": "操作  快速切换单击、双击和滑动，并中途离开棋盘。\n通过  手势不串扰、不重复扣血；双击优先，滑动结束后不继续标记。",
+      "originalRequirementIDs": [
+        "PLAY-02"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "触碰即撤除待机侧看/眨眼，沿用单一任务与现有手势，不延后操作；r2引导15项通过。",
+      "evidence": [
+        "Validation/original-0228-feedback.json",
+        "Validation/test-runs/original-0228-targeted-r2-summary.json",
+        "Validation/test-runs/original-0228-app.xcresult",
+        "Validation/test-runs/original-0228-17e-ui.xcresult"
+      ],
+      "thisRoundRequirementIDs": [
+        "PLAY-02",
+        "ART-02"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "04-07",
+      "title": "弹窗及等待锁盘",
+      "originalAcceptanceText": "操作  在提示、设置、结算和外部等待期间操作棋盘。\n通过  不穿透、不改盘、不扣血；结束后按当前对局状态恢复输入。",
+      "originalRequirementIDs": [
+        "ADS-01",
+        "PLAY-08"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "教学、预览、锁定、遮挡、后台、换局及移除清理待机表情，装饰不接收输入。",
+      "evidence": [
+        "Validation/original-0228-feedback.json",
+        "Validation/test-runs/original-0228-targeted-r2-summary.json",
+        "Validation/test-runs/original-0228-app.xcresult",
+        "Validation/test-runs/original-0228-17e-ui.xcresult"
+      ],
+      "thisRoundRequirementIDs": [
+        "PLAY-08",
+        "ART-02"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "05-06",
+      "title": "结算导航与继续",
+      "originalAcceptanceText": "操作  测试结算下一关、返回首页和继续游戏。\n通过  跳转、进度及反馈正确；主动退出保留策略、击败比例和Rank有确认依据。",
+      "originalRequirementIDs": [
+        "PLAY-10",
+        "UI-04"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "结算仅调整脚部锚点、分轴形变及共享演出时钟；导航立即可用。r3角色7项通过，三套有效前后图已复核，仍保留三姿态离散限制。",
+      "evidence": [
+        "Validation/original-0228-feedback.json",
+        "Validation/test-runs/original-0228-targeted-r2-summary.json",
+        "Validation/test-runs/original-0228-character-r3.xcresult",
+        "Validation/test-runs/original-0228-app.xcresult",
+        "Validation/test-runs/original-0228-17e-ui.xcresult"
+      ],
+      "thisRoundRequirementIDs": [
+        "PLAY-10",
+        "ART-02"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "14-01",
+      "title": "主题资源与全部状态",
+      "originalAcceptanceText": "操作  核对角色、Logo、图标、棋盘和弹窗全部状态。\n通过  资源完整，主题与尺寸统一；没有参考产品品牌或遗漏占位素材。",
+      "originalRequirementIDs": [
+        "ART-01"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "新增原创左右侧看两帧，原生alpha摘要验证边界；新方向零扫描、替换回退、旧四表情像素一致专项通过。",
+      "evidence": [
+        "Validation/original-0228-feedback.json",
+        "Validation/test-runs/original-0228-targeted-r2-summary.json",
+        "Validation/test-runs/original-0228-app.xcresult",
+        "Docs/original-feel-0228/manifest.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "ART-01"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "14-02",
+      "title": "安全区字号与触点",
+      "originalAcceptanceText": "操作  在目标设备检查安全区、最大棋盘与长英文。\n通过  不遮挡、不截字；主要点击区至少44×44pt，正确错误不只靠颜色区分。",
+      "originalRequirementIDs": [
+        "UI-09"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "爱心和区域碎片限制在格内，侧看经透明边界标准化；10张最终图逐张核对，17e四种棋盘尺寸及弹层可访问性回归通过，不以有限样本代替所有设备/尺寸/无障碍验收。",
+      "evidence": [
+        "Validation/original-0228-feedback.json",
+        "Validation/test-runs/original-0228-targeted-r2-summary.json",
+        "Validation/test-runs/original-0228-app.xcresult",
+        "Docs/original-feel-0228/manifest.json",
+        "Validation/test-runs/original-0228-17e-ui.xcresult"
+      ],
+      "thisRoundRequirementIDs": [
+        "UI-09",
+        "ART-01"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "14-03",
+      "title": "游戏奖励动效与降级",
+      "originalAcceptanceText": "操作  触发正确、错误、Combo、通关及签到动效。\n通过  与业务状态同步，不阻碍后续操作；轻量特效在低性能设备可降级。",
+      "originalRequirementIDs": [
+        "ART-02"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "正确装饰0.32秒、减少动态效果0.10秒静态、低电量头像/光圈；待机和结果均有限且可取消。r3结果动作运行前后对照已复核，不代替参考精确时序验收。",
+      "evidence": [
+        "Validation/original-0228-feedback.json",
+        "Validation/test-runs/original-0228-targeted-r2-summary.json",
+        "Validation/test-runs/original-0228-character-r3.xcresult",
+        "Validation/test-runs/original-0228-app.xcresult",
+        "Docs/original-feel-0228/manifest.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "ART-02"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "16-03",
+      "title": "最终构建全部问题复验",
+      "originalAcceptanceText": "操作  在最终构建复测所有失败用例及受影响流程。\n通过  每个Bug均有关联修复版本、复测结论和证据，旧版本通过不能代替复测。",
+      "originalRequirementIDs": [
+        "TECH-07"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "保留r1测试编译问题及r2一例三断言采样失败；修正后r3角色7项、最终449项App（168.081秒）与17e九项UI（240.892秒）通过，均0失败/跳过。10张最终图已复核。0.2.28（31）签名构建、严格验签、无线覆盖安装、版本查询及自动启动通过。请求启动前的安装快照8文件字节一致，第10关对局、285条事件、38条奖励、已完成关卡、设置/签到/身份保持，4份主备校验有效；未清档、卸载或回滚。不代表真机连续运行或声音/触觉/手感验收。",
+      "evidence": [
+        "Validation/original-0228-feedback.json",
+        "Validation/test-runs/original-0228-targeted-r2-summary.json",
+        "Validation/test-runs/original-0228-character-r3.xcresult",
+        "Validation/test-runs/original-0228-app.xcresult",
+        "Validation/original-0228-physical-install.json",
+        "Docs/original-feel-0228/manifest.json",
+        "Validation/test-runs/original-0228-17e-ui.xcresult"
+      ],
+      "thisRoundRequirementIDs": [
+        "TECH-07"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    }
+  ]
+}

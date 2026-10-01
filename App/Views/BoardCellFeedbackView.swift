@@ -13,11 +13,13 @@ final class BoardCellFeedbackView: UIView {
     private let crossOutline = CAShapeLayer()
     private let cross = CAShapeLayer()
     private let ring = CAShapeLayer()
-    private let glow = CAGradientLayer()
+    private var glow: CAGradientLayer?
+    private var heart: CAShapeLayer?
     private var stars: [CAShapeLayer] = []
+    private var fragments: [CAShapeLayer] = []
     private var cleanupTask: DispatchWorkItem?
 
-    init(cellIndex: Int, kind: Kind, frame: CGRect, tileColor: UIColor, reduceMotion: Bool, errorMark: Bool = false) {
+    init(cellIndex: Int, kind: Kind, frame: CGRect, tileColor: UIColor, reduceMotion: Bool, lowPower: Bool = false, errorMark: Bool = false) {
         self.cellIndex = cellIndex; self.kind = kind; self.reduceMotion = reduceMotion
         duration = reduceMotion ? 0.10 : kind == .found ? 0.32 : kind == .markAdded ? 0.16 : 0.13
         super.init(frame: frame)
@@ -27,7 +29,7 @@ final class BoardCellFeedbackView: UIView {
         layer.cornerRadius = max(3, bounds.width * 0.05)
 
         if kind == .found {
-            if !reduceMotion { makeFoundAccents() }
+            if !reduceMotion && !lowPower { makeFoundAccents(tileColor: tileColor) }
             symbol.frame = bounds.insetBy(dx: bounds.width * 0.07, dy: bounds.height * 0.07)
             symbol.name = "found-face-happy"
             symbol.contents = CapyExpressionArtwork.image(.happy)?.cgImage
@@ -100,7 +102,9 @@ final class BoardCellFeedbackView: UIView {
         super.willMove(toSuperview: newSuperview)
     }
 
-    private func makeFoundAccents() {
+    private func makeFoundAccents(tileColor: UIColor) {
+        let glow = CAGradientLayer()
+        self.glow = glow
         glow.name = "found-local-glow"
         glow.frame = bounds.insetBy(dx: bounds.width * 0.025, dy: bounds.height * 0.025)
         glow.type = .radial
@@ -110,14 +114,17 @@ final class BoardCellFeedbackView: UIView {
                        UIColor(CapyPalette.orange).withAlphaComponent(0).cgColor]
         glow.locations = [0, 0.55, 1]; glow.opacity = 0
         layer.addSublayer(glow)
-        let points = [CGPoint(x: 0.16, y: 0.24), CGPoint(x: 0.77, y: 0.16),
-                      CGPoint(x: 0.84, y: 0.73), CGPoint(x: 0.24, y: 0.83)]
-        let side = min(10, max(3, bounds.width * 0.115))
+        // OBS-02/03: a small affection heart, colored sparkles and confetti
+        // matching this region. These are original vectors, not copied assets.
+        let points = [CGPoint(x: 0.17, y: 0.18), CGPoint(x: 0.86, y: 0.43),
+                      CGPoint(x: 0.71, y: 0.84), CGPoint(x: 0.15, y: 0.73)]
+        let colors = [2, 4, 8, 9].map { UIColor(CapyPalette.regionColors[$0]) }
+        let side = min(9, max(2.5, bounds.width * 0.105))
         for (index, point) in points.enumerated() {
             let star = CAShapeLayer()
             star.name = "found-local-star-\(index)"
             star.bounds = CGRect(x: 0, y: 0, width: side, height: side)
-            star.position = CGPoint(x: bounds.width * point.x, y: bounds.height * point.y)
+            star.position = bounded(CGPoint(x: bounds.width * point.x, y: bounds.height * point.y), margin: side / 2 + 0.7)
             let path = UIBezierPath()
             for vertex in 0..<8 {
                 let angle = CGFloat(vertex) * .pi / 4 - .pi / 2
@@ -126,14 +133,48 @@ final class BoardCellFeedbackView: UIView {
                 if vertex == 0 { path.move(to: point) } else { path.addLine(to: point) }
             }
             path.close(); star.path = path.cgPath
-            star.fillColor = UIColor(index.isMultiple(of: 2) ? CapyPalette.orange : CapyPalette.paper).cgColor
-            star.strokeColor = UIColor(CapyPalette.orange).withAlphaComponent(0.7).cgColor
+            star.fillColor = colors[index].cgColor
+            star.strokeColor = UIColor(CapyPalette.paper).cgColor
             star.lineWidth = 0.6; star.opacity = 0; star.zPosition = 1
             layer.addSublayer(star); stars.append(star)
         }
+        let fragmentPoints = [CGPoint(x: 0.12, y: 0.42), CGPoint(x: 0.41, y: 0.14),
+                              CGPoint(x: 0.86, y: 0.76), CGPoint(x: 0.39, y: 0.87)]
+        let fragmentSide = min(7, max(2.5, bounds.width * 0.075))
+        for (index, point) in fragmentPoints.enumerated() {
+            let fragment = CAShapeLayer(); fragment.name = "found-region-fragment-\(index)"
+            fragment.bounds = CGRect(x: 0, y: 0, width: fragmentSide * 0.66, height: fragmentSide)
+            let radius = hypot(fragment.bounds.width, fragment.bounds.height) / 2 + 0.7
+            fragment.position = bounded(CGPoint(x: bounds.width * point.x, y: bounds.height * point.y), margin: radius)
+            fragment.path = UIBezierPath(roundedRect: fragment.bounds.insetBy(dx: 0.3, dy: 0.3), cornerRadius: 0.6).cgPath
+            fragment.fillColor = tileColor.cgColor
+            fragment.strokeColor = UIColor(CapyPalette.markOutline).withAlphaComponent(0.5).cgColor
+            fragment.lineWidth = 0.6; fragment.opacity = 0; fragment.zPosition = 1
+            layer.addSublayer(fragment); fragments.append(fragment)
+        }
+        let heartSide = min(14, max(4, bounds.width * 0.21))
+        let heart = CAShapeLayer()
+        self.heart = heart
+        heart.name = "found-local-heart"
+        heart.bounds = CGRect(x: 0, y: 0, width: heartSide, height: heartSide)
+        heart.position = bounded(CGPoint(x: bounds.width * 0.74, y: bounds.height * 0.18), margin: heartSide * 0.54 + 0.7)
+        let heartPath = UIBezierPath()
+        heartPath.move(to: CGPoint(x: 0.5, y: 0.91))
+        heartPath.addCurve(to: CGPoint(x: 0.07, y: 0.37), controlPoint1: CGPoint(x: 0.33, y: 0.76), controlPoint2: CGPoint(x: 0.07, y: 0.56))
+        heartPath.addCurve(to: CGPoint(x: 0.5, y: 0.25), controlPoint1: CGPoint(x: 0.07, y: 0.10), controlPoint2: CGPoint(x: 0.37, y: 0.08))
+        heartPath.addCurve(to: CGPoint(x: 0.93, y: 0.37), controlPoint1: CGPoint(x: 0.63, y: 0.08), controlPoint2: CGPoint(x: 0.93, y: 0.10))
+        heartPath.addCurve(to: CGPoint(x: 0.5, y: 0.91), controlPoint1: CGPoint(x: 0.93, y: 0.56), controlPoint2: CGPoint(x: 0.67, y: 0.76))
+        heartPath.close(); heartPath.apply(CGAffineTransform(scaleX: heartSide, y: heartSide))
+        heart.path = heartPath.cgPath
+        // Soft pink and an intact silhouette separate affection from the red,
+        // split-heart loss signal. This never changes the HUD life count.
+        heart.fillColor = UIColor(CapyPalette.regionColors[9]).cgColor
+        heart.strokeColor = UIColor(CapyPalette.paper).cgColor; heart.lineWidth = 0.9
+        heart.opacity = 0; heart.zPosition = 2; layer.addSublayer(heart)
     }
 
     private func playFoundAccents() {
+        guard let glow, let heart else { return }
         let light = CAKeyframeAnimation(keyPath: "opacity")
         light.values = [0, 1, 0]; light.keyTimes = [0, 0.32, 1]; light.duration = duration
         glow.add(light, forKey: "found-light")
@@ -150,6 +191,37 @@ final class BoardCellFeedbackView: UIView {
             star.add(travel, forKey: "found-local-travel")
             animate(star, key: "transform.scale", from: 0.4, to: 1, duration: duration)
         }
+        for (index, fragment) in fragments.enumerated() {
+            let visible = CAKeyframeAnimation(keyPath: "opacity")
+            visible.values = [0, 1, 0.9, 0]; visible.keyTimes = [0, 0.19, 0.58, 1]
+            visible.duration = duration; fragment.add(visible, forKey: "found-fragment-visible")
+            let travel = CABasicAnimation(keyPath: "position")
+            let radius = hypot(fragment.bounds.width, fragment.bounds.height) / 2 + 0.7
+            let start = bounded(CGPoint(x: bounds.midX + (fragment.position.x - bounds.midX) * 0.55,
+                                        y: bounds.midY + (fragment.position.y - bounds.midY) * 0.55), margin: radius)
+            travel.fromValue = NSValue(cgPoint: start); travel.toValue = NSValue(cgPoint: fragment.position)
+            travel.duration = duration; travel.timingFunction = CAMediaTimingFunction(name: .easeOut)
+            fragment.add(travel, forKey: "found-fragment-travel")
+            let direction: CGFloat = index.isMultiple(of: 2) ? -1 : 1
+            animate(fragment, key: "transform.rotation.z", from: direction * 0.15, to: direction * 1.1, duration: duration)
+        }
+        let affection = CAKeyframeAnimation(keyPath: "opacity")
+        affection.values = [0, 0, 1, 1, 0]; affection.keyTimes = [0, 0.13, 0.32, 0.68, 1]
+        affection.duration = duration; heart.add(affection, forKey: "found-heart-visible")
+        let pop = CAKeyframeAnimation(keyPath: "transform.scale")
+        pop.values = [0.48, 1.08, 1, 0.92]; pop.keyTimes = [0, 0.4, 0.68, 1]
+        pop.duration = duration; heart.add(pop, forKey: "found-heart-pop")
+        let float = CABasicAnimation(keyPath: "position")
+        float.fromValue = NSValue(cgPoint: bounded(CGPoint(x: heart.position.x, y: heart.position.y + min(5, bounds.height * 0.10)),
+                                                   margin: heart.bounds.width * 0.54 + 0.7))
+        float.toValue = NSValue(cgPoint: heart.position); float.duration = duration
+        float.timingFunction = CAMediaTimingFunction(name: .easeOut)
+        heart.add(float, forKey: "found-heart-lift")
+    }
+
+    private func bounded(_ point: CGPoint, margin: CGFloat) -> CGPoint {
+        CGPoint(x: min(max(point.x, bounds.minX + margin), bounds.maxX - margin),
+                y: min(max(point.y, bounds.minY + margin), bounds.maxY - margin))
     }
 
     private func animate(_ target: CALayer, key: String, from: CGFloat, to: CGFloat, duration: TimeInterval) {

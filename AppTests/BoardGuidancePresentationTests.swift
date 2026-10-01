@@ -53,6 +53,9 @@ import CapydokuCore
     var blinks: [CapyFaceExpressionView] {
         board.subviews.flatMap(\.subviews).compactMap { $0 as? CapyFaceExpressionView }.filter { $0.expression == .blink }
     }
+    var looks: [CapyIdleGazeView] {
+        board.subviews.flatMap(\.subviews).compactMap { $0 as? CapyIdleGazeView }
+    }
     func center(_ index: Int) throws -> CGPoint {
         let element = try XCTUnwrap(board.accessibilityElements?[index] as? UIAccessibilityElement)
         return CGPoint(x: element.accessibilityFrameInContainerSpace.midX, y: element.accessibilityFrameInContainerSpace.midY)
@@ -301,7 +304,13 @@ final class BoardGuidancePresentationTests: XCTestCase {
         capture(rig.window, "idle-blink-first-visible-animal")
         first.removeFromSuperview() // The expression's own removal is tested separately.
         try schedule.fireNext()
-        XCTAssertEqual(rig.blinks.map(\.cellIndex), [7]); XCTAssertEqual(rig.session, saved)
+        XCTAssertTrue(rig.blinks.isEmpty); XCTAssertEqual(rig.looks.map(\.cellIndex), [7])
+        XCTAssertEqual(rig.looks.first?.direction, .left)
+        rig.looks.first?.removeFromSuperview(); try schedule.fireNext()
+        XCTAssertEqual(rig.blinks.map(\.cellIndex), [1]); XCTAssertTrue(rig.looks.isEmpty)
+        rig.blinks.first?.removeFromSuperview(); try schedule.fireNext()
+        XCTAssertEqual(rig.looks.map(\.cellIndex), [7]); XCTAssertEqual(rig.looks.first?.direction, .right)
+        XCTAssertEqual(schedule.pending.count, 1); XCTAssertEqual(rig.session, saved)
         XCTAssertTrue(rig.scores.isEmpty); XCTAssertTrue(rig.callbacks.isEmpty)
         XCTAssertFalse(rig.board.inputActivity.isBusy)
     }
@@ -356,7 +365,52 @@ final class BoardGuidancePresentationTests: XCTestCase {
         rig.board.subviews.flatMap(\.subviews).filter {
             $0 is BoardMistakeFeedbackView || $0 is BoardConflictFeedbackView || $0 is CapyFaceExpressionView
         }.forEach { $0.removeFromSuperview() }
-        try schedule.fireNext(); XCTAssertEqual(rig.blinks.count, 1)
+        try schedule.fireNext(); XCTAssertEqual(rig.looks.count, 1)
+        XCTAssertEqual(rig.looks.first?.direction, .left)
         XCTAssertEqual(schedule.pending.count, 1)
+    }
+
+    @MainActor func testVisibleIdleLookCancelsImmediatelyForContactAndEveryBoardLifecycleBoundary() throws {
+        for boundary in ["contact", "lock", "preview", "tutorial", "hidden", "motion", "disabled", "background", "session", "removed"] {
+            var saved = GameSession(puzzle: GuidanceRig.puzzle); _ = saved.submit(cell: 1)
+            let schedule = BlinkTestSchedule()
+            let rig = try GuidanceRig(session: saved, idleBlinkScheduler: schedule.schedule); defer { rig.close() }
+            try schedule.fireNext(); rig.blinks.first?.removeFromSuperview(); try schedule.fireNext()
+            let look = try XCTUnwrap(rig.looks.first)
+            XCTAssertTrue(rig.board.hitTest(try rig.center(1), with: nil) === rig.board)
+            switch boundary {
+            case "contact": rig.board.beginCellPress(at: try rig.center(0))
+            case "lock": rig.locked = true; rig.refresh()
+            case "preview": rig.preview = [0]; rig.refresh()
+            case "tutorial": rig.targets = [0]; rig.action = "tap"; rig.refresh()
+            case "hidden": rig.hidden = true; rig.refresh()
+            case "motion": rig.reduceMotion = true; rig.refresh()
+            case "disabled": rig.effectsEnabled = false; rig.refresh()
+            case "background": NotificationCenter.default.post(name: UIApplication.willResignActiveNotification, object: nil)
+            case "session": rig.session = GameSession(puzzle: GuidanceRig.puzzle); rig.refresh()
+            default: rig.board.removeFromSuperview()
+            }
+            XCTAssertTrue(rig.looks.isEmpty, boundary); XCTAssertNil(look.superview, boundary)
+            XCTAssertTrue(animations(look.layer).isEmpty, boundary)
+            if boundary != "session" { XCTAssertEqual(rig.session, saved, boundary) }
+            XCTAssertTrue(rig.scores.isEmpty); XCTAssertTrue(rig.callbacks.isEmpty)
+            if boundary == "background" { NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil) }
+        }
+    }
+
+    @MainActor func testActualHostedIdleLooksShowBothDirectionsAndSettleWithoutChangingTheGame() async throws {
+        var saved = GameSession(puzzle: GuidanceRig.puzzle); _ = saved.submit(cell: 1)
+        let schedule = BlinkTestSchedule()
+        let rig = try GuidanceRig(session: saved, idleBlinkScheduler: schedule.schedule); defer { rig.close() }
+        for direction in [CapyIdleGazeDirection.left, .right] {
+            try schedule.fireNext(); rig.blinks.first?.removeFromSuperview(); try schedule.fireNext()
+            let look = try XCTUnwrap(rig.looks.first); XCTAssertEqual(look.direction, direction)
+            try await Task.sleep(nanoseconds: 230_000_000)
+            capture(rig.window, "idle-gaze-\(direction)-230ms-actual-board")
+            try await Task.sleep(nanoseconds: 680_000_000)
+            XCTAssertNil(look.superview); XCTAssertTrue(animations(look.layer).isEmpty)
+            XCTAssertEqual(rig.session, saved); XCTAssertEqual(schedule.pending.count, 1)
+        }
+        capture(rig.window, "idle-gaze-neutral-settled-board")
     }
 }

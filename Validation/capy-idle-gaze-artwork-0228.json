@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 1,
+  "versionScope": "Capydoku Demo 0.2.28",
+  "assetCatalogName": "CapyIdleGaze0228",
+  "assetPath": "App/Resources/Assets.xcassets/CapyIdleGaze0228.imageset/CapyIdleGaze0228.png",
+  "origin": "Original AI-generated derivatives of the project's existing original Capydoku artwork. No competitor artwork or extracted resources.",
+  "tool": "image_gen.imagegen (built-in)",
+  "mode": "identity-preserving edit, followed by one transparent-padding correction",
+  "skillPath": "/Users/poca/.codex/skills/.system/imagegen/SKILL.md",
+  "referencePath": "App/Resources/Assets.xcassets/CapyFaceExpressions.imageset/CapyFaceExpressions.png",
+  "referenceSelection": "Top-left neutral head only",
+  "generatedPath": "/Users/poca/.codex/generated_images/01a0f696-3a42-7c01-b72d-8d7af0c9ea95/exec-ff0fc897-bd8b-4635-a62b-e18ff6375bfa.png",
+  "sha256": "090429333eaa76dbe0913c80a4f2412a667c1379eb9425096e2a1e0a791a85d7",
+  "dimensionsPixels": {
+    "width": 1774,
+    "height": 887
+  },
+  "pixelMode": "RGBA",
+  "hasAlpha": true,
+  "alphaExtrema": [
+    0,
+    255
+  ],
+  "layout": {
+    "columns": 2,
+    "rows": 1,
+    "cellWidth": 887,
+    "cellHeight": 887,
+    "order": [
+      "gazeLeft",
+      "gazeRight"
+    ],
+    "headOrientation": "Same three-quarter orientation as neutral, snout toward viewer's right. Neither head is mirrored."
+  },
+  "contentBoundsDefinition": "Cell-local [left,top,rightExclusive,bottomExclusive], alpha threshold >16. Alpha>0 bounds include very faint generator fringe pixels.",
+  "frames": [
+    {
+      "expression": "gazeLeft",
+      "alphaGT16Bounds": [
+        57,
+        171,
+        875,
+        762
+      ],
+      "alphaNonzeroBounds": [
+        55,
+        169,
+        879,
+        863
+      ],
+      "contentWidth": 818,
+      "contentHeight": 591,
+      "alphaZeroPixels": 410265,
+      "edgeAlphaMax": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+      },
+      "marginsGT16": {
+        "left": 57,
+        "top": 171,
+        "right": 12,
+        "bottom": 125
+      }
+    },
+    {
+      "expression": "gazeRight",
+      "alphaGT16Bounds": [
+        31,
+        171,
+        849,
+        762
+      ],
+      "alphaNonzeroBounds": [
+        29,
+        169,
+        855,
+        837
+      ],
+      "contentWidth": 818,
+      "contentHeight": 591,
+      "alphaZeroPixels": 409836,
+      "edgeAlphaMax": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+      },
+      "marginsGT16": {
+        "left": 31,
+        "top": 171,
+        "right": 38,
+        "bottom": 125
+      }
+    }
+  ],
+  "inspection": {
+    "status": "accepted_for_runtime_normalization",
+    "visuallyInspected": true,
+    "style": "Same original orange-brown head, warm dark outlines, neutral mouth, ears and snout; direction is expressed through pupils with cream sclera crescents.",
+    "gazeReadability": "Left frame pupils look to viewer's left; right frame pupils look to viewer's right. Full-resolution inspection completed; final small-cell runtime presentation belongs to the implementation validation.",
+    "invariants": "Two complete non-mirrored heads; identical meaningful content dimensions and top/bottom alignment; no lettering, extra objects, UI or hearts.",
+    "limitations": "The correction did not achieve the requested 10% horizontal margins. Both cell edges are transparent and all meaningful head artwork is inside its cell, but the horizontal content centers differ by 26 pixels. Runtime alpha-bounds trim and common centered canvas are required, as for the existing expression sheet.",
+    "assetProcessing": "Selected generated PNG copied byte-for-byte. No image editing, cropping, resampling or recompression performed on the stored asset.",
+    "testScope": "No build, runtime installation, or performance claim in this artwork record."
+  },
+  "attempts": [
+    {
+      "generatedPath": "/Users/poca/.codex/generated_images/01a0f696-3a42-7c01-b72d-8d7af0c9ea95/exec-353c169d-299f-4b24-8733-f90815a7011f.png",
+      "sha256": "3baa2ca70e356b1cda580b1c03f20e736dd0b2119d6878c57575a060e9776469",
+      "selected": false,
+      "rejection": "Left head reached the internal cell boundary; rightmost cell column alpha maximum was 38.",
+      "prompt": "Use case: identity-preserve.\nAsset type: an original Capydoku mobile puzzle character sprite sheet, transparent PNG, TWO equal square columns and ONE row.\nInput image 1 is the identity and style reference. Use ONLY its TOP-LEFT neutral capybara head as the source character; the other three existing expressions are not requested.\nPrimary request: create two eye-gaze variants of that exact neutral head. LEFT CELL: both dark pupils clearly glance toward the viewer's LEFT. RIGHT CELL: both dark pupils clearly glance toward the viewer's RIGHT. Keep a gentle, curious, calm expression. Make the direction readable when each sprite is displayed at 40 pixels wide; a very small warm-cream sclera crescent on the opposite side of each dark pupil is allowed.\nComposition: a wide 2:1 canvas divided implicitly into two equal square cells, no visible divider. Put one complete head in each cell. Both heads have the EXACT SAME silhouette, size, baseline, center, and camera orientation as the reference neutral head, facing the same three-quarter orientation with the snout projecting to the viewer's right. Do not mirror or turn either head. Leave generous identical true-transparent padding around each head including the nose and cheeks; about 8% transparent margin on each side of each square cell.\nPreserve invariants: same orange-brown fur, dark warm outline, rounded snout, nostrils, closed neutral mouth, ears, forehead, cheek tufts, lighting and shading, and matching eye placement. Only pupils/eye direction may change. Eyes must not become wide or startled; no raised eyebrows, no grin, no new facial expression.\nScene/backdrop: genuine transparent background with alpha, including between sprites. No background color, no drawn checkerboard, no white rectangles.\nAvoid: body, hands, UI, lettering, labels, watermark, hearts, stars, extra assets, tilted heads, flipped heads, differing outlines or differently sized heads. Output the sprite sheet only."
+    },
+    {
+      "generatedPath": "/Users/poca/.codex/generated_images/01a0f696-3a42-7c01-b72d-8d7af0c9ea95/exec-ff0fc897-bd8b-4635-a62b-e18ff6375bfa.png",
+      "sha256": "090429333eaa76dbe0913c80a4f2412a667c1379eb9425096e2a1e0a791a85d7",
+      "selected": true,
+      "prompt": "Use case: precise-object-edit.\nAsset type: a two-frame transparent sprite sheet for the original Capydoku character.\nEdit target: the supplied TWO-COLUMN, ONE-ROW gaze sprite sheet.\nMake ONLY this correction: provide substantially more TRUE TRANSPARENT padding inside BOTH equal square cells. The two complete heads must each occupy at most 78% of their cell's width, leaving at least 10% transparent margin at the left and right of EACH cell. Center both sprites on the exact same vertical baseline and at exactly the same size. Keep the canvas 2:1 with two equal square cells, no visible divider. Keep the complete nose, cheeks, and every outline pixel away from the half-sheet boundary and outer image edges.\nPreserve all artwork as closely as possible: the same orange-brown capybara head, camera orientation, silhouette, ears, snout, nose, mouth, warm outlines and shading. BOTH heads still point toward the viewer's right. In the LEFT cell both pupils look to the viewer's LEFT; in the RIGHT cell both pupils look to the viewer's RIGHT, with the existing small cream sclera crescents. These expressions are already correct. Do not mirror or rotate either head. Do not redesign the eyes, face or outlines.\nMaintain genuine alpha transparency everywhere outside the heads; no background, no checkerboard drawing, no text, no UI, no labels, no added symbols, no extra frames. Output only the corrected sprite sheet."
+    }
+  ]
+}

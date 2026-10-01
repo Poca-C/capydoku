@@ -61,6 +61,7 @@ final class ResultCharacterUIView: UIView {
     private var consumedEvents = Set<UUID>()
     private var pendingEvent: UUID?
     private var generation = UUID()
+    private var presentationStartTime: TimeInterval = 0
     private var cleanup: DispatchWorkItem?
     private(set) var activeEventID: UUID?
     private(set) var playedEventCount = 0
@@ -187,6 +188,9 @@ final class ResultCharacterUIView: UIView {
         }
         CATransaction.begin(); CATransaction.setDisableActions(true)
         // Motion uses the spare margin around this 80% character footprint.
+        // Keep squash/lean grounded at the shared foot baseline in the atlas.
+        // Centre scaling made the feet float whenever an anticipation compressed.
+        character.anchorPoint = CGPoint(x: 0.5, y: 0.96)
         character.frame = square(0.10, 0.13, 0.80)
         groundShadow.frame = CGRect(x: origin.x + side * 0.28, y: origin.y + side * 0.865, width: side * 0.44, height: side * 0.055)
         groundShadow.path = UIBezierPath(ovalIn: groundShadow.bounds).cgPath
@@ -228,6 +232,7 @@ final class ResultCharacterUIView: UIView {
         pendingEvent = nil; consumedEvents.insert(event)
         activeEventID = event; playedEventCount += 1
         generation = UUID(); let token = generation
+        presentationStartTime = CACurrentMediaTime()
         let duration = won ? (variant == .joyfulBounce ? 1.05 : 1.20) : 0.92
         playPoses(duration: duration)
         if won && variant == .joyfulBounce { playBounce(duration: duration) }
@@ -248,26 +253,36 @@ final class ResultCharacterUIView: UIView {
         animation.keyTimes = performance.poseTimes
         animation.calculationMode = .discrete
         animation.duration = duration
+        animation.beginTime = character.convertTime(presentationStartTime, from: nil)
         character.add(animation, forKey: "result-pose-sequence")
     }
 
-    private func keyframes(_ target: CALayer, key: String, values: [CGFloat], times: [NSNumber], duration: TimeInterval) {
+    private func keyframes(_ target: CALayer, key: String, values: [CGFloat], times: [NSNumber], duration: TimeInterval,
+                           easing: [CAMediaTimingFunctionName]? = nil) {
         let animation = CAKeyframeAnimation(keyPath: key)
         animation.values = values; animation.keyTimes = times; animation.duration = duration
-        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        // Ease individual phases, not the whole timeline: contents swaps must
+        // stay aligned with takeoff/contact instead of a globally warped clock.
+        animation.timingFunctions = (easing ?? Array(repeating: .easeInEaseOut, count: times.count - 1))
+            .map { CAMediaTimingFunction(name: $0) }
+        animation.beginTime = target.convertTime(presentationStartTime, from: nil)
         target.add(animation, forKey: "result-\(key)")
     }
 
     private func playBounce(duration: TimeInterval) {
         let side = min(bounds.width, bounds.height)
-        keyframes(character, key: "transform.translation.y", values: [0, 2, -side * 0.07, 0, -side * 0.045, 0, 0],
-                  times: [0, 0.10, 0.27, 0.43, 0.61, 0.78, 1], duration: duration)
-        keyframes(character, key: "transform.scale", values: [1, 0.97, 1.03, 0.97, 1.02, 1, 1],
-                  times: [0, 0.10, 0.27, 0.43, 0.61, 0.78, 1], duration: duration)
-        keyframes(character, key: "transform.rotation.z", values: [0, -0.055, 0.055, -0.04, 0.035, 0],
-                  times: [0, 0.23, 0.42, 0.61, 0.78, 1], duration: duration)
-        keyframes(groundShadow, key: "transform.scale", values: [1, 0.70, 1, 0.78, 1],
-                  times: [0, 0.27, 0.43, 0.61, 1], duration: duration)
+        keyframes(character, key: "transform.translation.y", values: [0, 0, -side * 0.07, 0, -side * 0.045, 0, 0],
+                  times: [0, 0.10, 0.27, 0.43, 0.61, 0.78, 1], duration: duration,
+                  easing: [.easeInEaseOut, .easeOut, .easeIn, .easeOut, .easeIn, .easeOut])
+        let contacts: [NSNumber] = [0, 0.10, 0.17, 0.27, 0.43, 0.49, 0.53, 0.61, 0.78, 0.86, 1]
+        keyframes(character, key: "transform.scale.x", values: [1, 1.025, 0.985, 0.99, 1.045, 1.015, 0.99, 0.995, 1.03, 0.995, 1],
+                  times: contacts, duration: duration)
+        keyframes(character, key: "transform.scale.y", values: [1, 0.95, 1.035, 1.015, 0.91, 0.97, 1.025, 1.012, 0.94, 1.005, 1],
+                  times: contacts, duration: duration)
+        keyframes(character, key: "transform.rotation.z", values: [0, -0.025, 0.025, -0.020, 0.016, 0],
+                  times: [0, 0.10, 0.32, 0.49, 0.68, 1], duration: duration)
+        keyframes(groundShadow, key: "transform.scale", values: [1, 0.70, 1.10, 0.78, 1.06, 1],
+                  times: [0, 0.27, 0.43, 0.61, 0.78, 1], duration: duration)
         for (index, star) in wingStars.enumerated() {
             keyframes(star, key: "opacity", values: [0, 1, 0.4, 1, 0], times: [0, 0.24, 0.43, 0.67, 1], duration: duration)
             keyframes(star, key: "transform.rotation.z", values: [0, index < 2 ? -0.4 : 0.4, 0], times: [0, 0.55, 1], duration: duration)
@@ -276,9 +291,14 @@ final class ResultCharacterUIView: UIView {
     }
 
     private func playCrown(duration: TimeInterval) {
-        keyframes(character, key: "transform.rotation.z", values: [0, -0.085, 0.085, -0.04, 0.025, 0],
-                  times: [0, 0.20, 0.44, 0.64, 0.81, 1], duration: duration)
-        keyframes(character, key: "transform.scale", values: [1, 1.035, 1.02, 1], times: [0, 0.24, 0.72, 1], duration: duration)
+        // The two redraws at .20/.66 occur during a lift/presentation, rather
+        // than at a stationary sway endpoint where they read as a picture swap.
+        keyframes(character, key: "transform.rotation.z", values: [0, -0.065, 0.065, 0.04, -0.04, 0],
+                  times: [0, 0.10, 0.34, 0.54, 0.80, 1], duration: duration)
+        keyframes(character, key: "transform.scale.x", values: [1, 1.02, 0.99, 1.008, 1.015, 1],
+                  times: [0, 0.10, 0.32, 0.52, 0.80, 1], duration: duration)
+        keyframes(character, key: "transform.scale.y", values: [1, 0.97, 1.025, 0.99, 1.02, 1],
+                  times: [0, 0.10, 0.32, 0.52, 0.80, 1], duration: duration)
         for (index, star) in crownStars.enumerated() {
             let peak = NSNumber(value: 0.20 + Double(index) * 0.08)
             keyframes(star, key: "transform.scale", values: [0.35, 1.12, 0.93, 1], times: [0, peak, 0.72, 1], duration: duration)
@@ -288,11 +308,12 @@ final class ResultCharacterUIView: UIView {
 
     private func playSigh(duration: TimeInterval) {
         let side = min(bounds.width, bounds.height)
-        keyframes(character, key: "transform.translation.y", values: [0, side * 0.022, side * 0.022, 0],
-                  times: [0, 0.28, 0.70, 1], duration: duration)
-        keyframes(character, key: "transform.rotation.z", values: [0, 0.04, -0.025, 0.022, 0],
-                  times: [0, 0.23, 0.43, 0.63, 1], duration: duration)
-        keyframes(character, key: "transform.scale.y", values: [1, 0.97, 0.97, 1], times: [0, 0.28, 0.70, 1], duration: duration)
+        keyframes(character, key: "transform.rotation.z", values: [0, -0.016, 0.04, 0.04, -0.012, 0],
+                  times: [0, 0.08, 0.34, 0.56, 0.87, 1], duration: duration)
+        keyframes(character, key: "transform.scale.x", values: [1, 0.995, 1.025, 1.025, 0.995, 1],
+                  times: [0, 0.08, 0.32, 0.56, 0.88, 1], duration: duration)
+        keyframes(character, key: "transform.scale.y", values: [1, 1.01, 0.94, 0.94, 1.015, 1],
+                  times: [0, 0.08, 0.32, 0.56, 0.88, 1], duration: duration)
         for (index, sigh) in sighs.enumerated() {
             keyframes(sigh, key: "opacity", values: [0, 0, 0.9, 0],
                       times: [0, NSNumber(value: 0.18 + Double(index) * 0.07), 0.58, 1], duration: duration)

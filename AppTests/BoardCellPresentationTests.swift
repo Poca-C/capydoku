@@ -48,9 +48,9 @@ final class BoardCellPresentationTests: XCTestCase {
             + (layer.sublayers ?? []).flatMap(animations)
     }
 
-    @MainActor private func effect(_ kind: BoardCellFeedbackView.Kind, reduceMotion: Bool = false, errorMark: Bool = false) -> BoardCellFeedbackView {
+    @MainActor private func effect(_ kind: BoardCellFeedbackView.Kind, reduceMotion: Bool = false, lowPower: Bool = false, errorMark: Bool = false) -> BoardCellFeedbackView {
         BoardCellFeedbackView(cellIndex: 0, kind: kind, frame: CGRect(x: 0, y: 0, width: 72, height: 72),
-            tileColor: UIColor(CapyPalette.regionColors[0]), reduceMotion: reduceMotion, errorMark: errorMark)
+            tileColor: UIColor(CapyPalette.regionColors[0]), reduceMotion: reduceMotion, lowPower: lowPower, errorMark: errorMark)
     }
 
     @MainActor private func pixels(_ view: UIView) throws -> Data {
@@ -100,6 +100,12 @@ final class BoardCellPresentationTests: XCTestCase {
         XCTAssertEqual(stars.count, 4)
         XCTAssertEqual(view.duration, 0.32)
         XCTAssertEqual((view.layer.sublayers ?? []).filter { $0.name == "found-local-glow" }.count, 1)
+        let heart = try XCTUnwrap((view.layer.sublayers ?? []).first { $0.name == "found-local-heart" } as? CAShapeLayer)
+        XCTAssertNotNil(heart.path); XCTAssertNotEqual(heart.fillColor, UIColor(CapyPalette.life).cgColor)
+        XCTAssertEqual(heart.opacity, 0, "The affection heart is transient and cannot become a second life indicator")
+        let fragments = (view.layer.sublayers ?? []).filter { $0.name?.hasPrefix("found-region-fragment-") == true }
+        XCTAssertEqual(fragments.count, 4)
+        XCTAssertEqual(stars.count + fragments.count + 1, 9, "The accepted placement has a fixed, small decorative budget")
         for star in stars {
             XCTAssertTrue(view.bounds.contains(star.frame), "Local accents must not travel into neighboring cells or the progress bar")
             let travel = try XCTUnwrap(star.animation(forKey: "found-local-travel") as? CABasicAnimation)
@@ -109,18 +115,33 @@ final class BoardCellPresentationTests: XCTestCase {
             XCTAssertEqual(star.opacity, 0, "No particle remains in the final drawing")
         }
         XCTAssertTrue(animations(view.layer).allSatisfy { $0.duration <= view.duration && $0.repeatCount == 0 && !$0.autoreverses })
+        let lowPower = effect(.found, lowPower: true)
+        host.addSubview(lowPower); lowPower.play()
+        let lowPowerLayers = lowPower.layer.sublayers ?? []
+        XCTAssertEqual(lowPower.duration, 0.32)
+        XCTAssertEqual(lowPowerLayers.count, 2, "Low power keeps only the avatar and ring; decorative layers are not created")
+        XCTAssertFalse(lowPowerLayers.contains { $0.name?.hasPrefix("found-local-") == true || $0.name?.hasPrefix("found-region-fragment-") == true })
+        let lowPowerFace = try XCTUnwrap(lowPowerLayers.first { $0.name == "found-face-happy" })
+        XCTAssertNotNil(lowPowerFace.animation(forKey: "found-pop"))
+        let lowPowerRing = try XCTUnwrap(lowPowerLayers.first { $0 !== lowPowerFace })
+        XCTAssertNotNil(lowPowerRing.animation(forKey: "transform.scale"))
+        XCTAssertTrue(animations(lowPower.layer).allSatisfy { $0.duration <= lowPower.duration && $0.repeatCount == 0 && !$0.autoreverses })
+        XCTAssertFalse(lowPower.isUserInteractionEnabled)
         try await Task.sleep(nanoseconds: 410_000_000)
         XCTAssertNil(view.superview); XCTAssertTrue(animations(view.layer).isEmpty)
+        XCTAssertNil(lowPower.superview); XCTAssertTrue(animations(lowPower.layer).isEmpty)
     }
 
     @MainActor func testReduceMotionCreatesNoParticlesOrHiddenMotionAndStillCleansUp() async throws {
         let host = UIView(frame: CGRect(x: 0, y: 0, width: 240, height: 90))
-        let effects = [BoardCellFeedbackView.Kind.found, .markAdded, .markRemoved].map { effect($0, reduceMotion: true) }
+        var effects = [BoardCellFeedbackView.Kind.found, .markAdded, .markRemoved].map { effect($0, reduceMotion: true) }
+        effects.append(effect(.found, reduceMotion: true, lowPower: true))
         for view in effects {
             host.addSubview(view); view.play()
             XCTAssertEqual(view.duration, 0.10)
             XCTAssertTrue(animations(view.layer).isEmpty)
             XCTAssertFalse((view.layer.sublayers ?? []).contains { $0.name?.hasPrefix("found-local-") == true })
+            XCTAssertFalse((view.layer.sublayers ?? []).contains { $0.name?.hasPrefix("found-region-fragment-") == true })
             XCTAssertFalse(view.isUserInteractionEnabled); XCTAssertTrue(view.accessibilityElementsHidden)
         }
         try await Task.sleep(nanoseconds: 180_000_000)
@@ -141,6 +162,52 @@ final class BoardCellPresentationTests: XCTestCase {
         XCTAssertNil(replacement.superview); XCTAssertTrue(animations(replacement.layer).isEmpty)
     }
 
+    @MainActor func testMulticolorSparklesAndRegionalFragmentsStayInsideFourThroughTenCellBoards() throws {
+        let expectedColors = [2, 4, 8, 9].map { UIColor(CapyPalette.regionColors[$0]).cgColor }
+        for size in 4...10 {
+            for boardSide in [CGFloat(190), CGFloat(340)] {
+                let side = (boardSide - 14) / CGFloat(size)
+                let gap = max(1.1, min(2, side * 0.028)), tileSide = side - gap * 2
+                for tileColor in CapyPalette.regionColors.map({ UIColor($0) }) {
+                    let view = BoardCellFeedbackView(cellIndex: size * size - 1, kind: .found,
+                        frame: CGRect(x: 0, y: 0, width: tileSide, height: tileSide), tileColor: tileColor, reduceMotion: false)
+                    let host = UIView(frame: view.bounds); host.addSubview(view); view.play()
+                    let stars = (view.layer.sublayers ?? []).compactMap { $0 as? CAShapeLayer }
+                        .filter { $0.name?.hasPrefix("found-local-star-") == true }
+                    XCTAssertEqual(stars.compactMap(\.fillColor), expectedColors)
+                    let fragments = (view.layer.sublayers ?? []).compactMap { $0 as? CAShapeLayer }
+                        .filter { $0.name?.hasPrefix("found-region-fragment-") == true }
+                    XCTAssertEqual(fragments.count, 4)
+                    for fragment in fragments { XCTAssertEqual(fragment.fillColor, tileColor.cgColor) }
+                    let heart = try XCTUnwrap((view.layer.sublayers ?? []).first { $0.name == "found-local-heart" } as? CAShapeLayer)
+                    var specs: [(CAShapeLayer, String, CGFloat)] = []
+                    for star in stars {
+                        let radius: CGFloat = star.bounds.width / 2 + star.lineWidth / 2
+                        specs.append((star, "found-local-travel", radius))
+                    }
+                    for fragment in fragments {
+                        // The circumscribed circle also bounds intermediate rotation.
+                        let radius: CGFloat = hypot(fragment.bounds.width, fragment.bounds.height) / 2 + fragment.lineWidth / 2
+                        specs.append((fragment, "found-fragment-travel", radius))
+                    }
+                    let heartRadius: CGFloat = heart.bounds.width * 0.54 + heart.lineWidth / 2
+                    specs.append((heart, "found-heart-lift", heartRadius))
+                    for (particle, key, radius) in specs {
+                        let travel = try XCTUnwrap(particle.animation(forKey: key) as? CABasicAnimation)
+                        let start = try XCTUnwrap(travel.fromValue as? NSValue).cgPointValue
+                        let end = try XCTUnwrap(travel.toValue as? NSValue).cgPointValue
+                        for point in [start, end] {
+                            let extent = CGRect(x: point.x - radius, y: point.y - radius, width: radius * 2, height: radius * 2)
+                            XCTAssertTrue(view.bounds.contains(extent), "Every path endpoint plus maximum scale/rotation stays inside a \(size)x\(size) tile")
+                        }
+                        XCTAssertEqual(particle.opacity, 0)
+                    }
+                    view.removeFromSuperview(); XCTAssertTrue(animations(view.layer).isEmpty)
+                }
+            }
+        }
+    }
+
     @MainActor func testActualBoardSamplesAndSettledPixelsMatchImmediateCommittedState() async throws {
         let rig = try CellPresentationRig(); defer { rig.close() }
         rig.board.activate(index: 0, submit: false)
@@ -158,9 +225,9 @@ final class BoardCellPresentationTests: XCTestCase {
         XCTAssertEqual(rig.session.found, [1]); XCTAssertGreaterThan(rig.session.score, 0)
         let committed = rig.session
         try await Task.sleep(nanoseconds: 70_000_000)
-        capture(rig.window, name: "cell-found-070ms-avatar-light-local-stars")
+        capture(rig.board, name: "cell-found-070ms-heart-arriving-and-regional-fragments")
         try await Task.sleep(nanoseconds: 100_000_000)
-        capture(rig.window, name: "cell-found-170ms-local-stars-outward")
+        capture(rig.board, name: "cell-found-170ms-intact-heart-multicolor-sparkles-regional-fragments")
         try await Task.sleep(nanoseconds: 230_000_000)
         capture(rig.window, name: "cell-found-400ms-settled-board")
         XCTAssertTrue(rig.effects.isEmpty); XCTAssertEqual(rig.session, committed)

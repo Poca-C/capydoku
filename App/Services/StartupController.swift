@@ -66,6 +66,18 @@ struct BundledStartupResources: StartupResources {
             }
             await Task.yield()
         }
+        // Decode/crop the small gameplay atlases during the existing loading
+        // stage, so the first idle look does not prepare pixels while playing.
+        for expression in CapyFaceExpression.allCases {
+            try Task.checkCancellation()
+            _ = CapyExpressionArtwork.image(expression)
+            await Task.yield()
+        }
+        for direction in CapyIdleGazeDirection.allCases {
+            try Task.checkCancellation()
+            _ = CapyIdleGazeArtwork.image(direction)
+            await Task.yield()
+        }
     }
 }
 

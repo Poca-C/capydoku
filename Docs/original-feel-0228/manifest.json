@@ -1,0 +1,305 @@
+{
+  "build": "0.2.28 (31)",
+  "reviewDate": "2026-10-01T19:34:11+08:00",
+  "sourceBundle": "Validation/test-runs/original-0228-app.xcresult",
+  "sourceLog": "Validation/test-runs/original-0228-app.log",
+  "sourceSummary": "Validation/test-runs/original-0228-app-summary.json",
+  "sourceTests": {
+    "passed": 449,
+    "failed": 0,
+    "skipped": 0
+  },
+  "sourceExportManifest": ".build/0228-app-attachments/manifest.json",
+  "sourceExportManifestSha256": "738d8e0da5ae16594754d99f49cd37b4889fdeb63834f8a57a4de014c9ded0ec",
+  "reviewedImages": 10,
+  "timingTextFiles": 3,
+  "totalCopiedAttachments": 13,
+  "reviewMethod": "逐张使用 view_image 实际查看最终全量 App 测试导出的十张 PNG；三份动作实际采样时刻逐份读取。所有图和时刻文件均原样复制，不裁切、不重绘、不补帧；SHA-256 与来源一致。",
+  "reviewScope": "覆盖标准化左右眼神、真实棋盘左右眼神与结束状态、正确答案爱心两个阶段、三套结果身体动作前后对照、一个实际关卡 RootView 中文胜利页。",
+  "comparisonMethod": "三个动作图册上排在当前宿主中重放 0.2.27 身体位移、缩放、旋转及影子参数，下排使用 0.2.28 实现；姿态素材与当前装饰保持一致。上排不是旧版完整 App 或 Meowdoku 的录屏。",
+  "limitations": [
+    "结果角色使用同一图层里的三张原创关键姿态离散切换；压伸、旋转和位置变化连续，不等于手臂与表情逐帧连续动画。",
+    "这些证据是模拟器实际测试宿主的静态采样与时钟记录，不能证明物理设备帧率、交互手感、完整动画顺滑度或音效/震动体验。",
+    "名义采样时间包含调度偏差；动作对比另附实际归一化采样时间。不得将静态列间距或时刻误差当成性能指标。",
+    "目视检查只确认所选帧的布局、边界、可辨识度及动作阶段，不宣称与 Meowdoku 审美或动作节奏等效。",
+    "完整回归的功能结论由原始测试结果支撑；这份图册不替代其他设备、无障碍、生命周期或正式上架验收。"
+  ],
+  "images": [
+    {
+      "file": "idle-gaze-normalized-contact-sheet.png",
+      "sourceTest": "CapyExpressionTests/testIdleGazeAtlasCachesAlignedDistinctEyesAndMatchesTheGeneralScanner()",
+      "sourceTestURL": "test://com.apple.xcode/Capydoku/CapydokuAppTests/CapyExpressionTests/testIdleGazeAtlasCachesAlignedDistinctEyesAndMatchesTheGeneralScanner",
+      "sourceAttachment": "45D30CC8-02EA-42A4-9215-551EF3568CF6.png",
+      "sourceSuggestedName": "capy-idle-gaze-normalized-contact-sheet_0_F487D1DB-EEDB-4EA7-AD17-EE1C6C1785BE.png",
+      "sourceTimestamp": 1790853983.968,
+      "device": "iPhone 17 Pro",
+      "associatedWithFailure": false,
+      "sha256": "a67ea1b1b032742433971d23837ea2191a85109784820ca78e405fcead3a9d59",
+      "sourceSha256": "a67ea1b1b032742433971d23837ea2191a85109784820ca78e405fcead3a9d59",
+      "copiedByteForByte": true,
+      "dimensionsPx": [
+        480,
+        180
+      ],
+      "scope": "标准化素材对照，依次为中性、向左看、向右看。",
+      "visualReview": "已逐张目视：左右瞳孔方向可区分，轮廓与位置对齐，角色完整。",
+      "limitations": [
+        "这是资源标准化对照图，不是运行时帧。"
+      ]
+    },
+    {
+      "file": "idle-gaze-left-230ms-actual-board.png",
+      "sourceTest": "BoardGuidancePresentationTests/testActualHostedIdleLooksShowBothDirectionsAndSettleWithoutChangingTheGame()",
+      "sourceTestURL": "test://com.apple.xcode/Capydoku/CapydokuAppTests/BoardGuidancePresentationTests/testActualHostedIdleLooksShowBothDirectionsAndSettleWithoutChangingTheGame",
+      "sourceAttachment": "BFBC45AB-923D-416F-B61D-16CDB5079507.png",
+      "sourceSuggestedName": "idle-gaze-left-230ms-actual-board_0_8D40DD83-FD51-41C8-BB9B-5A0A0F91DA72.png",
+      "sourceTimestamp": 1790853964.019,
+      "device": "iPhone 17 Pro",
+      "associatedWithFailure": false,
+      "sha256": "b09277d5d32b0f1f0e28a79c34e40210f790100253964d154bf7c6df2e53561e",
+      "sourceSha256": "b09277d5d32b0f1f0e28a79c34e40210f790100253964d154bf7c6df2e53561e",
+      "copiedByteForByte": true,
+      "dimensionsPx": [
+        1206,
+        2622
+      ],
+      "scope": "实际 UIWindow 中的 4×4 测试棋盘，左视动作名义 230 ms 采样。",
+      "visualReview": "已逐张目视：左视角色留在第一行第二格内，四周格线完整，无额外角色轮廓。",
+      "limitations": [
+        "测试夹具棋盘；230 ms 是等待值，不能作为逐帧精确时间。"
+      ]
+    },
+    {
+      "file": "idle-gaze-right-230ms-actual-board.png",
+      "sourceTest": "BoardGuidancePresentationTests/testActualHostedIdleLooksShowBothDirectionsAndSettleWithoutChangingTheGame()",
+      "sourceTestURL": "test://com.apple.xcode/Capydoku/CapydokuAppTests/BoardGuidancePresentationTests/testActualHostedIdleLooksShowBothDirectionsAndSettleWithoutChangingTheGame",
+      "sourceAttachment": "23E78239-9B40-4938-9BFD-AD399B3DE2EE.png",
+      "sourceSuggestedName": "idle-gaze-right-230ms-actual-board_0_88D47150-7C5D-4502-B27A-8805BD9085C2.png",
+      "sourceTimestamp": 1790853964.995,
+      "device": "iPhone 17 Pro",
+      "associatedWithFailure": false,
+      "sha256": "846893f5e80cb751e3bceec9e0b5999fbb262852b7b2ac9444375e07a021344c",
+      "sourceSha256": "846893f5e80cb751e3bceec9e0b5999fbb262852b7b2ac9444375e07a021344c",
+      "copiedByteForByte": true,
+      "dimensionsPx": [
+        1206,
+        2622
+      ],
+      "scope": "同一实际测试棋盘，右视动作名义 230 ms 采样。",
+      "visualReview": "已逐张目视：瞳孔相对左视发生反向变化，头部仍位于同一格。",
+      "limitations": [
+        "测试夹具棋盘；静态截图不证明整段过渡流畅度。"
+      ]
+    },
+    {
+      "file": "idle-gaze-neutral-settled-board.png",
+      "sourceTest": "BoardGuidancePresentationTests/testActualHostedIdleLooksShowBothDirectionsAndSettleWithoutChangingTheGame()",
+      "sourceTestURL": "test://com.apple.xcode/Capydoku/CapydokuAppTests/BoardGuidancePresentationTests/testActualHostedIdleLooksShowBothDirectionsAndSettleWithoutChangingTheGame",
+      "sourceAttachment": "343C1FFA-4AC0-4BE5-8BF0-BB7D9C38A838.png",
+      "sourceSuggestedName": "idle-gaze-neutral-settled-board_0_DBCB73D2-3953-451E-A2D8-A5617F4F7EC1.png",
+      "sourceTimestamp": 1790853965.72,
+      "device": "iPhone 17 Pro",
+      "associatedWithFailure": false,
+      "sha256": "29d57d8c87108e817f788e92113b2a30d4f7a203750551d6aba561c7037f2132",
+      "sourceSha256": "29d57d8c87108e817f788e92113b2a30d4f7a203750551d6aba561c7037f2132",
+      "copiedByteForByte": true,
+      "dimensionsPx": [
+        1206,
+        2622
+      ],
+      "scope": "左右眼神演出结束后的同一实际测试棋盘。",
+      "visualReview": "已逐张目视：回到中性眼神，未见残留眼神覆盖层或漂移。",
+      "limitations": [
+        "业务状态未变、动画清理由来源测试断言；截图仅证明这一时刻的显示。"
+      ]
+    },
+    {
+      "file": "cell-found-070ms-heart-arriving.png",
+      "sourceTest": "BoardCellPresentationTests/testActualBoardSamplesAndSettledPixelsMatchImmediateCommittedState()",
+      "sourceTestURL": "test://com.apple.xcode/Capydoku/CapydokuAppTests/BoardCellPresentationTests/testActualBoardSamplesAndSettledPixelsMatchImmediateCommittedState",
+      "sourceAttachment": "CA465A8B-6412-46D4-BE12-19181DB784A5.png",
+      "sourceSuggestedName": "cell-found-070ms-heart-arriving-and-regional-fragments_0_FD95EF92-9DAD-4ED4-B02E-EE5CCFA4B936.png",
+      "sourceTimestamp": 1790853962.02,
+      "device": "iPhone 17 Pro",
+      "associatedWithFailure": false,
+      "sha256": "4625217c125bf091e3e44ee9c2200290aea3e5c43a4b701d8774a6c750952058",
+      "sourceSha256": "4625217c125bf091e3e44ee9c2200290aea3e5c43a4b701d8774a6c750952058",
+      "copiedByteForByte": true,
+      "dimensionsPx": [
+        960,
+        960
+      ],
+      "scope": "真实棋盘发现正确答案后，名义 70 ms 的反馈采样。",
+      "visualReview": "已逐张目视：开心表情、环形强调和爱心进入阶段均可见，反馈留在棋盘范围内。",
+      "limitations": [
+        "爱心仍在进入阶段；不是完整展开或稳定状态。"
+      ]
+    },
+    {
+      "file": "cell-found-170ms-intact-heart-sparkles.png",
+      "sourceTest": "BoardCellPresentationTests/testActualBoardSamplesAndSettledPixelsMatchImmediateCommittedState()",
+      "sourceTestURL": "test://com.apple.xcode/Capydoku/CapydokuAppTests/BoardCellPresentationTests/testActualBoardSamplesAndSettledPixelsMatchImmediateCommittedState",
+      "sourceAttachment": "2DEBEAC2-AAE5-4975-9EF6-240F35554B6C.png",
+      "sourceSuggestedName": "cell-found-170ms-intact-heart-multicolor-sparkles-regional-fragments_0_7128F283-241B-4C4F-86C2-6EE38FFEE2F2.png",
+      "sourceTimestamp": 1790853962.162,
+      "device": "iPhone 17 Pro",
+      "associatedWithFailure": false,
+      "sha256": "7c71671b283570f38d8e5ccc31a47f7c4370746e0ab3cf5eaed0c50d0f827bcb",
+      "sourceSha256": "7c71671b283570f38d8e5ccc31a47f7c4370746e0ab3cf5eaed0c50d0f827bcb",
+      "copiedByteForByte": true,
+      "dimensionsPx": [
+        960,
+        960
+      ],
+      "scope": "同一次正确答案反馈，名义 170 ms 采样。",
+      "visualReview": "已逐张目视：粉色爱心轮廓完整，白边可见；星光与区域色碎片可区分。",
+      "limitations": [
+        "名义等待时间包含运行调度与截图开销，不能由这两张图推算帧率。"
+      ]
+    },
+    {
+      "file": "result-joyful-body-comparison.png",
+      "sourceTest": "ResultCharacterChoreographyTests/testActualHostCapturesOldAndNewMotionAroundPoseChangesWithoutBlendedSilhouettes()",
+      "sourceTestURL": "test://com.apple.xcode/Capydoku/CapydokuAppTests/ResultCharacterChoreographyTests/testActualHostCapturesOldAndNewMotionAroundPoseChangesWithoutBlendedSilhouettes",
+      "sourceAttachment": "116B782E-365D-48DF-AC3B-4B524C287D5A.png",
+      "sourceSuggestedName": "result-pose-boundaries-joyfulRaise-top-0227-bottom-0228_0_60FF23D7-F4DB-47DB-8932-71084DE5D805.png",
+      "sourceTimestamp": 1790854075.642,
+      "device": "iPhone 17 Pro",
+      "associatedWithFailure": false,
+      "sha256": "c053f156285ab1dbb99bdcd19681823e465f5e0ab4d686621e8373359f3f5622",
+      "sourceSha256": "c053f156285ab1dbb99bdcd19681823e465f5e0ab4d686621e8373359f3f5622",
+      "copiedByteForByte": true,
+      "dimensionsPx": [
+        2016,
+        672
+      ],
+      "scope": "欢呼身体动作对比：上排重放 0.2.27 身体参数，下排 0.2.28；每排六个实际运行时采样。",
+      "visualReview": "已逐张目视：下排有明显蓄力压缩、上抬与落地压缩；未见角色双轮廓或局部裁切。",
+      "limitations": [
+        "旧参数在当前 UIView、当前姿态图和当前装饰上重放；不是旧版 App 录屏。三张姿态仍离散切换。"
+      ]
+    },
+    {
+      "file": "result-star-hug-body-comparison.png",
+      "sourceTest": "ResultCharacterChoreographyTests/testActualHostCapturesOldAndNewMotionAroundPoseChangesWithoutBlendedSilhouettes()",
+      "sourceTestURL": "test://com.apple.xcode/Capydoku/CapydokuAppTests/ResultCharacterChoreographyTests/testActualHostCapturesOldAndNewMotionAroundPoseChangesWithoutBlendedSilhouettes",
+      "sourceAttachment": "10C3E658-638D-484F-BE38-BB950D0AB84F.png",
+      "sourceSuggestedName": "result-pose-boundaries-starHug-top-0227-bottom-0228_0_F3FF8C78-C205-4732-8FD7-2C90E037C5F5.png",
+      "sourceTimestamp": 1790854077.507,
+      "device": "iPhone 17 Pro",
+      "associatedWithFailure": false,
+      "sha256": "efd5e070690ee1cf907dcc35222ede7599cfc9c0d9961eb8f9154f8bf9f2f087",
+      "sourceSha256": "efd5e070690ee1cf907dcc35222ede7599cfc9c0d9961eb8f9154f8bf9f2f087",
+      "copiedByteForByte": true,
+      "dimensionsPx": [
+        2016,
+        672
+      ],
+      "scope": "抱星身体动作对比：上排旧身体参数重放，下排当前参数。",
+      "visualReview": "已逐张目视：下排侧倾与举星姿态配合，三个姿态可辨，未见半透明重影。",
+      "limitations": [
+        "不能仅凭这些采样宣称手臂连续运动或达到参考产品的动画质量。"
+      ]
+    },
+    {
+      "file": "result-retry-body-comparison.png",
+      "sourceTest": "ResultCharacterChoreographyTests/testActualHostCapturesOldAndNewMotionAroundPoseChangesWithoutBlendedSilhouettes()",
+      "sourceTestURL": "test://com.apple.xcode/Capydoku/CapydokuAppTests/ResultCharacterChoreographyTests/testActualHostCapturesOldAndNewMotionAroundPoseChangesWithoutBlendedSilhouettes",
+      "sourceAttachment": "E22A5623-471B-470E-8C11-7469519FF3D8.png",
+      "sourceSuggestedName": "result-pose-boundaries-gentleRetry-top-0227-bottom-0228_0_F96E2DF4-3BC4-41C5-A8F1-99333C611A84.png",
+      "sourceTimestamp": 1790854079.069,
+      "device": "iPhone 17 Pro",
+      "associatedWithFailure": false,
+      "sha256": "f54ad31d2258c99f777eb89294da022d43d529c098c747b4c2b4c3cb225f9eb9",
+      "sourceSha256": "f54ad31d2258c99f777eb89294da022d43d529c098c747b4c2b4c3cb225f9eb9",
+      "copiedByteForByte": true,
+      "dimensionsPx": [
+        2016,
+        672
+      ],
+      "scope": "失败叹气身体动作对比：上排旧身体参数重放，下排当前参数。",
+      "visualReview": "已逐张目视：下排叹气通过身体压缩表现，角色仍完整，脚底未出现明显向下穿入画外的位移。",
+      "limitations": [
+        "整体身体变形连续，但表情和手臂姿态依然采用三张离散图片。"
+      ]
+    },
+    {
+      "file": "current-L6-complete-celebration-1500ms.png",
+      "sourceTest": "ResultChoreographyTests/testCurrentLevelSixRootShowsSequentialResultAndAccessibleImmediateAction()",
+      "sourceTestURL": "test://com.apple.xcode/Capydoku/CapydokuAppTests/ResultChoreographyTests/testCurrentLevelSixRootShowsSequentialResultAndAccessibleImmediateAction",
+      "sourceAttachment": "1DBE3C1E-D9B4-4A4B-A8A6-1950AD1445AA.png",
+      "sourceSuggestedName": "current-L6-complete-celebration-1500ms_0_79C38C8A-30B8-475A-B065-A0165F871E76.png",
+      "sourceTimestamp": 1790854092.971,
+      "device": "iPhone 17 Pro",
+      "associatedWithFailure": false,
+      "sha256": "4881b8c94de2ab076880829c3213d5dfc5760de7774466d225d2946f9fb00307",
+      "sourceSha256": "4881b8c94de2ab076880829c3213d5dfc5760de7774466d225d2946f9fb00307",
+      "copiedByteForByte": true,
+      "dimensionsPx": [
+        1206,
+        2622
+      ],
+      "scope": "实际当前关卡包第 6 关 RootView 胜利页，名义 1500 ms 采样。",
+      "visualReview": "已逐张目视：中文标题、抱星全身角色、背景光线和第 7 关按钮完整；主要按钮没有被角色遮挡。",
+      "limitations": [
+        "这是完整 RootView 的测试宿主截图，不是物理 iPhone 实测或商店发布证明。"
+      ]
+    }
+  ],
+  "timingAttachments": [
+    {
+      "file": "result-joyful-actual-sampling-times.txt",
+      "sourceTest": "ResultCharacterChoreographyTests/testActualHostCapturesOldAndNewMotionAroundPoseChangesWithoutBlendedSilhouettes()",
+      "sourceTestURL": "test://com.apple.xcode/Capydoku/CapydokuAppTests/ResultCharacterChoreographyTests/testActualHostCapturesOldAndNewMotionAroundPoseChangesWithoutBlendedSilhouettes",
+      "sourceAttachment": "E6281B51-3BD1-4A9F-985C-17F1A501D343.txt",
+      "sourceSuggestedName": "result-pose-boundaries-joyfulRaise-actual-sampling-times_0_34359581-6B6B-4ACA-BE06-43A079D7CEC7.txt",
+      "sourceTimestamp": 1790854075.642,
+      "device": "iPhone 17 Pro",
+      "associatedWithFailure": false,
+      "sha256": "8c11e44f7c911257ff42e180f8582bf17985230aeb652bbb2bc2b477409a4022",
+      "sourceSha256": "8c11e44f7c911257ff42e180f8582bf17985230aeb652bbb2bc2b477409a4022",
+      "copiedByteForByte": true,
+      "performance": "joyfulRaise",
+      "durationSeconds": 1.05,
+      "sampleCount": 12,
+      "phaseDefinition": "从角色 contents 动画实际 beginTime 起算的归一化运行时间。每版六个采样；保留原始数值，非精确显示帧时间。",
+      "maxObservedLateSamplingMs": 7.23625
+    },
+    {
+      "file": "result-star-hug-actual-sampling-times.txt",
+      "sourceTest": "ResultCharacterChoreographyTests/testActualHostCapturesOldAndNewMotionAroundPoseChangesWithoutBlendedSilhouettes()",
+      "sourceTestURL": "test://com.apple.xcode/Capydoku/CapydokuAppTests/ResultCharacterChoreographyTests/testActualHostCapturesOldAndNewMotionAroundPoseChangesWithoutBlendedSilhouettes",
+      "sourceAttachment": "1DF1FE7A-410C-4913-BC63-DB7B16C86D45.txt",
+      "sourceSuggestedName": "result-pose-boundaries-starHug-actual-sampling-times_0_2FC25F0E-C652-4FDF-8329-0A1D8650CE27.txt",
+      "sourceTimestamp": 1790854077.507,
+      "device": "iPhone 17 Pro",
+      "associatedWithFailure": false,
+      "sha256": "61ed897775e7fb0992cc64d36bf327a89e02a44fc693aab49c678904c279220d",
+      "sourceSha256": "61ed897775e7fb0992cc64d36bf327a89e02a44fc693aab49c678904c279220d",
+      "copiedByteForByte": true,
+      "performance": "starHug",
+      "durationSeconds": 1.2,
+      "sampleCount": 12,
+      "phaseDefinition": "从角色 contents 动画实际 beginTime 起算的归一化运行时间。每版六个采样；保留原始数值，非精确显示帧时间。",
+      "maxObservedLateSamplingMs": 12.239833
+    },
+    {
+      "file": "result-retry-actual-sampling-times.txt",
+      "sourceTest": "ResultCharacterChoreographyTests/testActualHostCapturesOldAndNewMotionAroundPoseChangesWithoutBlendedSilhouettes()",
+      "sourceTestURL": "test://com.apple.xcode/Capydoku/CapydokuAppTests/ResultCharacterChoreographyTests/testActualHostCapturesOldAndNewMotionAroundPoseChangesWithoutBlendedSilhouettes",
+      "sourceAttachment": "5D146B80-8CE7-418E-993B-82029EEFB4FC.txt",
+      "sourceSuggestedName": "result-pose-boundaries-gentleRetry-actual-sampling-times_0_A64D407D-BD3F-49B1-80D5-22240F8459BF.txt",
+      "sourceTimestamp": 1790854079.07,
+      "device": "iPhone 17 Pro",
+      "associatedWithFailure": false,
+      "sha256": "ed63c700df5bf65cf1a397ea5696c78be77845a5ef555d7ead97a414a860bb68",
+      "sourceSha256": "ed63c700df5bf65cf1a397ea5696c78be77845a5ef555d7ead97a414a860bb68",
+      "copiedByteForByte": true,
+      "performance": "gentleRetry",
+      "durationSeconds": 0.92,
+      "sampleCount": 12,
+      "phaseDefinition": "从角色 contents 动画实际 beginTime 起算的归一化运行时间。每版六个采样；保留原始数值，非精确显示帧时间。",
+      "maxObservedLateSamplingMs": 12.76025
+    }
+  ]
+}

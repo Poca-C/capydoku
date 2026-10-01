@@ -1,0 +1,266 @@
+{
+  "build": "0.2.28 (31)",
+  "date": "2026-10-01",
+  "status": "verified_scoped_demo_improvements_formal_acceptance_unchanged",
+  "authority": "原始Word正文及截图为需求基准；Meowdoku已观察细节只提供改进参考。本轮为Demo表现细化，不提高83行正式状态或88项历史统计。",
+  "sourceParagraphs": [
+    241,
+    249,
+    252,
+    254
+  ],
+  "changes": [
+    {
+      "area": "待机表情",
+      "observations": [
+        "OBS-02"
+      ],
+      "requirements": [
+        "ART-01",
+        "ART-02"
+      ],
+      "implementation": "新增基于本项目角色的左右侧看两帧图集。复用棋盘唯一4秒任务，依次眨眼、左看、眨眼、右看并轮换已找到角色；侧看0.82秒、首尾眨眼。接触、锁定、教学、提示预览、后台、换局及移除取消，不触发输入、声音或游戏状态变化。",
+      "files": [
+        "App/Views/CapyIdleGazeView.swift",
+        "App/Views/PuzzleBoardView.swift"
+      ],
+      "artwork": "Validation/capy-idle-gaze-artwork-0228.json"
+    },
+    {
+      "area": "像素准备",
+      "requirements": [
+        "ART-01",
+        "TECH-07"
+      ],
+      "implementation": "新图集按原生alpha摘要验证透明边界，两张方向图走零扫描路径，替换图自动回退标准化扫描；原四表情像素保持。现有加载阶段预热四表情与两方向，每项检查取消并让出任务，不新增定时等待。",
+      "files": [
+        "App/Views/CapyExpressionArtwork.swift",
+        "App/Views/CapyIdleGazeView.swift",
+        "App/Services/StartupController.swift"
+      ],
+      "boundary": "r2缓存/像素专项及最终449项App回归通过，最终回归包含启动预热。不引用上轮暖图测量作为本轮性能结论。"
+    },
+    {
+      "area": "正确格反馈",
+      "observations": [
+        "OBS-02",
+        "OBS-03"
+      ],
+      "requirements": [
+        "ART-02"
+      ],
+      "implementation": "头像和光圈外增加粉色小爱心、4枚多色星点和4枚真实区域色碎片，限制在格内且0.32秒结束。减少动态效果使用0.10秒静态确认；低电量只保留头像/光圈。沿用真实成功事件，不改提交、分数、生命或道具逻辑。",
+      "files": [
+        "App/Views/BoardCellFeedbackView.swift"
+      ]
+    },
+    {
+      "area": "全身姿态衔接",
+      "observations": [
+        "OBS-06"
+      ],
+      "requirements": [
+        "ART-02",
+        "PLAY-10"
+      ],
+      "implementation": "角色锚点移至脚部0.96，分轴预备/落地形变、姿态与移动共用起始时钟，按阶段缓动。保留现有三套姿态和时长，按钮即时可用。",
+      "files": [
+        "App/Views/ResultCharacterView.swift"
+      ],
+      "boundary": "r3实际运行前后采样已由root与角色agent目视复核，三套动作有可见差别；仍是既有三姿态离散切换，不是新增连续骨骼动画或冻结参考逐帧验收。"
+    }
+  ],
+  "targetedTests": {
+    "status": "historical_r2_failure_resolved_in_character_r3_and_final_app",
+    "device": "iPhone 17 Pro simulator / iOS26.5",
+    "cases": 47,
+    "passedCases": 46,
+    "failedCases": 1,
+    "skipped": 0,
+    "assertionFailures": 3,
+    "seconds": 21.8,
+    "groups": {
+      "BoardCellPresentationTests": 6,
+      "BoardGuidancePresentationTests": 15,
+      "CapyExpressionTests": 12,
+      "ResultCharacterChoreographyTests": 7,
+      "ResultCharacterTests": 7
+    },
+    "log": "Validation/test-runs/original-0228-targeted-r2.log",
+    "summary": "Validation/test-runs/original-0228-targeted-r2-summary.json",
+    "bundle": "Validation/test-runs/original-0228-targeted-r2.xcresult",
+    "scope": "r2共47例，46通过、1个结果对照采样用例失败；后由r3角色7项和最终449项App完整复验通过，不改写首次失败。"
+  },
+  "applicationTests": {
+    "status": "passed",
+    "build": "0.2.28 (31)",
+    "device": "iPhone 17 Pro simulator / iOS26.5",
+    "passed": 449,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 168.081,
+    "suiteSecondsIncludingOverhead": 168.223,
+    "scope": "Full449 CapydokuAppTests, including8 new cases versus0.2.27; no exclusions. Includes final startup atlas warm-up and corrected result capture.",
+    "log": "Validation/test-runs/original-0228-app.log",
+    "summary": "Validation/test-runs/original-0228-app-summary.json",
+    "bundle": "Validation/test-runs/original-0228-app.xcresult"
+  },
+  "uiTests": {
+    "status": "passed",
+    "build": "0.2.28 (31)",
+    "device": "iPhone 17e simulator / iOS26.5",
+    "passed": 9,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 240.892,
+    "suiteSecondsIncludingOverhead": 240.903,
+    "log": "Validation/test-runs/original-0228-17e-ui.log",
+    "summary": "Validation/test-runs/original-0228-17e-ui-summary.json",
+    "bundle": "Validation/test-runs/original-0228-17e-ui.xcresult",
+    "repeatedTestAction": false,
+    "scope": "Same nine selected UI cases as0.2.27, no repeat or skipped case; tutorial, gesture/tools, solve/advance, loss/revive, last-life restore, mixed gestures, leave-board swipe, modal accessibility and4/6/8/10 board sizes. Fixture boundaries are unchanged; not an all150-level playthrough.",
+    "cases": [
+      "CapydokuUITests.CapydokuUITests testGuidedTutorialCoversRulesTapUndoBothSwipesAndFind",
+      "CapydokuUITests.CapydokuUITests testLastLifeSpotlightDismissalDoesNotSpendLifeOrMarkAndColdRestoreDoesNotReplayIt",
+      "CapydokuUITests.CapydokuUITests testLoseAndSimulatedRevivePreservesBoard",
+      "CapydokuUITests.CapydokuUITests testSolveEntirePuzzleAndAdvance",
+      "CapydokuUITests.CapydokuUITests testToolsResumeAfterNativeTapDoubleTapAndPanRecognizersFinish",
+      "CapydokuUITests.HardeningUITests testMixedBackToBackGesturesNeverRepeatDamageOrScore",
+      "CapydokuUITests.HardeningUITests testSwipeStopsWhenFingerLeavesBoard",
+      "CapydokuUITests.OriginalReferenceUITests testAllFourBoardSizesKeepNavigationRulesAndToolsInOrder",
+      "CapydokuUITests.OriginalReferenceUITests testModalControlsExcludeBackgroundAndReturnToTheSameBoard"
+    ]
+  },
+  "initialFailures": [
+    {
+      "run": "r1",
+      "kind": "test_compile_failure",
+      "log": "Validation/test-runs/original-0228-targeted.log",
+      "cause": "新增BoardCellPresentationTests第169行表达式类型检查超时，改为显式类型数组；未改生产逻辑或放宽断言。"
+    },
+    {
+      "run": "r2",
+      "kind": "one_failed_case_three_assertions",
+      "test": "ResultCharacterChoreographyTests/testActualHostCapturesOldAndNewMotionAroundPoseChangesWithoutBlendedSilhouettes",
+      "cause": "r2前后对照图的首列在初始Core Animation提交前捕获，因而是静态；后列实际有运动，不能把所有列描述为model层静态。改为实际运行时钟、先等待提交后再采样；r3七项角色专项通过，三套有效对照图已复核。",
+      "productionChangedForThisFailure": false
+    }
+  ],
+  "visualEvidence": {
+    "status": "reviewed_passed_scoped_static_samples",
+    "manifest": "Docs/original-feel-0228/manifest.json",
+    "imagesReviewed": 10,
+    "timingTextFiles": 3,
+    "sourceBundle": "Validation/test-runs/original-0228-app.xcresult",
+    "scope": "标准化眼神图、4×4实际测试棋盘左右/中性3图、正确爱心70/170毫秒2图、三套结果BODY前后对照、当前包L6实际Root胜利页；均来自最终449项全量App附件。",
+    "comparisonMethod": "对照上排在当前宿主重放0.2.27身体参数，下排为0.2.28，不是旧App或Meowdoku录屏。",
+    "boundary": "逐张目视确认所选帧布局、边界与动作阶段；三关键姿态离散切换，不能证明完整动画顺滑度、真机帧率/手感或参考审美节奏等效。"
+  },
+  "audio": {
+    "modifiedThisRound": false,
+    "localWAVFiles": 9,
+    "gitIgnored": true,
+    "formalReferenceVerified": false,
+    "newAudioAdded": false,
+    "liveAuditoryABThisRound": false,
+    "evidence": "Validation/meowdoku-audio-test-0226.json",
+    "resourceAuditThisBuild": {
+      "status": "passed",
+      "scope": "final Debug simulator and signed physical internal_demo",
+      "localWAVFilesPerArtifact": 9,
+      "reports": [
+        "Validation/test-runs/original-0228-audio-debug-inventory.json",
+        "Validation/test-runs/original-0228-audio-physical-inventory.json"
+      ],
+      "formalReferenceVerified": false
+    },
+    "boundary": "沿用0.2.27本地内部测试原声及哈希，六产物矩阵为0.2.26历史；不声称本轮听测或正式原声验收。"
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "evidence": "Validation/test-runs/original-0224-core.log",
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "referenceObservation": {
+    "source": "Validation/meowdoku-playtest-comparison-0223.json",
+    "observations": [
+      "OBS-02",
+      "OBS-03",
+      "OBS-06"
+    ],
+    "successfulNewPlaytestThisRound": false,
+    "boundary": "侧看、爱心/区域碎片和姿态节奏为落实已采样观察；帧数与时长是Demo参数，未取得冻结参考逐帧对标。"
+  },
+  "physicalUpdate": {
+    "status": "installed_queried_and_automatically_launched",
+    "installedThisRound": true,
+    "verifiedVersion": "0.2.28 (31)",
+    "strictSignaturePassed": true,
+    "automatedLaunchSucceeded": true,
+    "dataScope": "Snapshots immediately before and after in-place update, before requested launch.",
+    "observedFilesIdentical": 8,
+    "historicalEventsUnchanged": 285,
+    "rewardEntriesUnchanged": 38,
+    "primaryAndBackupChecksumsValid": 4,
+    "currentLevel": 10,
+    "sessionCompletedLevelsSettingsCheckInIdentityPreserved": true,
+    "resetUninstallOrRollback": false,
+    "continuousOperationVerified": false,
+    "physicalGestureHapticAudioAccepted": false,
+    "report": "Validation/original-0228-physical-install.json",
+    "summary": "0.2.28（31）签名构建、严格验签、无线覆盖安装、版本查询及自动启动通过。请求启动前的安装快照8文件字节一致，第10关对局、285条事件、38条奖励、已完成关卡、设置/签到/身份保持，4份主备校验有效；未清档、卸载或回滚。不代表真机连续运行或声音/触觉/手感验收。"
+  },
+  "builds": {
+    "signedPhysicalDebug": {
+      "status": "passed",
+      "log": "Validation/test-runs/original-0228-physical-build.log",
+      "strictSignaturePassed": true,
+      "signatureLog": "Validation/test-runs/original-0228-codesign.log"
+    },
+    "unsignedRelease": {
+      "status": "not_run_this_round",
+      "reason": "本轮音频及构建打包逻辑未改；0.2.27 Release排除测试资源是最近历史证据，不标为本轮重建。",
+      "latestBuild": "0.2.27 (30)",
+      "latestEvidence": "Validation/test-runs/original-0227-audio-release-inventory.json"
+    }
+  },
+  "remaining": [
+    "全身角色仍是三张关键姿态离散切换，位移/形变连续；完整自然度、冻结参考逐帧节奏与审美等效尚未验收。",
+    "真机声音/触觉与连续试玩、低性能设备和系统减少动态效果专项仍待验；安装启动及模拟器样本不能替代这些结论。",
+    "正式素材全集、参考参数/音频清单及上架验收保持待验；参考Excellent未在先前实际试玩中观察到，本轮没有新的成功Meowdoku试玩或听觉A/B。"
+  ],
+  "formalSignOff": false,
+  "characterRetest": {
+    "status": "passed",
+    "run": "r3",
+    "device": "iPhone 17 Pro simulator / iOS26.5",
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 7.912,
+    "suiteSecondsIncludingOverhead": 7.915,
+    "log": "Validation/test-runs/original-0228-character-r3.log",
+    "bundle": "Validation/test-runs/original-0228-character-r3.xcresult",
+    "attachments": ".build/0228-character-r3-attachments/manifest.json",
+    "scope": "只复验7项ResultCharacterChoreographyTests；不是重新执行r2全部47项。三套有效前后动作对照已由root与角色agent实际审阅。"
+  },
+  "observedCoverageSummary": {
+    "source": "Validation/meowdoku-playtest-comparison-0223.json",
+    "status": "all_nine_observed_directions_have_demo_implementations",
+    "coverage": {
+      "OBS-01": "动态教学手势与目标聚焦",
+      "OBS-02": "待机/正确/冲突表情，本轮补左右侧看与小爱心",
+      "OBS-03": "局部真实加分、HUD联动与彩粒，本轮补多色星点和区域碎片",
+      "OBS-04": "可见冲突连接、高亮与规则卡解释",
+      "OBS-05": "实际扣命反馈与一命聚焦",
+      "OBS-06": "分档Combo、整盘庆祝及结果演出，本轮细化身体动作",
+      "OBS-07": "新盘错峰入场",
+      "OBS-08": "提示预览/Apply与直接答案联动",
+      "OBS-09": "签到点亮、到账与日期分段强调"
+    },
+    "boundary": "九个主要观察方向均有Demo实现，不等于连续角色动画、逐帧节奏或音画触觉质量已对齐。三姿态换图仍离散，未做真机听觉A/B，参考Excellent未观察到。"
+  }
+}
