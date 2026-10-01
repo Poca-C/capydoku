@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.42 (45)",
+  "date": "2026-10-02",
+  "status": "scoped_combo_readability_verified_simulator_only",
+  "previousReport": "Validation/original-0241-feedback.json",
+  "previousGoalTurn": {
+    "classification": "progress",
+    "reason": "0.2.41已落实并验证结算身体联动；本轮继续正常游玩节奏诊断与修复。"
+  },
+  "sourceParagraphs": [
+    136,
+    249,
+    252,
+    254
+  ],
+  "referenceObservation": "Validation/meowdoku-playtest-comparison-0229.json#R0229-02",
+  "finding": "同级/跨级Combo替换时，父级scale过渡叠加子组件入场，在自然截图中缩至几乎不可读。最初的新旧文字重影假设未获证实，不列为已修复问题。",
+  "changes": [
+    "移除Combo外层scale/opacity替换过渡和跟随revision的外层spring。",
+    "保留每次有效提交的新revision及子组件入场弹跳；降低动态效果仍静态展示。",
+    "未改Combo等级、分数、映射延迟、1.3秒显示时长及业务提交。"
+  ],
+  "temporaryTuning": "沿用现有Demo曲线与配置；未新增参考测量值或正式冻结参数。",
+  "verificationHistory": [
+    {
+      "status": "Passed",
+      "cases": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 29.898,
+      "scope": "0.2.41 baseline diagnostic passed state/layout assertions; visual shrinkage observed. This was not an automated failing regression.",
+      "summary": "Validation/test-runs/original-0242-combo-before-summary.json",
+      "log": "Validation/test-runs/original-0242-combo-before.log",
+      "bundle": "Validation/test-runs/original-0242-combo-before.xcresult"
+    },
+    {
+      "status": "Passed",
+      "cases": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 31.075,
+      "scope": "Candidate before version bump and diagnostic metadata clarifications; natural captures inspected.",
+      "summary": "Validation/test-runs/original-0242-combo-candidate-summary.json",
+      "log": "Validation/test-runs/original-0242-combo-candidate.log",
+      "bundle": "Validation/test-runs/original-0242-combo-candidate.xcresult"
+    }
+  ],
+  "applicationTests": {
+    "status": "Passed",
+    "cases": 48,
+    "passed": 48,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 54.153,
+    "scope": "17 Pro / iOS26.5; seven affected presentation suites including natural replacement captures. No full App/Core rerun.",
+    "summary": "Validation/test-runs/original-0242-app-final-summary.json",
+    "log": "Validation/test-runs/original-0242-app-final.log",
+    "bundle": "Validation/test-runs/original-0242-app-final.xcresult"
+  },
+  "uiTests": {
+    "status": "Passed",
+    "cases": 4,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 146.2,
+    "scope": "17e / iOS26.5; native tap/double-tap/pan then tools, solve/advance, lose/simulated revive, hint preview/Apply. Existing fixtures.",
+    "summary": "Validation/test-runs/original-0242-17e-ui-summary.json",
+    "log": "Validation/test-runs/original-0242-17e-ui.log",
+    "bundle": "Validation/test-runs/original-0242-17e-ui.xcresult"
+  },
+  "visualEvidence": "Docs/original-feel-0242/manifest.json",
+  "normalSavePlaytest": {
+    "build": "0.2.41 (44)",
+    "start": "Restored L4, score320, found3/6, lives2.",
+    "actions": [
+      "Mark/undo cell2; wrong confirmation cell13; acknowledge one-life reminder.",
+      "Mock reward opens hint preview; Apply writes marks while score/found/lives remain unchanged.",
+      "Mock rewarded direct find cell6 raises score to420 and found4/6.",
+      "Confirm cells22/33, win atscore680; Next entersL5 score0/found0/lives3 and tools1/1."
+    ],
+    "end": "Normal simulator save left atL5; no reset.",
+    "limitations": "Accessibility actions; finite video extraction review. Occurred before Combo production fix; not relabelled as 0.2.42 manual playtest."
+  },
+  "reference": {
+    "latestSuccessfulPlaytest": "Validation/meowdoku-playtest-comparison-0229.json",
+    "newSuccessfulPlaytestThisRound": false,
+    "equivalenceClaimed": false
+  },
+  "audio": {
+    "modified": false,
+    "localTestWAVCount": 9,
+    "currentDebugInventory": "Validation/audio-isolation-0242-debug.json",
+    "formalManifestClipsEmpty": true,
+    "liveAuditoryAB": false,
+    "releaseRebuilt": false
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  },
+  "remaining": [
+    "九类参考观察已有Demo实现，但完整连续节奏、角色自然度与真机音画/触觉未验。",
+    "棋盘开心脸结束到静态脸的衔接是下一项待诊断候选，尚未证实必须改动。",
+    "未完成真机、最低系统、冻结参考及正式上架验收。"
+  ],
+  "formalSignOff": false,
+  "formalConformanceRowsUnchanged": 83,
+  "historicalChecklistCountUnchanged": 88
+}

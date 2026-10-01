@@ -662,10 +662,12 @@ struct GameView: View {
                     })
                     .accessibilityIdentifier("combo_feedback").capyLayoutProbe("combo_feedback")
                     .id(feedback.comboRevision)
-                    .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
+                    // Each accepted find gets the child's own entrance spring.
+                    // A second scale transition collapses the entire badge on
+                    // replacement, briefly making repeated Combos unreadable.
+                    .transition(.identity)
             }
         }.allowsHitTesting(false)
-            .animation(reduceMotion ? nil : .spring(response: 0.25, dampingFraction: 0.6), value: feedback.comboRevision)
             // Preserve the last find's board-phase Combo. Once result artwork
             // starts, remove only this text so it cannot sit behind the title.
             // The clear band still reserves the same board/HUD layout space.

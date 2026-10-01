@@ -173,6 +173,115 @@ final class GameFeelVisualTests: XCTestCase {
         (view as? PuzzleGridUIView) ?? view.subviews.lazy.compactMap { self.grid(in: $0) }.first
     }
 
+    /// Diagnostic evidence, not a claim that SwiftUI necessarily retains two
+    /// visible labels. Each sample uses a fresh real board so screenshot work
+    /// cannot move the next requested sample past its intended time window.
+    @MainActor func testActualRootComboReplacementNaturalFrames() async throws {
+        var samples: [[String: Any]] = []
+        let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
+        for (width, language) in [(CGFloat(320), AppLanguage.simplifiedChinese), (CGFloat(402), AppLanguage.english)] {
+            let directory = FileManager.default.temporaryDirectory.appendingPathComponent("combo-replacement-" + UUID().uuidString)
+            let model = AppModel(saveDirectory: directory, runsTimer: false, feedbackEnabled: false)
+            model.progress.settings.language = language
+            model.progress.tutorialCompleted = true; model.start(level: 6)
+            let previous = scene.windows.first(where: \.isKeyWindow), window = UIWindow(windowScene: scene)
+            window.frame = CGRect(x: 0, y: 0, width: width, height: width == 320 ? 568 : 874)
+            var frames: [String: CGRect] = [:]
+            let host = UIHostingController(rootView: RootView(reduceMotionOverride: false).environmentObject(model)
+                .environment(\.scenePhase, .active)
+                .environment(\.capyLayoutObserver, { frames[$0] = $1 }))
+            window.rootViewController = host; window.makeKeyAndVisible()
+            defer {
+                window.isHidden = true; window.rootViewController = nil; previous?.makeKeyAndVisible()
+                model.flushPendingSaves(); try? FileManager.default.removeItem(at: directory)
+            }
+            let solution = try XCTUnwrap(model.session).puzzle.solution
+            // Derive the two cases from the configuration actually in this
+            // session; this diagnostic must not change scoring or thresholds.
+            let pairs: [(count: Int, before: String, after: String)] = (2..<solution.count).compactMap { count in
+                guard let before = model.comboFeedbackPresentation(for: count - 1)?.text,
+                      let after = model.comboFeedbackPresentation(for: count)?.text else { return nil }
+                return (count, before, after)
+            }
+            let crossing = try XCTUnwrap(pairs.last(where: { $0.before != $0.after }))
+            let repeating = try XCTUnwrap(pairs.first(where: { $0.before == $0.after }))
+            for (kind, replacement) in [("cross-tier", crossing), ("same-tier", repeating)] {
+                for requestedMilliseconds in [30, 70, 120] {
+                    model.start(level: 6)
+                    try await Task.sleep(nanoseconds: 200_000_000)
+                    let boardBefore = try XCTUnwrap(frames["puzzle_board"])
+                    let activeSolution = try XCTUnwrap(model.session).puzzle.solution
+                    // Allow 400 ms before each next move. The before image
+                    // verifies readability; this wait does not prove settling.
+                    for index in activeSolution.prefix(replacement.count - 1) {
+                        model.submit(index)
+                        try await Task.sleep(nanoseconds: 400_000_000)
+                    }
+                    let before = try XCTUnwrap(model.session)
+                    let replacementPresentation = try XCTUnwrap(model.comboFeedbackPresentation(for: replacement.count))
+                    XCTAssertEqual(before.status, .playing)
+                    XCTAssertEqual(before.combo, replacement.count - 1)
+                    XCTAssertEqual(model.comboFeedbackPresentation(for: before.combo)?.text, replacement.before)
+                    let prefix = "combo-replacement-\(Int(width))pt-\(kind)-\(requestedMilliseconds)ms"
+                    func capture(_ name: String) {
+                        let image = UIGraphicsImageRenderer(bounds: window.bounds).image { _ in
+                            window.drawHierarchy(in: window.bounds, afterScreenUpdates: false)
+                        }
+                        let attachment = XCTAttachment(image: image)
+                        attachment.name = name; attachment.lifetime = .keepAlways; add(attachment)
+                    }
+                    capture(prefix + "-before")
+                    let acceptedAt = ProcessInfo.processInfo.systemUptime
+                    model.submit(activeSolution[replacement.count - 1])
+                    let committedAt = ProcessInfo.processInfo.systemUptime
+                    let deadline = acceptedAt + Double(requestedMilliseconds) / 1_000
+                    let remaining = deadline - ProcessInfo.processInfo.systemUptime
+                    if remaining > 0 { try await Task.sleep(nanoseconds: UInt64(remaining * 1_000_000_000)) }
+                    let captureBeganAt = ProcessInfo.processInfo.systemUptime
+                    capture(prefix + "-replacement")
+                    let captureEndedAt = ProcessInfo.processInfo.systemUptime
+                    let after = try XCTUnwrap(model.session)
+                    XCTAssertEqual(after.status, .playing, "The sample must precede the result overlay.")
+                    XCTAssertEqual(after.combo, replacement.count)
+                    XCTAssertEqual(after.found.count, before.found.count + 1)
+                    XCTAssertEqual(after.lives, before.lives)
+                    XCTAssertGreaterThan(after.score, before.score)
+                    XCTAssertEqual(model.comboFeedbackPresentation(for: after.combo)?.text, replacement.after)
+                    XCTAssertEqual(frames["puzzle_board"], boardBefore)
+                    let band = try XCTUnwrap(frames["combo_feedback"])
+                    let board = try XCTUnwrap(frames["puzzle_board"])
+                    let rules = try XCTUnwrap(frames["rule_strip"])
+                    // Window captures and their measured crop describe pixels.
+                    // AX node counts would not prove which outgoing glyphs are
+                    // actually visible during a SwiftUI insertion/removal.
+                    samples.append([
+                        "capture": prefix + "-replacement", "beforeCapture": prefix + "-before",
+                        "widthPoints": Double(width), "language": language == .english ? "en" : "zh-Hans",
+                        "kind": kind, "oldText": language.text(replacement.before), "newText": language.text(replacement.after),
+                        "comboBefore": before.combo, "comboAfter": after.combo,
+                        "configuredComboDelaySeconds": replacementPresentation.delay,
+                        "requestedMillisecondsAfterSubmission": requestedMilliseconds,
+                        "commitReturnedMilliseconds": (committedAt - acceptedAt) * 1_000,
+                        "captureBeganMilliseconds": (captureBeganAt - acceptedAt) * 1_000,
+                        "captureEndedMilliseconds": (captureEndedAt - acceptedAt) * 1_000,
+                        "lastReportedComboFramePoints": [Double(band.minX), Double(band.minY), Double(band.width), Double(band.height)],
+                        "reviewBandPoints": [0, Double(rules.maxY - 2), Double(width), Double(board.minY - rules.maxY + 4)],
+                        "foundCount": after.found.count, "score": after.score, "lives": after.lives,
+                        "animationsFrozen": false
+                    ])
+                }
+            }
+        }
+        let data = try JSONSerialization.data(withJSONObject: [
+            "purpose": "Actual Root natural Combo replacement frames; visual overlap is not asserted by this diagnostic.",
+            "timing": "Requested times are targets measured from model.submit, not the display refresh. afterScreenUpdates:false can capture the previous committed frame. Capture start/end enclose snapshot work, not presentation timestamps. No Core Animation timeOffset or speed is modified.",
+            "layout": "The last reported Combo frame can belong to an earlier revision and does not prove the new text is visible. Judge the whole feedback band pixels together with the before image.",
+            "samples": samples
+        ], options: [.prettyPrinted, .sortedKeys])
+        let attachment = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+        attachment.name = "combo-replacement-natural-frame-timing"; attachment.lifetime = .keepAlways; add(attachment)
+    }
+
     @MainActor func testActualRootApplauseFitsBesideComboAndStopsForLaterMistake() async throws {
         for (width, language) in [(CGFloat(320), AppLanguage.simplifiedChinese), (CGFloat(402), AppLanguage.english)] {
             let directory = FileManager.default.temporaryDirectory.appendingPathComponent("applause-root-" + UUID().uuidString)

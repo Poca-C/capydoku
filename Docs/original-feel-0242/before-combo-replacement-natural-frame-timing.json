@@ -1,0 +1,378 @@
+{
+  "purpose" : "Actual Root natural Combo replacement frames; visual overlap is not asserted by this diagnostic.",
+  "samples" : [
+    {
+      "animationsFrozen" : false,
+      "beforeCapture" : "combo-replacement-320pt-cross-tier-30ms-before",
+      "capture" : "combo-replacement-320pt-cross-tier-30ms-replacement",
+      "captureBeganMilliseconds" : 32.190083526074886,
+      "captureEndedMilliseconds" : 143.43125000596046,
+      "comboAfter" : 4,
+      "comboBefore" : 3,
+      "comboFramePoints" : [
+        159.98537225953879,
+        257.99565121229534,
+        0.0292554809224157,
+        0.0086975754093145952
+      ],
+      "commitReturnedMilliseconds" : 1.8546667415648699,
+      "foundCount" : 4,
+      "kind" : "cross-tier",
+      "language" : "zh-Hans",
+      "lives" : 3,
+      "newText" : "太出色了！",
+      "oldText" : "真棒！",
+      "requestedMillisecondsAfterSubmission" : 30,
+      "reviewBandPoints" : [
+        0,
+        244,
+        320,
+        28
+      ],
+      "score" : 520,
+      "widthPoints" : 320
+    },
+    {
+      "animationsFrozen" : false,
+      "beforeCapture" : "combo-replacement-320pt-cross-tier-70ms-before",
+      "capture" : "combo-replacement-320pt-cross-tier-70ms-replacement",
+      "captureBeganMilliseconds" : 72.477958397939801,
+      "captureEndedMilliseconds" : 170.75120843946934,
+      "comboAfter" : 4,
+      "comboBefore" : 3,
+      "comboFramePoints" : [
+        159.99887398873912,
+        257.99966523989542,
+        0.002252022521759045,
+        0.00066952020915778121
+      ],
+      "commitReturnedMilliseconds" : 2.161708427593112,
+      "foundCount" : 4,
+      "kind" : "cross-tier",
+      "language" : "zh-Hans",
+      "lives" : 3,
+      "newText" : "太出色了！",
+      "oldText" : "真棒！",
+      "requestedMillisecondsAfterSubmission" : 70,
+      "reviewBandPoints" : [
+        0,
+        244,
+        320,
+        28
+      ],
+      "score" : 520,
+      "widthPoints" : 320
+    },
+    {
+      "animationsFrozen" : false,
+      "beforeCapture" : "combo-replacement-320pt-cross-tier-120ms-before",
+      "capture" : "combo-replacement-320pt-cross-tier-120ms-replacement",
+      "captureBeganMilliseconds" : 123.11749998480082,
+      "captureEndedMilliseconds" : 239.45354158058763,
+      "comboAfter" : 4,
+      "comboBefore" : 3,
+      "comboFramePoints" : [
+        70.484024280827242,
+        247.91799590876212,
+        179.03195143834549,
+        20.164008182475754
+      ],
+      "commitReturnedMilliseconds" : 2.0395417232066393,
+      "foundCount" : 4,
+      "kind" : "cross-tier",
+      "language" : "zh-Hans",
+      "lives" : 3,
+      "newText" : "太出色了！",
+      "oldText" : "真棒！",
+      "requestedMillisecondsAfterSubmission" : 120,
+      "reviewBandPoints" : [
+        0,
+        244,
+        320,
+        28
+      ],
+      "score" : 520,
+      "widthPoints" : 320
+    },
+    {
+      "animationsFrozen" : false,
+      "beforeCapture" : "combo-replacement-320pt-same-tier-30ms-before",
+      "capture" : "combo-replacement-320pt-same-tier-30ms-replacement",
+      "captureBeganMilliseconds" : 31.905333278700709,
+      "captureEndedMilliseconds" : 153.87879172340035,
+      "comboAfter" : 5,
+      "comboBefore" : 4,
+      "comboFramePoints" : [
+        151.63664263717681,
+        257.0580519011155,
+        16.726714725646332,
+        1.8838961977689905
+      ],
+      "commitReturnedMilliseconds" : 2.4338332004845142,
+      "foundCount" : 5,
+      "kind" : "same-tier",
+      "language" : "zh-Hans",
+      "lives" : 3,
+      "newText" : "太出色了！",
+      "oldText" : "太出色了！",
+      "requestedMillisecondsAfterSubmission" : 30,
+      "reviewBandPoints" : [
+        0,
+        244,
+        320,
+        28
+      ],
+      "score" : 700,
+      "widthPoints" : 320
+    },
+    {
+      "animationsFrozen" : false,
+      "beforeCapture" : "combo-replacement-320pt-same-tier-70ms-before",
+      "capture" : "combo-replacement-320pt-same-tier-70ms-replacement",
+      "captureBeganMilliseconds" : 71.732500102370977,
+      "captureEndedMilliseconds" : 182.94341675937176,
+      "comboAfter" : 5,
+      "comboBefore" : 4,
+      "comboFramePoints" : [
+        154.83176735575736,
+        257.41791236430032,
+        10.336465288485243,
+        1.1641752713993583
+      ],
+      "commitReturnedMilliseconds" : 2.329458249732852,
+      "foundCount" : 5,
+      "kind" : "same-tier",
+      "language" : "zh-Hans",
+      "lives" : 3,
+      "newText" : "太出色了！",
+      "oldText" : "太出色了！",
+      "requestedMillisecondsAfterSubmission" : 70,
+      "reviewBandPoints" : [
+        0,
+        244,
+        320,
+        28
+      ],
+      "score" : 700,
+      "widthPoints" : 320
+    },
+    {
+      "animationsFrozen" : false,
+      "beforeCapture" : "combo-replacement-320pt-same-tier-120ms-before",
+      "capture" : "combo-replacement-320pt-same-tier-120ms-replacement",
+      "captureBeganMilliseconds" : 121.15775002166629,
+      "captureEndedMilliseconds" : 233.86249993927777,
+      "comboAfter" : 5,
+      "comboBefore" : 4,
+      "comboFramePoints" : [
+        159.41706678741321,
+        257.93434540609087,
+        1.1658664251735615,
+        0.1313091878182604
+      ],
+      "commitReturnedMilliseconds" : 2.0458332728594542,
+      "foundCount" : 5,
+      "kind" : "same-tier",
+      "language" : "zh-Hans",
+      "lives" : 3,
+      "newText" : "太出色了！",
+      "oldText" : "太出色了！",
+      "requestedMillisecondsAfterSubmission" : 120,
+      "reviewBandPoints" : [
+        0,
+        244,
+        320,
+        28
+      ],
+      "score" : 700,
+      "widthPoints" : 320
+    },
+    {
+      "animationsFrozen" : false,
+      "beforeCapture" : "combo-replacement-402pt-cross-tier-30ms-before",
+      "capture" : "combo-replacement-402pt-cross-tier-30ms-replacement",
+      "captureBeganMilliseconds" : 31.974166631698608,
+      "captureEndedMilliseconds" : 207.13249989785254,
+      "comboAfter" : 4,
+      "comboBefore" : 3,
+      "comboFramePoints" : [
+        200.99961999999999,
+        294.99986000000001,
+        0.0007600000000138607,
+        0.00027999999997518898
+      ],
+      "commitReturnedMilliseconds" : 2.027666661888361,
+      "foundCount" : 4,
+      "kind" : "cross-tier",
+      "language" : "en",
+      "lives" : 3,
+      "newText" : "Excellent",
+      "oldText" : "Great",
+      "requestedMillisecondsAfterSubmission" : 30,
+      "reviewBandPoints" : [
+        0,
+        274,
+        402,
+        38
+      ],
+      "score" : 520,
+      "widthPoints" : 402
+    },
+    {
+      "animationsFrozen" : false,
+      "beforeCapture" : "combo-replacement-402pt-cross-tier-70ms-before",
+      "capture" : "combo-replacement-402pt-cross-tier-70ms-replacement",
+      "captureBeganMilliseconds" : 70.042208302766085,
+      "captureEndedMilliseconds" : 263.73529154807329,
+      "comboAfter" : 4,
+      "comboBefore" : 3,
+      "comboFramePoints" : [
+        168.02255313962357,
+        290.60300708528314,
+        65.954893720752892,
+        8.7939858294337228
+      ],
+      "commitReturnedMilliseconds" : 1.8447083421051502,
+      "foundCount" : 4,
+      "kind" : "cross-tier",
+      "language" : "en",
+      "lives" : 3,
+      "newText" : "Excellent",
+      "oldText" : "Great",
+      "requestedMillisecondsAfterSubmission" : 70,
+      "reviewBandPoints" : [
+        0,
+        274,
+        402,
+        38
+      ],
+      "score" : 520,
+      "widthPoints" : 402
+    },
+    {
+      "animationsFrozen" : false,
+      "beforeCapture" : "combo-replacement-402pt-cross-tier-120ms-before",
+      "capture" : "combo-replacement-402pt-cross-tier-120ms-replacement",
+      "captureBeganMilliseconds" : 123.01062513142824,
+      "captureEndedMilliseconds" : 317.74800014682114,
+      "comboAfter" : 4,
+      "comboBefore" : 3,
+      "comboFramePoints" : [
+        118.96015821151278,
+        284.0613544282017,
+        164.07968357697447,
+        21.877291143596608
+      ],
+      "commitReturnedMilliseconds" : 2.1694584283977747,
+      "foundCount" : 4,
+      "kind" : "cross-tier",
+      "language" : "en",
+      "lives" : 3,
+      "newText" : "Excellent",
+      "oldText" : "Great",
+      "requestedMillisecondsAfterSubmission" : 120,
+      "reviewBandPoints" : [
+        0,
+        274,
+        402,
+        38
+      ],
+      "score" : 520,
+      "widthPoints" : 402
+    },
+    {
+      "animationsFrozen" : false,
+      "beforeCapture" : "combo-replacement-402pt-same-tier-30ms-before",
+      "capture" : "combo-replacement-402pt-same-tier-30ms-replacement",
+      "captureBeganMilliseconds" : 31.953041674569249,
+      "captureEndedMilliseconds" : 209.63841676712036,
+      "comboAfter" : 5,
+      "comboBefore" : 4,
+      "comboFramePoints" : [
+        199.47188232631873,
+        294.79625097684249,
+        3.0562353473625308,
+        0.40749804631502684
+      ],
+      "commitReturnedMilliseconds" : 2.0397501066327095,
+      "foundCount" : 5,
+      "kind" : "same-tier",
+      "language" : "en",
+      "lives" : 3,
+      "newText" : "Excellent",
+      "oldText" : "Excellent",
+      "requestedMillisecondsAfterSubmission" : 30,
+      "reviewBandPoints" : [
+        0,
+        274,
+        402,
+        38
+      ],
+      "score" : 700,
+      "widthPoints" : 402
+    },
+    {
+      "animationsFrozen" : false,
+      "beforeCapture" : "combo-replacement-402pt-same-tier-70ms-before",
+      "capture" : "combo-replacement-402pt-same-tier-70ms-replacement",
+      "captureBeganMilliseconds" : 72.974874870851636,
+      "captureEndedMilliseconds" : 256.17999979294837,
+      "comboAfter" : 5,
+      "comboBefore" : 4,
+      "comboFramePoints" : [
+        200.41511002888782,
+        294.92201467051837,
+        1.1697799422243804,
+        0.15597065896326967
+      ],
+      "commitReturnedMilliseconds" : 2.0174582023173571,
+      "foundCount" : 5,
+      "kind" : "same-tier",
+      "language" : "en",
+      "lives" : 3,
+      "newText" : "Excellent",
+      "oldText" : "Excellent",
+      "requestedMillisecondsAfterSubmission" : 70,
+      "reviewBandPoints" : [
+        0,
+        274,
+        402,
+        38
+      ],
+      "score" : 700,
+      "widthPoints" : 402
+    },
+    {
+      "animationsFrozen" : false,
+      "beforeCapture" : "combo-replacement-402pt-same-tier-120ms-before",
+      "capture" : "combo-replacement-402pt-same-tier-120ms-replacement",
+      "captureBeganMilliseconds" : 121.01554172113538,
+      "captureEndedMilliseconds" : 309.13162487559021,
+      "comboAfter" : 5,
+      "comboBefore" : 4,
+      "comboFramePoints" : [
+        200.23438025407114,
+        294.89791736720952,
+        1.5312394918577183,
+        0.20416526558096848
+      ],
+      "commitReturnedMilliseconds" : 1.9885832443833351,
+      "foundCount" : 5,
+      "kind" : "same-tier",
+      "language" : "en",
+      "lives" : 3,
+      "newText" : "Excellent",
+      "oldText" : "Excellent",
+      "requestedMillisecondsAfterSubmission" : 120,
+      "reviewBandPoints" : [
+        0,
+        274,
+        402,
+        38
+      ],
+      "score" : 700,
+      "widthPoints" : 402
+    }
+  ],
+  "timing" : "Requested times are targets. Recorded capture start\/end enclose the actual window snapshot work; no Core Animation timeOffset or speed is modified."
+}

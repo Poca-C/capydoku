@@ -1,0 +1,514 @@
+{
+  "build": "0.2.42 (45)",
+  "items": [
+    {
+      "file": "before-combo-replacement-natural-frame-timing.json",
+      "build": "0.2.41 (44)",
+      "sourceBundle": "Validation/test-runs/original-0242-combo-before.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "569E029E-2B71-4F83-A01F-37BB11BAD890.json",
+      "sha256": "4fcd88da4f91ba7e148d5ec122ac603241bc3d589560d1da99f4b903c61b7e8d"
+    },
+    {
+      "file": "before-combo-replacement-402pt-same-tier-70ms-replacement.png",
+      "build": "0.2.41 (44)",
+      "sourceBundle": "Validation/test-runs/original-0242-combo-before.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "7C857019-388C-43FD-AC52-489F1AD28FB1.png",
+      "sha256": "5a3716402577da9c55b42f083abffbba7827a4ed9b1a51bd19c4432047ef9b62"
+    },
+    {
+      "file": "before-combo-replacement-402pt-cross-tier-70ms-replacement.png",
+      "build": "0.2.41 (44)",
+      "sourceBundle": "Validation/test-runs/original-0242-combo-before.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "7460321F-722B-457C-BDC0-18D8F035994C.png",
+      "sha256": "5bbb8d91e4fc177fa1d15c07a9105b31b57941b7290054e195afdf8ed23d7dc1"
+    },
+    {
+      "file": "before-combo-replacement-320pt-same-tier-70ms-replacement.png",
+      "build": "0.2.41 (44)",
+      "sourceBundle": "Validation/test-runs/original-0242-combo-before.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "84ECBD72-90C0-46A2-9B13-A05379EE9B05.png",
+      "sha256": "1407ecbc6d36c4cff0e3c8b381f62a46e55b95e9020e085d6add89d1ec41aced"
+    },
+    {
+      "file": "before-combo-replacement-320pt-cross-tier-70ms-replacement.png",
+      "build": "0.2.41 (44)",
+      "sourceBundle": "Validation/test-runs/original-0242-combo-before.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "BC7623FC-2579-491E-8CB0-049C02CB5E66.png",
+      "sha256": "d87644551ce487a8732cec76c92d6349d5407347283d9ea2481872d87b3c4005"
+    },
+    {
+      "file": "final-result-title-entered-without-underlying-combo.png",
+      "build": "0.2.42 (45)",
+      "sourceBundle": "Validation/test-runs/original-0242-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualMovesAndResultPresentationCapture()",
+      "sourceAttachment": "79A521E1-7C9A-4F42-83C5-956021B89A7F.png",
+      "sha256": "67df08f744bfcaff4e8d38b2c292b989f721c022625efdc747d6e51f9ba0c134"
+    },
+    {
+      "file": "final-applause-root-320pt-continuous-combo.png",
+      "build": "0.2.42 (45)",
+      "sourceBundle": "Validation/test-runs/original-0242-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualRootApplauseFitsBesideComboAndStopsForLaterMistake()",
+      "sourceAttachment": "39001E4E-0899-4873-8969-C3231A0F963E.png",
+      "sha256": "e5bda0ef7199202638e509e321b893fc80075b29d43ec22e8fbc1194ef79b0ee"
+    },
+    {
+      "file": "final-applause-root-320pt-first-correct.png",
+      "build": "0.2.42 (45)",
+      "sourceBundle": "Validation/test-runs/original-0242-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualRootApplauseFitsBesideComboAndStopsForLaterMistake()",
+      "sourceAttachment": "C9EC44C2-F696-4582-B551-2C5D60E30267.png",
+      "sha256": "06dcedd157fa6631c27217a6a9713ead563412532aff25694f162f51d7d50d8b"
+    },
+    {
+      "file": "final-combo-replacement-natural-frame-timing.json",
+      "build": "0.2.42 (45)",
+      "sourceBundle": "Validation/test-runs/original-0242-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "7DCDC253-7579-418C-BD27-1E5BAB2EAE25.json",
+      "sha256": "74a56d316485d28f8e55693929296249394946b107a9b36e70bf7847dca73d1d"
+    },
+    {
+      "file": "final-combo-replacement-402pt-same-tier-70ms-replacement.png",
+      "build": "0.2.42 (45)",
+      "sourceBundle": "Validation/test-runs/original-0242-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "CA460099-FEDD-4B50-B1DE-D7B84E0BDEEA.png",
+      "sha256": "2f1b2fa36c915a39f07b2bfee760438552b6b2ef3284ab7a1f10b61ecf8009c9"
+    },
+    {
+      "file": "final-combo-replacement-402pt-cross-tier-70ms-replacement.png",
+      "build": "0.2.42 (45)",
+      "sourceBundle": "Validation/test-runs/original-0242-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "EE728E30-DD3D-4911-A5CF-FC6E805A6E47.png",
+      "sha256": "72ebf38c8e00af0b31a86f6ec0df4bb8bc34b3f0b0d2aa192d2c3877e3ee9117"
+    },
+    {
+      "file": "final-combo-replacement-320pt-same-tier-70ms-replacement.png",
+      "build": "0.2.42 (45)",
+      "sourceBundle": "Validation/test-runs/original-0242-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "557C3C25-DAE2-4779-AC51-80CAACF53AC9.png",
+      "sha256": "68bbbc95b93428571b714e1589a03df4fb56affbab18764806d641f884626b88"
+    },
+    {
+      "file": "final-combo-replacement-320pt-cross-tier-70ms-replacement.png",
+      "build": "0.2.42 (45)",
+      "sourceBundle": "Validation/test-runs/original-0242-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "19A32B51-1D90-430E-822C-3BD3CBAFC318.png",
+      "sha256": "d89730c02fc6cfba3626bba2152630ad8b2cebcf9b78698468c4baf46e2fde67"
+    },
+    {
+      "file": "combo-before-contact.png",
+      "kind": "Aspect-preserving crops of the 12 replacement samples and four before frames; captions report requested and actual readback interval, not refresh timestamps.",
+      "build": "0.2.41 (44)",
+      "sha256": "3025be34166b431b425d709346086b00fdb4bfa304fec11302133811ddf1e467"
+    },
+    {
+      "file": "combo-final-contact.png",
+      "kind": "Aspect-preserving crops of the 12 replacement samples and four before frames; captions report requested and actual readback interval, not refresh timestamps.",
+      "build": "0.2.42 (45)",
+      "sha256": "055d5832602dfcc1398ea182d18c35c242f53311ec572b1d1d4da1cb640a6d74"
+    },
+    {
+      "file": "normal-041-restored-L4.png",
+      "build": "0.2.41 (44)",
+      "sourceVideo": ".build/normal-0242-level4-before.mov",
+      "requestedSeconds": 0,
+      "actualSeconds": 0,
+      "sha256": "e497c34c3c297c5725f6bc3a6c13ea2ab1a66e88886ab5e71391af9c8531351a"
+    },
+    {
+      "file": "normal-041-one-life.png",
+      "build": "0.2.41 (44)",
+      "sourceVideo": ".build/normal-0242-level4-before.mov",
+      "requestedSeconds": 25,
+      "actualSeconds": 22.041666666666668,
+      "sha256": "248902ea38b10242c22471a98231057f4820bd1d7bf0cf02e5cba99250563946"
+    },
+    {
+      "file": "normal-041-hint-preview.png",
+      "build": "0.2.41 (44)",
+      "sourceVideo": ".build/normal-0242-level4-before.mov",
+      "requestedSeconds": 55,
+      "actualSeconds": 52.025,
+      "sha256": "c62af16e4ffc7a643e011ba8ee56b90be978d35e368edec7002a62d631bd9571"
+    },
+    {
+      "file": "normal-041-hint-applied.png",
+      "build": "0.2.41 (44)",
+      "sourceVideo": ".build/normal-0242-level4-before.mov",
+      "requestedSeconds": 80,
+      "actualSeconds": 78.53333333333333,
+      "sha256": "041b82d7167a33f20d3ddeddf916fcddd6d3856d09bbdcd232182680901eb1cc"
+    },
+    {
+      "file": "normal-041-direct-found.png",
+      "build": "0.2.41 (44)",
+      "sourceVideo": ".build/normal-0242-level4-before.mov",
+      "requestedSeconds": 95,
+      "actualSeconds": 94.57,
+      "sha256": "f023683dbbae9f64bd371ff31af5d610c0afc36cd9da12e03fae95179f9f218f"
+    },
+    {
+      "file": "normal-041-L4-won.png",
+      "build": "0.2.41 (44)",
+      "sourceVideo": ".build/normal-0242-level4-before.mov",
+      "requestedSeconds": 110,
+      "actualSeconds": 109.80166666666666,
+      "sha256": "575cc16a2c63f864eb0814df6c09b16f518d52c07bdf7d9302ddf6b68359682a"
+    },
+    {
+      "file": "normal-041-L5-next.png",
+      "build": "0.2.41 (44)",
+      "sourceVideo": ".build/normal-0242-level4-before.mov",
+      "requestedSeconds": 125,
+      "actualSeconds": 122.12666666666667,
+      "sha256": "6a1361e884938eca4bfd317b3a5138e5c4e9dd90ad3d4cd30f15d26051aeffe0"
+    }
+  ],
+  "visualReview": {
+    "combo": "Before/candidate/final full feedback-band contact sheets inspected; selected original full windows also inspected. Final 12 sampled replacement bands remain readable without the preceding near-zero outer scale. No demonstrated double-text ghosting.",
+    "timing": "Samples target 30/70/120 ms in independent fresh games. Final configured Combo delay is zero. Snapshot readback took 100.5–200.3 ms and afterScreenUpdates:false may show the previous committed frame. These are not calibrated display-refresh samples or proof of exact event-to-photon timing.",
+    "layout": "Last reported Combo frame can belong to an earlier revision; visual conclusion is based on pixels of the whole feedback band, not its reported width or accessibility counts.",
+    "normalPlay": "125.848-second normal-save video reviewed via 0–125 s contact sheet every 5 s plus the full victory frame; a finite visual review, not frame-by-frame inspection or audible A/B. Seven exact extracted checkpoints retained. Actual video timestamps may precede requested times because the screen was idle.",
+    "input": "Normal-save session used observed accessibility clicks and confirmation actions because the CUA simulator screenshot surface was malformed. Native physical touch/double-tap/pan covered by separate 17e UI automation, not claimed as manual finger play.",
+    "scope": "No new successful Meowdoku playtest, reference frame timing, phone installation, haptic or auditory review this round.",
+    "retention": "Full feedback-band contact sheets retain all 12 replacement samples per build; eight source window images at the requested70ms point, timing JSON, selected other Root images and seven normal-play checkpoints are committed. The other40 full source windows remain in ignored local exports/result bundles, listed separately to avoid duplicating them in the repository."
+  },
+  "normalVideo": {
+    "localIgnoredPath": ".build/normal-0242-level4-before.mov",
+    "sha256": "3e01e0d82541fbb1d99212a2f2f74e83dbbdfa35f39f96bde0c437c0c781dc27",
+    "durationSeconds": 125.84833333333333,
+    "publishedOrCommitted": false
+  },
+  "additionalRawCapturesRetainedLocally": [
+    {
+      "localIgnoredPath": ".build/attachments-0242-before/FF81CA83-CB51-45B3-BE47-34F92E1F02B9.png",
+      "build": "0.2.41 (44)",
+      "sourceBundle": "Validation/test-runs/original-0242-combo-before.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "FF81CA83-CB51-45B3-BE47-34F92E1F02B9.png",
+      "sha256": "089f699ec5c6d053b2d42449bae4fec8e19eee9a40b2aca745b76f0c732e0fca"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-before/ADDF6F41-9CAE-4B82-9C1E-7C66110B1C34.png",
+      "build": "0.2.41 (44)",
+      "sourceBundle": "Validation/test-runs/original-0242-combo-before.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "ADDF6F41-9CAE-4B82-9C1E-7C66110B1C34.png",
+      "sha256": "ebe2fc1d258693ea73d299a241042cfdd0a2e090a7ee4643cee85620b1526a58"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-before/1A7F55C7-153D-4F01-BCB4-7B4C5E5822F3.png",
+      "build": "0.2.41 (44)",
+      "sourceBundle": "Validation/test-runs/original-0242-combo-before.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "1A7F55C7-153D-4F01-BCB4-7B4C5E5822F3.png",
+      "sha256": "698fa5ab619dc6ea62e0ad7d235fb215679a50f1636e436703be9632f86830c7"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-before/C6CA7197-64ED-490C-B2FB-45F3C766C38A.png",
+      "build": "0.2.41 (44)",
+      "sourceBundle": "Validation/test-runs/original-0242-combo-before.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "C6CA7197-64ED-490C-B2FB-45F3C766C38A.png",
+      "sha256": "1520a7bd532e74e8ebfd02389eae36e5fb8441611a45deb49af8660a75f2854a"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-before/170DC283-EC95-4166-AD97-3157A4B40808.png",
+      "build": "0.2.41 (44)",
+      "sourceBundle": "Validation/test-runs/original-0242-combo-before.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "170DC283-EC95-4166-AD97-3157A4B40808.png",
+      "sha256": "1ab047f3d75c9e71dc18a6434a5a673982e5151ee6d126f18f7f099b71b50398"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-before/711357A0-4C27-4571-B37B-F98E5DD2F475.png",
+      "build": "0.2.41 (44)",
+      "sourceBundle": "Validation/test-runs/original-0242-combo-before.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "711357A0-4C27-4571-B37B-F98E5DD2F475.png",
+      "sha256": "db92a8b5112ec27d08e702fb37256e9a9573c2812d8b5f3c522ab611bc86beb1"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-before/42D37603-5810-4BD8-AE89-6403D9975DB7.png",
+      "build": "0.2.41 (44)",
+      "sourceBundle": "Validation/test-runs/original-0242-combo-before.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "42D37603-5810-4BD8-AE89-6403D9975DB7.png",
+      "sha256": "c458db80618162abcf3cda155f8fa5db83773cf1d9c070922b519bda8906bbb1"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-before/9CC7F250-BEAE-423A-8F4A-615B6E5380E9.png",
+      "build": "0.2.41 (44)",
+      "sourceBundle": "Validation/test-runs/original-0242-combo-before.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "9CC7F250-BEAE-423A-8F4A-615B6E5380E9.png",
+      "sha256": "838a5818ab9ed090d1b7de61cd9da7218d49154c02d3032a05dbfbc542427631"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-before/682635EB-0335-4B8A-BC6F-E793365BCE2E.png",
+      "build": "0.2.41 (44)",
+      "sourceBundle": "Validation/test-runs/original-0242-combo-before.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "682635EB-0335-4B8A-BC6F-E793365BCE2E.png",
+      "sha256": "3397ebf9f5b7090951bcdaad7b2365dc86949c9c3b55961535bb9f0780da0226"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-before/0EEE9DAA-E067-4461-810F-8F4769D1E611.png",
+      "build": "0.2.41 (44)",
+      "sourceBundle": "Validation/test-runs/original-0242-combo-before.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "0EEE9DAA-E067-4461-810F-8F4769D1E611.png",
+      "sha256": "92515d774cf5bd27403b10d39995415dddf689e2e10faf49afeadb03672d7a2c"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-before/9CD3299F-9121-43FD-B10C-3A528EF8E991.png",
+      "build": "0.2.41 (44)",
+      "sourceBundle": "Validation/test-runs/original-0242-combo-before.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "9CD3299F-9121-43FD-B10C-3A528EF8E991.png",
+      "sha256": "29a595bd007cd15eda8b215c96b6f67395cd003ca7282f972feae4ab1fb92409"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-before/327A6944-6280-406E-B713-DE876DE0CFB9.png",
+      "build": "0.2.41 (44)",
+      "sourceBundle": "Validation/test-runs/original-0242-combo-before.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "327A6944-6280-406E-B713-DE876DE0CFB9.png",
+      "sha256": "761e581628c8151ef1c6143b06ca9386fafd884847567bf9b25a3b0b9b71e25b"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-before/C5336D82-D87C-4463-89D9-5746B5A64A6F.png",
+      "build": "0.2.41 (44)",
+      "sourceBundle": "Validation/test-runs/original-0242-combo-before.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "C5336D82-D87C-4463-89D9-5746B5A64A6F.png",
+      "sha256": "a5c51f0a9897626c18aa788ba7b734a134de57012d3fdb29faa208ce39d24558"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-before/8A85F159-FA43-4542-8226-0913B86F0565.png",
+      "build": "0.2.41 (44)",
+      "sourceBundle": "Validation/test-runs/original-0242-combo-before.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "8A85F159-FA43-4542-8226-0913B86F0565.png",
+      "sha256": "781340946505f8abe78bda52e34e0fb3254479963f6df07da80a9fc3d96beb62"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-before/47D4B91E-A42A-4AA4-BF80-4032CD5814F9.png",
+      "build": "0.2.41 (44)",
+      "sourceBundle": "Validation/test-runs/original-0242-combo-before.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "47D4B91E-A42A-4AA4-BF80-4032CD5814F9.png",
+      "sha256": "36c3036cb7c4e727f5d9a18999f0621fb9ec34825976d29ab09f5506280bf79e"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-before/6E9A1787-05AA-4856-B77A-CE579D25E091.png",
+      "build": "0.2.41 (44)",
+      "sourceBundle": "Validation/test-runs/original-0242-combo-before.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "6E9A1787-05AA-4856-B77A-CE579D25E091.png",
+      "sha256": "170f961bc8437e888bbf346130f999109f440c46081a09cdace0b0a0a5538c20"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-before/9634D477-BF9D-4095-992C-44D17EB270BC.png",
+      "build": "0.2.41 (44)",
+      "sourceBundle": "Validation/test-runs/original-0242-combo-before.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "9634D477-BF9D-4095-992C-44D17EB270BC.png",
+      "sha256": "bb387dbe506137a890e60d39a1af3e3a75df778402fd69010347f53b508a16bd"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-before/49C09F49-7489-4141-AA4D-24A5FD794F02.png",
+      "build": "0.2.41 (44)",
+      "sourceBundle": "Validation/test-runs/original-0242-combo-before.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "49C09F49-7489-4141-AA4D-24A5FD794F02.png",
+      "sha256": "da90a2222fa017d7ef9bcd86e1d738fe52b015486f0dc2f9b088a0b85a72a59a"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-before/F8590A6B-E8D3-422E-8038-38EF419FA40F.png",
+      "build": "0.2.41 (44)",
+      "sourceBundle": "Validation/test-runs/original-0242-combo-before.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "F8590A6B-E8D3-422E-8038-38EF419FA40F.png",
+      "sha256": "38481423c7a444127c3e9f6e21357efb1f7c84cfb6e51deefc661e222eff2953"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-before/B950C4EE-3353-4603-A40C-128300806F2F.png",
+      "build": "0.2.41 (44)",
+      "sourceBundle": "Validation/test-runs/original-0242-combo-before.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "B950C4EE-3353-4603-A40C-128300806F2F.png",
+      "sha256": "6755edd48121890510136eb242b7f9069049b44bec8fa6e2c137fcf143f7af09"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-final/FB5C6913-B248-4F18-99BE-FE1FF284827D.png",
+      "build": "0.2.42 (45)",
+      "sourceBundle": "Validation/test-runs/original-0242-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "FB5C6913-B248-4F18-99BE-FE1FF284827D.png",
+      "sha256": "ef327bc896704afa08c87cbf1c4fbe2e3391e74c06c3e5c9e5596e9cc7420011"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-final/C2390229-8852-4CC5-A141-C727172CD90B.png",
+      "build": "0.2.42 (45)",
+      "sourceBundle": "Validation/test-runs/original-0242-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "C2390229-8852-4CC5-A141-C727172CD90B.png",
+      "sha256": "d58b52ccae3c9f8391f59ed728f598aa02ffd7535e13b9be4e57a881d19a6810"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-final/444F1E2E-416B-4558-AF20-697D9699D1D1.png",
+      "build": "0.2.42 (45)",
+      "sourceBundle": "Validation/test-runs/original-0242-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "444F1E2E-416B-4558-AF20-697D9699D1D1.png",
+      "sha256": "7b88600935a476923fa39eeea5a9ab9a7e5c4649a98d6e58f28f6a58dacc6ef2"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-final/E713E3C3-6553-492A-91A9-EC5DF96D02D1.png",
+      "build": "0.2.42 (45)",
+      "sourceBundle": "Validation/test-runs/original-0242-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "E713E3C3-6553-492A-91A9-EC5DF96D02D1.png",
+      "sha256": "8531868c2d78d41d5117c3ae756fbc4d86a8a9167de3e7e50eea45b51fcbc32c"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-final/3EDFED71-A112-4D92-BCBB-3E052803358C.png",
+      "build": "0.2.42 (45)",
+      "sourceBundle": "Validation/test-runs/original-0242-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "3EDFED71-A112-4D92-BCBB-3E052803358C.png",
+      "sha256": "6a2c08d5cdf80aa17c906a21a9d4799cd12978fd66b7d3dccf321f9e0685df73"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-final/3A785EA4-6F7A-4793-9446-F24060FB98A0.png",
+      "build": "0.2.42 (45)",
+      "sourceBundle": "Validation/test-runs/original-0242-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "3A785EA4-6F7A-4793-9446-F24060FB98A0.png",
+      "sha256": "ea7f608b04ec45d12c4ce9f47dd30b9eb96743ec64e103b8fcb5a53098359b0f"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-final/334026E0-E9F6-4EF2-AC29-EB3FC460402B.png",
+      "build": "0.2.42 (45)",
+      "sourceBundle": "Validation/test-runs/original-0242-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "334026E0-E9F6-4EF2-AC29-EB3FC460402B.png",
+      "sha256": "71db729ad6fd107ebaab8e05c6db8b468a6f16c69dab0ae775c0c5945e86cd1c"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-final/D92A77EE-D4C9-4674-A466-7B50E4C5ECB0.png",
+      "build": "0.2.42 (45)",
+      "sourceBundle": "Validation/test-runs/original-0242-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "D92A77EE-D4C9-4674-A466-7B50E4C5ECB0.png",
+      "sha256": "557a5d5cf77e3c3686b75f410be4f4ec43240de16fec7f6b0b4601f83becb664"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-final/21B3D6B7-C9A8-4B1C-8C19-5C62C5A89BD1.png",
+      "build": "0.2.42 (45)",
+      "sourceBundle": "Validation/test-runs/original-0242-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "21B3D6B7-C9A8-4B1C-8C19-5C62C5A89BD1.png",
+      "sha256": "5ff10dea49309922089b1633cdf3353933c903b7b8936c70febb5e7de4dc53ce"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-final/E02EF9B8-2C49-40E1-A8B8-795E8D530C0D.png",
+      "build": "0.2.42 (45)",
+      "sourceBundle": "Validation/test-runs/original-0242-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "E02EF9B8-2C49-40E1-A8B8-795E8D530C0D.png",
+      "sha256": "00497ca3e15ac6ba067da0168f36c5b339895f73251fc822d0c63afc5b230098"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-final/5A79A563-C068-4EF3-971C-766E23D81227.png",
+      "build": "0.2.42 (45)",
+      "sourceBundle": "Validation/test-runs/original-0242-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "5A79A563-C068-4EF3-971C-766E23D81227.png",
+      "sha256": "ea1442e553e19e22857ec2e44f9727a01064860bc42fc3203555c66517eb15da"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-final/67DCF043-44AE-49B1-A332-A0056948D0F1.png",
+      "build": "0.2.42 (45)",
+      "sourceBundle": "Validation/test-runs/original-0242-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "67DCF043-44AE-49B1-A332-A0056948D0F1.png",
+      "sha256": "6d698908c63d3dbefb6eef0fc1d86dc9998158eed5530719d87e0f4a76a449e7"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-final/BE9BE22D-E41D-4339-8619-5CC7638E230A.png",
+      "build": "0.2.42 (45)",
+      "sourceBundle": "Validation/test-runs/original-0242-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "BE9BE22D-E41D-4339-8619-5CC7638E230A.png",
+      "sha256": "ebc7b1ea43f423b75dd17f87a9b3c4660c2a1a7b6e9675ee6b5c1df508213873"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-final/36772195-AF57-42FD-9CFC-B718BB3695A6.png",
+      "build": "0.2.42 (45)",
+      "sourceBundle": "Validation/test-runs/original-0242-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "36772195-AF57-42FD-9CFC-B718BB3695A6.png",
+      "sha256": "a40eb80e02ce38a252e357fb8cb7201befc86f11b2f4e8db77e0bb9df61729a8"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-final/BD34F88E-07D3-4FC2-8D3C-31310B6290B2.png",
+      "build": "0.2.42 (45)",
+      "sourceBundle": "Validation/test-runs/original-0242-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "BD34F88E-07D3-4FC2-8D3C-31310B6290B2.png",
+      "sha256": "32b4795c6c46dbb7f07f771b05706572c63538f7d27e0517d81a12e11762d619"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-final/9E7FCBA1-8538-4ABE-9446-2C8BD818E094.png",
+      "build": "0.2.42 (45)",
+      "sourceBundle": "Validation/test-runs/original-0242-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "9E7FCBA1-8538-4ABE-9446-2C8BD818E094.png",
+      "sha256": "23a0488c437a46dd8674e3b08986de5d28d82af7b942088d8acfb0a4fe54a578"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-final/6E7551C2-43CF-46DC-95D2-9555DE3916A2.png",
+      "build": "0.2.42 (45)",
+      "sourceBundle": "Validation/test-runs/original-0242-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "6E7551C2-43CF-46DC-95D2-9555DE3916A2.png",
+      "sha256": "bdd8f560749758cccf2eec64ae851acccf75b1f9b38b8359c0a9c1137868caf7"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-final/799C9A7E-E7AC-4F97-AFE8-69C67F3EB0FB.png",
+      "build": "0.2.42 (45)",
+      "sourceBundle": "Validation/test-runs/original-0242-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "799C9A7E-E7AC-4F97-AFE8-69C67F3EB0FB.png",
+      "sha256": "24fb82ee0575d7407dc193da9769ba70cd197334b23a681f06beab1123d40a83"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-final/040FA504-A790-4438-A135-6012224086EF.png",
+      "build": "0.2.42 (45)",
+      "sourceBundle": "Validation/test-runs/original-0242-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "040FA504-A790-4438-A135-6012224086EF.png",
+      "sha256": "bb9ed2620a26c353fc6629d51cf84b62b38cd37d5a0d161eb0a13e6770d673ee"
+    },
+    {
+      "localIgnoredPath": ".build/attachments-0242-final/2CBF4398-CAAB-489B-984C-9E3D202051D5.png",
+      "build": "0.2.42 (45)",
+      "sourceBundle": "Validation/test-runs/original-0242-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualRootComboReplacementNaturalFrames()",
+      "sourceAttachment": "2CBF4398-CAAB-489B-984C-9E3D202051D5.png",
+      "sha256": "8b74a80071db03fb27f716b7ea131a5aa057a2cf71c9832e5fc19c41f3480c2e"
+    }
+  ]
+}
