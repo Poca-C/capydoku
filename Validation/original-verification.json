@@ -3106,5 +3106,13 @@
     "referenceObservation": "Validation/meowdoku-local-observation-0223.json",
     "visualManifest": "Docs/original-cell-feel-0223/manifest.json",
     "physicalInstall": "Validation/original-0223-physical-install.json"
+  },
+  "referencePlaytest20261001": {
+    "report": "Validation/meowdoku-playtest-comparison-0223.json",
+    "productionCodeChanged": false,
+    "localGameplayObserved": true,
+    "audioObserved": false,
+    "physicalHapticsObserved": false,
+    "formalReferenceFrozen": false
   }
 }

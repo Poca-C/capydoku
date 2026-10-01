@@ -10,9 +10,21 @@
   },
   "storeObservation": "Store now displays Open; previous region-unavailable blocker no longer reproduced.",
   "launchObservation": "App launched successfully; initial Chinese welcome asks to accept service terms and privacy policy.",
-  "consent": "awaiting_explicit_user_confirmation; Accept not clicked",
-  "gameplayObserved": false,
+  "consent": "User explicitly confirmed; reopened app already at tutorial, no Accept click needed in follow-up.",
+  "gameplayObserved": true,
   "audioObserved": false,
   "baseline": "Existing original Word requirements remain authoritative; current local Meowdoku is an observational reference, not frozen formal parameters.",
-  "scope": "Local UI inspection and read-only bundle version metadata. No reference code/audio/artwork extracted."
+  "scope": "Local UI inspection and read-only bundle version metadata. No reference code/audio/artwork extracted.",
+  "initialObservation": {
+    "launchObservation": "App launched successfully; initial Chinese welcome asks to accept service terms and privacy policy.",
+    "consent": "awaiting_explicit_user_confirmation; Accept not clicked",
+    "gameplayObserved": false,
+    "audioObserved": false
+  },
+  "followUp": {
+    "date": "2026-10-01",
+    "status": "tutorial_and_levels_1_2_completed_level_3_failure_restart_and_tools_sampled",
+    "report": "Validation/meowdoku-playtest-comparison-0223.json",
+    "referenceLeftAt": "Home, level 3 available"
+  }
 }

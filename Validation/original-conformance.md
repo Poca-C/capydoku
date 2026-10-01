@@ -27,6 +27,7 @@
 - 0.2.14的151+临时Profile v2与0.2.1历史180关证据分别保存。新60关为151–180及容量压力下291–320，未生成181–290，也不证明无限生成或正式难度对标。
 - 0.2.22以原文要求完善视觉与触感，319项App、4项真实UI及7张实际宿主图仅证明所述范围；Meowdoku商店地区不可用，未安装试玩，第三方录像不是冻结Pawdoku基线。原音、真机手感、系统Reduce Motion和性能仍待验。
 - 0.2.23仅细化格内X撤销、4星点光晕、错误短抖与红X描边；17 Pro/iOS26.5最终327项App、17e两项UI与11张组件图只验证所述范围，核心169项保持0.2.21证据。真机新包签名检查通过但无线不可用，未更新，仍为0.2.22。Meowdoku地区限制解除且已安装1.19.1（457），停Welcome条款页待用户明确确认，未亲自试玩或听音；不替代冻结Pawdoku参考。
+- 随后在用户明确确认后重新打开Meowdoku 1.19.1（457），直接进入教学；完成教学及前两关，并采样第3关三类冲突、失败重开、提示Apply和直接答案。新增的是实际画面观察与建议，不是正式Pawdoku冻结参数；声音、手机触感、精确帧时序未验。详见Validation/meowdoku-playtest-comparison-0223.json。
 
 ## 后续处理项
 
@@ -45,7 +46,7 @@
 
 | ID／原文索引 | 要求与状态 | 实现和证据／仍缺内容 |
 |---|---|---|
-| REF-01<br>[5] [7] | 冻结 Pawdoku 唯一参考版本及资料<br>`awaiting_reference` | 已保存原 Word 正文、28 张附图及原文校验值。<br>**缺口：**缺商店版本、完整录屏、采样设备/系统、正式配置和音频清单；Word 附图不能替代完整冻结基线。<br>[document.json](../Reference/Original/document.json) · [document.txt](../Reference/Original/document.txt) · [gameplay-template.json](../Reference/gameplay-template.json) |
+| REF-01<br>[5] [7] | 冻结 Pawdoku 唯一参考版本及资料<br>`awaiting_reference` | 已保存原 Word 正文、28 张附图及原文校验值。 2026-10-01已实际试玩本机Meowdoku 1.19.1（457）的教学、前两关和第3关指定流程；观察与Capydoku差距独立记录。<br>**缺口：**缺商店版本、完整录屏、采样设备/系统、正式配置和音频清单；Word 附图不能替代完整冻结基线。<br>[document.json](../Reference/Original/document.json) · [document.txt](../Reference/Original/document.txt) · [gameplay-template.json](../Reference/gameplay-template.json) · [meowdoku-playtest-comparison-0223.json](../Validation/meowdoku-playtest-comparison-0223.json) |
 | REF-02<br>[8] | 150 关玩法与商业化映射<br>`partial` | 定义并接入逐关 direct/hint、免费广告、复活、失败与插页配置模型；失败标题/按钮/关闭、免费复活配额已补接。<br>**缺口：**真实逐关值尚缺。另有明确客户端缺口：triggerOrder 只读入并校验，尚未执行；restartCreatesNewBoard=true 仅报未支持，没有换盘路径。缺冻结资料不能作为这两项已经实现的依据。<br>[ReferenceGameplayConfiguration.swift](../Sources/CapydokuCore/ReferenceGameplayConfiguration.swift) · [AppModel.swift](../App/AppModel.swift) · [PlayerProgress.swift](../Sources/CapydokuCore/PlayerProgress.swift) |
 | REF-03<br>[9] | 结构化导入与禁止导入参考棋盘<br>`verified` | 导入脚本严格拒绝未知字段/棋盘/答案，验证完整 150 关、来源校验值、字段类型；7 个 Swift 和 6 个 Python 测试通过。<br>**缺口：**验证的是导入契约，未收到真实冻结数据，不能据此声称对标完成。<br>[import_reference_gameplay.py](../scripts/import_reference_gameplay.py) · [test_import_reference_gameplay.py](../scripts/test_import_reference_gameplay.py) · [ReferenceGameplayConfigurationTests.swift](../Tests/CapydokuCoreTests/ReferenceGameplayConfigurationTests.swift) · [reference-gameplay-import.json](../Validation/reference-gameplay-import.json) |
 | REF-04<br>[10] | 基线变更控制<br>`implemented` | 支持上一版本字段差异及同版本内容变更拒绝。<br>**缺口：**实际冻结、人工评审和版本更新记录尚无。<br>[import_reference_gameplay.py](../scripts/import_reference_gameplay.py) · [gameplay-import.md](../Reference/gameplay-import.md) |

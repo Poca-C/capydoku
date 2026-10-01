@@ -1,0 +1,230 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-01",
+  "capydokuComparedBuild": "0.2.23 (26)",
+  "reference": {
+    "name": "Meowdoku",
+    "version": "1.19.1",
+    "build": "457",
+    "source": "Official App Store iOS application running on Mac",
+    "bundle": "com.oakever.meowdoku"
+  },
+  "method": {
+    "reference": "Live native-app UI through CUA, mouse click/double-click/drag and successive screenshots; no app code or artwork extraction.",
+    "capydoku": "Read-only review of current source and existing 0.2.23 test/visual evidence; not a new full Capydoku playthrough.",
+    "terms": "User explicitly authorized acceptance in current message. On reopening, game was already in tutorial; no Accept click was needed or performed in this follow-up.",
+    "durations": "Not measured; screenshots establish visible states and coarse ordering, not frame-accurate timings.",
+    "audioListening": false,
+    "physicalHapticTesting": false
+  },
+  "completed": [
+    "Tutorial through final completion and Start Game",
+    "Normal L1: mark, undo, incorrect placement, three correct placements, Nice and victory",
+    "First check-in introduction and claim",
+    "Normal L2: hint preview and Apply; four correct placements, Nice, Great and victory",
+    "L3: three visible conflicts (same region, same row, diagonal adjacency), one-life reminder dismissal, loss",
+    "L3 restart: same observed region layout and given cat, lives refilled; one direct-answer tool use",
+    "Settings read-only and return to home; reference left at home with L3 available"
+  ],
+  "observations": [
+    {
+      "id": "OBS-01",
+      "where": "Tutorial",
+      "seen": "Animated hand and tap rings demonstrate double taps; swipe hand demonstrates exclusion. Unrelated cells are darkened while the relevant row/column/region remains visible.",
+      "scope": "Observed instructional screens, not all accessibility/gesture edge cases."
+    },
+    {
+      "id": "OBS-02",
+      "where": "Tutorial and L1-L3",
+      "seen": "Cats blink/look sideways when idle; correct placement uses closed-eye smile and small heart; visible conflict changes both proposed and existing cats to startled/distressed expressions.",
+      "scope": "Facial changes observed in live screenshots; implementation technology and frame count unknown."
+    },
+    {
+      "id": "OBS-03",
+      "where": "L1-L3 correct placements",
+      "seen": "Floating positive score appears at the actual cell, with multicolor sparkles and region-colored fragments; top found silhouettes turn into cat heads and top score subsequently shows the accumulated amount.",
+      "scope": "Sampled visible score increments were 576,672,768,864 across a four-find sequence; not a frozen scoring formula or duration model."
+    },
+    {
+      "id": "OBS-04",
+      "where": "L3 given cat at R1C3",
+      "seen": "Wrong R1C1 highlights the pink region, connects wrong and given cats and flashes the region rule card. Wrong R1C5 highlights the row segment/connection and row-column rule card. Wrong R2C4 highlights neighboring cells/diagonal connection and adjacency rule card.",
+      "scope": "Same-region example also shares row; three samples do not prove the complete multiple-conflict priority. L1 wrong R1C1 had no visible conflict with its distant given cat and showed generic error instead."
+    },
+    {
+      "id": "OBS-05",
+      "where": "L1/L3 errors",
+      "seen": "A consumed fish life visibly fragments before becoming a pale silhouette. At one life, board darkens and a short message focuses attention on life HUD; tapping message dismisses it.",
+      "scope": "No audio or haptic claim."
+    },
+    {
+      "id": "OBS-06",
+      "where": "L1 and L2 wins",
+      "seen": "Nice and Great labels differ in color/visual treatment. Last find causes all board cats to smile. Result shows a large posed/animated full-body cat, radial light and confetti; the two sampled wins use different celebration outfits/props and praise copy.",
+      "scope": "Excellent not observed. Exact random selection and input-ready timings not measured; preserve original Capydoku no-extra-input-delay requirement."
+    },
+    {
+      "id": "OBS-07",
+      "where": "New levels and L3 restart",
+      "seen": "Board tiles appear in staggered small-to-full scale states. L3 restart retained observed layout/given position and refilled lives.",
+      "scope": "Only one restart sample; no change to Capydoku formal restart policy inferred."
+    },
+    {
+      "id": "OBS-08",
+      "where": "L2 hint and L3 direct answer",
+      "seen": "Hint uses dimming plus hollow X previews that become solid on Apply; inventory changed 5 to 4. Direct answer added a cat with local score and Clear label, inventory changed 5 to 4.",
+      "scope": "No real rewarded ad used. Preview close behavior was not tested."
+    },
+    {
+      "id": "OBS-09",
+      "where": "First post-L1 check-in",
+      "seen": "Dimmed yarn object becomes colored/glowing after tap, followed by streak count and seven-day row.",
+      "scope": "One initial claim only, not calendar or duplicate-claim testing."
+    }
+  ],
+  "recommendedWork": [
+    {
+      "id": "FEEL-01",
+      "priority": "first_batch",
+      "title": "可见错误原因解释",
+      "current": "Only generic per-cell mistake sequence; RuleStrip is static.",
+      "add": "Visible-conflict query, region/row/column/adjacency highlight, short line to conflicting found character, corresponding rule-card acknowledgement.",
+      "evidence": [
+        "OBS-04"
+      ],
+      "files": [
+        "Sources/CapydokuCore/Puzzle.swift",
+        "App/AppModel.swift",
+        "App/Views/PuzzleBoardView.swift",
+        "App/Views/RootView.swift"
+      ],
+      "acceptance": [
+        "Explain only conflicts with currently found/given characters; no fabricated reason from hidden solution.",
+        "One accepted mistake still deducts life once; effect does not mutate board, block further input or survive session replacement.",
+        "Test region, row, column, adjacency, multiple conflicts and wrong-with-no-visible-conflict."
+      ],
+      "scope": "New explanatory feedback, no change to correctness rules."
+    },
+    {
+      "id": "FEEL-02",
+      "priority": "first_batch_parallel_art",
+      "title": "角色表情与动作",
+      "current": "Same static CapyFace for normal, correct and wrong; whole-image scaling/rotation.",
+      "add": "Consistent original capy idle/blink, happy, startled/wrong and sad states; whole-body win/loss motion resources.",
+      "evidence": [
+        "OBS-02",
+        "OBS-06"
+      ],
+      "files": [
+        "App/Views/CapyStyle.swift",
+        "App/Views/BoardCellFeedbackView.swift",
+        "App/Views/BoardMistakeFeedbackView.swift",
+        "App/Views/RootView.swift"
+      ],
+      "acceptance": [
+        "Fixed art size/anchor and consistent design across frames or layers.",
+        "Expression events follow accepted model events; background/exit/reduced motion handled."
+      ],
+      "scope": "Use original Capydoku assets; reference appearance is not an asset package."
+    },
+    {
+      "id": "FEEL-03",
+      "priority": "first_batch",
+      "title": "动态手势教学",
+      "current": "Board-driven nine-step tutorial with text and static target border; no hand/trajectory.",
+      "add": "Double-tap hand/rings, horizontal and vertical swipe trajectory, focused target masking; make rules visible on the actual board.",
+      "evidence": [
+        "OBS-01"
+      ],
+      "files": [
+        "App/Views/RootView.swift",
+        "App/Views/PuzzleBoardView.swift",
+        "Sources/CapydokuCore/PuzzleHints.swift"
+      ],
+      "acceptance": [
+        "Derive demonstration positions from current tutorial targets, never hard-code one board.",
+        "Retain undo, both swipe axes and all four rules; demonstration never performs player moves.",
+        "Re-entry, restoration and reduced-motion states remain understandable."
+      ]
+    },
+    {
+      "id": "FEEL-04",
+      "priority": "second_batch",
+      "title": "格子到顶部的奖励与扣命联动",
+      "current": "Cell pop/stars and flight to found count already exist; positive score label is only at top and life icons merely dim.",
+      "add": "Cell-local positive score using actual accepted delta, stronger arrival acknowledgement on HUD, per-life consume animation.",
+      "evidence": [
+        "OBS-03",
+        "OBS-05"
+      ],
+      "files": [
+        "App/Views/GameRewardPresentation.swift",
+        "App/Views/RootView.swift",
+        "App/Views/GameFeedbackPresentation.swift"
+      ],
+      "acceptance": [
+        "No double counting or delayed saving; presentation follows already committed truth.",
+        "Local score must fit edge cells, 10x10 boards and dynamic text.",
+        "Use original heart/life presentation contract, not wholesale fish icon substitution."
+      ]
+    },
+    {
+      "id": "FEEL-05",
+      "priority": "second_batch",
+      "title": "Combo与胜败演出分层",
+      "current": "Combo badge and immediate-action result overlay exist; static character and common decoration entrance.",
+      "add": "Distinct Combo intensities, short final-board celebration, character/title/light/copy stagger, at least two original victory performance variants.",
+      "evidence": [
+        "OBS-06"
+      ],
+      "files": [
+        "App/Views/RootView.swift",
+        "App/Views/GameRewardPresentation.swift"
+      ],
+      "acceptance": [
+        "Next/revive/restart remain immediately usable as required by original [254].",
+        "No replay on restored completed sessions; no duplicate rewards or added Combo haptics.",
+        "Use actual score/config; observed sample thresholds do not silently replace formal configuration."
+      ]
+    },
+    {
+      "id": "FEEL-06",
+      "priority": "later_polish",
+      "title": "新盘入场和道具确认",
+      "current": "Whole board draws directly; core tools already work.",
+      "add": "Light staggered new-board appearance and brief localized direct-answer acknowledgement.",
+      "evidence": [
+        "OBS-07",
+        "OBS-08"
+      ],
+      "files": [
+        "App/Views/PuzzleBoardView.swift",
+        "App/Views/RootView.swift"
+      ],
+      "acceptance": [
+        "No delayed input or hit-frame movement.",
+        "Do not replay entry for restored board or ordinary navigation; reduced-motion bypass."
+      ]
+    }
+  ],
+  "audioDependency": {
+    "priority": "high",
+    "current": "Resources/audio-manifest.json clips is empty.",
+    "next": "Obtain authorized original sounds/timing or explicit change to the original-audio-only constraint, then tune audiovisual timing.",
+    "observedReferenceAudio": false
+  },
+  "recommendedSequence": [
+    "Implement FEEL-01 and FEEL-03 while original expression/motion assets for FEEL-02 are prepared.",
+    "Integrate expressions, cell-local score and life feedback together.",
+    "Polish Combo, win/loss choreography and new-board entrance."
+  ],
+  "authority": "Original Word and user Chinese-market requirement remain authoritative. This sampled Meowdoku version is observational evidence, not formal Pawdoku baseline or permission to expand modes/services.",
+  "notVerified": [
+    "Exact timing/frame rate, audio mix and phone haptics",
+    "Excellent tier or late-game difficulty",
+    "Real rewarded-ad completion/revive",
+    "Long-session persistence and all settings",
+    "Full frozen formal reference or asset rights deliverables"
+  ],
+  "implementationStatus": "Recommendations only in this follow-up; production build remains 0.2.23 (26)."
+}
