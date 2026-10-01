@@ -347,7 +347,7 @@ final class BoardGuidancePresentationTests: XCTestCase {
         rig.board.removeFromSuperview(); XCTAssertTrue(schedule.pending.isEmpty)
     }
 
-    @MainActor func testIdleBlinkSkipsActiveFeedbackAndResumesOnNextBoardTick() throws {
+    @MainActor func testIdleBlinkSkipsActiveFeedbackAndResumesOnNextBoardTick() async throws {
         let schedule = BlinkTestSchedule()
         let rig = try GuidanceRig(idleBlinkScheduler: schedule.schedule); defer { rig.close() }
         XCTAssertTrue(schedule.pending.isEmpty)
@@ -358,6 +358,12 @@ final class BoardGuidancePresentationTests: XCTestCase {
         rig.board.beginCellPress(at: try rig.center(0))
         try schedule.fireNext(); XCTAssertTrue(rig.blinks.isEmpty)
         rig.board.endCellPress()
+        try schedule.fireNext(); XCTAssertTrue(rig.blinks.isEmpty, "The accepted reward continues after the next contact ends")
+        XCTAssertTrue(rig.board.subviews.flatMap(\.subviews).contains { $0 is BoardPlacementBurstView })
+        // Do not cancel a reward just to make an idle tick possible. Wait for
+        // its actual finite cleanup, then idle motion can resume naturally.
+        try await Task.sleep(nanoseconds: 700_000_000)
+        XCTAssertFalse(rig.board.subviews.flatMap(\.subviews).contains { $0 is BoardPlacementBurstView })
         try schedule.fireNext(); XCTAssertEqual(rig.blinks.count, 1)
         rig.board.activate(index: 0, submit: true)
         XCTAssertTrue(rig.blinks.isEmpty, "A new mistake cancels an already-present blink")

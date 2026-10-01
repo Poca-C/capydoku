@@ -13,13 +13,15 @@ import UIKit
     let button = UIButton(type: .system)
     private let previousWindow: UIWindow?
 
-    init(side: CGFloat = 240, clock: ResultCharacterClock? = nil) throws {
+    init(side: CGFloat = 240, clock: ResultCharacterClock? = nil, prepareRig: (() -> Bool)? = nil) throws {
         let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
         previousWindow = scene.windows.first(where: \.isKeyWindow)
         window = UIWindow(windowScene: scene); window.frame = scene.coordinateSpace.bounds
         let controller = UIViewController(); controller.view.backgroundColor = UIColor(CapyPalette.ink)
         window.rootViewController = controller; window.makeKeyAndVisible()
-        view = ResultCharacterUIView(frame: CGRect(x: 40, y: 120, width: side, height: side))
+        let frame = CGRect(x: 40, y: 120, width: side, height: side)
+        if let prepareRig { view = ResultCharacterUIView(frame: frame, prepareRig: prepareRig) }
+        else { view = ResultCharacterUIView(frame: frame) }
         if let clock { view.schedule = clock.schedule }
         controller.view.addSubview(view)
         button.frame = CGRect(x: 40, y: 120 + side + 16, width: side, height: 46)
@@ -189,6 +191,50 @@ final class ResultCharacterTests: XCTestCase {
         XCTAssertTrue(animations(rig.view).allSatisfy { $0.duration <= 0.92 && $0.repeatCount == 0 })
         clock.jobs.last?.1.perform()
         XCTAssertTrue(animations(rig.view).isEmpty)
+    }
+
+    @MainActor func testSighFollowsActualMouthDuringNodAtThreeSizesIncludingFallback() async throws {
+        for fallback in [false, true] {
+            for side: CGFloat in [140,168,250] {
+                let rig = try ResultCharacterRig(side:side, prepareRig:fallback ? { false } : nil)
+                defer { rig.close() }
+                rig.configure(won:false,id:nil)
+                let finalPixels = try modelPixels(rig.view)
+                let event = UUID(); rig.configure(won:false,id:event)
+                try await Task.sleep(nanoseconds:380_000_000)
+                let root = try XCTUnwrap(rig.view.layer.presentation())
+                let ownerName = fallback ? "result-character" : ResultRigPart.sadHead.layerName
+                let owner = try XCTUnwrap(layers(root).first { $0.name == ownerName })
+                let origin = try XCTUnwrap(owner.sublayers?.first { $0.name == "result-mouth-origin" })
+                let mouth = fallback ? CGPoint(x:0.805,y:0.446) : CGPoint(x:0.835,y:0.815)
+                XCTAssertEqual(origin.position.x / owner.bounds.width,mouth.x,accuracy:0.0001)
+                XCTAssertEqual(origin.position.y / owner.bounds.height,mouth.y,accuracy:0.0001)
+                let firstSigh = try XCTUnwrap(origin.sublayers?.first { $0.name == "result-sigh-0" })
+                XCTAssertGreaterThan(firstSigh.opacity,0.1)
+                let mouthPoint = origin.convert(CGPoint.zero,to:root)
+                let bubblePoint = firstSigh.convert(CGPoint(x:firstSigh.bounds.midX,y:firstSigh.bounds.midY),to:root)
+                // Mouth and nostril coordinates are independently marked on the
+                // supplied head/fallback image. The old root-level effect sat
+                // near the nostril instead of following the animated mouth.
+                let nostril = fallback ? CGPoint(x:0.85,y:0.285) : CGPoint(x:0.9,y:0.49)
+                let nosePoint = owner.convert(CGPoint(x:owner.bounds.width * nostril.x,
+                                                      y:owner.bounds.height * nostril.y),to:root)
+                XCTAssertLessThan(hypot(bubblePoint.x-mouthPoint.x,bubblePoint.y-mouthPoint.y),
+                                  hypot(bubblePoint.x-nosePoint.x,bubblePoint.y-nosePoint.y))
+                XCTAssertLessThan(hypot(bubblePoint.x-mouthPoint.x,bubblePoint.y-mouthPoint.y),side * 0.08)
+                for shown in origin.sublayers ?? [] where shown.opacity > 0 {
+                    XCTAssertTrue(rig.view.bounds.insetBy(dx:-0.5,dy:-0.5).contains(shown.convert(shown.bounds,to:root)))
+                }
+                capture(rig.view,name:"result-mouth-0230-\(fallback ? "fallback" : "rig")-\(Int(side))pt-380ms")
+                NotificationCenter.default.post(name:UIApplication.willResignActiveNotification,object:nil)
+                XCTAssertTrue(animations(rig.view).isEmpty)
+                XCTAssertEqual(try modelPixels(rig.view),finalPixels)
+                NotificationCenter.default.post(name:UIApplication.didBecomeActiveNotification,object:nil)
+                rig.configure(won:false,id:event)
+                XCTAssertEqual(rig.view.playedEventCount,1)
+                XCTAssertTrue(animations(rig.view).isEmpty)
+            }
+        }
     }
 
     @MainActor func testActualHostShowsThreeDistinctPerformancesWithinBoundsAndSettlesExactly() async throws {

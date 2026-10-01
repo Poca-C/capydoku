@@ -69,6 +69,9 @@ final class FeedbackWindowFrameView: UIView {
     @Published private(set) var flights: [Flight] = []
     @Published private(set) var progressPulse = false
     @Published private(set) var scoreDelta: Int?
+    /// Reuses the score expiry token so equal, consecutive awards still have
+    /// distinct presentation identities without adding a gameplay event stream.
+    @Published private(set) var scorePulseID: UUID?
     @Published private(set) var localScores: [LocalScore] = []
     @Published private(set) var toolReveal: ToolReveal?
     private var sessionID: UUID?
@@ -102,9 +105,11 @@ final class FeedbackWindowFrameView: UIView {
         guard visible, presentationEnabled, change > 0 else { return }
         scoreToken = UUID(); let token = scoreToken
         scoreDelta = change
+        scorePulseID = token
         schedule(0.75) { [weak self] in
             guard self?.scoreToken == token else { return }
             self?.scoreDelta = nil
+            self?.scorePulseID = nil
         }
     }
 
@@ -164,7 +169,7 @@ final class FeedbackWindowFrameView: UIView {
 
     func clear() {
         generation = UUID(); scoreToken = UUID(); pulseToken = UUID()
-        flights = []; progressPulse = false; scoreDelta = nil; localScores = []; toolReveal = nil
+        flights = []; progressPulse = false; scoreDelta = nil; scorePulseID = nil; localScores = []; toolReveal = nil
     }
 }
 

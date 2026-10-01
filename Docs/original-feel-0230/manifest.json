@@ -1,0 +1,214 @@
+{
+  "build": "0.2.30 (33)",
+  "sourceBundle": "Validation/test-runs/original-0230-targeted-r2.xcresult",
+  "status": "reviewed_scoped_runtime_images_and_movie_samples",
+  "images": [
+    {
+      "file": "continuous-find-04-settled-with-committed-mark.png",
+      "sourceAttachment": "5C468BB3-16E2-44AD-807C-959FB345368B.png",
+      "originalName": "continuous-find-04-settled-with-committed-mark_0_86BC8BD8-7FAB-4CB3-AD36-6848B93CEC7F.png",
+      "test": "BoardCellPresentationTests/testNextContactKeepsCommittedRewardAliveWhileFurtherFindsAndMarksApplyImmediately()",
+      "sha256": "f95ac06f497a953e6cb7dc273fc1497ddeb767765582208f65991166a2360e92"
+    },
+    {
+      "file": "continuous-find-03-two-independent-rewards.png",
+      "sourceAttachment": "8226759A-A154-47F7-97E7-B39D5427D4AF.png",
+      "originalName": "continuous-find-03-two-independent-rewards_0_88E97413-3EBC-48A1-8484-5F77ACA61784.png",
+      "test": "BoardCellPresentationTests/testNextContactKeepsCommittedRewardAliveWhileFurtherFindsAndMarksApplyImmediately()",
+      "sha256": "739d8bb585a7eaca93219f2854ab60f51305cb3d59509176d86f80a2f5571255"
+    },
+    {
+      "file": "continuous-find-02-next-contact-keeps-flight.png",
+      "sourceAttachment": "4E17A447-0C88-4FC7-80DD-064DF063BC47.png",
+      "originalName": "continuous-find-02-next-contact-keeps-flight_0_694113B0-01F4-48CE-A53D-8D3387626D5B.png",
+      "test": "BoardCellPresentationTests/testNextContactKeepsCommittedRewardAliveWhileFurtherFindsAndMarksApplyImmediately()",
+      "sha256": "03d2b1104a35526a4168716403e70afa7c0a84e801a74b997fe58aeac0ee7d9f"
+    },
+    {
+      "file": "continuous-find-01-first-reward.png",
+      "sourceAttachment": "774ECDEC-9687-48ED-B3A7-0290A19E29E9.png",
+      "originalName": "continuous-find-01-first-reward_0_D6254298-51B7-4D3C-9A26-DE027860FAD4.png",
+      "test": "BoardCellPresentationTests/testNextContactKeepsCommittedRewardAliveWhileFurtherFindsAndMarksApplyImmediately()",
+      "sha256": "d09458584d0f91570da4007c0f9bba989953120b5f53a0c917f38de263682ca9"
+    },
+    {
+      "file": "rig-0230-gentleRetry-250pt-actual-380ms.png",
+      "sourceAttachment": "A6158A22-83B0-46CB-A4B7-6F27FDD984E2.png",
+      "originalName": "rig-0229-gentleRetry-250pt-actual-380ms_0_E7E8E3B4-1B3D-4388-8C98-4A91C3971DE1.png",
+      "test": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+      "sha256": "db6821ae58cc2cc53911fdad94ea21a93ac0bd339d06a69ca78559aca1d74380"
+    },
+    {
+      "file": "rig-0230-starHug-250pt-actual-380ms.png",
+      "sourceAttachment": "5D1D1EE3-5375-4983-92AE-E94D5BFDF8C9.png",
+      "originalName": "rig-0229-starHug-250pt-actual-380ms_0_499E4EE0-0063-43EF-A521-0301246E8F8D.png",
+      "test": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+      "sha256": "15448dd6c0e1b1675bbd1c8f1646784dbfaa33481f64501acf9bd3a589c785a1"
+    },
+    {
+      "file": "rig-0230-joyfulRaise-250pt-actual-380ms.png",
+      "sourceAttachment": "75C26501-7856-4CF3-82C1-6A0804D36A35.png",
+      "originalName": "rig-0229-joyfulRaise-250pt-actual-380ms_0_B04BF7AC-9FC3-4608-9E1B-E189E491A46E.png",
+      "test": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+      "sha256": "e46b351c5cc10b1e284902f7b931b54a7085ceec489805645b5204118c515d32"
+    },
+    {
+      "file": "rig-0230-gentleRetry-168pt-actual-380ms.png",
+      "sourceAttachment": "E8DD379B-0CD6-4A4A-815E-51C16B892A14.png",
+      "originalName": "rig-0229-gentleRetry-168pt-actual-380ms_0_3BB3BD82-8C85-408D-80D7-200A9F97C3C5.png",
+      "test": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+      "sha256": "1c941fe55340d6126f75c3bbaaa2025bc9324c23e61806b57e536ec54f5f912e"
+    },
+    {
+      "file": "rig-0230-starHug-168pt-actual-380ms.png",
+      "sourceAttachment": "05842E4E-F617-40A4-9AB1-F0C8FAB7BEA9.png",
+      "originalName": "rig-0229-starHug-168pt-actual-380ms_0_DBAFB1F7-30FF-41F6-A30F-F98797E7743C.png",
+      "test": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+      "sha256": "185e1c67a3d003673d99163bb5a2166b9b5f812c3add7dca8cf929939b909eaa"
+    },
+    {
+      "file": "rig-0230-joyfulRaise-168pt-actual-380ms.png",
+      "sourceAttachment": "704D7AF8-0000-4033-84D3-91E444523DBD.png",
+      "originalName": "rig-0229-joyfulRaise-168pt-actual-380ms_0_01090D96-3042-4743-8288-FB490CF96745.png",
+      "test": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+      "sha256": "259d2ff103b7cf8bae3fa7468d36b1e984b0ef4317583edc9151565c5bc0f26a"
+    },
+    {
+      "file": "rig-0230-gentleRetry-140pt-actual-380ms.png",
+      "sourceAttachment": "186B8B16-8B4E-4344-B160-8D693ADAE0F6.png",
+      "originalName": "rig-0229-gentleRetry-140pt-actual-380ms_0_876E332D-996D-483B-98A2-E7DB6FB54A60.png",
+      "test": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+      "sha256": "7079cbad94ff6d8730a4eb3ef49da42354bc10a0944ce3a51e3fbe5118639ac8"
+    },
+    {
+      "file": "rig-0230-starHug-140pt-actual-380ms.png",
+      "sourceAttachment": "F4B7B630-C4BD-451A-A053-DB44FA0EECE5.png",
+      "originalName": "rig-0229-starHug-140pt-actual-380ms_0_279D652E-28F5-482C-B2E8-539F48F45310.png",
+      "test": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+      "sha256": "6cd9dfe0c18c1381a583a32b09cc15e6215b2f39037963df6edd5aba116d0ff5"
+    },
+    {
+      "file": "rig-0230-joyfulRaise-140pt-actual-380ms.png",
+      "sourceAttachment": "0BFE86C4-7978-414B-80BC-77F5E4B61657.png",
+      "originalName": "rig-0229-joyfulRaise-140pt-actual-380ms_0_F61FBA5A-9139-4474-AD3D-CCC64AB8D3C5.png",
+      "test": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+      "sha256": "d2b4dd033e8857e3e6ad5cc27b73e593f0f892edfc84027093eed90736310c78"
+    },
+    {
+      "file": "result-mouth-0230-fallback-250pt-380ms.png",
+      "sourceAttachment": "99667D59-7FAC-441A-8407-9986964976C9.png",
+      "originalName": "result-mouth-0230-fallback-250pt-380ms_0_861D26CF-AF3F-4E1C-8FB9-3550218B3A89.png",
+      "test": "ResultCharacterTests/testSighFollowsActualMouthDuringNodAtThreeSizesIncludingFallback()",
+      "sha256": "1e522970085a145bb7ad27a7153a454ebd7ba54febf7b7c6a8f1443ad7e654e4"
+    },
+    {
+      "file": "result-mouth-0230-fallback-168pt-380ms.png",
+      "sourceAttachment": "3F4ACF8E-5709-46FE-8D0E-8B1646E18217.png",
+      "originalName": "result-mouth-0230-fallback-168pt-380ms_0_3FF39528-7803-4232-91DC-BC186016B760.png",
+      "test": "ResultCharacterTests/testSighFollowsActualMouthDuringNodAtThreeSizesIncludingFallback()",
+      "sha256": "6a353f4946ee50a4a3967630b1b7c320104f2a39a907874bbb73f6db6493f632"
+    },
+    {
+      "file": "result-mouth-0230-fallback-140pt-380ms.png",
+      "sourceAttachment": "9DEA31E7-BD60-40D1-AC89-D1E17C507787.png",
+      "originalName": "result-mouth-0230-fallback-140pt-380ms_0_60103108-C934-4920-965F-953E9E6C8274.png",
+      "test": "ResultCharacterTests/testSighFollowsActualMouthDuringNodAtThreeSizesIncludingFallback()",
+      "sha256": "ae2365929063947278e78ac94afead375882557f091624dfac1c1076dc0b336c"
+    },
+    {
+      "file": "result-mouth-0230-rig-250pt-380ms.png",
+      "sourceAttachment": "F8CE4DD8-6C53-427F-BBDA-A1F87D148714.png",
+      "originalName": "result-mouth-0230-rig-250pt-380ms_0_EA8587F0-AC28-4A0E-B3AB-9BE8B363E998.png",
+      "test": "ResultCharacterTests/testSighFollowsActualMouthDuringNodAtThreeSizesIncludingFallback()",
+      "sha256": "be1343bdc2168b05ab86d6e1182f9e6b8a949ae9d18a73eb49ac5572a97005e1"
+    },
+    {
+      "file": "result-mouth-0230-rig-168pt-380ms.png",
+      "sourceAttachment": "AC5FC8E1-4BF3-47C7-908D-E578D61B07A5.png",
+      "originalName": "result-mouth-0230-rig-168pt-380ms_0_E394FDE4-C79D-47E4-BC43-1AAF973EC486.png",
+      "test": "ResultCharacterTests/testSighFollowsActualMouthDuringNodAtThreeSizesIncludingFallback()",
+      "sha256": "55b74b9c8a4b1b8cc75e0e61ed000c4394a9b940bdef57ef7154362e549627b1"
+    },
+    {
+      "file": "result-mouth-0230-rig-140pt-380ms.png",
+      "sourceAttachment": "177ED387-06B7-4FCF-BF47-7E2948AA9296.png",
+      "originalName": "result-mouth-0230-rig-140pt-380ms_0_49AFE1B5-9253-481E-89ED-04D9BB31A31C.png",
+      "test": "ResultCharacterTests/testSighFollowsActualMouthDuringNodAtThreeSizesIncludingFallback()",
+      "sha256": "693da497c5e8da7c05461d25fe9c664340eee2397322780d6e83f126f36745fb"
+    },
+    {
+      "file": "score-rapid-awards-settled.png",
+      "sourceAttachment": "10D35D5E-0015-483F-B6A9-BF135C9E9FB0.png",
+      "originalName": "score-rapid-awards-settled_0_BC382400-5CBA-4F50-85FB-F7B0DEE0A786.png",
+      "test": "ScorePulsePresentationTests/testActualRootRapidAcceptedAwardsCapture()",
+      "sha256": "dfb147a73911f21de50499756d59ccdedb0ffabafc0406885f1d8077bfdaf90f"
+    },
+    {
+      "file": "score-award-2-peak.png",
+      "sourceAttachment": "85A1B235-175D-4413-849B-28DA56AF5D86.png",
+      "originalName": "score-award-2-peak_0_F37A32BF-0D8A-49CD-B570-A04293A9B9AF.png",
+      "test": "ScorePulsePresentationTests/testActualRootRapidAcceptedAwardsCapture()",
+      "sha256": "d905260e474b5f38b378d218c145f8ff6b3bbbf69f2e4fced0b078124b19a4bc"
+    },
+    {
+      "file": "score-award-1-peak.png",
+      "sourceAttachment": "C458336A-64BE-4490-8E24-E258AB99F2E1.png",
+      "originalName": "score-award-1-peak_0_2B4F3416-11AE-46A9-A7F2-EF46345C4E35.png",
+      "test": "ScorePulsePresentationTests/testActualRootRapidAcceptedAwardsCapture()",
+      "sha256": "dcea2db05b7b6d80cbee688382efc0b1b14a5717a0fc570962e76adb9bfef697"
+    }
+  ],
+  "limits": [
+    "Real UIKit/SwiftUI test hosts; calls to real gameplay models are not native touch timing",
+    "No reference per-frame, physical haptic or audible A/B acceptance",
+    "Score/board submissions in host tests do not establish physical input latency",
+    "Head eyes/mouth remain fixed textures; still visible rigid cutout contours"
+  ],
+  "review": {
+    "root": "Individually viewed four board and three actual RootView score captures. New contact retains first reward, two rewards coexist, clean end state preserves the committed mark; score digits and page layout remain legible.",
+    "resultCharacterAgent": "Individually viewed nine rig and six mouth captures; compared previous250pt joy/retry. End-cap rings reduced, correct mouth anchoring, no visible cut-off paws/bubbles in sampled three sizes; rigid contours still identifiable."
+  },
+  "finalApplicationTests": {
+    "sourceBundle": "Validation/test-runs/original-0230-app-r2.xcresult",
+    "passed": 473,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 177.13
+  },
+  "videos": [
+    {
+      "file": "continuous-result-performances.mov",
+      "sha256": "8c43ca2102e0dd3bbfe436b7394d1fbbfabe5d626880ac75f5daf289bc2360e4",
+      "durationSeconds": 8.635,
+      "sampledFrames": 44,
+      "sampling": "continuous-result-performances-sampling.json",
+      "sourceBundle": "Validation/test-runs/original-0230-app-r2.xcresult",
+      "scope": "Actual iPhone17 Pro simulator screen recording of a UIKit/SwiftUI test host. Silent fixture; no layer time seeking; not normal navigation, native touch timing or physical-device playback.",
+      "review": "Character reviewer viewed the three labeled sequences in the contact sheet and three full raw frames. Arm cap seams reduced; hands remain with the star; sigh follows mouth and clears. No claimed FPS or aesthetic equivalence.",
+      "sampleContactSheet": "continuous-result-video-frames.png",
+      "sampleContactSheetSHA256": "eb4c64965ed97f30be6d194742b329334604d1b21940acd29c92dba8d6218b0a",
+      "contactSheetRequestedRangeSeconds": [
+        3.8,
+        8.0
+      ]
+    },
+    {
+      "file": "continuous-score-feedback.mov",
+      "sha256": "38fda2a19a8e4c2edd7e21530ddd5da98801fe20cbe1cae7ec94ab70de5073a6",
+      "durationSeconds": 2.2683333333333335,
+      "sampledFrames": 23,
+      "sampling": "continuous-score-feedback-sampling.json",
+      "sourceBundle": "Validation/test-runs/original-0230-app-r2.xcresult",
+      "scope": "Actual iPhone17 Pro simulator screen recording of a UIKit/SwiftUI test host. Silent fixture; no layer time seeking; not normal navigation, native touch timing or physical-device playback.",
+      "review": "Root viewed native movie frames at requested0.2/0.4/0.7s alongside three actual RootView runtime captures; first and second committed awards retain their local feedback and readable score layout. Pulse motion and settling also verified through running presentation layers."
+    }
+  ],
+  "finalUITests": {
+    "sourceBundle": "Validation/test-runs/original-0230-17e-ui.xcresult",
+    "passed": 9,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 241.202,
+    "scope": "Nine selected original native UI cases on iPhone17e; unchanged selection from0.2.29, not all150 levels human-played"
+  }
+}

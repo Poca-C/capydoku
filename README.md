@@ -1,12 +1,12 @@
 # Capydoku · 原文对齐 Demo
 
-原生 Swift / SwiftUI iPhone 应用，默认简体中文、可在设置中切换 English、竖屏，最低编译目标 iOS 15。当前版本 **0.2.29（32）**，可内部试玩，尚未达到正式验收或上架状态。
+原生 Swift / SwiftUI iPhone 应用，默认简体中文、可在设置中切换 English、竖屏，最低编译目标 iOS 15。当前本地开发版本 **0.2.30（33）**，尚未达到正式验收或上架状态。手机最近确认安装的是0.2.29；按用户要求，本轮暂停打包分发、手机更新和GitHub上传。
 
 ## 唯一需求基准
 
 以工作区原始《卡皮巴拉主题（Capydoku）区域逻辑小游戏需求说明 V1.3》的正文和内嵌截图为准。`Reference/Original/document.json` 保存源文件校验值与提取结果。后续报告及88条 Checklist只作核查，不能覆盖原文。用户于2026-10-01明确补充面向中文市场，语言条款按此更新为默认简体中文并内置英文切换；其他原文要求继续有效。0.1.x 的功能测试通过记录不证明符合原文。
 
-当前逐章对照与未完成项见 `Validation/original-conformance.md`；本轮进展与验证边界见 `Validation/original-0229-feedback.json`，综合历史记录保留在 `Validation/original-verification.json`。
+当前逐章对照与未完成项见 `Validation/original-conformance.md`；本轮进展与验证边界见 `Validation/original-0230-feedback.json`，综合历史记录保留在 `Validation/original-verification.json`。
 
 ## 运行和试玩
 
@@ -19,6 +19,15 @@
 下列主页面图册保留0.2.1的实测版本；0.2.4新增操作反馈，分时组件截图见 Docs/original-feedback/manifest.json，不能用旧图替代新构建验收：[首页](Docs/original-reference/01-home.png) · [游戏](Docs/original-reference/04-gameplay.png) · [提示](Docs/original-reference/05-hint.png) · [设置](Docs/original-reference/02-settings.png) · [签到](Docs/original-reference/03-check-in.png)。
 
 无需第三方依赖或真实广告 SDK。模拟器运行/测试须保留本地签名（CODE_SIGNING_ALLOWED=YES），工程仅为模拟器配置钥匙串权限；禁用签名只能验证编译，不能验证真实钥匙串。0.2.29（32）已无线覆盖安装并由设备查询确认。请求启动前的安装前后8份文件逐字节一致，第10关对局、287条事件、38条奖励及设置/签到/身份保持，见[真机记录](Validation/original-0229-physical-install.json)。本次自动启动被手机锁屏阻止，需解锁后打开App；未记录为启动成功或真机手感验收。
+
+## 0.2.30 连续操作反馈与角色局部修整
+
+- 下一次触摸保留已提交的彩粒，各组按原期限结束，仍最多2组；确认错误时清掉旧成功彩粒，错误和扣血立即生效。待机眨眼等成功反馈自然结束后恢复。
+- 每次正得分各自触发0.32秒有限回弹，连续等额得分也能重触发；数字立即更新，结束恢复原大小。遮挡、后台、恢复、减少动态效果及低电量不重播旧奖励。
+- 只采用新图集的4个臂段以减弱肘部暗圈，原头身、手爪、脚与运动轨迹保留；失败叹气随嘴角点头。仍是刚性部件与固定脸部贴图，尚未实现独立眼口动态。[素材与提示词](Validation/capy-rig-artwork-0230.json)
+- [运行图册](Docs/original-feel-0230/manifest.json)区分真实UIKit/SwiftUI宿主与原生手势测试；[验证记录](Validation/original-0230-feedback.json)保留专项、完整回归及首次失败历史，[Checklist增量](Validation/checklist-0230-feedback-delta.json)不改变83行正式状态或88项历史统计。新回弹时长是Demo参数。
+- 最终473项App与17e九项UI全部通过，均0失败/跳过；22张实际运行截图已逐张核对，两段最终模拟器录屏保留抽样时戳：[连续得分](Docs/original-feel-0230/continuous-score-feedback.mov) · [三套角色动作](Docs/original-feel-0230/continuous-result-performances.mov)。录屏为静音测试场景，不代表真机声音/触觉或参考帧率对标。
+- 同9个本地测试原声和正式空音频清单不变。本轮不创建分发包、手机构建或归档，不安装手机、不上传GitHub；完整真机手感和正式验收仍待完成。
 
 ## 0.2.29 连续角色动作、跨格彩粒与音效预热
 

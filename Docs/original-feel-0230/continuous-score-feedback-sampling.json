@@ -1,0 +1,122 @@
+{
+  "durationSeconds" : 2.2683333333333335,
+  "frames" : [
+    {
+      "actualSeconds" : 0,
+      "file" : "frame-000.000.png",
+      "requestedSeconds" : 0
+    },
+    {
+      "actualSeconds" : 0.098333333333333328,
+      "file" : "frame-000.100.png",
+      "requestedSeconds" : 0.10000000000000001
+    },
+    {
+      "actualSeconds" : 0.185,
+      "file" : "frame-000.200.png",
+      "requestedSeconds" : 0.20000000000000001
+    },
+    {
+      "actualSeconds" : 0.29999999999999999,
+      "file" : "frame-000.300.png",
+      "requestedSeconds" : 0.30000000000000004
+    },
+    {
+      "actualSeconds" : 0.39833333333333332,
+      "file" : "frame-000.400.png",
+      "requestedSeconds" : 0.40000000000000002
+    },
+    {
+      "actualSeconds" : 0.5,
+      "file" : "frame-000.500.png",
+      "requestedSeconds" : 0.5
+    },
+    {
+      "actualSeconds" : 0.58666666666666667,
+      "file" : "frame-000.600.png",
+      "requestedSeconds" : 0.60000000000000009
+    },
+    {
+      "actualSeconds" : 0.68500000000000005,
+      "file" : "frame-000.700.png",
+      "requestedSeconds" : 0.70000000000000007
+    },
+    {
+      "actualSeconds" : 0.80000000000000004,
+      "file" : "frame-000.800.png",
+      "requestedSeconds" : 0.80000000000000004
+    },
+    {
+      "actualSeconds" : 0.90000000000000002,
+      "file" : "frame-000.900.png",
+      "requestedSeconds" : 0.90000000000000002
+    },
+    {
+      "actualSeconds" : 0.98833333333333329,
+      "file" : "frame-001.000.png",
+      "requestedSeconds" : 1
+    },
+    {
+      "actualSeconds" : 1.0983333333333334,
+      "file" : "frame-001.100.png",
+      "requestedSeconds" : 1.1000000000000001
+    },
+    {
+      "actualSeconds" : 1.2,
+      "file" : "frame-001.200.png",
+      "requestedSeconds" : 1.2000000000000002
+    },
+    {
+      "actualSeconds" : 1.2,
+      "file" : "frame-001.300.png",
+      "requestedSeconds" : 1.3
+    },
+    {
+      "actualSeconds" : 1.2,
+      "file" : "frame-001.400.png",
+      "requestedSeconds" : 1.4000000000000001
+    },
+    {
+      "actualSeconds" : 1.49,
+      "file" : "frame-001.500.png",
+      "requestedSeconds" : 1.5
+    },
+    {
+      "actualSeconds" : 1.5983333333333334,
+      "file" : "frame-001.600.png",
+      "requestedSeconds" : 1.6000000000000001
+    },
+    {
+      "actualSeconds" : 1.6983333333333333,
+      "file" : "frame-001.700.png",
+      "requestedSeconds" : 1.7000000000000002
+    },
+    {
+      "actualSeconds" : 1.7983333333333333,
+      "file" : "frame-001.800.png",
+      "requestedSeconds" : 1.8
+    },
+    {
+      "actualSeconds" : 1.8983333333333334,
+      "file" : "frame-001.900.png",
+      "requestedSeconds" : 1.9000000000000001
+    },
+    {
+      "actualSeconds" : 1.9983333333333333,
+      "file" : "frame-002.000.png",
+      "requestedSeconds" : 2
+    },
+    {
+      "actualSeconds" : 2.1000000000000001,
+      "file" : "frame-002.100.png",
+      "requestedSeconds" : 2.1000000000000001
+    },
+    {
+      "actualSeconds" : 2.1983333333333333,
+      "file" : "frame-002.200.png",
+      "requestedSeconds" : 2.2000000000000002
+    }
+  ],
+  "sampleIntervalSeconds" : 0.10000000000000001,
+  "source" : "\/Users\/poca\/Documents\/ChatGPT\/capydoku开发\/.build\/score-0230-r2.mov"
+}

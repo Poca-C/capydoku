@@ -100,7 +100,7 @@ final class ResultCharacterChoreographyTests: XCTestCase {
         var calls:[String:Int] = [:]
         let cache = ResultRigImageCache { name in calls[name,default:0] += 1; return UIImage(named:name) }
         XCTAssertTrue(cache.prepare()); XCTAssertTrue(cache.prepare())
-        XCTAssertEqual(cache.digestChecks,2); XCTAssertEqual(cache.alphaScanCount,0)
+        XCTAssertEqual(cache.digestChecks,3); XCTAssertEqual(cache.alphaScanCount,0)
         var unique = Set<Data>()
         for part in ResultRigPart.allCases {
             let image = try XCTUnwrap(cache.image(part))
@@ -113,7 +113,37 @@ final class ResultCharacterChoreographyTests: XCTestCase {
             XCTAssertLessThanOrEqual(max(bitmap.width,bitmap.height),640)
         }
         XCTAssertEqual(unique.count,12)
-        XCTAssertEqual(calls,["CapyRigCore0229":1,"CapyRigLimbs0229":1])
+        XCTAssertEqual(calls,["CapyRigCore0229":1,"CapyRigLimbs0229":1,"CapyRigLimbs0230":1])
+    }
+
+    @MainActor func testArmRefinementRetainsOriginalHeadHandsFeetAndUsesOnlyFourEditedParts() throws {
+        let unchanged: [(String, CGRect, ResultRigPart)] = [
+            ("CapyRigCore0229", CGRect(x:45,y:102,width:569,height:505), .torso),
+            ("CapyRigCore0229", CGRect(x:657,y:135,width:571,height:410), .happyHead),
+            ("CapyRigCore0229", CGRect(x:47,y:722,width:576,height:420), .sadHead),
+            ("CapyRigCore0229", CGRect(x:705,y:693,width:470,height:450), .star),
+            ("CapyRigLimbs0229", CGRect(x:1003,y:187,width:213,height:214), .leftPaw),
+            ("CapyRigLimbs0229", CGRect(x:1394,y:145,width:289,height:265), .leftFoot),
+            ("CapyRigLimbs0229", CGRect(x:997,y:592,width:210,height:198), .rightPaw),
+            ("CapyRigLimbs0229", CGRect(x:1399,y:553,width:296,height:269), .rightFoot)
+        ]
+        let edited: [(String, CGRect, ResultRigPart)] = [
+            ("CapyRigLimbs0230", CGRect(x:117,y:57,width:251,height:370), .leftUpperArm),
+            ("CapyRigLimbs0230", CGRect(x:594,y:86,width:196,height:320), .leftForearm),
+            ("CapyRigLimbs0230", CGRect(x:104,y:474,width:247,height:363), .rightUpperArm),
+            ("CapyRigLimbs0230", CGRect(x:566,y:496,width:208,height:314), .rightForearm)
+        ]
+        for (name, rect, part) in unchanged + edited {
+            let source = try XCTUnwrap(UIImage(named:name)?.cgImage)
+            let crop = try XCTUnwrap(source.cropping(to:rect.insetBy(dx:-2,dy:-2)))
+            let format = UIGraphicsImageRendererFormat(); format.scale = 1
+            let size = CGSize(width:crop.width,height:crop.height)
+            let expected = UIGraphicsImageRenderer(size:size,format:format).image { _ in
+                UIImage(cgImage:crop).draw(in:CGRect(origin:.zero,size:size))
+            }
+            XCTAssertEqual(try pixels(XCTUnwrap(ResultCharacterArtwork.rigImage(part)?.cgImage)),
+                           try pixels(XCTUnwrap(expected.cgImage)), "\(part) must come from the approved source cutout")
+        }
     }
 
     @MainActor func testUnknownReplacementRigCannotReuseStaleJointRectanglesOrPartiallyAssemble() throws {
@@ -129,6 +159,9 @@ final class ResultCharacterChoreographyTests: XCTestCase {
         let missingSecond = ResultRigImageCache { $0 == "CapyRigCore0229" ? UIImage(named:$0) : nil }
         XCTAssertFalse(missingSecond.prepare())
         for part in ResultRigPart.allCases { XCTAssertNil(missingSecond.image(part),"No headless or armless partial rig") }
+        let missingRefinedArms = ResultRigImageCache { $0 == "CapyRigLimbs0230" ? nil : UIImage(named:$0) }
+        XCTAssertFalse(missingRefinedArms.prepare())
+        for part in ResultRigPart.allCases { XCTAssertNil(missingRefinedArms.image(part),"Do not keep a partial rig when the third atlas is absent") }
     }
 
     @MainActor func testFreshResultMovesIndependentJointsWithoutChangingTexturesAndCancelsToSameRig() throws {

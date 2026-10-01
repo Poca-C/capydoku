@@ -96,13 +96,12 @@ final class BoardPlacementBurstTests: XCTestCase {
         XCTAssertTrue(restored.bursts.isEmpty)
     }
 
-    @MainActor func testInputCoveringBackgroundPolicyAndBoardReplacementCancelWithoutGameplayCallbacks() throws {
-        for boundary in ["touch", "lock", "hidden", "preview", "disabled", "reduced", "background", "power", "resize", "remove"] {
+    @MainActor func testCoveringBackgroundPolicyAndBoardReplacementCancelWithoutGameplayCallbacks() throws {
+        for boundary in ["lock", "hidden", "preview", "disabled", "reduced", "background", "power", "resize", "remove"] {
             let rig = try PlacementBurstRig(); defer { rig.close() }
             rig.found = [1]; rig.refresh(); XCTAssertEqual(rig.bursts.count, 1, boundary)
             let burst = try XCTUnwrap(rig.bursts.first)
             switch boundary {
-            case "touch": rig.board.beginCellPress(at: CGPoint(x: 30, y: 30))
             case "lock": rig.locked = true; rig.refresh()
             case "hidden": rig.hidden = true; rig.refresh()
             case "preview": rig.preview = [0]; rig.refresh()

@@ -1,0 +1,608 @@
+{
+  "schemaVersion": 1,
+  "version": "0.2.30",
+  "status": "Local artwork and assembly reviewed; 40/40 targeted r2 tests passed, and all 15 role-specific actual UIKit captures were individually reviewed. Full App and physical-device verification remain outside this review.",
+  "scope": "Two bounded fixes: soften four golden arm attachment caps and attach existing finite sigh effect to the sad-head mouth. No head/eye/mouth redesign, no motion trajectory or duration changes.",
+  "originalParagraphs": [
+    241,
+    248,
+    249,
+    252,
+    254
+  ],
+  "generator": {
+    "mode": "built-in image_gen.imagegen",
+    "skill": "/Users/poca/.codex/skills/.system/imagegen/SKILL.md",
+    "useCase": "precise-object-edit",
+    "prompt": "Use case: precise-object-edit.\nAsset type: transparent original Capydoku 2D skeletal animation limb sprite atlas.\nInput image 1 is the EDIT TARGET: our own eight-part 4-column by 2-row transparent atlas. Preserve its exact canvas, grid, scale, location, orientation, warm golden palette, hand-drawn outline style, and transparent alpha background.\nCHANGE ONLY the attachment-cap artwork on the FOUR GOLDEN ARM SEGMENTS in columns 1 and 2, both rows. Each segment must remain a complete solid isolated piece. At the upper/proximal end, which overlaps its connected arm segment, remove the separate crescent rim/highlight and ring-shaped shadow; fill smoothly with the same mid-tone golden fur color as the neighboring shaft. At the lower/distal end also remove the terminal crescent/ring shading so rotated overlapping pieces do not look like two stacked elbow cuffs. Keep gentle shaft shading in the central 60%; let attachment zones at both ends be low-contrast flat warm gold with NO dark transverse cap outline and NO end-ring. Slightly taper the attachment ends inward only if needed to eliminate the bulbous cap, maintaining full solid overlap coverage. Preserve the established dark long-side outer contour and small fur tufts on the shaft, but fade any long-side line out before it crosses an attachment end.\nDO NOT change the two brown paws and two brown feet in columns 3 and 4, any pixels outside these four golden arm pieces, or add/change any objects. No new face, head, body, eyes, mouths, poses, joints, labels, panels, background color, grid lines, watermark, or shadows outside the sprites. Do not render a combined character. Do not add holes, masks, opaque backdrop, detached patches, or translucent parts. The output must remain the same eight-part atlas on a genuinely transparent background. This is a very localized cleanup, not a redesign.",
+    "source": {
+      "path": "App/Resources/Assets.xcassets/CapyRigLimbs0229.imageset/CapyRigLimbs0229.png",
+      "sha256": "164dbbb442ec2e96eb0a0c58ea6fdf3254ac979c0d77da71bcb4f2682b9e3af5",
+      "role": "Edit target, original Capydoku artwork created in 0.2.29. Viewed before editing."
+    },
+    "output": {
+      "path": "/Users/poca/.codex/generated_images/01a0f6eb-c91e-7e01-b286-1a0ab4836d11/exec-c6e995a2-365c-49b9-8baf-90fb74cad661.png",
+      "sha256": "c0933c8e3101f58412833546433cc1aa4fa0fa93227895a531bdcee7d6bc4280"
+    }
+  },
+  "selectedAsset": {
+    "path": "App/Resources/Assets.xcassets/CapyRigLimbs0230.imageset/CapyRigLimbs0230.png",
+    "sha256": "c0933c8e3101f58412833546433cc1aa4fa0fa93227895a531bdcee7d6bc4280",
+    "byteIdenticalToGenerated": true,
+    "width": 1774,
+    "height": 887,
+    "alphaDigest": "707fa071a7b10c7ce8b4bd51e8ccf14cd6662d4413869d03b17e3353a7d4f1c1",
+    "adoptedParts": [
+      {
+        "part": "leftUpperArm",
+        "cellIndex": 0,
+        "sourceRect": [
+          117,
+          57,
+          251,
+          370
+        ],
+        "meaningfulEdgePixels": 0
+      },
+      {
+        "part": "leftForearm",
+        "cellIndex": 1,
+        "sourceRect": [
+          594,
+          86,
+          196,
+          320
+        ],
+        "meaningfulEdgePixels": 0
+      },
+      {
+        "part": "rightUpperArm",
+        "cellIndex": 4,
+        "sourceRect": [
+          104,
+          474,
+          247,
+          363
+        ],
+        "meaningfulEdgePixels": 0
+      },
+      {
+        "part": "rightForearm",
+        "cellIndex": 5,
+        "sourceRect": [
+          566,
+          496,
+          208,
+          314
+        ],
+        "meaningfulEdgePixels": 0
+      }
+    ],
+    "paddingPixels": 2
+  },
+  "preservation": {
+    "result": "Generator did not preserve every non-target pixel: paw/foot outlines and alpha bounds changed slightly. Those new cells are deliberately unused.",
+    "unchangedSources": [
+      {
+        "path": "App/Resources/Assets.xcassets/CapyRigLimbs0229.imageset/CapyRigLimbs0229.png",
+        "sha256": "164dbbb442ec2e96eb0a0c58ea6fdf3254ac979c0d77da71bcb4f2682b9e3af5"
+      },
+      {
+        "path": "App/Resources/Assets.xcassets/CapyRigCore0229.imageset/CapyRigCore0229.png",
+        "sha256": "dd18d6fbe11447ccdcb29e4988fadf4c584ee109e2c14e142a6c74b5add067d9"
+      }
+    ],
+    "runtimeComposition": "Original Core0229 torso/happy/sad/star + original Limbs0229 paws/feet + only the four edited golden arms from Limbs0230. No code recoloring, cap masks, source painting or image crossfade.",
+    "motion": "App/Views/ResultCharacterRig.swift is unchanged; original joint tracks, branch choices, scale proportions and durations retained."
+  },
+  "audit": {
+    "method": "Native macOS CoreGraphics/ImageIO decode, alpha > 16 meaningful bounds, alpha SHA256 matches CapyAlphaPlane encoding. No simulator or frame-rate measurement.",
+    "generatedAtlas": {
+      "alphaDigest": "707fa071a7b10c7ce8b4bd51e8ccf14cd6662d4413869d03b17e3353a7d4f1c1",
+      "columns": 4,
+      "height": 887,
+      "name": "limbs",
+      "path": "/Users/poca/.codex/generated_images/01a0f6eb-c91e-7e01-b286-1a0ab4836d11/exec-c6e995a2-365c-49b9-8baf-90fb74cad661.png",
+      "pieces": [
+        {
+          "bounds": [
+            117,
+            57,
+            251,
+            370
+          ],
+          "index": 0,
+          "meaningfulEdgePixels": 0,
+          "opaquePixels": 66357,
+          "transparentPixels": 126098
+        },
+        {
+          "bounds": [
+            151,
+            86,
+            196,
+            320
+          ],
+          "index": 1,
+          "meaningfulEdgePixels": 0,
+          "opaquePixels": 45259,
+          "transparentPixels": 148349
+        },
+        {
+          "bounds": [
+            116,
+            184,
+            214,
+            218
+          ],
+          "index": 2,
+          "meaningfulEdgePixels": 0,
+          "opaquePixels": 35358,
+          "transparentPixels": 158807
+        },
+        {
+          "bounds": [
+            64,
+            143,
+            291,
+            267
+          ],
+          "index": 3,
+          "meaningfulEdgePixels": 0,
+          "opaquePixels": 57940,
+          "transparentPixels": 135692
+        },
+        {
+          "bounds": [
+            104,
+            31,
+            247,
+            363
+          ],
+          "index": 4,
+          "meaningfulEdgePixels": 0,
+          "opaquePixels": 65122,
+          "transparentPixels": 127745
+        },
+        {
+          "bounds": [
+            123,
+            53,
+            208,
+            314
+          ],
+          "index": 5,
+          "meaningfulEdgePixels": 0,
+          "opaquePixels": 46966,
+          "transparentPixels": 146587
+        },
+        {
+          "bounds": [
+            109,
+            149,
+            213,
+            200
+          ],
+          "index": 6,
+          "meaningfulEdgePixels": 0,
+          "opaquePixels": 33247,
+          "transparentPixels": 161040
+        },
+        {
+          "bounds": [
+            70,
+            110,
+            299,
+            271
+          ],
+          "index": 7,
+          "meaningfulEdgePixels": 0,
+          "opaquePixels": 60109,
+          "transparentPixels": 133461
+        }
+      ],
+      "rows": 2,
+      "width": 1774
+    }
+  },
+  "visualReview": {
+    "sourceAtlas": "Viewed original transparent target before editing.",
+    "editedAtlas": "Viewed the actual built-in edited result: end-cap crescent shadows/highlights reduced; long-side fur outlines and complete solid pieces remain. Paws/feet not assumed unchanged.",
+    "assembly": {
+      "path": ".build/rig-0230-preview/assembly-candidate-original-track.png",
+      "sha256": "76c85357c46ad980032ad7046ecb3fee981a6e4c5e3acc6c72be15336fb2fa4f",
+      "method": "Native macOS CoreGraphics composition using unchanged production ResultRigMotion.swift, 2px padded crops, original Core/paw/foot cutouts and four edited arms. Rows: joyfulRaise/starHug/gentleRetry; phases 0/.12/.23/.38/.50/.67/.84/1. 76% footprint. This is an assembly preview, not a UIKit screenshot.",
+      "finding": "Actually viewed all 24 assemblies. The separate elbow cuff-like end rings are reduced, arm overlap remains complete, and original star grips and retry posture remain legible. Faint segment shading can still be identified at close inspection; this is not a deformable mesh."
+    }
+  },
+  "sighFix": {
+    "rig": "result-mouth-origin is a child of sadHead, normalized local point (0.835,0.815), independently marked on the actual padded Core0229 sad-head image at right mouth corner. It inherits nod and whole-body transforms.",
+    "fallback": "For absent/invalid rig, same origin attaches to complete-character fallback at normalized (0.805,0.446), marked on final CapyRetryPoses0226 image.",
+    "preserved": "Original three circles, opacity/translation/scale keys and finite 0.92s presentation lifecycle remain. Background/cancel removes all animations, restores terminal model, and never replays consumed event.",
+    "assets": "No new facial texture or new expression.",
+    "testability": "Initializer can inject rig preparation failure so actual fallback mouth geometry and lifecycle are exercised."
+  },
+  "performance": "Existing prewarm API unchanged. Three atlas alpha-digest checks once; 12 decoded cached pieces; no per-part alpha scan or new timer. If any atlas is absent or mismatched, clear all rig pieces and use complete-image fallback.",
+  "preparedVerification": {
+    "syntax": "Swift frontend parse passed for both production and both test files.",
+    "diff": "git diff --check passed.",
+    "xcode": "Not run by subagent; root owns unified build.",
+    "targetedSuites": [
+      "ResultCharacterTests",
+      "ResultCharacterChoreographyTests"
+    ],
+    "newTests": [
+      "ResultCharacterChoreographyTests/testArmRefinementRetainsOriginalHeadHandsFeetAndUsesOnlyFourEditedParts",
+      "ResultCharacterTests/testSighFollowsActualMouthDuringNodAtThreeSizesIncludingFallback"
+    ],
+    "expandedTests": [
+      "prepareOnce now verifies three single atlas loads, three digests and zero alpha scans",
+      "malformed/missing tests include missing refined third atlas without partial rig"
+    ],
+    "expectedNewAttachments": "result-mouth-0230-(rig|fallback)-(140|168|250)pt-380ms"
+  },
+  "limitations": [
+    "Actual UIKit screenshots/recording and final unified pass are pending.",
+    "No assertion of pixel-identical new whole atlas: only selected four new arm pieces are used.",
+    "Fixed happy/sad head textures remain unchanged; no claim of new eye/mouth animation.",
+    "No claim of Meowdoku aesthetic equivalence, physical-device feel, or measured FPS."
+  ],
+  "runtimeReview": {
+    "status": "Targeted r2 actual UIKit screenshot review complete; full App run and physical-device verification are not claimed here.",
+    "sourceBundle": "Validation/test-runs/original-0230-targeted-r2.xcresult",
+    "sourceManifest": "Docs/original-feel-0230/manifest.json",
+    "testSummary": {
+      "path": "Validation/test-runs/original-0230-targeted-r2-summary.json",
+      "log": "Validation/test-runs/original-0230-targeted-r2.log",
+      "passedTests": 40,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "executionSeconds": 23.609,
+      "scope": "40 targeted tests, not the full App suite. r1 compile ambiguity in convert(.zero) was fixed by root to CGPoint.zero before r2; no failure is omitted or relabeled as a runtime pass."
+    },
+    "imagesReviewed": [
+      {
+        "path": "Docs/original-feel-0230/rig-0230-gentleRetry-250pt-actual-380ms.png",
+        "sha256": "db6821ae58cc2cc53911fdad94ea21a93ac0bd339d06a69ca78559aca1d74380",
+        "sourceAttachment": "A6158A22-83B0-46CB-A4B7-6F27FDD984E2.png",
+        "sourceTest": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+        "openedIndividually": true
+      },
+      {
+        "path": "Docs/original-feel-0230/rig-0230-starHug-250pt-actual-380ms.png",
+        "sha256": "15448dd6c0e1b1675bbd1c8f1646784dbfaa33481f64501acf9bd3a589c785a1",
+        "sourceAttachment": "5D1D1EE3-5375-4983-92AE-E94D5BFDF8C9.png",
+        "sourceTest": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+        "openedIndividually": true
+      },
+      {
+        "path": "Docs/original-feel-0230/rig-0230-joyfulRaise-250pt-actual-380ms.png",
+        "sha256": "e46b351c5cc10b1e284902f7b931b54a7085ceec489805645b5204118c515d32",
+        "sourceAttachment": "75C26501-7856-4CF3-82C1-6A0804D36A35.png",
+        "sourceTest": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+        "openedIndividually": true
+      },
+      {
+        "path": "Docs/original-feel-0230/rig-0230-gentleRetry-168pt-actual-380ms.png",
+        "sha256": "1c941fe55340d6126f75c3bbaaa2025bc9324c23e61806b57e536ec54f5f912e",
+        "sourceAttachment": "E8DD379B-0CD6-4A4A-815E-51C16B892A14.png",
+        "sourceTest": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+        "openedIndividually": true
+      },
+      {
+        "path": "Docs/original-feel-0230/rig-0230-starHug-168pt-actual-380ms.png",
+        "sha256": "185e1c67a3d003673d99163bb5a2166b9b5f812c3add7dca8cf929939b909eaa",
+        "sourceAttachment": "05842E4E-F617-40A4-9AB1-F0C8FAB7BEA9.png",
+        "sourceTest": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+        "openedIndividually": true
+      },
+      {
+        "path": "Docs/original-feel-0230/rig-0230-joyfulRaise-168pt-actual-380ms.png",
+        "sha256": "259d2ff103b7cf8bae3fa7468d36b1e984b0ef4317583edc9151565c5bc0f26a",
+        "sourceAttachment": "704D7AF8-0000-4033-84D3-91E444523DBD.png",
+        "sourceTest": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+        "openedIndividually": true
+      },
+      {
+        "path": "Docs/original-feel-0230/rig-0230-gentleRetry-140pt-actual-380ms.png",
+        "sha256": "7079cbad94ff6d8730a4eb3ef49da42354bc10a0944ce3a51e3fbe5118639ac8",
+        "sourceAttachment": "186B8B16-8B4E-4344-B160-8D693ADAE0F6.png",
+        "sourceTest": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+        "openedIndividually": true
+      },
+      {
+        "path": "Docs/original-feel-0230/rig-0230-starHug-140pt-actual-380ms.png",
+        "sha256": "6cd9dfe0c18c1381a583a32b09cc15e6215b2f39037963df6edd5aba116d0ff5",
+        "sourceAttachment": "F4B7B630-C4BD-451A-A053-DB44FA0EECE5.png",
+        "sourceTest": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+        "openedIndividually": true
+      },
+      {
+        "path": "Docs/original-feel-0230/rig-0230-joyfulRaise-140pt-actual-380ms.png",
+        "sha256": "d2b4dd033e8857e3e6ad5cc27b73e593f0f892edfc84027093eed90736310c78",
+        "sourceAttachment": "0BFE86C4-7978-414B-80BC-77F5E4B61657.png",
+        "sourceTest": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+        "openedIndividually": true
+      },
+      {
+        "path": "Docs/original-feel-0230/result-mouth-0230-fallback-250pt-380ms.png",
+        "sha256": "1e522970085a145bb7ad27a7153a454ebd7ba54febf7b7c6a8f1443ad7e654e4",
+        "sourceAttachment": "99667D59-7FAC-441A-8407-9986964976C9.png",
+        "sourceTest": "ResultCharacterTests/testSighFollowsActualMouthDuringNodAtThreeSizesIncludingFallback()",
+        "openedIndividually": true
+      },
+      {
+        "path": "Docs/original-feel-0230/result-mouth-0230-fallback-168pt-380ms.png",
+        "sha256": "6a353f4946ee50a4a3967630b1b7c320104f2a39a907874bbb73f6db6493f632",
+        "sourceAttachment": "3F4ACF8E-5709-46FE-8D0E-8B1646E18217.png",
+        "sourceTest": "ResultCharacterTests/testSighFollowsActualMouthDuringNodAtThreeSizesIncludingFallback()",
+        "openedIndividually": true
+      },
+      {
+        "path": "Docs/original-feel-0230/result-mouth-0230-fallback-140pt-380ms.png",
+        "sha256": "ae2365929063947278e78ac94afead375882557f091624dfac1c1076dc0b336c",
+        "sourceAttachment": "9DEA31E7-BD60-40D1-AC89-D1E17C507787.png",
+        "sourceTest": "ResultCharacterTests/testSighFollowsActualMouthDuringNodAtThreeSizesIncludingFallback()",
+        "openedIndividually": true
+      },
+      {
+        "path": "Docs/original-feel-0230/result-mouth-0230-rig-250pt-380ms.png",
+        "sha256": "be1343bdc2168b05ab86d6e1182f9e6b8a949ae9d18a73eb49ac5572a97005e1",
+        "sourceAttachment": "F8CE4DD8-6C53-427F-BBDA-A1F87D148714.png",
+        "sourceTest": "ResultCharacterTests/testSighFollowsActualMouthDuringNodAtThreeSizesIncludingFallback()",
+        "openedIndividually": true
+      },
+      {
+        "path": "Docs/original-feel-0230/result-mouth-0230-rig-168pt-380ms.png",
+        "sha256": "55b74b9c8a4b1b8cc75e0e61ed000c4394a9b940bdef57ef7154362e549627b1",
+        "sourceAttachment": "AC5FC8E1-4BF3-47C7-908D-E578D61B07A5.png",
+        "sourceTest": "ResultCharacterTests/testSighFollowsActualMouthDuringNodAtThreeSizesIncludingFallback()",
+        "openedIndividually": true
+      },
+      {
+        "path": "Docs/original-feel-0230/result-mouth-0230-rig-140pt-380ms.png",
+        "sha256": "693da497c5e8da7c05461d25fe9c664340eee2397322780d6e83f126f36745fb",
+        "sourceAttachment": "177ED387-06B7-4FCF-BF47-7E2948AA9296.png",
+        "sourceTest": "ResultCharacterTests/testSighFollowsActualMouthDuringNodAtThreeSizesIncludingFallback()",
+        "openedIndividually": true
+      }
+    ],
+    "imageCount": 15,
+    "scope": "Nine 380ms snapshots: all three rig performances at 140/168/250pt. Six mouth snapshots: current rig and complete-image fallback at all three sizes. Each was individually opened with view_image. No images or code modified in this review.",
+    "comparisonReferences": [
+      {
+        "path": ".build/0229-app-attachments/A0C132F0-930E-4A7F-9794-11FEAAFCD4C0.png",
+        "sha256": "34d290836ad05f5a9622d1cbfd56f50f602e1c9a6b7d5bef48362d2306b45ab7",
+        "openedAgainForComparison": true
+      },
+      {
+        "path": ".build/0229-app-attachments/A37B315F-0C90-4C98-BAA9-536A455F4BEE.png",
+        "sha256": "1171a293b0b9fcd943f2744e115697b13e0764ec30af8257397d9d5960c4ab22",
+        "openedAgainForComparison": true
+      }
+    ],
+    "findings": {
+      "elbowCaps": "Compared final 0.2.29 and targeted 0.2.30 250pt cheer captures directly. The conspicuous terminal crescent shading/highlight around each elbow is reduced; there is no new dark transverse cap seam. Complete arm overlap is visible at all three sizes. The joint silhouette remains visibly built from overlapping rounded parts on close inspection, so this is an improvement rather than a seamless-mesh claim.",
+      "mouthAttachment": "All three current-rig mouth captures place the three dots beside the lower snout/right mouth corner, visibly below the nostril rather than near it. All three fallback captures do likewise using the original complete-character image. The marked-mouth relationship and inheritance through nod are additionally checked by the passing actual presentation-layer test.",
+      "bounds": "All 15 captures show complete feet/head/paws and visible outer margin; no visible clipped dot or disconnected limb. The unchanged part bounds assertions and new mouth-bubble bounds assertions passed in r2.",
+      "starGrip": "Both paws remain in front of the held star in the three hugging captures; the star still partly covers the left cheek as in the prior design. No new overlap/z-order defect observed.",
+      "expressionAndDepth": "Happy and sad heads retain the original expression/art style. Shoulder roots remain behind torso/head; forearms and paws retain the intended overlap. Eyes/mouth have not been redesigned or animated. Complete-image fallback is deliberately a different old full-body pose, not asserted identical to the normal rig."
+    },
+    "limitations": [
+      "These are actual simulator/UIKit snapshots at roughly 380ms, not full temporal coverage or live-video review.",
+      "No full-suite success, physical-iPhone playtest, measured FPS, system VoiceOver validation or Meowdoku aesthetic equivalence is asserted by this scoped review.",
+      "This agent reviewed the 15 role-specific images only; the remaining 7 board/score captures are assigned to root."
+    ],
+    "finalRecording": {
+      "source": ".build/rig-0230-r2.mov",
+      "sourceSHA256": "8c43ca2102e0dd3bbfe436b7394d1fbbfabe5d626880ac75f5daf289bc2360e4",
+      "recordingDurationSeconds": 8.635,
+      "framesDirectory": ".build/rig-0230-r2-frames",
+      "frameManifest": ".build/rig-0230-r2-frames/manifest.json",
+      "frameManifestSHA256": "df1c0a3c858ce2bf68f21f510f1319bd7ec29f2ae9c5fc4b63c45bcba0b79fc4",
+      "extraction": "Existing native AVFoundation extractor .build/extract-simulator-video, interval 0.2 seconds. All 44 sampled full-device frames preserved, including requested/actual sample times.",
+      "contactSheet": {
+        "path": ".build/rig-0230-r2-contact.png",
+        "sha256": "eb4c64965ed97f30be6d194742b329334604d1b21940acd29c92dba8d6218b0a",
+        "rangeRequestedSeconds": [
+          3.8,
+          8.0
+        ],
+        "selectedFrameCount": 22,
+        "method": "Existing .build/rig-video-contact crops actual frame content into a contact sheet; no regenerated poses. The reviewed range contains the three labeled continuous performances, avoiding earlier unlabelled size-test fragments.",
+        "frames": [
+          {
+            "actualSeconds": 3.796666666666667,
+            "file": "frame-003.800.png",
+            "requestedSeconds": 3.8000000000000003,
+            "sha256": "c383d7e5041f94ecf755e2c10a938e2673654183ab21912b3309eeeb71950da1"
+          },
+          {
+            "actualSeconds": 3.9983333333333335,
+            "file": "frame-004.000.png",
+            "requestedSeconds": 4,
+            "sha256": "fd357484b56ada7763736f1af0001e2b4030a13fa71b43cde27e43f8e56162fc"
+          },
+          {
+            "actualSeconds": 4.195,
+            "file": "frame-004.200.png",
+            "requestedSeconds": 4.2,
+            "sha256": "205a946a741fbd91a25f92e5e604f50f6304fa585b2a321cdee969ec1007eb0e"
+          },
+          {
+            "actualSeconds": 4.3966666666666665,
+            "file": "frame-004.400.png",
+            "requestedSeconds": 4.4,
+            "sha256": "f08b60ad4718c687c64819e56d279f8a5ee4956387cafc5a4d8297010c71ac7b"
+          },
+          {
+            "actualSeconds": 4.596666666666667,
+            "file": "frame-004.600.png",
+            "requestedSeconds": 4.6000000000000005,
+            "sha256": "436f5727f03f7193282c9f5cb76c0bbaa85c02ec8f2a103c4332bd3fcb978be0"
+          },
+          {
+            "actualSeconds": 4.793333333333333,
+            "file": "frame-004.800.png",
+            "requestedSeconds": 4.800000000000001,
+            "sha256": "a484cadef3125e2dbd828bf9484ff18b586ad042cfc3f5bdf8302e6cc654e57f"
+          },
+          {
+            "actualSeconds": 4.995,
+            "file": "frame-005.000.png",
+            "requestedSeconds": 5,
+            "sha256": "cb886f8f31ef98a84761e279b4b932c540b74a828ff0bd4871ba94e3fc6ba5b3"
+          },
+          {
+            "actualSeconds": 5.198333333333333,
+            "file": "frame-005.200.png",
+            "requestedSeconds": 5.2,
+            "sha256": "c59b951036703f7b79505ae7fdc45913939958e2156ca6274393f515a677723d"
+          },
+          {
+            "actualSeconds": 5.395,
+            "file": "frame-005.400.png",
+            "requestedSeconds": 5.4,
+            "sha256": "50f92a94874421caa7ebcbf062eeef09d36c637d77e9944a44ed5f3510dc2d05"
+          },
+          {
+            "actualSeconds": 5.596666666666667,
+            "file": "frame-005.600.png",
+            "requestedSeconds": 5.6000000000000005,
+            "sha256": "a390a3a0a08fe95da6105253d627c448aa607ed272cafff4533fe7bfb2b15dc0"
+          },
+          {
+            "actualSeconds": 5.798333333333333,
+            "file": "frame-005.800.png",
+            "requestedSeconds": 5.800000000000001,
+            "sha256": "bdf02583306dccd2dde6ab1148d24846c48dbff8e3c6a87d673ff872ec392972"
+          },
+          {
+            "actualSeconds": 5.996666666666667,
+            "file": "frame-006.000.png",
+            "requestedSeconds": 6,
+            "sha256": "7fe4257e60cd2e95f6fa2ba91503219b7e7a22abe1e6a099e1e55c6de8d1ef04"
+          },
+          {
+            "actualSeconds": 6.196666666666666,
+            "file": "frame-006.200.png",
+            "requestedSeconds": 6.2,
+            "sha256": "a60c0b7c1a8fa417f443243464199d532dbc216b7e6c672857fe9180405758a6"
+          },
+          {
+            "actualSeconds": 6.3966666666666665,
+            "file": "frame-006.400.png",
+            "requestedSeconds": 6.4,
+            "sha256": "f128a81d6b4fc5895bd8963c330be46ad3a1e5120985f51b3d73ba04c9b30fb6"
+          },
+          {
+            "actualSeconds": 6.598333333333334,
+            "file": "frame-006.600.png",
+            "requestedSeconds": 6.6000000000000005,
+            "sha256": "dcb24b5db3e424d551ea2a31f0251e62d8ed1507d5450741bdca5f7cf064d96b"
+          },
+          {
+            "actualSeconds": 6.8,
+            "file": "frame-006.800.png",
+            "requestedSeconds": 6.800000000000001,
+            "sha256": "d31d0bc299c1dd4ac28e443f06a35c9d6cf0c256b7e4aef0a78c3dfbb01fd40b"
+          },
+          {
+            "actualSeconds": 6.996666666666667,
+            "file": "frame-007.000.png",
+            "requestedSeconds": 7,
+            "sha256": "f7b2e4f3214ce04b18980b8fc85b3941ca688a56fb7ce2f84100c49cd446c104"
+          },
+          {
+            "actualSeconds": 7.195,
+            "file": "frame-007.200.png",
+            "requestedSeconds": 7.2,
+            "sha256": "fe7df2d74e489afe4ef677fc37c9f92d1697f73b4fa790c173ecfc5a7dfa8506"
+          },
+          {
+            "actualSeconds": 7.398333333333333,
+            "file": "frame-007.400.png",
+            "requestedSeconds": 7.4,
+            "sha256": "bd356ceda536fe8d5356636b3e10808865793828413a352bfb260d7835417282"
+          },
+          {
+            "actualSeconds": 7.596666666666667,
+            "file": "frame-007.600.png",
+            "requestedSeconds": 7.6000000000000005,
+            "sha256": "ee48f1c869e697f5547941e1bdef6ef7bb80e871b32936aef29f396cfa421d80"
+          },
+          {
+            "actualSeconds": 7.796666666666667,
+            "file": "frame-007.800.png",
+            "requestedSeconds": 7.800000000000001,
+            "sha256": "f87e408cc9f849ae229cfb8ed8769a9437f3ec839ade9850d433f0b67fe68bd3"
+          },
+          {
+            "actualSeconds": 7.991666666666666,
+            "file": "frame-008.000.png",
+            "requestedSeconds": 8,
+            "sha256": "a887a0ec0231686045c51168e352ee3c2e64858e9c309db0576ddc5c64388636"
+          }
+        ]
+      },
+      "sourceTest": "ResultCharacterChoreographyTests/testActualRigPerformancesRunContinuouslyForVideoReview()",
+      "sourceRun": "Final full-App r2 recording; parent reported ResultCharacterChoreographyTests passed. This entry does not assert the entire ongoing App run passed.",
+      "reviewMethod": "Opened the extracted-frame contact sheet and additionally opened the full-device 4.0s, 5.4s and 7.0s requested frames individually. This is actual-recording frame review, not live video playback.",
+      "fullFramesIndividuallyOpened": [
+        {
+          "actualSeconds": 3.9983333333333335,
+          "file": "frame-004.000.png",
+          "requestedSeconds": 4,
+          "path": ".build/rig-0230-r2-frames/frame-004.000.png",
+          "sha256": "fd357484b56ada7763736f1af0001e2b4030a13fa71b43cde27e43f8e56162fc"
+        },
+        {
+          "actualSeconds": 5.395,
+          "file": "frame-005.400.png",
+          "requestedSeconds": 5.4,
+          "path": ".build/rig-0230-r2-frames/frame-005.400.png",
+          "sha256": "50f92a94874421caa7ebcbf062eeef09d36c637d77e9944a44ed5f3510dc2d05"
+        },
+        {
+          "actualSeconds": 6.996666666666667,
+          "file": "frame-007.000.png",
+          "requestedSeconds": 7,
+          "path": ".build/rig-0230-r2-frames/frame-007.000.png",
+          "sha256": "f7b2e4f3214ce04b18980b8fc85b3941ca688a56fb7ce2f84100c49cd446c104"
+        }
+      ],
+      "observations": [
+        {
+          "performance": "joyfulRaise",
+          "labeledRequestedSampleRangeSeconds": [
+            3.8,
+            5.0
+          ],
+          "finding": "Arms progress from the lowered anticipation through raised cheer to a stable raised terminal pose. End-cap shading remains softer through sampled elbow bends. Full paws remain within decoration; no obvious detached arm, duplicate silhouette or switch to legacy full art in the sampled sequence."
+        },
+        {
+          "performance": "starHug",
+          "labeledRequestedSampleRangeSeconds": [
+            5.2,
+            6.4
+          ],
+          "finding": "Both paws track the star during lift, hold and settling. The star remains in front of the face/hands arrangement as authored; no hand/prop detachment or terminal image replacement observed."
+        },
+        {
+          "performance": "gentleRetry",
+          "labeledRequestedSampleRangeSeconds": [
+            6.6,
+            8.0
+          ],
+          "finding": "Head bows and returns with arm movement. At requested 7.0s (actual 6.9966667s) the three sigh dots appear beside the mouth; at 7.2s they remain beside the moving mouth, then disappear while the same sad rig settles. No observed dot emerging at the nostril."
+        }
+      ],
+      "limits": [
+        "This is a simulator test-host recording, not ordinary application navigation or physical-device gameplay.",
+        "The configured host holds each performance for about 1.4s; labeled frame ranges are sampled observation intervals, not exact measured animation durations.",
+        "Sampling every 0.2s cannot establish per-frame continuity, FPS, device input/audio/haptic feel or absence of every short transient artifact.",
+        "Art remains a cutout rig with fixed happy/sad head textures; no claim of Meowdoku aesthetic equivalence."
+      ]
+    }
+  }
+}

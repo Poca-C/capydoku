@@ -47,11 +47,13 @@ final class ResultCharacterUIView: UIView {
     private let character = CALayer()
     private var rigLayers: [ResultRigPart: CALayer] = [:]
     private var rigReady = false
+    private let prepareRig: () -> Bool
     private let groundShadow = CAShapeLayer()
     private let crown = CALayer()
     private var crownStars: [CAShapeLayer] = []
     private var wingStars: [CAShapeLayer] = []
     private var sighs: [CAShapeLayer] = []
+    private let mouthOrigin = CALayer()
     private var won = true
     private var variant = ResultCelebrationVariant.joyfulBounce
     private var reduceMotion = false
@@ -72,7 +74,12 @@ final class ResultCharacterUIView: UIView {
         DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: work)
     }
 
-    override init(frame: CGRect) {
+    override convenience init(frame: CGRect) {
+        self.init(frame: frame, prepareRig: ResultCharacterArtwork.prewarmRig)
+    }
+
+    init(frame: CGRect, prepareRig: @escaping () -> Bool) {
+        self.prepareRig = prepareRig
         super.init(frame: frame)
         isUserInteractionEnabled = false; isAccessibilityElement = false; accessibilityElementsHidden = true
         backgroundColor = .clear; clipsToBounds = true
@@ -102,10 +109,11 @@ final class ResultCharacterUIView: UIView {
             star.strokeColor = UIColor(CapyPalette.orange).cgColor; star.lineWidth = 0.8
             star.opacity = 0; layer.addSublayer(star); wingStars.append(star)
         }
+        mouthOrigin.name = "result-mouth-origin"
         for index in 0..<3 {
             let sigh = CAShapeLayer(); sigh.name = "result-sigh-\(index)"
             sigh.fillColor = UIColor(CapyPalette.paper).withAlphaComponent(0.9).cgColor
-            sigh.opacity = 0; layer.addSublayer(sigh); sighs.append(sigh)
+            sigh.opacity = 0; mouthOrigin.addSublayer(sigh); sighs.append(sigh)
         }
         NotificationCenter.default.addObserver(self, selector: #selector(suspend), name: UIApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resume), name: UIApplication.didBecomeActiveNotification, object: nil)
@@ -176,7 +184,7 @@ final class ResultCharacterUIView: UIView {
         if UIAccessibility.isReduceMotionEnabled { cancelPresentation() }
     }
 
-    private var allLayers: [CALayer] { [layer, character, groundShadow, crown] + Array(rigLayers.values) + crownStars + wingStars + sighs }
+    private var allLayers: [CALayer] { [layer, character, groundShadow, crown, mouthOrigin] + Array(rigLayers.values) + crownStars + wingStars + sighs }
 
     private var performance: ResultCharacterPerformance {
         won ? (variant == .joyfulBounce ? .joyfulRaise : .starHug) : .gentleRetry
@@ -184,7 +192,7 @@ final class ResultCharacterUIView: UIView {
 
     private func updateArtwork() {
         CATransaction.begin(); CATransaction.setDisableActions(true)
-        rigReady = ResultCharacterArtwork.prewarmRig()
+        rigReady = prepareRig()
         if rigReady {
             character.contents = nil
             for (part,piece) in rigLayers { piece.contents = ResultCharacterArtwork.rigImage(part)?.cgImage }
@@ -197,6 +205,7 @@ final class ResultCharacterUIView: UIView {
             for piece in rigLayers.values { piece.opacity = 0 }
         }
         crown.opacity = won && variant == .proudCrown ? 1 : 0
+        layoutSighs()
         CATransaction.commit()
     }
 
@@ -239,12 +248,25 @@ final class ResultCharacterUIView: UIView {
             star.frame = square(positions[index].0, positions[index].1, 0.065)
             star.path = starPath(in: star.bounds).cgPath
         }
+        layoutSighs()
+        CATransaction.commit()
+    }
+
+    private func layoutSighs() {
+        // Marked on the actual padded sad-head cutout, at the right mouth corner.
+        // A head child inherits both the nod and the whole-body motion. The
+        // complete-image fallback has its own calibrated mouth location.
+        let owner = rigReady ? (rigLayers[.sadHead] ?? character) : character
+        let mouth = rigReady ? CGPoint(x: 0.835, y: 0.815) : CGPoint(x: 0.805, y: 0.446)
+        if mouthOrigin.superlayer !== owner { owner.addSublayer(mouthOrigin) }
+        mouthOrigin.position = CGPoint(x: owner.bounds.width * mouth.x, y: owner.bounds.height * mouth.y)
+        let side = min(bounds.width, bounds.height)
         for (index, sigh) in sighs.enumerated() {
-            let width = CGFloat(0.023 + Double(index) * 0.014)
-            sigh.frame = square(0.77 + CGFloat(index) * 0.036, 0.48 - CGFloat(index) * 0.022, width)
+            let width = side * CGFloat(0.023 + Double(index) * 0.014)
+            sigh.frame = CGRect(x: side * CGFloat(index) * 0.036, y: -side * CGFloat(index) * 0.022,
+                                width: width, height: width)
             sigh.path = UIBezierPath(ovalIn: sigh.bounds).cgPath
         }
-        CATransaction.commit()
     }
 
     private func starPath(in bounds: CGRect) -> UIBezierPath {

@@ -63,6 +63,8 @@ final class ResultRigImageCache {
         CGRect(x:1003,y:187,width:213,height:214), CGRect(x:1394,y:145,width:289,height:265),
         CGRect(x:105,y:477,width:247,height:359), CGRect(x:567,y:499,width:207,height:309),
         CGRect(x:997,y:592,width:210,height:198), CGRect(x:1399,y:553,width:296,height:269)]
+    static let refinedArmBounds = [CGRect(x:117,y:57,width:251,height:370), CGRect(x:594,y:86,width:196,height:320),
+        CGRect(x:104,y:474,width:247,height:363), CGRect(x:566,y:496,width:208,height:314)]
 
     func image(_ part: ResultRigPart) -> UIImage? { _ = prepare(); return images[part] }
 
@@ -71,7 +73,10 @@ final class ResultRigImageCache {
         prepared = true
         let atlases: [(String, Int, Int, String, [CGRect], [ResultRigPart])] = [
             ("CapyRigCore0229",1254,1254,"b60a16842ffe4666eadcea26ae757c49e8f263c201634b961d8325c3988b1a5d",Self.coreBounds,[.torso,.happyHead,.sadHead,.star]),
-            ("CapyRigLimbs0229",1774,887,"5354358b312919d57dd9aa0351a047d19a5bbb35e249e1082d7f64fae2252353",Self.limbBounds,[.leftUpperArm,.leftForearm,.leftPaw,.leftFoot,.rightUpperArm,.rightForearm,.rightPaw,.rightFoot])]
+            // The local edit also changed non-target pixels. Reuse the original
+            // paw/foot cutouts verbatim, and adopt only the four refined arms.
+            ("CapyRigLimbs0229",1774,887,"5354358b312919d57dd9aa0351a047d19a5bbb35e249e1082d7f64fae2252353",[2,3,6,7].map { Self.limbBounds[$0] },[.leftPaw,.leftFoot,.rightPaw,.rightFoot]),
+            ("CapyRigLimbs0230",1774,887,"707fa071a7b10c7ce8b4bd51e8ccf14cd6662d4413869d03b17e3353a7d4f1c1",Self.refinedArmBounds,[.leftUpperArm,.leftForearm,.rightUpperArm,.rightForearm])]
         for (name,width,height,digest,bounds,parts) in atlases {
             guard let image = load(name), image.imageOrientation == .up, let source = image.cgImage,
                   source.width == width, source.height == height else { images.removeAll(); return false }

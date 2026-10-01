@@ -267,7 +267,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         }
         if !preview.isEmpty || (hideAccessibility && found.count != size) { clearScenePresentation() }
         if locked || hideAccessibility || !preview.isEmpty { clearGuidance() }
-        if !preview.isEmpty || ((locked || hideAccessibility) && found.count != size) { clearPlacementBursts() }
+        if mistakeCell != nil || !preview.isEmpty || ((locked || hideAccessibility) && found.count != size) { clearPlacementBursts() }
         for effect in feedbackOverlay.subviews.compactMap({ $0 as? BoardPlacementBurstView }) where !found.contains(effect.cellIndex) {
             effect.removeFromSuperview()
         }
@@ -377,7 +377,9 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     /// tap is recognized. These methods only own a transient highlight.
     func beginCellPress(at point: CGPoint) {
         removeIdleExpressions()
-        clearPlacementBursts()
+        // A new contact must not cut off a committed reward. These sparse,
+        // non-interactive bursts finish independently, with at most two alive;
+        // covering, lifecycle and board replacement still cancel them.
         clearEntrancePresentation()
         endCellPress()
         guard let index = cell(at: point), canPress(index) else { return }

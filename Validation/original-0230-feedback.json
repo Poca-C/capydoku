@@ -1,0 +1,315 @@
+{
+  "build": "0.2.30 (33)",
+  "date": "2026-10-01",
+  "status": "verified_scoped_demo_improvements_simulator_only_distribution_paused",
+  "authority": "以初始Word正文及截图、中文市场补充和用户既有授权为依据。本轮限定反馈衔接与局部角色修整；不扩大业务范围或将临时表现值标为冻结参考参数。",
+  "sourceParagraphs": [
+    127,
+    129,
+    130,
+    133,
+    134,
+    136,
+    241,
+    248,
+    249,
+    250,
+    252,
+    254
+  ],
+  "previousReport": "Validation/original-0229-feedback.json",
+  "changes": [
+    {
+      "area": "连续操作保留已提交彩粒，确认错误后取消",
+      "status": "implemented_final_app_and_scoped_runtime_visual_review_passed",
+      "detail": "移除新触摸对先前正确操作彩粒的无条件清理。普通连续双击、单击标记或盘外接触保留原有实例与有限结束时间；后续正确提交可与先前彩粒并行，仍为每组12枚、0.62秒、每盘最多2组。真实扣命识别到错误时清除旧成功彩粒，按下尚未判定不提前取消。",
+      "boundaries": "不改变手势识别器、输入等待、分数、生命、存档或规则；预览、遮挡、后台、离页、尺寸/棋盘更换及动态政策切换仍清理。第三组替换最早组是既有容量限制。",
+      "sources": [
+        "App/Views/PuzzleBoardView.swift",
+        "App/Views/BoardPlacementBurstView.swift",
+        "AppTests/BoardCellPresentationTests.swift",
+        "AppTests/BoardPlacementBurstTests.swift"
+      ],
+      "evidenceBoundary": "新增宿主用例经 activate→真实GameSession提交/标记→configure 检查生命、得分、found/marks及动画生命周期；未合成真实UITouch，不能单独替代双击识别与连续滑动UI测试。"
+    },
+    {
+      "area": "连续正得分各自有限回弹",
+      "status": "implemented_final_app_and_scoped_runtime_visual_review_passed",
+      "detail": "复用现有正分数变化的scoreToken生成呈现标识；将顶部数字由scoreDelta持续非空时维持放大，改为每次新的正增分触发0.32秒有限回弹。数字立即更新；再次得分从当前可见尺寸接续，短暂释放再抬升，最终回到原大小。",
+      "boundaries": "没有新增业务事件账本、重置计时器或输入等待；模型变换始终为identity。相同呈现标识/HUD刷新不重触发，恢复、新局、遮挡、后台和离页消费快照而不重播；减少动态效果和低电量静态。既有scoreDelta及其0.75秒过期语义保留。",
+      "sources": [
+        "App/Views/ScorePulseView.swift",
+        "App/Views/GameRewardPresentation.swift",
+        "App/Views/RootView.swift",
+        "AppTests/ScorePulsePresentationTests.swift",
+        "AppTests/GameRewardPresentationTests.swift"
+      ],
+      "evidenceBoundary": "3项新宿主测试在40项专项内通过，采样实际presentation layer连续两次等额得分各自运动及归位，并经过真实RootView/Core提交；不据此声称真机节奏或Meowdoku时序等效。"
+    },
+    {
+      "area": "四个臂部末端修整与嘴角叹气",
+      "status": "implemented_final_app_and_scoped_runtime_visual_review_passed",
+      "detail": "只采用修整图集中的左/右上臂及前臂4个部件，头、身体、星星、爪与脚仍从0.2.29原图集中提取；避免采用编辑图中非目标区域的变化。失败叹气的原点改为失落头部的嘴角子层，随点头和整体动作移动；旧完整角色回退路径有单独嘴角坐标。",
+      "boundaries": "保留12个刚性部件与既有有限动作，不新增眼口独立动态或网格形变。三个图集任一缺失/校验失败仍整体回退；22张专项r2运行图有限目视通过，最终r2视频有限抽样核对通过，仍不等于真机或逐帧参考对标。",
+      "sources": [
+        "App/Views/ResultCharacterArtwork.swift",
+        "App/Views/ResultCharacterView.swift",
+        "App/Resources/Assets.xcassets/CapyRigLimbs0230.imageset/CapyRigLimbs0230.png",
+        "AppTests/ResultCharacterChoreographyTests.swift",
+        "AppTests/ResultCharacterTests.swift"
+      ],
+      "evidenceBoundary": "专项包含来源裁切像素保持、缺失新臂图集整体回退，以及rig/完整图回退各140/168/250pt嘴角跟随、边界、取消和不重播测试。参数验证不单独等于审美质量完成。"
+    }
+  ],
+  "referenceObservation": {
+    "successfulNewPlaytestThisRound": false,
+    "latestObservation": "Validation/meowdoku-playtest-comparison-0229.json",
+    "liveAuditoryABThisRound": false,
+    "boundary": "沿用0.2.29的有限参考观察，本轮没有新增Meowdoku试玩、听觉A/B、触觉测量或帧率对标；先前观察的Perfect仍不替换正式Excellent要求。"
+  },
+  "initialFailures": [
+    {
+      "run": "targeted-r1",
+      "status": "compile_failed_before_test_execution",
+      "testExecutionStarted": false,
+      "log": "Validation/test-runs/original-0230-targeted.log",
+      "bundle": "Validation/test-runs/original-0230-targeted.xcresult",
+      "file": "AppTests/ResultCharacterTests.swift",
+      "lineAtFailure": 214,
+      "failure": "origin.convert(.zero,to:root) 中 .zero 在 CGPoint/CGRect 重载之间存在歧义。",
+      "fix": "明确写作 CGPoint.zero；未删除用例或放宽断言。",
+      "resolutionStatus": "resolved_targeted_r2_passed",
+      "resolutionEvidence": "Validation/test-runs/original-0230-targeted-r2.log"
+    },
+    {
+      "run": "full-app-r1",
+      "kind": "one_failed_case_three_assertions",
+      "test": "BoardGuidancePresentationTests/testIdleBlinkSkipsActiveFeedbackAndResumesOnNextBoardTick",
+      "observed": "旧用例假设下一次触摸会清除成功彩粒，在0.62秒彩粒仍存活时立即期待空闲眨眼，和本轮持续反馈行为冲突。",
+      "fix": "仅将该测试改为async：确认触摸结束彩粒仍在且不眨眼，等待真实700ms自然清理后，下一tick再验证眨眼/侧看；生产代码未改。",
+      "productionCodeChangedForThisFix": false,
+      "log": "Validation/test-runs/original-0230-app.log",
+      "summary": "Validation/test-runs/original-0230-app-summary.json",
+      "bundle": "Validation/test-runs/original-0230-app.xcresult",
+      "resolutionStatus": "resolved_guidance15_and_final_app473_passed",
+      "resolutionEvidence": "Validation/test-runs/original-0230-app-r2.xcresult"
+    }
+  ],
+  "targetedTests": {
+    "status": "passed",
+    "build": "0.2.30 (33)",
+    "device": "iPhone 17 Pro simulator / iOS 26.5",
+    "cases": 40,
+    "passed": 40,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 23.609,
+    "suiteSecondsIncludingOverhead": 23.625,
+    "groups": {
+      "BoardCellPresentationTests": 8,
+      "BoardPlacementBurstTests": 5,
+      "GameRewardPresentationTests": 6,
+      "ResultCharacterChoreographyTests": 10,
+      "ResultCharacterTests": 8,
+      "ScorePulsePresentationTests": 3
+    },
+    "log": "Validation/test-runs/original-0230-targeted-r2.log",
+    "bundle": "Validation/test-runs/original-0230-targeted-r2.xcresult",
+    "boundary": "修正首次测试编译歧义后的40项专项；之后首轮完整App暴露旧眨眼测试预期与新彩粒保留语义冲突，该历史与修复另行保留。",
+    "summary": "Validation/test-runs/original-0230-targeted-r2-summary.json"
+  },
+  "applicationTests": {
+    "status": "passed",
+    "build": "0.2.30 (33)",
+    "device": "iPhone 17 Pro simulator / iOS 26.5",
+    "log": "Validation/test-runs/original-0230-app-r2.log",
+    "bundle": "Validation/test-runs/original-0230-app-r2.xcresult",
+    "boundary": "最终完整模拟器App复验通过，且本轮九项17e UI通过；不等于真机手感或正式验收。",
+    "cases": 473,
+    "passed": 473,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 177.13,
+    "suiteSecondsIncludingOverhead": 177.29,
+    "summary": "Validation/test-runs/original-0230-app-r2-summary.json",
+    "scope": "完整CapydokuAppTests，473项全过，无排除或跳过；包含修正后眨眼等待测试及本轮连续彩粒、得分、臂部和叹气用例。"
+  },
+  "uiTests": {
+    "status": "passed",
+    "build": "0.2.30 (33)",
+    "device": "iPhone 17e simulator / iOS 26.5",
+    "cases": [
+      "CapydokuUITests.CapydokuUITests testGuidedTutorialCoversRulesTapUndoBothSwipesAndFind",
+      "CapydokuUITests.CapydokuUITests testLastLifeSpotlightDismissalDoesNotSpendLifeOrMarkAndColdRestoreDoesNotReplayIt",
+      "CapydokuUITests.CapydokuUITests testLoseAndSimulatedRevivePreservesBoard",
+      "CapydokuUITests.CapydokuUITests testSolveEntirePuzzleAndAdvance",
+      "CapydokuUITests.CapydokuUITests testToolsResumeAfterNativeTapDoubleTapAndPanRecognizersFinish",
+      "CapydokuUITests.HardeningUITests testMixedBackToBackGesturesNeverRepeatDamageOrScore",
+      "CapydokuUITests.HardeningUITests testSwipeStopsWhenFingerLeavesBoard",
+      "CapydokuUITests.OriginalReferenceUITests testAllFourBoardSizesKeepNavigationRulesAndToolsInOrder",
+      "CapydokuUITests.OriginalReferenceUITests testModalControlsExcludeBackgroundAndReturnToTheSameBoard"
+    ],
+    "passed": 9,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 241.202,
+    "suiteSecondsIncludingOverhead": 241.215,
+    "log": "Validation/test-runs/original-0230-17e-ui.log",
+    "summary": "Validation/test-runs/original-0230-17e-ui-summary.json",
+    "bundle": "Validation/test-runs/original-0230-17e-ui.xcresult",
+    "repeatedTestAction": false,
+    "testActionCount": 1,
+    "scope": "与0.2.29相同九项UI，单个test动作、无重复、无排除/跳过；覆盖教学、原生手势及道具、通关下一关、失败复活、一命提示与恢复、连续混合手势、离盘停止滑动、弹层可访问性及4/6/8/10尺寸。",
+    "boundary": "保留既有固定夹具范围；不是150关全部人工试玩、真机手感、真实外部服务或正式上架验收。"
+  },
+  "visualEvidence": {
+    "status": "reviewed_passed_scoped_runtime_images_and_movie_samples",
+    "testEntries": [
+      "ScorePulsePresentationTests/testActualRootRapidAcceptedAwardsCapture",
+      "BoardCellPresentationTests/testNextContactKeepsCommittedRewardAliveWhileFurtherFindsAndMarksApplyImmediately",
+      "ResultCharacterTests/testSighFollowsActualMouthDuringNodAtThreeSizesIncludingFallback",
+      "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving"
+    ],
+    "boundary": "22张图片来自专项r2，两段实际模拟器屏幕录制来自最终App-r2。有限图片与视频抽样目视通过，不声称全片逐帧检查；静音UIKit/SwiftUI测试宿主，不是普通导航、原生触摸时序、真机播放、FPS或听觉/触觉验收，亦不等于参考产品审美/时序等效。",
+    "manifest": "Docs/original-feel-0230/manifest.json",
+    "sourceBundle": "Validation/test-runs/original-0230-targeted-r2.xcresult",
+    "imagesReviewed": 22,
+    "imageScope": "4张连续棋盘、3张真实RootView得分、9张三尺寸三动作rig、6张rig/完整图回退嘴角叹气。",
+    "reviewers": {
+      "root": "逐张查看4张棋盘与3张真实RootView得分图，通过有限目视核对。",
+      "resultCharacterAgent": "逐张查看9张rig与6张嘴角叹气图，通过有限目视核对。"
+    },
+    "imageIntegrity": "22张专项r2原PNG逐一SHA256核验通过；按manifest保留原始附件与来源。",
+    "videos": [
+      {
+        "file": "Docs/original-feel-0230/continuous-result-performances.mov",
+        "sha256": "8c43ca2102e0dd3bbfe436b7394d1fbbfabe5d626880ac75f5daf289bc2360e4",
+        "durationSeconds": 8.635,
+        "sampledFrames": 44,
+        "sampling": "Docs/original-feel-0230/continuous-result-performances-sampling.json",
+        "sourceBundle": "Validation/test-runs/original-0230-app-r2.xcresult",
+        "scope": "Actual iPhone17 Pro simulator screen recording of a UIKit/SwiftUI test host. Silent fixture; no layer time seeking; not normal navigation, native touch timing or physical-device playback.",
+        "review": "Character reviewer viewed the three labeled sequences in the contact sheet and three full raw frames. Arm cap seams reduced; hands remain with the star; sigh follows mouth and clears. No claimed FPS or aesthetic equivalence.",
+        "sampleContactSheet": "Docs/original-feel-0230/continuous-result-video-frames.png",
+        "sampleContactSheetSHA256": "eb4c64965ed97f30be6d194742b329334604d1b21940acd29c92dba8d6218b0a",
+        "contactSheetRequestedRangeSeconds": [
+          3.8,
+          8.0
+        ],
+        "sampleIntervalSeconds": 0.2,
+        "reviewedScope": "角色agent查看请求3.8–8.0秒范围内22帧汇总及3张原始帧，root另看该汇总；未声称44个采样帧均逐张查看。"
+      },
+      {
+        "file": "Docs/original-feel-0230/continuous-score-feedback.mov",
+        "sha256": "38fda2a19a8e4c2edd7e21530ddd5da98801fe20cbe1cae7ec94ab70de5073a6",
+        "durationSeconds": 2.2683333333333335,
+        "sampledFrames": 23,
+        "sampling": "Docs/original-feel-0230/continuous-score-feedback-sampling.json",
+        "sourceBundle": "Validation/test-runs/original-0230-app-r2.xcresult",
+        "scope": "Actual iPhone17 Pro simulator screen recording of a UIKit/SwiftUI test host. Silent fixture; no layer time seeking; not normal navigation, native touch timing or physical-device playback.",
+        "review": "Root viewed native movie frames at requested0.2/0.4/0.7s alongside three actual RootView runtime captures; first and second committed awards retain their local feedback and readable score layout. Pulse motion and settling also verified through running presentation layers.",
+        "sampleIntervalSeconds": 0.1,
+        "reviewedScope": "root查看请求0.2/0.4/0.7秒的原始帧，并结合3张实际RootView附件；未声称23个采样帧均逐张查看。"
+      }
+    ]
+  },
+  "audio": {
+    "audioPlaybackImplementationModified": false,
+    "sourceWAVModified": false,
+    "localWAVFiles": 9,
+    "gitIgnored": true,
+    "formalManifest": "Resources/audio-manifest.json",
+    "formalManifestClipsEmpty": true,
+    "formalReferenceVerified": false,
+    "newAudioAdded": false,
+    "liveAuditoryABThisRound": false,
+    "latestTimingEvidence": "Validation/audio-timing-0229.json",
+    "boundary": "9个本地测试原声、volume/delay、正式空清单及播放器保持；未创建手机包或声称本轮真机声音验收。",
+    "resourceAuditThisBuild": {
+      "status": "passed",
+      "scope": "0.2.30 (33) Debug simulator internal_demo",
+      "localWAVFilesPerArtifact": 9,
+      "report": "Validation/test-runs/original-0230-audio-debug-inventory.json"
+    },
+    "releaseExclusion": {
+      "status": "historical_0227_evidence_only",
+      "evidence": "Validation/test-runs/original-0227-audio-release-inventory.json",
+      "rebuiltThisRound": false
+    }
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "evidence": "Validation/test-runs/original-0224-core.log",
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "physicalUpdate": {
+    "status": "not_built_or_installed_this_round_user_paused_distribution",
+    "installedThisRound": false,
+    "physicalBuildCreatedThisRound": false,
+    "latestVerifiedVersion": "0.2.29 (32)",
+    "latestEvidence": "Validation/original-0229-physical-install.json",
+    "latestEvidenceBoundary": "0.2.29曾无线覆盖安装并查询确认，自动启动因手机锁屏被拒；本轮不延伸为0.2.30安装、真机运行或手感验证。"
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "boundary": "本轮仅本地研发与模拟器验证；不制作手机包、不安装、不归档、不打包分发、不上传GitHub。"
+  },
+  "previousVerification": {
+    "build": "0.2.29 (32)",
+    "report": "Validation/original-0229-feedback.json",
+    "applicationPassed": 466,
+    "uiPassed": 9,
+    "historicalRunsPreserved": "0.2.29早期83过、候选100项99过/1失败及最终466/9通过均留在原报告，本轮不覆盖，也不作为0.2.30复测结果。"
+  },
+  "remaining": [
+    "仍无独立眼睛/嘴型动画，角色为刚性贴图部件；末端修整和嘴角叹气不代表整体达到Meowdoku精细度。",
+    "用户暂停手机包与分发，本轮不安装0.2.30；连续真人试玩、声音/触觉和真机手感仍未验。",
+    "正式计分/音频/难度与参考冻结、正式素材全集、外部服务及上架验收保持待验。"
+  ],
+  "formalSignOff": false,
+  "formalConformanceRowsUnchanged": 83,
+  "historicalChecklistCountUnchanged": 88,
+  "applicationTestsHistory": [
+    {
+      "status": "failed_historical_test_expectation_corrected_and_verified_in_final_app_r2",
+      "build": "0.2.30 (33)",
+      "device": "iPhone 17 Pro simulator / iOS 26.5",
+      "cases": 473,
+      "passed": 472,
+      "failed": 1,
+      "assertionFailures": 3,
+      "skipped": 0,
+      "seconds": 176.843,
+      "suiteSecondsIncludingOverhead": 176.985,
+      "failedTest": "BoardGuidancePresentationTests/testIdleBlinkSkipsActiveFeedbackAndResumesOnNextBoardTick",
+      "log": "Validation/test-runs/original-0230-app.log",
+      "summary": "Validation/test-runs/original-0230-app-summary.json",
+      "bundle": "Validation/test-runs/original-0230-app.xcresult",
+      "failureScope": "旧用例假设下一次触摸会清除成功彩粒，在0.62秒彩粒仍存活时立即期待空闲眨眼，和本轮持续反馈行为冲突。",
+      "fix": "仅将该测试改为async：确认触摸结束彩粒仍在且不眨眼，等待真实700ms自然清理后，下一tick再验证眨眼/侧看；生产代码未改。",
+      "resolutionEvidence": "Validation/test-runs/original-0230-app-r2.xcresult"
+    }
+  ],
+  "guidanceRetest": {
+    "status": "passed",
+    "build": "0.2.30 (33)",
+    "device": "iPhone 17 Pro simulator / iOS 26.5",
+    "cases": 15,
+    "passed": 15,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 6.291,
+    "log": "Validation/test-runs/original-0230-guidance.log",
+    "summary": "Validation/test-runs/original-0230-guidance-summary.json",
+    "bundle": "Validation/test-runs/original-0230-guidance.xcresult",
+    "scope": "BoardGuidancePresentationTests完整15项，包含修正后自然等待彩粒结束再恢复空闲表情的用例。"
+  },
+  "verificationConclusion": "本轮40项专项、眨眼修正后15项专项、最终473项App与九项17e UI均通过；22张专项r2运行图及两段最终App-r2实际模拟器录屏有限抽样核对通过。首次编译失败及首轮App旧用例失败仍完整保留，不升级正式要求状态。"
+}

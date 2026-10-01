@@ -324,9 +324,10 @@ struct GameView: View {
                                 .capyLayoutProbe("level_title")
                             VStack(spacing: 0) {
                                 Text(language.text("Score")).font(.system(size: compact ? 14 : 17, weight: .medium, design: .rounded))
-                                Text("\(s.score)").font(.system(size: compact ? 22 : 25, weight: .heavy, design: .rounded)).accessibilityIdentifier("score")
-                                    .scaleEffect(rewards.scoreDelta != nil && !reduceMotion ? 1.12 : 1)
-                                    .animation(reduceMotion ? nil : .spring(response: 0.24, dampingFraction: 0.62), value: rewards.scoreDelta)
+                                ScorePulseView(score: s.score, sessionID: s.id, pulseID: rewards.scorePulseID,
+                                               fontSize: compact ? 22 : 25, reduceMotion: reduceMotion,
+                                               presentationEnabled: canPresentFeedback && !lifeFocused)
+                                    .fixedSize()
                             }
                         }.frame(height: compact ? 44 : 56).opacity(model.hint == nil ? 1 : 0.35).accessibilityHidden(covered || model.hint != nil)
                         HStack(spacing: compact ? 12 : 18) {

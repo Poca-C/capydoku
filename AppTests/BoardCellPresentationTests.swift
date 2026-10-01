@@ -36,6 +36,12 @@ private final class CellPresentationRig {
     }
 
     var effects: [BoardCellFeedbackView] { board.subviews.flatMap(\.subviews).compactMap { $0 as? BoardCellFeedbackView } }
+    var bursts: [BoardPlacementBurstView] { board.subviews.flatMap(\.subviews).compactMap { $0 as? BoardPlacementBurstView } }
+    func center(_ index: Int) throws -> CGPoint {
+        let element = try XCTUnwrap(board.accessibilityElements?[index] as? UIAccessibilityElement)
+        return CGPoint(x: element.accessibilityFrameInContainerSpace.midX,
+                       y: element.accessibilityFrameInContainerSpace.midY)
+    }
     func close() {
         board.removeFromSuperview(); window.isHidden = true
         window.rootViewController = nil; previousWindow?.makeKeyAndVisible()
@@ -43,6 +49,60 @@ private final class CellPresentationRig {
 }
 
 final class BoardCellPresentationTests: XCTestCase {
+    @MainActor func testConfirmedMistakeEndsPreviousCelebrationWithoutWaitingToApplyDamage() throws {
+        let rig = try CellPresentationRig(); defer { rig.close() }
+        rig.board.activate(index: 1, submit: true)
+        let reward = try XCTUnwrap(rig.bursts.first), earned = rig.session.score
+        rig.board.beginCellPress(at: try rig.center(0)); rig.board.endCellPress()
+        XCTAssertTrue(rig.bursts.contains { $0 === reward }, "Intent alone must not cancel the earlier success")
+        rig.board.activate(index: 0, submit: true)
+        XCTAssertEqual(rig.session.lives, 2); XCTAssertEqual(rig.session.errors, [0])
+        XCTAssertEqual(rig.session.found, [1]); XCTAssertEqual(rig.session.score, earned)
+        XCTAssertTrue(rig.bursts.isEmpty, "Once a mistake is confirmed its feedback must not compete with old success confetti")
+        XCTAssertTrue(animations(reward.layer).isEmpty)
+    }
+
+    @MainActor func testNextContactKeepsCommittedRewardAliveWhileFurtherFindsAndMarksApplyImmediately() async throws {
+        let rig = try CellPresentationRig(); defer { rig.close() }
+        rig.board.activate(index: 1, submit: true)
+        let first = try XCTUnwrap(rig.bursts.first)
+        let firstFlight = try XCTUnwrap(first.layer.sublayers?.first?.animation(forKey: "placement-flight"))
+        try await Task.sleep(nanoseconds: 100_000_000)
+        capture(rig.board, name: "continuous-find-01-first-reward")
+
+        let next = try rig.center(7), pointsBeforeTouch = rig.session.score
+        rig.board.beginCellPress(at: next)
+        XCTAssertTrue(rig.bursts.contains { $0 === first }, "The first contact of the next double-tap cannot erase a committed reward")
+        XCTAssertEqual(first.layer.sublayers?.first?.animation(forKey: "placement-flight")?.beginTime, firstFlight.beginTime,
+                       "Contact cannot restart the reward's finite lifetime")
+        XCTAssertTrue(rig.board.hitTest(next, with: nil) === rig.board, "Continuing particles cannot intercept board input")
+        XCTAssertEqual(rig.session.found, [1]); XCTAssertEqual(rig.session.score, pointsBeforeTouch)
+        try await Task.sleep(nanoseconds: 80_000_000)
+        capture(rig.board, name: "continuous-find-02-next-contact-keeps-flight")
+        rig.board.endCellPress()
+        rig.board.activate(index: 7, submit: true)
+        XCTAssertEqual(rig.session.found, [1, 7]); XCTAssertGreaterThan(rig.session.score, pointsBeforeTouch)
+        XCTAssertEqual(Set(rig.bursts.map(\.cellIndex)), [1, 7])
+        let second = try XCTUnwrap(rig.bursts.first { $0.cellIndex == 7 })
+        let secondFlight = try XCTUnwrap(second.layer.sublayers?.first?.animation(forKey: "placement-flight"))
+        XCTAssertGreaterThan(secondFlight.beginTime, firstFlight.beginTime)
+        try await Task.sleep(nanoseconds: 90_000_000)
+        capture(rig.board, name: "continuous-find-03-two-independent-rewards")
+
+        let pointsBeforeMark = rig.session.score
+        rig.board.beginCellPress(at: try rig.center(0)); rig.board.endCellPress()
+        rig.board.activate(index: 0, submit: false)
+        XCTAssertEqual(rig.session.marks, [0]); XCTAssertEqual(rig.session.found, [1, 7])
+        XCTAssertEqual(rig.session.score, pointsBeforeMark); XCTAssertEqual(rig.session.lives, 3)
+        XCTAssertTrue(rig.bursts.contains { $0 === second }, "An ordinary mark also preserves the accepted reward")
+        rig.board.beginCellPress(at: CGPoint(x: -20, y: -20)); rig.board.endCellPress()
+        XCTAssertTrue(rig.bursts.contains { $0 === second }, "An out-of-board contact is not a cancellation event")
+        try await Task.sleep(nanoseconds: 560_000_000)
+        XCTAssertTrue(rig.bursts.isEmpty, "Both original cleanup deadlines must still finish normally")
+        XCTAssertTrue(animations(first.layer).isEmpty); XCTAssertTrue(animations(second.layer).isEmpty)
+        capture(rig.board, name: "continuous-find-04-settled-with-committed-mark")
+    }
+
     @MainActor private func animations(_ layer: CALayer) -> [CAAnimation] {
         (layer.animationKeys() ?? []).compactMap { layer.animation(forKey: $0) }
             + (layer.sublayers ?? []).flatMap(animations)
