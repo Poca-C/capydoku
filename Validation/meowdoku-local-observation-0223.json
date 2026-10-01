@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-01",
+  "reference": "Meowdoku by Oakever Games",
+  "installedApplication": {
+    "bundle": "com.oakever.meowdoku",
+    "version": "1.19.1",
+    "build": "457",
+    "source": "Official Mac App Store iOS-on-Mac install, already present when observed",
+    "metadata": "/Applications/Meowdoku.app/Wrapper/vita-meowdoku-godot.app/Info.plist"
+  },
+  "storeObservation": "Store now displays Open; previous region-unavailable blocker no longer reproduced.",
+  "launchObservation": "App launched successfully; initial Chinese welcome asks to accept service terms and privacy policy.",
+  "consent": "awaiting_explicit_user_confirmation; Accept not clicked",
+  "gameplayObserved": false,
+  "audioObserved": false,
+  "baseline": "Existing original Word requirements remain authoritative; current local Meowdoku is an observational reference, not frozen formal parameters.",
+  "scope": "Local UI inspection and read-only bundle version metadata. No reference code/audio/artwork extracted."
+}

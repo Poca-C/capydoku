@@ -1,0 +1,29 @@
+{
+  "build": "0.2.23 (26)",
+  "timestampUTC": "2026-10-01T06:06:55.004233+00:00",
+  "package": {
+    "version": "0.2.23",
+    "build": "26",
+    "bundle": "com.capydoku.demo",
+    "profileIncludesPhone": true,
+    "profileExpiresUTC": "2026-10-08 04:04:05",
+    "binarySHA256": "48c3f330db4fe2705fa21b3bd35d84eac7309d816c6cf8c43fbaac2700c52b0a"
+  },
+  "signature": {
+    "strictVerification": true,
+    "buildLog": "Validation/test-runs/original-0223-physical-build.log"
+  },
+  "installation": {
+    "status": "not_attempted_device_unavailable",
+    "passed": false,
+    "resetOrUninstall": false,
+    "lastConfirmedInstalledBuild": "0.2.22 (25)",
+    "beforeDataCopy": "Validation/test-runs/physical-0223-before-copy.json",
+    "failure": "CoreDevice could not locate a reachable matching device; read-only list finds paired device but tunnelState is unavailable.",
+    "discovery": "Validation/test-runs/physical-0223-discovery.json"
+  },
+  "launch": {
+    "status": "not_attempted"
+  },
+  "acceptanceBoundary": "Signed local package is ready. No update, data preservation check or physical play acceptance claimed for this build. Private identifiers omitted."
+}

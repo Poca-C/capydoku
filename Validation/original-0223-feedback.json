@@ -1,0 +1,94 @@
+{
+  "build": "0.2.23 (26)",
+  "date": "2026-10-01",
+  "status": "verified_scoped_demo_feedback_not_formal_acceptance",
+  "authority": "Original Word remains authoritative; Chinese default is the explicit user override. Meowdoku is observational, not frozen formal parameters.",
+  "sourceParagraphs": [
+    127,
+    129,
+    130,
+    136,
+    252,
+    254
+  ],
+  "changes": [
+    "Undo retracts the second then first X stroke over existing 0.13-second presentation; model already holds the empty cell.",
+    "Correct reveal adds four local small stars and radial glow within existing 0.32-second pop. No extra business event or sound.",
+    "Wrong-cell content and thin rim briefly shake while the opaque tile cover/hit geometry stay fixed; heart-to-X sequence ends with the same outlined red X as the committed board.",
+    "Early removal cancels cell cleanup/animations; visual effects remain non-interactive and reduced-motion branches have no explicit motion."
+  ],
+  "demoPresentationParameters": {
+    "formalReferenceValues": false,
+    "appliesOnlyToPresentation": true,
+    "undoSeconds": 0.13,
+    "foundSeconds": 0.32,
+    "wrongSequenceSeconds": 0.78,
+    "wrongRemovalSeconds": 0.8,
+    "wrongShakeFirstPortionSecondsApprox": 0.24,
+    "maximumWrongShakePoints": 2.4
+  },
+  "applicationTests": {
+    "build": "0.2.23 (26)",
+    "device": "iPhone 17 Pro simulator / iOS 26.5",
+    "passed": 327,
+    "failed": 0,
+    "skipped": 0,
+    "scope": "All CapydokuAppTests, no exclusions; 8 new cases covering cell accents, cancellation/reduced motion, in-flight captures and wrong-cell transition.",
+    "bundle": "Validation/test-runs/original-0223-app-final.xcresult",
+    "log": "Validation/test-runs/original-0223-app-final.log"
+  },
+  "uiTests": {
+    "device": "iPhone 17e simulator / iOS 26.5",
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0,
+    "bundle": "Validation/test-runs/original-0223-17e-ui.xcresult",
+    "cases": [
+      "testToolsResumeAfterNativeTapDoubleTapAndPanRecognizersFinish",
+      "testLoseAndSimulatedRevivePreservesBoard"
+    ],
+    "fixtureBoundary": "Both use preserved deterministic test fixture, not all-150 current-pack playthrough."
+  },
+  "visualEvidence": "Docs/original-cell-feel-0223/manifest.json",
+  "referenceObservation": "Validation/meowdoku-local-observation-0223.json",
+  "codeReview": {
+    "scope": "Both changed feedback classes and 8 added tests; lifecycle, reentry, reduced motion, hit/accessibility isolation, minimum cell bounds.",
+    "blockingFindings": 0
+  },
+  "historicalIterations": [
+    {
+      "bundle": "Validation/test-runs/original-0223-app.xcresult",
+      "passed": 326,
+      "failed": 1,
+      "skipped": 0,
+      "cause": "New pixel comparison rendered isolated transition and full-board committed X at different subpixel phases.",
+      "resolution": "Test now renders both states in identical full-board coordinates and crops the same integer pixel rectangle. Original tolerances retained; production code unchanged."
+    },
+    {
+      "bundle": "Validation/test-runs/original-0223-mistake-recheck.xcresult",
+      "passed": 3,
+      "failed": 0,
+      "scope": "Targeted retest after coordinate correction; followed by full 327 passing suite."
+    }
+  ],
+  "audio": {
+    "manifest": "Resources/audio-manifest.json",
+    "referenceVerified": false,
+    "newAudioAdded": false,
+    "soundAcceptance": "pending_original_resources_and_timing; no audio listening claim"
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "latestCoreEvidenceBuild": "0.2.21 (24)",
+    "latestCorePassed": 169,
+    "rerunThisBuild": false,
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "physicalInstall": "Validation/original-0223-physical-install.json",
+  "notVerified": [
+    "Meowdoku 1.19.1 (457) is installed and launches; terms acceptance is awaiting explicit user confirmation. No local gameplay or audio observation yet.",
+    "0.2.23 phone update: paired device is not currently reachable. Last confirmed phone build remains 0.2.22 (25).",
+    "Original audio, physical feel, system reduced motion, frame rate and frozen-reference fidelity.",
+    "Formal difficulty, external integrations, TestFlight/App Store release."
+  ]
+}

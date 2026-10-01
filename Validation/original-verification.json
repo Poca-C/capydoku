@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "date": "2026-10-01",
-  "build": "0.2.22 (25)",
+  "build": "0.2.23 (26)",
   "status": "Partial original-spec alignment; remaining client, reference and release gaps open.",
   "originalSHA256": "274bbf15f031bd80bb8b360cf14c0266acff370a230d9cad1b1785461df54dd2",
   "currentPackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49",
@@ -647,6 +647,24 @@
       "skipped": 0,
       "seconds": 58.992,
       "scope": "Actual Demo UI: default Chinese/English saved switch and cold same-board restore; first-launch legal links/consent and cold acceptance restoration. Existing simulator OS permission decisions can persist; not fresh physical-device coverage."
+    },
+    {
+      "build": "0.2.23 (26)",
+      "device": "iPhone 17 Pro",
+      "bundle": "Validation/test-runs/original-0223-app-final.xcresult",
+      "appTestsPassed": 327,
+      "failed": 0,
+      "skipped": 0,
+      "scope": "All CapydokuAppTests, no exclusions; 8 new cases covering cell accents, cancellation/reduced motion, in-flight captures and wrong-cell transition."
+    },
+    {
+      "build": "0.2.23 (26)",
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-0223-17e-ui.xcresult",
+      "uiTestsPassed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "scope": "Both use preserved deterministic test fixture, not all-150 current-pack playthrough. Cases: testToolsResumeAfterNativeTapDoubleTapAndPanRecognizersFinish, testLoseAndSimulatedRevivePreservesBoard"
     }
   ],
   "visualEvidence": {
@@ -672,14 +690,14 @@
   ],
   "historicalFailuresRetained": "Initial UI/app runs and first full-core run failed on changed fixture assumptions or real UI issues; these are retained under Validation/test-runs. Only explicitly listed successful reruns count. Old 88-item checklist completion counts are superseded.",
   "applicationTests": {
-    "build": "0.2.22 (25)",
+    "build": "0.2.23 (26)",
     "device": "iPhone 17 Pro simulator / iOS 26.5",
-    "passed": 319,
+    "passed": 327,
     "failed": 0,
     "skipped": 0,
-    "scope": "All CapydokuAppTests, no exclusions; includes 24 new feedback tests (7 board, 10 haptic, 6 presentation, 1 actual-view visual/layout test).",
-    "bundle": "Validation/test-runs/original-0222-app-layout-final.xcresult",
-    "log": "Validation/test-runs/original-0222-app-layout-final.log"
+    "scope": "All CapydokuAppTests, no exclusions; 8 new cases covering cell accents, cancellation/reduced motion, in-flight captures and wrong-cell transition.",
+    "bundle": "Validation/test-runs/original-0223-app-final.xcresult",
+    "log": "Validation/test-runs/original-0223-app-final.log"
   },
   "supersededOrInterruptedRuns": [
     "reward-readiness-final was intentionally interrupted to stop two runners targeting one simulator; not counted as success.",
@@ -722,13 +740,14 @@
     }
   ],
   "buildVerification": {
-    "bundleVersion": "0.2.22 (25)",
+    "bundleVersion": "0.2.23 (26)",
     "simulatorDebug": "passed locally signed, full App test host and selected UI tests",
-    "physicalDebugSigned": "passed strict codesign verification",
-    "physicalBuildLog": "Validation/test-runs/original-0222-physical-layout-final.log",
-    "physicalInstallEvidence": "Validation/original-0222-physical-install.json",
+    "physicalDebugSigned": "passed strict codesign verification; matching phone included in profile",
+    "physicalBuildLog": "Validation/test-runs/original-0223-physical-build.log",
+    "physicalInstallEvidence": "Validation/original-0223-physical-install.json",
+    "physicalInstall": "not attempted: paired device tunnel unavailable",
     "genericIOSReleaseUnsigned": "not rerun this version; latest evidence 0.2.21",
-    "normalSimulatorInstall": "No normal launch claimed this round; test bundles installed by Xcode use dedicated test data directories."
+    "normalSimulatorInstall": "Test bundles installed by Xcode use dedicated test data directories; no normal saved-game install claimed this round."
   },
   "audioContract": {
     "policyTestsPassed": 13,
@@ -977,6 +996,16 @@
       "bundle": "Validation/test-runs/original-0220-app.xcresult",
       "scope": "All AppTests, no exclusions, on iPhone 17 Pro. Includes 12 new build/identity tests: cross-environment queues and prepared/related events with shared identity, real Keychain non-adoption and container move, hand-authored pre-change Demo queue, fail-closed service settings. No real service transport.",
       "currentBuildScope": "Latest complete App suite remains 293 tests from 0.2.20. Version 0.2.21 ran the nine targeted check-in/reward tests listed in corrections0221; do not relabel this full run."
+    },
+    {
+      "build": "0.2.22 (25)",
+      "device": "iPhone 17 Pro simulator / iOS 26.5",
+      "passed": 319,
+      "failed": 0,
+      "skipped": 0,
+      "scope": "All CapydokuAppTests, no exclusions; includes 24 new feedback tests (7 board, 10 haptic, 6 presentation, 1 actual-view visual/layout test).",
+      "bundle": "Validation/test-runs/original-0222-app-layout-final.xcresult",
+      "log": "Validation/test-runs/original-0222-app-layout-final.log"
     }
   ],
   "remoteConfigurationContract": {
@@ -1735,6 +1764,15 @@
       "physicalIOSSignedDebug": "fresh device-targeted Debug build and strict local signature verification passed; new embedded profile includes the target phone",
       "physicalDebugLog": "Validation/test-runs/original-0221-iphone-wireless-fresh-build.log",
       "physicalInstallEvidence": "Validation/original-0221-physical-install.json"
+    },
+    {
+      "bundleVersion": "0.2.22 (25)",
+      "simulatorDebug": "passed locally signed, full App test host and selected UI tests",
+      "physicalDebugSigned": "passed strict codesign verification",
+      "physicalBuildLog": "Validation/test-runs/original-0222-physical-layout-final.log",
+      "physicalInstallEvidence": "Validation/original-0222-physical-install.json",
+      "genericIOSReleaseUnsigned": "not rerun this version; latest evidence 0.2.21",
+      "normalSimulatorInstall": "No normal launch claimed this round; test bundles installed by Xcode use dedicated test data directories."
     }
   ],
   "feedbackCorrection": {
@@ -3061,5 +3099,12 @@
     "evidence": "Validation/original-0222-feedback.json",
     "checklistDelta": "Validation/checklist-0222-feedback-delta.json",
     "referenceObservation": "Validation/meowdoku-reference-observation-0222.md"
+  },
+  "feedbackUpdate0223": {
+    "evidence": "Validation/original-0223-feedback.json",
+    "checklistDelta": "Validation/checklist-0223-feedback-delta.json",
+    "referenceObservation": "Validation/meowdoku-local-observation-0223.json",
+    "visualManifest": "Docs/original-cell-feel-0223/manifest.json",
+    "physicalInstall": "Validation/original-0223-physical-install.json"
   }
 }

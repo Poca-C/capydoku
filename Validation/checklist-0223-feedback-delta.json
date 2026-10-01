@@ -1,0 +1,176 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.23 (26)",
+  "kind": "scoped_delta_to_88_item_audit",
+  "baseAudit": "Validation/checklist-0221-audit.json",
+  "previousDelta": "Validation/checklist-0222-feedback-delta.json",
+  "sourceChecklist": "Validation/checklist-source.json",
+  "sourceCaseCount": 88,
+  "formalSignOff": false,
+  "full88Reexecuted": false,
+  "overallCountsRecomputed": false,
+  "unchangedStatusReason": "仅为原88条中5项追加0.2.23范围证据；原审计统计、0.2.22增量及正式状态保持，测试数量不是验收完成率。",
+  "originalParagraphs": [
+    127,
+    129,
+    130,
+    136,
+    252,
+    254
+  ],
+  "verificationSnapshot": {
+    "appFinal": {
+      "status": "passed",
+      "device": "iPhone 17 Pro",
+      "os": "iOS 26.5",
+      "tests": 327,
+      "failures": 0,
+      "skipped": 0,
+      "newTests": 8,
+      "evidence": "Validation/test-runs/original-0223-app-final.xcresult"
+    },
+    "ui": {
+      "status": "passed",
+      "device": "iPhone 17e",
+      "tests": 2,
+      "scope": [
+        "手势后道具恢复",
+        "失败复活"
+      ],
+      "evidence": "Validation/test-runs/original-0223-17e-ui.xcresult"
+    },
+    "core": {
+      "rerun": false,
+      "inheritedBuild": "0.2.21 (24)",
+      "tests": 169,
+      "reason": "核心与关卡未修改"
+    },
+    "visual": {
+      "reviewedImages": 11,
+      "scope": "7张首轮已通过用例图；4张同坐标采样修正后的红X对照图",
+      "evidence": "Docs/original-cell-feel-0223/manifest.json"
+    },
+    "physical": {
+      "signedBuildVerified": true,
+      "installedThisRound": false,
+      "deviceAvailability": "unavailable",
+      "lastConfirmedInstalledBuild": "0.2.22 (25)",
+      "evidence": "Validation/original-0223-physical-install.json"
+    },
+    "reference": {
+      "product": "Meowdoku",
+      "installedVersion": "1.19.1 (457)",
+      "regionRestrictionResolved": true,
+      "currentScreen": "Welcome条款页，待用户明确确认",
+      "firsthandGameplayVerified": false,
+      "audioAuditioned": false,
+      "formalBaselineUnchanged": true
+    }
+  },
+  "failureHistory": "首轮新增末态像素用例在10×10格失败；孤立覆盖层和棋盘的小数裁切原点造成不同重采样，相同棋盘坐标完整渲染后按整数像素裁切，保持原容差和生产描边；3项定向复验及最终327项全量通过。",
+  "stillOpen": [
+    "14-03的冻结时序、正式角色表情帧、系统减少动态效果及真实低性能设备仍partial",
+    "16-03不代表最低系统/所有真机场景或SDK升级已完成",
+    "0.2.23真机未安装，手机仍0.2.22；真机手感与恢复待验",
+    "14-04原音频仍pending，未新增替代原音或宣称听感验收",
+    "Meowdoku已安装但未亲自试玩或听音，REF-01不提升状态"
+  ],
+  "rows": [
+    {
+      "id": "04-02",
+      "title": "单击标记与撤销",
+      "originalAcceptanceText": "操作  单击空格，再次单击该X。\n通过  添加后可撤销；生命、分数和找到数量不变。",
+      "originalRequirementIDs": [
+        "PLAY-02"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "X撤销改为逆向逐笔收回，仅表现层变化；新增格内测试和最终327项App回归通过，17e实际手势后道具恢复通过。",
+      "evidence": [
+        "Validation/original-0223-feedback.json",
+        "Docs/original-cell-feel-0223/manifest.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "PLAY-02"
+      ]
+    },
+    {
+      "id": "04-03",
+      "title": "正确双击只提交一次",
+      "originalAcceptanceText": "操作  双击正确空格和带普通X的正确格。\n通过  各提交一次，清除原X并显示动物；不为其他格自动打叉。",
+      "originalRequirementIDs": [
+        "PLAY-02",
+        "PLAY-06"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "已提交正确格补4枚局部星点/柔光，保持头像及进度飞星；恢复不重播、减少动态和快速替换有新增覆盖，Core规则与提交保持原实现。",
+      "evidence": [
+        "Validation/original-0223-feedback.json",
+        "Docs/original-cell-feel-0223/manifest.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "PLAY-02",
+        "PLAY-13"
+      ]
+    },
+    {
+      "id": "04-04",
+      "title": "错误双击反馈幂等",
+      "originalAcceptanceText": "操作  双击错误格，观察整个手势和动画。\n通过  只扣一次生命并反馈一次；不出现额外提交或临时X残留。",
+      "originalRequirementIDs": [
+        "PLAY-02",
+        "PLAY-13"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "错误格仅展示层轻抖，固定不透明底板防露底；过渡红X与底层描边一致，静态减少动态序列保留，3项专项与最终全量复验通过，17e失败复活UI通过。",
+      "evidence": [
+        "Validation/original-0223-feedback.json",
+        "Docs/original-cell-feel-0223/manifest.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "PLAY-02",
+        "PLAY-13"
+      ]
+    },
+    {
+      "id": "14-03",
+      "title": "游戏奖励动效与降级",
+      "originalAcceptanceText": "操作  触发正确、错误、Combo、通关及签到动效。\n通过  与业务状态同步，不阻碍后续操作；轻量特效在低性能设备可降级。",
+      "originalRequirementIDs": [
+        "ART-02"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "本轮只细化X撤销、正确局部星点/光晕及错误短抖/描边；8项新增测试与11张组件图覆盖展示和清理，未代替真机/低性能设备、冻结节奏或正式角色帧验收。",
+      "evidence": [
+        "Validation/original-0223-feedback.json",
+        "Docs/original-cell-feel-0223/manifest.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "ART-02"
+      ]
+    },
+    {
+      "id": "16-03",
+      "title": "最终构建全部问题复验",
+      "originalAcceptanceText": "操作  在最终构建复测所有失败用例及受影响流程。\n通过  每个Bug均有关联修复版本、复测结论和证据，旧版本通过不能代替复测。",
+      "originalRequirementIDs": [
+        "TECH-07"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "最终17 Pro/iOS26.5全量327项App（0失败、0跳过）与17e两项UI通过；初次像素测试采样失败及同坐标修正后的3项复验保留。真机包签名检查通过但设备unavailable，本轮未安装。",
+      "evidence": [
+        "Validation/original-0223-feedback.json",
+        "Docs/original-cell-feel-0223/manifest.json",
+        "Validation/test-runs/original-0223-app-final.xcresult",
+        "Validation/original-0223-physical-install.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "TECH-07"
+      ]
+    }
+  ]
+}

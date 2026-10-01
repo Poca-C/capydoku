@@ -1,0 +1,92 @@
+{
+  "build": "0.2.23 (26)",
+  "device": "iPhone 17 Pro simulator / iOS 26.5",
+  "method": "Actual UIKit board/effect host rendering; visual fixtures, not complete RootView gameplay. All 11 retained images inspected. Times are test sampling targets, not measured animation duration.",
+  "scope": "First 7 attachments come from the initial full suite: their cases passed; a separate red-X pixel comparison test initially failed. Production code is unchanged in the corrected retest. Final 4 crops come from passed retest using identical full-board render/crop coordinates.",
+  "findings": [
+    "Undo visibly retracts the second then first stroke.",
+    "Correct-cell stars remain local and disappear by settled state.",
+    "Mistake tile cover stays stationary during content shake; heart stage remains legible.",
+    "Transition and committed red X match visual weight on small and regular 10x10 cells.",
+    "No reference-app gameplay, audio listening, physical feel, or frame-rate acceptance claimed."
+  ],
+  "images": [
+    {
+      "file": "01-undo-035ms.png",
+      "sourceAttachment": "Validation/test-runs/original-0223-cell-visual/31B237CD-D2C4-47DD-B214-EB6B2EF65367.png",
+      "sourceBundle": "Validation/test-runs/original-0223-app.xcresult",
+      "sha256": "f210a75c0dcb6093ed66c284eaa01d4d6d3ebfe571a6b98b5665375a3c31315a",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "02-undo-080ms.png",
+      "sourceAttachment": "Validation/test-runs/original-0223-cell-visual/7D0628AF-5A6B-4AA5-9116-260841FC667D.png",
+      "sourceBundle": "Validation/test-runs/original-0223-app.xcresult",
+      "sha256": "a6bafc31683e5d2946f75dd73d8f352afac2385b7fd3a72aaeaa855f6c7bba34",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "03-found-070ms.png",
+      "sourceAttachment": "Validation/test-runs/original-0223-cell-visual/E3A3C02A-29D4-4A34-A00A-FDED4297C648.png",
+      "sourceBundle": "Validation/test-runs/original-0223-app.xcresult",
+      "sha256": "73fdf4eb2f7fb4364edf2c2525506ce7ef27d4e4c432fb3f3227ca4ebf77dce4",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "04-found-170ms.png",
+      "sourceAttachment": "Validation/test-runs/original-0223-cell-visual/E5469598-9DFE-4BA5-8726-739EE4DA671A.png",
+      "sourceBundle": "Validation/test-runs/original-0223-app.xcresult",
+      "sha256": "1c77c7da1af75c4f328c94550529f1cdb3f33a61b8f685963cd1b3af506d28ae",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "05-found-settled-400ms.png",
+      "sourceAttachment": "Validation/test-runs/original-0223-cell-visual/68A25A81-39D2-4F87-95F4-DB96FF0AE562.png",
+      "sourceBundle": "Validation/test-runs/original-0223-app.xcresult",
+      "sha256": "5a639abed7e1322c1dcbea00c89c865b56a4e22c9cee7c6c90d33f6de6d4ed25",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "06-mistake-060ms.png",
+      "sourceAttachment": "Validation/test-runs/original-0223-mistake-visual/21CEEBE7-B220-4D6B-AFE5-963822BC87A3.png",
+      "sourceBundle": "Validation/test-runs/original-0223-app.xcresult",
+      "sha256": "5c5cf65e33da841bbc11cd6d184ffa6a27d49514979908ac8a2e258e2a5f58e7",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "07-mistake-280ms.png",
+      "sourceAttachment": "Validation/test-runs/original-0223-mistake-visual/57D4104F-077C-4EC8-911D-A95E2F8AE3F0.png",
+      "sourceBundle": "Validation/test-runs/original-0223-app.xcresult",
+      "sha256": "6d77bc3f30b7e6d5fef97adba47d2d6ad3f62de3652eab21e22c50fc2d29d299",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "08-small-cell-board-x.png",
+      "sourceAttachment": "Validation/test-runs/original-0223-mistake-final-visual/1ACE6B1D-CEA0-47F0-A474-97E93DC478CB.png",
+      "sourceBundle": "Validation/test-runs/original-0223-mistake-recheck.xcresult",
+      "sha256": "8e734a04e2c12349416106504038b675402590fd7d5f447cd19b5ad6d3671a74",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "09-small-cell-transition-x.png",
+      "sourceAttachment": "Validation/test-runs/original-0223-mistake-final-visual/3DE9EA5A-396F-4086-AB30-AED7EB92FBBA.png",
+      "sourceBundle": "Validation/test-runs/original-0223-mistake-recheck.xcresult",
+      "sha256": "7a3eaa6a4c808bab5c51edca94ab541c3f0b91c0f20307525a64ec71b3340a96",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "10-normal-cell-board-x.png",
+      "sourceAttachment": "Validation/test-runs/original-0223-mistake-final-visual/63E74934-2EF2-4210-9247-9F552F6E0520.png",
+      "sourceBundle": "Validation/test-runs/original-0223-mistake-recheck.xcresult",
+      "sha256": "61d7ace9775b5ab00d9e82e7a4daf4593b35e689e1922d15b71beac814e17503",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "11-normal-cell-transition-x.png",
+      "sourceAttachment": "Validation/test-runs/original-0223-mistake-final-visual/182A63B5-EBF2-47D5-AC37-57DC5FDB8E25.png",
+      "sourceBundle": "Validation/test-runs/original-0223-mistake-recheck.xcresult",
+      "sha256": "bf279148f65e420d6e7bdffae230bc4b8831a8b285d89267a70eb0f27d395835",
+      "visuallyReviewed": true
+    }
+  ]
+}
