@@ -227,10 +227,11 @@ final class ResultChoreographyTests: XCTestCase {
 
     @MainActor func testLastLifeWaitsForAcknowledgementAndNeverReplaysHiddenChanges() {
         let clock = ChoreographyClock(), feedback = GameFeedbackPresentation(schedule: clock.schedule)
+        feedback.bindLives(3)
         feedback.life(1); clock.advance(20)
         XCTAssertTrue(feedback.showLastLife, "The player must have time to read and acknowledge it.")
         feedback.dismissLastLife(); clock.advance(20); XCTAssertFalse(feedback.showLastLife)
-        feedback.life(3); feedback.life(1); XCTAssertTrue(feedback.showLastLife)
+        feedback.life(3); feedback.life(1); clock.advance(1.36); XCTAssertTrue(feedback.showLastLife)
         feedback.setPresentationEnabled(false); feedback.life(1); feedback.setPresentationEnabled(true)
         XCTAssertFalse(feedback.showLastLife)
         feedback.life(1); feedback.life(0); XCTAssertFalse(feedback.showLastLife)
@@ -324,6 +325,8 @@ final class ResultChoreographyTests: XCTestCase {
         model.submit(wrong[0]); try await Task.sleep(nanoseconds: 100_000_000); model.submit(wrong[1])
         let committed = model.session; XCTAssertEqual(committed?.lives, 1)
         try await Task.sleep(nanoseconds: 300_000_000)
+        XCTAssertNil(frames["last_life_continue"])
+        try await Task.sleep(nanoseconds: 1_150_000_000)
         XCTAssertNotNil(frames["last_life_continue"])
         capture(host.view, "current-L6-last-life-small-Chinese-large-type")
         XCTAssertEqual(model.session, committed)
@@ -388,6 +391,7 @@ final class ResultChoreographyTests: XCTestCase {
             XCTAssertTrue(board.activate(index: rowWrong[0], submit: true))
             try await Task.sleep(nanoseconds: 100_000_000)
             XCTAssertTrue(board.activate(index: rowWrong[1], submit: true))
+            try await Task.sleep(nanoseconds: 1_400_000_000)
             for _ in 0..<40 {
                 if board.accessibilityElements?.isEmpty == true, frames["last_life_continue"] != nil { break }
                 try await Task.sleep(nanoseconds: 5_000_000)

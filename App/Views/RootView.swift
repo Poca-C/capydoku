@@ -353,6 +353,7 @@ struct GameView: View {
     private func bindFeedback(to session: GameSession) {
         guard feedbackSessionID != session.id else { return }
         feedback.clear()
+        feedback.bindLives(session.lives)
         rewards.bind(sessionID: session.id, score: session.score)
         hud.bind(sessionID: session.id, lives: session.lives)
         comboBadgeWindowFrame = .zero; comboBadgeFrameRevision = nil
@@ -476,10 +477,13 @@ struct GameView: View {
                                         tutorialAction: model.tutorial?.action,
                                         hideAccessibility: covered,
                                         locked: s.status != .playing || !canPresentFeedback || lifeFocused || model.tutorial?.action == "read",
-                                        onToggle: model.toggle, onSubmit: model.submit, onMark: model.mark,
+                                        onToggle: { feedback.cancelPendingLastLife(); model.toggle($0) },
+                                        onSubmit: { feedback.cancelPendingLastLife(); model.submit($0) },
+                                        onMark: { feedback.cancelPendingLastLife(); model.mark($0) },
                                         onBeginSwipe: model.beginSwipeFeedback,
                                         onEndSwipe: { model.endSwipeFeedback(cancelled: $0) },
                                         onInputActivityChange: { token, active in
+                                            if active { feedback.cancelPendingLastLife() }
                                             model.setBoardInputActivity(token, active: active, sessionID: s.id)
                                         }, onFoundFeedback: { index, anchor in
                                             let feedbackEpoch = model.sceneFeedbackEpoch
@@ -576,6 +580,7 @@ struct GameView: View {
                 .onChange(of: s.combo) { combo in
                     guard ownsFeedback, model.session?.id == s.id else { return }
                     feedback.setPresentationEnabled(canPresentFeedback)
+                    if combo > 0 { feedback.cancelPendingLastLife() }
                     feedback.combo(model.comboFeedbackPresentation(for: combo))
                 }
                 .onChange(of: s.lives) {
@@ -584,7 +589,12 @@ struct GameView: View {
                     // celebration, while the accepted score stays in the model.
                     rewards.clear()
                     feedback.setPresentationEnabled(canPresentFeedback)
-                    feedback.life($0)
+                    let epoch = model.sceneFeedbackEpoch
+                    feedback.life($0) {
+                        model.session?.id == s.id && model.session?.status == .playing &&
+                            model.session?.lives == 1 && model.session?.combo == 0 &&
+                            model.sceneFeedbackEpoch == epoch
+                    }
                     hud.lifeChanged($0, sessionID: s.id, visible: canPresentFeedback)
                 }
                 .onChange(of: s.status) { status in

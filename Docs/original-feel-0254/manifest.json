@@ -1,0 +1,60 @@
+{
+  "build": "0.2.54 (57)",
+  "artifacts": [
+    {
+      "path": "Docs/original-feel-0254/before-last-life-320-reduced-true-reminder.png",
+      "source": ".build/attachments-0254-before/20C31DA9-EF3D-4A34-8F85-DDC851568B07.png",
+      "test": "GameHUDVisualTests/testActualRootLastLifeAllowsMistakeExplanationBeforeReminder()",
+      "phase": "before"
+    },
+    {
+      "path": "Docs/original-feel-0254/before-last-life-320-reduced-true-mistake.png",
+      "source": ".build/attachments-0254-before/22D1B585-516B-43D1-AE2A-E5977D3DCCB6.png",
+      "test": "GameHUDVisualTests/testActualRootLastLifeAllowsMistakeExplanationBeforeReminder()",
+      "phase": "before"
+    },
+    {
+      "path": "Docs/original-feel-0254/before-last-life-402-reduced-false-reminder.png",
+      "source": ".build/attachments-0254-before/A5E195D3-A5E6-4497-AB9D-2C6D49E3D9DB.png",
+      "test": "GameHUDVisualTests/testActualRootLastLifeAllowsMistakeExplanationBeforeReminder()",
+      "phase": "before"
+    },
+    {
+      "path": "Docs/original-feel-0254/before-last-life-402-reduced-false-mistake.png",
+      "source": ".build/attachments-0254-before/159B71E7-FB68-487F-9740-B06F3CB1672F.png",
+      "test": "GameHUDVisualTests/testActualRootLastLifeAllowsMistakeExplanationBeforeReminder()",
+      "phase": "before"
+    },
+    {
+      "path": "Docs/original-feel-0254/final-last-life-320-reduced-true-reminder.png",
+      "source": ".build/attachments-0254-final/F9446B9E-0A1B-4E59-A2F0-6B70F8B35691.png",
+      "test": "GameHUDVisualTests/testActualRootLastLifeAllowsMistakeExplanationBeforeReminder()",
+      "phase": "final"
+    },
+    {
+      "path": "Docs/original-feel-0254/final-last-life-320-reduced-true-mistake.png",
+      "source": ".build/attachments-0254-final/ED80D484-0CE0-46CA-A5D5-AFA921BAA5A2.png",
+      "test": "GameHUDVisualTests/testActualRootLastLifeAllowsMistakeExplanationBeforeReminder()",
+      "phase": "final"
+    },
+    {
+      "path": "Docs/original-feel-0254/final-last-life-402-reduced-false-reminder.png",
+      "source": ".build/attachments-0254-final/95414B43-BBC4-4104-AEF5-C76475A421A5.png",
+      "test": "GameHUDVisualTests/testActualRootLastLifeAllowsMistakeExplanationBeforeReminder()",
+      "phase": "final"
+    },
+    {
+      "path": "Docs/original-feel-0254/final-last-life-402-reduced-false-mistake.png",
+      "source": ".build/attachments-0254-final/E9D13D2E-0A98-45AE-9585-39BA538079A7.png",
+      "test": "GameHUDVisualTests/testActualRootLastLifeAllowsMistakeExplanationBeforeReminder()",
+      "phase": "final"
+    },
+    {
+      "path": "Docs/original-feel-0254/final-current-L6-last-life-small-Chinese-large-type.png",
+      "source": ".build/attachments-0254-large-type/170E5382-5D54-482A-8B2E-240BD1811245.png",
+      "test": "ResultChoreographyTests/testActualSmallRootOneLifeFocusFitsChineseAndPreservesCommittedState()",
+      "phase": "final"
+    }
+  ],
+  "boundary": "Actual Root screenshot readbacks at requested checkpoints, not frame-by-frame timing, physical touch, audio or haptic verification. Before is0.2.53. No new reference playtest."
+}

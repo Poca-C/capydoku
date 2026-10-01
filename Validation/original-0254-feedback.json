@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.54 (57)",
+  "date": "2026-10-02",
+  "status": "scoped_last_life_handoff_verified_simulator_only",
+  "previousReport": "Validation/original-0253-feedback.json",
+  "previousGoalTurn": {
+    "classification": "progress",
+    "reason": "acd78f1 improved applause palms and contact readability;46App/1UI scoped evidence."
+  },
+  "sourceParagraphs": [
+    123,
+    129,
+    136,
+    249,
+    252,
+    254
+  ],
+  "finding": "Actual Root at2→1lives immediately covered the same error and discarded its visible-rule explanation. Baseline1test failed4assertions across normal402pt and reduced320pt fixtures.",
+  "changes": [
+    "Schedule one-life focus after the existing1.35second rule explanation, without locking gameplay during that interval.",
+    "Cancel pending focus when the player continues; cancel or invalidate it on later life changes, result, cover, background, session replacement or epoch change.",
+    "Only an observed actual life decrease schedules focus; restore, duplicate observations and revival to1life do not. Once shown, acknowledgement remains required."
+  ],
+  "temporaryTuning": "1.35second delay and cancellation after continued input are Demo interaction choices, not verified reference behavior.",
+  "verificationHistory": [
+    {
+      "status": "Failed",
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0254-last-life-before-summary.json",
+      "log": "Validation/test-runs/original-0254-last-life-before.log",
+      "bundle": "Validation/test-runs/original-0254-last-life-before.xcresult"
+    },
+    {
+      "status": "Passed",
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0254-last-life-candidate-summary.json",
+      "log": "Validation/test-runs/original-0254-last-life-candidate.log",
+      "bundle": "Validation/test-runs/original-0254-last-life-candidate.xcresult"
+    }
+  ],
+  "applicationTests": {
+    "distinctVerified": 44,
+    "firstRun": {
+      "status": "Failed",
+      "passed": 43,
+      "failed": 1,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0254-app-final-summary.json",
+      "log": "Validation/test-runs/original-0254-app-final.log",
+      "bundle": "Validation/test-runs/original-0254-app-final.xcresult"
+    },
+    "correctedTestRerun": {
+      "status": "Passed",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0254-large-type-final-summary.json",
+      "log": "Validation/test-runs/original-0254-large-type-final.log",
+      "bundle": "Validation/test-runs/original-0254-large-type-final.xcresult"
+    },
+    "explanation": "First scoped run43passed/1failed because an existing large-type test still expected the old300ms reminder. Only that test timing changed; corrected1test passed. Production code unchanged between these runs. Not a full App/Core run."
+  },
+  "uiTests": {
+    "status": "Passed",
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0,
+    "summary": "Validation/test-runs/original-0254-17e-ui-summary.json",
+    "log": "Validation/test-runs/original-0254-17e-ui.log",
+    "bundle": "Validation/test-runs/original-0254-17e-ui.xcresult"
+  },
+  "visualEvidence": "Docs/original-feel-0254/manifest.json",
+  "reference": {
+    "latestSuccessfulPlaytest": "Validation/meowdoku-playtest-comparison-0249.json",
+    "newSuccessfulPlaytestThisRound": false,
+    "equivalenceClaimed": false,
+    "implementationSummary": {
+      "status": "Nine observed directions each have Demo implementation; this is not reference-quality sign-off.",
+      "implementedDirections": [
+        "动态手势教学",
+        "角色待机/正确/错误表情",
+        "浮分/彩粒/飞星/鼓掌及顶部联动",
+        "错误原因与规则可视化",
+        "扣命与一命提醒",
+        "Combo及分层胜败演出",
+        "新盘错峰入场",
+        "提示与找答案反馈",
+        "签到点亮与实际到账演出"
+      ],
+      "audio": "9 local Debug-only reference WAVs remain an authorized testing experiment; no live audio or physical haptic A/B in this round.",
+      "qualityGaps": [
+        "角色动作自然度与整段节奏",
+        "密集浮分离源距离",
+        "真机声音/震动配合",
+        "正式参考和发布资源验收"
+      ],
+      "notReplicatedFromLatestPlaytest": [
+        "Reference horn-playing character pose",
+        "Every observed praise phrase",
+        "Automatic check-in interstitial during victory; current Demo check-in entry remains on home"
+      ]
+    }
+  },
+  "audio": {
+    "modified": false,
+    "localTestWAVCount": 9,
+    "currentDebugInventory": "Validation/audio-isolation-0254-debug.json",
+    "formalManifestClipsEmpty": true,
+    "liveAuditoryAB": false,
+    "releaseRebuilt": false
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  },
+  "formalSignOff": false,
+  "formalConformanceRowsUnchanged": 83,
+  "historicalChecklistCountUnchanged": 88,
+  "remaining": [
+    "整体自然度和真机音画/触感未验收；手机仍0.2.29，分发及GitHub暂停。",
+    "新Root用例验证继续正确、标记、失败、同帧设置开关及换局；原始拖动开始且尚未提交时取消这一分支只读审查，未另做物理手势专项。"
+  ]
+}

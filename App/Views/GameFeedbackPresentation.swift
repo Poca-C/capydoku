@@ -9,6 +9,8 @@ import Combine
     @Published private(set) var comboRevision = UUID()
     @Published private(set) var showLastLife = false
     private var comboToken = UUID()
+    private var lastLifeToken = UUID()
+    private var observedLives: Int?
     private var presentationEnabled = true
     private let schedule: Schedule
 
@@ -41,16 +43,35 @@ import Combine
         if presentation.delay == 0 { show() } else { schedule(presentation.delay, show) }
     }
 
-    func life(_ lives: Int) {
-        showLastLife = presentationEnabled && lives == 1
+    func bindLives(_ lives: Int) {
+        dismissLastLife()
+        observedLives = lives
     }
+
+    func life(_ lives: Int, isStillCurrent: @escaping () -> Bool = { true }) {
+        let previous = observedLives
+        observedLives = lives
+        guard previous != lives else { return }
+        dismissLastLife()
+        guard presentationEnabled, let previous, previous > lives, lives == 1 else { return }
+        let token = lastLifeToken
+        // Let the same error's visible-rule explanation finish first. This is
+        // a Demo presentation delay; gameplay remains immediately available.
+        schedule(BoardConflictFeedbackView.presentationDuration) { [weak self] in
+            guard let self, self.lastLifeToken == token, self.presentationEnabled,
+                  self.observedLives == 1, isStillCurrent() else { return }
+            self.showLastLife = true
+        }
+    }
+
+    func cancelPendingLastLife() { lastLifeToken = UUID() }
 
     // The focus reminder is acknowledged by the player, never by a timer.
     // It is still ephemeral: restoring, covering or leaving a game clears it.
-    func dismissLastLife() { showLastLife = false }
+    func dismissLastLife() { cancelPendingLastLife(); showLastLife = false }
 
     func clear() {
         combo(nil)
-        showLastLife = false
+        dismissLastLife()
     }
 }

@@ -151,6 +151,7 @@ final class GameFeedbackPresentationTests: XCTestCase {
     @MainActor func testBackgroundOrAlertBlocksNewArrivalsAsWellAsAlreadyScheduledText() {
         let clock = PresentationClock()
         let presentation = GameFeedbackPresentation(schedule: clock.schedule)
+        presentation.bindLives(3)
         presentation.combo(.init(text: "Nice", delay: 0.25))
         presentation.life(1)
         presentation.setPresentationEnabled(false)
@@ -193,11 +194,51 @@ final class GameFeedbackPresentationTests: XCTestCase {
     @MainActor func testRevivalAndNewWarningCannotBeOverwrittenByPreviousLifeTimeout() {
         let clock = PresentationClock()
         let presentation = GameFeedbackPresentation(schedule: clock.schedule)
+        presentation.bindLives(3)
         presentation.life(1); clock.advance(1)
+        XCTAssertFalse(presentation.showLastLife)
         presentation.life(3); XCTAssertFalse(presentation.showLastLife)
         presentation.life(1); clock.advance(0.9)
+        XCTAssertFalse(presentation.showLastLife, "The previous loss must not show the replacement warning early.")
+        clock.advance(0.46)
         XCTAssertTrue(presentation.showLastLife)
         presentation.clear(); clock.advance(1)
+        XCTAssertFalse(presentation.showLastLife)
+    }
+
+    @MainActor func testLastLifeWaitsForExplanationAndDuplicateObservationDoesNotRestartIt() {
+        let clock = PresentationClock(), presentation = GameFeedbackPresentation(schedule: clock.schedule)
+        presentation.bindLives(2); presentation.life(1)
+        clock.advance(1); presentation.life(1)
+        clock.advance(0.34); XCTAssertFalse(presentation.showLastLife)
+        clock.advance(0.02); XCTAssertTrue(presentation.showLastLife)
+        clock.advance(20); XCTAssertTrue(presentation.showLastLife)
+    }
+
+    @MainActor func testPendingLastLifeCannotSurviveNewActionCoverResetOrChangedScope() {
+        for interruption in 0..<6 {
+            let clock = PresentationClock(), presentation = GameFeedbackPresentation(schedule: clock.schedule)
+            var current = true
+            presentation.bindLives(2); presentation.life(1, isStillCurrent: { current })
+            clock.advance(0.3)
+            switch interruption {
+            case 0: presentation.cancelPendingLastLife()
+            case 1: presentation.dismissLastLife()
+            case 2: presentation.setPresentationEnabled(false); presentation.setPresentationEnabled(true)
+            case 3: presentation.clear(); presentation.bindLives(1)
+            case 4: presentation.life(0); presentation.life(1)
+            default: current = false
+            }
+            clock.advance(20)
+            XCTAssertFalse(presentation.showLastLife, "Interruption \(interruption) must invalidate the old reminder.")
+        }
+    }
+
+    @MainActor func testRestoringOneLifeAndRevivingToOneLifeAreNotNewMistakes() {
+        let clock = PresentationClock(), presentation = GameFeedbackPresentation(schedule: clock.schedule)
+        presentation.bindLives(1); presentation.life(1); clock.advance(2)
+        XCTAssertFalse(presentation.showLastLife)
+        presentation.life(0); presentation.life(1); clock.advance(2)
         XCTAssertFalse(presentation.showLastLife)
     }
 }

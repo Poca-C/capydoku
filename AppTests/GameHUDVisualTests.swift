@@ -16,6 +16,99 @@ import CapydokuCore
 }
 
 final class GameHUDVisualTests: XCTestCase {
+    @MainActor func testActualRootContinuingBeforeLastLifeReminderCancelsOldFocus() async throws {
+        let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
+        for action in ["correct", "mark", "lose", "cover", "replace"] {
+            let directory = FileManager.default.temporaryDirectory.appendingPathComponent("last-life-continue-" + UUID().uuidString)
+            let model = AppModel(saveDirectory: directory, runsTimer: false, feedbackEnabled: false)
+            model.progress.tutorialCompleted = true; model.start(level: 6)
+            let initial = try XCTUnwrap(model.session)
+            let wrong = initial.puzzle.regions.indices.filter { !initial.puzzle.solution.contains($0) }
+            model.submit(wrong[0])
+            let previous = scene.windows.first(where: \.isKeyWindow), window = UIWindow(windowScene: scene)
+            window.frame = CGRect(x: 0, y: 0, width: 320, height: 568)
+            var frames = [String: CGRect]()
+            let host = UIHostingController(rootView: RootView().environmentObject(model).environment(\.scenePhase, .active)
+                .environment(\.capyLayoutObserver, { frames[$0] = $1 }))
+            window.rootViewController = host; window.makeKeyAndVisible()
+            defer {
+                window.isHidden = true; window.rootViewController = nil; previous?.makeKeyAndVisible()
+                model.flushPendingSaves(); try? FileManager.default.removeItem(at: directory)
+            }
+            try await Task.sleep(nanoseconds: 400_000_000)
+            let board = try XCTUnwrap(descendants(host.view).compactMap { $0 as? PuzzleGridUIView }.first)
+            XCTAssertTrue(board.activate(index: wrong[1], submit: true))
+            try await Task.sleep(nanoseconds: 300_000_000)
+            XCTAssertNil(frames["last_life_continue"])
+            switch action {
+            case "correct":
+                XCTAssertTrue(board.activate(index: initial.puzzle.solution[0], submit: true))
+                XCTAssertEqual(model.session?.combo, 1, "First correct has no Combo badge but still cancels pending focus.")
+            case "mark": XCTAssertTrue(board.activate(index: wrong[2], submit: false))
+            case "lose": XCTAssertTrue(board.activate(index: wrong[2], submit: true))
+            case "cover": model.sheet = .settings; model.sheet = nil
+            default: model.start(level: 7)
+            }
+            let committed = model.session
+            try await Task.sleep(nanoseconds: 1_500_000_000)
+            XCTAssertNil(frames["last_life_continue"], "A late reminder must not interrupt \(action).")
+            XCTAssertEqual(model.session, committed)
+            if action == "lose" { XCTAssertEqual(model.session?.status, .lost) }
+            else {
+                XCTAssertFalse(board.accessibilityElementsHidden)
+                if action == "correct" { XCTAssertEqual(model.session?.found.count, 1) }
+                if action == "mark" { XCTAssertTrue(model.session?.marks.contains(wrong[2]) == true) }
+            }
+        }
+    }
+
+    @MainActor func testActualRootLastLifeAllowsMistakeExplanationBeforeReminder() async throws {
+        let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
+        for (width, reduced) in [(402, false), (320, true)] {
+            let directory = FileManager.default.temporaryDirectory.appendingPathComponent("last-life-handoff-" + UUID().uuidString)
+            let model = AppModel(saveDirectory: directory, runsTimer: false, feedbackEnabled: false)
+            model.progress.tutorialCompleted = true; model.start(level: 6)
+            let initial = try XCTUnwrap(model.session), first = try XCTUnwrap(initial.puzzle.solution.first)
+            let wrong = initial.puzzle.regions.indices.filter { !initial.puzzle.solution.contains($0) }
+            let candidate = try XCTUnwrap(wrong.first { $0 / initial.puzzle.size == first / initial.puzzle.size })
+            let earlier = try XCTUnwrap(wrong.first { $0 != candidate })
+            model.submit(first); model.submit(earlier)
+            XCTAssertEqual(model.session?.lives, 2)
+            let previous = scene.windows.first(where: \.isKeyWindow), window = UIWindow(windowScene: scene)
+            window.windowLevel = UIWindow.Level(rawValue: 2)
+            window.frame = CGRect(x: 0, y: 0, width: width, height: width == 320 ? 568 : 874)
+            let host = UIHostingController(rootView: RootView(reduceMotionOverride: reduced).environmentObject(model)
+                .environment(\.scenePhase, .active))
+            window.rootViewController = host; window.makeKeyAndVisible()
+            defer {
+                window.isHidden = true; window.rootViewController = nil; previous?.makeKeyAndVisible()
+                model.flushPendingSaves(); try? FileManager.default.removeItem(at: directory)
+            }
+            try await Task.sleep(nanoseconds: 620_000_000)
+            let board = try XCTUnwrap(descendants(host.view).compactMap { $0 as? PuzzleGridUIView }.first)
+            XCTAssertTrue(board.activate(index: candidate, submit: true))
+            let committed = try XCTUnwrap(model.session)
+            XCTAssertEqual(committed.lives, 1)
+            try await Task.sleep(nanoseconds: 300_000_000)
+            XCTAssertFalse(board.accessibilityElementsHidden, "The same mistake must remain visible before the reminder takes focus.")
+            XCTAssertTrue(descendants(board).contains { $0 is BoardConflictFeedbackView },
+                "The reminder must not discard the just-triggered visible-rule explanation.")
+            let early = UIGraphicsImageRenderer(bounds: window.bounds).image { _ in
+                window.drawHierarchy(in: window.bounds, afterScreenUpdates: false)
+            }
+            let a = XCTAttachment(image: early); a.name = "last-life-\(width)-reduced-\(reduced)-mistake"
+            a.lifetime = .keepAlways; add(a)
+            try await Task.sleep(nanoseconds: 1_300_000_000)
+            XCTAssertTrue(board.accessibilityElementsHidden, "The reminder still appears after the error explanation.")
+            XCTAssertEqual(model.session, committed, "Presentation must not change lives, marks or score.")
+            let late = UIGraphicsImageRenderer(bounds: window.bounds).image { _ in
+                window.drawHierarchy(in: window.bounds, afterScreenUpdates: false)
+            }
+            let b = XCTAttachment(image: late); b.name = "last-life-\(width)-reduced-\(reduced)-reminder"
+            b.lifetime = .keepAlways; add(b)
+        }
+    }
+
     /// Watch actual newly mounted native reward views while the result is
     /// skipped before its character entrance. Never read back a screenshot in
     /// that interval: keep the recording useful for the mixed-renderer window.

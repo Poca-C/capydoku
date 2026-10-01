@@ -8,7 +8,8 @@ final class BoardConflictFeedbackView: UIView {
     let conflicts: [VisiblePuzzleConflict]
     let highlightedCells: Set<Int>
     let connections: [(CGPoint, CGPoint)]
-    let duration: TimeInterval = 1.35
+    static let presentationDuration: TimeInterval = 1.35
+    let duration: TimeInterval = presentationDuration
     private let reduceMotion: Bool
     private var cleanup: DispatchWorkItem?
 

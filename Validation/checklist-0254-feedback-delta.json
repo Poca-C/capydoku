@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "kind": "scoped_delta_to_88_item_audit",
+  "baseAudit": "Validation/checklist-0221-audit.json",
+  "sourceChecklist": "Validation/checklist-source.json",
+  "sourceCaseCount": 88,
+  "formalSignOff": false,
+  "full88Reexecuted": false,
+  "overallCountsRecomputed": false,
+  "build": "0.2.54 (57)",
+  "status": "scoped_last_life_handoff_verified_simulator_only",
+  "previousDelta": "Validation/checklist-0253-feedback-delta.json",
+  "scopedRows": 2,
+  "rows": [
+    {
+      "id": "14-03",
+      "title": "游戏奖励动效与降级",
+      "originalAcceptanceText": "操作  触发正确、错误、Combo、通关及签到动效。\n通过  与业务状态同步，不阻碍后续操作；轻量特效在低性能设备可降级。",
+      "originalRequirementIDs": [
+        "ART-02"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "一命提醒在错误解释后出现，继续操作及生命周期中断不补弹；44项相关App经修正1项旧时序断言后通过，17e2项UI通过。非全量或真机验收。",
+      "evidence": [
+        "Validation/original-0254-feedback.json",
+        "Docs/original-feel-0254/manifest.json",
+        "Validation/test-runs/original-0254-app-final-summary.json",
+        "Validation/test-runs/original-0254-large-type-final-summary.json",
+        "Validation/test-runs/original-0254-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "16-03",
+      "title": "最终构建全部问题复验",
+      "originalAcceptanceText": "操作  在最终构建复测所有失败用例及受影响流程。\n通过  每个Bug均有关联修复版本、复测结论和证据，旧版本通过不能代替复测。",
+      "originalRequirementIDs": [
+        "TECH-07"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "一命提醒在错误解释后出现，继续操作及生命周期中断不补弹；44项相关App经修正1项旧时序断言后通过，17e2项UI通过。非全量或真机验收。",
+      "evidence": [
+        "Validation/original-0254-feedback.json",
+        "Docs/original-feel-0254/manifest.json",
+        "Validation/test-runs/original-0254-app-final-summary.json",
+        "Validation/test-runs/original-0254-large-type-final-summary.json",
+        "Validation/test-runs/original-0254-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    }
+  ],
+  "verificationSnapshot": {
+    "app": {
+      "distinctVerified": 44,
+      "firstRun": {
+        "status": "Failed",
+        "passed": 43,
+        "failed": 1,
+        "skipped": 0,
+        "summary": "Validation/test-runs/original-0254-app-final-summary.json",
+        "log": "Validation/test-runs/original-0254-app-final.log",
+        "bundle": "Validation/test-runs/original-0254-app-final.xcresult"
+      },
+      "correctedTestRerun": {
+        "status": "Passed",
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "summary": "Validation/test-runs/original-0254-large-type-final-summary.json",
+        "log": "Validation/test-runs/original-0254-large-type-final.log",
+        "bundle": "Validation/test-runs/original-0254-large-type-final.xcresult"
+      },
+      "explanation": "First scoped run43passed/1failed because an existing large-type test still expected the old300ms reminder. Only that test timing changed; corrected1test passed. Production code unchanged between these runs. Not a full App/Core run."
+    },
+    "ui": {
+      "status": "Passed",
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0254-17e-ui-summary.json",
+      "log": "Validation/test-runs/original-0254-17e-ui.log",
+      "bundle": "Validation/test-runs/original-0254-17e-ui.xcresult"
+    }
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  }
+}
