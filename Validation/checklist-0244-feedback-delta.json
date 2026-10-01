@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "kind": "scoped_delta_to_88_item_audit",
+  "baseAudit": "Validation/checklist-0221-audit.json",
+  "sourceChecklist": "Validation/checklist-source.json",
+  "sourceCaseCount": 88,
+  "formalSignOff": false,
+  "full88Reexecuted": false,
+  "overallCountsRecomputed": false,
+  "build": "0.2.44 (47)",
+  "status": "scoped_local_score_character_avoidance_verified_simulator_only",
+  "previousDelta": "Validation/checklist-0243-feedback-delta.json",
+  "scopedRows": 3,
+  "rows": [
+    {
+      "id": "05-06",
+      "title": "结算导航与继续",
+      "originalAcceptanceText": "操作  测试结算下一关、返回首页和继续游戏。\n通过  跳转、进度及反馈正确；主动退出保留策略、击败比例和Rank有确认依据。",
+      "originalRequirementIDs": [
+        "PLAY-10",
+        "UI-04"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "真实源格反馈、通关下一关和失败模拟复活UI通过；未改变正式状态。",
+      "evidence": [
+        "Validation/original-0244-feedback.json",
+        "Docs/original-feel-0244/manifest.json",
+        "Validation/test-runs/original-0244-app-final-summary.json",
+        "Validation/test-runs/original-0244-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "14-03",
+      "title": "游戏奖励动效与降级",
+      "originalAcceptanceText": "操作  触发正确、错误、Combo、通关及签到动效。\n通过  与业务状态同步，不阻碍后续操作；轻量特效在低性能设备可降级。",
+      "originalRequirementIDs": [
+        "ART-02"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "浮分避让源角色及当前已找到角色，连续新角色撤除遮挡旧badge；实际Root大小棋盘和减少动态截图核对。",
+      "evidence": [
+        "Validation/original-0244-feedback.json",
+        "Docs/original-feel-0244/manifest.json",
+        "Validation/test-runs/original-0244-app-final-summary.json",
+        "Validation/test-runs/original-0244-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "16-03",
+      "title": "最终构建全部问题复验",
+      "originalAcceptanceText": "操作  在最终构建复测所有失败用例及受影响流程。\n通过  每个Bug均有关联修复版本、复测结论和证据，旧版本通过不能代替复测。",
+      "originalRequirementIDs": [
+        "TECH-07"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "最终82项相关App与4项UI通过；首次候选及编译失败历史保留，非全量/真机验收。",
+      "evidence": [
+        "Validation/original-0244-feedback.json",
+        "Docs/original-feel-0244/manifest.json",
+        "Validation/test-runs/original-0244-app-final-summary.json",
+        "Validation/test-runs/original-0244-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    }
+  ],
+  "verificationSnapshot": {
+    "app": {
+      "status": "Passed",
+      "cases": 82,
+      "passed": 82,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 74.767,
+      "scope": "17 Pro / iOS26.5; eight affected board/reward/presentation suites, not full App/Core.",
+      "summary": "Validation/test-runs/original-0244-app-final-summary.json",
+      "log": "Validation/test-runs/original-0244-app-final.log",
+      "bundle": "Validation/test-runs/original-0244-app-final.xcresult"
+    },
+    "ui": {
+      "status": "Passed",
+      "cases": 4,
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 146.768,
+      "scope": "17e / iOS26.5; native gestures/tools, solve/advance, lose/simulated revive, hint preview/Apply.",
+      "summary": "Validation/test-runs/original-0244-17e-ui-summary.json",
+      "log": "Validation/test-runs/original-0244-17e-ui.log",
+      "bundle": "Validation/test-runs/original-0244-17e-ui.xcresult"
+    }
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  }
+}

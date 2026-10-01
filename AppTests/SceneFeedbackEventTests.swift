@@ -42,7 +42,7 @@ final class SceneFeedbackEventTests: XCTestCase {
             DispatchQueue.main.async {
                 guard model.canPresentPositiveFeedback(from: accepted, epoch: epoch) else { return }
                 reward.found(index: first, sessionID: accepted.id, origin: .zero, destination: .zero, reduceMotion: false)
-                reward.scoreAward(accepted.score, sessionID: accepted.id, origin: .zero, reduceMotion: false)
+                reward.scoreAward(accepted.score, sessionID: accepted.id, placement: CellScorePlacement(amount: accepted.score, center: .zero), reduceMotion: false)
             }
             switch boundary {
             case "mistake":

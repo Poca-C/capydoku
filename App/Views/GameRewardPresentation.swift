@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 import CapydokuCore
 
 private struct CapyMotionOverrideKey: EnvironmentKey {
@@ -56,7 +57,8 @@ final class FeedbackWindowFrameView: UIView {
     struct LocalScore: Identifiable {
         let id = UUID()
         let amount: Int
-        let origin: CGPoint
+        let placement: CellScorePlacement
+        var origin: CGPoint { placement.center }
         let reduceMotion: Bool
     }
     struct ToolReveal: Identifiable {
@@ -142,16 +144,23 @@ final class FeedbackWindowFrameView: UIView {
 
     /// The board supplies its committed positive delta once, even if UIKit
     /// coalesces several accepted moves into a single render transaction.
-    func scoreAward(_ amount: Int, sessionID: UUID, origin: CGPoint, reduceMotion: Bool) {
+    func scoreAward(_ amount: Int, sessionID: UUID, placement: CellScorePlacement, reduceMotion: Bool) {
         guard self.sessionID == sessionID, presentationEnabled, amount > 0,
-              origin.x.isFinite, origin.y.isFinite else { return }
+              placement.center.x.isFinite, placement.center.y.isFinite else { return }
         let token = generation
-        let item = LocalScore(amount: amount, origin: origin, reduceMotion: reduceMotion)
+        let item = LocalScore(amount: amount, placement: placement, reduceMotion: reduceMotion)
         localScores = Array((localScores + [item]).suffix(4))
         schedule(0.72) { [weak self] in
             guard self?.generation == token else { return }
             self?.localScores.removeAll { $0.id == item.id }
         }
+    }
+
+    /// A newer accepted character takes priority over an earlier floating badge.
+    /// Keep unrelated badges and their original independent expiry deadlines.
+    func retireScores(overlapping frames: [CGRect], sessionID: UUID) {
+        guard self.sessionID == sessionID else { return }
+        localScores.removeAll { item in frames.contains { $0.intersects(item.placement.sweptFrame) } }
     }
 
     func directReveal(_ event: DirectRevealFeedback, origin: CGPoint, destination: CGPoint, reduceMotion: Bool) {
@@ -309,17 +318,115 @@ struct ProgressFlightStar: View {
     }
 }
 
+/// Place the entire badge and its travel outside the accepted cell. The board
+/// supplies actual geometry; no duplicated padding or guessed cell dimensions.
+struct CellScorePlacement {
+    let center: CGPoint
+    let size: CGSize
+    let verticalTravel: CGFloat
+    let fontSize: CGFloat
+
+    init(amount: Int, center: CGPoint, verticalTravel: CGFloat = -12) {
+        self.init(amount: amount, center: center, verticalTravel: verticalTravel, fontSize: 19)
+    }
+
+    private init(amount: Int, center: CGPoint, verticalTravel: CGFloat, fontSize: CGFloat) {
+        let base = UIFont.systemFont(ofSize: fontSize, weight: .heavy)
+        let font = UIFont(descriptor: base.fontDescriptor.withDesign(.rounded) ?? base.fontDescriptor, size: fontSize)
+        let textWidth = ("+\(amount)" as NSString).size(withAttributes: [.font: font]).width
+        self.center = center; self.fontSize = fontSize
+        size = CGSize(width: ceil(textWidth) + 12, height: max(ceil(font.lineHeight) + 4, ceil(fontSize * 24 / 19) + 4))
+        self.verticalTravel = verticalTravel
+    }
+
+    private init(center: CGPoint, size: CGSize, verticalTravel: CGFloat, fontSize: CGFloat) {
+        self.center = center; self.size = size; self.verticalTravel = verticalTravel; self.fontSize = fontSize
+    }
+
+    var sweptFrame: CGRect {
+        let start = CGRect(x: center.x - size.width / 2, y: center.y - size.height / 2,
+                           width: size.width, height: size.height)
+        return start.union(start.offsetBy(dx: 0, dy: verticalTravel))
+    }
+
+    static func anchored(amount: Int, cellFrame: CGRect, boardFrame: CGRect, avoiding: [CGRect] = []) -> CellScorePlacement? {
+        let preferredSize = max(15, min(19, cellFrame.width * 0.6))
+        if let preferred = place(amount: amount, cellFrame: cellFrame, boardFrame: boardFrame,
+                                 avoiding: avoiding, fontSize: preferredSize) { return preferred }
+        guard preferredSize > 15 else { return nil }
+        return place(amount: amount, cellFrame: cellFrame, boardFrame: boardFrame, avoiding: avoiding, fontSize: 15)
+    }
+
+    private static func place(amount: Int, cellFrame: CGRect, boardFrame: CGRect, avoiding: [CGRect], fontSize: CGFloat) -> CellScorePlacement? {
+        guard amount > 0, !cellFrame.isEmpty, !boardFrame.isEmpty,
+              [cellFrame.minX, cellFrame.minY, cellFrame.width, cellFrame.height,
+               boardFrame.minX, boardFrame.minY, boardFrame.width, boardFrame.height].allSatisfy(\.isFinite) else { return nil }
+        let bounds = boardFrame.insetBy(dx: 2, dy: 2)
+        let measured = CellScorePlacement(amount: amount, center: .zero, verticalTravel: -12, fontSize: fontSize)
+        let size = CGSize(width: min(measured.size.width, bounds.width), height: measured.size.height)
+        guard size.width > 0, bounds.height >= size.height else { return nil }
+        let obstacles = [cellFrame] + avoiding.filter { !$0.isEmpty && !$0.isInfinite && !$0.isNull }
+        func clampX(_ x: CGFloat) -> CGFloat { min(max(x, bounds.minX + size.width / 2), bounds.maxX - size.width / 2) }
+        func candidate(x: CGFloat, y: CGFloat, direction: CGFloat, travel: CGFloat = 12) -> CellScorePlacement? {
+            let result = CellScorePlacement(center: CGPoint(x: x, y: y), size: size,
+                verticalTravel: direction * travel, fontSize: fontSize)
+            guard bounds.insetBy(dx: -0.0001, dy: -0.0001).contains(result.sweptFrame),
+                  !obstacles.contains(where: { $0.insetBy(dx: -2, dy: -2).intersects(result.sweptFrame) }) else { return nil }
+            return result
+        }
+        let x = clampX(cellFrame.midX)
+        for direction in [CGFloat(-1), CGFloat(1)] {
+            let y = direction < 0 ? cellFrame.minY - 4 - size.height / 2 : cellFrame.maxY + 4 + size.height / 2
+            if let direct = candidate(x: x, y: y, direction: direction) { return direct }
+        }
+        // Tight late-game boards may have another animal above and below.
+        // Search only obstacle edges and board limits, then choose the closest
+        // clear position; at most 10 occupied cells bound this small search.
+        var horizontal = [x, bounds.minX + size.width / 2, bounds.maxX - size.width / 2]
+        for obstacle in obstacles {
+            horizontal.append(clampX(obstacle.minX - 4 - size.width / 2))
+            horizontal.append(clampX(obstacle.maxX + 4 + size.width / 2))
+        }
+        let xs = Array(Set(horizontal)).sorted()
+        for travel in [CGFloat(12), CGFloat(6), CGFloat(0)] {
+            var best: CellScorePlacement?
+            var bestDistance = CGFloat.infinity
+            for direction in [CGFloat(-1), CGFloat(1)] {
+                let upward: CGFloat = direction < 0 ? travel : 0
+                let downward: CGFloat = direction > 0 ? travel : 0
+                var vertical = [bounds.minY + size.height / 2 + upward,
+                                bounds.maxY - size.height / 2 - downward]
+                for obstacle in obstacles {
+                    vertical.append(obstacle.minY - 4 - size.height / 2 - downward)
+                    vertical.append(obstacle.maxY + 4 + size.height / 2 + upward)
+                }
+                let ys = Array(Set(vertical)).sorted()
+                for cx in xs { for cy in ys {
+                    guard let option = candidate(x: cx, y: cy, direction: direction, travel: travel) else { continue }
+                    let distance = pow(cx - cellFrame.midX, 2) + pow(cy - cellFrame.midY, 2)
+                    if distance < bestDistance { best = option; bestDistance = distance }
+                } }
+            }
+            if let best { return best }
+        }
+        return nil
+    }
+}
+
 struct CellScoreLabel: View {
     let item: GameRewardPresentation.LocalScore
     @State private var lifted = false
     var body: some View {
         Text("+\(item.amount)")
-            .font(.system(size: 19, weight: .heavy, design: .rounded))
+            .font(.system(size: item.placement.fontSize, weight: .heavy, design: .rounded))
             .foregroundColor(CapyPalette.actionOrange)
-            .padding(.horizontal, 6).padding(.vertical, 2)
+            .lineLimit(1).minimumScaleFactor(0.5)
+            .padding(.horizontal, 6)
+            .frame(width: item.placement.size.width, height: item.placement.size.height)
             .background(CapyPalette.paper.opacity(0.96)).clipShape(Capsule())
-            .fixedSize().shadow(color: CapyPalette.ink.opacity(0.12), radius: 2, y: 1)
-            .position(x: item.origin.x, y: item.origin.y - (lifted ? 12 : 0))
+            .capyLayoutProbe("local_score_\(item.amount)")
+            .shadow(color: CapyPalette.ink.opacity(0.12), radius: 2, y: 1)
+            .position(x: item.origin.x, y: item.origin.y + (lifted ? item.placement.verticalTravel : 0))
             .opacity(lifted ? 0 : 1)
             .allowsHitTesting(false).accessibilityHidden(true)
             .onAppear {

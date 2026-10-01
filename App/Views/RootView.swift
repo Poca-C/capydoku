@@ -314,7 +314,6 @@ struct GameView: View {
     @StateObject private var hud = GameHUDPresentation()
     @State private var progressFrame = CGRect.zero
     @State private var gameWindowFrame = CGRect.zero
-    @State private var boardWindowFrame = CGRect.zero
     @State private var ruleWindowFrame = CGRect.zero
     @State private var comboBandWindowFrame = CGRect.zero
     @State private var comboBadgeWindowFrame = CGRect.zero
@@ -474,23 +473,24 @@ struct GameView: View {
                                                 guard model.session?.id == s.id else { return }
                                                 hud.conflict(kinds, sessionID: s.id, visible: canPresentFeedback)
                                             }
-                                        }, onScoreFeedback: { amount, location in
+                                        }, onScoreFeedback: { amount, anchor in
                                             let feedbackEpoch = model.sceneFeedbackEpoch
-                                            let area = boardWindowFrame.offsetBy(dx: -gameWindowFrame.minX, dy: -gameWindowFrame.minY)
-                                            let source = CGPoint(x: location.x - gameWindowFrame.minX,
-                                                                 y: location.y - gameWindowFrame.minY)
-                                            let labelPoint = CGPoint(x: min(max(source.x, area.minX + 44), area.maxX - 44),
-                                                                     y: max(area.minY + 32, source.y - boardSide / CGFloat(s.puzzle.size) * 0.4))
+                                            let offset = CGVector(dx: -gameWindowFrame.minX, dy: -gameWindowFrame.minY)
+                                            let cell = anchor.cellFrame.offsetBy(dx: offset.dx, dy: offset.dy)
+                                            let area = anchor.boardFrame.offsetBy(dx: offset.dx, dy: offset.dy)
+                                            let foundFrames = anchor.foundFrames.map { $0.offsetBy(dx: offset.dx, dy: offset.dy) }
+                                            let placement = CellScorePlacement.anchored(amount: amount, cellFrame: cell, boardFrame: area, avoiding: foundFrames)
                                             DispatchQueue.main.async {
                                                 guard model.session?.id == s.id, canPresentFeedback,
-                                                      !gameWindowFrame.isEmpty, !boardWindowFrame.isEmpty,
+                                                      !gameWindowFrame.isEmpty,
                                                       model.canPresentPositiveFeedback(from: s, epoch: feedbackEpoch) else { return }
-                                                rewards.scoreAward(amount, sessionID: s.id, origin: labelPoint,
+                                                rewards.retireScores(overlapping: foundFrames, sessionID: s.id)
+                                                guard let placement else { return }
+                                                rewards.scoreAward(amount, sessionID: s.id, placement: placement,
                                                                    reduceMotion: reduceMotion)
                                             }
                                         })
                             .frame(width: boardSide, height: boardSide)
-                            .background(FeedbackWindowFrameReader { boardWindowFrame = $0 })
                             .capyLayoutProbe("puzzle_board")
                         Spacer(minLength: compact ? 4 : 10)
                         if model.hint != nil {

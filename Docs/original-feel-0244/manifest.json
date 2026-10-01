@@ -1,0 +1,118 @@
+{
+  "build": "0.2.44 (47)",
+  "items": [
+    {
+      "file": "final-continuous-score.mov",
+      "sha256": "fd00fe5e24ba0b9940f27fac09fc8f26054076396bfe76d0818d9a1e10430bf5",
+      "kind": "Actual Root L6 continuous simulator recording; no animation freeze or mid-sequence snapshot."
+    },
+    {
+      "file": "final-extraction-index.json",
+      "sha256": "5d8906bc30b7c5b742ea8a2f0b2058080302cfb18ab40b1ff518efb94048aad7",
+      "kind": "Requested/actual sample times; finite 50ms extraction, not frame/FPS benchmark."
+    },
+    {
+      "file": "final-continuous-overview.png",
+      "sha256": "95ba19ad7a10faf394e6bd0504cbd0fe636f030c2043ce4238dad4fa85f36b12",
+      "kind": "Full-screen finite video overview, 0–3.6s every0.2s."
+    },
+    {
+      "file": "correct-face-continuous-event-times.json",
+      "sha256": "329679ab718f6c7fe8f2719a887371e0331ee59887d1a8e72dcae3531d9810f6",
+      "sourceBundle": "Validation/test-runs/original-0244-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualRootCorrectFacePlaysContinuouslyIntoRest()",
+      "sourceAttachment": "D9B91648-4947-47F4-BB5E-978425E26C78.json"
+    },
+    {
+      "file": "correct-face-continuous-sequence-end.png",
+      "sha256": "5dae52110306407de0b9c5b7390d7b873fcd6413334c08b601b4d754383bd1bf",
+      "sourceBundle": "Validation/test-runs/original-0244-app-final.xcresult",
+      "test": "GameFeelVisualTests/testActualRootCorrectFacePlaysContinuouslyIntoRest()",
+      "sourceAttachment": "B6CAC55D-FC65-49E6-B763-E7F31FDB1ACB.png"
+    },
+    {
+      "file": "local-score-root-layout-timing.json",
+      "sha256": "3f5544a49fbcb155c64785b159516d08110830be222ce4fa42097f84e94770b4",
+      "sourceBundle": "Validation/test-runs/original-0244-app-final.xcresult",
+      "test": "GameHUDVisualTests/testLocalScoreFitsActualRootWithoutCoveringItsCharacterAtBoardEdges()",
+      "sourceAttachment": "F5FF1664-DC17-4C80-BD85-73136A982D89.json"
+    },
+    {
+      "file": "local-score-L47-320pt-reduced-false-final.png",
+      "sha256": "9149a40d5f3977a7df3247d3847048e2b09904a48e9a4568fe618c36e79848ca",
+      "sourceBundle": "Validation/test-runs/original-0244-app-final.xcresult",
+      "test": "GameHUDVisualTests/testLocalScoreFitsActualRootWithoutCoveringItsCharacterAtBoardEdges()",
+      "sourceAttachment": "CF8CCE1C-A0F6-4266-82AD-3D53E170C981.png"
+    },
+    {
+      "file": "local-score-L101-320pt-reduced-true-bottom.png",
+      "sha256": "22671c5b292757f16576b566345f1f36fc979a80286036525cea2f82a0a738f3",
+      "sourceBundle": "Validation/test-runs/original-0244-app-final.xcresult",
+      "test": "GameHUDVisualTests/testLocalScoreFitsActualRootWithoutCoveringItsCharacterAtBoardEdges()",
+      "sourceAttachment": "96EB06E8-27D1-488B-83AB-7420C9981625.png"
+    },
+    {
+      "file": "local-score-L101-320pt-reduced-true-nearby.png",
+      "sha256": "691e2e827349bcbd37b8fe75002788f6ecc55476bbdfe66c45f78a40f6a2126c",
+      "sourceBundle": "Validation/test-runs/original-0244-app-final.xcresult",
+      "test": "GameHUDVisualTests/testLocalScoreFitsActualRootWithoutCoveringItsCharacterAtBoardEdges()",
+      "sourceAttachment": "04DB029C-B834-402E-8E92-42C3991168D6.png"
+    },
+    {
+      "file": "local-score-L101-320pt-reduced-true-top.png",
+      "sha256": "53cbb580a48c7ac43c822d38cad6dd4974b80a27474dbceae1da6b47f23aa328",
+      "sourceBundle": "Validation/test-runs/original-0244-app-final.xcresult",
+      "test": "GameHUDVisualTests/testLocalScoreFitsActualRootWithoutCoveringItsCharacterAtBoardEdges()",
+      "sourceAttachment": "079814B0-EA23-4B79-A48A-CFD8B6816D14.png"
+    },
+    {
+      "file": "local-score-L101-320pt-reduced-false-bottom.png",
+      "sha256": "78875212012be55143bcbf6bbf2bc2209824f3fbb0ae2bb9f48cce89230d2fa8",
+      "sourceBundle": "Validation/test-runs/original-0244-app-final.xcresult",
+      "test": "GameHUDVisualTests/testLocalScoreFitsActualRootWithoutCoveringItsCharacterAtBoardEdges()",
+      "sourceAttachment": "E5B1D0E3-CAF1-4B9D-9D7C-11B58AAB030E.png"
+    },
+    {
+      "file": "local-score-L101-320pt-reduced-false-nearby.png",
+      "sha256": "16501d85424b6541022694000e83ff316bac49e7f460837e84f5b1a4a1bb2f90",
+      "sourceBundle": "Validation/test-runs/original-0244-app-final.xcresult",
+      "test": "GameHUDVisualTests/testLocalScoreFitsActualRootWithoutCoveringItsCharacterAtBoardEdges()",
+      "sourceAttachment": "79C791D9-6581-4130-B33F-0F2E7C8DF880.png"
+    },
+    {
+      "file": "local-score-L101-320pt-reduced-false-top.png",
+      "sha256": "8a592754c0e166df214b76612c475275a1dab9152be35a08ecf04b9d49bfd5f2",
+      "sourceBundle": "Validation/test-runs/original-0244-app-final.xcresult",
+      "test": "GameHUDVisualTests/testLocalScoreFitsActualRootWithoutCoveringItsCharacterAtBoardEdges()",
+      "sourceAttachment": "584B3B21-3A62-48E6-95A9-2E4B5F163070.png"
+    },
+    {
+      "file": "local-score-L6-402pt-reduced-false-bottom.png",
+      "sha256": "50b8aff6d1eb4951d0844bdf7b3b980f22877e1e873256fdebdba5c22cdfc578",
+      "sourceBundle": "Validation/test-runs/original-0244-app-final.xcresult",
+      "test": "GameHUDVisualTests/testLocalScoreFitsActualRootWithoutCoveringItsCharacterAtBoardEdges()",
+      "sourceAttachment": "BE4059E3-B012-4457-A722-3EE9027D5362.png"
+    },
+    {
+      "file": "local-score-L6-402pt-reduced-false-nearby.png",
+      "sha256": "1673277ecd3b747de53365fdb1d5e36398aaa4c19a1b1049ff1bc7d6990105e9",
+      "sourceBundle": "Validation/test-runs/original-0244-app-final.xcresult",
+      "test": "GameHUDVisualTests/testLocalScoreFitsActualRootWithoutCoveringItsCharacterAtBoardEdges()",
+      "sourceAttachment": "1B44E167-9990-4C00-AB2E-E0062FC84037.png"
+    },
+    {
+      "file": "local-score-L6-402pt-reduced-false-top.png",
+      "sha256": "9781156064748072e7298689a65cc0c7fbc0bd681a20728ab053060ec0733fc8",
+      "sourceBundle": "Validation/test-runs/original-0244-app-final.xcresult",
+      "test": "GameHUDVisualTests/testLocalScoreFitsActualRootWithoutCoveringItsCharacterAtBoardEdges()",
+      "sourceAttachment": "A666D9E8-15C2-4011-B389-A16369DF1577.png"
+    }
+  ],
+  "baseline": "Docs/original-feel-0243/final-correct-face.mov",
+  "review": {
+    "actualRoot": "Ten real Root screenshots:402pt/L6 and320pt/L101 normal motion,320pt/L101 reduced motion (top, nearby second source and bottom), plus320pt/L47 final find. Await bounded asynchronous layout after initial120ms; first observed layout and capture times are attached, not visible-frame latency. Cell frames are cached before winning hides their accessibility elements.",
+    "continuous": "L6 source recording sampled0–3.6s every0.2s, with selected full frames. Movie zeros are independent; no exact frame timing or audible review is inferred.",
+    "geometry": "4452 single-source geometry cases plus actual150-level pack forward/reverse at190/374pt across every prefix including final board. These are layout checks, not a fresh solver/uniqueness or full gameplay acceptance run.",
+    "boundary": "Finite simulator screenshots/recording and deterministic rectangle checks; no physical haptic/audio A/B, no new reference playtest. Entire badge rectangles avoid found cells; shadow pixels and every possible generated-board order are not exhaustively measured."
+  }
+}

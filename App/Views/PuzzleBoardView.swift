@@ -3,6 +3,13 @@ import UIKit
 import UIKit.UIGestureRecognizerSubclass
 import CapydokuCore
 
+/// Exact geometry of an accepted score source, in the board's UIWindow.
+struct BoardScoreAnchor {
+    let cellFrame: CGRect
+    let boardFrame: CGRect
+    let foundFrames: [CGRect]
+}
+
 struct PuzzleBoardView: UIViewRepresentable {
     @Environment(\.appLanguage) private var language
     @Environment(\.accessibilityReduceMotion) private var systemReduceMotion
@@ -32,7 +39,7 @@ struct PuzzleBoardView: UIViewRepresentable {
     /// The point is in the board's UIWindow coordinates, not local grid space.
     var onFoundFeedback: (Int, CGPoint) -> Void = { _, _ in }
     var onConflictFeedback: ([VisibleConflictKind]) -> Void = { _ in }
-    var onScoreFeedback: (Int, CGPoint) -> Void = { _, _ in }
+    var onScoreFeedback: (Int, BoardScoreAnchor) -> Void = { _, _ in }
 
     func makeUIView(context: Context) -> PuzzleGridUIView {
         let view = PuzzleGridUIView()
@@ -145,7 +152,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     private var onInputActivityChange: ((UUID, Bool) -> Void)?
     private var onFoundFeedback: ((Int, CGPoint) -> Void)?
     private var onConflictFeedback: (([VisibleConflictKind]) -> Void)?
-    private var onScoreFeedback: ((Int, CGPoint) -> Void)?
+    private var onScoreFeedback: ((Int, BoardScoreAnchor) -> Void)?
     let inputActivity = BoardInputActivity()
     private var inputRecognizers: [UIGestureRecognizer] = []
     private var swipeFeedbackActive = false
@@ -235,7 +242,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
                    onInputActivityChange: @escaping (UUID, Bool) -> Void = { _, _ in },
                    onFoundFeedback: @escaping (Int, CGPoint) -> Void = { _, _ in },
                    onConflictFeedback: @escaping ([VisibleConflictKind]) -> Void = { _ in },
-                   onScoreFeedback: @escaping (Int, CGPoint) -> Void = { _, _ in }) {
+                   onScoreFeedback: @escaping (Int, BoardScoreAnchor) -> Void = { _, _ in }) {
         refreshDiagnostics.configurations += 1
         let sameBoard = self.size == size && self.regions == regions && self.sessionID == sessionID
         let fullAccessibilityRefresh = !hasConfigured || !sameBoard || self.language != language || self.locked != locked
@@ -368,7 +375,9 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
             }
             if !suppressPositiveFeedback, scoreDelta > 0, let index = scoreOrigin, let window {
                 let cell = rect(for: index)
-                self.onScoreFeedback?(scoreDelta, convert(CGPoint(x: cell.midX, y: cell.midY), to: window))
+                self.onScoreFeedback?(scoreDelta, BoardScoreAnchor(cellFrame: convert(cell, to: window),
+                    boardFrame: convert(boardRect, to: window),
+                    foundFrames: found.sorted().map { convert(rect(for: $0), to: window) }))
             }
         }
         if hasConfigured, sameBoard, canPresentEffects, !latestFindWins, let index = mistakeCell {

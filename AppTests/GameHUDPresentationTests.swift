@@ -33,7 +33,7 @@ final class GameHUDPresentationTests: XCTestCase {
         hud.lifeChanged(2, sessionID: session, visible: true)
         hud.conflict([.row], sessionID: session, visible: true)
         rewards.scoreChanged(120, sessionID: session, visible: true)
-        rewards.scoreAward(20, sessionID: session, origin: .zero, reduceMotion: false)
+        rewards.scoreAward(20, sessionID: session, placement: CellScorePlacement(amount: 20, center: .zero), reduceMotion: false)
         rewards.found(index: 0, sessionID: session, origin: .zero, destination: .zero, reduceMotion: false)
         XCTAssertFalse(hud.lifeLosses.isEmpty)
         XCTAssertFalse(rewards.localScores.isEmpty)
@@ -45,7 +45,7 @@ final class GameHUDPresentationTests: XCTestCase {
         hud.lifeChanged(1, sessionID: session, visible: true)
         rewards.scoreChanged(180, sessionID: session, visible: true)
         rewards.scoreChanged(200, sessionID: session, visible: false)
-        rewards.scoreAward(80, sessionID: session, origin: .zero, reduceMotion: false)
+        rewards.scoreAward(80, sessionID: session, placement: CellScorePlacement(amount: 80, center: .zero), reduceMotion: false)
         rewards.found(index: 1, sessionID: session, origin: .zero, destination: .zero, reduceMotion: false)
         clock.advance(1)
         XCTAssertTrue(hud.highlightedRules.isEmpty)
@@ -67,7 +67,7 @@ final class GameHUDPresentationTests: XCTestCase {
         hud.lifeChanged(0, sessionID: session, visible: true)
         hud.conflict([.adjacent], sessionID: session, visible: true)
         rewards.scoreChanged(225, sessionID: session, visible: true)
-        rewards.scoreAward(25, sessionID: session, origin: CGPoint(x: 60, y: 80), reduceMotion: false)
+        rewards.scoreAward(25, sessionID: session, placement: CellScorePlacement(amount: 25, center: CGPoint(x: 60, y: 80)), reduceMotion: false)
         rewards.found(index: 2, sessionID: session, origin: .zero, destination: .zero, reduceMotion: false)
         XCTAssertEqual(hud.lifeLosses.map(\.index), [0])
         XCTAssertEqual(hud.highlightedRules, [.adjacent])
@@ -203,22 +203,22 @@ final class GameHUDPresentationTests: XCTestCase {
     @MainActor func testLocalScoreRejectsUnboundWrongSessionNonpositiveAndNonfiniteInputs() {
         let clock = HUDPresentationClock(), feedback = GameRewardPresentation(schedule: clock.schedule)
         let session = UUID()
-        feedback.scoreAward(10, sessionID: session, origin: .zero, reduceMotion: false)
+        feedback.scoreAward(10, sessionID: session, placement: CellScorePlacement(amount: 10, center: .zero), reduceMotion: false)
         XCTAssertTrue(feedback.localScores.isEmpty)
         feedback.bind(sessionID: session, score: 500)
         XCTAssertTrue(feedback.localScores.isEmpty, "Restoring committed score does not replay a local award.")
         for amount in [Int.min, -1, 0] {
-            feedback.scoreAward(amount, sessionID: session, origin: .zero, reduceMotion: false)
+            feedback.scoreAward(amount, sessionID: session, placement: CellScorePlacement(amount: amount, center: .zero), reduceMotion: false)
         }
         for origin in [CGPoint(x: CGFloat.nan, y: 0), CGPoint(x: CGFloat.infinity, y: 0),
                        CGPoint(x: -CGFloat.infinity, y: 0), CGPoint(x: 0, y: CGFloat.nan),
                        CGPoint(x: 0, y: CGFloat.infinity), CGPoint(x: 0, y: -CGFloat.infinity)] {
-            feedback.scoreAward(10, sessionID: session, origin: origin, reduceMotion: false)
+            feedback.scoreAward(10, sessionID: session, placement: CellScorePlacement(amount: 10, center: origin), reduceMotion: false)
         }
-        feedback.scoreAward(10, sessionID: UUID(), origin: .zero, reduceMotion: false)
+        feedback.scoreAward(10, sessionID: UUID(), placement: CellScorePlacement(amount: 10, center: .zero), reduceMotion: false)
         clock.advance(1)
         XCTAssertTrue(feedback.localScores.isEmpty)
-        feedback.scoreAward(25, sessionID: session, origin: CGPoint(x: 40, y: 80), reduceMotion: true)
+        feedback.scoreAward(25, sessionID: session, placement: CellScorePlacement(amount: 25, center: CGPoint(x: 40, y: 80)), reduceMotion: true)
         XCTAssertEqual(feedback.localScores.map(\.amount), [25])
         XCTAssertEqual(feedback.localScores.first?.origin, CGPoint(x: 40, y: 80))
         XCTAssertEqual(feedback.localScores.first?.reduceMotion, true)
@@ -229,7 +229,7 @@ final class GameHUDPresentationTests: XCTestCase {
         let session = UUID()
         feedback.bind(sessionID: session, score: 0)
         for amount in 1...6 {
-            feedback.scoreAward(amount, sessionID: session, origin: .zero, reduceMotion: false)
+            feedback.scoreAward(amount, sessionID: session, placement: CellScorePlacement(amount: amount, center: .zero), reduceMotion: false)
             clock.advance(0.05)
         }
         XCTAssertEqual(feedback.localScores.map(\.amount), [3, 4, 5, 6])
@@ -245,23 +245,172 @@ final class GameHUDPresentationTests: XCTestCase {
         let clock = HUDPresentationClock(), feedback = GameRewardPresentation(schedule: clock.schedule)
         let session = UUID(), next = UUID()
         feedback.bind(sessionID: session, score: 0)
-        feedback.scoreAward(10, sessionID: session, origin: .zero, reduceMotion: false)
+        feedback.scoreAward(10, sessionID: session, placement: CellScorePlacement(amount: 10, center: .zero), reduceMotion: false)
         clock.advance(0.40)
         feedback.clear()
         XCTAssertTrue(feedback.localScores.isEmpty)
-        feedback.scoreAward(20, sessionID: session, origin: .zero, reduceMotion: false)
+        feedback.scoreAward(20, sessionID: session, placement: CellScorePlacement(amount: 20, center: .zero), reduceMotion: false)
         let afterClear = try XCTUnwrap(feedback.localScores.first)
         clock.advance(0.33)
         XCTAssertEqual(feedback.localScores.map(\.id), [afterClear.id])
         feedback.bind(sessionID: next, score: 90)
         XCTAssertTrue(feedback.localScores.isEmpty)
-        feedback.scoreAward(30, sessionID: session, origin: .zero, reduceMotion: false)
+        feedback.scoreAward(30, sessionID: session, placement: CellScorePlacement(amount: 30, center: .zero), reduceMotion: false)
         XCTAssertTrue(feedback.localScores.isEmpty)
-        feedback.scoreAward(40, sessionID: next, origin: .zero, reduceMotion: false)
+        feedback.scoreAward(40, sessionID: next, placement: CellScorePlacement(amount: 40, center: .zero), reduceMotion: false)
         let afterBind = try XCTUnwrap(feedback.localScores.first)
         clock.advance(0.40)
         XCTAssertEqual(feedback.localScores.map(\.id), [afterBind.id])
         clock.advance(0.33)
         XCTAssertTrue(feedback.localScores.isEmpty)
     }
+
+    @MainActor func testAnchoredLocalScoresStayInsideEveryBoardCellWithoutCrossingTheSource() throws {
+        // Use the real inner-board sizes of 190/320/374pt hosts and a fractional
+        // translated origin; a zero-origin-only test would miss coordinate bugs.
+        for side in [CGFloat(190), 320, 374] {
+            let board = CGRect(x: 17.25, y: 29.75, width: side - 14, height: side - 14)
+            for count in 4...10 {
+                let unit = board.width / CGFloat(count)
+                for index in 0..<(count * count) {
+                    let cell = CGRect(x: board.minX + CGFloat(index % count) * unit,
+                                      y: board.minY + CGFloat(index / count) * unit,
+                                      width: unit, height: unit)
+                    for amount in [100, 140, 99_999, Int.max] {
+                        let context = "host=\(side), grid=\(count), cell=\(index), amount=\(amount)"
+                        let placement = try XCTUnwrap(CellScorePlacement.anchored(amount: amount,
+                            cellFrame: cell, boardFrame: board), context)
+                        XCTAssertTrue([placement.center.x, placement.center.y, placement.size.width,
+                                       placement.size.height, placement.verticalTravel].allSatisfy(\.isFinite), context)
+                        XCTAssertGreaterThan(placement.size.width, 0, context)
+                        XCTAssertGreaterThanOrEqual(placement.size.height, 22, context)
+                        XCTAssertLessThanOrEqual(placement.size.height, 28.5, context)
+                        XCTAssertGreaterThanOrEqual(placement.fontSize, 15, context)
+                        XCTAssertLessThanOrEqual(placement.fontSize, 19, context)
+                        let start = CGRect(x: placement.center.x - placement.size.width / 2,
+                                           y: placement.center.y - placement.size.height / 2,
+                                           width: placement.size.width, height: placement.size.height)
+                        let end = start.offsetBy(dx: 0, dy: placement.verticalTravel)
+                        // Derive the sweep from the actual label size and travel,
+                        // rather than trusting the helper's declared safe frame.
+                        let actualSweep = start.union(end)
+                        XCTAssertTrue(board.insetBy(dx: -0.0001, dy: -0.0001).contains(actualSweep), context)
+                        XCTAssertFalse(actualSweep.intersects(cell), context)
+                        XCTAssertEqual(placement.sweptFrame.minX, actualSweep.minX, accuracy: 0.0001, context)
+                        XCTAssertEqual(placement.sweptFrame.minY, actualSweep.minY, accuracy: 0.0001, context)
+                        XCTAssertEqual(placement.sweptFrame.width, actualSweep.width, accuracy: 0.0001, context)
+                        XCTAssertEqual(placement.sweptFrame.height, actualSweep.height, accuracy: 0.0001, context)
+                    }
+                }
+            }
+        }
+    }
+
+    @MainActor func testCurrent150LevelPackPlacesEveryScoreAroundAllFoundCharactersInBothOrders() throws {
+        let url = try XCTUnwrap(Bundle.main.url(forResource: "levels", withExtension: "json"))
+        let puzzles = try JSONDecoder().decode([Puzzle].self, from: Data(contentsOf: url))
+        XCTAssertEqual(puzzles.count, 150, "Exercise the complete bundled level pack, not a substitute fixture.")
+        for puzzle in puzzles {
+            for side in [CGFloat(190), 374] {
+                let board = CGRect(x: 17.25, y: 29.75, width: side - 14, height: side - 14)
+                let unit = board.width / CGFloat(puzzle.size)
+                for (direction, order) in [("forward", puzzle.solution), ("reverse", Array(puzzle.solution.reversed()))] {
+                    var found = [CGRect]()
+                    for (step, index) in order.enumerated() {
+                        let cell = CGRect(x: board.minX + CGFloat(index % puzzle.size) * unit,
+                                          y: board.minY + CGFloat(index / puzzle.size) * unit,
+                                          width: unit, height: unit)
+                        found.append(cell)
+                        let context = "level=\(puzzle.id), host=\(side), order=\(direction), step=\(step), source=\(index)"
+                        let placement = try XCTUnwrap(CellScorePlacement.anchored(amount: 100 + step * 20,
+                            cellFrame: cell, boardFrame: board, avoiding: found), context)
+                        let start = CGRect(x: placement.center.x - placement.size.width / 2,
+                                           y: placement.center.y - placement.size.height / 2,
+                                           width: placement.size.width, height: placement.size.height)
+                        let sweep = start.union(start.offsetBy(dx: 0, dy: placement.verticalTravel))
+                        XCTAssertTrue(board.insetBy(dx: -0.0001, dy: -0.0001).contains(sweep), context)
+                        for character in found { XCTAssertFalse(sweep.intersects(character), context) }
+                    }
+                    XCTAssertEqual(found.count, puzzle.size, "Include the full-board victory find: \(puzzle.id) / \(direction).")
+                }
+            }
+        }
+    }
+
+    @MainActor func testAnchoredLocalScoresAvoidEarlierCharactersAcrossCompactLevel101Sequence() throws {
+        // Current fixed L101 layout: its first two finds (0 -> 12) expose the
+        // old top-row badge crossing the next character on a compact board.
+        let solution = [0, 12, 29, 31, 45, 53, 67, 74, 86, 98]
+        for side in [CGFloat(190), 320, 374] {
+            let board = CGRect(x: 17.25, y: 29.75, width: side - 14, height: side - 14)
+            let unit = board.width / 10
+            let cells = solution.map { index in
+                CGRect(x: board.minX + CGFloat(index % 10) * unit,
+                       y: board.minY + CGFloat(index / 10) * unit, width: unit, height: unit)
+            }
+            for step in cells.indices {
+                let found = Array(cells.prefix(step + 1))
+                let context = "host=\(side), source=\(solution[step]), found=\(step + 1)"
+                let placement = try XCTUnwrap(CellScorePlacement.anchored(amount: 100 + step * 40,
+                    cellFrame: cells[step], boardFrame: board, avoiding: found), context)
+                let start = CGRect(x: placement.center.x - placement.size.width / 2,
+                                   y: placement.center.y - placement.size.height / 2,
+                                   width: placement.size.width, height: placement.size.height)
+                let sweep = start.union(start.offsetBy(dx: 0, dy: placement.verticalTravel))
+                XCTAssertTrue(board.insetBy(dx: -0.0001, dy: -0.0001).contains(sweep), context)
+                for character in found { XCTAssertFalse(sweep.intersects(character), context) }
+            }
+        }
+    }
+
+    @MainActor func testNewCharacterRetiresOnlyOverlappingScoresAndOldExpiryCannotEraseReplacement() throws {
+        let clock = HUDPresentationClock(), feedback = GameRewardPresentation(schedule: clock.schedule)
+        let session = UUID()
+        feedback.bind(sessionID: session, score: 0)
+        feedback.scoreChanged(100, sessionID: session, visible: true)
+        feedback.scoreAward(100, sessionID: session,
+                            placement: CellScorePlacement(amount: 100, center: CGPoint(x: 40, y: 80)),
+                            reduceMotion: false)
+        let first = try XCTUnwrap(feedback.localScores.first)
+        clock.advance(0.20)
+        feedback.scoreAward(140, sessionID: session,
+                            placement: CellScorePlacement(amount: 140, center: CGPoint(x: 200, y: 80)),
+                            reduceMotion: true)
+        let safe = try XCTUnwrap(feedback.localScores.last)
+        // This character lies in the first badge's travel, outside its initial
+        // rectangle; checking only the original center would miss the collision.
+        let incomingCharacter = CGRect(x: 35, y: 55, width: 10, height: 5)
+        feedback.retireScores(overlapping: [incomingCharacter], sessionID: UUID())
+        XCTAssertEqual(feedback.localScores.map(\.id), [first.id, safe.id], "Stale-board geometry is ignored.")
+        feedback.retireScores(overlapping: [], sessionID: session)
+        XCTAssertEqual(feedback.localScores.map(\.id), [first.id, safe.id])
+        feedback.retireScores(overlapping: [incomingCharacter], sessionID: session)
+        XCTAssertEqual(feedback.localScores.map(\.id), [safe.id], "Keep the separate, non-overlapping acknowledgement.")
+        XCTAssertEqual(feedback.localScores.first?.amount, 140)
+        XCTAssertEqual(feedback.localScores.first?.reduceMotion, true)
+        XCTAssertEqual(feedback.scoreDelta, 100, "Retiring local artwork does not clear the committed HUD acknowledgement.")
+
+        clock.advance(0.39)
+        feedback.scoreAward(100, sessionID: session,
+                            placement: CellScorePlacement(amount: 100, center: CGPoint(x: 40, y: 80)),
+                            reduceMotion: false)
+        let replacement = try XCTUnwrap(feedback.localScores.last)
+        XCTAssertNotEqual(replacement.id, first.id)
+        clock.advance(0.14) // t=0.73: the retired first badge's timer has fired.
+        XCTAssertEqual(feedback.localScores.map(\.id), [safe.id, replacement.id])
+        clock.advance(0.20) // t=0.93: the unaffected badge still expires normally.
+        XCTAssertEqual(feedback.localScores.map(\.id), [replacement.id])
+        clock.advance(0.40)
+        XCTAssertTrue(feedback.localScores.isEmpty)
+    }
+
+    @MainActor func testAnchoredLocalScoreOmitsDecorationWhenTheBoardCannotFitIt() {
+        let tooSmall = CGRect(x: 40, y: 70, width: 18, height: 18)
+        XCTAssertNil(CellScorePlacement.anchored(amount: 140,
+            cellFrame: tooSmall.insetBy(dx: 2, dy: 2), boardFrame: tooSmall))
+        let board = CGRect(x: 40, y: 70, width: 190, height: 190)
+        XCTAssertNil(CellScorePlacement.anchored(amount: 140, cellFrame: board, boardFrame: board),
+                     "A badge must not cover the source merely because every other position is unavailable.")
+    }
+
 }

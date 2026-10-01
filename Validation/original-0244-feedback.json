@@ -1,0 +1,199 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.44 (47)",
+  "date": "2026-10-02",
+  "status": "scoped_local_score_character_avoidance_verified_simulator_only",
+  "previousReport": "Validation/original-0243-feedback.json",
+  "previousGoalTurn": {
+    "classification": "progress",
+    "reason": "0.2.43收势与快速通关交接已实现、验证并提交0b2dd07；本轮处理实际录屏浮分遮脸。"
+  },
+  "sourceParagraphs": [
+    129,
+    241,
+    249,
+    252,
+    254
+  ],
+  "finding": "原浮分采用猜测格宽、固定边缘钳制与统一上漂，首行被压回脸内；首版只避源格仍可能盖住此前角色，旧badge也会盖住快速下一次找到的角色。",
+  "changes": [
+    "UIKit提供实际源格、棋盘及所有当前角色的窗口矩形，Root统一转换坐标，删除过时的重复棋盘测量。",
+    "按数字实际字体宽度布局，优先上下留空，必要时从障碍边缘找最近的可用位置，完整移动范围留在棋盘内并避开已找到角色。",
+    "紧凑格使用15–19pt可调字号，无空位时回退到15pt再布局；优先12pt漂移，密集终盘不足时缩为6pt或原位淡出，保留0.68秒淡出与0.72秒独立清理，不延后操作、计分或存档。",
+    "新角色出现时仅撤掉会挡住它的旧浮分，其他反馈及已得分保留；旧到期回调不能误删新的同金额反馈。"
+  ],
+  "temporaryTuning": "字号、间距、移动距离均为Demo呈现参数，非Meowdoku逐帧对标值。",
+  "verificationHistory": [
+    {
+      "status": "Passed",
+      "cases": 79,
+      "passed": 79,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 77.566,
+      "scope": "First candidate79passed; screenshots and later geometry review exposed possible overlap with other/newly found characters, prompting broader avoidance.",
+      "summary": "Validation/test-runs/original-0244-app-r1-summary.json",
+      "log": "Validation/test-runs/original-0244-app-r1.log",
+      "bundle": "Validation/test-runs/original-0244-app-r1.xcresult"
+    },
+    {
+      "status": "BuildFailed",
+      "testCountUnavailable": true,
+      "log": "Validation/test-runs/original-0244-app-r2.log",
+      "reason": "Swift type checker could not resolve a long Set/array/flatMap expression; split into explicit loops before execution."
+    },
+    {
+      "status": "Failed",
+      "cases": 82,
+      "passed": 81,
+      "failed": 1,
+      "skipped": 0,
+      "seconds": 86.08,
+      "scope": "Intermediate all-face avoidance check failed atL47/190pt forward final cell35. Shortening travel alone did not solve it; added15pt typography fallback while retaining nonnil/no-overlap assertions.",
+      "summary": "Validation/test-runs/original-0244-app-r3-summary.json",
+      "log": "Validation/test-runs/original-0244-app-r3.log",
+      "bundle": "Validation/test-runs/original-0244-app-r3.xcresult"
+    },
+    {
+      "status": "Failed",
+      "cases": 82,
+      "passed": 81,
+      "failed": 1,
+      "skipped": 0,
+      "seconds": 81.724,
+      "scope": "Intermediate all-face avoidance check failed atL47/190pt forward final cell35. Shortening travel alone did not solve it; added15pt typography fallback while retaining nonnil/no-overlap assertions.",
+      "summary": "Validation/test-runs/original-0244-app-r4-summary.json",
+      "log": "Validation/test-runs/original-0244-app-r4.log",
+      "bundle": "Validation/test-runs/original-0244-app-r4.xcresult"
+    },
+    {
+      "status": "Failed",
+      "cases": 18,
+      "passed": 17,
+      "failed": 1,
+      "skipped": 0,
+      "seconds": 29.952,
+      "scope": "150-pack layout passed after15pt fallback; new actualRootL47 inspection failed because120ms did not yet have async layout.",
+      "summary": "Validation/test-runs/original-0244-layout-r5-summary.json",
+      "log": "Validation/test-runs/original-0244-layout-r5.log",
+      "bundle": "Validation/test-runs/original-0244-layout-r5.xcresult"
+    },
+    {
+      "status": "BuildFailed",
+      "testCountUnavailable": true,
+      "log": "Validation/test-runs/original-0244-root-diagnostic.log",
+      "reason": "Diagnostic used unavailable NSStringFromCGRect; replaced with NSCoder.string(for:)."
+    },
+    {
+      "status": "Failed",
+      "cases": 1,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "seconds": 28.514,
+      "scope": "Diagnostic test crashed by indexing accessibility cells after victory deliberately hides them; fixed by caching before submit. This was test code, not a production crash.",
+      "summary": "Validation/test-runs/original-0244-root-diagnostic-r2-summary.json",
+      "log": "Validation/test-runs/original-0244-root-diagnostic-r2.log",
+      "bundle": "Validation/test-runs/original-0244-root-diagnostic-r2.xcresult"
+    },
+    {
+      "status": "Failed",
+      "cases": 1,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "seconds": 22.501,
+      "scope": "Cached geometry proved a valid200-point layout but initial120ms observer read remained too early.",
+      "summary": "Validation/test-runs/original-0244-root-diagnostic-r3-summary.json",
+      "log": "Validation/test-runs/original-0244-root-diagnostic-r3.log",
+      "bundle": "Validation/test-runs/original-0244-root-diagnostic-r3.xcresult"
+    },
+    {
+      "status": "Failed",
+      "cases": 1,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "seconds": 24.385,
+      "scope": "Temporary trace verified actualRoot placement and business guard succeeded; initial120ms observer read still failed.",
+      "summary": "Validation/test-runs/original-0244-root-diagnostic-r4-summary.json",
+      "log": "Validation/test-runs/original-0244-root-diagnostic-r4.log",
+      "bundle": "Validation/test-runs/original-0244-root-diagnostic-r4.xcresult"
+    },
+    {
+      "status": "Passed",
+      "cases": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 14.087,
+      "scope": "Bounded wait for actual async layout passed with identical geometry assertions; temporary traces removed before final affected-suite rerun.",
+      "summary": "Validation/test-runs/original-0244-root-diagnostic-r5-summary.json",
+      "log": "Validation/test-runs/original-0244-root-diagnostic-r5.log",
+      "bundle": "Validation/test-runs/original-0244-root-diagnostic-r5.xcresult"
+    }
+  ],
+  "applicationTests": {
+    "status": "Passed",
+    "cases": 82,
+    "passed": 82,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 74.767,
+    "scope": "17 Pro / iOS26.5; eight affected board/reward/presentation suites, not full App/Core.",
+    "summary": "Validation/test-runs/original-0244-app-final-summary.json",
+    "log": "Validation/test-runs/original-0244-app-final.log",
+    "bundle": "Validation/test-runs/original-0244-app-final.xcresult"
+  },
+  "uiTests": {
+    "status": "Passed",
+    "cases": 4,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 146.768,
+    "scope": "17e / iOS26.5; native gestures/tools, solve/advance, lose/simulated revive, hint preview/Apply.",
+    "summary": "Validation/test-runs/original-0244-17e-ui-summary.json",
+    "log": "Validation/test-runs/original-0244-17e-ui.log",
+    "bundle": "Validation/test-runs/original-0244-17e-ui.xcresult"
+  },
+  "visualEvidence": "Docs/original-feel-0244/manifest.json",
+  "reference": {
+    "latestSuccessfulPlaytest": "Validation/meowdoku-playtest-comparison-0229.json",
+    "newSuccessfulPlaytestThisRound": false,
+    "equivalenceClaimed": false
+  },
+  "audio": {
+    "modified": false,
+    "localTestWAVCount": 9,
+    "currentDebugInventory": "Validation/audio-isolation-0244-debug.json",
+    "formalManifestClipsEmpty": true,
+    "liveAuditoryAB": false,
+    "releaseRebuilt": false
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  },
+  "remaining": [
+    "角色整体动作自然度、真人连续体验及真机音画/触觉仍待验。",
+    "当前飞星仍会短暂覆盖角色，紧凑棋盘尤其明显；本轮只校正浮分避让，没有完成所有奖励特效的视觉层次优化。",
+    "密集终盘浮分为避开角色可能离源格较远，来源关联的直观性仍可改善。",
+    "矩形校验不代表所有生成盘、任意操作排列和每个阴影像素都已穷尽；极端不可用布局省略局部装饰，已提交分数不受影响。",
+    "手机仍0.2.29；冻结参考、最低系统和正式上架验收未完成。"
+  ],
+  "formalSignOff": false,
+  "formalConformanceRowsUnchanged": 83,
+  "historicalChecklistCountUnchanged": 88
+}

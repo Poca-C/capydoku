@@ -20,7 +20,7 @@ import CapydokuCore
     var reduceMotion = false
     var effectsEnabled = true
     var callbacks = [[VisibleConflictKind]]()
-    var scores = [(Int, CGPoint)]()
+    var scores = [(Int, BoardScoreAnchor)]()
 
     init(session: GameSession? = nil, idleBlinkScheduler: ((TimeInterval, DispatchWorkItem) -> Void)? = nil) throws {
         self.session = session ?? GameSession(puzzle: Self.puzzle)
@@ -46,7 +46,7 @@ import CapydokuCore
             }, onMark: { [weak self] cells in
                 guard let self else { return }; session.markMany(cells); refresh()
             }, onConflictFeedback: { [weak self] kinds in self?.callbacks.append(kinds) },
-            onScoreFeedback: { [weak self] delta, point in self?.scores.append((delta, point)) })
+            onScoreFeedback: { [weak self] delta, anchor in self?.scores.append((delta, anchor)) })
     }
     var guides: [BoardTutorialGuideView] { board.subviews.flatMap(\.subviews).compactMap { $0 as? BoardTutorialGuideView } }
     var conflicts: [BoardConflictFeedbackView] { board.subviews.flatMap(\.subviews).compactMap { $0 as? BoardConflictFeedbackView } }
@@ -350,15 +350,52 @@ final class BoardGuidancePresentationTests: XCTestCase {
 
     @MainActor func testScoreUsesActualCommittedIncreaseOnceAndCoalescedMovesReportOneTotal() throws {
         let rig = try GuidanceRig(); defer { rig.close() }
+        func assertAnchor(_ anchor: BoardScoreAnchor, for index: Int) throws {
+            let elements = try XCTUnwrap(rig.board.accessibilityElements as? [UIAccessibilityElement])
+            let localCells = elements.map(\.accessibilityFrameInContainerSpace)
+            let measuredCell = rig.board.convert(localCells[index], to: rig.window)
+            let measuredBoard = rig.board.convert(localCells.reduce(CGRect.null) { $0.union($1) }, to: rig.window)
+            let expectedCenter = rig.board.convert(try rig.center(index), to: rig.window)
+            XCTAssertEqual(anchor.cellFrame.midX, expectedCenter.x, accuracy: 0.0001)
+            XCTAssertEqual(anchor.cellFrame.midY, expectedCenter.y, accuracy: 0.0001)
+            for (actual, expected) in [(anchor.cellFrame, measuredCell), (anchor.boardFrame, measuredBoard)] {
+                XCTAssertEqual(actual.minX, expected.minX, accuracy: 0.0001)
+                XCTAssertEqual(actual.minY, expected.minY, accuracy: 0.0001)
+                XCTAssertEqual(actual.width, expected.width, accuracy: 0.0001)
+                XCTAssertEqual(actual.height, expected.height, accuracy: 0.0001)
+            }
+            let measuredFound = rig.session.found.sorted().map { rig.board.convert(localCells[$0], to: rig.window) }
+            let actualFound = anchor.foundFrames.sorted {
+                $0.minY == $1.minY ? $0.minX < $1.minX : $0.minY < $1.minY
+            }
+            XCTAssertEqual(actualFound.count, measuredFound.count,
+                           "Every current character, including earlier finds, participates in avoidance.")
+            for (actual, expected) in zip(actualFound, measuredFound) {
+                XCTAssertEqual(actual.minX, expected.minX, accuracy: 0.0001)
+                XCTAssertEqual(actual.minY, expected.minY, accuracy: 0.0001)
+                XCTAssertEqual(actual.width, expected.width, accuracy: 0.0001)
+                XCTAssertEqual(actual.height, expected.height, accuracy: 0.0001)
+            }
+            XCTAssertTrue(anchor.boardFrame.insetBy(dx: -0.0001, dy: -0.0001).contains(anchor.cellFrame))
+            XCTAssertLessThan(anchor.boardFrame.width, rig.board.bounds.width,
+                              "The callback describes actual tiles, excluding the decorative board margin.")
+        }
         let before = rig.session.score
         rig.board.activate(index: 1, submit: true)
         XCTAssertEqual(rig.scores.count, 1); XCTAssertEqual(rig.scores[0].0, rig.session.score - before)
-        XCTAssertEqual(rig.scores[0].1, rig.board.convert(try rig.center(1), to: rig.window))
+        try assertAnchor(rig.scores[0].1, for: 1)
         rig.refresh(); XCTAssertEqual(rig.scores.count, 1)
+        // Reparent and resize before a second real callback so a stale frame,
+        // unconverted local rect or square-host assumption cannot pass unnoticed.
+        let parent = try XCTUnwrap(rig.board.superview)
+        let nested = UIView(frame: CGRect(x: 31.5, y: 48.25, width: 340, height: 380))
+        parent.addSubview(nested); nested.addSubview(rig.board)
+        rig.board.frame = CGRect(x: 12.25, y: 26.5, width: 290, height: 330)
+        rig.board.setNeedsLayout(); rig.board.layoutIfNeeded()
         let beforeCombined = rig.session.score
         _ = rig.session.submit(cell: 7); _ = rig.session.submit(cell: 8); rig.refresh()
         XCTAssertEqual(rig.scores.count, 2); XCTAssertEqual(rig.scores[1].0, rig.session.score - beforeCombined)
-        XCTAssertEqual(rig.scores[1].1, rig.board.convert(try rig.center(8), to: rig.window))
+        try assertAnchor(rig.scores[1].1, for: 8)
         rig.session = GameSession(puzzle: GuidanceRig.puzzle); rig.refresh()
         XCTAssertEqual(rig.scores.count, 2)
         rig.effectsEnabled = false; _ = rig.session.submit(cell: 1); rig.refresh()

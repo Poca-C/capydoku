@@ -1,0 +1,95 @@
+{
+  "boundary" : "Process-relative layout-observer timings are not visible frame or touch latency measurements; snapshots are taken afterward. Initial120ms wait is followed by up to300ms for async layout.",
+  "samples" : [
+    {
+      "amount" : 100,
+      "beforeCaptureAfterSubmissionMs" : 128.65774985402822,
+      "cell" : 0,
+      "layoutObservedAfterSubmissionMs" : 26.707499986514449,
+      "level" : 6,
+      "reduced" : false,
+      "width" : 402
+    },
+    {
+      "amount" : 120,
+      "beforeCaptureAfterSubmissionMs" : 130.2921250462532,
+      "cell" : 8,
+      "layoutObservedAfterSubmissionMs" : 12.600458459928632,
+      "level" : 6,
+      "reduced" : false,
+      "width" : 402
+    },
+    {
+      "amount" : 140,
+      "beforeCaptureAfterSubmissionMs" : 128.18199978210032,
+      "cell" : 34,
+      "layoutObservedAfterSubmissionMs" : 8.6344999726861715,
+      "level" : 6,
+      "reduced" : false,
+      "width" : 402
+    },
+    {
+      "amount" : 100,
+      "beforeCaptureAfterSubmissionMs" : 132.08783324807882,
+      "cell" : 0,
+      "layoutObservedAfterSubmissionMs" : 32.009541755542159,
+      "level" : 101,
+      "reduced" : false,
+      "width" : 320
+    },
+    {
+      "amount" : 120,
+      "beforeCaptureAfterSubmissionMs" : 126.9075833261013,
+      "cell" : 12,
+      "layoutObservedAfterSubmissionMs" : 8.978833444416523,
+      "level" : 101,
+      "reduced" : false,
+      "width" : 320
+    },
+    {
+      "amount" : 140,
+      "beforeCaptureAfterSubmissionMs" : 123.79345833323896,
+      "cell" : 98,
+      "layoutObservedAfterSubmissionMs" : 14.001166680827737,
+      "level" : 101,
+      "reduced" : false,
+      "width" : 320
+    },
+    {
+      "amount" : 100,
+      "beforeCaptureAfterSubmissionMs" : 131.86824996955693,
+      "cell" : 0,
+      "layoutObservedAfterSubmissionMs" : 20.461291540414095,
+      "level" : 101,
+      "reduced" : true,
+      "width" : 320
+    },
+    {
+      "amount" : 120,
+      "beforeCaptureAfterSubmissionMs" : 130.63179166056216,
+      "cell" : 12,
+      "layoutObservedAfterSubmissionMs" : 11.691624997183681,
+      "level" : 101,
+      "reduced" : true,
+      "width" : 320
+    },
+    {
+      "amount" : 140,
+      "beforeCaptureAfterSubmissionMs" : 123.6972501501441,
+      "cell" : 98,
+      "layoutObservedAfterSubmissionMs" : 13.414958491921425,
+      "level" : 101,
+      "reduced" : true,
+      "width" : 320
+    },
+    {
+      "amount" : 200,
+      "beforeCaptureAfterSubmissionMs" : 131.46166666410863,
+      "cell" : 35,
+      "layoutObservedAfterSubmissionMs" : 31.237625051289797,
+      "level" : 47,
+      "reduced" : false,
+      "width" : 320
+    }
+  ]
+}
