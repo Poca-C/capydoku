@@ -18,6 +18,35 @@ import CapydokuCore
 }
 
 final class GameRewardPresentationTests: XCTestCase {
+    @MainActor func testApplauseIsSinglePerAcceptedFindAndOldExpiryCannotEraseTheNext() throws {
+        let clock = RewardMotionClock(), id = UUID(), reward = GameRewardPresentation(schedule: clock.schedule)
+        reward.bind(sessionID: id, score: 100)
+        XCTAssertNil(reward.applauseID, "Restoring score is not a fresh celebration.")
+        reward.found(index: 1, sessionID: id, origin: .zero, destination: .zero, reduceMotion: false)
+        let first = try XCTUnwrap(reward.applauseID)
+        reward.found(index: 1, sessionID: id, origin: .zero, destination: .zero, reduceMotion: false)
+        XCTAssertEqual(reward.applauseID, first)
+        clock.advance(0.40)
+        reward.found(index: 2, sessionID: id, origin: .zero, destination: .zero, reduceMotion: true)
+        let second = try XCTUnwrap(reward.applauseID)
+        XCTAssertNotEqual(first, second, "Static acknowledgement still belongs to the new find.")
+        clock.advance(0.36)
+        XCTAssertEqual(reward.applauseID, second)
+        reward.clear()
+        XCTAssertNil(reward.applauseID)
+        XCTAssertTrue(reward.flights.isEmpty, "A newer mistake ends existing visual celebration.")
+        reward.setPresentationEnabled(false)
+        reward.found(index: 4, sessionID: id, origin: .zero, destination: .zero, reduceMotion: false)
+        reward.setPresentationEnabled(true)
+        reward.found(index: 4, sessionID: id, origin: .zero, destination: .zero, reduceMotion: false)
+        XCTAssertNil(reward.applauseID, "Hidden finds are consumed, not replayed.")
+        reward.found(index: 5, sessionID: id, origin: .zero, destination: .zero, reduceMotion: false)
+        XCTAssertNotNil(reward.applauseID)
+        reward.bind(sessionID: UUID(), score: 0)
+        clock.advance(2)
+        XCTAssertNil(reward.applauseID)
+    }
+
     @MainActor func testFoundAcknowledgementIsBoundedAndNeverReplayedByDuplicateOrOldSession() {
         let clock = RewardMotionClock(), id = UUID(), next = UUID()
         let feedback = GameRewardPresentation(schedule: clock.schedule)
@@ -137,6 +166,78 @@ final class GameRewardPresentationTests: XCTestCase {
 }
 
 final class GameFeelVisualTests: XCTestCase {
+    @MainActor private func applause(in view: UIView) -> ApplauseFeedbackUIView? {
+        (view as? ApplauseFeedbackUIView) ?? view.subviews.lazy.compactMap { self.applause(in: $0) }.first
+    }
+
+    @MainActor func testActualRootApplauseFitsBesideComboAndStopsForLaterMistake() async throws {
+        for (width, language) in [(CGFloat(320), AppLanguage.simplifiedChinese), (CGFloat(402), AppLanguage.english)] {
+            let directory = FileManager.default.temporaryDirectory.appendingPathComponent("applause-root-" + UUID().uuidString)
+            let model = AppModel(saveDirectory: directory, runsTimer: false, feedbackEnabled: false)
+            model.progress.settings.language = language
+            model.progress.tutorialCompleted = true; model.start(level: 6)
+            let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
+            let previous = scene.windows.first(where: \.isKeyWindow), window = UIWindow(windowScene: scene)
+            window.frame = CGRect(x: 0, y: 0, width: width, height: width == 320 ? 568 : 874)
+            var frames: [String: CGRect] = [:]
+            let host = UIHostingController(rootView: RootView(reduceMotionOverride: false).environmentObject(model)
+                .environment(\.scenePhase, .active)
+                .environment(\.capyLayoutObserver, { frames[$0] = $1 }))
+            window.rootViewController = host; window.makeKeyAndVisible()
+            defer {
+                window.isHidden = true; window.rootViewController = nil; previous?.makeKeyAndVisible()
+                model.flushPendingSaves(); try? FileManager.default.removeItem(at: directory)
+            }
+            func capture(_ stage: String) {
+                let image = UIGraphicsImageRenderer(bounds: host.view.bounds).image { _ in
+                    host.view.drawHierarchy(in: host.view.bounds, afterScreenUpdates: false)
+                }
+                let a = XCTAttachment(image: image); a.name = "applause-root-\(Int(width))pt-\(stage)"; a.lifetime = .keepAlways; add(a)
+            }
+            try await Task.sleep(nanoseconds: 180_000_000)
+            let solution = try XCTUnwrap(model.session).puzzle.solution
+            let boardBefore = try XCTUnwrap(frames["puzzle_board"])
+            model.submit(solution[0])
+            try await Task.sleep(nanoseconds: 120_000_000)
+            let firstView = try XCTUnwrap(applause(in: host.view))
+            let firstID = try XCTUnwrap(firstView.activeEventID)
+            capture("first-correct")
+            model.submit(solution[1])
+            try await Task.sleep(nanoseconds: 90_000_000)
+            XCTAssertNotEqual(firstView.activeEventID, firstID)
+            model.submit(solution[2])
+            try await Task.sleep(nanoseconds: 180_000_000)
+            XCTAssertNotNil(firstView.activeEventID)
+            let clap = try XCTUnwrap(frames["applause_feedback"]), combo = try XCTUnwrap(frames["combo_feedback"])
+            let rules = try XCTUnwrap(frames["rule_strip"]), board = try XCTUnwrap(frames["puzzle_board"])
+            XCTAssertLessThanOrEqual(clap.maxY, board.minY + 0.5)
+            XCTAssertGreaterThanOrEqual(clap.minY, rules.maxY - 0.5)
+            XCTAssertFalse(clap.intersects(combo), "Encouragement must fit beside translated Combo text.")
+            XCTAssertTrue(host.view.bounds.contains(clap))
+            XCTAssertEqual(board, boardBefore, "A fresh decoration must not shift the playable board.")
+            XCTAssertFalse(firstView.isUserInteractionEnabled); XCTAssertTrue(firstView.accessibilityElementsHidden)
+            capture("continuous-combo")
+            let accepted = try XCTUnwrap(model.session)
+            let wrong = try XCTUnwrap((0..<(accepted.puzzle.size * accepted.puzzle.size)).first { !solution.contains($0) })
+            model.submit(wrong)
+            try await Task.sleep(nanoseconds: 100_000_000)
+            XCTAssertNil(firstView.activeEventID)
+            XCTAssertEqual(model.session?.found, accepted.found); XCTAssertEqual(model.session?.score, accepted.score)
+            XCTAssertEqual(model.session?.lives, 2)
+            capture("mistake-no-applause")
+            model.start(level: 6)
+            try await Task.sleep(nanoseconds: 120_000_000)
+            // Deliberately coalesce a real correct and incorrect submission.
+            model.submit(solution[0]); model.submit(wrong)
+            try await Task.sleep(nanoseconds: 120_000_000)
+            let nextView = try XCTUnwrap(applause(in: host.view))
+            XCTAssertFalse(firstView === nextView, "Consumed event storage is scoped to one board.")
+            XCTAssertNil(nextView.activeEventID)
+            XCTAssertEqual(model.session?.found.count, 1); XCTAssertEqual(model.session?.lives, 2)
+            capture("coalesced-correct-wrong-no-applause")
+        }
+    }
+
     @MainActor func testActualMovesAndResultPresentationCapture() async throws {
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent("game-feel-" + UUID().uuidString)
         let model = AppModel(saveDirectory: directory, runsTimer: false, feedbackEnabled: false)
@@ -182,6 +283,7 @@ final class GameFeelVisualTests: XCTestCase {
         XCTAssertEqual(model.session, committedResult, "Visual result delay must not postpone input locking.")
         try await Task.sleep(nanoseconds: 150_000_000)
         XCTAssertNotNil(frames["result_primary_action"], "Result actions must precede the decoration window.")
+        XCTAssertNotNil(try XCTUnwrap(applause(in: host.view)).activeEventID, "A genuine final find still gets encouragement.")
         capture("final-move-before-result")
         // Requested sampling delays identify broad phases, not measured frame
         // timestamps. Keep the existing win-celebration capture for comparison.
@@ -192,6 +294,7 @@ final class GameFeelVisualTests: XCTestCase {
         capture("win-celebration")
         try await Task.sleep(nanoseconds: 250_000_000)
         capture("result-title-entered-without-underlying-combo")
+        XCTAssertNil(try XCTUnwrap(applause(in: host.view)).activeEventID)
         try await Task.sleep(nanoseconds: 1_000_000_000)
         capture("result-settled-without-underlying-combo")
         XCTAssertEqual(frames["puzzle_board"], board)

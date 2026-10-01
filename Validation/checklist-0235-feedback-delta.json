@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "kind": "scoped_delta_to_88_item_audit",
+  "baseAudit": "Validation/checklist-0221-audit.json",
+  "sourceChecklist": "Validation/checklist-source.json",
+  "sourceCaseCount": 88,
+  "formalSignOff": false,
+  "full88Reexecuted": false,
+  "overallCountsRecomputed": false,
+  "build": "0.2.35 (38)",
+  "status": "verified_scoped_applause_and_error_cancellation_simulator_only",
+  "previousDelta": "Validation/checklist-0234-feedback-delta.json",
+  "scopedRows": 3,
+  "rows": [
+    {
+      "id": "05-06",
+      "title": "结算导航与继续",
+      "originalAcceptanceText": "操作  测试结算下一关、返回首页和继续游戏。\n通过  跳转、进度及反馈正确；主动退出保留策略、击败比例和Rank有确认依据。",
+      "originalRequirementIDs": [
+        "PLAY-10",
+        "UI-04"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "17e原生通关/下一关、失败/模拟复活通过；实际Root末步鼓掌在结果标题出现前收起，不据此验收正式排名和退出规则。",
+      "evidence": [
+        "Validation/original-0235-feedback.json",
+        "Docs/original-feel-0235/manifest.json",
+        "Validation/test-runs/original-0235-targeted-r3-summary.json",
+        "Validation/test-runs/original-0235-17e-ui-r2-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "14-03",
+      "title": "游戏奖励动效与降级",
+      "originalAcceptanceText": "操作  触发正确、错误、Combo、通关及签到动效。\n通过  与业务状态同步，不阻碍后续操作；轻量特效在低性能设备可降级。",
+      "originalRequirementIDs": [
+        "ART-02"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "短鼓掌两次/静态降级、重复与生命周期取消通过；连续正确立即错误及同帧正确错误无旧奖励残留。14张最终运行图核对，32个录屏时间点抽查。",
+      "evidence": [
+        "Validation/original-0235-feedback.json",
+        "Docs/original-feel-0235/manifest.json",
+        "Validation/test-runs/original-0235-targeted-r3-summary.json",
+        "Validation/test-runs/original-0235-17e-ui-r2-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "16-03",
+      "title": "最终构建全部问题复验",
+      "originalAcceptanceText": "操作  在最终构建复测所有失败用例及受影响流程。\n通过  每个Bug均有关联修复版本、复测结论和证据，旧版本通过不能代替复测。",
+      "originalRequirementIDs": [
+        "TECH-07"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "首次测试编译问题和绿测后目视发现的旧奖励残留均修复；最终56项相关App和4项UI复验通过。未重跑全量App/Core或更新真机证据。",
+      "evidence": [
+        "Validation/original-0235-feedback.json",
+        "Docs/original-feel-0235/manifest.json",
+        "Validation/test-runs/original-0235-targeted-r3-summary.json",
+        "Validation/test-runs/original-0235-17e-ui-r2-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    }
+  ],
+  "verificationSnapshot": {
+    "app": {
+      "status": "Passed",
+      "cases": 56,
+      "passed": 56,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 32.339,
+      "scope": "17 Pro / iOS26.5: applause, reward presentation, scene events, actual Root, completion, board scene, progress arrival and result choreography. No full App/Core rerun.",
+      "summary": "Validation/test-runs/original-0235-targeted-r3-summary.json",
+      "log": "Validation/test-runs/original-0235-targeted-r3.log",
+      "bundle": "Validation/test-runs/original-0235-targeted-r3.xcresult"
+    },
+    "ui": {
+      "status": "Passed",
+      "cases": 4,
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 141.115,
+      "scope": "17e / iOS26.5: native tap/double tap/pan and tools, solve/advance, lose/simulated revive, four-board-size layout. Historical UI fixtures distinct from current-pack Root captures.",
+      "summary": "Validation/test-runs/original-0235-17e-ui-r2-summary.json",
+      "log": "Validation/test-runs/original-0235-17e-ui-r2.log",
+      "bundle": "Validation/test-runs/original-0235-17e-ui-r2.xcresult"
+    }
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  },
+  "baselinePreservation": {
+    "sourceChecklist88AndAuditUnchanged": true,
+    "formalConformanceJSONAnd83TableRowsUnchanged": true,
+    "levelsAndRasterArtworkUnchanged": true,
+    "newNativeVectorDecoration": true
+  }
+}

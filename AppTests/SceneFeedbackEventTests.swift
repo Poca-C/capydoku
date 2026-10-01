@@ -30,6 +30,59 @@ final class SceneFeedbackEventTests: XCTestCase {
         }
     }
 
+    @MainActor func testDeferredApplauseCannotCrossMistakeCoverReturnOrReplacement() async throws {
+        for boundary in ["mistake", "settings-round-trip", "background-round-trip", "replacement"] {
+            let model = fresh(), reward = GameRewardPresentation()
+            let first = try XCTUnwrap(model.session).puzzle.solution[0]
+            model.submit(first)
+            let accepted = try XCTUnwrap(model.session), epoch = model.sceneFeedbackEpoch
+            reward.bind(sessionID: accepted.id, score: accepted.score)
+            XCTAssertTrue(model.canPresentPositiveFeedback(from: accepted, epoch: epoch))
+            // The same snapshot/epoch guard used by Root's queued callback.
+            DispatchQueue.main.async {
+                guard model.canPresentPositiveFeedback(from: accepted, epoch: epoch) else { return }
+                reward.found(index: first, sessionID: accepted.id, origin: .zero, destination: .zero, reduceMotion: false)
+                reward.scoreAward(accepted.score, sessionID: accepted.id, origin: .zero, reduceMotion: false)
+            }
+            switch boundary {
+            case "mistake":
+                let wrong = try XCTUnwrap((0..<(accepted.puzzle.size * accepted.puzzle.size)).first { !accepted.puzzle.solution.contains($0) })
+                model.submit(wrong)
+                XCTAssertEqual(model.session?.lives, accepted.lives - 1)
+                XCTAssertEqual(model.session?.found, accepted.found)
+                XCTAssertEqual(model.session?.score, accepted.score)
+                let combined = try XCTUnwrap(model.session)
+                XCTAssertFalse(model.canPresentPositiveFeedback(from: combined, epoch: model.sceneFeedbackEpoch),
+                               "Correct + incorrect in one render has matching lives, but must not applaud.")
+            case "settings-round-trip": model.sheet = .settings; model.sheet = nil
+            case "background-round-trip": model.setActive(false); model.setActive(true)
+            default: model.start(level: 2)
+            }
+            let committed = model.session
+            await drainCallbacks()
+            XCTAssertNil(reward.applauseID, boundary)
+            XCTAssertTrue(reward.flights.isEmpty, boundary); XCTAssertTrue(reward.localScores.isEmpty, boundary)
+            XCTAssertEqual(model.session, committed, "Dropping decoration cannot change a committed move.")
+            let continued = try XCTUnwrap(model.session)
+            let next = try XCTUnwrap(continued.puzzle.solution.first { !continued.found.contains($0) })
+            model.submit(next)
+            let freshResult = try XCTUnwrap(model.session)
+            XCTAssertTrue(model.canPresentPositiveFeedback(from: freshResult, epoch: model.sceneFeedbackEpoch),
+                          "A later real success remains eligible after \(boundary).")
+        }
+    }
+
+    @MainActor func testFinalFoundApplauseSurvivesWinButColdRestoreIsNotTheSamePresentation() throws {
+        let model = fresh()
+        for cell in try XCTUnwrap(model.session).puzzle.solution { model.submit(cell) }
+        let won = try XCTUnwrap(model.session), epoch = model.sceneFeedbackEpoch
+        XCTAssertEqual(won.status, .won)
+        XCTAssertTrue(model.canPresentPositiveFeedback(from: won, epoch: epoch))
+        model.home(); model.startOrContinue()
+        XCTAssertEqual(model.session?.id, won.id)
+        XCTAssertFalse(model.canPresentPositiveFeedback(from: won, epoch: epoch))
+    }
+
     private func blockPrimary(_ modelDirectory: URL) throws -> Data {
         let primary = modelDirectory.appendingPathComponent("progress.json")
         let bytes = try Data(contentsOf: primary)

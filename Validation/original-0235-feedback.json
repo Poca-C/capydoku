@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.35 (38)",
+  "date": "2026-10-01",
+  "status": "scoped_applause_and_positive_feedback_cancellation_verified_simulator_only",
+  "previousReport": "Validation/original-0234-feedback.json",
+  "authority": "初始Word及既有Demo临时参数授权；参考应用观察不替代原文或正式验收。",
+  "sourceParagraphs": [
+    129,
+    136,
+    248,
+    249,
+    250,
+    254
+  ],
+  "referenceObservation": "Validation/meowdoku-playtest-comparison-0229.json#R0229-01",
+  "changes": [
+    {
+      "area": "正确鼓掌",
+      "detail": "原创原生双掌位于既有反馈带右侧，真实找对后合掌两次，0.56秒结束。34×30/28×24pt，不占新增布局、不接收触摸或读屏，不增加音效、触觉、粒子或业务等待。减少动态/低电量显示0.20秒静态轮廓。"
+    },
+    {
+      "area": "有效事件与取消",
+      "detail": "Root按局ID替换组件；同盘事件台账通常最多10次，重复ID不重播。新事件不受旧清理回调影响；后台、遮挡、提示、换局、取消及结果装饰开始后撤下。"
+    },
+    {
+      "area": "错误覆盖旧奖励",
+      "detail": "运行图发现正确后立刻错误仍残留旧飞星/浮分。最终修复在扣命时清理奖励展示，已获分数保持；模型同步epoch及局ID/生命/Combo/found检查拦截排队中的过时正向反馈，包含同帧正确错误和设置开关合并更新。真正最后一步通关和道具揭示仍可播放。"
+    }
+  ],
+  "temporaryTuning": "几何与时长为Demo参数，未称参考精确测量。规则、分数、奖励、关卡、栅格素材、音频不改；新增原生矢量装饰。",
+  "applicationTests": {
+    "status": "Passed",
+    "cases": 56,
+    "passed": 56,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 32.339,
+    "scope": "17 Pro / iOS26.5: applause, reward presentation, scene events, actual Root, completion, board scene, progress arrival and result choreography. No full App/Core rerun.",
+    "summary": "Validation/test-runs/original-0235-targeted-r3-summary.json",
+    "log": "Validation/test-runs/original-0235-targeted-r3.log",
+    "bundle": "Validation/test-runs/original-0235-targeted-r3.xcresult"
+  },
+  "uiTests": {
+    "status": "Passed",
+    "cases": 4,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 141.115,
+    "scope": "17e / iOS26.5: native tap/double tap/pan and tools, solve/advance, lose/simulated revive, four-board-size layout. Historical UI fixtures distinct from current-pack Root captures.",
+    "summary": "Validation/test-runs/original-0235-17e-ui-r2-summary.json",
+    "log": "Validation/test-runs/original-0235-17e-ui-r2.log",
+    "bundle": "Validation/test-runs/original-0235-17e-ui-r2.xcresult"
+  },
+  "iterationHistory": [
+    {
+      "attempt": "targeted r1",
+      "result": "测试编译失败：递归查找闭包缺显式self；补self后运行，未改生产规则。",
+      "log": "Validation/test-runs/original-0235-targeted.log"
+    },
+    {
+      "attempt": "targeted r2 and UI r1",
+      "result": "56项App/3项UI分别32.220/56.083秒全过，仍由运行图发现错误期间旧奖励残留，两张修复前图保留。不是最终验证。",
+      "log": [
+        "Validation/test-runs/original-0235-targeted-r2.log",
+        "Validation/test-runs/original-0235-17e-ui.log"
+      ]
+    },
+    {
+      "attempt": "final targeted r3 and UI r2",
+      "result": "清理旧奖励并统一延迟回调门禁，强化连续/同帧错误断言后56项App和4项UI全部通过，未放宽断言或排除用例。"
+    }
+  ],
+  "visualEvidence": "Docs/original-feel-0235/manifest.json",
+  "review": {
+    "independentReadOnlyReview": "四个生产文件及相邻棋盘/道具回调未发现可定位的新缺陷；未运行额外测试。",
+    "normalFlowThisRound": false
+  },
+  "reference": {
+    "latestSuccessfulPlaytest": "Validation/meowdoku-playtest-comparison-0229.json",
+    "newSuccessfulPlaytestThisRound": false,
+    "equivalenceClaimed": false
+  },
+  "coverageConclusion": "既有九类参考方向保持Demo实现，本轮补鼓掌并修正错误后旧奖励叠加。不能认定全部细节、参考品质或用户满意度达标。",
+  "audio": {
+    "modified": false,
+    "localTestWAVCount": 9,
+    "formalManifestClipsEmpty": true,
+    "formalReferenceVerified": false,
+    "currentDebugInventory": "Validation/audio-isolation-0235-debug.json",
+    "liveAuditoryAB": false,
+    "releaseExclusion": "沿用0.2.27历史；本轮未做Release构建。"
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  },
+  "remaining": [
+    "角色动作自然度、连续奖励与结果节奏仍需真人体验和参考A/B。",
+    "9个原声仅本地测试；真机音画/触觉未验收，手机仍为0.2.29。",
+    "正式参考/音频、难度、外部接入和上架验收仍待完成。"
+  ],
+  "formalSignOff": false,
+  "formalConformanceRowsUnchanged": 83,
+  "historicalChecklistCountUnchanged": 88
+}

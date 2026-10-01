@@ -1,0 +1,154 @@
+{
+  "build": "0.2.35 (38)",
+  "status": "reviewed_scoped_runtime_images_and_movie_samples",
+  "items": [
+    {
+      "file": "applause-native-normal-and-compact-cancelled.png",
+      "test": "ApplauseFeedbackTests/testRealSwiftUIHostsNaturallyShowTwoContactsAndClearAfterCancellation()",
+      "sourceAttachment": "FC45893D-1332-45AE-BB79-D3AA31FFEA5D.png",
+      "sourceBundle": "Validation/test-runs/original-0235-targeted-r3.xcresult",
+      "sha256": "2c36ef918085a2a0d420ac0ddaa5c73a25c9e176ba19647e276ba8432c73b291"
+    },
+    {
+      "file": "applause-native-normal-and-compact-second-contact-phase.png",
+      "test": "ApplauseFeedbackTests/testRealSwiftUIHostsNaturallyShowTwoContactsAndClearAfterCancellation()",
+      "sourceAttachment": "1C9009F5-93F3-4D41-8040-327E0A123AFB.png",
+      "sourceBundle": "Validation/test-runs/original-0235-targeted-r3.xcresult",
+      "sha256": "746eb3a1ddf90a592ce8c1f48720e10c3257154b5361cd86e17395f22775aa7b"
+    },
+    {
+      "file": "applause-native-normal-and-compact-release-phase.png",
+      "test": "ApplauseFeedbackTests/testRealSwiftUIHostsNaturallyShowTwoContactsAndClearAfterCancellation()",
+      "sourceAttachment": "4FC9519E-0416-4F30-80C6-8CB90E919D39.png",
+      "sourceBundle": "Validation/test-runs/original-0235-targeted-r3.xcresult",
+      "sha256": "1c21122d4f937fab0e9a94b5f999f49b4dd394d1d9e5f0f44a37ff9cbb41781e"
+    },
+    {
+      "file": "applause-native-normal-and-compact-first-contact-phase.png",
+      "test": "ApplauseFeedbackTests/testRealSwiftUIHostsNaturallyShowTwoContactsAndClearAfterCancellation()",
+      "sourceAttachment": "41694032-6CAA-4C1B-AB6A-E8C6FB178F68.png",
+      "sourceBundle": "Validation/test-runs/original-0235-targeted-r3.xcresult",
+      "sha256": "9fc9ba4f118fbc44db20b090159d52792c4d5ecfcca74c2b67e24af5140ea303"
+    },
+    {
+      "file": "result-title-entered-without-underlying-combo.png",
+      "test": "GameFeelVisualTests/testActualMovesAndResultPresentationCapture()",
+      "sourceAttachment": "F84B5F86-F51B-4876-B985-8F5723FEB319.png",
+      "sourceBundle": "Validation/test-runs/original-0235-targeted-r3.xcresult",
+      "sha256": "774b34419db9661cbd3ed436d3f56f59b088a7dc6e2bbbc669e08f6841beed95"
+    },
+    {
+      "file": "final-move-before-result.png",
+      "test": "GameFeelVisualTests/testActualMovesAndResultPresentationCapture()",
+      "sourceAttachment": "08BB815B-3D99-404E-8594-1FA86D875013.png",
+      "sourceBundle": "Validation/test-runs/original-0235-targeted-r3.xcresult",
+      "sha256": "5b8550daa7515ce5834651f62c56c8ec3d22883c723cf7f60f8221e401b69ea9"
+    },
+    {
+      "file": "applause-root-402pt-coalesced-correct-wrong-no-applause.png",
+      "test": "GameFeelVisualTests/testActualRootApplauseFitsBesideComboAndStopsForLaterMistake()",
+      "sourceAttachment": "ACA5836F-C9C7-4A58-9A4F-83D2822207EE.png",
+      "sourceBundle": "Validation/test-runs/original-0235-targeted-r3.xcresult",
+      "sha256": "1751611420bd238c58679aee15ce235ca457df09a62e5248ae27f331c331537f"
+    },
+    {
+      "file": "applause-root-402pt-mistake-no-applause.png",
+      "test": "GameFeelVisualTests/testActualRootApplauseFitsBesideComboAndStopsForLaterMistake()",
+      "sourceAttachment": "6DFBDA77-7E31-4E1F-97AF-97B1138B76FF.png",
+      "sourceBundle": "Validation/test-runs/original-0235-targeted-r3.xcresult",
+      "sha256": "3840dc1ddfe2ab6fb27b10df2b9d558733c69b47a4ebe297b72f1c828cc418a6"
+    },
+    {
+      "file": "applause-root-402pt-continuous-combo.png",
+      "test": "GameFeelVisualTests/testActualRootApplauseFitsBesideComboAndStopsForLaterMistake()",
+      "sourceAttachment": "439DF9E3-9F75-4908-A2F2-563A6FB8FEB0.png",
+      "sourceBundle": "Validation/test-runs/original-0235-targeted-r3.xcresult",
+      "sha256": "18e4d4efdf3850e448ec17615e659ee8013149d0c0d502804f10efc1f117405f"
+    },
+    {
+      "file": "applause-root-402pt-first-correct.png",
+      "test": "GameFeelVisualTests/testActualRootApplauseFitsBesideComboAndStopsForLaterMistake()",
+      "sourceAttachment": "CEA2D88A-AAE0-4129-A9C2-E0CFA6E46304.png",
+      "sourceBundle": "Validation/test-runs/original-0235-targeted-r3.xcresult",
+      "sha256": "ee5b0c02f65f012c1b29383959db5f4b2dea33f6f84db1c5634199e0a618c2b3"
+    },
+    {
+      "file": "applause-root-320pt-coalesced-correct-wrong-no-applause.png",
+      "test": "GameFeelVisualTests/testActualRootApplauseFitsBesideComboAndStopsForLaterMistake()",
+      "sourceAttachment": "DD32733F-514E-4BF9-9901-2C03DDA0B014.png",
+      "sourceBundle": "Validation/test-runs/original-0235-targeted-r3.xcresult",
+      "sha256": "aaa1abd7f5086198d5c4b927f863d56177d40c4d7f3d206eca7a01596e99be68"
+    },
+    {
+      "file": "applause-root-320pt-mistake-no-applause.png",
+      "test": "GameFeelVisualTests/testActualRootApplauseFitsBesideComboAndStopsForLaterMistake()",
+      "sourceAttachment": "8A32E216-1ABB-462C-B0A1-D2C378E7E148.png",
+      "sourceBundle": "Validation/test-runs/original-0235-targeted-r3.xcresult",
+      "sha256": "c8ef9cc47eae93e92b51356e616534f9aca55ab2988d4ad2ce3bdb3c92865512"
+    },
+    {
+      "file": "applause-root-320pt-continuous-combo.png",
+      "test": "GameFeelVisualTests/testActualRootApplauseFitsBesideComboAndStopsForLaterMistake()",
+      "sourceAttachment": "D4D1A9A1-1783-4C03-AF4D-E15DA056A9CA.png",
+      "sourceBundle": "Validation/test-runs/original-0235-targeted-r3.xcresult",
+      "sha256": "db2b6b6a09138651be7eacd4767db8295e7d0f983adcc5b6a0a7c77fce35b0e2"
+    },
+    {
+      "file": "applause-root-320pt-first-correct.png",
+      "test": "GameFeelVisualTests/testActualRootApplauseFitsBesideComboAndStopsForLaterMistake()",
+      "sourceAttachment": "6B5302EE-5178-44BE-8DE2-313BA841A95E.png",
+      "sourceBundle": "Validation/test-runs/original-0235-targeted-r3.xcresult",
+      "sha256": "ab5caa5919810017df4bd326587c8ee2f391fef44ad1491e61f9887780212ee7"
+    }
+  ],
+  "preFixItems": [
+    {
+      "file": "pre-fix-applause-root-320pt-mistake-no-applause.png",
+      "test": "GameFeelVisualTests/testActualRootApplauseFitsBesideComboAndStopsForLaterMistake()",
+      "sourceAttachment": "8303958B-4FF0-40C1-B6F7-B73CADFCABED.png",
+      "sourceBundle": "Validation/test-runs/original-0235-targeted-r2.xcresult",
+      "sha256": "12018c72aae5b62d9dff4270338a07a51ea6b2300bd4ee5becb5cb00de912203"
+    },
+    {
+      "file": "pre-fix-applause-root-320pt-coalesced-correct-wrong-no-applause.png",
+      "test": "GameFeelVisualTests/testActualRootApplauseFitsBesideComboAndStopsForLaterMistake()",
+      "sourceAttachment": "E353BCE0-A8E6-422F-9EDF-7E881DBA762C.png",
+      "sourceBundle": "Validation/test-runs/original-0235-targeted-r2.xcresult",
+      "sha256": "11079eefa0198d62ae4a44761b580f056a7609b498e1cf7ba2d6e4c9938f0759"
+    }
+  ],
+  "imageScope": "14张最终r3图：4张真实SwiftUI鼓掌组件、8张当前包L6的320pt中文/402pt英文Root页面、2张末步及结果页。Root动作由模型提交。另保留2张r2修复前错误场景图，不作最终通过证据。",
+  "visualReview": "逐张核对14张最终图与2张修复前图。两次合掌、中间释放、取消透明可见；鼓掌留在既有反馈带右侧，不与Combo、规则或棋盘重叠。修复后连续正确紧接错误及同帧正确错误都无旧飞星、浮分或鼓掌；结果标题进入后鼓掌已消失。",
+  "movies": [
+    {
+      "file": "applause-gameplay-and-cancellation.mov",
+      "sha256": "0a3f155a893220aa35852ed9184722b865bc781f10678f41802def0539923ee0",
+      "durationSeconds": 9.703333333333333,
+      "sourceBundle": "Validation/test-runs/original-0235-targeted-r3.xcresult",
+      "scope": "17 Pro实际模拟器录屏：当前包L6模型提交连续正确及通关；约6.6秒起为320pt中文和402pt英文Root测试宿主的连续正确/错误/同帧正确错误。紧凑宿主之外可见原测试窗口，是测试构图，不是正常导航流程。",
+      "sampleManifests": [
+        "gameplay-samples-200ms.json"
+      ],
+      "reviewedWindows": [
+        {
+          "startSeconds": 0,
+          "endSeconds": 6,
+          "stepSeconds": 0.4,
+          "frames": 16
+        },
+        {
+          "startSeconds": 6.4,
+          "endSeconds": 9.4,
+          "stepSeconds": 0.2,
+          "frames": 16
+        }
+      ],
+      "reviewLimit": "32个时间点有限抽帧，不是全帧、手指操作、正常存档试玩、参考逐帧对标或听觉/触觉验证。提取49帧不代表全部审阅。"
+    }
+  ],
+  "limits": [
+    "毫秒或阶段截图名表示请求等待/采样条件，采集有耗时，不能作精确实测时序。",
+    "组件测试覆盖34×30、28×24、17×15几何及减少动态/低电量策略，不是低性能真机性能测试。",
+    "本轮没有新的Meowdoku试玩，仍参考R0229-01。"
+  ]
+}

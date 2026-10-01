@@ -17,6 +17,9 @@ final class AppModel: ObservableObject {
     // restore or a return from Home must never look like a freshly generated board.
     @Published private(set) var boardEntranceID: UUID?
     @Published private(set) var directRevealFeedback: DirectRevealFeedback?
+    // Synchronous presentation invalidation, including cover/return pairs that
+    // SwiftUI may coalesce before an already-queued board callback executes.
+    private(set) var sceneFeedbackEpoch = UUID()
     @Published var screen: AppScreen = .home { didSet {
         if screen != .game { boardInputOwners.removeAll(); clearSceneFeedback() }
         syncFeedbackState(); restoreSavedHint(); schedulePendingLevelStart()
@@ -833,7 +836,7 @@ final class AppModel: ObservableObject {
             playRevealFeedback()
             if tutorial != nil { advanceTutorial() }
             afterAction()
-        case .incorrect: feedback.play(.wrong); if session?.status == .lost { trackLevelEnd(.lose) }; save()
+        case .incorrect: clearSceneFeedback(); feedback.play(.wrong); if session?.status == .lost { trackLevelEnd(.lose) }; save()
         default: break
         }
     }
@@ -1150,8 +1153,17 @@ final class AppModel: ObservableObject {
     }
 
     private func clearSceneFeedback() {
+        sceneFeedbackEpoch = UUID()
         boardEntranceID = nil
         directRevealFeedback = nil
+    }
+    func canPresentPositiveFeedback(from snapshot: GameSession, epoch: UUID) -> Bool {
+        guard epoch == sceneFeedbackEpoch, canShowSceneFeedback, let current = session else { return false }
+        // No playing-only gate: a genuine final find deserves the same response.
+        // If correct and wrong were coalesced, the latest snapshot has combo 0.
+        return current.id == snapshot.id && current.lives == snapshot.lives
+            && snapshot.combo > 0 && current.combo > 0
+            && !snapshot.found.isEmpty && current.found.isSuperset(of: snapshot.found)
     }
     private var canShowSceneFeedback: Bool {
         active && screen == .game && sheet == nil && !loading && !rewardBusy && !interstitialBusy &&

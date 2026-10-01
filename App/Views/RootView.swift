@@ -415,6 +415,7 @@ struct GameView: View {
                                         onInputActivityChange: { token, active in
                                             model.setBoardInputActivity(token, active: active, sessionID: s.id)
                                         }, onFoundFeedback: { index, location in
+                                            let feedbackEpoch = model.sceneFeedbackEpoch
                                             let origin = gameWindowFrame.origin
                                             let target = CGPoint(x: progressFrame.midX - origin.x, y: progressFrame.midY - origin.y)
                                             let source = CGPoint(x: location.x - origin.x, y: location.y - origin.y)
@@ -422,7 +423,8 @@ struct GameView: View {
                                             // render. Schedule presentation after that transaction.
                                             DispatchQueue.main.async {
                                                 guard model.session?.id == s.id, canPresentFeedback,
-                                                      !progressFrame.isEmpty, !gameWindowFrame.isEmpty else { return }
+                                                      !progressFrame.isEmpty, !gameWindowFrame.isEmpty,
+                                                      model.canPresentPositiveFeedback(from: s, epoch: feedbackEpoch) else { return }
                                                 rewards.found(index: index, sessionID: s.id, origin: source, destination: target,
                                                               reduceMotion: reduceMotion || ProcessInfo.processInfo.isLowPowerModeEnabled)
                                                 if let event = model.directRevealFeedback, event.sessionID == s.id,
@@ -439,6 +441,7 @@ struct GameView: View {
                                                 hud.conflict(kinds, sessionID: s.id, visible: canPresentFeedback)
                                             }
                                         }, onScoreFeedback: { amount, location in
+                                            let feedbackEpoch = model.sceneFeedbackEpoch
                                             let area = boardWindowFrame.offsetBy(dx: -gameWindowFrame.minX, dy: -gameWindowFrame.minY)
                                             let source = CGPoint(x: location.x - gameWindowFrame.minX,
                                                                  y: location.y - gameWindowFrame.minY)
@@ -446,7 +449,8 @@ struct GameView: View {
                                                                      y: max(area.minY + 32, source.y - boardSide / CGFloat(s.puzzle.size) * 0.4))
                                             DispatchQueue.main.async {
                                                 guard model.session?.id == s.id, canPresentFeedback,
-                                                      !gameWindowFrame.isEmpty, !boardWindowFrame.isEmpty else { return }
+                                                      !gameWindowFrame.isEmpty, !boardWindowFrame.isEmpty,
+                                                      model.canPresentPositiveFeedback(from: s, epoch: feedbackEpoch) else { return }
                                                 rewards.scoreAward(amount, sessionID: s.id, origin: labelPoint,
                                                                    reduceMotion: reduceMotion)
                                             }
@@ -495,6 +499,9 @@ struct GameView: View {
                     feedback.combo(model.comboFeedbackPresentation(for: combo))
                 }
                 .onChange(of: s.lives) {
+                    // A newer mistake owns the visual explanation. Stop older
+                    // celebration, while the accepted score stays in the model.
+                    rewards.clear()
                     feedback.setPresentationEnabled(canPresentFeedback)
                     feedback.life($0)
                     hud.lifeChanged($0, sessionID: s.id, visible: canPresentFeedback)
@@ -510,7 +517,9 @@ struct GameView: View {
                         focus?.wrappedValue = lifeFocusReturn ?? "level_title"
                     }
                 }
-                .onChange(of: s.score) { rewards.scoreChanged($0, sessionID: s.id, visible: canPresentFeedback) }
+                .onChange(of: s.score) {
+                    rewards.scoreChanged($0, sessionID: s.id, visible: canPresentFeedback && (model.session?.combo ?? 0) > 0)
+                }
                 .onChange(of: s.id) { _ in
                     feedback.clear(); rewards.bind(sessionID: s.id, score: s.score)
                     hud.bind(sessionID: s.id, lives: s.lives)
@@ -599,6 +608,18 @@ struct GameView: View {
     private func comboBadge(compact: Bool) -> some View {
         ZStack {
             Color.clear
+            HStack {
+                Spacer()
+                ApplauseFeedbackView(eventID: rewards.applauseID,
+                                     enabled: canPresentFeedback && !feedback.showLastLife && !resultDecorationReady,
+                                     reduceMotion: reduceMotion,
+                                     lowPower: ProcessInfo.processInfo.isLowPowerModeEnabled)
+                    // At most ten accepted finds belong to one board. Retire
+                    // the native view and its consumed IDs with that session.
+                    .id(model.session?.id)
+                    .frame(width: compact ? 28 : 34, height: compact ? 24 : 30)
+                    .capyLayoutProbe("applause_feedback")
+            }
             if let combo = feedback.comboText {
                 ComboCelebrationView(text: language.text(combo), tier: ComboVisualTier(text: combo), compact: compact,
                                      reduceMotion: reduceMotion || ProcessInfo.processInfo.isLowPowerModeEnabled)
