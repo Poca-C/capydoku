@@ -1,0 +1,108 @@
+{
+  "build": "0.2.53 (56)",
+  "baselineBuild": "0.2.52 (55)",
+  "items": [
+    {
+      "file": "before-applause-native-normal-and-compact-cancelled.png",
+      "sha256": "2c36ef918085a2a0d420ac0ddaa5c73a25c9e176ba19647e276ba8432c73b291",
+      "scope": "Unedited XCTest attachment: ApplauseFeedbackTests/testRealSwiftUIHostsNaturallyShowTwoContactsAndClearAfterCancellation()"
+    },
+    {
+      "file": "before-applause-native-normal-and-compact-second-contact-phase.png",
+      "sha256": "3c197876c691ced7e64fb35f522ceec27ab5e47016152cd961d0f1bc42e0b857",
+      "scope": "Unedited XCTest attachment: ApplauseFeedbackTests/testRealSwiftUIHostsNaturallyShowTwoContactsAndClearAfterCancellation()"
+    },
+    {
+      "file": "before-applause-native-normal-and-compact-release-phase.png",
+      "sha256": "52f0c07b5617a4bea380e1f6d6ebb33e8ddb280d4bc3227ab14db15f85f776c2",
+      "scope": "Unedited XCTest attachment: ApplauseFeedbackTests/testRealSwiftUIHostsNaturallyShowTwoContactsAndClearAfterCancellation()"
+    },
+    {
+      "file": "before-applause-native-normal-and-compact-first-contact-phase.png",
+      "sha256": "d43416315144326a08d6d48366421581e75dd0d16dc51ffd2301c1da352b18a2",
+      "scope": "Unedited XCTest attachment: ApplauseFeedbackTests/testRealSwiftUIHostsNaturallyShowTwoContactsAndClearAfterCancellation()"
+    },
+    {
+      "file": "before-applause-root-402pt-mistake-no-applause.png",
+      "sha256": "e4269cc36dd9b4adf0461c7fd481bf1cf2707c6dbeb5335101e4c5acdef3a1e9",
+      "scope": "Unedited XCTest attachment: GameFeelVisualTests/testActualRootApplauseFitsBesideComboAndStopsForLaterMistake()"
+    },
+    {
+      "file": "before-applause-root-402pt-continuous-combo.png",
+      "sha256": "db7bb69f07981b92d1f19de270809618a4634db079147d2263b55c5422d28655",
+      "scope": "Unedited XCTest attachment: GameFeelVisualTests/testActualRootApplauseFitsBesideComboAndStopsForLaterMistake()"
+    },
+    {
+      "file": "before-applause-root-320pt-mistake-no-applause.png",
+      "sha256": "44dd75ee6dd6da72a6273dc6af8e12469abecec19b668a4b5703f98566a49d5c",
+      "scope": "Unedited XCTest attachment: GameFeelVisualTests/testActualRootApplauseFitsBesideComboAndStopsForLaterMistake()"
+    },
+    {
+      "file": "before-applause-root-320pt-continuous-combo.png",
+      "sha256": "a5a2106f883ab90d4d63b6df928372ea1423322744ba12e6460b3fc1fa190743",
+      "scope": "Unedited XCTest attachment: GameFeelVisualTests/testActualRootApplauseFitsBesideComboAndStopsForLaterMistake()"
+    },
+    {
+      "file": "final-applause-native-normal-and-compact-cancelled.png",
+      "sha256": "2c36ef918085a2a0d420ac0ddaa5c73a25c9e176ba19647e276ba8432c73b291",
+      "scope": "Unedited XCTest attachment: ApplauseFeedbackTests/testRealSwiftUIHostsNaturallyShowTwoContactsAndClearAfterCancellation()"
+    },
+    {
+      "file": "final-applause-native-normal-and-compact-second-contact-phase.png",
+      "sha256": "f29316a6cc13d5df32b0e2fa9a65559b83bebeb9445787089b1a5345e49d1394",
+      "scope": "Unedited XCTest attachment: ApplauseFeedbackTests/testRealSwiftUIHostsNaturallyShowTwoContactsAndClearAfterCancellation()"
+    },
+    {
+      "file": "final-applause-native-normal-and-compact-release-phase.png",
+      "sha256": "a4d27c096a66481639d591b9d48fc4db2df91c9066d2268d89cf540ba1a68078",
+      "scope": "Unedited XCTest attachment: ApplauseFeedbackTests/testRealSwiftUIHostsNaturallyShowTwoContactsAndClearAfterCancellation()"
+    },
+    {
+      "file": "final-applause-native-normal-and-compact-first-contact-phase.png",
+      "sha256": "e4b345bd1f1770173755b5d02e915c6a7c8f0defe642dc3ac489df40a4af3282",
+      "scope": "Unedited XCTest attachment: ApplauseFeedbackTests/testRealSwiftUIHostsNaturallyShowTwoContactsAndClearAfterCancellation()"
+    },
+    {
+      "file": "final-applause-root-402pt-mistake-no-applause.png",
+      "sha256": "817ac47f0e7aac49771b9f5d0833492175bd82a81f179193be7176dfb4dbee18",
+      "scope": "Unedited XCTest attachment: GameFeelVisualTests/testActualRootApplauseFitsBesideComboAndStopsForLaterMistake()"
+    },
+    {
+      "file": "final-applause-root-402pt-continuous-combo.png",
+      "sha256": "80b8d1c97b4847a0dd67cfff9b90a937e7bf250ea6c70986ef28f9adcf433707",
+      "scope": "Unedited XCTest attachment: GameFeelVisualTests/testActualRootApplauseFitsBesideComboAndStopsForLaterMistake()"
+    },
+    {
+      "file": "final-applause-root-320pt-mistake-no-applause.png",
+      "sha256": "56e486b33fb1c7f0c840f2c39377ae23d8e17ffa5d91d94a877bb4284d6a75dd",
+      "scope": "Unedited XCTest attachment: GameFeelVisualTests/testActualRootApplauseFitsBesideComboAndStopsForLaterMistake()"
+    },
+    {
+      "file": "final-applause-root-320pt-continuous-combo.png",
+      "sha256": "4bdfd386dedd5c35577e46f3ec4e11dc2ec4ef98e7f87159c482be7583e3b4a6",
+      "scope": "Unedited XCTest attachment: GameFeelVisualTests/testActualRootApplauseFitsBesideComboAndStopsForLaterMistake()"
+    },
+    {
+      "file": "before-applause-component.mov",
+      "sha256": "9c7b3536a360da28d182ec285890b92d8d874b701977950ed9e3c7165a9e3d49",
+      "scope": "Live SwiftUI34x30 and28x24 component; natural two-contact sequence, screenshot readbacks in the sample interval; not an FPS benchmark."
+    },
+    {
+      "file": "final-applause-component.mov",
+      "sha256": "d39668e77bd4eaa407b905dc6394647887030e1fa9da8a149509ecb0f6db0143",
+      "scope": "Live SwiftUI34x30 and28x24 component; natural two-contact sequence, screenshot readbacks in the sample interval; not an FPS benchmark."
+    },
+    {
+      "file": "final-applause-root.mov",
+      "sha256": "93abf17cda6d768e595661ab364d7d7478c436467293e004605fb914fd2311c6",
+      "scope": "Actual320/402pt Root: accepted finds, Combo and subsequent mistakes, coalesced submissions; contains screenshot readbacks."
+    },
+    {
+      "file": "final-full-level-rhythm.mov",
+      "sha256": "fec7c21d78300294117079b0e50ef91cbde7f37ec230b003d68da8c42bffad0a",
+      "scope": "Actual Root L6 to L7; no mid-sequence captures; same existing fixture as0.2.52, not physical touches or audible A/B."
+    }
+  ],
+  "reviewed": "Before/candidate/final natural component snapshots compare palm/thumb legibility. Final real Root compact/normal Combo and error-cancellation views checked. Two beats observed by existing live presentation-layer sampling.",
+  "boundary": "Finite simulator samples. Component capture can shift sampling time; geometry extrema verify reserved bounds but do not prove every composited frame, FPS, human perception or reference-quality equality."
+}

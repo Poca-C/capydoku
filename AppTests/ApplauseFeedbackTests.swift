@@ -169,7 +169,7 @@ final class ApplauseFeedbackTests: XCTestCase {
             let rig = try ApplauseWindowRig(size: size); defer { rig.close() }
             rig.show(UUID())
             let art = try artwork(rig.applause)
-            XCTAssertLessThanOrEqual(layers(art).count, 7, "Two paws with one outline and one finger path each; no growing particle list.")
+            XCTAssertLessThanOrEqual(layers(art).count, 8, "Two paws and one bounded contact accent; no growing particle list.")
             let allAnimations = animations(art)
             let commonTime = try XCTUnwrap(allAnimations.first).beginTime
             for animation in allAnimations {
@@ -177,7 +177,10 @@ final class ApplauseFeedbackTests: XCTestCase {
                 XCTAssertFalse(animation.autoreverses); XCTAssertEqual(animation.beginTime, commonTime, accuracy: 0.0001)
             }
             let scale = art.affineTransform().a
-            for paw in art.sublayers ?? [] {
+            let accent = try XCTUnwrap(art.sublayers?.compactMap { $0 as? CAShapeLayer }.first)
+            let accentBounds = try XCTUnwrap(accent.path).boundingBoxOfPath.insetBy(dx: -accent.lineWidth / 2, dy: -accent.lineWidth / 2)
+            XCTAssertTrue(art.bounds.contains(accentBounds), "Contact strokes stay in the reserved decoration band.")
+            for paw in (art.sublayers ?? []).filter({ $0.name == "applause-left" || $0.name == "applause-right" }) {
                 let translation = try XCTUnwrap(paw.animation(forKey: "applause-transform.translation.x") as? CAKeyframeAnimation)
                 let rotation = try XCTUnwrap(paw.animation(forKey: "applause-transform.rotation.z") as? CAKeyframeAnimation)
                 let positions = try XCTUnwrap(translation.values as? [NSNumber])

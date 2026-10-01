@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.53 (56)",
+  "date": "2026-10-02",
+  "status": "scoped_applause_legibility_verified_simulator_only",
+  "previousReport": "Validation/original-0252-feedback.json",
+  "previousGoalTurn": {
+    "classification": "progress",
+    "reason": "19f1247 preserved completed-board happy portraits through result handoff;67App/2UI and full-level real Root evidence."
+  },
+  "sourceParagraphs": [
+    136,
+    249,
+    250,
+    254,
+    337,
+    338,
+    344
+  ],
+  "finding": "Existing applause occupied only a small part of its reserved frame; narrow palms and subtle contact were weak at actual phone size. This is presentation improvement, not a baseline functional failure.",
+  "changes": [
+    "Use more of the same34x30/28x24 reserved area for larger rounded palms with clearer fingers and thumb creases; use the existing warm skin-tone palette.",
+    "Add one bounded three-stroke accent with two brief plateaus at the existing inward contacts. Keep0.56second duration, two inward/release beats, location and event ownership.",
+    "Reduced motion/low power retain the0.20second stationary outline, without contact accent. Cancellation remains immediate and the underlying model stays transparent.",
+    "No new audio, gameplay state, reward or input delay. Existing full-level sequence and current Root interruption fixtures rerun."
+  ],
+  "temporaryTuning": "Original vector artwork, palm dimensions and accent timing are Demo design values; no competitor artwork or measured reference constants copied.",
+  "verificationHistory": [
+    {
+      "status": "Passed",
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 12.997,
+      "scope": "0.2.52 component and Root visual baseline; functional assertions pass.",
+      "summary": "Validation/test-runs/original-0253-applause-before-summary.json",
+      "log": "Validation/test-runs/original-0253-applause-before.log",
+      "bundle": "Validation/test-runs/original-0253-applause-before.xcresult"
+    },
+    {
+      "status": "Passed",
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 13.04,
+      "scope": "Candidate larger palms, before final accent plateau/version update; lifecycle/bounds/Root checks pass. First-contact accent judged too brief and widened before final rerun.",
+      "summary": "Validation/test-runs/original-0253-applause-candidate-summary.json",
+      "log": "Validation/test-runs/original-0253-applause-candidate.log",
+      "bundle": "Validation/test-runs/original-0253-applause-candidate.xcresult"
+    }
+  ],
+  "applicationTests": {
+    "status": "Passed",
+    "passed": 46,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 108.697,
+    "scope": "17Pro/iOS26.5;applause, reward, real Root/HUD, scene-event and completion suites only; not full App/Core.",
+    "summary": "Validation/test-runs/original-0253-app-final-summary.json",
+    "log": "Validation/test-runs/original-0253-app-final.log",
+    "bundle": "Validation/test-runs/original-0253-app-final.xcresult"
+  },
+  "uiTests": {
+    "status": "Passed",
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 21.778,
+    "scope": "17e/iOS26.5;solve entire puzzle and advance.",
+    "summary": "Validation/test-runs/original-0253-17e-ui-summary.json",
+    "log": "Validation/test-runs/original-0253-17e-ui.log",
+    "bundle": "Validation/test-runs/original-0253-17e-ui.xcresult"
+  },
+  "visualEvidence": "Docs/original-feel-0253/manifest.json",
+  "reference": {
+    "latestSuccessfulPlaytest": "Validation/meowdoku-playtest-comparison-0249.json",
+    "newSuccessfulPlaytestThisRound": false,
+    "equivalenceClaimed": false,
+    "implementationSummary": {
+      "status": "Nine observed directions each have Demo implementation; this is not reference-quality sign-off.",
+      "implementedDirections": [
+        "动态手势教学",
+        "角色待机/正确/错误表情",
+        "浮分/彩粒/飞星/鼓掌及顶部联动",
+        "错误原因与规则可视化",
+        "扣命与一命提醒",
+        "Combo及分层胜败演出",
+        "新盘错峰入场",
+        "提示与找答案反馈",
+        "签到点亮与实际到账演出"
+      ],
+      "audio": "9 local Debug-only reference WAVs remain an authorized testing experiment; no live audio or physical haptic A/B in this round.",
+      "qualityGaps": [
+        "角色动作自然度与整段节奏",
+        "密集浮分离源距离",
+        "真机声音/震动配合",
+        "正式参考和发布资源验收"
+      ],
+      "notReplicatedFromLatestPlaytest": [
+        "Reference horn-playing character pose",
+        "Every observed praise phrase",
+        "Automatic check-in interstitial during victory; current Demo check-in entry remains on home"
+      ]
+    }
+  },
+  "audio": {
+    "modified": false,
+    "localTestWAVCount": 9,
+    "currentDebugInventory": "Validation/audio-isolation-0253-debug.json",
+    "formalManifestClipsEmpty": true,
+    "liveAuditoryAB": false,
+    "releaseRebuilt": false
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  },
+  "remaining": [
+    "整体角色自然度、音画及真机触觉仍待真人连续试玩，不声称参考品质验收。",
+    "Combo被错误操作打断及连续重播的听感需要实际对听；本轮未擅改未冻结的原声中断规则。",
+    "手机仍0.2.29；打包与GitHub上传暂停。"
+  ],
+  "formalSignOff": false,
+  "formalConformanceRowsUnchanged": 83,
+  "historicalChecklistCountUnchanged": 88,
+  "audioRoutingReview": {
+    "changed": false,
+    "files": [
+      "App/AppModel.swift",
+      "App/Services/FeedbackPlayer.swift",
+      "App/Services/ReferenceAudioPolicy.swift"
+    ],
+    "findings": [
+      "Accepted correct/Combo events retain trigger scope when the last move enters won state; no new applause or win clip introduced.",
+      "A wrong immediately after Combo clears visual reward, but existing Combo voice may overlap wrong audio. Same-event voice overflow follows configured stopOldest behavior."
+    ],
+    "boundary": "Read-only code policy audit, not audible judgment or evidence of a requirement defect. Original337 requires reference interruption behavior, not yet verified by live A/B. Existing local test mapping and WAVs unchanged."
+  }
+}
