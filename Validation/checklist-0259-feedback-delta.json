@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "kind": "scoped_delta_to_88_item_audit",
+  "baseAudit": "Validation/checklist-0221-audit.json",
+  "sourceChecklist": "Validation/checklist-source.json",
+  "sourceCaseCount": 88,
+  "formalSignOff": false,
+  "full88Reexecuted": false,
+  "overallCountsRecomputed": false,
+  "build": "0.2.59 (62)",
+  "status": "scoped_reward_modal_handoff_verified_simulator_only",
+  "previousDelta": "Validation/checklist-0258-feedback-delta.json",
+  "scopedRows": 5,
+  "rows": [
+    {
+      "id": "07-05",
+      "title": "奖励取消失败超时",
+      "originalAcceptanceText": "操作  取消广告，或模拟超时、失败、缺失奖励回调。\n通过  不发奖、不扣库存、不改盘；可结束等待并恢复正确页面。",
+      "originalRequirementIDs": [
+        "ADS-06",
+        "ADS-07"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "奖励取消/失败/加载超时与重试的App和原生UI回归，未接真实广告。",
+      "evidence": [
+        "Validation/original-0259-feedback.json",
+        "Docs/original-feel-0259/manifest.json",
+        "Validation/test-runs/original-0259-app-final-summary.json",
+        "Validation/test-runs/original-0259-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "07-06",
+      "title": "重复奖励回调",
+      "originalAcceptanceText": "操作  向同一offer_id重复发送有效奖励回调。\n通过  奖励及功能只执行一次，不多揭示动物、不额外累积库存。",
+      "originalRequirementIDs": [
+        "ADS-07"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "真实Root奖励直接答案仍即时只执行一次，不加库存；重复callback不改变已提交状态。",
+      "evidence": [
+        "Validation/original-0259-feedback.json",
+        "Docs/original-feel-0259/manifest.json",
+        "Validation/test-runs/original-0259-app-final-summary.json",
+        "Validation/test-runs/original-0259-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "07-08",
+      "title": "复活保留进度",
+      "originalAcceptanceText": "操作  带动物、两类X和分数失败后获得复活奖励。\n通过  恢复本关满生命，其余进度保留；重复回调不再次发奖。",
+      "originalRequirementIDs": [
+        "ADS-08",
+        "PLAY-11"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "17e失败后模拟奖励复活保留棋盘的原生UI回归。",
+      "evidence": [
+        "Validation/original-0259-feedback.json",
+        "Docs/original-feel-0259/manifest.json",
+        "Validation/test-runs/original-0259-app-final-summary.json",
+        "Validation/test-runs/original-0259-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "14-03",
+      "title": "游戏奖励动效与降级",
+      "originalAcceptanceText": "操作  触发正确、错误、Combo、通关及签到动效。\n通过  与业务状态同步，不阻碍后续操作；轻量特效在低性能设备可降级。",
+      "originalRequirementIDs": [
+        "ART-02"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "奖励退场白幕修复；两尺寸正常/减少动态像素与实际命中验证，完整节奏/真机仍待验。",
+      "evidence": [
+        "Validation/original-0259-feedback.json",
+        "Docs/original-feel-0259/manifest.json",
+        "Validation/test-runs/original-0259-app-final-summary.json",
+        "Validation/test-runs/original-0259-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "16-03",
+      "title": "最终构建全部问题复验",
+      "originalAcceptanceText": "操作  在最终构建复测所有失败用例及受影响流程。\n通过  每个Bug均有关联修复版本、复测结论和证据，旧版本通过不能代替复测。",
+      "originalRequirementIDs": [
+        "TECH-07"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "旧实现两条视觉断言失败后，最终29项相关App和5项UI通过；不冒充全部失败项/全部Checklist复验。",
+      "evidence": [
+        "Validation/original-0259-feedback.json",
+        "Docs/original-feel-0259/manifest.json",
+        "Validation/test-runs/original-0259-app-final-summary.json",
+        "Validation/test-runs/original-0259-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    }
+  ],
+  "verificationSnapshot": {
+    "app": {
+      "status": "Passed",
+      "passed": 29,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 40.935,
+      "summary": "Validation/test-runs/original-0259-app-final-summary.json",
+      "log": "Validation/test-runs/original-0259-app-final.log",
+      "bundle": "Validation/test-runs/original-0259-app-final.xcresult"
+    },
+    "ui": {
+      "status": "Passed",
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 167.417,
+      "summary": "Validation/test-runs/original-0259-17e-ui-summary.json",
+      "log": "Validation/test-runs/original-0259-17e-ui.log",
+      "bundle": "Validation/test-runs/original-0259-17e-ui.xcresult"
+    }
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  }
+}

@@ -1,0 +1,184 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.59 (62)",
+  "baselineBuild": "0.2.58 (61)",
+  "method": "Actual Root on17Pro simulator;402x874/320x568 normal/reduced, reward and inventory control. No CA freeze/forced layout. First120ms is free of screenshot readback; compare same-target early/late center color. Original dense30/70/120ms sampling perturbed rendering and is not used as a timing claim.",
+  "reviewed": "Two baseline and four final early reward images, and both15-frame natural video contacts were individually reviewed. Reported actual capture ranges are authoritative; recordings have different origins and random targets.",
+  "boundary": "Demo60ms exit choice is not a measured reference or guaranteed device render duration. No subjective quality, full88 or physical-device sign-off.",
+  "artifacts": [
+    {
+      "path": "Docs/original-feel-0259/baseline-reward-handoff-L6-320-normal-natural-timing-and-visible-paths.json",
+      "sha256": "a64f81d228d3421e0f17303164f3d0cace320b229f06b178472d5d968b99429a",
+      "stage": "baseline",
+      "sourceBundle": "Validation/test-runs/original-0259-sparse-baseline-r2.xcresult",
+      "attachment": "reward-handoff-L6-320-normal-natural-timing-and-visible-paths_0_8BD90660-8235-466E-837C-056C9D52344C.json",
+      "scope": "Real Root native-window sample or timing/hit report; requested sampling time is not the actual elapsed time."
+    },
+    {
+      "path": "Docs/original-feel-0259/baseline-reward-handoff-L6-320-normal-requested-120ms-actual-120ms.png",
+      "sha256": "46c491559265653ff5bccd8ec6d782b59de3c36777efae89c25d84a7719c6569",
+      "stage": "baseline",
+      "sourceBundle": "Validation/test-runs/original-0259-sparse-baseline-r2.xcresult",
+      "attachment": "reward-handoff-L6-320-normal-requested-120ms-actual-120ms_0_ADA3C7F7-7853-46F1-B069-0FCE1B3F0C4E.png",
+      "scope": "Real Root native-window sample or timing/hit report; requested sampling time is not the actual elapsed time."
+    },
+    {
+      "path": "Docs/original-feel-0259/baseline-reward-handoff-L6-402-normal-natural-timing-and-visible-paths.json",
+      "sha256": "26f674b924f3dbaaddaa166e8d3dee194c71504627dc677651c931cc1cd6f758",
+      "stage": "baseline",
+      "sourceBundle": "Validation/test-runs/original-0259-sparse-baseline-r2.xcresult",
+      "attachment": "reward-handoff-L6-402-normal-natural-timing-and-visible-paths_0_6A250CC3-8B3A-4AFD-BC63-36D0CB3011D1.json",
+      "scope": "Real Root native-window sample or timing/hit report; requested sampling time is not the actual elapsed time."
+    },
+    {
+      "path": "Docs/original-feel-0259/baseline-reward-handoff-L6-402-normal-requested-120ms-actual-122ms.png",
+      "sha256": "9041e655edb4dab3d2078620af4fbf0917d3bd5b073fd78112762fdce2ae4dd5",
+      "stage": "baseline",
+      "sourceBundle": "Validation/test-runs/original-0259-sparse-baseline-r2.xcresult",
+      "attachment": "reward-handoff-L6-402-normal-requested-120ms-actual-122ms_0_BF13862D-EE5B-4F5E-B3F6-2F492DC2BA3B.png",
+      "scope": "Real Root native-window sample or timing/hit report; requested sampling time is not the actual elapsed time."
+    },
+    {
+      "path": "Docs/original-feel-0259/final-reward-hit-handoff-402-reduced-true-actual-window-hit-routing.json",
+      "sha256": "d1b136bf1adc689b96c410140a84908f3a5793a3d1554a27ca3a6504e7b1ab28",
+      "stage": "final",
+      "sourceBundle": "Validation/test-runs/original-0259-app-final.xcresult",
+      "attachment": "reward-hit-handoff-402-reduced-true-actual-window-hit-routing_0_CF1A2587-50D3-4C49-AB5C-FB904141DD7D.json",
+      "scope": "Real Root native-window sample or timing/hit report; requested sampling time is not the actual elapsed time."
+    },
+    {
+      "path": "Docs/original-feel-0259/final-reward-hit-handoff-402-reduced-false-actual-window-hit-routing.json",
+      "sha256": "de89e66c481ec340553a69564ef652f85c9455f8abb73b7a0bc010a91686e20e",
+      "stage": "final",
+      "sourceBundle": "Validation/test-runs/original-0259-app-final.xcresult",
+      "attachment": "reward-hit-handoff-402-reduced-false-actual-window-hit-routing_0_87C02FA6-F78B-4E86-8ACF-6D630B44259E.json",
+      "scope": "Real Root native-window sample or timing/hit report; requested sampling time is not the actual elapsed time."
+    },
+    {
+      "path": "Docs/original-feel-0259/final-inventory-control-L6-320-reduced-natural-timing-and-visible-paths.json",
+      "sha256": "4595af68d819b65dce9734bf921af3c95e8be12916898b2b71214594915880f9",
+      "stage": "final",
+      "sourceBundle": "Validation/test-runs/original-0259-app-final.xcresult",
+      "attachment": "inventory-control-L6-320-reduced-natural-timing-and-visible-paths_0_C05707CF-E50D-4F8B-8CED-1CC5A7A56008.json",
+      "scope": "Real Root native-window sample or timing/hit report; requested sampling time is not the actual elapsed time."
+    },
+    {
+      "path": "Docs/original-feel-0259/final-reward-handoff-L6-320-reduced-natural-timing-and-visible-paths.json",
+      "sha256": "4c505e986e756b175391d1d15f2a12b951adc8958f686cafdd70c992912f92cd",
+      "stage": "final",
+      "sourceBundle": "Validation/test-runs/original-0259-app-final.xcresult",
+      "attachment": "reward-handoff-L6-320-reduced-natural-timing-and-visible-paths_0_290CDFC5-3D78-48B5-A303-B74C9FE27E9B.json",
+      "scope": "Real Root native-window sample or timing/hit report; requested sampling time is not the actual elapsed time."
+    },
+    {
+      "path": "Docs/original-feel-0259/final-reward-handoff-L6-320-reduced-requested-120ms-actual-126ms.png",
+      "sha256": "298983be4d6c0192ad4f6389115213062fb4f7bade3d82fcdd41387cc7d0a0b4",
+      "stage": "final",
+      "sourceBundle": "Validation/test-runs/original-0259-app-final.xcresult",
+      "attachment": "reward-handoff-L6-320-reduced-requested-120ms-actual-126ms_0_8ED66132-9DB6-4670-87F8-A2760C9D38E2.png",
+      "scope": "Real Root native-window sample or timing/hit report; requested sampling time is not the actual elapsed time."
+    },
+    {
+      "path": "Docs/original-feel-0259/final-inventory-control-L6-402-reduced-natural-timing-and-visible-paths.json",
+      "sha256": "bb98df23e98d8491396380a35cc512634aa14d3db2780e4e04a5e030f708978d",
+      "stage": "final",
+      "sourceBundle": "Validation/test-runs/original-0259-app-final.xcresult",
+      "attachment": "inventory-control-L6-402-reduced-natural-timing-and-visible-paths_0_4474CBEB-4675-4CE4-A740-E611376B83FC.json",
+      "scope": "Real Root native-window sample or timing/hit report; requested sampling time is not the actual elapsed time."
+    },
+    {
+      "path": "Docs/original-feel-0259/final-reward-handoff-L6-402-reduced-natural-timing-and-visible-paths.json",
+      "sha256": "1848216623a4c7752365f3dff060a500c5cbad659f0d8d09f1856787236f41a4",
+      "stage": "final",
+      "sourceBundle": "Validation/test-runs/original-0259-app-final.xcresult",
+      "attachment": "reward-handoff-L6-402-reduced-natural-timing-and-visible-paths_0_C844F64E-85DF-4442-B9CB-76E3D4CB6297.json",
+      "scope": "Real Root native-window sample or timing/hit report; requested sampling time is not the actual elapsed time."
+    },
+    {
+      "path": "Docs/original-feel-0259/final-reward-handoff-L6-402-reduced-requested-120ms-actual-125ms.png",
+      "sha256": "7871665ec4db936958da8df797195fcc1ae4516030fcb7a8b65e8323ae64d458",
+      "stage": "final",
+      "sourceBundle": "Validation/test-runs/original-0259-app-final.xcresult",
+      "attachment": "reward-handoff-L6-402-reduced-requested-120ms-actual-125ms_0_2849D8E8-9EF3-4765-9086-16D231AE13E6.png",
+      "scope": "Real Root native-window sample or timing/hit report; requested sampling time is not the actual elapsed time."
+    },
+    {
+      "path": "Docs/original-feel-0259/final-inventory-control-L6-320-normal-natural-timing-and-visible-paths.json",
+      "sha256": "8f63a90ede71d23c29e1f8ab26e45ffc1c31671bcc3cd021937bdd44ef397b9b",
+      "stage": "final",
+      "sourceBundle": "Validation/test-runs/original-0259-app-final.xcresult",
+      "attachment": "inventory-control-L6-320-normal-natural-timing-and-visible-paths_0_752CBE36-7A14-4173-A257-C3F47C0BFE44.json",
+      "scope": "Real Root native-window sample or timing/hit report; requested sampling time is not the actual elapsed time."
+    },
+    {
+      "path": "Docs/original-feel-0259/final-reward-handoff-L6-320-normal-natural-timing-and-visible-paths.json",
+      "sha256": "fb1cccc7d499479cac1deef39096433a0651ec32ca7e3e0f74379bcb760b1095",
+      "stage": "final",
+      "sourceBundle": "Validation/test-runs/original-0259-app-final.xcresult",
+      "attachment": "reward-handoff-L6-320-normal-natural-timing-and-visible-paths_0_231C39C3-91B4-445E-8828-E46E80764465.json",
+      "scope": "Real Root native-window sample or timing/hit report; requested sampling time is not the actual elapsed time."
+    },
+    {
+      "path": "Docs/original-feel-0259/final-reward-handoff-L6-320-normal-requested-120ms-actual-120ms.png",
+      "sha256": "f99e29d1272638bca1f7bffea7be1ea25f1dde9d122267319fac367b16c4adea",
+      "stage": "final",
+      "sourceBundle": "Validation/test-runs/original-0259-app-final.xcresult",
+      "attachment": "reward-handoff-L6-320-normal-requested-120ms-actual-120ms_0_D566DC4C-CFDD-4E19-A40B-69AEE8F9AC76.png",
+      "scope": "Real Root native-window sample or timing/hit report; requested sampling time is not the actual elapsed time."
+    },
+    {
+      "path": "Docs/original-feel-0259/final-inventory-control-L6-402-normal-natural-timing-and-visible-paths.json",
+      "sha256": "3fc89e455afc98f2756cbf6f20f5ae9bd564d7e8481c17322b53d686a449d3a9",
+      "stage": "final",
+      "sourceBundle": "Validation/test-runs/original-0259-app-final.xcresult",
+      "attachment": "inventory-control-L6-402-normal-natural-timing-and-visible-paths_0_E1704406-05F6-456B-B9F9-709A7A44B1E9.json",
+      "scope": "Real Root native-window sample or timing/hit report; requested sampling time is not the actual elapsed time."
+    },
+    {
+      "path": "Docs/original-feel-0259/final-reward-handoff-L6-402-normal-natural-timing-and-visible-paths.json",
+      "sha256": "08889f3c4f15b666a3dc856af6287d99699da419f2fa5b300ad93a8237ee1492",
+      "stage": "final",
+      "sourceBundle": "Validation/test-runs/original-0259-app-final.xcresult",
+      "attachment": "reward-handoff-L6-402-normal-natural-timing-and-visible-paths_0_2183C85C-16A0-4EE7-B10F-4944967B2176.json",
+      "scope": "Real Root native-window sample or timing/hit report; requested sampling time is not the actual elapsed time."
+    },
+    {
+      "path": "Docs/original-feel-0259/final-reward-handoff-L6-402-normal-requested-120ms-actual-125ms.png",
+      "sha256": "47c6783e85697681bff9faa2d751e6a3b1a1555d238e0144ee81f07811912cce",
+      "stage": "final",
+      "sourceBundle": "Validation/test-runs/original-0259-app-final.xcresult",
+      "attachment": "reward-handoff-L6-402-normal-requested-120ms-actual-125ms_0_C254AB2A-83C4-4E50-B5AD-4D7DE1264B4F.png",
+      "scope": "Real Root native-window sample or timing/hit report; requested sampling time is not the actual elapsed time."
+    },
+    {
+      "path": "Docs/original-feel-0259/baseline-natural-video-contact.png",
+      "sha256": "db70eb48949289f0d856e2a80e90c6a0c5f1432fb13a41f496b68473dce25d81",
+      "stage": "baseline",
+      "scope": "15 reviewed frames, requested0.70–1.40s at0.05s; separate recording origins, not synchronized A/B. First120ms after callback has no screenshot readback."
+    },
+    {
+      "path": "Docs/original-feel-0259/baseline-video-sampling.json",
+      "sha256": "244c578a3ded9b5f70ddcdcc94761624bef3ff8a4cb4da30930af86162aef9fc",
+      "stage": "baseline",
+      "scope": "Actual requested/decoded time mapping for first2s; full video is retained locally under .build."
+    },
+    {
+      "path": "Docs/original-feel-0259/final-natural-video-contact.png",
+      "sha256": "722ce834ce20afeec56de9f61aa5b316eb1de025167ff19b853b4b96c99388f4",
+      "stage": "final",
+      "scope": "15 reviewed frames, requested0.70–1.40s at0.05s; separate recording origins, not synchronized A/B. First120ms after callback has no screenshot readback."
+    },
+    {
+      "path": "Docs/original-feel-0259/final-video-sampling.json",
+      "sha256": "900dd775df9c02d3497fc76d0ca4f7477ff4d34cec0689054f19a04e0f976162",
+      "stage": "final",
+      "scope": "Actual requested/decoded time mapping for first2s; full video is retained locally under .build."
+    },
+    {
+      "path": "Docs/original-feel-0259/final-reward-handoff.mov",
+      "sha256": "1d6f13bbe57050f497b1a61eb3c5388ffa4f4e41d17516515fbc2ee4bb4baf7e",
+      "stage": "final",
+      "scope": "Unedited simulator recording of eight L6 fixtures. Only first-fixture contact frames were visually reviewed; not full-frame-rate, audio or physical haptic verification."
+    }
+  ]
+}

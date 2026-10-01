@@ -60,7 +60,8 @@
     "0.2.53拍爪轮廓与接触强调经真实宿主和有界几何检查；音频仅只读路由复核，未完成真人听觉或真机参考品质验收。见Validation/original-0253-feedback.json。",
     "0.2.54一命提醒等待现有错误解释且继续操作会取消，属于Demo节奏选择；当前Root截图、生命周期和2项UI证据不替代参考时序、全量或真机验收。见Validation/original-0254-feedback.json。",
     "0.2.55七组实际Root画面和静态描线像素差验证角色/X保护；不是所有逐帧画面、真机或参考品质验收。早期裁图范围修正及失败记录保留，见Validation/original-0255-feedback.json。",
-    "0.2.56道具遮挡使用六组实际Root与工具层透明像素检查；末格/下一关、近重复遮罩、非法几何和手势回归通过。首次夹具跳过真实启动预热导致的时限失败及修正保留；非全量、真机或参考品质验收。见Validation/original-0256-feedback.json。"
+    "0.2.56道具遮挡使用六组实际Root与工具层透明像素检查；末格/下一关、近重复遮罩、非法几何和手势回归通过。首次夹具跳过真实启动预热导致的时限失败及修正保留；非全量、真机或参考品质验收。见Validation/original-0256-feedback.json。",
+    "0.2.59在真实Root修复奖励卡白幕遮挡答案起始反馈；120ms前无截图的两尺寸/减少动态像素与实际命中检查，29项App和5项UI通过。不代表精确屏幕退场时长、真机或参考品质验收。见Validation/original-0259-feedback.json。"
   ],
   "priorityClientFollowUps": [
     {
@@ -1212,7 +1213,8 @@
         "Docs/original-feel-0256/manifest.json",
         "Validation/original-0258-feedback.json",
         "Validation/checklist-0258-feedback-delta.json",
-        "Docs/original-feel-0258/manifest.json"
+        "Docs/original-feel-0258/manifest.json",
+        "Validation/original-0259-feedback.json"
       ],
       "gapHistory": [
         {
@@ -1456,7 +1458,8 @@
         "AppTests/GameplayAvailabilityTests.swift",
         "Validation/original-0222-feedback.json",
         "Docs/original-feel-0222/manifest.json",
-        "Validation/original-0226-feedback.json"
+        "Validation/original-0226-feedback.json",
+        "Validation/original-0259-feedback.json"
       ]
     },
     {
@@ -2522,8 +2525,8 @@
       ]
     }
   ],
-  "currentBuild": "0.2.58 (61)",
-  "currentVerification": "Validation/original-0258-feedback.json",
+  "currentBuild": "0.2.59 (62)",
+  "currentVerification": "Validation/original-0259-feedback.json",
   "latestVerifiedPhoneBuild": "0.2.29 (32)",
-  "currentStatusSummary": "0.2.58修复长提示Apply后棋盘尺寸恢复吞掉描叉反馈；51项相关App与4项UI通过，83/88正式状态保持。"
+  "currentStatusSummary": "0.2.59缩短奖励卡退场并隔离动画/命中；旧版两条视觉断言失败后，29项相关App与5项UI通过，83/88正式状态保持。"
 }

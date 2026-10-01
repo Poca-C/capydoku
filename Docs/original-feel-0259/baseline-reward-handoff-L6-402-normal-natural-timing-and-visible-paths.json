@@ -1,0 +1,200 @@
+{
+  "boundary" : "Real Root and same-window native pixels. No CA freeze or forced configure\/layout. First120ms has no image readback; same-target early\/late face-center color detects a material modal veil in this fixture only, not aesthetic quality. Readback can delay later samples; actual capture ranges are recorded. Inventory control uses the same two remaining cells but random selection may choose the other cell.",
+  "businessCommitObservedAfterSeconds" : 0.027565666707232594,
+  "earlyToSettledCenterMaximumChannelChange" : 58,
+  "fixture" : "reward-handoff-L6-402-normal",
+  "level" : 6,
+  "observations" : [
+    {
+      "actualFeedbackViews" : [
+        {
+          "animationKeys" : [
+
+          ],
+          "cell" : 17,
+          "childAnimationKeys" : [
+            "found-light",
+            "found-heart-visible",
+            "found-heart-pop",
+            "found-heart-lift",
+            "opacity",
+            "transform.scale",
+            "found-pop",
+            "opacity",
+            "found-expression-settle"
+          ],
+          "frameInWindow" : [
+            307.13200000000001,
+            423.13200000000001,
+            49.402666666666676,
+            49.402666666666676
+          ],
+          "hidden" : false,
+          "kind" : "found",
+          "layerHasPresentation" : true,
+          "layerOpacity" : 1,
+          "path" : "window\/0:UITransitionView\/0:UIDropShadowView\/0:_UIHostingView<ModifiedContent<ModifiedContent<RootView, _EnvironmentKeyWritingModifier<Optional<AppModel>>>, _EnvironmentKeyWritingModifier<ScenePhase>>>\/0:UIKitPlatformViewHost<PlatformViewControllerRepresentableAdaptor<CapyAccessibilityHost<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<Group<_ConditionalContent<_ConditionalContent<HomeView, GameView>, CheckInView>>, _EnvironmentKeyWritingModifier<Optional<AppModel>>>, _EnvironmentKeyWritingModifier<Optional<Color>>>, _EnvironmentKeyWritingModifier<ScenePhase>>, _EnvironmentKeyWritingModifier<AppLanguage>>, _EnvironmentKeyWritingModifier<Optional<Bool>>>, _EnvironmentKeyWritingModifier<DynamicTypeSize>>, _EnvironmentKeyWritingModifier<Optional<Binding>>>, _EnvironmentKeyWritingModifier<(Optional<String>) -> ()>>>>>\/0:UIView\/0:_UIHostingView<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<Group<_ConditionalContent<_ConditionalContent<HomeView, GameView>, CheckInView>>, _EnvironmentKeyWritingModifier<Optional<AppModel>>>, _EnvironmentKeyWritingModifier<Optional<Color>>>, _EnvironmentKeyWritingModifier<ScenePhase>>, _EnvironmentKeyWritingModifier<AppLanguage>>, _EnvironmentKeyWritingModifier<Optional<Bool>>>, _EnvironmentKeyWritingModifier<DynamicTypeSize>>, _EnvironmentKeyWritingModifier<Optional<Binding>>>, _EnvironmentKeyWritingModifier<(Optional<String>) -> ()>>>\/8:UIKitPlatformViewHost<PlatformViewRepresentableAdaptor<PuzzleBoardView>>\/0:PuzzleGridUIView\/0:UIView\/1:BoardCellFeedbackView",
+          "viewAlpha" : 1
+        },
+        {
+          "animationKeys" : [
+
+          ],
+          "childAnimationKeys" : [
+            "receipt",
+            "trace",
+            "receipt",
+            "trace",
+            "flight"
+          ],
+          "frameInWindow" : [
+            0,
+            62,
+            402,
+            778
+          ],
+          "hidden" : false,
+          "layerHasPresentation" : true,
+          "layerOpacity" : 1,
+          "path" : "window\/0:UITransitionView\/0:UIDropShadowView\/0:_UIHostingView<ModifiedContent<ModifiedContent<RootView, _EnvironmentKeyWritingModifier<Optional<AppModel>>>, _EnvironmentKeyWritingModifier<ScenePhase>>>\/0:UIKitPlatformViewHost<PlatformViewControllerRepresentableAdaptor<CapyAccessibilityHost<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<Group<_ConditionalContent<_ConditionalContent<HomeView, GameView>, CheckInView>>, _EnvironmentKeyWritingModifier<Optional<AppModel>>>, _EnvironmentKeyWritingModifier<Optional<Color>>>, _EnvironmentKeyWritingModifier<ScenePhase>>, _EnvironmentKeyWritingModifier<AppLanguage>>, _EnvironmentKeyWritingModifier<Optional<Bool>>>, _EnvironmentKeyWritingModifier<DynamicTypeSize>>, _EnvironmentKeyWritingModifier<Optional<Binding>>>, _EnvironmentKeyWritingModifier<(Optional<String>) -> ()>>>>>\/0:UIView\/0:_UIHostingView<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<Group<_ConditionalContent<_ConditionalContent<HomeView, GameView>, CheckInView>>, _EnvironmentKeyWritingModifier<Optional<AppModel>>>, _EnvironmentKeyWritingModifier<Optional<Color>>>, _EnvironmentKeyWritingModifier<ScenePhase>>, _EnvironmentKeyWritingModifier<AppLanguage>>, _EnvironmentKeyWritingModifier<Optional<Bool>>>, _EnvironmentKeyWritingModifier<DynamicTypeSize>>, _EnvironmentKeyWritingModifier<Optional<Binding>>>, _EnvironmentKeyWritingModifier<(Optional<String>) -> ()>>>\/10:_UIInheritedView\/0:UIKitPlatformViewHost<PlatformViewRepresentableAdaptor<DirectToolRevealView>>\/0:DirectToolRevealUIView",
+          "viewAlpha" : 1
+        }
+      ],
+      "captureEndedAfterSeconds" : 0.15962879173457623,
+      "captureStartedAfterSeconds" : 0.12267587496899068,
+      "cellGeometrySource" : "current real board measurement",
+      "cropNativePixels" : [
+        917,
+        1265,
+        157,
+        157
+      ],
+      "modelRewardBusy" : false,
+      "modelSheet" : "none",
+      "requestedSeconds" : 0.12,
+      "targetCell" : 17,
+      "targetFrameInWindow" : [
+        305.66666666666669,
+        421.66666666666669,
+        52.333333333333314,
+        52.333333333333314
+      ],
+      "targetWindowPixels" : {
+        "boundary" : "Native-window pixels; the known brown face center is checked only against modal coverage.",
+        "centerPremultipliedSRGBA0To255" : [
+          236,
+          186,
+          146,
+          255
+        ],
+        "meanPremultipliedSRGBA0To255" : [
+          236.87857519574831,
+          202.89739948882308,
+          157.67333360379732,
+          255
+        ],
+        "pixelHeight" : 157,
+        "pixelWidth" : 157
+      }
+    },
+    {
+      "actualFeedbackViews" : [
+        {
+          "animationKeys" : [
+
+          ],
+          "cell" : 17,
+          "childAnimationKeys" : [
+            "found-light",
+            "found-heart-visible",
+            "found-heart-pop",
+            "found-heart-lift",
+            "opacity",
+            "transform.scale",
+            "found-pop",
+            "found-expression-settle"
+          ],
+          "frameInWindow" : [
+            307.13200000000001,
+            423.13200000000001,
+            49.402666666666676,
+            49.402666666666676
+          ],
+          "hidden" : false,
+          "kind" : "found",
+          "layerHasPresentation" : true,
+          "layerOpacity" : 1,
+          "path" : "window\/0:UITransitionView\/0:UIDropShadowView\/0:_UIHostingView<ModifiedContent<ModifiedContent<RootView, _EnvironmentKeyWritingModifier<Optional<AppModel>>>, _EnvironmentKeyWritingModifier<ScenePhase>>>\/0:UIKitPlatformViewHost<PlatformViewControllerRepresentableAdaptor<CapyAccessibilityHost<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<Group<_ConditionalContent<_ConditionalContent<HomeView, GameView>, CheckInView>>, _EnvironmentKeyWritingModifier<Optional<AppModel>>>, _EnvironmentKeyWritingModifier<Optional<Color>>>, _EnvironmentKeyWritingModifier<ScenePhase>>, _EnvironmentKeyWritingModifier<AppLanguage>>, _EnvironmentKeyWritingModifier<Optional<Bool>>>, _EnvironmentKeyWritingModifier<DynamicTypeSize>>, _EnvironmentKeyWritingModifier<Optional<Binding>>>, _EnvironmentKeyWritingModifier<(Optional<String>) -> ()>>>>>\/0:UIView\/0:_UIHostingView<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<Group<_ConditionalContent<_ConditionalContent<HomeView, GameView>, CheckInView>>, _EnvironmentKeyWritingModifier<Optional<AppModel>>>, _EnvironmentKeyWritingModifier<Optional<Color>>>, _EnvironmentKeyWritingModifier<ScenePhase>>, _EnvironmentKeyWritingModifier<AppLanguage>>, _EnvironmentKeyWritingModifier<Optional<Bool>>>, _EnvironmentKeyWritingModifier<DynamicTypeSize>>, _EnvironmentKeyWritingModifier<Optional<Binding>>>, _EnvironmentKeyWritingModifier<(Optional<String>) -> ()>>>\/8:UIKitPlatformViewHost<PlatformViewRepresentableAdaptor<PuzzleBoardView>>\/0:PuzzleGridUIView\/0:UIView\/1:BoardCellFeedbackView",
+          "viewAlpha" : 1
+        },
+        {
+          "animationKeys" : [
+
+          ],
+          "childAnimationKeys" : [
+            "receipt",
+            "receipt",
+            "flight"
+          ],
+          "frameInWindow" : [
+            0,
+            62,
+            402,
+            778
+          ],
+          "hidden" : false,
+          "layerHasPresentation" : true,
+          "layerOpacity" : 1,
+          "path" : "window\/0:UITransitionView\/0:UIDropShadowView\/0:_UIHostingView<ModifiedContent<ModifiedContent<RootView, _EnvironmentKeyWritingModifier<Optional<AppModel>>>, _EnvironmentKeyWritingModifier<ScenePhase>>>\/0:UIKitPlatformViewHost<PlatformViewControllerRepresentableAdaptor<CapyAccessibilityHost<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<Group<_ConditionalContent<_ConditionalContent<HomeView, GameView>, CheckInView>>, _EnvironmentKeyWritingModifier<Optional<AppModel>>>, _EnvironmentKeyWritingModifier<Optional<Color>>>, _EnvironmentKeyWritingModifier<ScenePhase>>, _EnvironmentKeyWritingModifier<AppLanguage>>, _EnvironmentKeyWritingModifier<Optional<Bool>>>, _EnvironmentKeyWritingModifier<DynamicTypeSize>>, _EnvironmentKeyWritingModifier<Optional<Binding>>>, _EnvironmentKeyWritingModifier<(Optional<String>) -> ()>>>>>\/0:UIView\/0:_UIHostingView<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<Group<_ConditionalContent<_ConditionalContent<HomeView, GameView>, CheckInView>>, _EnvironmentKeyWritingModifier<Optional<AppModel>>>, _EnvironmentKeyWritingModifier<Optional<Color>>>, _EnvironmentKeyWritingModifier<ScenePhase>>, _EnvironmentKeyWritingModifier<AppLanguage>>, _EnvironmentKeyWritingModifier<Optional<Bool>>>, _EnvironmentKeyWritingModifier<DynamicTypeSize>>, _EnvironmentKeyWritingModifier<Optional<Binding>>>, _EnvironmentKeyWritingModifier<(Optional<String>) -> ()>>>\/10:_UIInheritedView\/0:UIKitPlatformViewHost<PlatformViewRepresentableAdaptor<DirectToolRevealView>>\/0:DirectToolRevealUIView",
+          "viewAlpha" : 1
+        }
+      ],
+      "captureEndedAfterSeconds" : 0.25142270838841796,
+      "captureStartedAfterSeconds" : 0.22057958343066275,
+      "cellGeometrySource" : "current real board measurement",
+      "cropNativePixels" : [
+        917,
+        1265,
+        157,
+        157
+      ],
+      "modelRewardBusy" : false,
+      "modelSheet" : "none",
+      "requestedSeconds" : 0.22,
+      "targetCell" : 17,
+      "targetFrameInWindow" : [
+        305.66666666666669,
+        421.66666666666669,
+        52.333333333333314,
+        52.333333333333314
+      ],
+      "targetWindowPixels" : {
+        "boundary" : "Native-window pixels; the known brown face center is checked only against modal coverage.",
+        "centerPremultipliedSRGBA0To255" : [
+          224,
+          149,
+          88,
+          255
+        ],
+        "meanPremultipliedSRGBA0To255" : [
+          226.86993387155667,
+          176.61499452310437,
+          111.43876019311128,
+          255
+        ],
+        "pixelHeight" : 157,
+        "pixelWidth" : 157
+      }
+    }
+  ],
+  "reducedMotion" : false,
+  "remainingMiddleRowCellsBeforeUse" : [
+    17,
+    21
+  ],
+  "revealedCell" : 17,
+  "screenSize" : [
+    402,
+    874
+  ]
+}

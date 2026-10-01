@@ -132,15 +132,33 @@ struct RootView: View {
                 .transition(.identity)
                 .allowsHitTesting(showsResultPanel)
             }
-            if hasCard {
-                Color.black.opacity(0.68).ignoresSafeArea().contentShape(Rectangle())
-                Group {
-                    if model.sheet == .settings { SettingsView() }
-                    else { RewardView() }
+            ZStack {
+                if model.sheet == .settings {
+                    Color.black.opacity(0.68).ignoresSafeArea().contentShape(Rectangle())
+                    SettingsView().transition(.scale(scale: 0.88).combined(with: .opacity)).zIndex(1)
                 }
-                .transition(.scale(scale: 0.88).combined(with: .opacity))
-                .zIndex(2)
             }
+            .allowsHitTesting(model.sheet == .settings)
+            .accessibilityHidden(model.sheet != .settings)
+            .animation(reduceMotion ? nil : .easeOut(duration: 0.18), value: model.sheet == .settings)
+            .zIndex(2)
+            ZStack {
+                if model.sheet == .reward {
+                    Color.black.opacity(0.68).ignoresSafeArea().contentShape(Rectangle())
+                        .transition(.opacity)
+                    RewardView().transition(.asymmetric(
+                        insertion: .scale(scale: 0.88).combined(with: .opacity), removal: .opacity))
+                        .zIndex(1)
+                }
+            }
+            // Rewards commit immediately. Retire their cover quickly so the
+            // accepted cell's opening reaction is visible, without delaying or
+            // replaying it. Scope this transaction to the modal, not the board.
+            .allowsHitTesting(model.sheet == .reward)
+            .accessibilityHidden(model.sheet != .reward)
+            .animation(reduceMotion ? nil : .easeOut(duration: model.sheet == .reward ? 0.18 : 0.06),
+                       value: model.sheet == .reward)
+            .zIndex(2)
             if model.challengePending && !model.interstitialBusy {
                 Color.black.opacity(0.70).ignoresSafeArea().contentShape(Rectangle())
                 ChallengePanel().transition(.scale(scale: 0.88).combined(with: .opacity)).zIndex(3)
@@ -169,7 +187,6 @@ struct RootView: View {
         }
         .onChange(of: scenePhase) { phase in if phase == .active { requestFocus(modalHeading ?? focusedControl ?? defaultFocus) } }
         .foregroundColor(CapyPalette.ink)
-        .animation(reduceMotion ? nil : .easeOut(duration: 0.18), value: hasCard)
         .animation(reduceMotion ? nil : .easeOut(duration: 0.18), value: model.challengePending)
         .sheet(isPresented: Binding(get: { model.sheet == .debug }, set: { if !$0 && model.sheet == .debug { model.sheet = nil } })) {
             DebugView().environment(\.appLanguage, language).environment(\.capyAccessibilityFocus, $focusedControl).environment(\.capyButtonActivation, activate)

@@ -1,0 +1,27 @@
+{
+  "boundary" : "Actual UIWindow.hitTest at the same measured empty cell. No gesture injection, screenshots, forced layout or CA clock changes. 30ms is diagnostic; 120ms requires board routing.",
+  "businessCommitObservedAfterSeconds" : 0.02111054165288806,
+  "busyHitPath" : "window\/0:UITransitionView\/0:UIDropShadowView\/0:_UIHostingView<ModifiedContent<ModifiedContent<RootView, _EnvironmentKeyWritingModifier<Optional<AppModel>>>, _EnvironmentKeyWritingModifier<ScenePhase>>>",
+  "fixture" : "reward-hit-handoff-402-reduced-false",
+  "observations" : [
+    {
+      "hitPath" : "window\/0:UITransitionView\/0:UIDropShadowView\/0:_UIHostingView<ModifiedContent<ModifiedContent<RootView, _EnvironmentKeyWritingModifier<Optional<AppModel>>>, _EnvironmentKeyWritingModifier<ScenePhase>>>\/0:UIKitPlatformViewHost<PlatformViewControllerRepresentableAdaptor<CapyAccessibilityHost<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<Group<_ConditionalContent<_ConditionalContent<HomeView, GameView>, CheckInView>>, _EnvironmentKeyWritingModifier<Optional<AppModel>>>, _EnvironmentKeyWritingModifier<Optional<Color>>>, _EnvironmentKeyWritingModifier<ScenePhase>>, _EnvironmentKeyWritingModifier<AppLanguage>>, _EnvironmentKeyWritingModifier<Optional<Bool>>>, _EnvironmentKeyWritingModifier<DynamicTypeSize>>, _EnvironmentKeyWritingModifier<Optional<Binding>>>, _EnvironmentKeyWritingModifier<(Optional<String>) -> ()>>>>>\/0:UIView\/0:_UIHostingView<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<Group<_ConditionalContent<_ConditionalContent<HomeView, GameView>, CheckInView>>, _EnvironmentKeyWritingModifier<Optional<AppModel>>>, _EnvironmentKeyWritingModifier<Optional<Color>>>, _EnvironmentKeyWritingModifier<ScenePhase>>, _EnvironmentKeyWritingModifier<AppLanguage>>, _EnvironmentKeyWritingModifier<Optional<Bool>>>, _EnvironmentKeyWritingModifier<DynamicTypeSize>>, _EnvironmentKeyWritingModifier<Optional<Binding>>>, _EnvironmentKeyWritingModifier<(Optional<String>) -> ()>>>\/7:UIKitPlatformViewHost<PlatformViewRepresentableAdaptor<PuzzleBoardView>>\/0:PuzzleGridUIView",
+      "observedSeconds" : 0.032300666673108935,
+      "reachesBoard" : true,
+      "requestedSeconds" : 0.029999999999999999
+    },
+    {
+      "hitPath" : "window\/0:UITransitionView\/0:UIDropShadowView\/0:_UIHostingView<ModifiedContent<ModifiedContent<RootView, _EnvironmentKeyWritingModifier<Optional<AppModel>>>, _EnvironmentKeyWritingModifier<ScenePhase>>>\/0:UIKitPlatformViewHost<PlatformViewControllerRepresentableAdaptor<CapyAccessibilityHost<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<Group<_ConditionalContent<_ConditionalContent<HomeView, GameView>, CheckInView>>, _EnvironmentKeyWritingModifier<Optional<AppModel>>>, _EnvironmentKeyWritingModifier<Optional<Color>>>, _EnvironmentKeyWritingModifier<ScenePhase>>, _EnvironmentKeyWritingModifier<AppLanguage>>, _EnvironmentKeyWritingModifier<Optional<Bool>>>, _EnvironmentKeyWritingModifier<DynamicTypeSize>>, _EnvironmentKeyWritingModifier<Optional<Binding>>>, _EnvironmentKeyWritingModifier<(Optional<String>) -> ()>>>>>\/0:UIView\/0:_UIHostingView<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<ModifiedContent<Group<_ConditionalContent<_ConditionalContent<HomeView, GameView>, CheckInView>>, _EnvironmentKeyWritingModifier<Optional<AppModel>>>, _EnvironmentKeyWritingModifier<Optional<Color>>>, _EnvironmentKeyWritingModifier<ScenePhase>>, _EnvironmentKeyWritingModifier<AppLanguage>>, _EnvironmentKeyWritingModifier<Optional<Bool>>>, _EnvironmentKeyWritingModifier<DynamicTypeSize>>, _EnvironmentKeyWritingModifier<Optional<Binding>>>, _EnvironmentKeyWritingModifier<(Optional<String>) -> ()>>>\/7:UIKitPlatformViewHost<PlatformViewRepresentableAdaptor<PuzzleBoardView>>\/0:PuzzleGridUIView",
+      "observedSeconds" : 0.12229312490671873,
+      "reachesBoard" : true,
+      "requestedSeconds" : 0.12
+    }
+  ],
+  "targetCell" : 14,
+  "targetFrameInWindow" : [
+    148.66666666666669,
+    421.66666666666669,
+    52.333333333333314,
+    52.333333333333314
+  ]
+}
