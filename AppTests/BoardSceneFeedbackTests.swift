@@ -56,6 +56,81 @@ import CapydokuCore
 }
 
 final class BoardSceneFeedbackTests: XCTestCase {
+    /// Check the persistent board pixels, after the temporary celebration has
+    /// actually expired. A happy overlay alone cannot satisfy this contract.
+    @MainActor func testCompletedBoardKeepsHappyPortraitsAfterCelebrationAndRestore() async throws {
+        for reduced in [false, true] {
+            let rig = try BoardSceneRig(); defer { rig.close() }
+            rig.reduceMotion = reduced; rig.refresh()
+            for index in [1, 7, 8] { XCTAssertTrue(rig.board.activate(index: index, submit: true)) }
+            try await Task.sleep(nanoseconds: 660_000_000)
+            assertPortraits(rig, expression: .neutral, label: "playing")
+            XCTAssertTrue(rig.board.activate(index: 14, submit: true))
+            let committed = rig.session
+            XCTAssertEqual(committed.status, .won)
+            try await Task.sleep(nanoseconds: 860_000_000)
+            XCTAssertTrue(rig.scenes.isEmpty)
+            assertPortraits(rig, expression: .happy, label: "won-reduced-\(reduced)")
+            capture(rig.window, "completed-board-persistent-happy-reduced-\(reduced)")
+            rig.board.cancelPresentation(); rig.effectsEnabled = false; rig.refresh()
+            assertPortraits(rig, expression: .happy, label: "effects-off")
+            XCTAssertEqual(rig.session, committed)
+            // Re-mounting a completed save must retain the expression without
+            // reissuing the victory animation or adding any gameplay event.
+            let restored = try BoardSceneRig(session: committed)
+            defer { restored.close() }
+            XCTAssertTrue(restored.scenes.isEmpty)
+            assertPortraits(restored, expression: .happy, label: "restored")
+            restored.session = GameSession(puzzle: BoardSceneRig.puzzle)
+            _ = restored.session.submit(cell: 1); restored.refresh()
+            restored.board.cancelPresentation()
+            assertPortraits(restored, expression: .neutral, label: "new-attempt")
+            XCTAssertEqual(restored.session.status, .playing)
+        }
+    }
+
+    @MainActor private func assertPortraits(_ rig: BoardSceneRig, expression: CapyFaceExpression,
+                                           label: String, file: StaticString = #filePath, line: UInt = #line) {
+        let board = rig.board
+        board.layoutIfNeeded(); board.layer.displayIfNeeded()
+        let format = UIGraphicsImageRendererFormat(); format.scale = 3; format.opaque = false
+        let renderer = UIGraphicsImageRenderer(bounds: board.bounds, format: format)
+        let actual = renderer.image { board.layer.render(in: $0.cgContext) }
+        let size = rig.session.puzzle.size
+        let area = board.bounds.insetBy(dx: 7, dy: 7), side = area.width / CGFloat(size)
+        let gap = max(1.1, min(2, side * 0.028))
+        for index in rig.session.found.sorted() {
+            let tile = CGRect(x: area.minX + CGFloat(index % size) * side,
+                              y: area.minY + CGFloat(index / size) * side,
+                              width: side, height: side).insetBy(dx: gap, dy: gap)
+            let face = tile.insetBy(dx: tile.width * 0.07, dy: tile.height * 0.07)
+            let expected = renderer.image { context in
+                UIColor(CapyPalette.regionColors[rig.session.puzzle.regions[index]]).setFill()
+                context.fill(tile)
+                CapyExpressionArtwork.image(expression)?.draw(in: face)
+            }
+            let crop = face.insetBy(dx: 1, dy: 1).applying(CGAffineTransform(scaleX: 3, y: 3)).integral
+            guard let a = actual.cgImage?.cropping(to: crop), let e = expected.cgImage?.cropping(to: crop) else {
+                XCTFail("Missing portrait pixels: \(label)", file: file, line: line); continue
+            }
+            // Normalize cropped images: providers may retain the parent row
+            // stride, so compare compact rendered buffers, not provider tails.
+            func pixels(_ image: CGImage) -> [UInt8] {
+                var bytes = [UInt8](repeating: 0, count: image.width * image.height * 4)
+                bytes.withUnsafeMutableBytes { buffer in
+                    let context = CGContext(data: buffer.baseAddress, width: image.width, height: image.height,
+                        bitsPerComponent: 8, bytesPerRow: image.width * 4, space: CGColorSpaceCreateDeviceRGB(),
+                        bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+                    context.draw(image, in: CGRect(x: 0, y: 0, width: image.width, height: image.height))
+                }
+                return bytes
+            }
+            let left = pixels(a), right = pixels(e)
+            let differing = zip(left, right).filter { abs(Int($0) - Int($1)) > 2 }.count
+            XCTAssertEqual(differing, 0, "\(label) cell \(index) must retain \(expression) pixels", file: file, line: line)
+        }
+    }
+
     @MainActor private func animations(_ layer: CALayer) -> [CAAnimation] {
         (layer.animationKeys() ?? []).compactMap { layer.animation(forKey: $0) }
             + (layer.sublayers ?? []).flatMap(animations)

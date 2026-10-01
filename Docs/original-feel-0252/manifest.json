@@ -1,0 +1,63 @@
+{
+  "build": "0.2.52 (55)",
+  "baselineBuild": "0.2.51 (54)",
+  "items": [
+    {
+      "file": "before-completed-board-persistent-happy-reduced-true.png",
+      "sha256": "502c9fe7be9ee65f27d90e4c234da1343826fae82535ec2497a0972baa2701bc",
+      "scope": "Unedited XCTest attachment: BoardSceneFeedbackTests/testCompletedBoardKeepsHappyPortraitsAfterCelebrationAndRestore()"
+    },
+    {
+      "file": "before-completed-board-persistent-happy-reduced-false.png",
+      "sha256": "502c9fe7be9ee65f27d90e4c234da1343826fae82535ec2497a0972baa2701bc",
+      "scope": "Unedited XCTest attachment: BoardSceneFeedbackTests/testCompletedBoardKeepsHappyPortraitsAfterCelebrationAndRestore()"
+    },
+    {
+      "file": "final-completed-board-persistent-happy-reduced-true.png",
+      "sha256": "1ccc40e661b8eb466749221ed8b5eb964ff40ec5422f06065ede063a3115c5b6",
+      "scope": "Unedited XCTest attachment: BoardSceneFeedbackTests/testCompletedBoardKeepsHappyPortraitsAfterCelebrationAndRestore()"
+    },
+    {
+      "file": "final-completed-board-persistent-happy-reduced-false.png",
+      "sha256": "1ccc40e661b8eb466749221ed8b5eb964ff40ec5422f06065ede063a3115c5b6",
+      "scope": "Unedited XCTest attachment: BoardSceneFeedbackTests/testCompletedBoardKeepsHappyPortraitsAfterCelebrationAndRestore()"
+    },
+    {
+      "file": "final-full-level-rhythm-event-times.json",
+      "sha256": "dfa844cc6a1c926f8ffe4d605f3b6fea835ae2855528049d12a96fc283144322",
+      "scope": "Unedited XCTest attachment: GameFeelVisualTests/testActualRootFullLevelRhythmThroughVictoryAndNextBoard()"
+    },
+    {
+      "file": "final-full-level-rhythm-next-board.png",
+      "sha256": "e055d8375fef19582afe29249fe47fcc198070739e6d385f642c96d99cc2a523",
+      "scope": "Unedited XCTest attachment: GameFeelVisualTests/testActualRootFullLevelRhythmThroughVictoryAndNextBoard()"
+    },
+    {
+      "file": "before-full-level-rhythm.mov",
+      "sha256": "aa18fe0c6cc82e35b5cb6ba72248b10d1499799c0eede30f052af4f587f1299d",
+      "scope": "Actual Root normal-motion bundled L6 to L7; mark/undo, six finds at mixed intervals, result and next-board mark. No mid-sequence screenshot readbacks. Process and video clocks independent."
+    },
+    {
+      "file": "final-full-level-rhythm.mov",
+      "sha256": "2f4ec34baba299a6058c800376044234015a00a2a13d71b47f3565d85efdb0ea",
+      "scope": "Actual Root normal-motion bundled L6 to L7; mark/undo, six finds at mixed intervals, result and next-board mark. No mid-sequence screenshot readbacks. Process and video clocks independent."
+    },
+    {
+      "file": "before-result-gap.png",
+      "sha256": "75c5e7ea13c8ff305f7b1270cc7bf60603b94601607e403c3c5960068683a2fd",
+      "scope": "Unedited 1.3s extraction from prior0.2.51 actual Root handoff video; completed board neutral before result dimming. Video zero is not last-move time."
+    },
+    {
+      "file": "final-before-result.png",
+      "sha256": "e465561a166258d0261876b35bcaa9768c0949895d5b279180a92b4dd726b94d",
+      "scope": "Unedited4.3s extraction from0.2.52 full-level video; completed board remains happy at the result handoff. Not synchronized with the separate baseline recording."
+    }
+  ],
+  "reviewed": "Before/final completed-board screenshots and full-level continuous recording sampled around victory handoff and next board.",
+  "visualSampling": {
+    "finalFullLevelSeconds": "0.0 through5.6 at0.2s plus4.3",
+    "beforeFullLevelSeconds": "3.2 through5.6 at0.2s",
+    "portraitAttachments": "Normal and reduced completed-board pictures checked at original full size; restore/new-attempt covered by pixel assertions."
+  },
+  "boundary": "Finite simulator recordings and native3x persistent-board pixel comparisons. Not every input ordering, FPS, physical touch latency, audible A/B or reference-quality equivalence."
+}

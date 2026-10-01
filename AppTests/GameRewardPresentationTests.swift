@@ -325,6 +325,64 @@ final class GameFeelVisualTests: XCTestCase {
         metadata.name = "correct-face-continuous-event-times"; metadata.lifetime = .keepAlways; add(metadata)
     }
 
+    /// One uninterrupted level: marking, undo, ordinary and rapid corrects,
+    /// victory and the first action on the next board. No mid-sequence captures.
+    @MainActor func testActualRootFullLevelRhythmThroughVictoryAndNextBoard() async throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent("level-rhythm-" + UUID().uuidString)
+        let model = AppModel(saveDirectory: directory, runsTimer: false, feedbackEnabled: false)
+        model.progress.tutorialCompleted = true; model.start(level: 6)
+        let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
+        let previous = scene.windows.first(where: \.isKeyWindow), window = UIWindow(windowScene: scene)
+        window.frame = CGRect(x: 0, y: 0, width: 402, height: 874)
+        let host = UIHostingController(rootView: RootView(reduceMotionOverride: false).environmentObject(model)
+            .environment(\.scenePhase, .active))
+        window.rootViewController = host; window.makeKeyAndVisible()
+        defer {
+            window.isHidden = true; window.rootViewController = nil; previous?.makeKeyAndVisible()
+            model.flushPendingSaves(); try? FileManager.default.removeItem(at: directory)
+        }
+        try await Task.sleep(nanoseconds: 620_000_000)
+        let initial = try XCTUnwrap(model.session), board = try XCTUnwrap(grid(in: host.view))
+        let mark = try XCTUnwrap((0..<36).first { !initial.puzzle.solution.contains($0) })
+        let start = ProcessInfo.processInfo.systemUptime
+        var events: [[String: Any]] = []
+        func record(_ name: String) {
+            events.append(["name": name, "secondsFromSequenceStart": ProcessInfo.processInfo.systemUptime - start,
+                "level": model.session!.puzzle.id, "found": model.session!.found.sorted(),
+                "score": model.session!.score, "lives": model.session!.lives])
+        }
+        XCTAssertTrue(board.activate(index: mark, submit: false)); record("mark")
+        try await Task.sleep(nanoseconds: 280_000_000)
+        XCTAssertTrue(board.activate(index: mark, submit: false)); record("undo")
+        XCTAssertFalse(model.session!.marks.contains(mark))
+        let delays: [UInt64] = [900, 500, 220, 220, 800, 0]
+        for (ordinal, cell) in initial.puzzle.solution.enumerated() {
+            XCTAssertTrue(board.activate(index: cell, submit: true)); record("correct-\(ordinal + 1)")
+            try await Task.sleep(nanoseconds: delays[ordinal] * 1_000_000)
+        }
+        let completed = try XCTUnwrap(model.session)
+        XCTAssertEqual(completed.status, .won); XCTAssertEqual(completed.lives, initial.lives)
+        try await Task.sleep(nanoseconds: 1_750_000_000)
+        XCTAssertEqual(model.session, completed); record("result-visible")
+        model.next(); record("next")
+        try await Task.sleep(nanoseconds: 100_000_000)
+        let next = try XCTUnwrap(model.session), nextBoard = try XCTUnwrap(grid(in: host.view))
+        XCTAssertEqual(next.puzzle.id, 7); XCTAssertEqual(next.status, .playing)
+        let nextMark = try XCTUnwrap((0..<(next.puzzle.size * next.puzzle.size)).first { !next.found.contains($0) })
+        XCTAssertTrue(nextBoard.activate(index: nextMark, submit: false))
+        XCTAssertTrue(model.session!.marks.contains(nextMark)); record("next-board-first-mark")
+        try await Task.sleep(nanoseconds: 500_000_000)
+        let image = UIGraphicsImageRenderer(bounds: window.bounds).image { _ in
+            window.drawHierarchy(in: window.bounds, afterScreenUpdates: false)
+        }
+        let picture = XCTAttachment(image: image); picture.name = "full-level-rhythm-next-board"
+        picture.lifetime = .keepAlways; add(picture)
+        let data = try JSONSerialization.data(withJSONObject: ["events": events,
+            "boundary": "Actual Root, bundled L6 to L7, native board endpoints and normal motion. No screenshot readbacks during the sequence. No physical touches, live audio or FPS measurement. Recording zero is independent."], options: [.prettyPrinted, .sortedKeys])
+        let attachment = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+        attachment.name = "full-level-rhythm-event-times"; attachment.lifetime = .keepAlways; add(attachment)
+    }
+
     @MainActor private func applause(in view: UIView) -> ApplauseFeedbackUIView? {
         (view as? ApplauseFeedbackUIView) ?? view.subviews.lazy.compactMap { self.applause(in: $0) }.first
     }

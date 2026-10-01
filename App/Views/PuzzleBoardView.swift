@@ -930,7 +930,11 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     }
 
     private func drawCapy(in rect: CGRect, context: CGContext) {
-        if let image = CapyExpressionArtwork.image(.neutral) {
+        // A completed board keeps the same happy portraits beneath the finite
+        // cheer. Removing that overlay must not return every animal to neutral
+        // just before the result appears; restored wins also remain happy.
+        let expression: CapyFaceExpression = found.count == size ? .happy : .neutral
+        if let image = CapyExpressionArtwork.image(expression) {
             image.draw(in: rect.insetBy(dx: rect.width * 0.07, dy: rect.height * 0.07)); return
         }
         let r = rect.insetBy(dx: rect.width * 0.11, dy: rect.height * 0.10)

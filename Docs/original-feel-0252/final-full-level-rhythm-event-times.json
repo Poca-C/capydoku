@@ -1,0 +1,135 @@
+{
+  "boundary" : "Actual Root, bundled L6 to L7, native board endpoints and normal motion. No screenshot readbacks during the sequence. No physical touches, live audio or FPS measurement. Recording zero is independent.",
+  "events" : [
+    {
+      "found" : [
+
+      ],
+      "level" : 6,
+      "lives" : 3,
+      "name" : "mark",
+      "score" : 0,
+      "secondsFromSequenceStart" : 0.0045798332430422306
+    },
+    {
+      "found" : [
+
+      ],
+      "level" : 6,
+      "lives" : 3,
+      "name" : "undo",
+      "score" : 0,
+      "secondsFromSequenceStart" : 0.2961961249820888
+    },
+    {
+      "found" : [
+        0
+      ],
+      "level" : 6,
+      "lives" : 3,
+      "name" : "correct-1",
+      "score" : 100,
+      "secondsFromSequenceStart" : 0.29974529170431197
+    },
+    {
+      "found" : [
+        0,
+        8
+      ],
+      "level" : 6,
+      "lives" : 3,
+      "name" : "correct-2",
+      "score" : 220,
+      "secondsFromSequenceStart" : 1.2231909998226911
+    },
+    {
+      "found" : [
+        0,
+        8,
+        17
+      ],
+      "level" : 6,
+      "lives" : 3,
+      "name" : "correct-3",
+      "score" : 360,
+      "secondsFromSequenceStart" : 1.7377300416119397
+    },
+    {
+      "found" : [
+        0,
+        8,
+        17,
+        21
+      ],
+      "level" : 6,
+      "lives" : 3,
+      "name" : "correct-4",
+      "score" : 520,
+      "secondsFromSequenceStart" : 1.9665314999874681
+    },
+    {
+      "found" : [
+        0,
+        8,
+        17,
+        21,
+        25
+      ],
+      "level" : 6,
+      "lives" : 3,
+      "name" : "correct-5",
+      "score" : 700,
+      "secondsFromSequenceStart" : 2.1911883749999106
+    },
+    {
+      "found" : [
+        0,
+        8,
+        17,
+        21,
+        25,
+        34
+      ],
+      "level" : 6,
+      "lives" : 3,
+      "name" : "correct-6",
+      "score" : 900,
+      "secondsFromSequenceStart" : 2.9996261666528881
+    },
+    {
+      "found" : [
+        0,
+        8,
+        17,
+        21,
+        25,
+        34
+      ],
+      "level" : 6,
+      "lives" : 3,
+      "name" : "result-visible",
+      "score" : 900,
+      "secondsFromSequenceStart" : 4.8001782081555575
+    },
+    {
+      "found" : [
+
+      ],
+      "level" : 7,
+      "lives" : 3,
+      "name" : "next",
+      "score" : 0,
+      "secondsFromSequenceStart" : 4.8092631248291582
+    },
+    {
+      "found" : [
+
+      ],
+      "level" : 7,
+      "lives" : 3,
+      "name" : "next-board-first-mark",
+      "score" : 0,
+      "secondsFromSequenceStart" : 4.9169682916253805
+    }
+  ]
+}
