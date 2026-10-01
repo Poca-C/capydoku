@@ -1560,7 +1560,7 @@
       ],
       "title": "单格/连拍/撤销/正确/错误事件",
       "status": "partial",
-      "implemented": "成功操作才发事件，滑动按实际新增X逐格排队；横纵手势开始/结束/取消、离盘和锁定接入停止策略；Apply不额外发单格标记声。 0.2.26本地测试标记/撤销/正确/错误与滑动共10事件映射中的对应项；滑动暂共享标记声，不新增事件。",
+      "implemented": "成功操作才发事件，滑动按实际新增X逐格排队；横纵手势开始/结束/取消、离盘和锁定接入停止策略；Apply不额外发单格标记声。 0.2.26本地测试标记/撤销/正确/错误与滑动共10事件映射中的对应项；滑动暂共享标记声，不新增事件。 0.2.57真实AppModel回归复现并修复本地试验正确/错误音150ms节流导致的漏声；只在校验后的内存策略取消这两项节流，源JSON/WAV和正式策略保持。",
       "gap": "原版逐格时序、声音优先级与真机听感仍需冻结资料；当前原声映射与参数明确为测试值。",
       "evidence": [
         "App/AppModel.swift",
@@ -1571,7 +1571,10 @@
         "AppTests/AppModelFeedbackRoutingTests.swift",
         "Validation/test-runs/original-audio-final.xcresult",
         "Validation/original-0226-feedback.json",
-        "Validation/meowdoku-audio-test-0226.json"
+        "Validation/meowdoku-audio-test-0226.json",
+        "AppTests/AcceptedMoveAudioTests.swift",
+        "Validation/original-0257-feedback.json",
+        "Validation/checklist-0257-feedback-delta.json"
       ],
       "gapHistory": [
         {
@@ -2513,8 +2516,8 @@
       ]
     }
   ],
-  "currentBuild": "0.2.56 (59)",
-  "currentVerification": "Validation/original-0256-feedback.json",
+  "currentBuild": "0.2.57 (60)",
+  "currentVerification": "Validation/original-0257-feedback.json",
   "latestVerifiedPhoneBuild": "0.2.29 (32)",
-  "currentStatusSummary": "0.2.56以四角框确认直接答案并保护可见角色和X；46项相关App及4项UI通过，83/88正式状态保持。"
+  "currentStatusSummary": "0.2.57修正本地试验音频在快速有效判定时漏声的150ms节流；79项相关App通过，正式83行/Checklist88状态保持。"
 }

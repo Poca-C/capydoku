@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-02",
+  "build": "0.2.57 (60)",
+  "status": "scoped_accepted_move_audio_calls_verified_simulator_only",
+  "previousReport": "Validation/original-0256-feedback.json",
+  "sourceParagraphs": [
+    335,
+    336
+  ],
+  "finding": "The unverified local experiment had a 150ms minimum interval for correct/wrong cues. Real AppModel/Core accepted two distinct moves while the injected playback adapter started only one cue. Baseline: two failing cases, duplicate same-cell case passing.",
+  "changes": [
+    "After validating the local source policy and file checksums, set only correct/wrong minimumInterval to zero in the in-memory Demo policy.",
+    "Keep source JSON/WAV, formal audio import, other cues, delay, concurrency, scope, Combo and business duplicate rejection unchanged."
+  ],
+  "temporaryTuning": "This corrects the local Demo policy to match original per-accepted-move requirements. It does not certify reference timing or alter the formal empty manifest.",
+  "baselineTests": {
+    "status": "Failed",
+    "passed": 1,
+    "failed": 2,
+    "skipped": 0,
+    "summary": "Validation/test-runs/original-0257-audio-baseline-summary.json",
+    "log": "Validation/test-runs/original-0257-audio-baseline.log",
+    "bundle": "Validation/test-runs/original-0257-audio-baseline.xcresult"
+  },
+  "applicationTests": {
+    "status": "Passed",
+    "passed": 79,
+    "failed": 0,
+    "skipped": 0,
+    "summary": "Validation/test-runs/original-0257-audio-final-summary.json",
+    "log": "Validation/test-runs/original-0257-audio-final.log",
+    "bundle": "Validation/test-runs/original-0257-audio-final.xcresult"
+  },
+  "testedScope": [
+    "Real AppModel/Core: two distinct wrong moves lose two lives and start two cues; duplicate same-cell delivery remains one life/one cue; two correct moves advance score/found/Combo and start two cues.",
+    "Controlled playback clock at 0/100ms, silent injected handles; no claim of UIKit gestures at that speed or audible output latency.",
+    "Local policy tuning preserves every other policy field and source JSON bytes; invalid negative interval rejected before tuning.",
+    "Related audio policies, settings/lifecycle/interruption, model routing, haptics and reward-completion tests."
+  ],
+  "uiTests": {
+    "rerunThisBuild": false,
+    "reason": "No visual, gesture or UI implementation changed; historical 0.2.56 UI evidence remains labeled with its build."
+  },
+  "reference": {
+    "latestSuccessfulPlaytest": "Validation/meowdoku-playtest-comparison-0249.json",
+    "newSuccessfulPlaytestThisRound": false,
+    "equivalenceClaimed": false,
+    "implementationSummary": {
+      "status": "Nine observed directions each have Demo implementation; this is not reference-quality sign-off.",
+      "implementedDirections": [
+        "动态手势教学",
+        "角色待机/正确/错误表情",
+        "浮分/彩粒/飞星/鼓掌及顶部联动",
+        "错误原因与规则可视化",
+        "扣命与一命提醒",
+        "Combo及分层胜败演出",
+        "新盘错峰入场",
+        "提示与找答案反馈",
+        "签到点亮与实际到账演出"
+      ],
+      "audio": "9 local Debug-only reference WAVs remain an authorized testing experiment; no live audio or physical haptic A/B in this round.",
+      "qualityGaps": [
+        "角色动作自然度与整段节奏",
+        "密集浮分离源距离",
+        "真机声音/震动配合",
+        "正式参考和发布资源验收"
+      ],
+      "notReplicatedFromLatestPlaytest": [
+        "Reference horn-playing character pose",
+        "Every observed praise phrase",
+        "Automatic check-in interstitial during victory; current Demo check-in entry remains on home"
+      ]
+    }
+  },
+  "audio": {
+    "modifiedWAVOrSourceJSON": false,
+    "modifiedLocalRuntimePolicy": true,
+    "localTestWAVCount": 9,
+    "currentDebugInventory": "Validation/audio-isolation-0257-debug.json",
+    "inventoryIdenticalTo0256": true,
+    "formalManifestClipsEmpty": true,
+    "liveAuditoryAB": false,
+    "releaseRebuilt": false
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  },
+  "formalSignOff": false,
+  "formalConformanceRowsUnchanged": 83,
+  "historicalChecklistCountUnchanged": 88,
+  "remaining": [
+    "主要参考方向均已有Demo实现；动作自然度、连续节奏与真机音画触感仍未完成整体对照验收。",
+    "吹喇叭姿态、全部赞语与胜利途中自动签到未原样加入；参考观察不自动取代原始需求。",
+    "手机仍0.2.29；继续暂停打包、手机更新和GitHub上传。",
+    "本轮79项相关App测试，不是全量App/Core、全88条或真机测试。"
+  ]
+}

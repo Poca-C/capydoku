@@ -44,7 +44,16 @@ struct LocalTestAudioImport {
             return SHA256.hash(data: bytes).map { String(format: "%02x", $0) }.joined() == expected
         }, validateUnverified: true)
         guard errors.isEmpty else { return nil }
-        return Self(manifest: envelope.playback, directory: directory)
+        var playback = envelope.playback
+        // Demo tuning only: AppModel emits these after a committed find/life
+        // loss and already rejects duplicate input. The original [335/336]
+        // requires a cue for each accepted move; the experimental 150ms
+        // throttle incorrectly silenced distinct moves. Keep source files,
+        // other cue policies and the separate formal import unchanged.
+        for event in ["double_tap_correct", "double_tap_wrong"] {
+            playback.clips[event]?.minimumInterval = 0
+        }
+        return Self(manifest: playback, directory: directory)
         #else
         return nil
         #endif

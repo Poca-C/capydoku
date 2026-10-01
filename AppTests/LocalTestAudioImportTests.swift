@@ -36,6 +36,34 @@ final class LocalTestAudioImportTests: XCTestCase {
             XCTAssertNil(LocalTestAudioImport.load(directory: directory, environment: environment))
         }
     }
+    func testAcceptedMoveTuningPreservesSourceAndOtherLocalPolicies() throws {
+        let source = try fixture()
+        var playback = source.playback
+        playback.clips["mark_x"]?.minimumInterval = 0.15
+        playback.clips["double_tap_correct"] = playback.clips["mark_x"]
+        playback.clips["double_tap_wrong"] = playback.clips["mark_x"]
+        try write(.init(schemaVersion: source.schemaVersion, purpose: source.purpose,
+                        allowedEnvironment: source.allowedEnvironment, referenceVerified: false,
+                        files: source.files, playback: playback))
+        let url = directory.appendingPathComponent("local-test-audio.json")
+        let before = try Data(contentsOf: url)
+        let imported = try XCTUnwrap(LocalTestAudioImport.load(directory: directory, environment: .demo))
+        XCTAssertFalse(imported.manifest.referenceVerified)
+        var expected = playback
+        expected.clips["double_tap_correct"]?.minimumInterval = 0
+        expected.clips["double_tap_wrong"]?.minimumInterval = 0
+        let encoder = JSONEncoder(); encoder.outputFormatting = [.sortedKeys]
+        XCTAssertEqual(try encoder.encode(imported.manifest), try encoder.encode(expected))
+        XCTAssertEqual(try Data(contentsOf: url), before)
+
+        // Validate the imported data before applying tuning; bad input must
+        // not become acceptable merely because this field would be reset.
+        playback.clips["double_tap_wrong"]?.minimumInterval = -1
+        try write(.init(schemaVersion: source.schemaVersion, purpose: source.purpose,
+                        allowedEnvironment: source.allowedEnvironment, referenceVerified: false,
+                        files: source.files, playback: playback))
+        XCTAssertNil(LocalTestAudioImport.load(directory: directory, environment: .demo))
+    }
     func testChecksumMismatchRejectsWholeImport() throws {
         try write(fixture())
         try Data("changed".utf8).write(to: directory.appendingPathComponent("meow-test-fixture.wav"))

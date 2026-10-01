@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "kind": "scoped_delta_to_88_item_audit",
+  "baseAudit": "Validation/checklist-0221-audit.json",
+  "sourceChecklist": "Validation/checklist-source.json",
+  "sourceCaseCount": 88,
+  "formalSignOff": false,
+  "full88Reexecuted": false,
+  "overallCountsRecomputed": false,
+  "build": "0.2.57 (60)",
+  "status": "scoped_accepted_move_audio_calls_verified_simulator_only",
+  "previousDelta": "Validation/checklist-0256-feedback-delta.json",
+  "scopedRows": 3,
+  "rows": [
+    {
+      "id": "14-04",
+      "title": "原音频文件与触发验收",
+      "originalAcceptanceText": "操作  逐项触发按钮、X、滑动、撤销、正确错误及Combo声音。\n通过  文件、触发次数、节奏和分组符合冻结音频表；没有未经确认的额外声音。",
+      "originalRequirementIDs": [
+        "AUDIO-01",
+        "AUDIO-04",
+        "AUDIO-05"
+      ],
+      "priorStatus": "pending",
+      "formalStatusAfterThisRound": "pending",
+      "newEvidenceScope": "本地测试正确/错误音取消150ms节流；真实AppModel接受动作与无声播放调用次数回归通过。79项相关App通过，不代表正式音频表、真机听感或全量验收。",
+      "evidence": [
+        "Validation/original-0257-feedback.json",
+        "Validation/test-runs/original-0257-audio-baseline-summary.json",
+        "Validation/test-runs/original-0257-audio-final-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "14-05",
+      "title": "音频叠加打断与恢复",
+      "originalAcceptanceText": "操作  快速操作并切前后台，测试外部播放前后及四个开关。\n通过  声音不失控叠加、不漏停或错误重播；恢复前次开关与播放状态。",
+      "originalRequirementIDs": [
+        "AUDIO-02",
+        "AUDIO-03",
+        "AUDIO-06"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "本地测试正确/错误音取消150ms节流；真实AppModel接受动作与无声播放调用次数回归通过。79项相关App通过，不代表正式音频表、真机听感或全量验收。",
+      "evidence": [
+        "Validation/original-0257-feedback.json",
+        "Validation/test-runs/original-0257-audio-baseline-summary.json",
+        "Validation/test-runs/original-0257-audio-final-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "16-03",
+      "title": "最终构建全部问题复验",
+      "originalAcceptanceText": "操作  在最终构建复测所有失败用例及受影响流程。\n通过  每个Bug均有关联修复版本、复测结论和证据，旧版本通过不能代替复测。",
+      "originalRequirementIDs": [
+        "TECH-07"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "本地测试正确/错误音取消150ms节流；真实AppModel接受动作与无声播放调用次数回归通过。79项相关App通过，不代表正式音频表、真机听感或全量验收。",
+      "evidence": [
+        "Validation/original-0257-feedback.json",
+        "Validation/test-runs/original-0257-audio-baseline-summary.json",
+        "Validation/test-runs/original-0257-audio-final-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    }
+  ],
+  "verificationSnapshot": {
+    "app": {
+      "status": "Passed",
+      "passed": 79,
+      "failed": 0,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0257-audio-final-summary.json",
+      "log": "Validation/test-runs/original-0257-audio-final.log",
+      "bundle": "Validation/test-runs/original-0257-audio-final.xcresult"
+    }
+  }
+}
