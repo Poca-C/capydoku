@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.36 (39)",
+  "date": "2026-10-01",
+  "status": "scoped_cheer_transit_verified_simulator_only",
+  "previousReport": "Validation/original-0235-feedback.json",
+  "previousGoalTurn": {
+    "classification": "progress",
+    "commit": "1dd830a",
+    "evidence": "已提交正确鼓掌、过时奖励取消及最终56项App/4项UI证据。"
+  },
+  "authority": "初始Word及既有Demo临时参数授权；参考应用观察不替代原文或正式验收。",
+  "sourceParagraphs": [
+    136,
+    241,
+    248,
+    249,
+    250,
+    254
+  ],
+  "referenceObservation": "Validation/meowdoku-playtest-comparison-0229.json#R0229-03",
+  "finding": "原每段smoothstep令欢呼双腕在phase .23的中途外展位置速度归零，形成抬手到一半再起步的停顿；该点不是蓄力或举手顶点。",
+  "changes": [
+    {
+      "area": "上举连续弧线",
+      "detail": "只为欢呼双腕第2号中途节点设置有界Hermite切线；前后同向斜率取加权调和均值，反向保持零。两轴不越相邻关键值，中途速度连续且非零；phase .12蓄力/.38顶点仍停，原关键姿势、头/脚/外层身体动作、时长及终态不变。"
+    }
+  ],
+  "temporaryTuning": "切线选择是Demo动作设计，不是参考应用精确测量；无新栅格美术、音频、粒子或规则调整。",
+  "applicationTests": {
+    "status": "Passed",
+    "cases": 48,
+    "passed": 48,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 59.775,
+    "scope": "17 Pro / iOS26.5: character motion, rig geometry, arm/face presentation, actual Root, completion, result choreography and accessibility focus. No full App/Core rerun.",
+    "summary": "Validation/test-runs/original-0236-targeted-summary.json",
+    "log": "Validation/test-runs/original-0236-targeted.log",
+    "bundle": "Validation/test-runs/original-0236-targeted.xcresult"
+  },
+  "uiTests": {
+    "status": "Passed",
+    "cases": 2,
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 37.556,
+    "scope": "17e / iOS26.5: native solve/advance and lose/simulated revive. Historical UI fixtures, distinct from component captures.",
+    "summary": "Validation/test-runs/original-0236-17e-ui-summary.json",
+    "log": "Validation/test-runs/original-0236-17e-ui.log",
+    "bundle": "Validation/test-runs/original-0236-17e-ui.xcresult"
+  },
+  "baselineRun": {
+    "build": "0.2.35 (38)",
+    "passed": 1,
+    "failed": 0,
+    "seconds": 4.458,
+    "log": "Validation/test-runs/original-0236-baseline.log",
+    "bundle": "Validation/test-runs/original-0236-baseline.xcresult"
+  },
+  "iterationHistory": "改动前先运行原角色三动作宿主并录屏；最终48项专项App和2项UI首次运行通过，没有放宽断言、排除用例或重复全量测试。",
+  "visualEvidence": "Docs/original-feel-0236/manifest.json",
+  "independentReview": "只读复核通过：切线权重与时间缩放正确，仅影响欢呼双腕中途节点；另外两种动作和终态保留原逻辑。",
+  "reference": {
+    "latestSuccessfulPlaytest": "Validation/meowdoku-playtest-comparison-0229.json",
+    "newSuccessfulPlaytestThisRound": false,
+    "attempt": "按名称和安装路径获取官方应用都返回Running application not found；可选launch_app接口在本环境不可用。没有新成功试玩。",
+    "equivalenceClaimed": false
+  },
+  "audio": {
+    "modified": false,
+    "localTestWAVCount": 9,
+    "formalManifestClipsEmpty": true,
+    "formalReferenceVerified": false,
+    "currentDebugInventory": "Validation/audio-isolation-0236-debug.json",
+    "liveAuditoryAB": false,
+    "releaseExclusion": "沿用0.2.27历史；本轮未做Release构建。"
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  },
+  "remaining": [
+    "角色动作自然度、连续奖励与结果节奏仍需真人体验和参考A/B。",
+    "9个原声仅本地测试；真机音画/触觉未验收，手机仍为0.2.29。",
+    "正式参考/音频、难度、外部接入和上架验收仍待完成。"
+  ],
+  "formalSignOff": false,
+  "formalConformanceRowsUnchanged": 83,
+  "historicalChecklistCountUnchanged": 88
+}

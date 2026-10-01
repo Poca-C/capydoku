@@ -27,6 +27,98 @@ import UIKit
 }
 
 final class ResultCharacterChoreographyTests: XCTestCase {
+    func testCheerLiftPassesThroughItsMidpointWithoutStoppingOrOvershooting() throws {
+        func wrists(_ phase: CGFloat) -> [CGPoint] {
+            let pose = ResultRigMotion.pose(.joyfulRaise, phase: phase)
+            return [pose.leftArm.wrist, pose.rightArm.wrist]
+        }
+        let epsilon: CGFloat = 0.00001
+        let before = wrists(0.23 - epsilon), at = wrists(0.23), after = wrists(0.23 + epsilon)
+        for hand in 0..<2 {
+            let incoming = CGPoint(x: (at[hand].x - before[hand].x) / epsilon,
+                                   y: (at[hand].y - before[hand].y) / epsilon)
+            let outgoing = CGPoint(x: (after[hand].x - at[hand].x) / epsilon,
+                                   y: (after[hand].y - at[hand].y) / epsilon)
+            XCTAssertGreaterThan(hypot(incoming.x, incoming.y), 0.5,
+                "Hands must keep travelling through the middle of the lift, not hold another pose.")
+            XCTAssertLessThan(hypot(incoming.x - outgoing.x, incoming.y - outgoing.y), 0.005,
+                "The incoming and outgoing velocity must join without a sudden direction change.")
+        }
+        let beats: [CGFloat] = [0.12, 0.23, 0.38]
+        let left = [CGPoint(x:0.40,y:0.77), CGPoint(x:0.12,y:0.72), CGPoint(x:-0.025,y:0.38)]
+        let right = [CGPoint(x:0.66,y:0.77), CGPoint(x:0.95,y:0.72), CGPoint(x:1.035,y:0.36)]
+        for (i, beat) in beats.enumerated() {
+            for (actual, expected) in zip(wrists(beat), [left[i], right[i]]) {
+                XCTAssertEqual(actual.x, expected.x, accuracy:0.000001)
+                XCTAssertEqual(actual.y, expected.y, accuracy:0.000001)
+            }
+        }
+        for segment in 0..<2 {
+            for sample in 0...100 {
+                let phase = beats[segment] + (beats[segment+1] - beats[segment]) * CGFloat(sample) / 100
+                for (actual, authored) in zip(wrists(phase), [left, right]) {
+                    let a = authored[segment], b = authored[segment+1]
+                    XCTAssertTrue((min(a.x,b.x)-0.000001...max(a.x,b.x)+0.000001).contains(actual.x))
+                    XCTAssertTrue((min(a.y,b.y)-0.000001...max(a.y,b.y)+0.000001).contains(actual.y))
+                }
+            }
+        }
+        for beat in [CGFloat(0.12), 0.38] {
+            let a = wrists(beat-epsilon), b = wrists(beat+epsilon)
+            for hand in 0..<2 {
+                XCTAssertLessThan(hypot(b[hand].x-a[hand].x,b[hand].y-a[hand].y)/(2*epsilon),0.01,
+                    "Anticipation and the raised-hand apex retain their authored pause.")
+            }
+        }
+    }
+
+    @MainActor func testActualEarlyCheerLiftKeepsSleevesAttachedAndInsideThreeViewports() async throws {
+        for side: CGFloat in [140,168,250] {
+            let rig = try CharacterChoreographyRig(side:side); defer { rig.close() }
+            rig.configure(.joyfulRaise,event:UUID())
+            let model = try XCTUnwrap(rig.view.layer.sublayers?.first { $0.name == "result-character" })
+            let head = try XCTUnwrap(model.sublayers?.first { $0.name == "result-rig-happyHead" })
+            let clock = try XCTUnwrap(head.animation(forKey:"result-rig-position"))
+            var phases: [Double] = [], captures: [(String,UIImage)] = []
+            let targets: [Double] = [0.16,0.23,0.32]
+            while true {
+                let phase = (head.convertTime(CACurrentMediaTime(),from:nil)-clock.beginTime)/clock.duration
+                if phase > 0.39 { break }
+                if phase >= 0.14, let root = rig.view.layer.presentation(),
+                   let character = root.sublayers?.first(where:{ $0.name == "result-character" }) {
+                    phases.append(phase)
+                    for hand in ["left","right"] {
+                        let sleeve = try XCTUnwrap(character.sublayers?.first { $0.name == "result-arm-\(hand)-back" })
+                        let ink = try XCTUnwrap(sleeve.sublayers?.first { $0.name?.hasSuffix("-outline") == true } as? CAShapeLayer)
+                        let contour = try XCTUnwrap(ink.path)
+                        let occupied = contour.copy(strokingWithWidth:ink.lineWidth,lineCap:.round,lineJoin:.round,miterLimit:1).boundingBoxOfPath
+                        XCTAssertTrue(rig.view.bounds.insetBy(dx:-0.5,dy:-0.5).contains(ink.convert(occupied,to:root)))
+                        let front = try XCTUnwrap(character.sublayers?.first { $0.name == "result-arm-\(hand)-front" })
+                        let mask = try XCTUnwrap((front.mask?.presentation() ?? front.mask) as? CAShapeLayer)
+                        let wrist = mask.convert(try XCTUnwrap(mask.path).currentPoint,to:character)
+                        let paw = try XCTUnwrap(character.sublayers?.first { $0.name == "result-rig-\(hand)Paw" })
+                        XCTAssertLessThan(hypot(wrist.x-paw.position.x,wrist.y-paw.position.y),0.25)
+                    }
+                    if captures.count < targets.count, phase >= targets[captures.count] {
+                        let format = UIGraphicsImageRendererFormat(); format.scale=2; format.opaque=true
+                        let image = UIGraphicsImageRenderer(size:rig.view.bounds.size,format:format).image {
+                            UIColor(CapyPalette.ink).setFill(); $0.fill(rig.view.bounds); root.render(in:$0.cgContext)
+                        }
+                        captures.append(("cheer-transit-\(Int(side))pt-phase-\(String(format:"%.3f",phase))",image))
+                    }
+                }
+                try await Task.sleep(nanoseconds:8_000_000)
+            }
+            XCTAssertGreaterThan(phases.count,10,"Sample the changed early lift during natural playback.")
+            XCTAssertEqual(captures.count,3)
+            for (name,image) in captures {
+                let attachment=XCTAttachment(image:image); attachment.name=name; attachment.lifetime = .keepAlways; add(attachment)
+            }
+            let log=XCTAttachment(string:phases.map { String(format:"%.6f",$0) }.joined(separator:","))
+            log.name="cheer-transit-\(Int(side))pt-sampled-phases";log.lifetime = .keepAlways;add(log)
+        }
+    }
+
     private func pixels(_ source: CGImage) throws -> [UInt8] {
         var bytes = [UInt8](repeating: 0, count: source.width * source.height * 4)
         let succeeded = bytes.withUnsafeMutableBytes { storage -> Bool in

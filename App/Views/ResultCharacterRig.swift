@@ -41,18 +41,35 @@ enum ResultRigMotion {
     static func samples(_ performance: ResultCharacterPerformance) -> [ResultRigPose] { tracks[performance] ?? [] }
 
     private static func point(_ x: CGFloat, _ y: CGFloat) -> CGPoint { CGPoint(x: x, y: y) }
-    private static func interpolate(_ phase: CGFloat, times: [CGFloat], values: [CGFloat]) -> CGFloat {
+    private static func interpolate(_ phase: CGFloat, times: [CGFloat], values: [CGFloat], passingThrough: Set<Int> = []) -> CGFloat {
         let phase = min(1, max(0, phase))
         guard let upper = times.firstIndex(where: { $0 > phase }), upper > 0 else { return values.last! }
         let lower = upper - 1
         let t = (phase - times[lower]) / (times[upper] - times[lower])
         let ease = t * t * (3 - 2 * t)
-        return values[lower] + (values[upper] - values[lower]) * ease
+        let stopped = values[lower] + (values[upper] - values[lower]) * ease
+        guard !passingThrough.isEmpty else { return stopped }
+        // A transit waypoint is not a pose to hold. Use a shared bounded slope
+        // on both sides; reversals and every authored contact still stop. The
+        // weighted harmonic mean prevents a wrist coordinate overshooting its
+        // adjacent key poses, which also keeps the authored IK arc reachable.
+        func slope(_ index: Int) -> CGFloat {
+            guard passingThrough.contains(index), index > 0, index < times.count - 1 else { return 0 }
+            let before = times[index] - times[index - 1], after = times[index + 1] - times[index]
+            let incoming = (values[index] - values[index - 1]) / before
+            let outgoing = (values[index + 1] - values[index]) / after
+            guard incoming * outgoing > 0 else { return 0 }
+            let w1 = 2 * after + before, w2 = after + 2 * before
+            return (w1 + w2) / (w1 / incoming + w2 / outgoing)
+        }
+        let span = times[upper] - times[lower]
+        return stopped + (t * t * t - 2 * t * t + t) * span * slope(lower)
+            + (t * t * t - t * t) * span * slope(upper)
     }
 
-    private static func path(_ phase: CGFloat, times: [CGFloat], points: [CGPoint]) -> CGPoint {
-        point(interpolate(phase, times: times, values: points.map(\.x)),
-              interpolate(phase, times: times, values: points.map(\.y)))
+    private static func path(_ phase: CGFloat, times: [CGFloat], points: [CGPoint], passingThrough: Set<Int> = []) -> CGPoint {
+        point(interpolate(phase, times: times, values: points.map(\.x), passingThrough: passingThrough),
+              interpolate(phase, times: times, values: points.map(\.y), passingThrough: passingThrough))
     }
 
     /// A fixed elbow branch avoids sudden flips. All authored targets remain
@@ -83,8 +100,10 @@ enum ResultRigMotion {
             let beats: [CGFloat] = [0, 0.12, 0.23, 0.38, 0.50, 0.67, 0.84, 1]
             // The hands travel below/outside the shoulders on the way up.
             // A direct chord passes too near the IK origin and whips the elbow.
-            wristL = path(phase, times: beats, points: [point(0.45,0.65), point(0.40,0.77), point(0.12,0.72), point(-0.025,0.38), point(0.04,0.43), point(-0.01,0.36), point(0.03,0.43), point(0.02,0.40)])
-            wristR = path(phase, times: beats, points: [point(0.62,0.64), point(0.66,0.77), point(0.95,0.72), point(1.035,0.36), point(0.98,0.43), point(1.015,0.35), point(0.975,0.43), point(0.99,0.40)])
+            // Phase .23 is the middle of the lift, not another anticipation.
+            // Carry the hands through it instead of stopping halfway up.
+            wristL = path(phase, times: beats, points: [point(0.45,0.65), point(0.40,0.77), point(0.12,0.72), point(-0.025,0.38), point(0.04,0.43), point(-0.01,0.36), point(0.03,0.43), point(0.02,0.40)], passingThrough: [2])
+            wristR = path(phase, times: beats, points: [point(0.62,0.64), point(0.66,0.77), point(0.95,0.72), point(1.035,0.36), point(0.98,0.43), point(1.015,0.35), point(0.975,0.43), point(0.99,0.40)], passingThrough: [2])
             nod = interpolate(phase, times: beats, values: [0, 0.03, 0.01, -0.03, 0.02, -0.02, 0.012, 0])
             pawAngleL = -.pi / 2; pawAngleR = .pi / 2; star = nil
         case .starHug:

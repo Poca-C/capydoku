@@ -1,0 +1,137 @@
+{
+  "build": "0.2.36 (39)",
+  "status": "reviewed_scoped_runtime_images_and_movie_samples",
+  "items": [
+    {
+      "file": "cheer-transit-250pt-phase-0.325.png",
+      "sourceAttachment": "1EB8BCD7-81C6-4DBB-A720-3B00AC57980A.png",
+      "phaseAtSampling": 0.325,
+      "test": "ResultCharacterChoreographyTests/testActualEarlyCheerLiftKeepsSleevesAttachedAndInsideThreeViewports()",
+      "sourceBundle": "Validation/test-runs/original-0236-targeted.xcresult",
+      "sha256": "0a9d90d43042f5050787a4595e1355e0bf2111d8083e96c68f00aaf61e60dd99"
+    },
+    {
+      "file": "cheer-transit-250pt-phase-0.234.png",
+      "sourceAttachment": "7769A0A6-0F18-4886-BE79-0AB1AFB68314.png",
+      "phaseAtSampling": 0.234,
+      "test": "ResultCharacterChoreographyTests/testActualEarlyCheerLiftKeepsSleevesAttachedAndInsideThreeViewports()",
+      "sourceBundle": "Validation/test-runs/original-0236-targeted.xcresult",
+      "sha256": "1959acfff2f5f5b15bf5a18ae143c0947a88608bc7ee75064d23cfd8124b3864"
+    },
+    {
+      "file": "cheer-transit-250pt-phase-0.161.png",
+      "sourceAttachment": "385BB9D7-CD9D-4A2A-9CC3-2F16838B8EFC.png",
+      "phaseAtSampling": 0.161,
+      "test": "ResultCharacterChoreographyTests/testActualEarlyCheerLiftKeepsSleevesAttachedAndInsideThreeViewports()",
+      "sourceBundle": "Validation/test-runs/original-0236-targeted.xcresult",
+      "sha256": "b81c8e60b97a9bc5baa260b7743f22388ebf97a1f86494cc75a00b2e755cf331"
+    },
+    {
+      "file": "cheer-transit-168pt-phase-0.326.png",
+      "sourceAttachment": "6B1BD5CC-492C-45D9-89AC-CD604BDF1E05.png",
+      "phaseAtSampling": 0.326,
+      "test": "ResultCharacterChoreographyTests/testActualEarlyCheerLiftKeepsSleevesAttachedAndInsideThreeViewports()",
+      "sourceBundle": "Validation/test-runs/original-0236-targeted.xcresult",
+      "sha256": "0974a9ec93ccbf85946d1855cfd959e12d5b2a22142ac5f57a5f58fc8b57c0e5"
+    },
+    {
+      "file": "cheer-transit-168pt-phase-0.239.png",
+      "sourceAttachment": "2B9EF063-DC22-401F-8DE6-6CE9A704F92C.png",
+      "phaseAtSampling": 0.239,
+      "test": "ResultCharacterChoreographyTests/testActualEarlyCheerLiftKeepsSleevesAttachedAndInsideThreeViewports()",
+      "sourceBundle": "Validation/test-runs/original-0236-targeted.xcresult",
+      "sha256": "75d8a7c3cd2ea4405d6ae75b14f97264b18a8d26a65a8f8c997c8df8d054ff7c"
+    },
+    {
+      "file": "cheer-transit-168pt-phase-0.169.png",
+      "sourceAttachment": "420BC2FB-2259-4FFC-9206-6BE04C3C7DC6.png",
+      "phaseAtSampling": 0.169,
+      "test": "ResultCharacterChoreographyTests/testActualEarlyCheerLiftKeepsSleevesAttachedAndInsideThreeViewports()",
+      "sourceBundle": "Validation/test-runs/original-0236-targeted.xcresult",
+      "sha256": "080e59fa36c507e169582a507468570936ac09c798a705e9714b3f932321a966"
+    },
+    {
+      "file": "cheer-transit-140pt-phase-0.320.png",
+      "sourceAttachment": "FAEDE48C-1B8D-48FA-B649-6DE999B155FF.png",
+      "phaseAtSampling": 0.32,
+      "test": "ResultCharacterChoreographyTests/testActualEarlyCheerLiftKeepsSleevesAttachedAndInsideThreeViewports()",
+      "sourceBundle": "Validation/test-runs/original-0236-targeted.xcresult",
+      "sha256": "dce24d370b6cf1d614c299b138dba4be70a671856706ef1ca642cfcc928d0c7c"
+    },
+    {
+      "file": "cheer-transit-140pt-phase-0.231.png",
+      "sourceAttachment": "00D9D958-5837-4BCE-8FFD-A0CE5D5D252B.png",
+      "phaseAtSampling": 0.231,
+      "test": "ResultCharacterChoreographyTests/testActualEarlyCheerLiftKeepsSleevesAttachedAndInsideThreeViewports()",
+      "sourceBundle": "Validation/test-runs/original-0236-targeted.xcresult",
+      "sha256": "49f87333cd884c13829ddbdad139505fb32660ab82c69390e8f1427ae63ac42a"
+    },
+    {
+      "file": "cheer-transit-140pt-phase-0.169.png",
+      "sourceAttachment": "E3808505-2E39-4B25-92D1-7E0883AE1F9B.png",
+      "phaseAtSampling": 0.169,
+      "test": "ResultCharacterChoreographyTests/testActualEarlyCheerLiftKeepsSleevesAttachedAndInsideThreeViewports()",
+      "sourceBundle": "Validation/test-runs/original-0236-targeted.xcresult",
+      "sha256": "b2b76dce5b06f7ceaefd428d201982f775ad59c0340d5d06c1a1688f89be0119"
+    }
+  ],
+  "imageScope": "9张当前原生组件自然播放图，140/168/250pt，每种三阶段。图名phase为采样时动画时钟相位，不是精确呈现帧时间。",
+  "visualReview": "九张逐张核对，手臂在中途外展和举起之间保持完整轮廓、袖口连接且留在视口；两份实际录屏有限抽帧检查。没有声称整套动作自然度或参考品质验收。",
+  "naturalSamples": "natural-playback-phases.json",
+  "naturalSampleCount": 68,
+  "movies": [
+    {
+      "file": "baseline-result-performances.mov",
+      "build": "0.2.35 (38)",
+      "sha256": "db12267cef57c9f8d565b173805da4ce9e6c389cf9728ed53af975b34365c093",
+      "durationSeconds": 4.343333333333334,
+      "sourceBundle": "Validation/test-runs/original-0236-baseline.xcresult",
+      "scope": "真实17 Pro模拟器组件测试宿主，依次播放欢呼、抱星、失败；不是实际对局或物理手势。",
+      "sampleManifests": [
+        "baseline-samples-50ms.json"
+      ],
+      "reviewedWindows": [
+        {
+          "startSeconds": 0,
+          "endSeconds": 4.2,
+          "stepSeconds": 0.2
+        },
+        {
+          "startSeconds": 0.1,
+          "endSeconds": 0.5,
+          "stepSeconds": 0.05
+        }
+      ],
+      "reviewLimit": "有限抽帧并裁取角色区域检查；两份录屏启动延迟不同，时间零点未对齐，不能逐时刻比较或从视频长短推断动作变快。"
+    },
+    {
+      "file": "final-result-performances.mov",
+      "build": "0.2.36 (39)",
+      "sha256": "5f3915bdbac8c75010a4a27a47eaebf984508797395076273399a319cb95b6f9",
+      "durationSeconds": 4.081666666666667,
+      "sourceBundle": "Validation/test-runs/original-0236-targeted.xcresult",
+      "scope": "真实17 Pro模拟器组件测试宿主，依次播放欢呼、抱星、失败；不是实际对局或物理手势。",
+      "sampleManifests": [
+        "final-samples-50ms.json"
+      ],
+      "reviewedWindows": [
+        {
+          "startSeconds": 0,
+          "endSeconds": 4.0,
+          "stepSeconds": 0.2
+        },
+        {
+          "startSeconds": 0.1,
+          "endSeconds": 0.5,
+          "stepSeconds": 0.05
+        }
+      ],
+      "reviewLimit": "有限抽帧并裁取角色区域检查；两份录屏启动延迟不同，时间零点未对齐，不能逐时刻比较或从视频长短推断动作变快。"
+    }
+  ],
+  "limits": [
+    "0.14–0.39区间实际采样分别24/23/21次，未冻结或跳转Core Animation；不是全帧或真机性能测试。",
+    "动作时长保持原1.05/1.20/0.92秒；没有增加循环或业务等待。",
+    "本轮无法打开参考应用，没有新的参考试玩或听觉A/B。"
+  ]
+}
