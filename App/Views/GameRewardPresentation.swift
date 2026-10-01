@@ -53,6 +53,30 @@ final class FeedbackWindowFrameView: UIView {
         let id = UUID()
         let origin: CGPoint
         let destination: CGPoint
+        let diameter: CGFloat
+
+        init(origin: CGPoint, destination: CGPoint, sourceCell: CGRect? = nil) {
+            self.destination = destination
+            if let cell = sourceCell, !cell.isEmpty,
+               [cell.minX, cell.minY, cell.width, cell.height].allSatisfy(\.isFinite) {
+                diameter = max(8, min(14, cell.width * 0.28))
+                let side: CGFloat = destination.x < cell.midX ? -1 : 1
+                // The full rotating star and a small glow clear the source
+                // before flight begins, so the new happy face stays readable.
+                self.origin = CGPoint(x: cell.midX + side * cell.width * 0.18,
+                                      y: cell.minY - diameter * sqrt(2) / 2 - 3)
+            } else {
+                self.origin = origin; diameter = 14
+            }
+        }
+
+        func position(at progress: CGFloat) -> CGPoint {
+            let t = min(1, max(0, progress)), u = 1 - t
+            let control = CGPoint(x: origin.x + (destination.x - origin.x) * 0.28,
+                                  y: min(origin.y, destination.y) - 30)
+            return CGPoint(x: u * u * origin.x + 2 * u * t * control.x + t * t * destination.x,
+                           y: u * u * origin.y + 2 * u * t * control.y + t * t * destination.y)
+        }
     }
     struct LocalScore: Identifiable {
         let id = UUID()
@@ -117,7 +141,7 @@ final class FeedbackWindowFrameView: UIView {
         }
     }
 
-    func found(index: Int, sessionID: UUID, origin: CGPoint, destination: CGPoint, reduceMotion: Bool) {
+    func found(index: Int, sessionID: UUID, origin: CGPoint, destination: CGPoint, sourceCell: CGRect? = nil, reduceMotion: Bool) {
         guard self.sessionID == sessionID, acknowledged.insert(index).inserted, presentationEnabled else { return }
         let token = generation
         let event = UUID(); applauseID = event
@@ -129,7 +153,7 @@ final class FeedbackWindowFrameView: UIView {
             pulseProgress()
             return
         }
-        let flight = Flight(origin: origin, destination: destination)
+        let flight = Flight(origin: origin, destination: destination, sourceCell: sourceCell)
         flights = Array((flights + [flight]).suffix(4))
         schedule(0.44) { [weak self] in
             guard let self, self.generation == token,
@@ -290,18 +314,13 @@ struct ProgressFlightTextMask: Shape {
 
 private struct ProgressStarPath: AnimatableModifier {
     var progress: CGFloat
-    let origin: CGPoint
-    let destination: CGPoint
+    let flight: GameRewardPresentation.Flight
     var animatableData: CGFloat { get { progress } set { progress = newValue } }
     func body(content: Content) -> some View {
-        let t = progress, u = 1 - t
-        let control = CGPoint(x: origin.x + (destination.x - origin.x) * 0.28,
-                              y: min(origin.y, destination.y) - 30)
-        let point = CGPoint(x: u * u * origin.x + 2 * u * t * control.x + t * t * destination.x,
-                            y: u * u * origin.y + 2 * u * t * control.y + t * t * destination.y)
+        let t = progress
         content.scaleEffect(1 - t * 0.42).rotationEffect(.degrees(Double(t) * 110))
             .opacity(t > 0.94 ? Double((1 - t) / 0.06) : 1)
-            .position(point)
+            .position(flight.position(at: t))
     }
 }
 
@@ -309,10 +328,11 @@ struct ProgressFlightStar: View {
     let flight: GameRewardPresentation.Flight
     @State private var progress: CGFloat = 0
     var body: some View {
-        Image(systemName: "star.fill").font(.system(size: 22, weight: .black))
+        Image(systemName: "star.fill").resizable().scaledToFit()
+            .frame(width: flight.diameter, height: flight.diameter)
             .foregroundColor(CapyPalette.orange)
-            .shadow(color: .white.opacity(0.9), radius: 2)
-            .modifier(ProgressStarPath(progress: progress, origin: flight.origin, destination: flight.destination))
+            .shadow(color: .white.opacity(0.9), radius: 1)
+            .modifier(ProgressStarPath(progress: progress, flight: flight))
             .allowsHitTesting(false).accessibilityHidden(true)
             .onAppear { withAnimation(.easeInOut(duration: 0.44)) { progress = 1 } }
     }

@@ -19,6 +19,72 @@ import CapydokuCore
 }
 
 final class ProgressArrivalPresentationTests: XCTestCase {
+    @MainActor func testFlightRotatingBoundsClearSourceAcrossBoardSizesAndEdgesAndReachHUD() {
+        // Match the board's 7-point inset while translating it by fractional
+        // window coordinates. Include corners, edge centres and an interior
+        // cell, with HUD targets on either side of the board.
+        var checkedFlights = 0
+        for boardWidth: CGFloat in [190, 320, 374] {
+            let board = CGRect(x: 23.25, y: 241.75, width: boardWidth, height: boardWidth)
+            let grid = board.insetBy(dx: 7, dy: 7)
+            for size in 4...10 {
+                let side = grid.width / CGFloat(size)
+                let middle = size / 2
+                let cells = [(0, 0), (0, middle), (0, size - 1),
+                             (middle, 0), (middle, middle), (middle, size - 1),
+                             (size - 1, 0), (size - 1, middle), (size - 1, size - 1)]
+                for (row, column) in cells {
+                    let source = CGRect(x: grid.minX + CGFloat(column) * side,
+                                        y: grid.minY + CGFloat(row) * side,
+                                        width: side, height: side)
+                    let cellCentre = CGPoint(x: source.midX, y: source.midY)
+                    for targetX in [board.minX + 28, board.maxX - 28] {
+                        let destination = CGPoint(x: targetX, y: board.minY - 96)
+                        let flight = GameRewardPresentation.Flight(origin: cellCentre,
+                            destination: destination, sourceCell: source)
+                        let context = "board \(boardWidth), \(size)×\(size), cell \(row)/\(column), target \(targetX)"
+                        XCTAssertGreaterThanOrEqual(flight.diameter, 8, context)
+                        XCTAssertLessThanOrEqual(flight.diameter, 14, context)
+                        XCTAssertLessThan(flight.origin.y, source.minY, context)
+                        XCTAssertEqual(flight.position(at: 0).x, flight.origin.x, accuracy: 0.000001, context)
+                        XCTAssertEqual(flight.position(at: 0).y, flight.origin.y, accuracy: 0.000001, context)
+                        XCTAssertEqual(flight.position(at: 1).x, destination.x, accuracy: 0.000001, context)
+                        XCTAssertEqual(flight.position(at: 1).y, destination.y, accuracy: 0.000001, context)
+                        var minimumClearance = CGFloat.infinity
+                        var allFinite = true
+                        for step in 0...240 {
+                            let progress = CGFloat(step) / 240
+                            let point = flight.position(at: progress)
+                            allFinite = allFinite && point.x.isFinite && point.y.isFinite
+                            // Circumcircle encloses the square sprite at every
+                            // rotation, including the renderer's shrinking scale.
+                            // This checks source geometry, not shadow pixels or
+                            // visibility through the separate rule/Combo masks.
+                            let radius = flight.diameter * sqrt(2) / 2 * (1 - progress * 0.42)
+                            let nearestX = min(source.maxX, max(source.minX, point.x))
+                            let nearestY = min(source.maxY, max(source.minY, point.y))
+                            let distance = hypot(point.x - nearestX, point.y - nearestY)
+                            minimumClearance = min(minimumClearance, distance - radius)
+                        }
+                        XCTAssertTrue(allFinite, context)
+                        XCTAssertGreaterThan(minimumClearance, 0, "Rotating star intersects its source: " + context)
+                        checkedFlights += 1
+                    }
+                }
+            }
+        }
+        XCTAssertEqual(checkedFlights, 378)
+    }
+
+    @MainActor func testFlightWithoutSourceKeepsItsOriginalEndpointsAndVisibleFallbackSize() {
+        let origin = CGPoint(x: 151.5, y: 412.25), destination = CGPoint(x: 74.25, y: 97.5)
+        let flight = GameRewardPresentation.Flight(origin: origin, destination: destination)
+        XCTAssertEqual(flight.origin, origin); XCTAssertEqual(flight.destination, destination)
+        XCTAssertEqual(flight.diameter, 14)
+        XCTAssertEqual(flight.position(at: 0), origin)
+        XCTAssertEqual(flight.position(at: 1), destination)
+    }
+
     @MainActor func testRapidArrivalsRetriggerAndOldJobsCannotSettleTheNewPulse() {
         let clock = ArrivalTestClock(), session = UUID(), first = UUID(), second = UUID()
         let pulse = ProgressArrivalPresentation(schedule: clock.schedule)

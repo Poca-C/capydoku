@@ -1,0 +1,89 @@
+{
+  "events" : [
+    {
+      "found" : [
+        0
+      ],
+      "level" : 6,
+      "secondsFromSequenceStart" : 0.67870070831850171,
+      "source" : 0,
+      "width" : 402
+    },
+    {
+      "found" : [
+        0,
+        8
+      ],
+      "level" : 6,
+      "secondsFromSequenceStart" : 1.3323680416215211,
+      "source" : 8,
+      "width" : 402
+    },
+    {
+      "found" : [
+        0,
+        8,
+        34
+      ],
+      "level" : 6,
+      "secondsFromSequenceStart" : 1.519255000166595,
+      "source" : 34,
+      "width" : 402
+    },
+    {
+      "found" : [
+        0,
+        8,
+        17,
+        34
+      ],
+      "level" : 6,
+      "secondsFromSequenceStart" : 2.1839229583274573,
+      "source" : 17,
+      "width" : 402
+    },
+    {
+      "found" : [
+        0
+      ],
+      "level" : 101,
+      "secondsFromSequenceStart" : 3.752808750141412,
+      "source" : 0,
+      "width" : 320
+    },
+    {
+      "found" : [
+        0,
+        12
+      ],
+      "level" : 101,
+      "secondsFromSequenceStart" : 4.4184949167538434,
+      "source" : 12,
+      "width" : 320
+    },
+    {
+      "found" : [
+        0,
+        12,
+        98
+      ],
+      "level" : 101,
+      "secondsFromSequenceStart" : 4.612859083339572,
+      "source" : 98,
+      "width" : 320
+    },
+    {
+      "found" : [
+        0,
+        12,
+        29,
+        98
+      ],
+      "level" : 101,
+      "secondsFromSequenceStart" : 5.270136208506301,
+      "source" : 29,
+      "width" : 320
+    }
+  ],
+  "timing" : "Actual Root and native board acceptance. No mid-flight snapshots or frozen animation. Video zero is independent; these are process-relative event times, not touch latency."
+}

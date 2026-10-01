@@ -447,11 +447,12 @@ struct GameView: View {
                                         onEndSwipe: { model.endSwipeFeedback(cancelled: $0) },
                                         onInputActivityChange: { token, active in
                                             model.setBoardInputActivity(token, active: active, sessionID: s.id)
-                                        }, onFoundFeedback: { index, location in
+                                        }, onFoundFeedback: { index, sourceWindowCell in
                                             let feedbackEpoch = model.sceneFeedbackEpoch
                                             let origin = gameWindowFrame.origin
                                             let target = CGPoint(x: progressFrame.midX - origin.x, y: progressFrame.midY - origin.y)
-                                            let source = CGPoint(x: location.x - origin.x, y: location.y - origin.y)
+                                            let sourceCell = sourceWindowCell.offsetBy(dx: -origin.x, dy: -origin.y)
+                                            let source = CGPoint(x: sourceCell.midX, y: sourceCell.midY)
                                             // UIViewRepresentable updates may occur during a SwiftUI
                                             // render. Schedule presentation after that transaction.
                                             DispatchQueue.main.async {
@@ -459,7 +460,7 @@ struct GameView: View {
                                                       !progressFrame.isEmpty, !gameWindowFrame.isEmpty,
                                                       model.canPresentPositiveFeedback(from: s, epoch: feedbackEpoch) else { return }
                                                 rewards.found(index: index, sessionID: s.id, origin: source, destination: target,
-                                                              reduceMotion: reduceMotion || ProcessInfo.processInfo.isLowPowerModeEnabled)
+                                                              sourceCell: sourceCell, reduceMotion: reduceMotion || ProcessInfo.processInfo.isLowPowerModeEnabled)
                                                 if let event = model.directRevealFeedback, event.sessionID == s.id,
                                                    event.cell == index, !directWindowFrame.isEmpty {
                                                     let tool = CGPoint(x: directWindowFrame.midX - gameWindowFrame.minX,

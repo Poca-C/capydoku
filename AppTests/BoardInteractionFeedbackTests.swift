@@ -22,7 +22,7 @@ import CapydokuCore
     var tutorialTargets = Set<Int>()
     var preview = Set<Int>()
     var actions = 0
-    var arrivals: [(index: Int, point: CGPoint)] = []
+    var arrivals: [(index: Int, cellFrame: CGRect)] = []
 
     init(session: GameSession? = nil) throws {
         self.session = session ?? GameSession(puzzle: Self.puzzle)
@@ -51,12 +51,16 @@ import CapydokuCore
             }, onMark: { [weak self] indices in
                 guard let self else { return }; actions += 1
                 session.markMany(indices); refresh()
-            }, onFoundFeedback: { [weak self] index, point in self?.arrivals.append((index, point)) })
+            }, onFoundFeedback: { [weak self] index, cellFrame in self?.arrivals.append((index, cellFrame)) })
     }
 
-    func point(_ index: Int) throws -> CGPoint {
+    func cellFrame(_ index: Int) throws -> CGRect {
         let cell = try XCTUnwrap(board.accessibilityElements?[index] as? UIAccessibilityElement)
-        return CGPoint(x: cell.accessibilityFrameInContainerSpace.midX, y: cell.accessibilityFrameInContainerSpace.midY)
+        return cell.accessibilityFrameInContainerSpace
+    }
+    func point(_ index: Int) throws -> CGPoint {
+        let frame = try cellFrame(index)
+        return CGPoint(x: frame.midX, y: frame.midY)
     }
     var press: [BoardPressedCellView] { board.subviews.flatMap(\.subviews).compactMap { $0 as? BoardPressedCellView } }
     var cells: [BoardCellFeedbackView] { board.subviews.flatMap(\.subviews).compactMap { $0 as? BoardCellFeedbackView } }
@@ -165,11 +169,22 @@ final class BoardInteractionFeedbackTests: XCTestCase {
         XCTAssertTrue(rig.cells.isEmpty); XCTAssertTrue(rig.arrivals.isEmpty)
         let finalPoint = try rig.point(14)
         let expected = rig.board.convert(finalPoint, to: rig.window)
+        // Cache the independently measured accessibility rectangle before the
+        // winning move removes cell accessibility and disables input.
+        let finalCell = try rig.cellFrame(14)
+        let expectedFrame = rig.board.convert(finalCell, to: rig.window)
         rig.board.activate(index: 14, submit: true)
         XCTAssertEqual(rig.session.status, .won)
         XCTAssertEqual(rig.arrivals.count, 1); XCTAssertEqual(rig.arrivals.first?.index, 14)
-        XCTAssertEqual(try XCTUnwrap(rig.arrivals.first).point.x, expected.x, accuracy: 0.001)
-        XCTAssertEqual(try XCTUnwrap(rig.arrivals.first).point.y, expected.y, accuracy: 0.001)
+        let reportedFrame = try XCTUnwrap(rig.arrivals.first).cellFrame
+        XCTAssertEqual(reportedFrame.midX, expected.x, accuracy: 0.001)
+        XCTAssertEqual(reportedFrame.midY, expected.y, accuracy: 0.001)
+        XCTAssertEqual(reportedFrame.minX, expectedFrame.minX, accuracy: 0.001)
+        XCTAssertEqual(reportedFrame.minY, expectedFrame.minY, accuracy: 0.001)
+        XCTAssertEqual(reportedFrame.width, expectedFrame.width, accuracy: 0.001)
+        XCTAssertEqual(reportedFrame.height, expectedFrame.height, accuracy: 0.001)
+        XCTAssertNotEqual(reportedFrame.origin, finalCell.origin,
+                          "The callback must include both nested view offsets, not a board-local rectangle.")
         let effect = try XCTUnwrap(rig.cells.first)
         XCTAssertEqual(effect.kind, .found); XCTAssertFalse(effect.isUserInteractionEnabled)
         XCTAssertEqual(effect.backgroundColor?.cgColor.alpha, 1, "The final avatar must not already appear at full size beneath its pop.")

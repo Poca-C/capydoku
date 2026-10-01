@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.45 (48)",
+  "date": "2026-10-02",
+  "status": "scoped_progress_star_source_clearance_verified_simulator_only",
+  "previousReport": "Validation/original-0244-feedback.json",
+  "previousGoalTurn": {
+    "classification": "progress",
+    "reason": "0.2.44 completed actual-cell score avoidance with82App/4UI and local commit24d1205; recordings exposed the separate oversized star on the new face."
+  },
+  "sourceParagraphs": [
+    129,
+    241,
+    249,
+    252,
+    254
+  ],
+  "finding": "Fixed22pt star launched from the center of the newly found character, hiding its happy expression, especially on dense10x10 boards.",
+  "changes": [
+    "Found callback supplies the actual source cell window rectangle; Root converts it once and retains cell center for direct-tool reveal.",
+    "Flight diameter scales with the real cell to8–14pt; a launch above the cell leaves room for the rotating star and3pt glow clearance. Shadow radius reduces to1pt.",
+    "A continuous quadratic flight retains0.44s arrival,0.58s cleanup, progress pulse, text mask, reduced-motion/low-power handling, duplicate/session cancellation, and immediate game state."
+  ],
+  "temporaryTuning": "8–14pt size,0.28cell ratio,0.18cell side offset and3pt clearance are Demo visual parameters, not reference measurements.",
+  "verificationHistory": [
+    {
+      "status": "Passed",
+      "cases": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 15.361,
+      "scope": "One actual Root visual follow-up after adding a black fixture surround; production code unchanged from the98-test run.",
+      "summary": "Validation/test-runs/original-0245-visual-clean-summary.json",
+      "log": "Validation/test-runs/original-0245-visual-clean.log",
+      "bundle": "Validation/test-runs/original-0245-visual-clean.xcresult",
+      "reason": "First recording exposed the unrelated host home outside the compact fixture. Added black fixture surround, kept Root viewport and gameplay assertions, repeated only the visual case."
+    }
+  ],
+  "applicationTests": {
+    "status": "Passed",
+    "cases": 98,
+    "passed": 98,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 89.899,
+    "scope": "17 Pro / iOS26.5; ten affected board/reward/presentation suites, not full App/Core.",
+    "summary": "Validation/test-runs/original-0245-app-final-summary.json",
+    "log": "Validation/test-runs/original-0245-app-final.log",
+    "bundle": "Validation/test-runs/original-0245-app-final.xcresult"
+  },
+  "uiTests": {
+    "status": "Passed",
+    "cases": 4,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 145.063,
+    "scope": "17e / iOS26.5; native gestures/tools, solve/advance, lose/simulated revive, hint preview/Apply.",
+    "summary": "Validation/test-runs/original-0245-17e-ui-summary.json",
+    "log": "Validation/test-runs/original-0245-17e-ui.log",
+    "bundle": "Validation/test-runs/original-0245-17e-ui.xcresult"
+  },
+  "visualEvidence": "Docs/original-feel-0245/manifest.json",
+  "reference": {
+    "latestSuccessfulPlaytest": "Validation/meowdoku-playtest-comparison-0229.json",
+    "newSuccessfulPlaytestThisRound": false,
+    "equivalenceClaimed": false
+  },
+  "audio": {
+    "modified": false,
+    "localTestWAVCount": 9,
+    "currentDebugInventory": "Validation/audio-isolation-0245-debug.json",
+    "formalManifestClipsEmpty": true,
+    "liveAuditoryAB": false,
+    "releaseRebuilt": false
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  },
+  "remaining": [
+    "角色动作自然度与整段节奏仍需真人评估；未完成参考连续操作音画/触觉A/B。",
+    "飞星源格避脸已修正，但途经其他角色的所有排列没有穷尽；密集终盘浮分与源格的关联仍可优化。",
+    "手机仍0.2.29；最低系统、冻结参考和正式上架验收未完成。"
+  ],
+  "formalSignOff": false,
+  "formalConformanceRowsUnchanged": 83,
+  "historicalChecklistCountUnchanged": 88
+}

@@ -36,8 +36,8 @@ struct PuzzleBoardView: UIViewRepresentable {
     var onBeginSwipe: () -> Void = {}
     var onEndSwipe: (Bool) -> Void = { _ in }
     var onInputActivityChange: (UUID, Bool) -> Void = { _, _ in }
-    /// The point is in the board's UIWindow coordinates, not local grid space.
-    var onFoundFeedback: (Int, CGPoint) -> Void = { _, _ in }
+    /// The source cell is in the board's UIWindow coordinates, not local grid space.
+    var onFoundFeedback: (Int, CGRect) -> Void = { _, _ in }
     var onConflictFeedback: ([VisibleConflictKind]) -> Void = { _ in }
     var onScoreFeedback: (Int, BoardScoreAnchor) -> Void = { _, _ in }
 
@@ -150,7 +150,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     private var onBeginSwipe: (() -> Void)?
     private var onEndSwipe: ((Bool) -> Void)?
     private var onInputActivityChange: ((UUID, Bool) -> Void)?
-    private var onFoundFeedback: ((Int, CGPoint) -> Void)?
+    private var onFoundFeedback: ((Int, CGRect) -> Void)?
     private var onConflictFeedback: (([VisibleConflictKind]) -> Void)?
     private var onScoreFeedback: ((Int, BoardScoreAnchor) -> Void)?
     let inputActivity = BoardInputActivity()
@@ -240,7 +240,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
                    onMark: @escaping ([Int]) -> Void,
                    onBeginSwipe: @escaping () -> Void = {}, onEndSwipe: @escaping (Bool) -> Void = { _ in },
                    onInputActivityChange: @escaping (UUID, Bool) -> Void = { _, _ in },
-                   onFoundFeedback: @escaping (Int, CGPoint) -> Void = { _, _ in },
+                   onFoundFeedback: @escaping (Int, CGRect) -> Void = { _, _ in },
                    onConflictFeedback: @escaping ([VisibleConflictKind]) -> Void = { _ in },
                    onScoreFeedback: @escaping (Int, BoardScoreAnchor) -> Void = { _, _ in }) {
         refreshDiagnostics.configurations += 1
@@ -366,7 +366,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
                 cellFeedback(at: index, kind: .found)
                 if let window {
                     let cell = rect(for: index)
-                    self.onFoundFeedback?(index, convert(CGPoint(x: cell.midX, y: cell.midY), to: window))
+                    self.onFoundFeedback?(index, convert(cell, to: window))
                 }
             }
             for index in changedMarks.sorted() {

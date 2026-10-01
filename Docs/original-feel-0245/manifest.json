@@ -1,0 +1,58 @@
+{
+  "build": "0.2.45 (48)",
+  "items": [
+    {
+      "file": "normal-and-compact-flight.mov",
+      "sha256": "8ce489be2a9c7b39d09c828cb7277d8d832603439ac33e9a29b401dc899bb11d",
+      "kind": "Natural actual Root playback: L6/402pt and L101/320pt; requested180ms pause between two finds, actual event times attached; no mid-flight screenshot readback."
+    },
+    {
+      "file": "flight-extraction-index.json",
+      "sha256": "61f2be041a5035c6416cd7d108268d2b242640f5da2f40a8843fd807c833e180",
+      "kind": "Finite video sampling; not a frame-rate or touch-latency benchmark."
+    },
+    {
+      "file": "flight-overview.png",
+      "sha256": "73b28c1c530640a9669b658a8cd6ffea78f646aa15bb06bcf3fdc0694754c803",
+      "kind": "Finite full-screen video contact sheet."
+    },
+    {
+      "file": "flight-sequence-event-times.json",
+      "sha256": "f40f526342e34e6e150384619fbe70b6b5bb6613e4ecc7542d0ee511c7f41632",
+      "sourceBundle": "Validation/test-runs/original-0245-visual-clean.xcresult",
+      "test": "GameFeelVisualTests/testActualRootProgressFlightAtNormalAndCompactSizes()"
+    },
+    {
+      "file": "flight-sequence-L101-end.png",
+      "sha256": "4bc3afc91e17367cc9a5e9a159c9c5775ff7bb3adaf5524e27bec5659a7feb33",
+      "sourceBundle": "Validation/test-runs/original-0245-visual-clean.xcresult",
+      "test": "GameFeelVisualTests/testActualRootProgressFlightAtNormalAndCompactSizes()"
+    },
+    {
+      "file": "flight-sequence-L6-end.png",
+      "sha256": "1c796f3feda9546d33999c456dce864656178683c09b5a0498caef26feb6228c",
+      "sourceBundle": "Validation/test-runs/original-0245-visual-clean.xcresult",
+      "test": "GameFeelVisualTests/testActualRootProgressFlightAtNormalAndCompactSizes()"
+    },
+    {
+      "file": "normal-source-flight.png",
+      "sha256": "07a8cd76eaa6e3c4f26b389ef9ab28c6c6be40ffa3b8d9988de8b02b7c48ca9a",
+      "kind": "Unedited full video frame; actual sample time recorded in extraction index.",
+      "sourceFrame": "frame-000.650.png"
+    },
+    {
+      "file": "compact-source-flight.png",
+      "sha256": "83d01e78da65160811e54d6162ac8bdea4a91de242e11a6848ce630053992ebe",
+      "kind": "Unedited full video frame; actual sample time recorded in extraction index.",
+      "sourceFrame": "frame-004.450.png"
+    }
+  ],
+  "baseline": "Docs/original-feel-0244/final-continuous-score.mov",
+  "review": {
+    "fixture": "402x874 and320x568 point Root windows on17Pro; smaller window is surrounded by black to isolate it from the underlying test host. This is viewport testing, not a physical320pt device.",
+    "scope": "Actual Root normal6x6 and compact10x10 continuous playback, finite overview and selected full-frame inspection. Geometry sampled separately; no assertion of every possible ordering or exact reference timing.",
+    "geometry": "378 paths across190/320/374pt and4–10 grids,241 sampled phases each; rotating star envelope avoids its source and reaches the target. Real callback window rectangle tested separately. Does not establish continuous rendered pixel clearance from all other characters.",
+    "boundary": "No new Meowdoku playtest, physical haptics or audible A/B. Other found characters along a trajectory are not exhaustively avoided; this change clears the source character and reduces visual weight.",
+    "videoSampleScope": "5.9467s recording; overview0–5.75s at0.25s intervals; inspected full frames0.65/0.75/4.45/4.60 and both end screenshots. Brief initial home and black fixture transition are test harness setup, not gameplay navigation."
+  }
+}

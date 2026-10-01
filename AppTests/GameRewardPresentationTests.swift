@@ -166,6 +166,65 @@ final class GameRewardPresentationTests: XCTestCase {
 }
 
 final class GameFeelVisualTests: XCTestCase {
+    /// Natural playback for source-face visibility and rapid arrival review.
+    /// No image readback during flight; simulator video captures the sequence.
+    @MainActor func testActualRootProgressFlightAtNormalAndCompactSizes() async throws {
+        let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
+        var events: [[String: Any]] = []
+        let start = ProcessInfo.processInfo.systemUptime
+        for (width, height, level) in [(CGFloat(402), CGFloat(874), 6), (320, 568, 101)] {
+            let directory = FileManager.default.temporaryDirectory.appendingPathComponent("flight-launch-" + UUID().uuidString)
+            let model = AppModel(saveDirectory: directory, runsTimer: false, feedbackEnabled: false)
+            model.progress.tutorialCompleted = true; model.start(level: level)
+            let previous = scene.windows.first(where: \.isKeyWindow), window = UIWindow(windowScene: scene)
+            // A compact test window must not expose the unrelated app home
+            // beneath it in the full simulator recording. Black is only the
+            // fixture surround; the actual Root viewport is unchanged.
+            let surround = UIWindow(windowScene: scene)
+            surround.frame = scene.coordinateSpace.bounds
+            let backdrop = UIViewController(); backdrop.view.backgroundColor = .black
+            surround.rootViewController = backdrop; surround.windowLevel = UIWindow.Level(rawValue: 1)
+            surround.isHidden = false; window.windowLevel = UIWindow.Level(rawValue: 2)
+            window.frame = CGRect(x: 0, y: 0, width: width, height: height)
+            let host = UIHostingController(rootView: RootView(reduceMotionOverride: false).environmentObject(model)
+                .environment(\.scenePhase, .active))
+            window.rootViewController = host; window.makeKeyAndVisible()
+            defer {
+                window.isHidden = true; window.rootViewController = nil
+                surround.isHidden = true; surround.rootViewController = nil; previous?.makeKeyAndVisible()
+                model.flushPendingSaves(); try? FileManager.default.removeItem(at: directory)
+            }
+            try await Task.sleep(nanoseconds: 650_000_000)
+            let board = try XCTUnwrap(grid(in: host.view))
+            let initial = try XCTUnwrap(model.session), solution = initial.puzzle.solution
+            let sources = [solution[0], solution[1], solution.last!, solution[2]]
+            for (offset, index) in sources.enumerated() {
+                XCTAssertTrue(board.activate(index: index, submit: true))
+                XCTAssertTrue(model.session!.found.contains(index))
+                XCTAssertEqual(model.session?.lives, initial.lives)
+                events.append(["width": width, "level": level, "source": index,
+                               "secondsFromSequenceStart": ProcessInfo.processInfo.systemUptime - start,
+                               "found": model.session!.found.sorted()])
+                try await Task.sleep(nanoseconds: offset == 1 ? 180_000_000 : 650_000_000)
+            }
+            XCTAssertEqual(model.session?.found, Set(sources))
+            let empty = try XCTUnwrap(initial.puzzle.regions.indices.first { !solution.contains($0) })
+            XCTAssertTrue(board.activate(index: empty, submit: false))
+            XCTAssertTrue(model.session!.marks.contains(empty))
+            let image = UIGraphicsImageRenderer(bounds: window.bounds).image { _ in
+                window.drawHierarchy(in: window.bounds, afterScreenUpdates: false)
+            }
+            let attachment = XCTAttachment(image: image); attachment.name = "flight-sequence-L\(level)-end"
+            attachment.lifetime = .keepAlways; add(attachment)
+        }
+        let data = try JSONSerialization.data(withJSONObject: [
+            "timing": "Actual Root and native board acceptance. No mid-flight snapshots or frozen animation. Video zero is independent; these are process-relative event times, not touch latency.",
+            "events": events
+        ], options: [.prettyPrinted, .sortedKeys])
+        let attachment = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+        attachment.name = "flight-sequence-event-times"; attachment.lifetime = .keepAlways; add(attachment)
+    }
+
     /// Continuous real Root playback for visual review. Capture only outside
     /// the moving sequence so snapshot readback cannot stall the expression.
     @MainActor func testActualRootCorrectFacePlaysContinuouslyIntoRest() async throws {

@@ -1,12 +1,12 @@
 # Capydoku · 原文对齐 Demo
 
-原生 Swift / SwiftUI iPhone 应用，默认简体中文、可在设置中切换 English、竖屏，最低编译目标 iOS 15。当前本地开发版本 **0.2.44（47）**，尚未达到正式验收或上架状态。手机最近确认安装的是0.2.29；按用户要求，本轮暂停打包分发、手机更新和GitHub上传。
+原生 Swift / SwiftUI iPhone 应用，默认简体中文、可在设置中切换 English、竖屏，最低编译目标 iOS 15。当前本地开发版本 **0.2.45（48）**，尚未达到正式验收或上架状态。手机最近确认安装的是0.2.29；按用户要求，本轮暂停打包分发、手机更新和GitHub上传。
 
 ## 唯一需求基准
 
 以工作区原始《卡皮巴拉主题（Capydoku）区域逻辑小游戏需求说明 V1.3》的正文和内嵌截图为准。`Reference/Original/document.json` 保存源文件校验值与提取结果。后续报告及88条 Checklist只作核查，不能覆盖原文。用户于2026-10-01明确补充面向中文市场，语言条款按此更新为默认简体中文并内置英文切换；其他原文要求继续有效。0.1.x 的功能测试通过记录不证明符合原文。
 
-当前逐章对照与未完成项见 `Validation/original-conformance.md`；本轮进展与验证边界见 `Validation/original-0244-feedback.json`，综合历史记录保留在 `Validation/original-verification.json`。
+当前逐章对照与未完成项见 `Validation/original-conformance.md`；本轮进展与验证边界见 `Validation/original-0245-feedback.json`，综合历史记录保留在 `Validation/original-verification.json`。
 
 ## 运行和试玩
 
@@ -19,6 +19,12 @@
 下列主页面图册保留0.2.1的实测版本；0.2.4新增操作反馈，分时组件截图见 Docs/original-feedback/manifest.json，不能用旧图替代新构建验收：[首页](Docs/original-reference/01-home.png) · [游戏](Docs/original-reference/04-gameplay.png) · [提示](Docs/original-reference/05-hint.png) · [设置](Docs/original-reference/02-settings.png) · [签到](Docs/original-reference/03-check-in.png)。
 
 无需第三方依赖或真实广告 SDK。模拟器运行/测试须保留本地签名（CODE_SIGNING_ALLOWED=YES），工程仅为模拟器配置钥匙串权限；禁用签名只能验证编译，不能验证真实钥匙串。0.2.29（32）已无线覆盖安装并由设备查询确认。请求启动前的安装前后8份文件逐字节一致，第10关对局、287条事件、38条奖励及设置/签到/身份保持，见[真机记录](Validation/original-0229-physical-install.json)。本次自动启动被手机锁屏阻止，需解锁后打开App；未记录为启动成功或真机手感验收。
+
+## 0.2.45 飞星与角色层次
+
+- 飞星从真实源格上沿飞出，按格尺寸缩为8–14pt，减轻光晕；开心脸保持可见。保留0.44秒到达、进度回弹、规则/Combo文字避让与即时操作，道具仍指向格子中心。参数为Demo。
+- 最终98项相关App（89.899秒）及17e四项UI（145.063秒）通过，0失败/跳过；真实Root常规6×6、紧凑10×10和快速连续找对录屏有限检查；仅调整录制背景后1项视觉用例复验通过，生产代码未变。未重跑全量App/Core、真机或参考品质验收。
+- [实际录屏](Docs/original-feel-0245/normal-and-compact-flight.mov) · [范围与图册](Docs/original-feel-0245/manifest.json) · [记录](Validation/original-0245-feedback.json) · [Checklist增量](Validation/checklist-0245-feedback-delta.json)。9个本地测试原声、150关包保持；手机仍029，打包/GitHub暂停。
 
 ## 0.2.44 浮分与角色避让
 
