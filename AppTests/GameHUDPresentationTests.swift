@@ -618,6 +618,220 @@ final class GameHUDPresentationTests: XCTestCase {
         attachment.name = "local-score-readability-diagnostic"; attachment.lifetime = .keepAlways; add(attachment)
     }
 
+    @MainActor func testCompactLevel101FinalReverseScoreUsesSideSpaceWithoutShrinkingOrCoveringCharacters() throws {
+        let url = try XCTUnwrap(Bundle.main.url(forResource: "levels", withExtension: "json"))
+        let puzzles = try JSONDecoder().decode([Puzzle].self, from: Data(contentsOf: url))
+        let puzzle = try XCTUnwrap(puzzles.first { $0.id == 101 })
+        // Root's compact 190pt host is centered in a 320pt content area. Its
+        // 7pt board inset and 14pt content margin leave usable side space.
+        let board = CGRect(x: 72, y: 200.25, width: 176, height: 176)
+        let available = CGRect(x: 14, y: board.minY, width: 292, height: board.height)
+        let unit = board.width / CGFloat(puzzle.size)
+        let found = puzzle.solution.reversed().map { index in
+            CGRect(x: board.minX + CGFloat(index % puzzle.size) * unit,
+                   y: board.minY + CGFloat(index / puzzle.size) * unit, width: unit, height: unit)
+        }
+        let source = try XCTUnwrap(found.last)
+        let amount = 100 + (found.count - 1) * 20
+        let before = try XCTUnwrap(CellScorePlacement.anchored(amount: amount,
+            cellFrame: source, boardFrame: board, avoiding: found))
+        let after = try XCTUnwrap(CellScorePlacement.anchored(amount: amount,
+            cellFrame: source, boardFrame: board, avoiding: found, availableFrame: available))
+        let beforeDistance = hypot(before.center.x - source.midX, before.center.y - source.midY) / unit
+        let afterDistance = hypot(after.center.x - source.midX, after.center.y - source.midY) / unit
+        XCTAssertLessThan(afterDistance, beforeDistance / 2,
+                          "This measured worst case must gain a visibly closer acknowledgement, not a fractional adjustment.")
+        XCTAssertEqual(after.fontSize, before.fontSize, "Closer placement must not come from smaller lettering.")
+        XCTAssertEqual(after.size, before.size, "Preserve the existing readable capsule dimensions.")
+        XCTAssertFalse(board.contains(after.sweptFrame), "The known blocked corner must actually use its available side space.")
+        XCTAssertTrue(available.insetBy(dx: 2, dy: 2).contains(after.sweptFrame))
+        for character in found {
+            XCTAssertFalse(after.sweptFrame.intersects(character.insetBy(dx: -2, dy: -2)))
+        }
+        let base = UIFont.systemFont(ofSize: after.fontSize, weight: .heavy)
+        let font = UIFont(descriptor: base.fontDescriptor.withDesign(.rounded) ?? base.fontDescriptor, size: after.fontSize)
+        let requiredTextWidth = ("+\(amount)" as NSString).size(withAttributes: [.font: font]).width
+        XCTAssertGreaterThanOrEqual(after.size.width - 2 * after.horizontalPadding, requiredTextWidth)
+    }
+
+    @MainActor func testLocalScoreAvailableFrameRejectsInvalidBoundsAndNeverExpandsTheVerticalBand() throws {
+        let board = CGRect(x: 72.25, y: 200.75, width: 176, height: 176)
+        let source = CGRect(x: board.minX, y: board.minY, width: 17.6, height: 17.6)
+        let baseline = try XCTUnwrap(CellScorePlacement.anchored(amount: 280,
+            cellFrame: source, boardFrame: board))
+        let invalid: [(String, CGRect)] = [
+            ("null", .null), ("infinite", .infinite), ("empty", .zero),
+            ("zero width", CGRect(x: 14, y: 0, width: 0, height: 1000)),
+            ("zero height", CGRect(x: 14, y: 0, width: 292, height: 0)),
+            ("NaN origin", CGRect(x: CGFloat.nan, y: 0, width: 292, height: 1000)),
+            ("infinite width", CGRect(x: 14, y: 0, width: CGFloat.infinity, height: 1000)),
+            ("missing left board edge", board.offsetBy(dx: 1, dy: 0)),
+            ("missing bottom board edge", CGRect(x: 14, y: board.minY, width: 292, height: board.height - 1))
+        ]
+        for (reason, frame) in invalid {
+            let result = try XCTUnwrap(CellScorePlacement.anchored(amount: 280,
+                cellFrame: source, boardFrame: board, availableFrame: frame), reason)
+            XCTAssertEqual(result.center, baseline.center, reason)
+            XCTAssertEqual(result.size, baseline.size, reason)
+            XCTAssertEqual(result.verticalTravel, baseline.verticalTravel, reason)
+            XCTAssertEqual(result.fontSize, baseline.fontSize, reason)
+        }
+
+        let horizontalOnly = CGRect(x: 14.25, y: board.minY, width: 292, height: board.height)
+        let alsoAboveAndBelow = CGRect(x: horizontalOnly.minX, y: -500,
+                                      width: horizontalOnly.width, height: 2000)
+        // Both top and bottom sources could otherwise escape into the rules or
+        // footer. Extra available height must have no influence on placement.
+        for cell in [source, source.offsetBy(dx: board.width - source.width, dy: board.height - source.height)] {
+            let horizontal = try XCTUnwrap(CellScorePlacement.anchored(amount: 280,
+                cellFrame: cell, boardFrame: board, availableFrame: horizontalOnly))
+            let tall = try XCTUnwrap(CellScorePlacement.anchored(amount: 280,
+                cellFrame: cell, boardFrame: board, availableFrame: alsoAboveAndBelow))
+            XCTAssertEqual(tall.center, horizontal.center)
+            XCTAssertEqual(tall.size, horizontal.size)
+            XCTAssertEqual(tall.verticalTravel, horizontal.verticalTravel)
+            XCTAssertEqual(tall.fontSize, horizontal.fontSize)
+            XCTAssertGreaterThanOrEqual(tall.sweptFrame.minY, board.minY + 2)
+            XCTAssertLessThanOrEqual(tall.sweptFrame.maxY, board.maxY - 2)
+            XCTAssertFalse(tall.sweptFrame.intersects(cell.insetBy(dx: -2, dy: -2)))
+        }
+    }
+
+    @MainActor func testCurrent150LevelPackSideSpaceKeepsScoresReadableAndClearAndReportsDistanceChanges() throws {
+        let url = try XCTUnwrap(Bundle.main.url(forResource: "levels", withExtension: "json"))
+        let puzzles = try JSONDecoder().decode([Puzzle].self, from: Data(contentsOf: url))
+        XCTAssertEqual(puzzles.count, 150)
+        var comparisons = [[String: Any]]()
+        var baselineDistances = [CGFloat](), expandedDistances = [CGFloat]()
+        var baselineBadgeCollisions = 0, expandedBadgeCollisions = 0
+        var baselineCharacterCollisions = 0, expandedCharacterCollisions = 0
+        var improved = 0, unchanged = 0, farther = 0
+        for puzzle in puzzles {
+            for (host, content) in [(CGFloat(190), CGFloat(320)), (CGFloat(374), CGFloat(402))] {
+                // A translated, fractional content origin catches accidentally
+                // mixing local board coordinates with the parent's safe area.
+                let board = CGRect(x: 17.25 + (content - host) / 2 + 7,
+                                   y: 29.75, width: host - 14, height: host - 14)
+                let available = CGRect(x: 17.25 + 14, y: board.minY,
+                                       width: content - 28, height: board.height)
+                let unit = board.width / CGFloat(puzzle.size)
+                for (direction, order) in [("forward", puzzle.solution), ("reverse", Array(puzzle.solution.reversed()))] {
+                    let clock = HUDPresentationClock(), session = UUID()
+                    let beforeFeedback = GameRewardPresentation(schedule: clock.schedule)
+                    let afterFeedback = GameRewardPresentation(schedule: clock.schedule)
+                    beforeFeedback.bind(sessionID: session, score: 0)
+                    afterFeedback.bind(sessionID: session, score: 0)
+                    var found = [CGRect]()
+                    for (step, index) in order.enumerated() {
+                        let cell = CGRect(x: board.minX + CGFloat(index % puzzle.size) * unit,
+                                          y: board.minY + CGFloat(index / puzzle.size) * unit, width: unit, height: unit)
+                        found.append(cell)
+                        let amount = 100 + step * 20
+                        let context = "level=\(puzzle.id), host=\(host), content=\(content), order=\(direction), step=\(step), source=\(index)"
+                        let before = try XCTUnwrap(CellScorePlacement.anchored(amount: amount,
+                            cellFrame: cell, boardFrame: board, avoiding: found), context)
+                        let after = try XCTUnwrap(CellScorePlacement.anchored(amount: amount,
+                            cellFrame: cell, boardFrame: board, avoiding: found, availableFrame: available), context)
+                        let beforeDistance = hypot(before.center.x - cell.midX, before.center.y - cell.midY) / unit
+                        let afterDistance = hypot(after.center.x - cell.midX, after.center.y - cell.midY) / unit
+                        baselineDistances.append(beforeDistance); expandedDistances.append(afterDistance)
+                        if afterDistance < beforeDistance - 0.0001 { improved += 1 }
+                        else if afterDistance > beforeDistance + 0.0001 { farther += 1 }
+                        else { unchanged += 1 }
+
+                        for (name, placement, feedback, bounds) in [
+                            ("board only", before, beforeFeedback, board),
+                            ("side space", after, afterFeedback, available)
+                        ] {
+                            let labelContext = "\(name): \(context)"
+                            let start = CGRect(x: placement.center.x - placement.size.width / 2,
+                                               y: placement.center.y - placement.size.height / 2,
+                                               width: placement.size.width, height: placement.size.height)
+                            let sweep = start.union(start.offsetBy(dx: 0, dy: placement.verticalTravel))
+                            XCTAssertTrue(bounds.insetBy(dx: 2 - 0.0001, dy: 2 - 0.0001).contains(sweep), labelContext)
+                            XCTAssertGreaterThanOrEqual(sweep.minY, board.minY + 2 - 0.0001, labelContext)
+                            XCTAssertLessThanOrEqual(sweep.maxY, board.maxY - 2 + 0.0001, labelContext)
+                            for character in found {
+                                XCTAssertFalse(sweep.intersects(character.insetBy(dx: -2, dy: -2)), labelContext)
+                            }
+                            XCTAssertGreaterThanOrEqual(placement.fontSize, 15, labelContext)
+                            XCTAssertLessThanOrEqual(placement.fontSize, 19, labelContext)
+                            let base = UIFont.systemFont(ofSize: placement.fontSize, weight: .heavy)
+                            let font = UIFont(descriptor: base.fontDescriptor.withDesign(.rounded) ?? base.fontDescriptor,
+                                              size: placement.fontSize)
+                            let textWidth = ("+\(amount)" as NSString).size(withAttributes: [.font: font]).width
+                            XCTAssertGreaterThanOrEqual(placement.size.width - 2 * placement.horizontalPadding,
+                                                        textWidth, labelContext)
+                            feedback.retireScores(overlapping: found, sessionID: session)
+                            feedback.scoreAward(amount, sessionID: session, placement: placement, reduceMotion: false)
+                            // Swept-rectangle separation is conservative: if it
+                            // holds, static and every vertical drift phase are
+                            // both clear, without inventing a rendering clock.
+                            for (position, score) in feedback.localScores.enumerated() {
+                                for older in feedback.localScores.prefix(position) {
+                                    if score.placement.sweptFrame.intersects(older.placement.sweptFrame) {
+                                        if name == "board only" { baselineBadgeCollisions += 1 }
+                                        else { expandedBadgeCollisions += 1 }
+                                    }
+                                }
+                                for character in found where score.placement.sweptFrame.intersects(character) {
+                                    if name == "board only" { baselineCharacterCollisions += 1 }
+                                    else { expandedCharacterCollisions += 1 }
+                                }
+                            }
+                        }
+                        comparisons.append([
+                            "level": puzzle.id, "host": host, "content": content, "order": direction,
+                            "step": step, "source": index, "foundCount": found.count,
+                            "boardOnlyDistanceInCells": beforeDistance, "sideSpaceDistanceInCells": afterDistance,
+                            "distanceReductionInCells": beforeDistance - afterDistance,
+                            "boardOnlyFont": before.fontSize, "sideSpaceFont": after.fontSize,
+                            "boardOnlySweep": NSCoder.string(for: before.sweptFrame),
+                            "sideSpaceSweep": NSCoder.string(for: after.sweptFrame),
+                            "sourceFrame": NSCoder.string(for: cell), "boardFrame": NSCoder.string(for: board),
+                            "availableFrame": NSCoder.string(for: available)
+                        ])
+                        clock.advance(0.15)
+                    }
+                    XCTAssertEqual(found.count, puzzle.size)
+                    clock.advance(1)
+                    XCTAssertTrue(beforeFeedback.localScores.isEmpty)
+                    XCTAssertTrue(afterFeedback.localScores.isEmpty)
+                }
+            }
+        }
+        func distanceSummary(_ distances: [CGFloat]) -> [String: Any] {
+            let sorted = distances.sorted()
+            return ["maximum": sorted.last ?? 0,
+                    "mean": sorted.reduce(0, +) / CGFloat(max(1, sorted.count)),
+                    "median": sorted[sorted.count / 2], "p95": sorted[Int(Double(sorted.count - 1) * 0.95)]]
+        }
+        let furthestBefore = comparisons.sorted { ($0["boardOnlyDistanceInCells"] as! CGFloat) > ($1["boardOnlyDistanceInCells"] as! CGFloat) }
+        let furthestAfter = comparisons.sorted { ($0["sideSpaceDistanceInCells"] as! CGFloat) > ($1["sideSpaceDistanceInCells"] as! CGFloat) }
+        let fartherCases = comparisons.filter { ($0["distanceReductionInCells"] as! CGFloat) < -0.0001 }
+            .sorted { ($0["distanceReductionInCells"] as! CGFloat) < ($1["distanceReductionInCells"] as! CGFloat) }
+        let data = try JSONSerialization.data(withJSONObject: [
+            "sampledPerLayout": comparisons.count,
+            "improved": improved, "unchanged": unchanged, "farther": farther,
+            "boardOnlyDistances": distanceSummary(baselineDistances),
+            "sideSpaceDistances": distanceSummary(expandedDistances),
+            "boardOnlyBadgeSweepCollisions": baselineBadgeCollisions,
+            "sideSpaceBadgeSweepCollisions": expandedBadgeCollisions,
+            "boardOnlyCharacterCollisions": baselineCharacterCollisions,
+            "sideSpaceCharacterCollisions": expandedCharacterCollisions,
+            "furthestBefore": Array(furthestBefore.prefix(15)), "furthestAfter": Array(furthestAfter.prefix(15)),
+            "largestDistanceIncreases": Array(fartherCases.prefix(15)),
+            "boundary": "Actual bundled 150 levels; every forward/reverse prefix; 190pt host in 320pt content and 374pt host in 402pt content. Both use unchanged typography and full found-cell +2 exclusion. Concurrent rewards are committed 150ms apart on an injected clock; conservative swept rectangles are checked, not raster pixels or real input timing. Distances are diagnostics; no arbitrary global proximity target is asserted."
+        ], options: [.prettyPrinted, .sortedKeys])
+        let attachment = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+        attachment.name = "local-score-side-space-0251-diagnostic"; attachment.lifetime = .keepAlways; add(attachment)
+        XCTAssertEqual(comparisons.count, puzzles.reduce(0) { $0 + $1.solution.count } * 4)
+        XCTAssertEqual(baselineBadgeCollisions, 0)
+        XCTAssertEqual(expandedBadgeCollisions, 0)
+        XCTAssertEqual(baselineCharacterCollisions, 0)
+        XCTAssertEqual(expandedCharacterCollisions, 0)
+    }
+
     @MainActor func testAnchoredLocalScoreOmitsDecorationWhenTheBoardCannotFitIt() {
         let tooSmall = CGRect(x: 40, y: 70, width: 18, height: 18)
         XCTAssertNil(CellScorePlacement.anchored(amount: 140,

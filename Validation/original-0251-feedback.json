@@ -1,0 +1,188 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.51 (54)",
+  "date": "2026-10-02",
+  "status": "scoped_compact_score_association_verified_simulator_only",
+  "previousReport": "Validation/original-0250-feedback.json",
+  "previousGoalTurn": {
+    "classification": "progress",
+    "reason": "b6d4001 added and verified the weighted found-character response;78App/4UI and natural presentation evidence."
+  },
+  "sourceParagraphs": [
+    129,
+    136,
+    249,
+    252,
+    254
+  ],
+  "finding": "A compact late-game corner score was forced across the puzzle because placement was restricted to the board rectangle. Current Root L101 reverse-final fixture reproduced3.762cell static center distance. Removing capsule padding alone was investigated and rejected as insufficient.",
+  "changes": [
+    "Accept an optional measured available area for score decoration, using only its horizontal extent and retaining the original inner-board vertical band.",
+    "Root supplies the current game container content bounds; the score can partially use empty side margins while the complete accepted/found cells and the full moving label remain separated.",
+    "Keep existing15–19pt type, capsule, scoring/save commit,0.68second drift and0.72second expiry; retain conflicting-old-score retirement and session ownership. Invalid available geometry falls back to board-only placement."
+  ],
+  "temporaryTuning": "Using existing side whitespace is a Demo presentation choice; no reference timing or formal score values inferred. Typeface size can follow the existing readability preference when new space is available.",
+  "verificationHistory": [
+    {
+      "status": "Passed",
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 12.701,
+      "scope": "Current0.2.50 all-pack diagnostic and prior four Root fixtures.",
+      "summary": "Validation/test-runs/original-0251-score-before-summary.json",
+      "log": "Validation/test-runs/original-0251-score-before.log",
+      "bundle": "Validation/test-runs/original-0251-score-before.xcresult"
+    },
+    {
+      "status": "Passed",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 10.683,
+      "scope": "Current0.2.50 six Root fixtures including the actual farthest corner; baseline state assertions pass.",
+      "summary": "Validation/test-runs/original-0251-corners-before-summary.json",
+      "log": "Validation/test-runs/original-0251-corners-before.log",
+      "bundle": "Validation/test-runs/original-0251-corners-before.xcresult"
+    },
+    {
+      "status": "Passed",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 13.182,
+      "scope": "Candidate six Root fixtures before final version and regression assertions.",
+      "summary": "Validation/test-runs/original-0251-score-candidate-summary.json",
+      "log": "Validation/test-runs/original-0251-score-candidate.log",
+      "bundle": "Validation/test-runs/original-0251-score-candidate.xcresult"
+    },
+    {
+      "status": "Failed",
+      "passed": 81,
+      "failed": 1,
+      "skipped": 0,
+      "seconds": 135.256,
+      "scope": "First full affected run:81pass/1fail. CGRect.infinite can have finite components; explicit isInfinite/isNull rejection added before the final rerun.",
+      "summary": "Validation/test-runs/original-0251-app-final-summary.json",
+      "log": "Validation/test-runs/original-0251-app-final.log",
+      "bundle": "Validation/test-runs/original-0251-app-final.xcresult"
+    }
+  ],
+  "applicationTests": {
+    "status": "Passed",
+    "passed": 82,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 126.186,
+    "scope": "17Pro/iOS26.5;affected HUD/reward/Root/board feedback and flight suites after invalid-geometry correction, not full App/Core.",
+    "summary": "Validation/test-runs/original-0251-app-final-r2-summary.json",
+    "log": "Validation/test-runs/original-0251-app-final-r2.log",
+    "bundle": "Validation/test-runs/original-0251-app-final-r2.xcresult"
+  },
+  "uiTests": {
+    "status": "Passed",
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 149.978,
+    "scope": "17e/iOS26.5;native tap/double-tap/pan and tools, solve/advance, simulated revive, hint preview/Apply.",
+    "summary": "Validation/test-runs/original-0251-17e-ui-summary.json",
+    "log": "Validation/test-runs/original-0251-17e-ui.log",
+    "bundle": "Validation/test-runs/original-0251-17e-ui.xcresult"
+  },
+  "visualEvidence": "Docs/original-feel-0251/manifest.json",
+  "reference": {
+    "latestSuccessfulPlaytest": "Validation/meowdoku-playtest-comparison-0249.json",
+    "newSuccessfulPlaytestThisRound": false,
+    "equivalenceClaimed": false,
+    "implementationSummary": {
+      "status": "Nine observed directions each have Demo implementation; this is not reference-quality sign-off.",
+      "implementedDirections": [
+        "动态手势教学",
+        "角色待机/正确/错误表情",
+        "浮分/彩粒/飞星/鼓掌及顶部联动",
+        "错误原因与规则可视化",
+        "扣命与一命提醒",
+        "Combo及分层胜败演出",
+        "新盘错峰入场",
+        "提示与找答案反馈",
+        "签到点亮与实际到账演出"
+      ],
+      "audio": "9 local Debug-only reference WAVs remain an authorized testing experiment; no live audio or physical haptic A/B in this round.",
+      "qualityGaps": [
+        "角色动作自然度与整段节奏",
+        "密集浮分离源距离",
+        "真机声音/震动配合",
+        "正式参考和发布资源验收"
+      ],
+      "notReplicatedFromLatestPlaytest": [
+        "Reference horn-playing character pose",
+        "Every observed praise phrase",
+        "Automatic check-in interstitial during victory; current Demo check-in entry remains on home"
+      ]
+    }
+  },
+  "audio": {
+    "modified": false,
+    "localTestWAVCount": 9,
+    "currentDebugInventory": "Validation/audio-isolation-0251-debug.json",
+    "formalManifestClipsEmpty": true,
+    "liveAuditoryAB": false,
+    "releaseRebuilt": false
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  },
+  "remaining": [
+    "完整角色自然度和整段节奏仍需真机音画/触觉评估；不声称参考品质验收。",
+    "本轮改善有侧边空白的紧凑布局；所有操作顺序、无侧边空间的密集局、弹窗中断组合、最低系统及正式发布验收仍未穷尽。",
+    "手机仍0.2.29；原声仅本地测试，打包与GitHub上传暂停。"
+  ],
+  "formalSignOff": false,
+  "formalConformanceRowsUnchanged": 83,
+  "historicalChecklistCountUnchanged": 88,
+  "scoreAssociation": {
+    "level": 101,
+    "order": "reverse",
+    "viewport": "320x568",
+    "source": 0,
+    "staticCenterDistanceBefore": 3.7620523435677766,
+    "staticCenterDistanceAfter": 1.281250000000001,
+    "normalTargetCenterDistanceBefore": 4.2105473899894665,
+    "normalTargetCenterDistanceAfter": 1.6221590909090922,
+    "boundary": "Static and target-layout distances have different meanings; neither is the pixel position at screenshot time. Other cases can trade slightly more distance for the existing larger-font readability preference."
+  },
+  "packScoreDiagnostics": {
+    "sampledPerLayout": 4744,
+    "improved": 980,
+    "unchanged": 3501,
+    "farther": 263,
+    "boardOnlyDistances": {
+      "maximum": 3.7620523435677757,
+      "mean": 1.1034313250243346,
+      "median": 1.0442791314208035,
+      "p95": 1.577605189123037
+    },
+    "sideSpaceDistances": {
+      "maximum": 2.0093021182944706,
+      "mean": 1.0799585434200334,
+      "median": 1,
+      "p95": 1.3806818181818188
+    },
+    "sideSpaceBadgeSweepCollisions": 0,
+    "sideSpaceCharacterCollisions": 0,
+    "boundary": "Actual bundled 150 levels; every forward/reverse prefix; 190pt host in 320pt content and 374pt host in 402pt content. Both use unchanged typography and full found-cell +2 exclusion. Concurrent rewards are committed 150ms apart on an injected clock; conservative swept rectangles are checked, not raster pixels or real input timing. Distances are diagnostics; no arbitrary global proximity target is asserted."
+  }
+}

@@ -436,12 +436,22 @@ struct CellScorePlacement {
         return start.union(start.offsetBy(dx: 0, dy: verticalTravel))
     }
 
-    static func anchored(amount: Int, cellFrame: CGRect, boardFrame: CGRect, avoiding: [CGRect] = []) -> CellScorePlacement? {
+    static func anchored(amount: Int, cellFrame: CGRect, boardFrame: CGRect, avoiding: [CGRect] = [], availableFrame: CGRect? = nil) -> CellScorePlacement? {
+        // Short screens leave wide empty margins beside a compact board. Let
+        // an edge reward use that space instead of appearing across the puzzle.
+        // The board owns the vertical band: never enter rules, Combo or tools.
+        let placementFrame: CGRect
+        if let availableFrame, !availableFrame.isEmpty, !availableFrame.isNull, !availableFrame.isInfinite,
+           [availableFrame.minX, availableFrame.minY, availableFrame.width, availableFrame.height].allSatisfy(\.isFinite),
+           availableFrame.contains(boardFrame) {
+            placementFrame = CGRect(x: availableFrame.minX, y: boardFrame.minY,
+                                    width: availableFrame.width, height: boardFrame.height)
+        } else { placementFrame = boardFrame }
         let preferredSize = max(15, min(19, cellFrame.width * 0.6))
-        let preferred = place(amount: amount, cellFrame: cellFrame, boardFrame: boardFrame,
+        let preferred = place(amount: amount, cellFrame: cellFrame, boardFrame: placementFrame,
                               avoiding: avoiding, fontSize: preferredSize)
         guard preferredSize > 15 else { return preferred }
-        let compact = place(amount: amount, cellFrame: cellFrame, boardFrame: boardFrame,
+        let compact = place(amount: amount, cellFrame: cellFrame, boardFrame: placementFrame,
                             avoiding: avoiding, fontSize: 15)
         guard let preferred else { return compact }
         guard let compact else { return preferred }

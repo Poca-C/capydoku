@@ -1,0 +1,43 @@
+{
+  "build": "0.2.51 (54)",
+  "baselineBuild": "0.2.50 (53)",
+  "items": [
+    {
+      "file": "before-dense-score-root-geometry.json",
+      "sha256": "f97d87ccd06c21fc3bce10b8759d065cbb4a91d97e0fce5779ea6c64106dbe76",
+      "scope": "Unedited XCTest attachment: GameHUDVisualTests/testDenseLocalScoresInActualRootStayAssociatedAndReadable()"
+    },
+    {
+      "file": "before-dense-score-L101-reduced-false.png",
+      "sha256": "d3406a8ee59e7e198db168e0bdd6cb70cba40457e615e7178e8887a42963dd3e",
+      "scope": "Unedited XCTest attachment: GameHUDVisualTests/testDenseLocalScoresInActualRootStayAssociatedAndReadable()"
+    },
+    {
+      "file": "final-local-score-side-space-0251-diagnostic.json",
+      "sha256": "9c56a5eee383c41d629dc620d7c1fb75466e2a5f3313bc4116fe64aaedc90790",
+      "scope": "Unedited XCTest attachment: GameHUDPresentationTests/testCurrent150LevelPackSideSpaceKeepsScoresReadableAndClearAndReportsDistanceChanges()"
+    },
+    {
+      "file": "final-dense-score-root-geometry.json",
+      "sha256": "0d81790835b5cf84140e4554635e7d0645a5ed789bbc213ed4f6d4bd27725e27",
+      "scope": "Unedited XCTest attachment: GameHUDVisualTests/testDenseLocalScoresInActualRootStayAssociatedAndReadable()"
+    },
+    {
+      "file": "final-dense-score-L101-reduced-false.png",
+      "sha256": "488c612049e07e7ff7d123d944712bd667c9e2761cdbef7e58fe98f2182cb4f9",
+      "scope": "Unedited XCTest attachment: GameHUDVisualTests/testDenseLocalScoresInActualRootStayAssociatedAndReadable()"
+    },
+    {
+      "file": "before-dense-scores.mov",
+      "sha256": "b2dce5e718aa2c4e811fb1612ab56ce7c95a9b6c2ae70b186950cd7e7f632f6a",
+      "scope": "Actual0.2.50 Root L6/L111/L101reverse; normal/reduced fixtures. Includes snapshot readbacks at fixture end, not a frame-rate benchmark."
+    },
+    {
+      "file": "final-dense-scores.mov",
+      "sha256": "8d70f31c525fe69ccd110f164342403faf0f0b1134dcad5214b60253c195e1e8",
+      "scope": "Actual0.2.51 same six Root fixtures after invalid-geometry correction; independent recording clock."
+    }
+  ],
+  "reviewed": "Original full-size L101 normal-motion screenshots compare the corner score across the board before versus beside its source after. Final L6/L111/L101 normal/reduced fixtures checked with source/label geometry.",
+  "boundary": "Layout observer values are target frames, not exact compositor phases. Finite real-Root screenshots/video, static/swept rectangles and all-pack statistics do not prove every input order, FPS, physical latency or reference-quality equivalence."
+}

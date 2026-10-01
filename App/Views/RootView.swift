@@ -516,7 +516,10 @@ struct GameView: View {
                                             let cell = anchor.cellFrame.offsetBy(dx: offset.dx, dy: offset.dy)
                                             let area = anchor.boardFrame.offsetBy(dx: offset.dx, dy: offset.dy)
                                             let foundFrames = anchor.foundFrames.map { $0.offsetBy(dx: offset.dx, dy: offset.dy) }
-                                            let placement = CellScorePlacement.anchored(amount: amount, cellFrame: cell, boardFrame: area, avoiding: foundFrames)
+                                            let scoreBand = CGRect(x: 14, y: area.minY,
+                                                width: max(0, gameWindowFrame.width - 28), height: area.height)
+                                            let placement = CellScorePlacement.anchored(amount: amount, cellFrame: cell,
+                                                boardFrame: area, avoiding: foundFrames, availableFrame: scoreBand)
                                             DispatchQueue.main.async {
                                                 guard model.session?.id == s.id, canPresentFeedback,
                                                       !gameWindowFrame.isEmpty,

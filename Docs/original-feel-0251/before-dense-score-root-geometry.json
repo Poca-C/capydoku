@@ -1,0 +1,53 @@
+{
+  "boundary" : "Real Root320x568 viewport;150ms requested intervals and final layout observations. Static reduced-motion collisions and natural final-flight frames are visually reviewed; no compositor phase or actual input latency is inferred.",
+  "samples" : [
+    {
+      "amount" : 200,
+      "centerDistanceInCells" : 1.0461413875217587,
+      "labelFrame" : "{{191.58333333333331, 398.41666666666663}, {48, 23}}",
+      "level" : 6,
+      "reduced" : true,
+      "sourceFrame" : "{{189.33333333333331, 423.66666666666663}, {29.333333333333343, 29.333333333333371}}"
+    },
+    {
+      "amount" : 200,
+      "centerDistanceInCells" : 1.4333111354309689,
+      "labelFrame" : "{{191.58333333333331, 386.41666666666663}, {48, 23}}",
+      "level" : 6,
+      "reduced" : false,
+      "sourceFrame" : "{{189.33333333333331, 423.66666666666663}, {29.333333333333343, 29.333333333333371}}"
+    },
+    {
+      "amount" : 280,
+      "centerDistanceInCells" : 2.0093021182944697,
+      "labelFrame" : "{{180.15000000000001, 428}, {48, 23}}",
+      "level" : 111,
+      "reduced" : true,
+      "sourceFrame" : "{{230.40000000000001, 435.39999999999998}, {17.599999999999994, 17.600000000000023}}"
+    },
+    {
+      "amount" : 280,
+      "centerDistanceInCells" : 2.0822080724865364,
+      "labelFrame" : "{{180.15000000000001, 422}, {48, 23}}",
+      "level" : 111,
+      "reduced" : false,
+      "sourceFrame" : "{{230.40000000000001, 435.39999999999998}, {17.599999999999994, 17.600000000000023}}"
+    },
+    {
+      "amount" : 280,
+      "centerDistanceInCells" : 3.7620523435677766,
+      "labelFrame" : "{{109.44999999999999, 314.44999999999999}, {48, 23}}",
+      "level" : 101,
+      "reduced" : true,
+      "sourceFrame" : "{{72, 277}, {17.599999999999994, 17.600000000000023}}"
+    },
+    {
+      "amount" : 280,
+      "centerDistanceInCells" : 4.2105473899894665,
+      "labelFrame" : "{{109.44999999999999, 326.44999999999999}, {48, 23}}",
+      "level" : 101,
+      "reduced" : false,
+      "sourceFrame" : "{{72, 277}, {17.599999999999994, 17.600000000000023}}"
+    }
+  ]
+}

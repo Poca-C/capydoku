@@ -210,11 +210,14 @@ final class GameHUDVisualTests: XCTestCase {
     @MainActor func testDenseLocalScoresInActualRootStayAssociatedAndReadable() async throws {
         var samples: [[String: Any]] = []
         let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
-        for (level, reduced) in [(6, true), (6, false), (111, true), (111, false)] {
+        for (level, reduced) in [(6, true), (6, false), (111, true), (111, false), (101, true), (101, false)] {
             let directory = FileManager.default.temporaryDirectory.appendingPathComponent("dense-score-" + UUID().uuidString)
             let model = AppModel(saveDirectory: directory, runsTimer: false, feedbackEnabled: false)
             model.progress.tutorialCompleted = true; model.start(level: level)
-            let solution = try XCTUnwrap(model.session).puzzle.solution
+            let originalSolution = try XCTUnwrap(model.session).puzzle.solution
+            // Reverse L101 leaves its top-left corner until last, reproducing
+            // the current pack's most distant compact-board score placement.
+            let solution = level == 101 ? Array(originalSolution.reversed()) : originalSolution
             let pending = level == 6 ? 2 : 1
             for index in solution.dropLast(pending) { model.submit(index) }
             let previous = scene.windows.first(where: \.isKeyWindow), window = UIWindow(windowScene: scene)
@@ -254,6 +257,15 @@ final class GameHUDVisualTests: XCTestCase {
             XCTAssertEqual(model.session?.status, .won); XCTAssertEqual(model.session?.found, Set(solution))
             XCTAssertEqual(model.session?.lives, initial.lives)
             XCTAssertEqual(frames["puzzle_board"], boardFrame)
+            let scoreBand = CGRect(x: 14, y: boardFrame.minY, width: window.bounds.width - 28, height: boardFrame.height)
+            XCTAssertTrue(scoreBand.contains(badge), "Use only measured horizontal board margins, never the controls above or below.")
+            for key in ["rule_strip", "game_footer"] {
+                XCTAssertFalse(badge.intersects(try XCTUnwrap(frames[key])))
+            }
+            if level == 101 {
+                XCTAssertLessThan(hypot(badge.midX - source.midX, badge.midY - source.midY) / source.width, 2,
+                    "The real compact corner score must stay associated with its source instead of crossing three or four columns.")
+            }
             for cell in cells.enumerated() where solution.contains(cell.offset) {
                 XCTAssertFalse(badge.intersects(cell.element), "Latest score must not cover any character.")
             }
@@ -341,7 +353,11 @@ final class GameHUDVisualTests: XCTestCase {
                     let foundCell = measured[found]
                     XCTAssertFalse(label.intersects(foundCell), "The new badge must also preserve earlier characters.")
                 }
-                XCTAssertTrue(boardBefore.contains(label), "Edge placement cannot spill into rules, Combo or tools.")
+                let scoreBand = CGRect(x: 14, y: boardBefore.minY, width: window.bounds.width - 28, height: boardBefore.height)
+                XCTAssertTrue(scoreBand.contains(label), "Only side whitespace is available; do not spill into rules, Combo or tools.")
+                for key in ["rule_strip", "game_footer"] {
+                    XCTAssertFalse(label.intersects(try XCTUnwrap(frames[key])))
+                }
                 XCTAssertGreaterThan(label.width, 20); XCTAssertGreaterThanOrEqual(label.height, 22)
                 XCTAssertLessThanOrEqual(label.height, 28.5)
                 XCTAssertEqual(frames["puzzle_board"], boardBefore)
