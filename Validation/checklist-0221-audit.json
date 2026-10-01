@@ -1,0 +1,1888 @@
+{
+  "schemaVersion": 1,
+  "metadata": {
+    "reviewedAt": "2026-10-01",
+    "reviewBuild": "0.2.21 (24)",
+    "reviewBasedOnExistingEvidence": true,
+    "basedOnExistingEvidence": true,
+    "readOnlyReview": true,
+    "noNewTests": true,
+    "reviewMethod": "只读核查已有源码和版本化证据；本次仅新建此JSON映射，不修改原始Word或历史验收记录，不执行新测试。",
+    "formalSignOff": false,
+    "sourceChecklist": "Validation/checklist-source.json",
+    "sourceChecklistSHA256": "5bd83dc55739a19e6d69a7aad14e21294ad9536808a82d2ca2d08bb2c32638c4",
+    "sourceModuleCount": 17,
+    "sourceCaseCount": 88,
+    "sourceCheckboxes": "88条原始勾选均为□；该源文件是需求摘录，不是当前执行状态。",
+    "authority": "原始Word优先；后续88条Checklist为核查工具，不能缩小原文范围；用户中文市场要求覆盖原英文界面条款。",
+    "historicalStatus": {
+      "build": "0.1.1 (2)",
+      "counts": {
+        "passedDemo": 42,
+        "partial": 30,
+        "pending": 15,
+        "outOfScopeDemo": 1
+      },
+      "evidence": [
+        "Validation/demo-acceptance.md",
+        "Validation/verification-summary.json"
+      ],
+      "reusePolicy": "仅保留历史统计来源，不挪用为0.2.21通过条目、完成比例或正式验收。"
+    },
+    "testEvidenceBoundary": {
+      "currentCore": {
+        "build": "0.2.21 (24)",
+        "passed": 169,
+        "failed": 0,
+        "evidence": "Validation/test-runs/original-0221-core.log"
+      },
+      "currentTargetedApp": {
+        "build": "0.2.21 (24)",
+        "passed": 9,
+        "failed": 0,
+        "skipped": 0,
+        "scope": "签到/奖励专项，不是完整App测试集",
+        "evidence": "Validation/original-verification.json"
+      },
+      "currentFirstEntryCandidateUI": {
+        "build": "0.2.21 (24)",
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0,
+        "scope": "三个优化候选在17 Pro正常目录的首启拒绝权限、L1教学、语言、签到与冷恢复，不是完整候选回归",
+        "evidence": "Validation/original-0221-candidate-playthrough.json"
+      },
+      "latestCompleteApp": {
+        "build": "0.2.20 (23)",
+        "passed": 293,
+        "failed": 0,
+        "skipped": 0,
+        "scope": "不得重标为0.2.21重新运行",
+        "evidence": "Validation/test-runs/original-0220-app.log"
+      },
+      "physicalDevice": {
+        "build": "0.2.21 (24)",
+        "device": "iPhone 14 Pro Max / iOS 26.3.1",
+        "scope": "仅确认安装、用户完成开发者信任后的手动启动及运行进程；未完成真机完整游玩、恢复和权限回归",
+        "evidence": "Validation/original-0221-physical-install.json"
+      },
+      "mixedVersionEvidence": "各行保留现有证据所属版本；源码与测试文件证明实现和用例定义，运行结果以original-verification.json及其引用记录为准，不能把全部历史记录称为本轮重跑。"
+    },
+    "scopeLimits": [
+      "本地范围核实不等于正式原文验收签署或上架。",
+      "含冻结数值/参考体验、真实SDK、线上服务或真机要求且条件未齐的条目保守记为partial或pending。",
+      "缺失原音频当前保持静音；未定义Daily Challenge/Pattern/排行活动属于获准Demo暂不开放，不代表从正式需求永久删除。",
+      "本次未生成新的性能、人工难度、跨产品或真机游玩证据；状态数量不得作为线性工期或发布完成率。"
+    ]
+  },
+  "statusDefinitions": {
+    "verified_local_scope": "现有证据覆盖本条明确本地逻辑或界面目标，未遗漏条文本身的冻结数值、真实SDK或真机要求；只在记录的样本和本地范围内核实，不等于正式签署。",
+    "partial": "已有实现或有效部分证据，但条目仍有冻结规则、参考资源、真实服务、设备覆盖或完整测试范围缺口。",
+    "pending": "本条所要求的主要实际交付或验收证据尚不存在，不能用模拟、本地占位或编译通过替代。",
+    "out_of_scope_demo": "经批准本轮不开放；仍保留正式范围待定义记录。"
+  },
+  "counts": {
+    "verified_local_scope": 29,
+    "partial": 50,
+    "pending": 8,
+    "out_of_scope_demo": 1
+  },
+  "moduleCounts": [
+    {
+      "module": 1,
+      "title": "冻结范围与验收基线",
+      "total": 3,
+      "counts": {
+        "verified_local_scope": 1,
+        "partial": 2,
+        "pending": 0,
+        "out_of_scope_demo": 0
+      }
+    },
+    {
+      "module": 2,
+      "title": "工程与公共基础",
+      "total": 3,
+      "counts": {
+        "verified_local_scope": 0,
+        "partial": 3,
+        "pending": 0,
+        "out_of_scope_demo": 0
+      }
+    },
+    {
+      "module": 3,
+      "title": "棋盘规则与求解验证",
+      "total": 4,
+      "counts": {
+        "verified_local_scope": 4,
+        "partial": 0,
+        "pending": 0,
+        "out_of_scope_demo": 0
+      }
+    },
+    {
+      "module": 4,
+      "title": "棋盘显示与手势操作",
+      "total": 7,
+      "counts": {
+        "verified_local_scope": 6,
+        "partial": 1,
+        "pending": 0,
+        "out_of_scope_demo": 0
+      }
+    },
+    {
+      "module": 5,
+      "title": "对局流程与胜负结算",
+      "total": 6,
+      "counts": {
+        "verified_local_scope": 1,
+        "partial": 5,
+        "pending": 0,
+        "out_of_scope_demo": 0
+      }
+    },
+    {
+      "module": 6,
+      "title": "生成器与质量筛选",
+      "total": 5,
+      "counts": {
+        "verified_local_scope": 2,
+        "partial": 3,
+        "pending": 0,
+        "out_of_scope_demo": 0
+      }
+    },
+    {
+      "module": 7,
+      "title": "道具与复活结果",
+      "total": 9,
+      "counts": {
+        "verified_local_scope": 6,
+        "partial": 3,
+        "pending": 0,
+        "out_of_scope_demo": 0
+      }
+    },
+    {
+      "module": 8,
+      "title": "动态新手教学",
+      "total": 3,
+      "counts": {
+        "verified_local_scope": 2,
+        "partial": 1,
+        "pending": 0,
+        "out_of_scope_demo": 0
+      }
+    },
+    {
+      "module": 9,
+      "title": "前150关内容与难度曲线",
+      "total": 4,
+      "counts": {
+        "verified_local_scope": 0,
+        "partial": 4,
+        "pending": 0,
+        "out_of_scope_demo": 0
+      }
+    },
+    {
+      "module": 10,
+      "title": "151关以后的关卡循环",
+      "total": 4,
+      "counts": {
+        "verified_local_scope": 0,
+        "partial": 4,
+        "pending": 0,
+        "out_of_scope_demo": 0
+      }
+    },
+    {
+      "module": 11,
+      "title": "启动首页游戏页与设置",
+      "total": 6,
+      "counts": {
+        "verified_local_scope": 1,
+        "partial": 4,
+        "pending": 0,
+        "out_of_scope_demo": 1
+      }
+    },
+    {
+      "module": 12,
+      "title": "签到与周期奖励",
+      "total": 4,
+      "counts": {
+        "verified_local_scope": 1,
+        "partial": 3,
+        "pending": 0,
+        "out_of_scope_demo": 0
+      }
+    },
+    {
+      "module": 13,
+      "title": "本地存档与中断恢复",
+      "total": 7,
+      "counts": {
+        "verified_local_scope": 5,
+        "partial": 2,
+        "pending": 0,
+        "out_of_scope_demo": 0
+      }
+    },
+    {
+      "module": 14,
+      "title": "美术动效与音频",
+      "total": 5,
+      "counts": {
+        "verified_local_scope": 0,
+        "partial": 4,
+        "pending": 1,
+        "out_of_scope_demo": 0
+      }
+    },
+    {
+      "module": 15,
+      "title": "外部交接与实际集成",
+      "total": 9,
+      "counts": {
+        "verified_local_scope": 0,
+        "partial": 6,
+        "pending": 3,
+        "out_of_scope_demo": 0
+      }
+    },
+    {
+      "module": 16,
+      "title": "真机测试与修复回归",
+      "total": 4,
+      "counts": {
+        "verified_local_scope": 0,
+        "partial": 3,
+        "pending": 1,
+        "out_of_scope_demo": 0
+      }
+    },
+    {
+      "module": 17,
+      "title": "打包提审与发布交付",
+      "total": 5,
+      "counts": {
+        "verified_local_scope": 0,
+        "partial": 2,
+        "pending": 3,
+        "out_of_scope_demo": 0
+      }
+    }
+  ],
+  "rows": [
+    {
+      "id": "01-01",
+      "module": 1,
+      "moduleTitle": "冻结范围与验收基线",
+      "title": "需求与冻结基线",
+      "originalAcceptanceText": "操作  核对需求、参考版本、录屏与配置清单。\n通过  资料可定位且版本一致；所有F1–F7待定项已有结论或明确标B。",
+      "currentStatus": "partial",
+      "currentResult": "原文及截图已提取并保留校验值，但冻结参考版本、完整录屏和F1–F7正式结论仍不齐。",
+      "originalRequirementIDs": [
+        "REF-01",
+        "REF-04"
+      ],
+      "evidence": [
+        "Reference/Original/document.json",
+        "Validation/original-conformance.json",
+        "Validation/reference-gameplay-import.json"
+      ]
+    },
+    {
+      "id": "01-02",
+      "module": 1,
+      "moduleTitle": "冻结范围与验收基线",
+      "title": "逐关正式配置",
+      "originalAcceptanceText": "操作  逐关抽查道具、生命、分数、失败与结算配置。\n通过  与冻结基线一致；前150关所需字段齐全，未知值未用猜测补齐。",
+      "currentStatus": "partial",
+      "currentResult": "配置导入与校验框架已实现，但L1–150正式道具、生命、计分及失败结算参数未冻结，不能按临时值验收。",
+      "originalRequirementIDs": [
+        "REF-02",
+        "PLAY-04"
+      ],
+      "evidence": [
+        "Validation/reference-gameplay-import.json",
+        "Validation/original-conformance.json",
+        "AppTests/GameplayConfigurationIntegrationTests.swift"
+      ]
+    },
+    {
+      "id": "01-03",
+      "module": 1,
+      "moduleTitle": "冻结范围与验收基线",
+      "title": "范围与外部分工记录",
+      "originalAcceptanceText": "操作  核对范围变更和外部分工记录。\n通过  每项变更有依据；广告外包未被扩展解释为其他服务均不做。",
+      "currentStatus": "verified_local_scope",
+      "currentResult": "当前范围及中文市场变更有记录，真实广告由外部负责未被扩展为取消其他原文服务要求。",
+      "originalRequirementIDs": [
+        "REF-04",
+        "REF-05"
+      ],
+      "evidence": [
+        "README.md",
+        "CHANGELOG.md",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "02-01",
+      "module": 2,
+      "moduleTitle": "工程与公共基础",
+      "title": "目标设备安装冷启动",
+      "originalAcceptanceText": "操作  在目标iPhone安装并冷启动验收构建。\n通过  安装、启动和进入首页正常；包版本、代码与配置能对应。",
+      "currentStatus": "partial",
+      "currentResult": "0.2.21两模拟器安装启动已验，目标真机安装及用户信任后的手动启动已确认，但未记录完整冷启动到首页验收路径。",
+      "originalRequirementIDs": [
+        "TECH-02",
+        "TECH-07"
+      ],
+      "evidence": [
+        "Validation/original-0221-install-audit.json",
+        "Validation/original-0221-physical-install.json",
+        "Validation/original-0221-candidate-playthrough.json"
+      ]
+    },
+    {
+      "id": "02-02",
+      "module": 2,
+      "moduleTitle": "工程与公共基础",
+      "title": "配置失败回退",
+      "originalAcceptanceText": "操作  测试配置缺失、损坏或远程读取失败。\n通过  按约定回退到缓存或同版本包内默认值，不阻塞游戏，不临时猜值。",
+      "currentStatus": "partial",
+      "currentResult": "缓存、备份、包内默认值回退及不中断当前对局已有客户端测试，正式冻结默认配置和真实远程服务尚未就绪。",
+      "originalRequirementIDs": [
+        "ADS-12",
+        "TECH-04"
+      ],
+      "evidence": [
+        "AppTests/GameplayConfigurationStoreTests.swift",
+        "AppTests/GameplayConfigurationIntegrationTests.swift",
+        "Validation/original-verification.json"
+      ]
+    },
+    {
+      "id": "02-03",
+      "module": 2,
+      "moduleTitle": "工程与公共基础",
+      "title": "环境与调试入口",
+      "originalAcceptanceText": "操作  核对测试／正式环境和调试入口。\n通过  环境隔离；测试包可定位关卡seed与版本，正式包无玩家可用的调试入口。",
+      "currentStatus": "partial",
+      "currentResult": "四环境本地目录、身份和配置目标已隔离且优化候选无DEBUG入口，但正式发行身份、广告位和线上数据源未配置。",
+      "originalRequirementIDs": [
+        "TECH-06"
+      ],
+      "evidence": [
+        "Validation/original-0220-build-settings.json",
+        "Validation/original-0221-candidate-playthrough.json",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "03-01",
+      "module": 3,
+      "moduleTitle": "棋盘规则与求解验证",
+      "title": "非法及非唯一盘拒绝",
+      "originalAcceptanceText": "操作  校验已知合法、无解、多解与区域不连通样例。\n通过  仅合法且唯一解者通过；拒绝项有可复核原因。",
+      "currentStatus": "verified_local_scope",
+      "currentResult": "共享校验器拒绝非法、无解、多解和不连通棋盘，当前包150关有独立合法性与唯一解复核。",
+      "originalRequirementIDs": [
+        "PLAY-01",
+        "GEN-09"
+      ],
+      "evidence": [
+        "Tests/CapydokuCoreTests/PuzzleEngineTests.swift",
+        "Validation/original-generation/summary.json",
+        "Validation/test-runs/original-0221-core.log"
+      ]
+    },
+    {
+      "id": "03-02",
+      "module": 3,
+      "moduleTitle": "棋盘规则与求解验证",
+      "title": "四规则冲突判定",
+      "originalAcceptanceText": "操作  分别构造同行、同列、同区域及八邻格冲突。\n通过  全部正确识别；远距离同一斜线不会被单独判成违规。",
+      "currentStatus": "verified_local_scope",
+      "currentResult": "同行、同列、同区域和八邻接冲突由共享规则验证，远距离斜线未被额外判为冲突。",
+      "originalRequirementIDs": [
+        "PLAY-01"
+      ],
+      "evidence": [
+        "Tests/CapydokuCoreTests/PuzzleEngineTests.swift",
+        "Validation/test-runs/original-0221-core.log"
+      ]
+    },
+    {
+      "id": "03-03",
+      "module": 3,
+      "moduleTitle": "棋盘规则与求解验证",
+      "title": "答案与逻辑步骤一致",
+      "originalAcceptanceText": "操作  对照答案、候选和逻辑求解步骤。\n通过  解数量为1；步骤理由成立，游戏判定与求解规则一致。",
+      "currentStatus": "verified_local_scope",
+      "currentResult": "当前150关唯一解且能由共享逻辑步骤推完，按原元数据重建同盘，覆盖本条逻辑正确性而不声明正式难度匹配。",
+      "originalRequirementIDs": [
+        "PLAY-01",
+        "GEN-09"
+      ],
+      "evidence": [
+        "Validation/original-generation/summary.json",
+        "Validation/original-0219-rebuild.json",
+        "Tests/CapydokuCoreTests/PuzzleEngineTests.swift",
+        "Validation/test-runs/original-0221-core.log"
+      ]
+    },
+    {
+      "id": "03-04",
+      "module": 3,
+      "moduleTitle": "棋盘规则与求解验证",
+      "title": "棋盘状态序列化",
+      "originalAcceptanceText": "操作  检查棋盘状态及序列化后的读取结果。\n通过  动物、普通X、红色X、开局状态与锁定格可区分，保存读取后含义不变。",
+      "currentStatus": "verified_local_scope",
+      "currentResult": "动物、普通X、红X及对局状态可区分，保存恢复保持其含义并有核心和界面恢复证据。",
+      "originalRequirementIDs": [
+        "SAVE-01",
+        "SAVE-04"
+      ],
+      "evidence": [
+        "Tests/CapydokuCoreTests/GameSessionTests.swift",
+        "Tests/CapydokuCoreTests/PersistenceTests.swift",
+        "Validation/test-runs/original-0221-core.log",
+        "Validation/original-verification.json"
+      ]
+    },
+    {
+      "id": "04-01",
+      "module": 4,
+      "moduleTitle": "棋盘显示与手势操作",
+      "title": "尺寸布局与边缘触点",
+      "originalAcceptanceText": "操作  在最小和最大棋盘、不同屏幕上操作边缘格。\n通过  格子正方形、触点准确；棋盘不挤压信息和道具区。",
+      "currentStatus": "partial",
+      "currentResult": "4至10阶棋盘及紧凑屏幕有模拟器布局和边缘操作证据，目标真机密集格触点与完整屏幕覆盖仍待验。",
+      "originalRequirementIDs": [
+        "UI-09",
+        "PLAY-02"
+      ],
+      "evidence": [
+        "Docs/original-compact-0216/manifest.json",
+        "Docs/original-tutorial-0219/manifest.json",
+        "Validation/original-0221-physical-install.json"
+      ]
+    },
+    {
+      "id": "04-02",
+      "module": 4,
+      "moduleTitle": "棋盘显示与手势操作",
+      "title": "单击标记与撤销",
+      "originalAcceptanceText": "操作  单击空格，再次单击该X。\n通过  添加后可撤销；生命、分数和找到数量不变。",
+      "currentStatus": "verified_local_scope",
+      "currentResult": "实际UI和核心测试覆盖单击增加及撤销X且不改变生命、分数和找到数量，候选正常教学再次执行该路径。",
+      "originalRequirementIDs": [
+        "PLAY-02"
+      ],
+      "evidence": [
+        "UITests/CapydokuUITests.swift",
+        "Tests/CapydokuCoreTests/GameSessionTests.swift",
+        "Validation/original-0221-candidate-playthrough.json"
+      ]
+    },
+    {
+      "id": "04-03",
+      "module": 4,
+      "moduleTitle": "棋盘显示与手势操作",
+      "title": "正确双击只提交一次",
+      "originalAcceptanceText": "操作  双击正确空格和带普通X的正确格。\n通过  各提交一次，清除原X并显示动物；不为其他格自动打叉。",
+      "currentStatus": "verified_local_scope",
+      "currentResult": "正确空格及带X目标的双击提交、清除自身X、显示动物和不自动排除邻格有现有核心与UI回归证据。",
+      "originalRequirementIDs": [
+        "PLAY-02",
+        "PLAY-06"
+      ],
+      "evidence": [
+        "UITests/CapydokuUITests.swift",
+        "Tests/CapydokuCoreTests/GameSessionTests.swift",
+        "Validation/original-verification.json"
+      ]
+    },
+    {
+      "id": "04-04",
+      "module": 4,
+      "moduleTitle": "棋盘显示与手势操作",
+      "title": "错误双击反馈幂等",
+      "originalAcceptanceText": "操作  双击错误格，观察整个手势和动画。\n通过  只扣一次生命并反馈一次；不出现额外提交或临时X残留。",
+      "currentStatus": "verified_local_scope",
+      "currentResult": "错误提交只扣一次生命，重复提交与手势竞争不增加扣血或残留临时X，反馈组件与UI路径有对应验证。",
+      "originalRequirementIDs": [
+        "PLAY-02",
+        "PLAY-13"
+      ],
+      "evidence": [
+        "UITests/CapydokuUITests.swift",
+        "Tests/CapydokuCoreTests/GameSessionTests.swift",
+        "Docs/original-feedback/manifest.json",
+        "Validation/original-verification.json"
+      ]
+    },
+    {
+      "id": "04-05",
+      "module": 4,
+      "moduleTitle": "棋盘显示与手势操作",
+      "title": "横纵滑动与保护格",
+      "originalAcceptanceText": "操作  横纵滑过空格、已有X、动物及锁定格，再斜滑。\n通过  只新增允许的X，不覆盖保护格；斜向不批量标记。",
+      "currentStatus": "verified_local_scope",
+      "currentResult": "横纵滑动只新增合法排除标记，已找到及锁定目标受保护，斜滑和重新入盘不继续批量标记。",
+      "originalRequirementIDs": [
+        "PLAY-02"
+      ],
+      "evidence": [
+        "AppTests/BoardSwipePathTests.swift",
+        "UITests/CapydokuUITests.swift",
+        "Validation/test-runs/original-0220-app.log"
+      ]
+    },
+    {
+      "id": "04-06",
+      "module": 4,
+      "moduleTitle": "棋盘显示与手势操作",
+      "title": "快速手势切换",
+      "originalAcceptanceText": "操作  快速切换单击、双击和滑动，并中途离开棋盘。\n通过  手势不串扰、不重复扣血；双击优先，滑动结束后不继续标记。",
+      "currentStatus": "verified_local_scope",
+      "currentResult": "真实手势与输入状态测试覆盖单击双击滑动切换、离盘终止和释放输入锁，已发现串扰问题有修复记录。",
+      "originalRequirementIDs": [
+        "PLAY-02"
+      ],
+      "evidence": [
+        "AppTests/BoardInputActivityTests.swift",
+        "AppTests/BoardSwipePathTests.swift",
+        "UITests/CapydokuUITests.swift",
+        "Validation/original-verification.json"
+      ]
+    },
+    {
+      "id": "04-07",
+      "module": 4,
+      "moduleTitle": "棋盘显示与手势操作",
+      "title": "弹窗及等待锁盘",
+      "originalAcceptanceText": "操作  在提示、设置、结算和外部等待期间操作棋盘。\n通过  不穿透、不改盘、不扣血；结束后按当前对局状态恢复输入。",
+      "currentStatus": "verified_local_scope",
+      "currentResult": "提示、设置、结算、后台与模拟外部等待使用统一输入门禁，客户端测试验证不穿透、不改盘且解除后可操作。",
+      "originalRequirementIDs": [
+        "ADS-01",
+        "PLAY-08"
+      ],
+      "evidence": [
+        "AppTests/GameplayAvailabilityTests.swift",
+        "AppTests/BoardInputRewardGateTests.swift",
+        "AppTests/RewardReadinessTests.swift",
+        "Validation/test-runs/original-0220-app.log"
+      ]
+    },
+    {
+      "id": "05-01",
+      "module": 5,
+      "moduleTitle": "对局流程与胜负结算",
+      "title": "游戏信息与计分显示",
+      "originalAcceptanceText": "操作  核对Level、Score、进度、生命和规则卡。\n通过  显示与真实状态及冻结计分规则一致，不能只更新画面而不更新存档。",
+      "currentStatus": "partial",
+      "currentResult": "生命、分数、进度和规则卡与保存状态对应，但正式冻结计分数值及表现尚不能对标。",
+      "originalRequirementIDs": [
+        "UI-06",
+        "PLAY-10"
+      ],
+      "evidence": [
+        "App/Views/RootView.swift",
+        "Tests/CapydokuCoreTests/GameSessionTests.swift",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "05-02",
+      "module": 5,
+      "moduleTitle": "对局流程与胜负结算",
+      "title": "最后一命通关幂等",
+      "originalAcceptanceText": "操作  剩一条命时找到最后一只动物，再快速点击。\n通过  仍判胜利且立即锁定输入；奖励、分数和结算只执行一次。",
+      "currentStatus": "verified_local_scope",
+      "currentResult": "剩一命找齐目标仍胜利并锁定输入，重复提交不重复结算、加分或解锁，业务事件与状态原子保存有测试。",
+      "originalRequirementIDs": [
+        "PLAY-10"
+      ],
+      "evidence": [
+        "Tests/CapydokuCoreTests/GameSessionTests.swift",
+        "AppTests/LevelResultAnalyticsTests.swift",
+        "AppTests/BuffUseDurabilityTests.swift",
+        "Validation/original-verification.json"
+      ]
+    },
+    {
+      "id": "05-03",
+      "module": 5,
+      "moduleTitle": "对局流程与胜负结算",
+      "title": "一命提醒与失败",
+      "originalAcceptanceText": "操作  观察仅剩一条命的提示，再扣完最后一条命。\n通过  提示与基线一致；生命停在0，失败弹层仅出现一次。",
+      "currentStatus": "partial",
+      "currentResult": "一命提醒、生命归零和单次失败弹层已实现，但提示内容及时序仍缺冻结参考。",
+      "originalRequirementIDs": [
+        "PLAY-12",
+        "PLAY-11"
+      ],
+      "evidence": [
+        "App/Views/RootView.swift",
+        "Docs/original-feedback/manifest.json",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "05-04",
+      "module": 5,
+      "moduleTitle": "对局流程与胜负结算",
+      "title": "重开确认及换盘规则",
+      "originalAcceptanceText": "操作  在已有标记、分数时Restart并连续点击。\n通过  按冻结规则确认及重置；尝试次数只加一次，换盘行为符合F4。",
+      "currentStatus": "partial",
+      "currentResult": "同盘重开、尝试计数和已用道具防刷已实现，冻结确认分支及换盘语义仍缺，要求新盘的导入配置明确拒绝。",
+      "originalRequirementIDs": [
+        "PLAY-11",
+        "REF-02"
+      ],
+      "evidence": [
+        "AppTests/RestartNavigationTests.swift",
+        "Validation/original-conformance.json",
+        "AppTests/GameplayConfigurationIntegrationTests.swift"
+      ]
+    },
+    {
+      "id": "05-05",
+      "module": 5,
+      "moduleTitle": "对局流程与胜负结算",
+      "title": "多次复活与结果口径",
+      "originalAcceptanceText": "操作  失败后复活，再失败、复活并最终通关。\n通过  流程可重复；生命恢复正确，尝试和结束事件按冻结口径记录。",
+      "currentStatus": "partial",
+      "currentResult": "重复失败复活保留盘面且分别记录实际结果，但尝试次数及结束事件正式冻结口径尚待确认。",
+      "originalRequirementIDs": [
+        "PLAY-11",
+        "DATA-03"
+      ],
+      "evidence": [
+        "AppTests/OriginalFlowTests.swift",
+        "AppTests/LevelResultAnalyticsTests.swift",
+        "AppTests/RewardCompletionRecoveryTests.swift",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "05-06",
+      "module": 5,
+      "moduleTitle": "对局流程与胜负结算",
+      "title": "结算导航与继续",
+      "originalAcceptanceText": "操作  测试结算下一关、返回首页和继续游戏。\n通过  跳转、进度及反馈正确；主动退出保留策略、击败比例和Rank有确认依据。",
+      "currentStatus": "partial",
+      "currentResult": "下一关、首页和继续流程可走通，主动退出正式保留策略、击败比例和Rank缺冻结定义。",
+      "originalRequirementIDs": [
+        "PLAY-10",
+        "UI-04"
+      ],
+      "evidence": [
+        "UITests/CapydokuUITests.swift",
+        "AppTests/OriginalFlowTests.swift",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "06-01",
+      "module": 6,
+      "moduleTitle": "生成器与质量筛选",
+      "title": "批量生成及过滤计数",
+      "originalAcceptanceText": "操作  以教学、普通和Hard目标批量生成候选。\n通过  输入与批次有版本；候选数量、各阶段淘汰数及入选数可核对。",
+      "currentStatus": "verified_local_scope",
+      "currentResult": "版本化Target与批次记录包含候选数、各阶段拒绝和入选结果，运行时成功失败报告均持久化并可定位。",
+      "originalRequirementIDs": [
+        "GEN-08",
+        "GEN-14"
+      ],
+      "evidence": [
+        "Validation/original-generation/summary.json",
+        "Sources/CapydokuCore/GenerationPipeline.swift",
+        "AppTests/GenerationAuditIntegrationTests.swift",
+        "Validation/original-verification.json"
+      ]
+    },
+    {
+      "id": "06-02",
+      "module": 6,
+      "moduleTitle": "生成器与质量筛选",
+      "title": "候选硬筛选与难度门槛",
+      "originalAcceptanceText": "操作  加入非法、非唯一解、难度越界及违规试探候选。\n通过  全部被相应筛选拒绝，不能混入正式包。",
+      "currentStatus": "partial",
+      "currentResult": "非法、非唯一、难度越界及规则深度限制按本地Profile拒绝，正式冻结难度和试探规则尚未校准。",
+      "originalRequirementIDs": [
+        "GEN-09",
+        "GEN-10"
+      ],
+      "evidence": [
+        "Sources/CapydokuCore/GenerationPipeline.swift",
+        "Validation/original-generation/summary.json",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "06-03",
+      "module": 6,
+      "moduleTitle": "生成器与质量筛选",
+      "title": "同产品及跨产品相似度",
+      "originalAcceptanceText": "操作  用重复与相似棋盘测试本产品及跨产品比较。\n通过  按冻结比较库、权重和阈值拒绝；报告包含命中对象与原因。",
+      "currentStatus": "partial",
+      "currentResult": "本产品历史答案与区域硬去重及综合相似度已实现，但冻结权重阈值和真实跨产品比较库缺失。",
+      "originalRequirementIDs": [
+        "GEN-12",
+        "GEN-13"
+      ],
+      "evidence": [
+        "Validation/original-generation/summary.json",
+        "AppTests/ExperimentalGenerationHistoryTests.swift",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "06-04",
+      "module": 6,
+      "moduleTitle": "生成器与质量筛选",
+      "title": "种子重建与三类报告",
+      "originalAcceptanceText": "操作  用同一seed、生成器和配置版本重建。\n通过  棋盘、答案及生成结果一致；关卡附求解、难度与相似度报告。",
+      "currentStatus": "partial",
+      "currentResult": "150关按版本和种子重建一致并有本地求解难度相似度报告，但正式难度校准及跨产品报告仍未齐。",
+      "originalRequirementIDs": [
+        "GEN-06",
+        "GEN-14"
+      ],
+      "evidence": [
+        "Validation/original-0219-rebuild.json",
+        "Validation/original-generation/summary.json",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "06-05",
+      "module": 6,
+      "moduleTitle": "生成器与质量筛选",
+      "title": "生成预算与失败退出",
+      "originalAcceptanceText": "操作  设置无法命中的目标或耗尽候选预算。\n通过  有明确终止及原因，不无期限重试、不返回不合格关卡。",
+      "currentStatus": "verified_local_scope",
+      "currentResult": "预算、候选数量和尺寸容量耗尽有明确终止原因，生成失败不放行非法盘并保留原对局。",
+      "originalRequirementIDs": [
+        "GEN-08",
+        "GEN-16"
+      ],
+      "evidence": [
+        "Sources/CapydokuCore/GenerationPipeline.swift",
+        "AppTests/ExperimentalGenerationHistoryTests.swift",
+        "AppTests/GenerationAuditIntegrationTests.swift",
+        "Validation/original-verification.json"
+      ]
+    },
+    {
+      "id": "07-01",
+      "module": 7,
+      "moduleTitle": "道具与复活结果",
+      "title": "解锁库存及跨关免费次数",
+      "originalAcceptanceText": "操作  核对解锁、赠送、库存、跨关与零库存按钮状态。\n通过  两种道具分别计数；同一发放节点不重复领取，重开或新尝试是否重置按配置执行。",
+      "currentStatus": "partial",
+      "currentResult": "独立库存、免费来源、配额和跨关策略的本地配置路径已验证，但正式逐关解锁赠送及重置数值未冻结。",
+      "originalRequirementIDs": [
+        "PLAY-04",
+        "ADS-09"
+      ],
+      "evidence": [
+        "Tests/CapydokuCoreTests/ToolInventorySourceTests.swift",
+        "AppTests/ToolSourceAnalyticsTests.swift",
+        "AppTests/GameplayConfigurationIntegrationTests.swift",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "07-02",
+      "module": 7,
+      "moduleTitle": "道具与复活结果",
+      "title": "库存直接找答案",
+      "originalAcceptanceText": "操作  有库存时使用直接找答案并快速重复点击。\n通过  每次有效使用扣一次，只揭示一个正确目标；不扣血、不自动打叉。",
+      "currentStatus": "verified_local_scope",
+      "currentResult": "有效直接找答案原子扣一次库存且只揭示一个正确目标，不扣血、不自动打叉，写盘失败和重复操作已覆盖。",
+      "originalRequirementIDs": [
+        "PLAY-06"
+      ],
+      "evidence": [
+        "AppTests/BuffUseDurabilityTests.swift",
+        "Tests/CapydokuCoreTests/GameSessionTests.swift",
+        "UITests/CapydokuUITests.swift",
+        "Validation/original-verification.json"
+      ]
+    },
+    {
+      "id": "07-03",
+      "module": 7,
+      "moduleTitle": "道具与复活结果",
+      "title": "提示预览关闭与应用",
+      "originalAcceptanceText": "操作  打开Hint观察预览后关闭，再打开并Apply。\n通过  显示时扣次；关闭不改盘、不退款；Apply只写入预览中的建议X。",
+      "currentStatus": "verified_local_scope",
+      "currentResult": "提示实际显示扣次、关闭不退款不改盘及Apply只应用原预览的路径已验证，冷恢复不重复消费。",
+      "originalRequirementIDs": [
+        "PLAY-08"
+      ],
+      "evidence": [
+        "Tests/CapydokuCoreTests/HintUsePersistenceTests.swift",
+        "AppTests/BuffUseDurabilityTests.swift",
+        "UITests/CapydokuUITests.swift",
+        "Validation/original-verification.json"
+      ]
+    },
+    {
+      "id": "07-04",
+      "module": 7,
+      "moduleTitle": "道具与复活结果",
+      "title": "提示特殊局面",
+      "originalAcceptanceText": "操作  重复点击Apply；在无提示或错误X局面使用Hint。\n通过  不重复扣次或执行；特殊局面按F4处理，不给错误推理或卡死。",
+      "currentStatus": "partial",
+      "currentResult": "重复Apply、无可用提示和错误标记场景有安全测试，但特殊局面F4和原提示文案映射仍缺正式确认。",
+      "originalRequirementIDs": [
+        "PLAY-07",
+        "PLAY-08"
+      ],
+      "evidence": [
+        "Tests/CapydokuCoreTests/HintUsePersistenceTests.swift",
+        "AppTests/BuffUseDurabilityTests.swift",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "07-05",
+      "module": 7,
+      "moduleTitle": "道具与复活结果",
+      "title": "奖励取消失败超时",
+      "originalAcceptanceText": "操作  取消广告，或模拟超时、失败、缺失奖励回调。\n通过  不发奖、不扣库存、不改盘；可结束等待并恢复正确页面。",
+      "currentStatus": "verified_local_scope",
+      "currentResult": "可控模拟取消、失败、无回调超时及迟到结果验证不发奖不扣库存并恢复等待页面，本项结论限游戏侧回调处理。",
+      "originalRequirementIDs": [
+        "ADS-06",
+        "ADS-07"
+      ],
+      "evidence": [
+        "AppTests/RewardReadinessTests.swift",
+        "AppTests/RewardLifecycleDurabilityTests.swift",
+        "Validation/test-runs/original-0220-app.log"
+      ]
+    },
+    {
+      "id": "07-06",
+      "module": 7,
+      "moduleTitle": "道具与复活结果",
+      "title": "重复奖励回调",
+      "originalAcceptanceText": "操作  向同一offer_id重复发送有效奖励回调。\n通过  奖励及功能只执行一次，不多揭示动物、不额外累积库存。",
+      "currentStatus": "verified_local_scope",
+      "currentResult": "同一offer的重复回执及保存重试不重复发放库存或执行道具，奖励台账与效果原子提交有验证。",
+      "originalRequirementIDs": [
+        "ADS-07"
+      ],
+      "evidence": [
+        "AppTests/RewardLifecycleDurabilityTests.swift",
+        "AppTests/RewardCompletionRecoveryTests.swift",
+        "Validation/test-runs/original-0221-core.log",
+        "Validation/test-runs/original-0220-app.log"
+      ]
+    },
+    {
+      "id": "07-07",
+      "module": 7,
+      "moduleTitle": "道具与复活结果",
+      "title": "无目标时迟到奖励",
+      "originalAcceptanceText": "操作  让找答案奖励在关卡结束或无目标后才到达。\n通过  不改结束棋盘；只补发一次对应库存。",
+      "currentStatus": "verified_local_scope",
+      "currentResult": "已结束或无目标局面的直接找答案奖励不改棋盘，只补一次对应库存并保留原奖励归属。",
+      "originalRequirementIDs": [
+        "ADS-07",
+        "ADS-08"
+      ],
+      "evidence": [
+        "AppTests/RewardCompletionRecoveryTests.swift",
+        "AppTests/RewardLifecycleDurabilityTests.swift",
+        "Validation/original-verification.json"
+      ]
+    },
+    {
+      "id": "07-08",
+      "module": 7,
+      "moduleTitle": "道具与复活结果",
+      "title": "复活保留进度",
+      "originalAcceptanceText": "操作  带动物、两类X和分数失败后获得复活奖励。\n通过  恢复本关满生命，其余进度保留；重复回调不再次发奖。",
+      "currentStatus": "verified_local_scope",
+      "currentResult": "确认复活按当前对局配置恢复满生命并保留动物、两类X和分数，重复回调不重复执行。",
+      "originalRequirementIDs": [
+        "ADS-08",
+        "PLAY-11"
+      ],
+      "evidence": [
+        "AppTests/OriginalFlowTests.swift",
+        "AppTests/RewardCompletionRecoveryTests.swift",
+        "Tests/CapydokuCoreTests/GameSessionTests.swift",
+        "Validation/original-verification.json"
+      ]
+    },
+    {
+      "id": "07-09",
+      "module": 7,
+      "moduleTitle": "道具与复活结果",
+      "title": "前20关四激励入口",
+      "originalAcceptanceText": "操作  逐关核对L1–20四个激励入口，含level_start_free。\n通过  显示、次数和顺序符合配置；实际接入后验证开局免费广告的成功奖励与失败状态。",
+      "currentStatus": "partial",
+      "currentResult": "四入口与开局免费奖励客户端已有实现，但逐关节点次数、触发顺序和真实SDK成功失败仍待冻结及联调。",
+      "originalRequirementIDs": [
+        "ADS-14",
+        "PLAY-09"
+      ],
+      "evidence": [
+        "AppTests/GameplayConfigurationIntegrationTests.swift",
+        "AppTests/RewardReadinessTests.swift",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "08-01",
+      "module": 8,
+      "moduleTitle": "动态新手教学",
+      "title": "多种子动态教学目标",
+      "originalAcceptanceText": "操作  更换多个合格L1种子，完整完成教学。\n通过  均为4×4合格教学盘；目标随棋盘变化且明确，不依赖固定坐标。",
+      "currentStatus": "verified_local_scope",
+      "currentResult": "64种子教学准入及多板安全路径验证通过，当前与历史棋盘产生不同目标顺序而非固定坐标。",
+      "originalRequirementIDs": [
+        "GEN-03"
+      ],
+      "evidence": [
+        "Tests/CapydokuCoreTests/DynamicTutorialPlanTests.swift",
+        "Tests/CapydokuCoreTests/TutorialEligibilityTests.swift",
+        "AppTests/TutorialRecoveryTests.swift",
+        "Validation/original-0219-rebuild.json",
+        "Validation/test-runs/original-0221-core.log"
+      ]
+    },
+    {
+      "id": "08-02",
+      "module": 8,
+      "moduleTitle": "动态新手教学",
+      "title": "教学规则操作与拦截",
+      "originalAcceptanceText": "操作  逐项检查教学内容，并操作非目标格。\n通过  覆盖单击及撤销、横纵滑动、双击和四条规则；越权操作不破坏教学。",
+      "currentStatus": "verified_local_scope",
+      "currentResult": "九步教学覆盖四规则、单击撤销、横纵滑动和双击，非目标操作受限，三个优化候选正常UI完成全路径。",
+      "originalRequirementIDs": [
+        "GEN-04"
+      ],
+      "evidence": [
+        "Tests/CapydokuCoreTests/TutorialEligibilityTests.swift",
+        "UITests/CapydokuUITests.swift",
+        "Validation/original-0221-candidate-playthrough.json"
+      ]
+    },
+    {
+      "id": "08-03",
+      "module": 8,
+      "moduleTitle": "动态新手教学",
+      "title": "教学中断恢复与完成",
+      "originalAcceptanceText": "操作  中途退出或强退后重进，再完成并重新启动。\n通过  按F4恢复或重启，完成状态保存；无教学路径的候选被拒绝。",
+      "currentStatus": "partial",
+      "currentResult": "逐步及半程滑动恢复、旧教学版本迁移和完成不重入已验证，但F4正式退出恢复语义仍未冻结。",
+      "originalRequirementIDs": [
+        "GEN-03",
+        "SAVE-04"
+      ],
+      "evidence": [
+        "Tests/CapydokuCoreTests/TutorialPlanStorageTests.swift",
+        "AppTests/TutorialPlanMigrationTests.swift",
+        "AppTests/TutorialRecoveryTests.swift",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "09-01",
+      "module": 9,
+      "moduleTitle": "前150关内容与难度曲线",
+      "title": "正式150关数据清单",
+      "originalAcceptanceText": "操作  核对正式包L1–150编号、配置及数据清单。\n通过  无缺号或重复；每关有Profile、seed、版本及三类报告，与验收版本一致。",
+      "currentStatus": "partial",
+      "currentResult": "当前包150关编号及Profile种子版本和本地报告齐全，但正式冻结配置、难度和跨产品验收报告未齐。",
+      "originalRequirementIDs": [
+        "GEN-06",
+        "GEN-14"
+      ],
+      "evidence": [
+        "Validation/original-generation/summary.json",
+        "Validation/original-0219-rebuild.json",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "09-02",
+      "module": 9,
+      "moduleTitle": "前150关内容与难度曲线",
+      "title": "150关合法性与难度容差",
+      "originalAcceptanceText": "操作  执行150关全部硬校验与难度筛选。\n通过  全部合法、连通且唯一解；难度在冻结容差内、不跨分段。",
+      "currentStatus": "partial",
+      "currentResult": "150关全部合法、连通、唯一且逻辑可解，正式参考难度的10%至15%容差尚不能验证。",
+      "originalRequirementIDs": [
+        "GEN-02",
+        "GEN-09"
+      ],
+      "evidence": [
+        "Validation/original-generation/summary.json",
+        "Validation/original-0219-rebuild.json",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "09-03",
+      "module": 9,
+      "moduleTitle": "前150关内容与难度曲线",
+      "title": "前20关及十关难度波形",
+      "originalAcceptanceText": "操作  核对前20关角色及L10至L150的十关节点。\n通过  符合冻结节奏；每十关节点为Hard，高难之后有恢复或稳定关。",
+      "currentStatus": "partial",
+      "currentResult": "教学普通Hard及恢复节奏按临时Profile执行，但冻结角色曲线和真人难度体验未对标。",
+      "originalRequirementIDs": [
+        "GEN-05",
+        "GEN-07"
+      ],
+      "evidence": [
+        "Validation/original-generation/summary.json",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "09-04",
+      "module": 9,
+      "moduleTitle": "前150关内容与难度曲线",
+      "title": "重点关卡人工体验",
+      "originalAcceptanceText": "操作  试玩前20关、全部Hard与恢复关及其他抽样关。\n通过  提示和教学可用；保存体验记录，发现的难度或错误提示问题已修复复测。",
+      "currentStatus": "partial",
+      "currentResult": "重点关卡提示与自动求解恢复有记录，但尚无前20关及全部Hard恢复关的完整人工体验验收报告。",
+      "originalRequirementIDs": [
+        "GEN-05",
+        "GEN-14"
+      ],
+      "evidence": [
+        "Validation/original-generation/summary.json",
+        "Validation/original-verification.json",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "10-01",
+      "module": 10,
+      "moduleTitle": "151关以后的关卡循环",
+      "title": "真机150到151衔接",
+      "originalAcceptanceText": "操作  真机通关150并进入151，连续推进后续关卡。\n通过  顺利衔接；按确认的数据方案取关，不缺关、不换错答案。",
+      "currentStatus": "partial",
+      "currentResult": "模拟器和应用层有150到151及后续生成恢复证据，真机150通关衔接与正式F3数据方案尚未验收。",
+      "originalRequirementIDs": [
+        "GEN-15",
+        "TECH-07"
+      ],
+      "evidence": [
+        "AppTests/ExperimentalGenerationHistoryTests.swift",
+        "Validation/original-verification.json",
+        "Validation/original-0221-physical-install.json",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "10-02",
+      "module": 10,
+      "moduleTitle": "151关以后的关卡循环",
+      "title": "后续十关组与上限",
+      "originalAcceptanceText": "操作  按F3约定的种子、棋盘规模与批次数量生成。\n通过  每十关至少2个Flow、1个Recovery，第10关Hard；不超过长期难度上限。",
+      "currentStatus": "partial",
+      "currentResult": "临时Profile验证151至180及容量压力下291至320共60关，正式长期难度及F3规则未冻结且未证明无限生成。",
+      "originalRequirementIDs": [
+        "GEN-15",
+        "GEN-16"
+      ],
+      "evidence": [
+        "Validation/original-generation-0214-final/independent-audit.json",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "10-03",
+      "module": 10,
+      "moduleTitle": "151关以后的关卡循环",
+      "title": "后续过滤预算及日志",
+      "originalAcceptanceText": "操作  检查每次生成的过滤日志，并测试超时和耗尽。\n通过  仍强制执行合法、难度和相似度校验；耗时和失败恢复符合约定。",
+      "currentStatus": "partial",
+      "currentResult": "运行时每批过滤、预算失败和保存原局有验证，但正式难度、跨产品门槛和性能约定未齐。",
+      "originalRequirementIDs": [
+        "GEN-08",
+        "GEN-15"
+      ],
+      "evidence": [
+        "AppTests/GenerationAuditIntegrationTests.swift",
+        "AppTests/ExperimentalGenerationHistoryTests.swift",
+        "Validation/original-generation-0214-final/independent-audit.json",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "10-04",
+      "module": 10,
+      "moduleTitle": "151关以后的关卡循环",
+      "title": "后续棋盘中断同盘恢复",
+      "originalAcceptanceText": "操作  在151以后中断、强退或断网，再恢复。\n通过  按F3恢复同一棋盘和玩家状态；不会因重新生成改变正在玩的答案。",
+      "currentStatus": "partial",
+      "currentResult": "实验方案保存棋盘seed版本和玩家状态并有10阶冷恢复证据，但151以后的正式F3架构仍未确认。",
+      "originalRequirementIDs": [
+        "GEN-15",
+        "SAVE-03"
+      ],
+      "evidence": [
+        "AppTests/ExperimentalGenerationHistoryTests.swift",
+        "Validation/original-verification.json",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "11-01",
+      "module": 11,
+      "moduleTitle": "启动首页游戏页与设置",
+      "title": "首启条款及权限顺序",
+      "originalAcceptanceText": "操作  首次安装，依次处理启动、条款与系统权限。\n通过  顺序符合确认方案；链接可打开，系统不允许重复请求时正确跳过。",
+      "currentStatus": "partial",
+      "currentResult": "两段加载、Welcome及通知Tracking流程已有正常候选UI证据，正式法律链接、冻结时序及地区Data Use仍待交付。",
+      "originalRequirementIDs": [
+        "UI-05",
+        "TECH-05"
+      ],
+      "evidence": [
+        "AppTests/StartupPreparationTests.swift",
+        "Docs/original-startup/manifest.json",
+        "Validation/original-0221-candidate-playthrough.json",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "11-02",
+      "module": 11,
+      "moduleTitle": "启动首页游戏页与设置",
+      "title": "权限拒绝及离线启动",
+      "originalAcceptanceText": "操作  分别拒绝通知、Tracking等非必要权限并断网启动。\n通过  仍可进入并完成核心游戏；拒绝后不反复强制弹窗。",
+      "currentStatus": "partial",
+      "currentResult": "三个优化候选实际拒绝通知和Tracking后可教学游玩且冷启不重复同意，但真实断网及全部权限组合未完整验收。",
+      "originalRequirementIDs": [
+        "TECH-05",
+        "TECH-07"
+      ],
+      "evidence": [
+        "Validation/original-0221-candidate-playthrough.json",
+        "AppTests/StartupPreparationTests.swift",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "11-03",
+      "module": 11,
+      "moduleTitle": "启动首页游戏页与设置",
+      "title": "首页游戏页与排除功能",
+      "originalAcceptanceText": "操作  检查首页、当前关卡按钮及游戏页返回和设置。\n通过  入口与布局齐全，当前进度正确；无个人资料、头像编辑等排除功能。",
+      "currentStatus": "verified_local_scope",
+      "currentResult": "首页签到设置及当前关卡、游戏返回入口完整，个人资料和头像编辑均未实现，正常候选路径已验证。",
+      "originalRequirementIDs": [
+        "UI-01",
+        "UI-02",
+        "UI-03",
+        "UI-06"
+      ],
+      "evidence": [
+        "App/Views/RootView.swift",
+        "App/Views/SupportingViews.swift",
+        "Validation/original-0221-candidate-playthrough.json"
+      ]
+    },
+    {
+      "id": "11-04",
+      "module": 11,
+      "moduleTitle": "启动首页游戏页与设置",
+      "title": "四开关生效与保存",
+      "originalAcceptanceText": "操作  切换音乐、音效、语音、震动，再关闭重开App。\n通过  即时生效且状态保存；各开关仅控制约定范围。",
+      "currentStatus": "partial",
+      "currentResult": "四开关独立保存和音频策略已有测试，但原音乐音效语音资源缺失，不能验证实际听感与全部播放行为。",
+      "originalRequirementIDs": [
+        "UI-07",
+        "AUDIO-01",
+        "AUDIO-05"
+      ],
+      "evidence": [
+        "AppTests/AppLanguageStateTests.swift",
+        "App/Services/FeedbackPlayer.swift",
+        "Resources/audio-manifest.json",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "11-05",
+      "module": 11,
+      "moduleTitle": "启动首页游戏页与设置",
+      "title": "设置反馈重开与弹层",
+      "originalAcceptanceText": "操作  测试设置关闭、Restart、Feedback及各种弹层。\n通过  遮罩不穿透，焦点与页面恢复正确；无对局重开和反馈去向符合F4／F5。",
+      "currentStatus": "partial",
+      "currentResult": "关闭恢复、遮罩门禁及首页重开已有验证，真实VoiceOver焦点和冻结F4确认及F5反馈去向尚未完成。",
+      "originalRequirementIDs": [
+        "UI-07",
+        "UI-09"
+      ],
+      "evidence": [
+        "AppTests/RestartNavigationTests.swift",
+        "AppTests/GameplayAvailabilityTests.swift",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "11-06",
+      "module": 11,
+      "moduleTitle": "启动首页游戏页与设置",
+      "title": "未定义额外玩法",
+      "originalAcceptanceText": "操作  测试Daily Challenge、Pattern Mode、排行或活动。\n通过  逐项符合F5确定的首发范围、锁定及开放规则；排除项注明依据，不能留假入口。",
+      "currentStatus": "out_of_scope_demo",
+      "currentResult": "本轮经批准不开放Daily Challenge、Pattern Mode、排行榜和活动，正式首发范围及玩法仍需单独定义。",
+      "originalRequirementIDs": [
+        "UI-04"
+      ],
+      "evidence": [
+        "README.md",
+        "App/Views/RootView.swift",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "12-01",
+      "module": 12,
+      "moduleTitle": "签到与周期奖励",
+      "title": "当日签到只领取一次",
+      "originalAcceptanceText": "操作  首次进入签到页，领取后当天反复进入及点击。\n通过  连续天数、日期状态与奖励显示正确；同一自然日只领一次。",
+      "currentStatus": "partial",
+      "currentResult": "临时UTC日历的领取状态和防重复有正常候选UI及存档测试，但正式项目自然日时区与奖励显示基线未冻结。",
+      "originalRequirementIDs": [
+        "UI-08",
+        "SAVE-05"
+      ],
+      "evidence": [
+        "Validation/original-0221-candidate-playthrough.json",
+        "AppTests/CheckInDateRecoveryTests.swift",
+        "Tests/CapydokuCoreTests/CheckInDateStorageTests.swift",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "12-02",
+      "module": 12,
+      "moduleTitle": "签到与周期奖励",
+      "title": "周期礼盒及重置",
+      "originalAcceptanceText": "操作  按配置完成一个周期并领取末日奖励。\n通过  领取条件、奖励内容、礼盒状态和下一周期行为与F5一致。",
+      "currentStatus": "partial",
+      "currentResult": "临时七日周期奖励和礼盒动效已实现并测试，F5正式周期内容、领取和下一周期规则尚未冻结。",
+      "originalRequirementIDs": [
+        "UI-08"
+      ],
+      "evidence": [
+        "AppTests/OriginalRewardVisualTests.swift",
+        "Docs/original-checkin-0221/manifest.json",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "12-03",
+      "module": 12,
+      "moduleTitle": "签到与周期奖励",
+      "title": "跨日断签与时钟回拨",
+      "originalAcceptanceText": "操作  模拟断签、跨日、离线及系统时间回拨。\n通过  按统一时区和冻结时间策略处理；不会重复发奖，补签行为符合配置。",
+      "currentStatus": "partial",
+      "currentResult": "核心验证断签跨日回拨防重且拒绝异常保存日期，但系统真实时钟变化、正式时区服务器时间和补签规则仍待验。",
+      "originalRequirementIDs": [
+        "UI-08",
+        "SAVE-05"
+      ],
+      "evidence": [
+        "Tests/CapydokuCoreTests/CheckInDateStorageTests.swift",
+        "AppTests/CheckInDateRecoveryTests.swift",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "12-04",
+      "module": 12,
+      "moduleTitle": "签到与周期奖励",
+      "title": "签到奖励冷恢复",
+      "originalAcceptanceText": "操作  领取后强退，再进入签到及首页。\n通过  签到、库存和周期奖励状态正确恢复，首页关卡不被改变。",
+      "currentStatus": "verified_local_scope",
+      "currentResult": "本地签到和库存事务保存及中断恢复已有测试，三个优化候选真实领取后冷启状态和原棋盘保持且不能同日重领。",
+      "originalRequirementIDs": [
+        "SAVE-04",
+        "UI-08"
+      ],
+      "evidence": [
+        "AppTests/CheckInDateRecoveryTests.swift",
+        "Tests/CapydokuCoreTests/CheckInDateStorageTests.swift",
+        "Validation/original-0221-candidate-playthrough.json",
+        "Validation/original-verification.json"
+      ]
+    },
+    {
+      "id": "13-01",
+      "module": 13,
+      "moduleTitle": "本地存档与中断恢复",
+      "title": "对局库存后台恢复",
+      "originalAcceptanceText": "操作  标记、找动物、扣血和用道具后退后台再重启。\n通过  动物、两类X、生命、分数、时长和库存恢复正确；同一发放节点不重复领取免费次数。",
+      "currentStatus": "verified_local_scope",
+      "currentResult": "本地对局各标记生命分数时长及库存可保存恢复，已有核心与UI证据且正常覆盖安装保留完整玩家字段。",
+      "originalRequirementIDs": [
+        "SAVE-01",
+        "SAVE-02",
+        "SAVE-04"
+      ],
+      "evidence": [
+        "Tests/CapydokuCoreTests/PersistenceTests.swift",
+        "Validation/test-runs/original-0221-core.log",
+        "Validation/original-0221-install-audit.json",
+        "Validation/original-verification.json"
+      ]
+    },
+    {
+      "id": "13-02",
+      "module": 13,
+      "moduleTitle": "本地存档与中断恢复",
+      "title": "强退或系统回收恢复",
+      "originalAcceptanceText": "操作  直接强退或模拟进程被系统回收，再重新打开。\n通过  恢复最近有效保存状态；尝试、教学、设置及签到数据一致。",
+      "currentStatus": "partial",
+      "currentResult": "模拟器冷恢复、教学提示和版本迁移已覆盖，真机系统回收及任意前台指令点强退的完整路径未验证。",
+      "originalRequirementIDs": [
+        "SAVE-04",
+        "TECH-07"
+      ],
+      "evidence": [
+        "AppTests/TutorialRecoveryTests.swift",
+        "Validation/original-verification.json",
+        "Validation/original-0221-physical-install.json",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "13-03",
+      "module": 13,
+      "moduleTitle": "本地存档与中断恢复",
+      "title": "未执行奖励中断补偿",
+      "originalAcceptanceText": "操作  在奖励到账未执行时中断并重启。\n通过  direct_find或hint只补一次库存，revive不补发；之后重启不重复补偿。",
+      "currentStatus": "verified_local_scope",
+      "currentResult": "已记账而未执行的直接答案或提示只补一次库存，中断复活不补生命，恢复后再次启动不重复补偿。",
+      "originalRequirementIDs": [
+        "ADS-07",
+        "SAVE-04"
+      ],
+      "evidence": [
+        "AppTests/RewardCompletionRecoveryTests.swift",
+        "AppTests/RewardLifecycleDurabilityTests.swift",
+        "Validation/test-runs/original-0221-core.log",
+        "Validation/test-runs/original-0220-app.log"
+      ]
+    },
+    {
+      "id": "13-04",
+      "module": 13,
+      "moduleTitle": "本地存档与中断恢复",
+      "title": "已执行奖励重放",
+      "originalAcceptanceText": "操作  在奖励功能已执行后中断，再重放同一回调。\n通过  功能和库存都不重复执行或补偿，台账状态一致。",
+      "currentStatus": "verified_local_scope",
+      "currentResult": "已执行台账与玩家效果一并保存，重启后重复回调和确认重试不重复执行或补库存。",
+      "originalRequirementIDs": [
+        "ADS-07",
+        "SAVE-04"
+      ],
+      "evidence": [
+        "AppTests/RewardCompletionRecoveryTests.swift",
+        "AppTests/RewardLifecycleDurabilityTests.swift",
+        "Validation/test-runs/original-0221-core.log",
+        "Validation/test-runs/original-0220-app.log"
+      ]
+    },
+    {
+      "id": "13-05",
+      "module": 13,
+      "moduleTitle": "本地存档与中断恢复",
+      "title": "主备损坏安全回退",
+      "originalAcceptanceText": "操作  分别破坏主存档、再使主存档和备份均不可用。\n通过  先回退有效备份；均不可用时按默认状态启动并记录错误，不崩溃。",
+      "currentStatus": "verified_local_scope",
+      "currentResult": "主档损坏回退有效备份，两份不可用安全初始启动并保留原文件，0.2.21新增合法校验值的越界日期拒绝恢复验证。",
+      "originalRequirementIDs": [
+        "SAVE-04"
+      ],
+      "evidence": [
+        "Tests/CapydokuCoreTests/SaveHardeningTests.swift",
+        "Tests/CapydokuCoreTests/CheckInDateStorageTests.swift",
+        "AppTests/CheckInDateRecoveryTests.swift",
+        "Validation/original-verification.json"
+      ]
+    },
+    {
+      "id": "13-06",
+      "module": 13,
+      "moduleTitle": "本地存档与中断恢复",
+      "title": "旧版本迁移与失败保留",
+      "originalAcceptanceText": "操作  升级旧schema存档，并模拟迁移失败。\n通过  成功保留进度、库存及签到；失败保留旧文件，不静默覆盖坏数据。",
+      "currentStatus": "verified_local_scope",
+      "currentResult": "旧schema和教学v1迁移保留玩家进度，非法或未来版本拒绝并保留原文件，正常升级完整字段审计通过。",
+      "originalRequirementIDs": [
+        "SAVE-04"
+      ],
+      "evidence": [
+        "Tests/CapydokuCoreTests/TutorialPlanStorageTests.swift",
+        "AppTests/TutorialPlanMigrationTests.swift",
+        "Validation/original-0221-install-audit.json",
+        "Validation/test-runs/original-0221-core.log"
+      ]
+    },
+    {
+      "id": "13-07",
+      "module": 13,
+      "moduleTitle": "本地存档与中断恢复",
+      "title": "首页继续及卸载重置",
+      "originalAcceptanceText": "操作  主动返回继续游戏，再卸载重装。\n通过  返回策略符合F4；重装后关卡、道具和签到重置，不承诺云端找回。",
+      "currentStatus": "partial",
+      "currentResult": "本地继续和真实模拟器卸载重装重置有证据，但正式F4返回策略、非空高关完成列表及真机系统备份场景仍有未验范围。",
+      "originalRequirementIDs": [
+        "SAVE-05"
+      ],
+      "evidence": [
+        "Validation/original-0217-operation-reinstall.json",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "14-01",
+      "module": 14,
+      "moduleTitle": "美术动效与音频",
+      "title": "主题资源与全部状态",
+      "originalAcceptanceText": "操作  核对角色、Logo、图标、棋盘和弹窗全部状态。\n通过  资源完整，主题与尺寸统一；没有参考产品品牌或遗漏占位素材。",
+      "currentStatus": "partial",
+      "currentResult": "原创卡皮巴拉主要界面及状态已有样本检查，尚不能以样本证明正式资源全集和全部状态对标通过。",
+      "originalRequirementIDs": [
+        "ART-01"
+      ],
+      "evidence": [
+        "Docs/original-candidates-0221/manifest.json",
+        "Docs/original-tutorial-0219/manifest.json",
+        "Docs/original-contrast-0217/manifest.json",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "14-02",
+      "module": 14,
+      "moduleTitle": "美术动效与音频",
+      "title": "安全区字号与触点",
+      "originalAcceptanceText": "操作  在目标设备检查安全区、最大棋盘与长英文。\n通过  不遮挡、不截字；主要点击区至少44×44pt，正确错误不只靠颜色区分。",
+      "currentStatus": "partial",
+      "currentResult": "紧凑屏幕大棋盘长提示和主要44pt控件已有模拟器证据，目标真机密集格、全部长文及辅助功能仍待验。",
+      "originalRequirementIDs": [
+        "UI-09"
+      ],
+      "evidence": [
+        "Docs/original-compact-0216/manifest.json",
+        "Docs/original-contrast-0217/manifest.json",
+        "Validation/original-0221-physical-install.json",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "14-03",
+      "module": 14,
+      "moduleTitle": "美术动效与音频",
+      "title": "游戏奖励动效与降级",
+      "originalAcceptanceText": "操作  触发正确、错误、Combo、通关及签到动效。\n通过  与业务状态同步，不阻碍后续操作；轻量特效在低性能设备可降级。",
+      "currentStatus": "partial",
+      "currentResult": "正确错误Combo结算及签到动效已有状态同步和视图级验证，真实低性能设备及系统减少动态效果完整回归未完成。",
+      "originalRequirementIDs": [
+        "ART-02"
+      ],
+      "evidence": [
+        "Docs/original-feedback/manifest.json",
+        "AppTests/OriginalRewardVisualTests.swift",
+        "Docs/original-compact-0216/manifest.json",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "14-04",
+      "module": 14,
+      "moduleTitle": "美术动效与音频",
+      "title": "原音频文件与触发验收",
+      "originalAcceptanceText": "操作  逐项触发按钮、X、滑动、撤销、正确错误及Combo声音。\n通过  文件、触发次数、节奏和分组符合冻结音频表；没有未经确认的额外声音。",
+      "currentStatus": "pending",
+      "currentResult": "原音乐音效Combo资源及冻结音频表未提供，自制音频已撤除，当前静音不能进行本条音频验收。",
+      "originalRequirementIDs": [
+        "AUDIO-01",
+        "AUDIO-04",
+        "AUDIO-05"
+      ],
+      "evidence": [
+        "Resources/audio-manifest.json",
+        "App/Services/FeedbackPlayer.swift",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "14-05",
+      "module": 14,
+      "moduleTitle": "美术动效与音频",
+      "title": "音频叠加打断与恢复",
+      "originalAcceptanceText": "操作  快速操作并切前后台，测试外部播放前后及四个开关。\n通过  声音不失控叠加、不漏停或错误重播；恢复前次开关与播放状态。",
+      "currentStatus": "partial",
+      "currentResult": "开关、背景和中断的播放策略已有客户端测试，但没有原音频和真实来电外部播放听感回归，不能判播放行为通过。",
+      "originalRequirementIDs": [
+        "AUDIO-02",
+        "AUDIO-03",
+        "AUDIO-06"
+      ],
+      "evidence": [
+        "App/Services/FeedbackPlayer.swift",
+        "Resources/audio-manifest.json",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "15-01",
+      "module": 15,
+      "moduleTitle": "外部交接与实际集成",
+      "title": "实际SDK交付清单",
+      "originalAcceptanceText": "操作  核对实际SDK版本、责任表和接口文档。\n通过  实际安装包与记录一致；广告外部接入完成，不能用模拟回调代替交付。",
+      "currentStatus": "pending",
+      "currentResult": "尚无实际第三方SDK及供应商交付版本清单，模拟适配器不能替代外部接入验收。",
+      "originalRequirementIDs": [
+        "TECH-03",
+        "TECH-04",
+        "TECH-06"
+      ],
+      "evidence": [
+        "App/Services/RewardProvider.swift",
+        "App/PrivacyInfo.xcprivacy",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "15-02",
+      "module": 15,
+      "moduleTitle": "外部交接与实际集成",
+      "title": "真实广告播放与奖励",
+      "originalAcceptanceText": "操作  真实测试加载、播放、完整观看、取消和失败。\n通过  Loading与输入冻结正确；奖励成功才执行，失败恢复且显示约定提示。",
+      "currentStatus": "pending",
+      "currentResult": "游戏侧加载展示奖励链具备模拟验证，但未接真实广告SDK，尚无实际加载完整观看取消失败证据。",
+      "originalRequirementIDs": [
+        "ADS-06",
+        "TECH-03"
+      ],
+      "evidence": [
+        "AppTests/RewardReadinessTests.swift",
+        "App/Services/RewardProvider.swift",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "15-03",
+      "module": 15,
+      "moduleTitle": "外部交接与实际集成",
+      "title": "真实广告弱网及异常",
+      "originalAcceptanceText": "操作  测试弱网、无填充、超时和重复或延迟回调。\n通过  不阻塞、不重复发奖；与07、13的结果一致，保留日志及台账。",
+      "currentStatus": "pending",
+      "currentResult": "模拟超时重复和迟到回调已验证，真实弱网无填充与SDK异常尚未联调，不能按真实集成条款通过。",
+      "originalRequirementIDs": [
+        "ADS-05",
+        "ADS-14"
+      ],
+      "evidence": [
+        "AppTests/RewardLifecycleDurabilityTests.swift",
+        "AppTests/RewardReadinessTests.swift",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "15-04",
+      "module": 15,
+      "moduleTitle": "外部交接与实际集成",
+      "title": "真实插页与L10衔接",
+      "originalAcceptanceText": "操作  通关后下一关或返回，测试L10到L11及横幅关闭。\n通过  插页结束或失败后继续原操作；教学／失败不插入，提示顺序正确，棋盘不移位。",
+      "currentStatus": "partial",
+      "currentResult": "模拟插页的胜利频控、L10挑战衔接和横幅默认关闭已验证，真实广告展示及正式配置仍待验。",
+      "originalRequirementIDs": [
+        "ADS-01",
+        "ADS-03",
+        "ADS-04",
+        "ADS-05"
+      ],
+      "evidence": [
+        "AppTests/OriginalFlowTests.swift",
+        "AppTests/InterstitialAnalyticsTests.swift",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "15-05",
+      "module": 15,
+      "moduleTitle": "外部交接与实际集成",
+      "title": "实际分析事件链",
+      "originalAcceptanceText": "操作  核对分析事件样本与一次完整业务路径。\n通过  12项定义中11项启用，coin_change不上报；字段、次数、去重和会话口径正确。",
+      "currentStatus": "partial",
+      "currentResult": "11个本地启用事件和禁止coin_change及持久幂等已有测试，正式口径、SDK传输和完整线上业务样本尚未验收。",
+      "originalRequirementIDs": [
+        "DATA-02",
+        "DATA-03",
+        "DATA-06"
+      ],
+      "evidence": [
+        "App/Services/AnalyticsRecorder.swift",
+        "AppTests/AnalyticsRecorderTests.swift",
+        "AppTests/LevelResultAnalyticsTests.swift",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "15-06",
+      "module": 15,
+      "moduleTitle": "外部交接与实际集成",
+      "title": "线上补报隔离与看板",
+      "originalAcceptanceText": "操作  断网后恢复，并检查测试／正式数据及看板。\n通过  事件补报保留原关联信息；环境隔离；四类看板及插页、无填充指标可计算，收益按SDK回传值记录且不重复。",
+      "currentStatus": "partial",
+      "currentResult": "本地离线队列原归属重试和四环境隔离已实现，但真实补报传输、四类看板及SDK收益回传均未完成。",
+      "originalRequirementIDs": [
+        "DATA-01",
+        "DATA-05",
+        "DATA-06",
+        "ADS-13"
+      ],
+      "evidence": [
+        "AppTests/AnalyticsRecorderTests.swift",
+        "Validation/original-0221-candidate-playthrough.json",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "15-07",
+      "module": 15,
+      "moduleTitle": "外部交接与实际集成",
+      "title": "真实远程配置回退",
+      "originalAcceptanceText": "操作  拉取远程配置失败，并在对局中更新配置。\n通过  回退缓存或默认值；新配置按约定下次生效，不改变正在进行的一局。",
+      "currentStatus": "partial",
+      "currentResult": "配置缓存默认回退及新局生效有可控传输测试，实际端点冻结数据与供应商线上合同仍缺。",
+      "originalRequirementIDs": [
+        "TECH-04",
+        "ADS-12"
+      ],
+      "evidence": [
+        "AppTests/GameplayConfigurationStoreTests.swift",
+        "AppTests/GameplayConfigurationIntegrationTests.swift",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "15-08",
+      "module": 15,
+      "moduleTitle": "外部交接与实际集成",
+      "title": "同意门禁监控推送",
+      "originalAcceptanceText": "操作  检查同意前后初始化、监控及推送允许／拒绝。\n通过  监控与推送按约定工作；分析与广告不早于相应同意节点，拒绝或失败不阻塞游玩。",
+      "currentStatus": "partial",
+      "currentResult": "本地统计同意门禁及实际通知ATT拒绝后游玩已有证据，真实广告初始化监控推送注册CMP尚未接入。",
+      "originalRequirementIDs": [
+        "TECH-03",
+        "TECH-04",
+        "TECH-05"
+      ],
+      "evidence": [
+        "Validation/original-0221-candidate-playthrough.json",
+        "AppTests/StartupPreparationTests.swift",
+        "AppTests/AnalyticsRecorderTests.swift",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "15-09",
+      "module": 15,
+      "moduleTitle": "外部交接与实际集成",
+      "title": "正式插页频控开关",
+      "originalAcceptanceText": "操作  核对插页起始关、每N次通关频率及广告关闭开关。\n通过  同次结算不重复展示；总开关与各广告位关闭后符合配置，继续游玩不受阻。",
+      "currentStatus": "partial",
+      "currentResult": "按配置频次和广告总开关的客户端执行及去重已测试，正式起始关参数和真实SDK远程关闭尚待联调。",
+      "originalRequirementIDs": [
+        "ADS-02",
+        "ADS-03"
+      ],
+      "evidence": [
+        "AppTests/OriginalFlowTests.swift",
+        "AppTests/InterstitialAnalyticsTests.swift",
+        "AppTests/GameplayConfigurationIntegrationTests.swift",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "16-01",
+      "module": 16,
+      "moduleTitle": "真机测试与修复回归",
+      "title": "真机完整端到端",
+      "originalAcceptanceText": "操作  在约定设备和系统执行完整端到端路径。\n通过  首次启动至教学、失败、复活、道具、通关、签到、重启均通过且有记录。",
+      "currentStatus": "partial",
+      "currentResult": "0.2.21已安装目标真机并确认手动启动，但教学失败复活道具通关签到与恢复的完整真机路径未验收。",
+      "originalRequirementIDs": [
+        "TECH-07"
+      ],
+      "evidence": [
+        "Validation/original-0221-physical-install.json",
+        "Validation/original-verification.json",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "16-02",
+      "module": 16,
+      "moduleTitle": "真机测试与修复回归",
+      "title": "正式性能指标测量",
+      "originalAcceptanceText": "操作  按约定性能标准测启动、帧率、内存和生成耗时。\n通过  结果达到F7标准；不以“看起来流畅”代替测量，标准未定则标B。",
+      "currentStatus": "pending",
+      "currentResult": "仅有生成预算耗时和模拟器构建记录，F7启动帧率内存标准未冻结且无完整真机性能测量。",
+      "originalRequirementIDs": [
+        "TECH-07",
+        "GEN-16"
+      ],
+      "evidence": [
+        "Validation/original-generation/summary.json",
+        "Validation/original-0221-physical-install.json",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "16-03",
+      "module": 16,
+      "moduleTitle": "真机测试与修复回归",
+      "title": "最终构建全部问题复验",
+      "originalAcceptanceText": "操作  在最终构建复测所有失败用例及受影响流程。\n通过  每个Bug均有关联修复版本、复测结论和证据，旧版本通过不能代替复测。",
+      "currentStatus": "partial",
+      "currentResult": "问题修复和对应复验保留版本，0.2.21有169项Core及专项与候选UI，但完整293项App仍属0.2.20，未全量复验最终构建所有路径。",
+      "originalRequirementIDs": [
+        "TECH-07"
+      ],
+      "evidence": [
+        "Validation/original-verification.json",
+        "Validation/test-runs/original-0221-core.log",
+        "Validation/test-runs/original-0220-app.log",
+        "Validation/original-0221-candidate-playthrough.json"
+      ]
+    },
+    {
+      "id": "16-04",
+      "module": 16,
+      "moduleTitle": "真机测试与修复回归",
+      "title": "完整问题闭环与未验汇总",
+      "originalAcceptanceText": "操作  汇总失败、阻塞、未测及不适用项。\n通过  结果与问题台账一致；阻断游玩、错误答案、丢档和重复奖励问题全部关闭。",
+      "currentStatus": "partial",
+      "currentResult": "当前记录区分失败阻塞未测和外部条件，但冻结流程客户端缺口及完整真机发布待验未清零，不能宣称全部问题闭环。",
+      "originalRequirementIDs": [
+        "TECH-07",
+        "REF-01"
+      ],
+      "evidence": [
+        "Validation/original-conformance.json",
+        "Validation/original-verification.json"
+      ]
+    },
+    {
+      "id": "17-01",
+      "module": 17,
+      "moduleTitle": "打包提审与发布交付",
+      "title": "正式商店材料",
+      "originalAcceptanceText": "操作  核对名称、图标、截图、描述、支持与隐私链接。\n通过  材料齐全可用，与最终应用及目标地区一致，已核对当次提交要求。",
+      "currentStatus": "pending",
+      "currentResult": "正式截图描述支持及隐私链接和中国市场提交材料尚未齐备，现有内测页面素材不能替代提审交付。",
+      "originalRequirementIDs": [
+        "TECH-02",
+        "TECH-06"
+      ],
+      "evidence": [
+        "README.md",
+        "App/PrivacyInfo.xcprivacy",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "17-02",
+      "module": 17,
+      "moduleTitle": "打包提审与发布交付",
+      "title": "正式验收构建一致",
+      "originalAcceptanceText": "操作  核对正式构建及代码、资源、配置、关卡版本。\n通过  与验收构建一致或已完成差异回归；无调试入口和错误环境配置。",
+      "currentStatus": "partial",
+      "currentResult": "内部候选构建配置和源码关卡可追溯且优化构建隐藏调试入口，但正式发行签名、身份及最终差异回归未完成。",
+      "originalRequirementIDs": [
+        "TECH-02",
+        "TECH-06"
+      ],
+      "evidence": [
+        "Validation/original-0220-build-settings.json",
+        "Validation/original-0221-candidate-playthrough.json",
+        "Validation/original-0221-physical-install.json",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "17-03",
+      "module": 17,
+      "moduleTitle": "打包提审与发布交付",
+      "title": "SDK采集与商店声明",
+      "originalAcceptanceText": "操作  检查SDK清单、实际采集行为与商店声明。\n通过  隐私等信息与实际集成一致，相关问题已处理，未以空白占位提交。",
+      "currentStatus": "pending",
+      "currentResult": "尚无实际SDK采集清单及最终App Privacy年龄分级等声明对照，不可用空白或占位隐私文件记为通过。",
+      "originalRequirementIDs": [
+        "TECH-06"
+      ],
+      "evidence": [
+        "App/PrivacyInfo.xcprivacy",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "17-04",
+      "module": 17,
+      "moduleTitle": "打包提审与发布交付",
+      "title": "中国区发布下载首启",
+      "originalAcceptanceText": "操作  查看发布状态，在目标地区商店实际下载并首启。\n通过  已正式发布、能下载且核心流程正常；仅上传、TestFlight或获批未发布均不算通过。",
+      "currentStatus": "pending",
+      "currentResult": "未完成App Store正式发布及中国区商店下载首启，内部安装或运行不满足上架完成条件。",
+      "originalRequirementIDs": [
+        "TECH-02",
+        "TECH-07"
+      ],
+      "evidence": [
+        "README.md",
+        "Validation/original-0221-physical-install.json",
+        "Validation/original-conformance.json"
+      ]
+    },
+    {
+      "id": "17-05",
+      "module": 17,
+      "moduleTitle": "打包提审与发布交付",
+      "title": "正式项目交付齐套",
+      "originalAcceptanceText": "操作  按清单接收源代码、构建说明、配置、资源与关卡工具。\n通过  150关数据和报告、后续生成规则、接口及测试资料齐全，可按说明复现构建和关卡。",
+      "currentStatus": "partial",
+      "currentResult": "源码工程关卡工具本地报告及构建说明已具备，但正式参数原音频跨产品报告外部接口和最终验收资料仍未齐。",
+      "originalRequirementIDs": [
+        "GEN-14",
+        "TECH-02"
+      ],
+      "evidence": [
+        "README.md",
+        "Validation/original-generation/summary.json",
+        "Validation/original-0219-rebuild.json",
+        "Validation/original-conformance.json"
+      ]
+    }
+  ]
+}
