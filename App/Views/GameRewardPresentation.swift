@@ -172,9 +172,14 @@ final class FeedbackWindowFrameView: UIView {
 /// are available immediately and board input is already locked by Core.
 /// Restored results, reduced motion and background transitions show immediately.
 @MainActor final class ResultEntrancePresentation: ObservableObject {
+    enum Stage: Int, Comparable {
+        case board, character, title, detail, settled
+        static func < (lhs: Stage, rhs: Stage) -> Bool { lhs.rawValue < rhs.rawValue }
+    }
     typealias Schedule = (TimeInterval, @escaping () -> Void) -> Void
     @Published private(set) var ready = true
     @Published private(set) var animationID: UUID?
+    @Published private(set) var stage = Stage.settled
     private var sessionID: UUID?
     private var status: GameStatus?
     private var token = UUID()
@@ -198,11 +203,20 @@ final class FeedbackWindowFrameView: UIView {
         token = UUID(); let current = token
         animationID = nil
         ready = !(freshResult && animate)
+        stage = ready ? .settled : .board
         if !ready {
-            schedule(status == .won ? 0.82 : 0.60) { [weak self] in
+            let characterDelay = status == .won ? 0.82 : 0.60
+            schedule(characterDelay) { [weak self] in
                 guard self?.token == current else { return }
                 self?.ready = true
                 self?.animationID = UUID()
+                self?.stage = .character
+            }
+            for (delay, stage) in [(0.16, Stage.title), (0.32, Stage.detail), (0.50, Stage.settled)] {
+                schedule(characterDelay + delay) { [weak self] in
+                    guard self?.token == current else { return }
+                    self?.stage = stage
+                }
             }
         }
     }

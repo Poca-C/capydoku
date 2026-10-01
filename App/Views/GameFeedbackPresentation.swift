@@ -9,7 +9,6 @@ import Combine
     @Published private(set) var comboRevision = UUID()
     @Published private(set) var showLastLife = false
     private var comboToken = UUID()
-    private var lifeToken = UUID()
     private var presentationEnabled = true
     private let schedule: Schedule
 
@@ -43,19 +42,15 @@ import Combine
     }
 
     func life(_ lives: Int) {
-        lifeToken = UUID()
-        let token = lifeToken
         showLastLife = presentationEnabled && lives == 1
-        if showLastLife {
-            schedule(1.8) { [weak self] in
-                guard let self, self.lifeToken == token else { return }
-                self.showLastLife = false
-            }
-        }
     }
+
+    // The focus reminder is acknowledged by the player, never by a timer.
+    // It is still ephemeral: restoring, covering or leaving a game clears it.
+    func dismissLastLife() { showLastLife = false }
 
     func clear() {
         combo(nil)
-        lifeToken = UUID(); showLastLife = false
+        showLastLife = false
     }
 }

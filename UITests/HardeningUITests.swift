@@ -128,6 +128,9 @@ final class HardeningUITests: XCTestCase {
         errorPoint.tap()
         expectValue(cell(0), "empty")
         errorPoint.doubleTap()
+        let reminder = app.buttons["last_life_continue"]
+        XCTAssertTrue(reminder.waitForExistence(timeout: 3))
+        reminder.tap()
         expectValue(cell(0), "error")
         cell(1).doubleTap()
         let foundPoint = cell(1).coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))

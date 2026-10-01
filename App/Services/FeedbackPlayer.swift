@@ -52,6 +52,7 @@ final class FeedbackPlayer {
     private struct Pending { let key: String; let swipe: Bool; let task: AudioScheduledTask }
     private(set) var settings = Settings()
     private(set) var validationErrors: [String] = []
+    private(set) var usesLocalTestAudio = false
     private let manifest: ReferenceAudioManifest
     private let resource: (String) -> URL?
     private let makePlayer: (URL) -> AudioPlaybackHandle?
@@ -79,10 +80,14 @@ final class FeedbackPlayer {
          clock: (() -> TimeInterval)? = nil, sessionControl: ((Bool) -> Bool)? = nil,
          observeSystem: Bool = true, hapticEmitter: ((FeedbackEvent) -> Void)? = nil,
          hapticDriver: HapticFeedbackDriver? = nil) {
-        self.manifest = manifest ?? Bundle.main.url(forResource: "audio-manifest", withExtension: "json")
+        let bundledManifest = Bundle.main.url(forResource: "audio-manifest", withExtension: "json")
             .flatMap { try? Data(contentsOf: $0) }
             .flatMap { try? JSONDecoder().decode(ReferenceAudioManifest.self, from: $0) } ?? .silent
+        let localImport = manifest == nil && !bundledManifest.referenceVerified ? LocalTestAudioImport.load() : nil
+        self.manifest = manifest ?? localImport?.manifest ?? bundledManifest
+        usesLocalTestAudio = localImport != nil
         resource = resourceResolver ?? { name in
+            if let localImport { return localImport.resource(name) }
             guard let url = Bundle.main.url(forResource: name, withExtension: nil),
                   (try? url.resourceValues(forKeys: [.isRegularFileKey]).isRegularFile) == true else { return nil }
             return url
@@ -107,7 +112,7 @@ final class FeedbackPlayer {
             } catch { return false }
         }
         suppressProductionAudio = playerFactory == nil && Self.isTesting
-        validationErrors = self.manifest.validationErrors { resource($0) != nil }
+        validationErrors = self.manifest.validationErrors(resourceExists: { resource($0) != nil }, validateUnverified: usesLocalTestAudio)
         if observeSystem {
             let center = NotificationCenter.default
             observers.append(center.addObserver(forName: AVAudioSession.interruptionNotification, object: nil, queue: .main) { [weak self] notification in
@@ -256,7 +261,7 @@ final class FeedbackPlayer {
         transition(.mediaReset)
     }
     private static var isTesting: Bool { ProcessInfo.processInfo.arguments.contains("-ui-testing") || ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil }
-    private var trusted: Bool { manifest.referenceVerified && validationErrors.isEmpty && !suppressProductionAudio }
+    private var trusted: Bool { (manifest.referenceVerified || usesLocalTestAudio) && validationErrors.isEmpty && !suppressProductionAudio }
     private func enabled(_ clip: AudioClipPolicy) -> Bool {
         switch clip.group { case .music: return settings.music; case .sound: return settings.sound; case .voice: return settings.voice }
     }

@@ -39,6 +39,8 @@ struct RootView: View {
     // Hosted-view verification can select this branch without changing the
     // device's accessibility setting. Production callers leave it nil.
     var reduceMotionOverride: Bool? = nil
+    // Read-only hosted verification of automatic requests; normal views omit it.
+    var focusRequestObserver: ((String) -> Void)? = nil
     private var reduceMotion: Bool { reduceMotionOverride ?? systemReduceMotion }
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
@@ -46,11 +48,12 @@ struct RootView: View {
     @State private var lastActivatedControl: String?
     @State private var previousModal: String?
     @State private var modalOrigins: [String: String] = [:]
+    @State private var lowPower = ProcessInfo.processInfo.isLowPowerModeEnabled
     @StateObject private var resultEntrance = ResultEntrancePresentation()
     private var hasCard: Bool { model.sheet == .settings || model.sheet == .reward }
     private var hasResult: Bool { model.screen == .game && model.session?.status != .playing && model.session != nil }
     private var animatesResult: Bool {
-        !reduceMotion && !ProcessInfo.processInfo.isLowPowerModeEnabled && scenePhase == .active &&
+        !reduceMotion && !lowPower && scenePhase == .active &&
         model.screen == .game && model.sheet == nil && !model.loading && !model.rewardBusy &&
         !model.interstitialBusy && !model.challengePending && model.notice == nil && model.errorMessage == nil
     }
@@ -98,7 +101,8 @@ struct RootView: View {
                 Color.black.opacity(resultDecorationReady ? 0.78 : 0).ignoresSafeArea().accessibilityHidden(true)
                 CapyAccessibilityHost(hidden: hasCard || model.loading || model.challengePending) {
                     ResultPanel(won: model.session?.status == .won, showsDecoration: resultDecorationReady,
-                                animationID: resultEntrance.animationID, presentationEnabled: animatesResult)
+                                animationID: resultEntrance.animationID, presentationEnabled: animatesResult,
+                                stage: animatesResult ? resultEntrance.stage : .settled)
                         .environmentObject(model).foregroundColor(CapyPalette.ink)
                         .environment(\.scenePhase, scenePhase)
                         .environment(\.appLanguage, language)
@@ -142,7 +146,9 @@ struct RootView: View {
         .onChange(of: model.session?.status) { _ in updateResultEntrance() }
         .onChange(of: animatesResult) { _ in updateResultEntrance() }
         .onChange(of: modal) { moveFocus(to: $0) }
-        .onChange(of: resultDecorationReady) { _ in if let heading = modalHeading { requestFocus(heading) } }
+        .onReceive(NotificationCenter.default.publisher(for: .NSProcessInfoPowerStateDidChange)) { _ in
+            lowPower = ProcessInfo.processInfo.isLowPowerModeEnabled
+        }
         .onChange(of: scenePhase) { phase in if phase == .active { requestFocus(modalHeading ?? focusedControl ?? defaultFocus) } }
         .foregroundColor(CapyPalette.ink)
         .animation(reduceMotion ? nil : .easeOut(duration: 0.18), value: hasCard)
@@ -167,11 +173,15 @@ struct RootView: View {
     }
     private var modalHeading: String? {
         guard let modal else { return nil }
-        if !resultDecorationReady && (modal == "win" || modal == "loss") { return modal == "win" ? "next_level" : "revive" }
+        // Result actions are present immediately. Visual stages must not pull
+        // VoiceOver away after the player starts exploring those controls.
+        if modal == "win" { return "next_level" }
+        if modal == "loss" { return model.reviveAvailable ? "revive" : "result_restart" }
         return ["settings": "settings_title", "reward": "reward_title", "challenge": "challenge_title",
                 "loading": "loading_title", "hint": "hint_explanation", "win": "win_result", "loss": "loss_result"][modal]
     }
     private func requestFocus(_ id: String) {
+        focusRequestObserver?(id)
         focusedControl = nil
         DispatchQueue.main.async { focusedControl = id }
     }
@@ -262,6 +272,7 @@ struct GameView: View {
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.accessibilityReduceMotion) private var systemReduceMotion
     @Environment(\.capyMotionOverride) private var motionOverride
+    @Environment(\.capyAccessibilityFocus) private var focus
     private var reduceMotion: Bool { motionOverride ?? systemReduceMotion }
     @StateObject private var feedback = GameFeedbackPresentation()
     @StateObject private var rewards = GameRewardPresentation()
@@ -270,6 +281,8 @@ struct GameView: View {
     @State private var gameWindowFrame = CGRect.zero
     @State private var boardWindowFrame = CGRect.zero
     @State private var directWindowFrame = CGRect.zero
+    @State private var livesWindowFrame = CGRect.zero
+    @State private var lifeFocusReturn: String?
     @State private var hintContentHeight: CGFloat = 66
     private var canPresentFeedback: Bool {
         model.screen == .game && scenePhase == .active && model.hint == nil && model.sheet == nil && !model.loading && !model.rewardBusy && !model.interstitialBusy &&
@@ -292,7 +305,8 @@ struct GameView: View {
                 let maximumHintHeight = max(66, geometry.size.height - fixedHeight - 190)
                 let hintHeight = model.hint == nil ? ruleHeight : min(max(66, hintContentHeight), maximumHintHeight)
                 let boardSide = max(190, min(geometry.size.width - 28, geometry.size.height - fixedHeight - hintHeight, 500))
-                let covered = s.status != .playing || model.sheet != nil || model.loading || model.challengePending
+                let lifeFocused = feedback.showLastLife && s.status == .playing && canPresentFeedback
+                let covered = s.status != .playing || model.sheet != nil || model.loading || model.challengePending || lifeFocused
                 ZStack {
                     VStack(spacing: 0) {
                         HStack {
@@ -326,6 +340,7 @@ struct GameView: View {
                             }.padding(.horizontal, 10).padding(.vertical, 5).background(CapyPalette.paper).clipShape(Capsule())
                                 .accessibilityElement(children: .ignore).accessibilityLabel(language.text("Lives")).accessibilityValue("\(s.lives)").accessibilityIdentifier("lives")
                                 .capyLayoutProbe("lives")
+                                .background(FeedbackWindowFrameReader { livesWindowFrame = $0 })
                         }.frame(height: compact ? 32 : 40).opacity(model.hint == nil ? 1 : 0.35).accessibilityHidden(covered || model.hint != nil)
                         Group {
                             if let hint = model.hint, let useID = model.progress.activeHintUse?.id {
@@ -368,7 +383,7 @@ struct GameView: View {
                                         preview: Set(model.hint?.cells ?? []), tutorialTargets: Set(model.tutorial?.targetCells ?? []),
                                         tutorialAction: model.tutorial?.action,
                                         hideAccessibility: covered,
-                                        locked: s.status != .playing || !canPresentFeedback || model.tutorial?.action == "read",
+                                        locked: s.status != .playing || !canPresentFeedback || lifeFocused || model.tutorial?.action == "read",
                                         onToggle: model.toggle, onSubmit: model.submit, onMark: model.mark,
                                         onBeginSwipe: model.beginSwipeFeedback,
                                         onEndSwipe: { model.endSwipeFeedback(cancelled: $0) },
@@ -429,20 +444,14 @@ struct GameView: View {
                         } else { tools(compact: compact).frame(height: footerHeight) }
                         // Reserved in every state, so loading or hiding a banner never moves the board.
                         Color.clear.frame(height: bannerHeight).accessibilityIdentifier("banner_reservation")
-                    }.disabled(s.status != .playing).accessibilityElement(children: covered ? .ignore : .contain).accessibilityHidden(covered).padding(.horizontal, 14).padding(.top, 4).padding(.bottom, 4)
+                    }.disabled(s.status != .playing || lifeFocused).accessibilityElement(children: covered ? .ignore : .contain).accessibilityHidden(covered).padding(.horizontal, 14).padding(.top, 4).padding(.bottom, 4)
                     ForEach(rewards.flights) { ProgressFlightStar(flight: $0) }
                     ForEach(rewards.localScores) { CellScoreLabel(item: $0) }
                     if let reveal = rewards.toolReveal { DirectToolRevealView(reveal: reveal).id(reveal.id) }
-                    if feedback.showLastLife && s.status == .playing && model.hint == nil && model.sheet == nil {
-                        VStack {
-                            Text(language.text("Only one chance left!"))
-                                .font(.system(size: 17, weight: .bold, design: .rounded))
-                                .padding(.horizontal, 20).padding(.vertical, 14)
-                                .background(CapyPalette.paper).clipShape(RoundedRectangle(cornerRadius: 16))
-                                .shadow(color: .black.opacity(0.2), radius: 8)
-                                .padding(.top, 142)
-                            Spacer()
-                        }.allowsHitTesting(false).transition(.opacity)
+                    if lifeFocused {
+                        LastLifeSpotlightView(livesFrame: livesWindowFrame.offsetBy(dx: -gameWindowFrame.minX, dy: -gameWindowFrame.minY)) {
+                            feedback.dismissLastLife()
+                        }.transition(.opacity).zIndex(4)
                     }
                 }
                 .background(FeedbackWindowFrameReader { gameWindowFrame = $0 })
@@ -454,6 +463,17 @@ struct GameView: View {
                     feedback.setPresentationEnabled(canPresentFeedback)
                     feedback.life($0)
                     hud.lifeChanged($0, sessionID: s.id, visible: canPresentFeedback)
+                }
+                .onChange(of: s.status) { status in
+                    if status != .playing { feedback.dismissLastLife() }
+                }
+                .onChange(of: feedback.showLastLife) { showing in
+                    if showing {
+                        lifeFocusReturn = focus?.wrappedValue
+                        focus?.wrappedValue = "last_life_continue"
+                    } else if focus?.wrappedValue == "last_life_continue" {
+                        focus?.wrappedValue = lifeFocusReturn ?? "level_title"
+                    }
                 }
                 .onChange(of: s.score) { rewards.scoreChanged($0, sessionID: s.id, visible: canPresentFeedback) }
                 .onChange(of: s.id) { _ in
@@ -714,6 +734,9 @@ struct ResultPanel: View {
     var showsDecoration = true
     var animationID: UUID? = nil
     var presentationEnabled = true
+    var stage: ResultEntrancePresentation.Stage = .settled
+    private var titleVisible: Bool { showsDecoration && (reduceMotion || stage >= .title) }
+    private var detailVisible: Bool { showsDecoration && (reduceMotion || stage >= .detail) }
     private var variant: ResultCelebrationVariant {
         (model.session?.id.uuid.0 ?? 0).isMultiple(of: 2) ? .joyfulBounce : .proudCrown
     }
@@ -738,15 +761,24 @@ struct ResultPanel: View {
                         .capyLayoutProbe(won ? "win_result" : "loss_result")
                         .accessibilityAddTraits(.isHeader).capyFocus(won ? "win_result" : "loss_result")
                         .accessibilityValue(language.text("Level \(model.session?.puzzle.id ?? 1). Score \(model.session?.score ?? 0). \(model.session?.found.count ?? 0) of \(model.session?.puzzle.size ?? 0) found."))
-                        .opacity(showsDecoration ? 1 : 0).accessibilityHidden(!showsDecoration)
+                        .opacity(titleVisible ? 1 : 0).accessibilityHidden(!titleVisible)
+                        .offset(y: titleVisible || reduceMotion ? 0 : 9)
+                        .scaleEffect(titleVisible || reduceMotion ? 1 : 0.94)
                     ResultCharacterView(won: won, variant: variant, size: min(geometry.size.width * 0.65, geometry.size.height * 0.34, 250),
                                         animationID: showsDecoration ? animationID : nil,
                                         presentationEnabled: presentationEnabled && showsDecoration)
                         .frame(height: min(geometry.size.height * 0.34, 270)).opacity(showsDecoration ? 1 : 0).accessibilityHidden(!showsDecoration)
+                        .background {
+                            ResultAtmosphereView(won: won, eventID: showsDecoration ? animationID : nil,
+                                                 enabled: presentationEnabled && showsDecoration, reduceMotion: reduceMotion)
+                                .frame(width: min(geometry.size.width - 24, 370), height: min(geometry.size.height * 0.43, 340))
+                                .opacity(showsDecoration ? 1 : 0).allowsHitTesting(false).accessibilityHidden(true)
+                        }
                     Text(language.text(won ? victoryDetail : "The next Capybara is close. Your progress is worth keeping!"))
                         .font(.system(size: 20, weight: .bold, design: .rounded))
                         .foregroundColor(won ? Color(red: 1, green: 0.86, blue: 0.39) : CapyPalette.orangeLight)
-                        .opacity(showsDecoration ? 1 : 0).accessibilityHidden(!showsDecoration)
+                        .opacity(detailVisible ? 1 : 0).accessibilityHidden(!detailVisible)
+                        .offset(y: detailVisible || reduceMotion ? 0 : 8)
                         .multilineTextAlignment(.center).fixedSize(horizontal: false, vertical: true)
                     CapyButton(id: won ? "next_level" : "revive") {
                         if won { model.next() } else { model.revive() }
@@ -770,6 +802,7 @@ struct ResultPanel: View {
                     }
                 }.padding(.horizontal, 40).padding(.vertical, 24)
                     .frame(maxWidth: 440).frame(maxWidth: .infinity, minHeight: max(0, geometry.size.height - 52))
+                    .animation(reduceMotion ? nil : .spring(response: 0.34, dampingFraction: 0.78), value: stage)
                 }.padding(.top, 52)
                 if won || failure?.canDismiss != false {
                     VStack {

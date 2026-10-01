@@ -24,11 +24,21 @@ struct SettingsView: View {
                 }
             }.padding(.horizontal, 12).frame(height: 66).background(CapyPalette.orangeLight.opacity(0.55))
             VStack(spacing: 20) {
-                HStack(spacing: 7) {
-                    setting("Music", symbol: "music.note", binding: $model.progress.settings.musicEnabled, id: "music_toggle")
-                    setting("Sound effects", symbol: "speaker.wave.2.fill", binding: $model.progress.settings.soundEnabled, id: "sound_toggle")
-                    setting("Voice", symbol: "person.wave.2.fill", binding: $model.progress.settings.voiceEnabled, id: "voice_toggle")
-                    setting("Haptics", symbol: "iphone.radiowaves.left.and.right", binding: $model.progress.settings.hapticsEnabled, id: "haptics_toggle")
+                VStack(spacing: 6) {
+                    HStack(spacing: 7) {
+                        setting("Music", symbol: "music.note", binding: $model.progress.settings.musicEnabled, id: "music_toggle")
+                        setting("Sound effects", symbol: "speaker.wave.2.fill", binding: $model.progress.settings.soundEnabled, id: "sound_toggle")
+                        setting("Voice", symbol: "person.wave.2.fill", binding: $model.progress.settings.voiceEnabled, id: "voice_toggle")
+                        setting("Haptics", symbol: "iphone.radiowaves.left.and.right", binding: $model.progress.settings.hapticsEnabled, id: "haptics_toggle")
+                    }
+                    if model.usesLocalTestAudio {
+                        Text(language.text("Reference audio · Internal testing only"))
+                            .font(.system(size: 12, weight: .medium, design: .rounded))
+                            .foregroundColor(CapyPalette.muted)
+                            .multilineTextAlignment(.center)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .accessibilityIdentifier("internal_reference_audio_notice")
+                    }
                 }.padding(.top, 6)
                 HStack(spacing: 8) {
                     Text(language.text("Language")).font(.system(size: 15, weight: .semibold, design: .rounded))
@@ -109,14 +119,19 @@ struct CheckInView: View {
     var reduceMotionOverride: Bool? = nil
     private var reduceMotion: Bool { reduceMotionOverride ?? systemReduceMotion }
     @Environment(\.scenePhase) private var scenePhase
-    @State private var rewardBounce = false
-    @State private var showRewardBurst = false
-    @State private var burstProgress: CGFloat = 0
+    @StateObject private var choreography = CheckInChoreography()
+    @State private var lowPower = ProcessInfo.processInfo.isLowPowerModeEnabled
     @State private var giftBounce = false
     @State private var showGiftBurst = false
     @State private var giftBurstProgress: CGFloat = 0
     @State private var giftCelebrationToken = UUID()
-    @State private var celebratedGiftDay: Int?
+    private var presentationVisible: Bool {
+        scenePhase == .active && model.screen == .checkIn && model.sheet == nil &&
+        model.notice == nil && model.errorMessage == nil && !model.loading &&
+        !model.rewardBusy && !model.interstitialBusy && !model.challengePending
+    }
+    private var motionAllowed: Bool { presentationVisible && !reduceMotion && !lowPower }
+    private var snapshot: CheckInChoreography.Snapshot { .init(model.progress) }
     private var cycleDays: Int { max(1, model.config.checkInCycleDays) }
     private var shownCycleDay: Int {
         let checkIn = model.progress.checkIn
@@ -147,23 +162,19 @@ struct CheckInView: View {
                     Spacer()
                 }.padding(.top, 8)
                 Spacer(minLength: compact ? 8 : 15)
-                Group {
-                    if let art = UIImage(named: "CapyCheckIn") {
-                        Image(uiImage: art).resizable().scaledToFit()
-                    } else {
-                        VStack(spacing: -40) {
-                            CapyMascot(mood: .happy, size: 210)
-                            Image(systemName: "pawprint.fill").font(.system(size: 63)).foregroundColor(.white)
-                                .frame(width: 175, height: 118).background(CapyPalette.orange)
-                                .clipShape(RoundedRectangle(cornerRadius: 19))
-                        }
-                    }
-                }.frame(width: geometry.size.width * 0.68, height: geometry.size.height * (compact ? 0.25 : 0.34))
-                    .scaleEffect(rewardBounce ? 1.06 : 1)
-                    .overlay { if showRewardBurst { CheckInParticleBurst(progress: burstProgress).allowsHitTesting(false) } }
-                    .accessibilityHidden(true)
+                ZStack(alignment: .bottom) {
+                    CheckInRewardArtwork(claimable: model.progress.checkIn.canClaim(on: model.now),
+                                         phase: choreography.phase, animationID: choreography.animationID,
+                                         animated: motionAllowed)
+                        .padding(.bottom, compact ? 29 : 35)
+                    rewardCaption
+                        .padding(.horizontal, 4)
+                }.frame(width: geometry.size.width * 0.82, height: geometry.size.height * (compact ? 0.25 : 0.34))
                 Text("\(shownStreak)").font(.system(size: compact ? 58 : 78, weight: .heavy, design: .rounded))
-                    .foregroundColor(CapyPalette.actionOrange).padding(.top, compact ? 4 : 8).accessibilityIdentifier("checkin_streak").capyFocus("checkin_streak")
+                    .foregroundColor(CapyPalette.actionOrange).padding(.top, compact ? 4 : 8)
+                    .scaleEffect(choreography.phase == .streak ? 1.10 : 1)
+                    .animation(motionAllowed ? .spring(response: 0.27, dampingFraction: 0.52) : nil, value: choreography.phase)
+                    .accessibilityIdentifier("checkin_streak").capyFocus("checkin_streak")
                 Text(language.text("Day Streak")).font(.system(size: compact ? 22 : 26, weight: .heavy, design: .rounded)).foregroundColor(CapyPalette.actionOrange)
                 Spacer().frame(height: compact ? max(16, geometry.size.height * 0.04) : max(32, geometry.size.height * 0.07))
                 Group {
@@ -182,11 +193,49 @@ struct CheckInView: View {
                 Spacer(minLength: compact ? 12 : 30)
             }.padding(.horizontal, 18)
         }
-        .onAppear { updateGiftCelebration() }
+        .onAppear { choreography.bind(snapshot); updateGiftCelebration() }
+        .onChange(of: snapshot) { current in
+            choreography.observe(current, visible: presentationVisible, animated: motionAllowed)
+        }
         .onChange(of: giftRewardAvailable) { _ in updateGiftCelebration() }
-        .onChange(of: scenePhase) { _ in updateGiftCelebration() }
-        .onChange(of: reduceMotion) { _ in updateGiftCelebration() }
-        .onDisappear { stopGiftCelebration() }
+        .onChange(of: motionAllowed) { enabled in
+            if !enabled { choreography.cancel() }
+            updateGiftCelebration()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .NSProcessInfoPowerStateDidChange)) { _ in
+            lowPower = ProcessInfo.processInfo.isLowPowerModeEnabled
+            if lowPower { choreography.cancel(); stopGiftCelebration() }
+        }
+        .onDisappear { choreography.unbind(); stopGiftCelebration() }
+    }
+    private var rewardCaption: some View {
+        let claimable = model.progress.checkIn.canClaim(on: model.now)
+        let receipt = choreography.receipt
+        let source: String = {
+            if claimable { return "Tap today's circle to light up" }
+            guard let receipt else { return "Checked in today" }
+            let hints = receipt.hints > 0 ? language.text("Hints +\(receipt.hints)") : nil
+            let direct = receipt.direct > 0 ? language.text("Finds +\(receipt.direct)") : nil
+            let items = [hints, direct].compactMap { $0 }
+            return items.isEmpty ? language.text("Reward received") : items.joined(separator: "  ·  ")
+        }()
+        return Text(language.text(source))
+            .font(.system(size: 14, weight: .bold, design: .rounded))
+            .foregroundColor(claimable ? CapyPalette.muted : CapyPalette.actionOrange)
+            .multilineTextAlignment(.center).lineLimit(2).minimumScaleFactor(0.8)
+            // The saved day updates before the receipt observer. Swap this
+            // single text immediately; animate only its outer capsule below.
+            .transaction { transaction in
+                transaction.animation = nil
+                transaction.disablesAnimations = true
+            }
+            .padding(.horizontal, 12).padding(.vertical, 6)
+            .background(Capsule().fill(claimable ? CapyPalette.paper.opacity(0.82) : CapyPalette.orangeLight.opacity(0.75)))
+            .opacity(receipt != nil && choreography.phase.rawValue < CheckInChoreography.Phase.reward.rawValue ? 0 : 1)
+            .offset(y: choreography.phase == .reward ? -3 : 0)
+            .animation(motionAllowed ? .easeOut(duration: 0.19) : nil, value: choreography.phase)
+            .accessibilityIdentifier("checkin_reward_receipt")
+            .capyLayoutProbe("checkin_reward_receipt")
     }
     private func dayView(_ day: Int) -> some View {
         let claimed = day <= shownCycleDay
@@ -196,17 +245,9 @@ struct CheckInView: View {
                 .foregroundColor(claimed || canClaim ? CapyPalette.actionOrange : CapyPalette.checkInSecondaryText)
             CapyButton(id: canClaim ? "claim_reward" : "checkin_day_\(day)") {
                 guard model.progress.checkIn.canClaim(on: model.now), day == shownCycleDay + 1 else { return }
-                let previousClaim = model.progress.checkIn.lastClaimedDay
+                // model.claim() publishes the new state only after its saved
+                // transaction succeeds. Observation above starts the visuals.
                 model.claim()
-                if !reduceMotion && model.progress.checkIn.lastClaimedDay != previousClaim {
-                    burstProgress = 0; showRewardBurst = true
-                    withAnimation(.spring(response: 0.25, dampingFraction: 0.4)) { rewardBounce = true }
-                    DispatchQueue.main.async {
-                        withAnimation(.easeOut(duration: 0.7)) { burstProgress = 1 }
-                    }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { withAnimation { rewardBounce = false } }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) { showRewardBurst = false }
-                }
             } label: {
                 ZStack {
                     Circle().fill(claimed ? CapyPalette.orange : Color(red: 0.82, green: 0.89, blue: 0.92))
@@ -225,6 +266,14 @@ struct CheckInView: View {
                     }
                     if canClaim { Circle().stroke(CapyPalette.orange, lineWidth: 2) }
                 }.frame(minWidth: 44, maxWidth: 48, minHeight: 44, maxHeight: 48)
+                    .overlay {
+                        if choreography.phase == .streak && choreography.receipt?.cycleDay == day {
+                            Circle().stroke(CapyPalette.actionOrange.opacity(0.55), lineWidth: 3)
+                                .padding(-4).allowsHitTesting(false).accessibilityHidden(true)
+                        }
+                    }
+                    .scaleEffect(choreography.phase == .streak && choreography.receipt?.cycleDay == day ? 1.10 : 1)
+                    .animation(motionAllowed ? .spring(response: 0.26, dampingFraction: 0.55) : nil, value: choreography.phase)
             }.buttonStyle(CapyPressStyle(disabledOpacity: 1)).disabled(!canClaim)
                 .accessibilityLabel(language.text(canClaim ? "Claim today's reward" : "Day \(day), \(claimed ? "claimed" : "not claimed")"))
                 .accessibilityIdentifier(canClaim ? "claim_reward" : "checkin_day_\(day)")
@@ -232,12 +281,11 @@ struct CheckInView: View {
         }.frame(maxWidth: .infinity)
     }
     private func updateGiftCelebration() {
-        guard giftRewardAvailable, scenePhase == .active, !reduceMotion else {
+        guard giftRewardAvailable, motionAllowed else {
             stopGiftCelebration(); return
         }
         let day = CheckInState.utcDay(for: model.now)
-        guard celebratedGiftDay != day else { return }
-        celebratedGiftDay = day
+        guard CheckInGiftCueMemory.consume(owner: model, day: day) else { return }
         let token = UUID()
         giftCelebrationToken = token
         giftBurstProgress = 0

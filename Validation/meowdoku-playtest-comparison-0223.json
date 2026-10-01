@@ -226,5 +226,78 @@
     "Long-session persistence and all settings",
     "Full frozen formal reference or asset rights deliverables"
   ],
-  "implementationStatus": "Recommendations only in this follow-up; production build remains 0.2.23 (26)."
+  "implementationStatus": "Recommendations only in this follow-up; production build remains 0.2.23 (26).",
+  "implementationFollowUp0226": {
+    "build": "0.2.26 (29)",
+    "status": "verified_scoped_demo_feedback_not_formal_acceptance",
+    "evidence": "Validation/original-0226-feedback.json",
+    "mapping": [
+      {
+        "area": "Original full-body key poses",
+        "reference": [
+          "FEEL-02",
+          "FEEL-05",
+          "OBS-02",
+          "OBS-06"
+        ],
+        "implementation": "Three original transparent strips, three genuinely different key poses each: joyful arm raise, star hug/presentation, and disappointed sigh/recovery. Existing Capydoku identity is the visual source; no Meowdoku artwork copied. Finite animation retains an expressive static final pose on restore, reduced motion or cancellation."
+      },
+      {
+        "area": "Sequential result celebration",
+        "reference": [
+          "FEEL-05",
+          "OBS-06"
+        ],
+        "implementation": "Last-board feedback leads into character, then title and explanation, with finite radial light and confetti. Next/revive/restart remain immediately available. Root focus avoids hidden headings and must not steal focus from a player who already moved to an action."
+      },
+      {
+        "area": "One-life focus reminder",
+        "reference": [
+          "FEEL-04",
+          "OBS-05"
+        ],
+        "implementation": "Dims board and focuses the measured life HUD. An explicit tap dismisses the reminder, without spending life or marking the underlying cell. Board gestures and underlying accessibility are locked while shown; restored/background/covered changes do not replay it."
+      },
+      {
+        "area": "Check-in reward choreography",
+        "reference": [
+          "FEEL-07",
+          "OBS-09"
+        ],
+        "implementation": "A muted reward plaque lights only after a saved claim. Streak and current-day circle are emphasized, followed by actual committed hint/direct inventory deltas. Calendar stays visible and actions never wait. A failed write cannot celebrate; duplicate claims, reentry, cancellation and restored state cannot replay."
+      },
+      {
+        "area": "Authorized local reference-audio experiment",
+        "reference": [
+          "audioDependency"
+        ],
+        "implementation": "User explicitly authorized attempting original Meowdoku audio for testing. Nine decoded local source files cover ten existing event mappings in Debug internal_demo only; settings clearly labels reference audio as internal testing. Formal audio manifest remains empty and unverified; Git ignores source clips and distribution/archive builds remove them."
+      }
+    ],
+    "additionalRecommendation": {
+      "id": "FEEL-07",
+      "basis": "OBS-09",
+      "title": "签到暗色奖励点亮与到账分段",
+      "scope": "Keep the original required streak/calendar visible; animate only committed claims and never grant rewards through presentation."
+    },
+    "audio": {
+      "report": "Validation/meowdoku-audio-test-0226.json",
+      "userAuthorizedTesting": true,
+      "localSourceFiles": 9,
+      "mappedEvents": 10,
+      "sourceExtractionNotLiveListening": true,
+      "formalReferenceFrozen": false
+    },
+    "historicalBoundary": "Original compared build, observed frames and no-audio-listening statements above remain dated 0.2.23 facts; this follow-up does not rewrite the original playtest.",
+    "verificationBoundary": "Full420 App and seven17e UI tests passed before the last caption-only fix. After the inner Text transaction fix, all nine CheckInChoreographyTests and one actual daily-claim UI test were rerun and passed; no claim that the full suites ran after that fix.",
+    "verifiedScope": {
+      "fullAppBeforeCaptionFix": 420,
+      "selectedUIBeforeCaptionFix": 7,
+      "finalCaptionApp": 9,
+      "finalCaptionUI": 1,
+      "reviewedImages": 18,
+      "finalDeviceRunningObserved": true,
+      "deviceAudioAudition": false
+    }
+  }
 }

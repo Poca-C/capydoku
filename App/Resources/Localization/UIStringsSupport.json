@@ -76,5 +76,11 @@
   "Anonymous analytics identity could not be recovered; collection is disabled to preserve existing event ownership.": "无法恢复匿名统计标识，已暂停记录，避免改变历史数据归属。",
   "Anonymous analytics identity could not be saved.": "无法保存匿名统计标识。",
   "Local event queue could not be read; the original file is preserved.": "无法读取本地统计记录，已保留原文件。",
-  "Local event queue could not be saved.": "无法保存本地统计记录。"
+  "Local event queue could not be saved.": "无法保存本地统计记录。",
+  "Tap today's circle to light up": "点击今日圆圈，点亮奖励",
+  "Checked in today": "今日已签到",
+  "Reward received": "奖励已到账",
+  "Hints +{0}": "提示 +{0}",
+  "Finds +{0}": "找答案 +{0}",
+  "Reference audio · Internal testing only": "参考原声 · 仅内部测试"
 }

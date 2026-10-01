@@ -91,5 +91,7 @@
   "Swipe down a column": "沿一列滑动",
   "Now swipe vertically between the two highlighted cells. Straight swipes mark X; diagonal swipes do not.": "现在沿竖直方向滑过两个高亮格。横向或纵向滑动会标记 X，斜向滑动不会。",
   "Double-tap to find": "双击寻找",
-  "The highlighted region has only one cell, so its capybara must be here. Double-tap to find it, then use the four rules to find the rest.": "高亮区域只有一个格子，卡皮巴拉一定在这里。双击找到它，再运用四条规则寻找其他卡皮巴拉。"
+  "The highlighted region has only one cell, so its capybara must be here. Double-tap to find it, then use the four rules to find the rest.": "高亮区域只有一个格子，卡皮巴拉一定在这里。双击找到它，再运用四条规则寻找其他卡皮巴拉。",
+  "Take a breath. Check the row, column and color before your next find.": "先别急，找下一只前再看看行、列和颜色区域。",
+  "Tap anywhere to continue": "点任意位置继续"
 }

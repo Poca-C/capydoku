@@ -1,0 +1,115 @@
+{
+  "build": "0.2.26 (29)",
+  "timestampUTC": "2026-10-01T10:35:17.124091+00:00",
+  "device": {
+    "model": "iPhone 14 Pro Max",
+    "os": "26.3.1",
+    "transport": "localNetwork"
+  },
+  "package": {
+    "version": "0.2.26",
+    "build": "29",
+    "bundle": "com.capydoku.demo",
+    "profileIncludesPhone": true,
+    "profileExpiresUTC": "2026-10-08 04:04:05",
+    "binarySHA256": "c9895079a1d1fd073bb0ee1898b06763aabca9a66fcd7c39658f9e3c15e067df",
+    "previousBinarySHA256BeforeReceiptVisualFix": "d2f3f8e249dff89045d0e857d1d9bedabe1ffe8833d5c390c806aef2cca97b8d"
+  },
+  "signature": {
+    "strictVerification": true,
+    "buildLog": "Validation/test-runs/original-0226-physical-build-r3.log",
+    "signatureLog": "Validation/test-runs/original-0226-codesign-final.log"
+  },
+  "installation": {
+    "passed": true,
+    "resetOrUninstall": false,
+    "normalBundleIdentifier": "com.capydoku.demo",
+    "verifiedVersion": "0.2.26",
+    "verifiedBuild": "29",
+    "result": "Validation/test-runs/physical-0226-final-install.json",
+    "containsFinalReceiptTextFix": true
+  },
+  "launch": {
+    "passed": true,
+    "status": "final_installed_application_observed_running",
+    "method": "Read-only process query found the executable in the exact final installation bundle path. Gameplay records also advanced. This was not a successful retry of the automated launch command.",
+    "automatedLaunchAttemptSucceeded": false,
+    "initialAutomaticLaunchFailure": "Device was locked. User was asked to unlock/open; no text reply was required after the final process was observed.",
+    "processEvidence": "Validation/test-runs/physical-0226-processes-r2.json",
+    "initialAttemptEvidence": "Validation/test-runs/physical-0226-launch.json",
+    "terminatedExistingProcess": false
+  },
+  "data": {
+    "observedFiles": 8,
+    "firstInstallAllFilesIdentical": true,
+    "finalInstallAllFilesIdentical": false,
+    "changedFiles": [
+      "Capydoku/progress.backup.json",
+      "Capydoku/analytics-demo-queue.json.backup",
+      "Capydoku/analytics-demo-queue.json",
+      "Capydoku/progress.json"
+    ],
+    "primaryAndBackupChecksums": [
+      {
+        "snapshot": "physical-0226-final-before",
+        "file": "progress.json",
+        "valid": true
+      },
+      {
+        "snapshot": "physical-0226-final-before",
+        "file": "progress.backup.json",
+        "valid": true
+      },
+      {
+        "snapshot": "physical-0226-final-after",
+        "file": "progress.json",
+        "valid": true
+      },
+      {
+        "snapshot": "physical-0226-final-after",
+        "file": "progress.backup.json",
+        "valid": true
+      }
+    ],
+    "historicalEventsUnchanged": 174,
+    "eventsAfterFinalInstallAndPlay": 179,
+    "previousRewardLedgerEntriesUnchanged": 23,
+    "rewardLedgerEntriesAfterPlay": 24,
+    "completedLevelsRetained": true,
+    "identityNamespaceUnchanged": true,
+    "settingsUnchanged": true,
+    "checkInUnchanged": true,
+    "comparisonNote": "The first 0.2.26 installation preserved all 8 observed files byte-for-byte. Final caption-only installation snapshots span actual activity: current level 3 to 4, five new local events and one new reward entry. Files are therefore not byte-identical. Every one of the 174 historical events and 23 existing ledger entries is unchanged, identity/settings/check-in retained, primary and backup checksums valid. No rollback performed. This is not an isolated no-activity post-install comparison.",
+    "evidence": [
+      "Validation/test-runs/physical-0226-install-data-check.json",
+      "Validation/test-runs/physical-0226-final-before-copy.json",
+      "Validation/test-runs/physical-0226-final-after-copy.json",
+      "Validation/test-runs/physical-0226-final-install-data-check.json"
+    ]
+  },
+  "audio": {
+    "debugLocalTestResourcesPresent": true,
+    "files": 9,
+    "inventory": "Validation/test-runs/original-0226-audio-final-physical-inventory.json",
+    "audiblePlaybackOnDevice": "not_verified_by_assistant"
+  },
+  "history": [
+    {
+      "action": "First backup attempt",
+      "result": "failed_read_only",
+      "cause": "Device copy source dot rejected by device file service; explicit Library/Application Support copy succeeded.",
+      "evidence": "Validation/test-runs/physical-0226-before-copy.json"
+    },
+    {
+      "action": "First 0.2.26 install before final caption-only fix",
+      "result": "passed; 8 files identical; initial launch command rejected due to lock",
+      "evidence": "Validation/test-runs/physical-0226-install-data-check.json"
+    },
+    {
+      "action": "Process query filter",
+      "result": "first URL CONTAINS filter rejected; URL lastPathComponent filter succeeded",
+      "evidence": "Validation/test-runs/physical-0226-processes-r2.json"
+    }
+  ],
+  "acceptanceBoundary": "Final development signature, wireless installation, queried version and running process verified. Data audit preserves prior history while newer gameplay is present. No supervised physical gesture/haptic/audio acceptance, TestFlight distribution or App Store upload."
+}

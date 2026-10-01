@@ -1,0 +1,475 @@
+{
+  "build": "0.2.26 (29)",
+  "date": "2026-10-01",
+  "status": "verified_scoped_demo_feedback_not_formal_acceptance",
+  "authority": "Original Word and explicit Chinese-market amendment remain authoritative. User additionally authorized original Meowdoku sound extraction for testing only; it is not distribution authorization or formal frozen-reference acceptance.",
+  "sourceParagraphs": [
+    105,
+    106,
+    110,
+    113,
+    119,
+    123,
+    238,
+    241,
+    248,
+    249,
+    252,
+    253,
+    254,
+    288,
+    289,
+    295,
+    296,
+    297,
+    298,
+    299,
+    303,
+    304,
+    305,
+    306,
+    314,
+    324,
+    325,
+    326,
+    327,
+    328,
+    329,
+    330,
+    331,
+    332,
+    333,
+    334,
+    335,
+    336,
+    337,
+    338,
+    339,
+    341,
+    342,
+    343,
+    344,
+    346,
+    347,
+    348,
+    349,
+    398,
+    402,
+    405,
+    406,
+    407,
+    409,
+    412,
+    414,
+    416
+  ],
+  "referenceObservation": "Validation/meowdoku-playtest-comparison-0223.json",
+  "changes": [
+    {
+      "area": "Original full-body key poses",
+      "reference": [
+        "FEEL-02",
+        "FEEL-05",
+        "OBS-02",
+        "OBS-06"
+      ],
+      "implementation": "Three original transparent strips, three genuinely different key poses each: joyful arm raise, star hug/presentation, and disappointed sigh/recovery. Existing Capydoku identity is the visual source; no Meowdoku artwork copied. Finite animation retains an expressive static final pose on restore, reduced motion or cancellation.",
+      "evidence": [
+        "App/Views/ResultCharacterArtwork.swift",
+        "App/Views/ResultCharacterView.swift",
+        "Validation/capy-result-artwork-0226.json",
+        "AppTests/ResultCharacterChoreographyTests.swift"
+      ]
+    },
+    {
+      "area": "Sequential result celebration",
+      "reference": [
+        "FEEL-05",
+        "OBS-06"
+      ],
+      "implementation": "Last-board feedback leads into character, then title and explanation, with finite radial light and confetti. Next/revive/restart remain immediately available. Root focus avoids hidden headings and must not steal focus from a player who already moved to an action.",
+      "evidence": [
+        "App/Views/GameRewardPresentation.swift",
+        "App/Views/ResultAtmosphereView.swift",
+        "App/Views/RootView.swift",
+        "AppTests/ResultChoreographyTests.swift"
+      ]
+    },
+    {
+      "area": "One-life focus reminder",
+      "reference": [
+        "FEEL-04",
+        "OBS-05"
+      ],
+      "implementation": "Dims board and focuses the measured life HUD. An explicit tap dismisses the reminder, without spending life or marking the underlying cell. Board gestures and underlying accessibility are locked while shown; restored/background/covered changes do not replay it.",
+      "evidence": [
+        "App/Views/LastLifeSpotlightView.swift",
+        "App/Views/GameFeedbackPresentation.swift",
+        "App/Views/RootView.swift",
+        "UITests/CapydokuUITests.swift"
+      ]
+    },
+    {
+      "area": "Check-in reward choreography",
+      "reference": [
+        "FEEL-07",
+        "OBS-09"
+      ],
+      "implementation": "A muted reward plaque lights only after a saved claim. Streak and current-day circle are emphasized, followed by actual committed hint/direct inventory deltas. Calendar stays visible and actions never wait. A failed write cannot celebrate; duplicate claims, reentry, cancellation and restored state cannot replay.",
+      "evidence": [
+        "App/Views/CheckInChoreography.swift",
+        "App/Views/SupportingViews.swift",
+        "AppTests/CheckInChoreographyTests.swift"
+      ]
+    },
+    {
+      "area": "Authorized local reference-audio experiment",
+      "reference": [
+        "audioDependency"
+      ],
+      "implementation": "User explicitly authorized attempting original Meowdoku audio for testing. Nine decoded local source files cover ten existing event mappings in Debug internal_demo only; settings clearly labels reference audio as internal testing. Formal audio manifest remains empty and unverified; Git ignores source clips and distribution/archive builds remove them.",
+      "evidence": [
+        "Validation/meowdoku-audio-test-0226.json",
+        "App/Services/LocalTestAudioImport.swift",
+        "App/Services/FeedbackPlayer.swift",
+        "scripts/stage_local_test_audio.py",
+        "scripts/verify_local_test_audio.py",
+        "AppTests/LocalTestAudioImportTests.swift"
+      ]
+    }
+  ],
+  "demoPresentationParameters": {
+    "winCharacterDelaySeconds": 0.82,
+    "lossCharacterDelaySeconds": 0.6,
+    "titleAfterCharacterSeconds": 0.16,
+    "detailAfterCharacterSeconds": 0.32,
+    "resultStageSettledAfterCharacterSeconds": 0.5,
+    "maximumConfettiParticles": 28,
+    "atmosphereCleanupSeconds": 1.5,
+    "checkInStreakSeconds": 0.24,
+    "checkInReceiptSeconds": 0.52,
+    "checkInSettledSeconds": 1.12,
+    "scope": "Presentation only; observed reference timing is not claimed."
+  },
+  "applicationTests": {
+    "status": "passed",
+    "build": "0.2.26 (29)",
+    "device": "iPhone 17 Pro simulator / iOS 26.5",
+    "expectedTests": 420,
+    "newTests": 29,
+    "passed": 420,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 173.042,
+    "scope": "All 420 CapydokuAppTests without exclusions, 29 more than 0.2.25. Includes check-in staging, original poses, result/life focus, local audio import and actual Root focus preservation. First compile failure and r2 418/419 remain separate historical evidence.",
+    "bundle": "Validation/test-runs/original-0226-app-r3.xcresult",
+    "log": "Validation/test-runs/original-0226-app-r3.log",
+    "suiteSecondsIncludingOverhead": 173.168,
+    "summary": "Validation/test-runs/original-0226-app-r3-summary.json",
+    "codeBoundary": "Full420 App and seven17e UI tests passed before the last caption-only fix. After the inner Text transaction fix, all nine CheckInChoreographyTests and one actual daily-claim UI test were rerun and passed; no claim that the full suites ran after that fix."
+  },
+  "uiTests": {
+    "status": "passed",
+    "build": "0.2.26 (29)",
+    "device": "iPhone 17e simulator / iOS 26.5",
+    "expectedCases": 7,
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 207.938,
+    "bundle": "Validation/test-runs/original-0226-17e-ui.xcresult",
+    "log": "Validation/test-runs/original-0226-17e-ui.log",
+    "fixtureBoundary": "Guided tutorial uses current packaged L1. Daily check-in, last-life dismissal/cold restore, loss/revive, solve/advance, tools/gestures and mixed-gesture scenarios use their explicit existing deterministic test setup; not an all-150 current-pack playthrough.",
+    "uniqueCases": 7,
+    "repeatedTestAction": false,
+    "codeBoundary": "Seven selected UI tests passed before the last caption-only fix; daily-claim UI rerun on final caption code separately below.",
+    "cases": [
+      "CapydokuUITests.CapydokuUITests testDailyClaimIsGrantedOnceAndPersists",
+      "CapydokuUITests.CapydokuUITests testGuidedTutorialCoversRulesTapUndoBothSwipesAndFind",
+      "CapydokuUITests.CapydokuUITests testLastLifeSpotlightDismissalDoesNotSpendLifeOrMarkAndColdRestoreDoesNotReplayIt",
+      "CapydokuUITests.CapydokuUITests testLoseAndSimulatedRevivePreservesBoard",
+      "CapydokuUITests.CapydokuUITests testSolveEntirePuzzleAndAdvance",
+      "CapydokuUITests.CapydokuUITests testToolsResumeAfterNativeTapDoubleTapAndPanRecognizersFinish",
+      "CapydokuUITests.HardeningUITests testMixedBackToBackGesturesNeverRepeatDamageOrScore"
+    ]
+  },
+  "initialFailures": [
+    {
+      "run": "r1",
+      "status": "build_failed",
+      "bundle": "Validation/test-runs/original-0226-app.xcresult",
+      "log": "Validation/test-runs/original-0226-app.log",
+      "cause": "New CGImage identity assertion did not compile. Fixed test comparison; not counted as an executed passing suite."
+    },
+    {
+      "run": "r2",
+      "status": "failed",
+      "passed": 418,
+      "failed": 1,
+      "skipped": 0,
+      "bundle": "Validation/test-runs/original-0226-app-r2.xcresult",
+      "log": "Validation/test-runs/original-0226-app-r2.log",
+      "cause": "New small-Root test incorrectly expected Home/Continue to leave resultPhase unchanged. Corrected expected session through the existing legal quit/resume lifecycle and retained full GameSession equality assertion."
+    }
+  ],
+  "reviewCorrection": {
+    "finding": "Root result-stage changes could request focus too early or override a player-selected action.",
+    "fix": "Gate hidden headings and preserve focus already moved to a result action; added actual Root focus regression.",
+    "verification": "passed in final r3, including actual Root focus regression"
+  },
+  "core": {
+    "build": "0.2.24 (27)",
+    "passed": 177,
+    "failed": 0,
+    "seconds": 59.426,
+    "log": "Validation/test-runs/original-0224-core.log",
+    "scope": "Full Swift package suite, including 8 new visible-conflict analysis cases. Added pure query only; gameplay rules, scoring and fixed 150 levels unchanged.",
+    "evidenceStatus": "historical_unchanged_core_not_rerun_this_build"
+  },
+  "visualEvidence": "Docs/original-feel-0226/manifest.json",
+  "visualReview": {
+    "status": "passed_after_receipt_fix",
+    "imagesReviewed": 18,
+    "passed": true,
+    "initialFinding": {
+      "sourceBundle": "Validation/test-runs/original-0226-app-r3.xcresult",
+      "file": "Validation/screenshots/original-0226-r3-checkin-receipt-overlap.png",
+      "finding": "Initial nominal100ms frame crossfaded old checked-in text and new reward amount in one capsule. Detected by visual review despite passing App tests.",
+      "fix": "Inner Text implicit animation disabled; focused9App+1UI passed and all six replacement check-in frames independently inspected.",
+      "status": "closed_verified_in_replacement_captures"
+    },
+    "scope": {
+      "actualCheckInPageWithSeededState": 6,
+      "actualCurrentLevel6Root": 4,
+      "actualCurrentLevel6RootSmallAccessibilityHost": 1,
+      "characterComponent": 4,
+      "characterComponentContactSheet": 1,
+      "atmosphereComponent": 1,
+      "actual17eUIArchivedFixture": 1
+    },
+    "sourceBundles": [
+      {
+        "path": "Validation/test-runs/original-0226-app-r3.xcresult",
+        "sourceTests": {
+          "passed": 420,
+          "failed": 0,
+          "skipped": 0
+        },
+        "retainedImages": 11,
+        "scope": "Full App-test pass before the isolated check-in receipt animation fix. Root/result/character/atmosphere images retained; six earlier check-in images superseded."
+      },
+      {
+        "path": "Validation/test-runs/original-0226-checkin-final.xcresult",
+        "sourceTests": {
+          "passed": 9,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 3.007
+        },
+        "retainedImages": 6,
+        "scope": "Focused CheckIn App tests after receipt text-animation fix; six replacement screenshots independently viewed."
+      },
+      {
+        "path": "Validation/test-runs/original-0226-17e-ui.xcresult",
+        "sourceTests": {
+          "passed": 7,
+          "failed": 0,
+          "skipped": 0
+        },
+        "retainedImages": 1,
+        "scope": "iPhone 17e actual UI-test last-life screenshot on archived 4x4 fixture. Check-in UI was additionally rerun after the isolated fix, but produced no image in this gallery."
+      }
+    ]
+  },
+  "audio": {
+    "report": "Validation/meowdoku-audio-test-0226.json",
+    "userAuthorization": "explicit_testing_only",
+    "formalManifest": "Resources/audio-manifest.json",
+    "formalClipCount": 0,
+    "referenceVerified": false,
+    "localTestClipCount": 9,
+    "localTestEventCount": 10,
+    "localTestFormat": "WAV PCM16 converted from original Vorbis; not the original-container bytes",
+    "distributionIsolation": {
+      "status": "passed",
+      "auditedArtifacts": 6,
+      "matrix": [
+        {
+          "configuration": "Release",
+          "signed": false,
+          "artifact": ".build/AudioIsolation0226/Build/Products/Release-iphoneos/Capydoku.app",
+          "inventory": "Validation/test-runs/original-0226-audio-release-inventory.json",
+          "result": "passed_absent",
+          "appVersion": "0.2.26",
+          "build": "29",
+          "environment": "internal_demo",
+          "regularFileCount": 17,
+          "localTestFileCount": 0,
+          "scope": "Actual generic iOS build and resource inventory, not signed distribution or device install."
+        },
+        {
+          "configuration": "TestFlight",
+          "signed": false,
+          "artifact": ".build/AudioIsolation0226/Build/Products/TestFlight-iphoneos/Capydoku.app",
+          "inventory": "Validation/test-runs/original-0226-audio-testflight-inventory.json",
+          "result": "passed_absent",
+          "appVersion": "0.2.26",
+          "build": "29",
+          "environment": "testing",
+          "regularFileCount": 17,
+          "localTestFileCount": 0,
+          "scope": "Actual generic iOS build and resource inventory, not signed distribution or device install."
+        },
+        {
+          "configuration": "Staging",
+          "signed": false,
+          "artifact": ".build/AudioIsolation0226/Build/Products/Staging-iphoneos/Capydoku.app",
+          "inventory": "Validation/test-runs/original-0226-audio-staging-inventory.json",
+          "result": "passed_absent",
+          "appVersion": "0.2.26",
+          "build": "29",
+          "environment": "staging",
+          "regularFileCount": 17,
+          "localTestFileCount": 0,
+          "scope": "Actual generic iOS build and resource inventory, not signed distribution or device install."
+        },
+        {
+          "configuration": "Production",
+          "signed": false,
+          "artifact": ".build/AudioIsolation0226/Build/Products/Production-iphoneos/Capydoku.app",
+          "inventory": "Validation/test-runs/original-0226-audio-production-inventory.json",
+          "result": "passed_absent",
+          "appVersion": "0.2.26",
+          "build": "29",
+          "environment": "production",
+          "regularFileCount": 17,
+          "localTestFileCount": 0,
+          "scope": "Actual generic iOS build and resource inventory, not signed distribution or device install."
+        },
+        {
+          "configuration": "Debug",
+          "description": "forced Debug archive",
+          "signed": false,
+          "artifact": ".build/AudioIsolation0226/ForcedDebugAudioIsolation.xcarchive",
+          "inventory": "Validation/test-runs/original-0226-audio-forced-debug-archive-inventory.json",
+          "result": "passed_absent",
+          "appVersion": "0.2.26",
+          "build": "29",
+          "environment": "internal_demo",
+          "regularFileCount": 17,
+          "localTestFileCount": 0,
+          "scope": "Actual unsigned forced-Debug archive resource inventory."
+        },
+        {
+          "configuration": "Debug",
+          "description": "Debug simulator",
+          "signed": true,
+          "artifact": ".build/Xcode/Build/Products/Debug-iphonesimulator/Capydoku.app",
+          "inventory": "Validation/test-runs/original-0226-audio-debug-simulator-inventory.json",
+          "result": "passed_present",
+          "appVersion": "0.2.26",
+          "build": "29",
+          "environment": "internal_demo",
+          "regularFileCount": 64,
+          "localTestFileCount": 10,
+          "scope": "Actual simulator build resources; not physical-device sound audition or distribution signing.",
+          "signing": "simulator ad-hoc (codesign -dv observed), not Apple distribution signature"
+        }
+      ],
+      "pythonTests": 8,
+      "appImportTests": 7,
+      "appImportEvidence": "Validation/test-runs/original-0226-app-r2.xcresult",
+      "codeBoundary": "Six-artifact matrix was built before the final Root-only focus correction, using the same 0.2.26 audio code. It verifies audio inclusion/exclusion, not that each distribution artifact contains the final UI correction."
+    },
+    "liveAuditoryAB": "not_performed",
+    "temporaryPolicy": "Filename-semantic event mappings, full-track BGM loop and temporary volumes/counts; see source report.",
+    "finalDeviceResources": {
+      "present": true,
+      "files": 9,
+      "inventory": "Validation/test-runs/original-0226-audio-final-physical-inventory.json",
+      "audiblePlaybackOnDevice": "not_verified_by_assistant"
+    }
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "coreRerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "physicalInstall": "Validation/original-0226-physical-install.json",
+  "physicalInstallationResult": {
+    "status": "final_caption_build_installed_and_observed_running",
+    "installedThisRound": true,
+    "versionQueried": "0.2.26 (29)",
+    "finalCaptionFixIncluded": true,
+    "freshSignedBuildPassed": true,
+    "strictSignatureVerificationPassed": true,
+    "buildLog": "Validation/test-runs/original-0226-physical-build-r3.log",
+    "runningProcessVerified": true,
+    "runningProcessMethod": "Read-only process query found the executable in the exact final installation bundle path. Gameplay records also advanced. This was not a successful retry of the automated launch command.",
+    "automaticLaunchSucceeded": false,
+    "initialAutomaticLaunchFailure": "device_locked",
+    "firstInstallObservedFilesByteEqual": 8,
+    "finalInstallAllFilesByteEqual": false,
+    "historicalEventsUnchanged": 174,
+    "newEventsDuringActivity": 5,
+    "previousRewardEntriesUnchanged": 23,
+    "newRewardEntriesDuringActivity": 1,
+    "primaryAndBackupChecksumsValid": true,
+    "settingsCheckInIdentityPreserved": true,
+    "scope": "0.2.26（29）最终文字修复包通过严格验签及无线覆盖安装；查询确认版本，并只读确认最终安装路径中的Capydoku正在运行。首次自动启动因锁屏失败，不记作自动重试成功。第一遍安装8文件字节一致；最后更新前后跨实际游玩（L3→4），174条旧事件和23条旧奖励完整保留，新增5条事件/1条奖励，设置、签到、身份保持，主备校验通过；未回滚新进度，不声明最终全部文件一致。",
+    "evidence": "Validation/original-0226-physical-install.json"
+  },
+  "feedbackScope": {
+    "FEEL-01": "retained_0224_implementation",
+    "FEEL-02": "expanded_original_full_body_poses_scoped_verified_formal_reference_pending",
+    "FEEL-03": "retained_0224_implementation",
+    "FEEL-04": "expanded_last_life_focus_scoped_verified_formal_reference_pending",
+    "FEEL-05": "expanded_sequential_result_and_atmosphere_scoped_verified_formal_reference_pending",
+    "FEEL-06": "retained_0225_implementation",
+    "FEEL-07": "new_checkin_choreography_scoped_verified_formal_reference_pending"
+  },
+  "remainingFeelWork": [
+    "冻结 Pawdoku 配置、原录屏精确节奏及音频逐事件映射尚未验收；本轮是可调 Demo 表现。",
+    "原声资源已取得并经用户授权作本地内部测试；原文正式音频清单、使用确认及真机实时听觉 A/B 仍待完成。",
+    "完整真机手势/触觉、系统辅助功能、最低系统与低性能测量，以及服务接入和上架验收仍待完成。"
+  ],
+  "notVerified": [
+    "83 formal statuses and 88-case historical audit counts retained. No overall completion percentage or formal sign-off.",
+    "Resource extraction, decoding and bundle checks do not establish auditory A/B, frozen playback policy or distribution approval."
+  ],
+  "postSuiteCaptionCorrection": {
+    "build": "0.2.26 (29)",
+    "status": "passed",
+    "change": "Prevent implicit animation of receipt Text content; outer capsule fade/offset remain. No reward, inventory, date or game logic changed.",
+    "app": {
+      "suite": "CheckInChoreographyTests",
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 3.007,
+      "bundle": "Validation/test-runs/original-0226-checkin-final.xcresult",
+      "log": "Validation/test-runs/original-0226-checkin-final.log"
+    },
+    "ui": {
+      "device": "iPhone 17e",
+      "case": "CapydokuUITests/testDailyClaimIsGrantedOnceAndPersists",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 12.168,
+      "bundle": "Validation/test-runs/original-0226-checkin-ui-final.xcresult",
+      "log": "Validation/test-runs/original-0226-checkin-ui-final.log"
+    },
+    "boundary": "Full420 App and seven17e UI tests passed before the last caption-only fix. After the inner Text transaction fix, all nine CheckInChoreographyTests and one actual daily-claim UI test were rerun and passed; no claim that the full suites ran after that fix.",
+    "visualReview": "Six replacements reviewed; all18 final gallery images passed the stated sampled-layout review."
+  },
+  "codeReview": {
+    "result": "implemented_corrections_verified_by_listed_scoped_tests",
+    "findings": [
+      "Early/overriding result focus fixed and actual Root regression passed.",
+      "Transient check-in receipt crossfade found in final visual review and fixed; final focused9+1 tests passed."
+    ]
+  }
+}

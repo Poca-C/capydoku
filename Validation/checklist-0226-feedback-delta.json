@@ -1,0 +1,669 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.26 (29)",
+  "kind": "scoped_delta_to_88_item_audit",
+  "baseAudit": "Validation/checklist-0221-audit.json",
+  "previousDelta": "Validation/checklist-0225-feedback-delta.json",
+  "sourceChecklist": "Validation/checklist-source.json",
+  "sourceCaseCount": 88,
+  "formalSignOff": false,
+  "full88Reexecuted": false,
+  "overallCountsRecomputed": false,
+  "unchangedStatusReason": "15项仅追加0.2.26实现和明确列出的验证范围；不修改历史增量、88项统计或83行正式状态。",
+  "originalParagraphs": [
+    105,
+    106,
+    110,
+    113,
+    119,
+    123,
+    238,
+    241,
+    248,
+    249,
+    252,
+    253,
+    254,
+    288,
+    289,
+    295,
+    296,
+    297,
+    298,
+    299,
+    303,
+    304,
+    305,
+    306,
+    314,
+    324,
+    325,
+    326,
+    327,
+    328,
+    329,
+    330,
+    331,
+    332,
+    333,
+    334,
+    335,
+    336,
+    337,
+    338,
+    339,
+    341,
+    342,
+    343,
+    344,
+    346,
+    347,
+    348,
+    349,
+    398,
+    402,
+    405,
+    406,
+    407,
+    409,
+    412,
+    414,
+    416
+  ],
+  "verificationSnapshot": {
+    "core": {
+      "status": "historical_evidence_not_rerun",
+      "build": "0.2.24 (27)",
+      "tests": 177,
+      "evidence": "Validation/test-runs/original-0224-core.log"
+    },
+    "appFinal": {
+      "status": "passed",
+      "build": "0.2.26 (29)",
+      "device": "iPhone 17 Pro simulator / iOS 26.5",
+      "expectedTests": 420,
+      "newTests": 29,
+      "passed": 420,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 173.042,
+      "scope": "All 420 CapydokuAppTests without exclusions, 29 more than 0.2.25. Includes check-in staging, original poses, result/life focus, local audio import and actual Root focus preservation. First compile failure and r2 418/419 remain separate historical evidence.",
+      "bundle": "Validation/test-runs/original-0226-app-r3.xcresult",
+      "log": "Validation/test-runs/original-0226-app-r3.log",
+      "suiteSecondsIncludingOverhead": 173.168,
+      "summary": "Validation/test-runs/original-0226-app-r3-summary.json",
+      "codeBoundary": "Full420 App and seven17e UI tests passed before the last caption-only fix. After the inner Text transaction fix, all nine CheckInChoreographyTests and one actual daily-claim UI test were rerun and passed; no claim that the full suites ran after that fix."
+    },
+    "ui": {
+      "status": "passed",
+      "build": "0.2.26 (29)",
+      "device": "iPhone 17e simulator / iOS 26.5",
+      "expectedCases": 7,
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 207.938,
+      "bundle": "Validation/test-runs/original-0226-17e-ui.xcresult",
+      "log": "Validation/test-runs/original-0226-17e-ui.log",
+      "fixtureBoundary": "Guided tutorial uses current packaged L1. Daily check-in, last-life dismissal/cold restore, loss/revive, solve/advance, tools/gestures and mixed-gesture scenarios use their explicit existing deterministic test setup; not an all-150 current-pack playthrough.",
+      "uniqueCases": 7,
+      "repeatedTestAction": false,
+      "codeBoundary": "Seven selected UI tests passed before the last caption-only fix; daily-claim UI rerun on final caption code separately below.",
+      "cases": [
+        "CapydokuUITests.CapydokuUITests testDailyClaimIsGrantedOnceAndPersists",
+        "CapydokuUITests.CapydokuUITests testGuidedTutorialCoversRulesTapUndoBothSwipesAndFind",
+        "CapydokuUITests.CapydokuUITests testLastLifeSpotlightDismissalDoesNotSpendLifeOrMarkAndColdRestoreDoesNotReplayIt",
+        "CapydokuUITests.CapydokuUITests testLoseAndSimulatedRevivePreservesBoard",
+        "CapydokuUITests.CapydokuUITests testSolveEntirePuzzleAndAdvance",
+        "CapydokuUITests.CapydokuUITests testToolsResumeAfterNativeTapDoubleTapAndPanRecognizersFinish",
+        "CapydokuUITests.HardeningUITests testMixedBackToBackGesturesNeverRepeatDamageOrScore"
+      ]
+    },
+    "visual": {
+      "status": "passed_after_receipt_fix",
+      "imagesReviewed": 18,
+      "passed": true,
+      "initialFinding": {
+        "sourceBundle": "Validation/test-runs/original-0226-app-r3.xcresult",
+        "file": "Validation/screenshots/original-0226-r3-checkin-receipt-overlap.png",
+        "finding": "Initial nominal100ms frame crossfaded old checked-in text and new reward amount in one capsule. Detected by visual review despite passing App tests.",
+        "fix": "Inner Text implicit animation disabled; focused9App+1UI passed and all six replacement check-in frames independently inspected.",
+        "status": "closed_verified_in_replacement_captures"
+      },
+      "scope": {
+        "actualCheckInPageWithSeededState": 6,
+        "actualCurrentLevel6Root": 4,
+        "actualCurrentLevel6RootSmallAccessibilityHost": 1,
+        "characterComponent": 4,
+        "characterComponentContactSheet": 1,
+        "atmosphereComponent": 1,
+        "actual17eUIArchivedFixture": 1
+      },
+      "sourceBundles": [
+        {
+          "path": "Validation/test-runs/original-0226-app-r3.xcresult",
+          "sourceTests": {
+            "passed": 420,
+            "failed": 0,
+            "skipped": 0
+          },
+          "retainedImages": 11,
+          "scope": "Full App-test pass before the isolated check-in receipt animation fix. Root/result/character/atmosphere images retained; six earlier check-in images superseded."
+        },
+        {
+          "path": "Validation/test-runs/original-0226-checkin-final.xcresult",
+          "sourceTests": {
+            "passed": 9,
+            "failed": 0,
+            "skipped": 0,
+            "durationSeconds": 3.007
+          },
+          "retainedImages": 6,
+          "scope": "Focused CheckIn App tests after receipt text-animation fix; six replacement screenshots independently viewed."
+        },
+        {
+          "path": "Validation/test-runs/original-0226-17e-ui.xcresult",
+          "sourceTests": {
+            "passed": 7,
+            "failed": 0,
+            "skipped": 0
+          },
+          "retainedImages": 1,
+          "scope": "iPhone 17e actual UI-test last-life screenshot on archived 4x4 fixture. Check-in UI was additionally rerun after the isolated fix, but produced no image in this gallery."
+        }
+      ]
+    },
+    "physical": {
+      "status": "final_caption_build_installed_and_observed_running",
+      "installedThisRound": true,
+      "versionQueried": "0.2.26 (29)",
+      "finalCaptionFixIncluded": true,
+      "freshSignedBuildPassed": true,
+      "strictSignatureVerificationPassed": true,
+      "buildLog": "Validation/test-runs/original-0226-physical-build-r3.log",
+      "runningProcessVerified": true,
+      "runningProcessMethod": "Read-only process query found the executable in the exact final installation bundle path. Gameplay records also advanced. This was not a successful retry of the automated launch command.",
+      "automaticLaunchSucceeded": false,
+      "initialAutomaticLaunchFailure": "device_locked",
+      "firstInstallObservedFilesByteEqual": 8,
+      "finalInstallAllFilesByteEqual": false,
+      "historicalEventsUnchanged": 174,
+      "newEventsDuringActivity": 5,
+      "previousRewardEntriesUnchanged": 23,
+      "newRewardEntriesDuringActivity": 1,
+      "primaryAndBackupChecksumsValid": true,
+      "settingsCheckInIdentityPreserved": true,
+      "scope": "0.2.26（29）最终文字修复包通过严格验签及无线覆盖安装；查询确认版本，并只读确认最终安装路径中的Capydoku正在运行。首次自动启动因锁屏失败，不记作自动重试成功。第一遍安装8文件字节一致；最后更新前后跨实际游玩（L3→4），174条旧事件和23条旧奖励完整保留，新增5条事件/1条奖励，设置、签到、身份保持，主备校验通过；未回滚新进度，不声明最终全部文件一致。",
+      "evidence": "Validation/original-0226-physical-install.json"
+    },
+    "audio": {
+      "report": "Validation/meowdoku-audio-test-0226.json",
+      "userAuthorization": "explicit_testing_only",
+      "formalManifest": "Resources/audio-manifest.json",
+      "formalClipCount": 0,
+      "referenceVerified": false,
+      "localTestClipCount": 9,
+      "localTestEventCount": 10,
+      "localTestFormat": "WAV PCM16 converted from original Vorbis; not the original-container bytes",
+      "distributionIsolation": {
+        "status": "passed",
+        "auditedArtifacts": 6,
+        "matrix": [
+          {
+            "configuration": "Release",
+            "signed": false,
+            "artifact": ".build/AudioIsolation0226/Build/Products/Release-iphoneos/Capydoku.app",
+            "inventory": "Validation/test-runs/original-0226-audio-release-inventory.json",
+            "result": "passed_absent",
+            "appVersion": "0.2.26",
+            "build": "29",
+            "environment": "internal_demo",
+            "regularFileCount": 17,
+            "localTestFileCount": 0,
+            "scope": "Actual generic iOS build and resource inventory, not signed distribution or device install."
+          },
+          {
+            "configuration": "TestFlight",
+            "signed": false,
+            "artifact": ".build/AudioIsolation0226/Build/Products/TestFlight-iphoneos/Capydoku.app",
+            "inventory": "Validation/test-runs/original-0226-audio-testflight-inventory.json",
+            "result": "passed_absent",
+            "appVersion": "0.2.26",
+            "build": "29",
+            "environment": "testing",
+            "regularFileCount": 17,
+            "localTestFileCount": 0,
+            "scope": "Actual generic iOS build and resource inventory, not signed distribution or device install."
+          },
+          {
+            "configuration": "Staging",
+            "signed": false,
+            "artifact": ".build/AudioIsolation0226/Build/Products/Staging-iphoneos/Capydoku.app",
+            "inventory": "Validation/test-runs/original-0226-audio-staging-inventory.json",
+            "result": "passed_absent",
+            "appVersion": "0.2.26",
+            "build": "29",
+            "environment": "staging",
+            "regularFileCount": 17,
+            "localTestFileCount": 0,
+            "scope": "Actual generic iOS build and resource inventory, not signed distribution or device install."
+          },
+          {
+            "configuration": "Production",
+            "signed": false,
+            "artifact": ".build/AudioIsolation0226/Build/Products/Production-iphoneos/Capydoku.app",
+            "inventory": "Validation/test-runs/original-0226-audio-production-inventory.json",
+            "result": "passed_absent",
+            "appVersion": "0.2.26",
+            "build": "29",
+            "environment": "production",
+            "regularFileCount": 17,
+            "localTestFileCount": 0,
+            "scope": "Actual generic iOS build and resource inventory, not signed distribution or device install."
+          },
+          {
+            "configuration": "Debug",
+            "description": "forced Debug archive",
+            "signed": false,
+            "artifact": ".build/AudioIsolation0226/ForcedDebugAudioIsolation.xcarchive",
+            "inventory": "Validation/test-runs/original-0226-audio-forced-debug-archive-inventory.json",
+            "result": "passed_absent",
+            "appVersion": "0.2.26",
+            "build": "29",
+            "environment": "internal_demo",
+            "regularFileCount": 17,
+            "localTestFileCount": 0,
+            "scope": "Actual unsigned forced-Debug archive resource inventory."
+          },
+          {
+            "configuration": "Debug",
+            "description": "Debug simulator",
+            "signed": true,
+            "artifact": ".build/Xcode/Build/Products/Debug-iphonesimulator/Capydoku.app",
+            "inventory": "Validation/test-runs/original-0226-audio-debug-simulator-inventory.json",
+            "result": "passed_present",
+            "appVersion": "0.2.26",
+            "build": "29",
+            "environment": "internal_demo",
+            "regularFileCount": 64,
+            "localTestFileCount": 10,
+            "scope": "Actual simulator build resources; not physical-device sound audition or distribution signing.",
+            "signing": "simulator ad-hoc (codesign -dv observed), not Apple distribution signature"
+          }
+        ],
+        "pythonTests": 8,
+        "appImportTests": 7,
+        "appImportEvidence": "Validation/test-runs/original-0226-app-r2.xcresult",
+        "codeBoundary": "Six-artifact matrix was built before the final Root-only focus correction, using the same 0.2.26 audio code. It verifies audio inclusion/exclusion, not that each distribution artifact contains the final UI correction."
+      },
+      "liveAuditoryAB": "not_performed",
+      "temporaryPolicy": "Filename-semantic event mappings, full-track BGM loop and temporary volumes/counts; see source report.",
+      "finalDeviceResources": {
+        "present": true,
+        "files": 9,
+        "inventory": "Validation/test-runs/original-0226-audio-final-physical-inventory.json",
+        "audiblePlaybackOnDevice": "not_verified_by_assistant"
+      }
+    },
+    "postSuiteCaptionCorrection": {
+      "build": "0.2.26 (29)",
+      "status": "passed",
+      "change": "Prevent implicit animation of receipt Text content; outer capsule fade/offset remain. No reward, inventory, date or game logic changed.",
+      "app": {
+        "suite": "CheckInChoreographyTests",
+        "passed": 9,
+        "failed": 0,
+        "skipped": 0,
+        "seconds": 3.007,
+        "bundle": "Validation/test-runs/original-0226-checkin-final.xcresult",
+        "log": "Validation/test-runs/original-0226-checkin-final.log"
+      },
+      "ui": {
+        "device": "iPhone 17e",
+        "case": "CapydokuUITests/testDailyClaimIsGrantedOnceAndPersists",
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "seconds": 12.168,
+        "bundle": "Validation/test-runs/original-0226-checkin-ui-final.xcresult",
+        "log": "Validation/test-runs/original-0226-checkin-ui-final.log"
+      },
+      "boundary": "Full420 App and seven17e UI tests passed before the last caption-only fix. After the inner Text transaction fix, all nine CheckInChoreographyTests and one actual daily-claim UI test were rerun and passed; no claim that the full suites ran after that fix.",
+      "visualReview": "Six replacements reviewed; all18 final gallery images passed the stated sampled-layout review."
+    }
+  },
+  "stillOpen": [
+    "冻结 Pawdoku 配置、原录屏精确节奏及音频逐事件映射尚未验收；本轮是可调 Demo 表现。",
+    "原声资源已取得并经用户授权作本地内部测试；原文正式音频清单、使用确认及真机实时听觉 A/B 仍待完成。",
+    "完整真机手势/触觉、系统辅助功能、最低系统与低性能测量，以及服务接入和上架验收仍待完成。"
+  ],
+  "rows": [
+    {
+      "id": "04-07",
+      "title": "弹窗及等待锁盘",
+      "originalAcceptanceText": "操作  在提示、设置、结算和外部等待期间操作棋盘。\n通过  不穿透、不改盘、不扣血；结束后按当前对局状态恢复输入。",
+      "originalRequirementIDs": [
+        "ADS-01",
+        "PLAY-08"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "一命提醒加入棋盘/控件输入及可访问性隔离；实际点击关闭不穿透、冷恢复不重播。",
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged",
+      "evidence": [
+        "Validation/original-0226-feedback.json",
+        "Docs/original-feel-0226/manifest.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "PLAY-12",
+        "UI-09",
+        "ADS-01"
+      ]
+    },
+    {
+      "id": "05-02",
+      "title": "最后一命通关幂等",
+      "originalAcceptanceText": "操作  剩一条命时找到最后一只动物，再快速点击。\n通过  仍判胜利且立即锁定输入；奖励、分数和结算只执行一次。",
+      "originalRequirementIDs": [
+        "PLAY-10"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "整盘胜利与结果分段装饰保持即时胜利提交、锁输入与可用操作。",
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged",
+      "evidence": [
+        "Validation/original-0226-feedback.json",
+        "Docs/original-feel-0226/manifest.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "PLAY-10",
+        "ART-02"
+      ]
+    },
+    {
+      "id": "05-03",
+      "title": "一命提醒与失败",
+      "originalAcceptanceText": "操作  观察仅剩一条命的提示，再扣完最后一条命。\n通过  提示与基线一致；生命停在0，失败弹层仅出现一次。",
+      "originalRequirementIDs": [
+        "PLAY-12",
+        "PLAY-11"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "一命由定时提示改为生命HUD聚焦和玩家点击关闭；失败使用原创三帧姿态。",
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged",
+      "evidence": [
+        "Validation/original-0226-feedback.json",
+        "Docs/original-feel-0226/manifest.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "PLAY-12",
+        "PLAY-11",
+        "ART-02"
+      ]
+    },
+    {
+      "id": "05-06",
+      "title": "结算导航与继续",
+      "originalAcceptanceText": "操作  测试结算下一关、返回首页和继续游戏。\n通过  跳转、进度及反馈正确；主动退出保留策略、击败比例和Rank有确认依据。",
+      "originalRequirementIDs": [
+        "PLAY-10",
+        "UI-04"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "角色、标题与说明分段进入，下一关/复活/重开不等待；焦点不转入隐藏标题或抢占玩家选中操作。",
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged",
+      "evidence": [
+        "Validation/original-0226-feedback.json",
+        "Docs/original-feel-0226/manifest.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "PLAY-10",
+        "PLAY-11",
+        "ART-02",
+        "UI-09"
+      ]
+    },
+    {
+      "id": "11-04",
+      "title": "四开关生效与保存",
+      "originalAcceptanceText": "操作  切换音乐、音效、语音、震动，再关闭重开App。\n通过  即时生效且状态保存；各开关仅控制约定范围。",
+      "originalRequirementIDs": [
+        "UI-07",
+        "AUDIO-01",
+        "AUDIO-05"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "本地内部测试原声接入已有四开关；设置明确标注测试用途，正式清单与分发包仍无测试音频。",
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged",
+      "evidence": [
+        "Validation/original-0226-feedback.json",
+        "Docs/original-feel-0226/manifest.json",
+        "Validation/meowdoku-audio-test-0226.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "UI-07",
+        "AUDIO-01",
+        "AUDIO-05"
+      ]
+    },
+    {
+      "id": "11-05",
+      "title": "设置反馈重开与弹层",
+      "originalAcceptanceText": "操作  测试设置关闭、Restart、Feedback及各种弹层。\n通过  遮罩不穿透，焦点与页面恢复正确；无对局重开和反馈去向符合F4／F5。",
+      "originalRequirementIDs": [
+        "UI-07",
+        "UI-09"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "本轮复核新增一命提示与结果演出期间的底层隔离、焦点和返回。",
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged",
+      "evidence": [
+        "Validation/original-0226-feedback.json",
+        "Docs/original-feel-0226/manifest.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "UI-07",
+        "UI-09",
+        "PLAY-12"
+      ]
+    },
+    {
+      "id": "12-01",
+      "title": "当日签到只领取一次",
+      "originalAcceptanceText": "操作  首次进入签到页，领取后当天反复进入及点击。\n通过  连续天数、日期状态与奖励显示正确；同一自然日只领一次。",
+      "originalRequirementIDs": [
+        "UI-08",
+        "SAVE-05"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "保存成功后才点亮并展示实际奖励，首次挂载/重复点击/重进只呈现已保存状态。",
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged",
+      "evidence": [
+        "Validation/original-0226-feedback.json",
+        "Docs/original-feel-0226/manifest.json",
+        "Validation/test-runs/original-0226-checkin-final.xcresult",
+        "Validation/test-runs/original-0226-checkin-ui-final.xcresult"
+      ],
+      "thisRoundRequirementIDs": [
+        "UI-08",
+        "SAVE-05",
+        "ART-02"
+      ]
+    },
+    {
+      "id": "12-02",
+      "title": "周期礼盒及重置",
+      "originalAcceptanceText": "操作  按配置完成一个周期并领取末日奖励。\n通过  领取条件、奖励内容、礼盒状态和下一周期行为与F5一致。",
+      "originalRequirementIDs": [
+        "UI-08"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "周期末礼盒沿用实际领取资格与真实库存增量，同模型同日重复进入不重播待领提示；正式奖励和时区未变。",
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged",
+      "evidence": [
+        "Validation/original-0226-feedback.json",
+        "Docs/original-feel-0226/manifest.json",
+        "Validation/test-runs/original-0226-checkin-final.xcresult",
+        "Validation/test-runs/original-0226-checkin-ui-final.xcresult"
+      ],
+      "thisRoundRequirementIDs": [
+        "UI-08",
+        "ART-02"
+      ]
+    },
+    {
+      "id": "12-04",
+      "title": "签到奖励冷恢复",
+      "originalAcceptanceText": "操作  领取后强退，再进入签到及首页。\n通过  签到、库存和周期奖励状态正确恢复，首页关卡不被改变。",
+      "originalRequirementIDs": [
+        "SAVE-04",
+        "UI-08"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "实际写盘失败无成功演出，重试成功后恢复签到/库存；恢复展示为静态，不新增业务保存路径。",
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged",
+      "evidence": [
+        "Validation/original-0226-feedback.json",
+        "Docs/original-feel-0226/manifest.json",
+        "Validation/test-runs/original-0226-checkin-final.xcresult",
+        "Validation/test-runs/original-0226-checkin-ui-final.xcresult"
+      ],
+      "thisRoundRequirementIDs": [
+        "SAVE-04",
+        "UI-08"
+      ]
+    },
+    {
+      "id": "14-01",
+      "title": "主题资源与全部状态",
+      "originalAcceptanceText": "操作  核对角色、Logo、图标、棋盘和弹窗全部状态。\n通过  资源完整，主题与尺寸统一；没有参考产品品牌或遗漏占位素材。",
+      "originalRequirementIDs": [
+        "ART-01"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "新增三套各三帧原创全身姿态；原角色身份与透明安全边界沿用，未复制参考产品美术。",
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged",
+      "evidence": [
+        "Validation/original-0226-feedback.json",
+        "Docs/original-feel-0226/manifest.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "ART-01"
+      ]
+    },
+    {
+      "id": "14-02",
+      "title": "安全区字号与触点",
+      "originalAcceptanceText": "操作  在目标设备检查安全区、最大棋盘与长英文。\n通过  不遮挡、不截字；主要点击区至少44×44pt，正确错误不只靠颜色区分。",
+      "originalRequirementIDs": [
+        "UI-09"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "小屏实际Root一命聚焦与角色宿主、中英文签到纳入新截图；完整设备/字号范围仍不扩大。",
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged",
+      "evidence": [
+        "Validation/original-0226-feedback.json",
+        "Docs/original-feel-0226/manifest.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "UI-09"
+      ]
+    },
+    {
+      "id": "14-03",
+      "title": "游戏奖励动效与降级",
+      "originalAcceptanceText": "操作  触发正确、错误、Combo、通关及签到动效。\n通过  与业务状态同步，不阻碍后续操作；轻量特效在低性能设备可降级。",
+      "originalRequirementIDs": [
+        "ART-02"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "分段结果、姿态与签到均有生命周期清理；420项App/7项UI基线通过。目视发现签到双文案交叠，最后只禁用Text隐式交叉淡入；9项签到App及1项领取UI复验通过，替换6图及最终18图已目视通过。",
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged",
+      "evidence": [
+        "Validation/original-0226-feedback.json",
+        "Docs/original-feel-0226/manifest.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "ART-02"
+      ]
+    },
+    {
+      "id": "14-04",
+      "title": "原音频文件与触发验收",
+      "originalAcceptanceText": "操作  逐项触发按钮、X、滑动、撤销、正确错误及Combo声音。\n通过  文件、触发次数、节奏和分组符合冻结音频表；没有未经确认的额外声音。",
+      "originalRequirementIDs": [
+        "AUDIO-01",
+        "AUDIO-04",
+        "AUDIO-05"
+      ],
+      "priorStatus": "pending",
+      "formalStatusAfterThisRound": "pending",
+      "newEvidenceScope": "用户已明确授权内部测试原声，9文件/10事件可解码；文件名映射与临时播放参数不替代冻结表。",
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged",
+      "evidence": [
+        "Validation/original-0226-feedback.json",
+        "Docs/original-feel-0226/manifest.json",
+        "Validation/meowdoku-audio-test-0226.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "AUDIO-01",
+        "AUDIO-04",
+        "AUDIO-05"
+      ]
+    },
+    {
+      "id": "14-05",
+      "title": "音频叠加打断与恢复",
+      "originalAcceptanceText": "操作  快速操作并切前后台，测试外部播放前后及四个开关。\n通过  声音不失控叠加、不漏停或错误重播；恢复前次开关与播放状态。",
+      "originalRequirementIDs": [
+        "AUDIO-02",
+        "AUDIO-03",
+        "AUDIO-06"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "沿用播放器生命周期与开关策略，新增内部测试资源校验和分发排除；真机听测仍待验。",
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged",
+      "evidence": [
+        "Validation/original-0226-feedback.json",
+        "Docs/original-feel-0226/manifest.json",
+        "Validation/meowdoku-audio-test-0226.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "AUDIO-02",
+        "AUDIO-03",
+        "AUDIO-06"
+      ]
+    },
+    {
+      "id": "16-03",
+      "title": "最终构建全部问题复验",
+      "originalAcceptanceText": "操作  在最终构建复测所有失败用例及受影响流程。\n通过  每个Bug均有关联修复版本、复测结论和证据，旧版本通过不能代替复测。",
+      "originalRequirementIDs": [
+        "TECH-07"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "小修前全量420项App与17e7项UI均通过（173.042/207.938秒）；最后签到文字补丁后9项App及1项UI通过（3.007/12.168秒），不称全量重跑。r1编译失败、r2错误期望与r3真实文案重叠均保留；18张最终图已目视通过。0.2.26（29）最终文字修复包通过严格验签及无线覆盖安装；查询确认版本，并只读确认最终安装路径中的Capydoku正在运行。首次自动启动因锁屏失败，不记作自动重试成功。第一遍安装8文件字节一致；最后更新前后跨实际游玩（L3→4），174条旧事件和23条旧奖励完整保留，新增5条事件/1条奖励，设置、签到、身份保持，主备校验通过；未回滚新进度，不声明最终全部文件一致。",
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged",
+      "evidence": [
+        "Validation/original-0226-feedback.json",
+        "Docs/original-feel-0226/manifest.json",
+        "Validation/original-0226-physical-install.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "TECH-07"
+      ]
+    }
+  ]
+}

@@ -167,9 +167,13 @@ final class ResultCharacterUIView: UIView {
 
     private var allLayers: [CALayer] { [layer, character, groundShadow, crown] + crownStars + wingStars + sighs }
 
+    private var performance: ResultCharacterPerformance {
+        won ? (variant == .joyfulBounce ? .joyfulRaise : .starHug) : .gentleRetry
+    }
+
     private func updateArtwork() {
         CATransaction.begin(); CATransaction.setDisableActions(true)
-        character.contents = (UIImage(named: won ? "CapyMascot" : "CapySad")
+        character.contents = (ResultCharacterArtwork.poses(for: performance).last
             ?? CapyExpressionArtwork.image(won ? .happy : .neutral))?.cgImage
         crown.opacity = won && variant == .proudCrown ? 1 : 0
         CATransaction.commit()
@@ -225,6 +229,7 @@ final class ResultCharacterUIView: UIView {
         activeEventID = event; playedEventCount += 1
         generation = UUID(); let token = generation
         let duration = won ? (variant == .joyfulBounce ? 1.05 : 1.20) : 0.92
+        playPoses(duration: duration)
         if won && variant == .joyfulBounce { playBounce(duration: duration) }
         else if won { playCrown(duration: duration) }
         else { playSigh(duration: duration) }
@@ -233,6 +238,17 @@ final class ResultCharacterUIView: UIView {
             self.cancelPresentation()
         }
         cleanup = work; schedule(duration + 0.03, work)
+    }
+
+    private func playPoses(duration: TimeInterval) {
+        let poses = ResultCharacterArtwork.poses(for: performance)
+        guard poses.count == 3 else { return }
+        let animation = CAKeyframeAnimation(keyPath: "contents")
+        animation.values = performance.poseIndices.compactMap { poses[$0].cgImage }
+        animation.keyTimes = performance.poseTimes
+        animation.calculationMode = .discrete
+        animation.duration = duration
+        character.add(animation, forKey: "result-pose-sequence")
     }
 
     private func keyframes(_ target: CALayer, key: String, values: [CGFloat], times: [NSNumber], duration: TimeInterval) {

@@ -293,7 +293,11 @@ final class CapydokuUITests: XCTestCase {
         for (offset, index) in [0, 2, 3].enumerated() {
             cell(index).doubleTap()
             if offset == 1 {
-                XCTAssertTrue(app.descendants(matching: .any)["found_count"].label.contains("One heart left"), "The last-life reminder should be shown.")
+                let reminder = app.buttons["last_life_continue"]
+                XCTAssertTrue(reminder.waitForExistence(timeout: 3), "The remaining life receives a dismissible focus reminder.")
+                XCTAssertFalse(cell(index).isHittable, "The acknowledgement tap must not hit the board below.")
+                reminder.tap()
+                XCTAssertTrue(app.descendants(matching: .any)["found_count"].label.contains("One heart left"))
             }
             if offset < 2 {
                 expectValue(cell(index), "error")
@@ -341,6 +345,30 @@ final class CapydokuUITests: XCTestCase {
         XCTAssertEqual(app.staticTexts["score"].label, score)
         expectValue(app.otherElements["lives"], "2")
         XCTAssertEqual(app.staticTexts["level_title"].label, "Level 1")
+    }
+
+    func testLastLifeSpotlightDismissalDoesNotSpendLifeOrMarkAndColdRestoreDoesNotReplayIt() {
+        launchGame()
+        let frame = cell(3).frame
+        cell(0).doubleTap(); expectValue(app.otherElements["lives"], "2")
+        cell(2).doubleTap()
+        let reminder = app.buttons["last_life_continue"]
+        XCTAssertTrue(reminder.waitForExistence(timeout: 3))
+        XCTAssertFalse(cell(3).isHittable)
+        attachScreen("Last life focuses actual hearts")
+        app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: frame.midX, dy: frame.midY)).tap()
+        expectValue(app.otherElements["lives"], "1")
+        expectValue(cell(3), "empty")
+        expectValue(cell(0), "error"); expectValue(cell(2), "error")
+        XCTAssertFalse(reminder.exists)
+        let before = boardValues()
+        app.terminate()
+        app.launchArguments = ["-ui-testing", "-legacy-fixture", "-skip-tutorial"]
+        app.launch(); tapButton("play")
+        expectValue(app.otherElements["lives"], "1")
+        XCTAssertEqual(boardValues(), before)
+        XCTAssertFalse(app.buttons["last_life_continue"].exists, "A restored one-life board is not a newly accepted mistake.")
+        cell(1).doubleTap(); expectValue(cell(1), "found")
     }
 
     func testSettingsStayIndependentAndPersist() {
@@ -428,6 +456,7 @@ final class CapydokuUITests: XCTestCase {
         // No answer coordinates are assumed or injected into this current-pack visual test.
         for index in 0..<16 {
             if app.staticTexts["loss_result"].exists { break }
+            if app.buttons["last_life_continue"].exists { app.buttons["last_life_continue"].tap() }
             cell(index).doubleTap()
         }
         XCTAssertTrue(app.staticTexts["loss_result"].waitForExistence(timeout: 5))

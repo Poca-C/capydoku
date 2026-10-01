@@ -79,8 +79,8 @@ struct ReferenceAudioManifest: Codable {
     static let allowedEvents: Set<String> = ["background_music", "button_tap", "mark_x", "swipe_x", "erase_x", "double_tap_correct", "double_tap_wrong", "nice", "great", "excellent"]
     static let comboEvents: Set<String> = ["nice", "great", "excellent"]
 
-    func validationErrors(resourceExists: (String) -> Bool) -> [String] {
-        guard referenceVerified else { return [] }
+    func validationErrors(resourceExists: (String) -> Bool, validateUnverified: Bool = false) -> [String] {
+        guard referenceVerified || validateUnverified else { return [] }
         var errors: [String] = []
         if version.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { errors.append("version is empty") }
         if clips.isEmpty { errors.append("verified manifest has no clips") }

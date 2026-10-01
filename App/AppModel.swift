@@ -120,6 +120,7 @@ final class AppModel: ObservableObject {
     /// but do not invent the required analytics enum for those consumptions.
     private(set) var unattributedToolUseCount = 0
     private let feedback: FeedbackPlayer
+    var usesLocalTestAudio: Bool { feedback.usesLocalTestAudio }
 
     init(saveDirectory: URL? = nil, rewardProvider: RewardProvider? = nil,
          rewardTimeout: TimeInterval = 5, runsTimer: Bool = true, feedbackEnabled: Bool = true, bundledPuzzles: [Puzzle]? = nil, interstitialProvider: InterstitialProvider? = nil, startupBypassForTesting: Bool = true, analyticsIdentityStore: AnalyticsIdentityStore? = nil, gameplayConfigurationStore: GameplayConfigurationStore? = nil, feedbackPlayer: FeedbackPlayer? = nil) {

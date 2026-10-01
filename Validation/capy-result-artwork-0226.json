@@ -1,0 +1,205 @@
+{
+  "version": "0.2.26",
+  "createdDate": "2026-10-01",
+  "status": "Original assets integrated; host runtime verification pending root test run.",
+  "tool": "Built-in image_gen.imagegen (not CLI)",
+  "source": "Existing original Capydoku CapyMascot and CapySad only. No Meowdoku artwork used or extracted.",
+  "inputAssets": [
+    "App/Resources/Assets.xcassets/CapyMascot.imageset/CapyMascot.png",
+    "App/Resources/Assets.xcassets/CapySad.imageset/CapySad.png"
+  ],
+  "selectedAssets": [
+    {
+      "performance": "joyfulRaise",
+      "path": "App/Resources/Assets.xcassets/CapyJoyfulPoses0226.imageset/CapyJoyfulPoses0226.png",
+      "sourceGeneration": "exec-44f0a16c-f024-49bf-9a33-2172f2d18cf4.png",
+      "prompt": "Use case: illustration-story.\nAsset type: original Capydoku iOS game character sprite animation sheet, joyful victory variant.\nInput image 1 is our own existing CapyMascot style/identity reference, not an edit target.\nCreate one horizontal sprite strip with exactly THREE equal square cells in a single row (3:1 canvas). Each cell has a genuinely transparent background with preserved alpha, no white/matte/checkerboard. No grid or text.\nAcross all three cells show the SAME full-body warm golden-brown chubby capybara, big rounded rectangular brown snout, tiny pink ears, dark brown rounded paws, creamy belly, fine dark brown clean outline and softly shaded polished casual game illustration exactly consistent with the reference. Keep its size, body proportions, perspective (slightly right facing), center x within each cell and ground baseline matched. Keep entire body and raised paws inside each square, leaving generous 12% safe margin.\nThe three cells are three actual distinct key poses of a joyful arm-raise celebration: LEFT anticipates, crouched a little, paws drawn together in front of belly, excited open eyes and little smile; MIDDLE is full cheerful stretch, BOTH little arms raised outward above shoulder level, wide closed happy eyes, open delighted smile, body lifted and feet slightly outward; RIGHT settles seated upright with BOTH paws still up and happily spread, eyes softly happy and broad smile. The pose change must genuinely redraw arms, shoulders, face, and legs, not merely scale/rotate one static picture. All faces capybara, no rabbit teeth.\nNo props, stars, confetti, clothes, accessories, text, borders, shadows on background, duplicate limbs, cropped ears/paws. Character itself retains natural shaded form. Sheet is intended for equal-cell slicing at runtime and harmonious 140px game UI.",
+      "visualReview": "Accepted after viewing: clasped paws anticipation, both arms up with open cheerful mouth, settled raised paws and happy smile. Three actual silhouettes/expressions; no props or extra limbs.",
+      "sha256": "ca775e930c0f2ef83330f4cecd1d4cc06b35a82b5504358caf83d9aa64e0be36",
+      "alphaAudit": {
+        "height": 724,
+        "path": "App/Resources/Assets.xcassets/CapyJoyfulPoses0226.imageset/CapyJoyfulPoses0226.png",
+        "poses": [
+          {
+            "edgeMaxAlpha": 0,
+            "edgeNonzeroAlphaPixels": 0,
+            "index": 0,
+            "meaningfulAlphaBounds": [
+              53,
+              45,
+              661,
+              690
+            ],
+            "meaningfulEdgeAlphaPixels": 0,
+            "opaquePixels": 283623,
+            "transparentPixels": 233821
+          },
+          {
+            "edgeMaxAlpha": 0,
+            "edgeNonzeroAlphaPixels": 0,
+            "index": 1,
+            "meaningfulAlphaBounds": [
+              50,
+              25,
+              686,
+              688
+            ],
+            "meaningfulEdgeAlphaPixels": 0,
+            "opaquePixels": 313443,
+            "transparentPixels": 202598
+          },
+          {
+            "edgeMaxAlpha": 0,
+            "edgeNonzeroAlphaPixels": 0,
+            "index": 2,
+            "meaningfulAlphaBounds": [
+              51,
+              39,
+              686,
+              695
+            ],
+            "meaningfulEdgeAlphaPixels": 0,
+            "opaquePixels": 298158,
+            "transparentPixels": 218454
+          }
+        ],
+        "width": 2172
+      }
+    },
+    {
+      "performance": "starHug",
+      "path": "App/Resources/Assets.xcassets/CapyStarHugPoses0226.imageset/CapyStarHugPoses0226.png",
+      "sourceGeneration": "exec-f0c9e21d-9023-431f-aa41-9775e9bbde37.png",
+      "prompt": "Use case: illustration-story.\nAsset type: original Capydoku iOS game character sprite animation sheet, proud star-hug victory variant.\nInput image 1 is our own existing CapyMascot style/identity reference. Input image 2 is our newly created joyful pose sheet as continuity reference, NOT to be copied poses.\nCreate one horizontal sprite strip with exactly THREE equal square cells in a single row (3:1 canvas). Each cell has a genuinely transparent background with preserved alpha, no white/matte/checkerboard. No grid or text.\nAcross all three cells show the SAME full-body warm golden-brown chubby capybara, large rounded rectangular brown snout, tiny pink ears, dark brown rounded paws, creamy belly, fine dark brown clean outline and softly shaded polished casual game illustration matching BOTH references. Same slightly right facing perspective. Keep its apparent size, body proportions, center x within each cell and ground baseline matched across cells; entire body within square with 10% safe margin. Stay seated.\nThe three cells are distinct key poses of proud, warm celebration: LEFT the capybara holds a small golden-orange five-point star at belly level with both paws, head tilted down looking at it delightedly; MIDDLE it lifts that same star up to chest and nestles/hugs it to one cheek, eyes closed with a big joyful smile and shoulders raised; RIGHT it presents the star proudly slightly forward at chest level, both paws visible holding star corners, head up with one happy winking eye and little confident smile. Pose changes genuinely redraw arms, shoulders and face. The single star is a simple charming softly shaded game star, thick warm outline, about one third body width; no facial features on star. Distinct from the two-arms-up joyful version.\nNo other props, floating stars, confetti, crown, clothes, text, borders, shadows on background, duplicate limbs, cropped ears/paws. Character itself retains natural shaded form. Designed for equal-cell slicing and crisp readable 140px game UI.",
+      "correctionPrompt": "Use case: precise-object-edit.\nAsset type: Capydoku proud star-hug three-frame sprite sheet final correction.\nEdit ONLY the RIGHTMOST cell of the supplied sprite strip: the face mistakenly has three eye-like marks. A capybara has exactly TWO eyes. Keep the tiny far-side crescent eye at the upper-right forehead silhouette. Replace the large round near-side eye on the left side of its face with ONE happy closed crescent eye. Completely REMOVE the extra central wink mark between that near-side eye and the muzzle, restoring continuous warm golden-brown fur there. The final face should have exactly TWO happy crescent eyes in the normal anatomical positions matching the middle cell. Make the smile content and closed-mouth.\nKeep every other part of ALL THREE cells unchanged: star, paw position, body, silhouette, palette, cell sizes and positions, transparent background with genuine alpha. No matte, text, grid, new objects or outlines.",
+      "rejectedGeneration": "exec-831202c5-f647-4328-9feb-d5163bae0a2d.png",
+      "visualReview": "Original generated third pose had an extra central eye mark. Rejected and corrected with built-in imagegen. Accepted corrected strip after viewing: star at belly, hugged against cheek, held forward. Final third face has exactly two happy eyes. All three poses retain reference character/style.",
+      "sha256": "9a8310ccb6c4d62e3a106d3b760d800f624a8d2110395d5c476566f5486c6d98",
+      "alphaAudit": {
+        "height": 724,
+        "path": "App/Resources/Assets.xcassets/CapyStarHugPoses0226.imageset/CapyStarHugPoses0226.png",
+        "poses": [
+          {
+            "edgeMaxAlpha": 0,
+            "edgeNonzeroAlphaPixels": 0,
+            "index": 0,
+            "meaningfulAlphaBounds": [
+              50,
+              43,
+              664,
+              704
+            ],
+            "meaningfulEdgeAlphaPixels": 0,
+            "opaquePixels": 294938,
+            "transparentPixels": 221589
+          },
+          {
+            "edgeMaxAlpha": 0,
+            "edgeNonzeroAlphaPixels": 0,
+            "index": 1,
+            "meaningfulAlphaBounds": [
+              50,
+              21,
+              640,
+              704
+            ],
+            "meaningfulEdgeAlphaPixels": 0,
+            "opaquePixels": 302360,
+            "transparentPixels": 214158
+          },
+          {
+            "edgeMaxAlpha": 0,
+            "edgeNonzeroAlphaPixels": 0,
+            "index": 2,
+            "meaningfulAlphaBounds": [
+              47,
+              17,
+              671,
+              705
+            ],
+            "meaningfulEdgeAlphaPixels": 0,
+            "opaquePixels": 319351,
+            "transparentPixels": 197086
+          }
+        ],
+        "width": 2172
+      }
+    },
+    {
+      "performance": "gentleRetry",
+      "path": "App/Resources/Assets.xcassets/CapyRetryPoses0226.imageset/CapyRetryPoses0226.png",
+      "sourceGeneration": "exec-753f7350-d96a-4336-9047-aa1ebe9aaf84.png",
+      "prompt": "Use case: illustration-story.\nAsset type: original Capydoku iOS game character sprite animation sheet, gentle failure/retry variant.\nInput image 1 is our own existing CapyMascot identity reference. Input image 2 is our existing CapySad emotion reference. Match their character, warm palette and finish. Create one horizontal sprite strip with exactly THREE equal square cells in a single row (3:1 canvas). Each cell has a genuinely transparent background with preserved alpha, no white/matte/checkerboard. No grid or text.\nAcross all three cells show the SAME full-body warm golden-brown chubby capybara, big rounded rectangular brown snout, exactly two eyes, two tiny pink ears, dark brown rounded paws, creamy belly, fine dark brown clean outline and softly shaded polished casual game illustration. Same slightly right facing perspective. Keep apparent body size, center x within each cell and seated ground baseline matched. Entire body inside its square, leaving 10% safety margin.\nThe three cells are real distinct key poses of a short disappointed sigh with an encouraging recovery: LEFT sits upright startled-disappointed, paws clasped near chest, sad brows and downturned mouth, no tears; MIDDLE lowers its head and rounds its shoulders into a soft slouch, eyes closed, forepaws rest limply on knees, small pursed sigh mouth; RIGHT gently lifts its head a little with a determined but still sad small expression, one paw held near chest and other resting on its knee as if ready to try again. Actual redraw of head angle, arms, shoulders and face between frames, not rotation/scaling one static image.\nNo tear drops, no despair, no injury, no props, floating particles, clothes, accessories, text, borders, shadows on background, duplicate limbs, cropped ears/paws. Keep lovable and warm, readable at 140px game UI. Intended for equal-cell sprite slicing.",
+      "visualReview": "Accepted after viewing: clasped worried paws, genuine head/shoulder slouch with closed eyes and sigh mouth, head lifts with one paw near chest. Gentle disappointed expression, no tears or distress imagery.",
+      "sha256": "97fd16c870ba477a4b5e2a6dc5e2d1d4c2773c6dfdde824491af6dce5945aad5",
+      "alphaAudit": {
+        "height": 724,
+        "path": "App/Resources/Assets.xcassets/CapyRetryPoses0226.imageset/CapyRetryPoses0226.png",
+        "poses": [
+          {
+            "edgeMaxAlpha": 0,
+            "edgeNonzeroAlphaPixels": 0,
+            "index": 0,
+            "meaningfulAlphaBounds": [
+              63,
+              35,
+              680,
+              696
+            ],
+            "meaningfulEdgeAlphaPixels": 0,
+            "opaquePixels": 303054,
+            "transparentPixels": 214158
+          },
+          {
+            "edgeMaxAlpha": 1,
+            "edgeNonzeroAlphaPixels": 2,
+            "index": 1,
+            "meaningfulAlphaBounds": [
+              51,
+              71,
+              678,
+              696
+            ],
+            "meaningfulEdgeAlphaPixels": 0,
+            "opaquePixels": 287282,
+            "transparentPixels": 230180
+          },
+          {
+            "edgeMaxAlpha": 0,
+            "edgeNonzeroAlphaPixels": 0,
+            "index": 2,
+            "meaningfulAlphaBounds": [
+              51,
+              37,
+              666,
+              696
+            ],
+            "meaningfulEdgeAlphaPixels": 0,
+            "opaquePixels": 301702,
+            "transparentPixels": 215258
+          }
+        ],
+        "width": 2172
+      }
+    }
+  ],
+  "packaging": "Generated PNGs copied unchanged into versioned asset sets. Genuine generated alpha preserved. Runtime crops equal square cells and downsamples to 512 px, preserving common canvas/baseline. No external image edits or generated-image replacements of pre-existing assets.",
+  "animation": "Finite discrete contents keyframes display redrawn key poses in sync with existing Core Animation body motion. No timer or infinite loop; final model layer uses the new terminal pose. Existing event consumption, cleanup token, background/overlay/resize cancellation, Reduce Motion and low-power behavior retained.",
+  "newTests": "AppTests/ResultCharacterChoreographyTests.swift: actual atlas alpha/seams/distinct pixels for all nine poses; malformed/missing fallback caching; fresh contents sequence and cancellation terminal pose; reduced-motion static expressive pose/no replay; actual small-host choreography contact sheet at nominal 100/350/900 ms for all three performances.",
+  "existingTests": "AppTests/ResultCharacterTests.swift unchanged: lifecycle, duration, event deduplication, background/attachment/resize, touch pass-through, bounds and visual evidence.",
+  "limitations": [
+    "Three key poses per performance, not a fully rigged continuously deforming character.",
+    "No audio generated or added by this subtask.",
+    "Host runtime results and aesthetic in-app assessment must be recorded after root's unified run; resource validation alone is not that proof."
+  ],
+  "inputSHA256": {
+    "App/Resources/Assets.xcassets/CapyMascot.imageset/CapyMascot.png": "462fbf8050c203ecd8b8b8e08dd33f58971cc1c5cc927e77f742205948d468a7",
+    "App/Resources/Assets.xcassets/CapySad.imageset/CapySad.png": "ee8cce1f80225bc67904b1bdbfa566f1909be5b7205702b8980499490a6e254d"
+  },
+  "resourceAudit": {
+    "tool": "Swift ImageIO/CoreGraphics read-only RGBA audit",
+    "allThreeAssetsExactThreeSquareFrames": true,
+    "allNinePosesHaveTransparentMarginsAndNoAdjacentBleed": true,
+    "edgeTolerance": "Meaningful alpha >16/255. The retry middle frame has two generated edge pixels of alpha 1/255; no visible contour crosses any cell edge. Original pixels preserved."
+  }
+}

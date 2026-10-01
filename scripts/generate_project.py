@@ -77,6 +77,13 @@ def phase(name, isa, builds):
 app_src=phase('app-src','PBXSourcesBuildPhase',app_builds)
 app_res=phase('app-res','PBXResourcesBuildPhase',resource_builds)
 app_frameworks=phase('app-frameworks','PBXFrameworksBuildPhase',[core_build])
+# Deliberately outside PBXResourcesBuildPhase: these machine-local inputs may only
+# enter a non-archive Debug/internal_demo build. Script clears stale copies first.
+local_test_audio = obj('local-test-audio',
+    'isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (); inputPaths = (); outputPaths = (); '
+    'alwaysOutOfDate = 1; name = "Stage optional local test audio"; shellPath = /bin/sh; '
+    'shellScript = ' + q('/usr/bin/python3 "$SRCROOT/scripts/stage_local_test_audio.py"') + '; runOnlyForDeploymentPostprocessing = 0;')
+
 test_src=phase('test-src','PBXSourcesBuildPhase',test_builds)
 test_res=phase('test-res','PBXResourcesBuildPhase',[])
 test_frameworks=phase('test-frameworks','PBXFrameworksBuildPhase',[])
@@ -101,7 +108,7 @@ project_config=configs('project-',{'SDKROOT':'iphoneos','IPHONEOS_DEPLOYMENT_TAR
 app_config=configs('app-',{'PRODUCT_NAME':'Capydoku','PRODUCT_BUNDLE_IDENTIFIER':'$(CAPYDOKU_APP_BUNDLE_IDENTIFIER)','INFOPLIST_FILE':'App/Info.plist','GENERATE_INFOPLIST_FILE':'NO','TARGETED_DEVICE_FAMILY':'1','CODE_SIGN_STYLE':'Automatic','CODE_SIGN_IDENTITY[sdk=iphonesimulator*]':'-','CODE_SIGN_ENTITLEMENTS[sdk=iphonesimulator*]':'App/Simulator.entitlements','ASSETCATALOG_COMPILER_APPICON_NAME':'AppIcon','LD_RUNPATH_SEARCH_PATHS':'$(inherited) @executable_path/Frameworks','SUPPORTS_MACCATALYST':'NO','SWIFT_EMIT_LOC_STRINGS':'YES'})
 test_config=configs('uitest-',{'PRODUCT_NAME':'CapydokuUITests','PRODUCT_BUNDLE_IDENTIFIER':'$(CAPYDOKU_APP_BUNDLE_IDENTIFIER).uitests','GENERATE_INFOPLIST_FILE':'YES','TARGETED_DEVICE_FAMILY':'1','CODE_SIGN_STYLE':'Automatic','TEST_TARGET_NAME':'Capydoku','LD_RUNPATH_SEARCH_PATHS':'$(inherited) @executable_path/Frameworks @loader_path/Frameworks'})
 unit_config=configs('unit-',{'PRODUCT_NAME':'CapydokuAppTests','PRODUCT_BUNDLE_IDENTIFIER':'$(CAPYDOKU_APP_BUNDLE_IDENTIFIER).apptests','GENERATE_INFOPLIST_FILE':'YES','TARGETED_DEVICE_FAMILY':'1','CODE_SIGN_STYLE':'Automatic','BUNDLE_LOADER':'$(TEST_HOST)','TEST_HOST':'$(BUILT_PRODUCTS_DIR)/Capydoku.app/Capydoku','LD_RUNPATH_SEARCH_PATHS':'$(inherited) @executable_path/Frameworks @loader_path/Frameworks'})
-app_target=obj('app-target',f'isa = PBXNativeTarget; buildConfigurationList = {app_config}; buildPhases = {arr([app_src,app_frameworks,app_res])}; buildRules = (); dependencies = (); name = Capydoku; packageProductDependencies = {arr([product_dep])}; productName = Capydoku; productReference = {app_product}; productType = "com.apple.product-type.application";')
+app_target=obj('app-target',f'isa = PBXNativeTarget; buildConfigurationList = {app_config}; buildPhases = {arr([app_src,app_frameworks,app_res,local_test_audio])}; buildRules = (); dependencies = (); name = Capydoku; packageProductDependencies = {arr([product_dep])}; productName = Capydoku; productReference = {app_product}; productType = "com.apple.product-type.application";')
 proxy=obj('test-proxy',f'isa = PBXContainerItemProxy; containerPortal = {ident("project")}; proxyType = 1; remoteGlobalIDString = {app_target}; remoteInfo = Capydoku;')
 dependency=obj('test-dependency',f'isa = PBXTargetDependency; target = {app_target}; targetProxy = {proxy};')
 test_target=obj('test-target',f'isa = PBXNativeTarget; buildConfigurationList = {test_config}; buildPhases = {arr([test_src,test_frameworks,test_res])}; buildRules = (); dependencies = {arr([dependency])}; name = CapydokuUITests; productName = CapydokuUITests; productReference = {test_product}; productType = "com.apple.product-type.bundle.ui-testing";')
