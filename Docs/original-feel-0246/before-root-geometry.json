@@ -1,0 +1,37 @@
+{
+  "boundary" : "Real Root320x568 viewport;150ms requested intervals and final layout observations. Static reduced-motion collisions and natural final-flight frames are visually reviewed; no compositor phase or actual input latency is inferred.",
+  "samples" : [
+    {
+      "amount" : 200,
+      "centerDistanceInCells" : 3.3996175192011666,
+      "labelFrame" : "{{95, 363.33333333333331}, {61, 27}}",
+      "level" : 6,
+      "reduced" : true,
+      "sourceFrame" : "{{189.33333333333331, 423.66666666666663}, {29.333333333333343, 29.333333333333371}}"
+    },
+    {
+      "amount" : 200,
+      "centerDistanceInCells" : 3.6660806334209006,
+      "labelFrame" : "{{95, 351.33333333333331}, {61, 27}}",
+      "level" : 6,
+      "reduced" : false,
+      "sourceFrame" : "{{189.33333333333331, 423.66666666666663}, {29.333333333333343, 29.333333333333371}}"
+    },
+    {
+      "amount" : 280,
+      "centerDistanceInCells" : 6.2670557570178254,
+      "labelFrame" : "{{102, 428}, {54, 23}}",
+      "level" : 111,
+      "reduced" : true,
+      "sourceFrame" : "{{230.40000000000001, 435.39999999999998}, {17.599999999999994, 17.600000000000023}}"
+    },
+    {
+      "amount" : 280,
+      "centerDistanceInCells" : 6.332852184220795,
+      "labelFrame" : "{{102, 416}, {54, 23}}",
+      "level" : 111,
+      "reduced" : false,
+      "sourceFrame" : "{{230.40000000000001, 435.39999999999998}, {17.599999999999994, 17.600000000000023}}"
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "build": "0.2.46 (49)",
+  "baselineBuild": "0.2.45 (48)",
+  "items": [
+    {
+      "file": "before-layout-diagnostic.json",
+      "sha256": "89ae3e7056d3f4f1d2c3032acd105018ee31c3997090e394a63fcb2941313f87",
+      "kind": "Unedited XCTest attachment",
+      "sourceBundle": "Validation/test-runs/original-0246-score-before.xcresult",
+      "test": "GameHUDPresentationTests/testCurrentPackLocalScoreReadabilityDiagnostics()",
+      "originalAttachment": "D1B914F5-1DF4-431E-8442-323BDD1D8876.json"
+    },
+    {
+      "file": "before-root-geometry.json",
+      "sha256": "ffa78cd6df8fe3dd69a79deb64fdeee5af64f4e1f4f5a5c18e6349ab457e7c0b",
+      "kind": "Unedited XCTest attachment",
+      "sourceBundle": "Validation/test-runs/original-0246-root-before.xcresult",
+      "test": "GameHUDVisualTests/testDenseLocalScoresInActualRootStayAssociatedAndReadable()",
+      "originalAttachment": "F6527B9B-B462-4098-8ABF-4F2ADC552CF7.json"
+    },
+    {
+      "file": "before-L6-normal.png",
+      "sha256": "527e664b8b0dfe5b8693ddfda92697a353bab559abcf57ed6e50f4f613228ebf",
+      "kind": "Unedited XCTest attachment",
+      "sourceBundle": "Validation/test-runs/original-0246-root-before.xcresult",
+      "test": "GameHUDVisualTests/testDenseLocalScoresInActualRootStayAssociatedAndReadable()",
+      "originalAttachment": "AE465B5D-95A3-4B8D-B906-913EB936488A.png"
+    },
+    {
+      "file": "before-L111-normal.png",
+      "sha256": "228b6c517505e8ddf999b67005b1453d8f3180a3d50e2e95da775bdb60b0ed22",
+      "kind": "Unedited XCTest attachment",
+      "sourceBundle": "Validation/test-runs/original-0246-root-before.xcresult",
+      "test": "GameHUDVisualTests/testDenseLocalScoresInActualRootStayAssociatedAndReadable()",
+      "originalAttachment": "0F7CE698-EA8E-412D-AE21-D7553EB234EB.png"
+    },
+    {
+      "file": "after-layout-diagnostic.json",
+      "sha256": "9bdecdec7108de81e869cd37ae7d48c6aa87a94a11e3f0be41b2abd34089ac3e",
+      "kind": "Unedited XCTest attachment",
+      "sourceBundle": "Validation/test-runs/original-0246-app-final.xcresult",
+      "test": "GameHUDPresentationTests/testCurrentPackLocalScoreReadabilityDiagnostics()",
+      "originalAttachment": "057DE7E9-6BF1-43F4-906C-A6C2CE4F7FF7.json"
+    },
+    {
+      "file": "after-root-geometry.json",
+      "sha256": "f76cf0922354af079280f07e125fd97bfb19001001ffb3e34478c1cd5afa1b9a",
+      "kind": "Unedited XCTest attachment",
+      "sourceBundle": "Validation/test-runs/original-0246-app-final.xcresult",
+      "test": "GameHUDVisualTests/testDenseLocalScoresInActualRootStayAssociatedAndReadable()",
+      "originalAttachment": "A4E46F41-84A9-4A10-978B-C5B67473CBFF.json"
+    },
+    {
+      "file": "after-L6-normal.png",
+      "sha256": "7d95de16afd73ab023cdf7c04e70f4b47d5881eb7e0e7b8d767153222531ba66",
+      "kind": "Unedited XCTest attachment",
+      "sourceBundle": "Validation/test-runs/original-0246-app-final.xcresult",
+      "test": "GameHUDVisualTests/testDenseLocalScoresInActualRootStayAssociatedAndReadable()",
+      "originalAttachment": "D7ECB340-5A74-49F4-B132-0EF77252DE6F.png"
+    },
+    {
+      "file": "after-L111-normal.png",
+      "sha256": "e32fc12b3dfa76ad32fa62a4ac8a2b0a7e0c8f5a4c11e2bcd6127b727159b8f4",
+      "kind": "Unedited XCTest attachment",
+      "sourceBundle": "Validation/test-runs/original-0246-app-final.xcresult",
+      "test": "GameHUDVisualTests/testDenseLocalScoresInActualRootStayAssociatedAndReadable()",
+      "originalAttachment": "9661C543-7841-466D-AB60-1506CAA79C5C.png"
+    },
+    {
+      "file": "after-L6-reduced.png",
+      "sha256": "3b19b4c723c2e8b162d90e17daf73f588be0838d080eab3defd60282743f17e9",
+      "kind": "Unedited XCTest attachment",
+      "sourceBundle": "Validation/test-runs/original-0246-app-final.xcresult",
+      "test": "GameHUDVisualTests/testDenseLocalScoresInActualRootStayAssociatedAndReadable()",
+      "originalAttachment": "7B890E02-86C8-4B2E-853A-E79276E79217.png"
+    },
+    {
+      "file": "after-L111-reduced.png",
+      "sha256": "edfd9d73f0d5ee1795ffd842b1d45e975c61b6a14325fac37c5a991c8b678009",
+      "kind": "Unedited XCTest attachment",
+      "sourceBundle": "Validation/test-runs/original-0246-app-final.xcresult",
+      "test": "GameHUDVisualTests/testDenseLocalScoresInActualRootStayAssociatedAndReadable()",
+      "originalAttachment": "17F8B87F-F0E8-4858-A187-BB12A85C3351.png"
+    },
+    {
+      "file": "dense-local-scores.mov",
+      "sha256": "2ceb3e6092eca3de2a5794ec4cba9ff3210a20e3fa980d493cac3fe00b0402f3",
+      "kind": "Actual simulator Root playback from the final visual test; screenshot readback may stall the compositor."
+    },
+    {
+      "file": "video-extraction-index.json",
+      "sha256": "a91358386f18a7af177a80bd07ed8b8fedf40b1cfeda14b9384b4812bc17039e",
+      "kind": "Finite video sample index; not a performance benchmark."
+    },
+    {
+      "file": "video-overview.png",
+      "sha256": "09279d651ad644bcf4c10109d6df8cc77cb5c162caad34bb8e869d1cac172332",
+      "kind": "Finite full-frame contact sheet reviewed at 0.2 second requested intervals from 0 through 3.6 seconds."
+    },
+    {
+      "file": "L6-full-video-frame.png",
+      "sha256": "442dd15b6a88927df4f372703ba6521dc856a83a22072363e52086acd930b6f5",
+      "kind": "Unedited full video frame inspected at native screenshot resolution.",
+      "sourceFrame": "frame-001.800.png"
+    },
+    {
+      "file": "L111-full-video-frame.png",
+      "sha256": "8ce01929246859c7d6e2885f871e2ff714b979825859971db6a232930cd0eb4b",
+      "kind": "Unedited full video frame inspected at native screenshot resolution.",
+      "sourceFrame": "frame-003.600.png"
+    }
+  ],
+  "metrics": {
+    "placements": 4744,
+    "staticOverlapPairsBefore": 1042,
+    "staticOverlapPairsAfter": 0,
+    "maxCenterDistanceInCellsBefore": 6.2670557570178245,
+    "maxCenterDistanceInCellsAfter": 3.7620523435677766
+  },
+  "review": {
+    "matrix": "150 bundled levels, forward/reverse solution order, 190/374pt outer boards and requested150ms fake-clock intervals; reduced-motion static rectangles. Not all play orders, raster alpha, normal-motion frame timing or solver/uniqueness revalidation.",
+    "fixture": "Actual Root320x568 viewport on17Pro; black full-scene surround. L6 last two finds and L111 last find use board.activate, not physical touches.",
+    "visual": "Two normal-motion before images, four final Root images, video overview0–3.6s and full frames1.8/3.6s inspected. Video duration3.68s; finite review, not every frame.",
+    "reducedMotion": "Immediate victory overlay covers much of the board; reduced screenshots support state/layout observations, not unobscured badge visual acceptance.",
+    "layoutProbe": "Normal-motion label frame can be an animation target; reported distance is geometry, not the instantaneous rendered position or input latency.",
+    "residual": "Some dense layouts still place badges farther away. Brief result-entry back-arrow duplication and next-button/tool fade overlap appear in baseline and final images; not addressed in this change.",
+    "reference": "No new reference playtest, audible A/B or physical haptics; not equivalence acceptance."
+  }
+}

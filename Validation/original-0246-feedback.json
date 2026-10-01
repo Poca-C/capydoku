@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.46 (49)",
+  "date": "2026-10-02",
+  "status": "scoped_dense_local_score_readability_verified_simulator_only",
+  "previousReport": "Validation/original-0245-feedback.json",
+  "previousGoalTurn": {
+    "classification": "progress",
+    "reason": "0.2.45 completed source-star clearance,98 related App/4UI and commit12729fb; dense local score readability remained."
+  },
+  "sourceParagraphs": [
+    129,
+    241,
+    249,
+    252,
+    254
+  ],
+  "finding": "Before diagnostic found1042 static badge-overlap pairs across4744 placements and source-center distance up to6.267cells. Actual RootL6/L111 confirmed stacked or distant labels.",
+  "changes": [
+    "Compare nearby valid placements across font sizes and12/6/0pt travel; include same-height side positions and narrow character gaps without reducing the2pt character exclusion.",
+    "15pt labels use3pt horizontal padding per side while retaining measured complete text,15–19pt typography and board bounds.",
+    "A new award retires only older local labels with intersecting full swept rectangles. Independent labels retain UUIDs and original deadlines; HUD score and immediate business state remain.",
+    "Dedicated tests cover full text width, actual packL6/L111 proximity, swept-path replacement, stale timers and session cancellation."
+  ],
+  "temporaryTuning": "Search gap2.25pt, compact padding3pt, travel preference0.25 and font penalty2 are Demo tuning, not reference measurements. Existing0.68s fade/0.72s cleanup retained.",
+  "verificationHistory": [
+    {
+      "status": "Passed",
+      "cases": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 5.166,
+      "scope": "Observational baseline diagnostic; passing execution exposed issues and is not acceptance.",
+      "summary": "Validation/test-runs/original-0246-score-before-summary.json",
+      "log": "Validation/test-runs/original-0246-score-before.log",
+      "bundle": "Validation/test-runs/original-0246-score-before.xcresult"
+    },
+    {
+      "status": "Passed",
+      "cases": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 8.182,
+      "scope": "Baseline actual Root visual fixture on0.2.45.",
+      "summary": "Validation/test-runs/original-0246-root-before-summary.json",
+      "log": "Validation/test-runs/original-0246-root-before.log",
+      "bundle": "Validation/test-runs/original-0246-root-before.xcresult"
+    },
+    {
+      "status": "Passed",
+      "cases": 21,
+      "passed": 21,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 13.601,
+      "scope": "First candidate;0 overlap pairs but worst4.430cell distance remained, so tuning continued.",
+      "summary": "Validation/test-runs/original-0246-score-candidate-summary.json",
+      "log": "Validation/test-runs/original-0246-score-candidate.log",
+      "bundle": "Validation/test-runs/original-0246-score-candidate.xcresult"
+    },
+    {
+      "status": "Passed",
+      "cases": 21,
+      "passed": 21,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 13.273,
+      "scope": "Second candidate;0 overlap pairs but worst3.840cell distance; narrow gap search refined before final.",
+      "summary": "Validation/test-runs/original-0246-score-candidate-r2-summary.json",
+      "log": "Validation/test-runs/original-0246-score-candidate-r2.log",
+      "bundle": "Validation/test-runs/original-0246-score-candidate-r2.xcresult"
+    }
+  ],
+  "applicationTests": {
+    "status": "Passed",
+    "cases": 104,
+    "passed": 104,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 90.932,
+    "scope": "17 Pro/iOS26.5; ten affected board/reward/presentation suites, not full App/Core.",
+    "summary": "Validation/test-runs/original-0246-app-final-summary.json",
+    "log": "Validation/test-runs/original-0246-app-final.log",
+    "bundle": "Validation/test-runs/original-0246-app-final.xcresult"
+  },
+  "uiTests": {
+    "status": "Passed",
+    "cases": 4,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 146.535,
+    "scope": "17e/iOS26.5; native gestures/tools, solve/advance, lose/simulated revive, hint preview/Apply.",
+    "summary": "Validation/test-runs/original-0246-17e-ui-summary.json",
+    "log": "Validation/test-runs/original-0246-17e-ui.log",
+    "bundle": "Validation/test-runs/original-0246-17e-ui.xcresult"
+  },
+  "visualEvidence": "Docs/original-feel-0246/manifest.json",
+  "reference": {
+    "latestSuccessfulPlaytest": "Validation/meowdoku-playtest-comparison-0229.json",
+    "newSuccessfulPlaytestThisRound": false,
+    "equivalenceClaimed": false
+  },
+  "audio": {
+    "modified": false,
+    "localTestWAVCount": 9,
+    "currentDebugInventory": "Validation/audio-isolation-0246-debug.json",
+    "formalManifestClipsEmpty": true,
+    "liveAuditoryAB": false,
+    "releaseRebuilt": false
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  },
+  "remaining": [
+    "主要参考方向均有Demo实现，但动作自然度、整段节奏及连续音画/触觉A/B仍未验收。",
+    "浮分更靠近源格且本次静态矩阵无重叠；最远仍3.762格，不声称所有棋盘或操作顺序均已理想。",
+    "结算入场的返回箭头短暂叠影与按钮/道具淡化叠加在前后画面均可见，本轮未处理。",
+    "手机仍0.2.29；最低系统、冻结参考和正式上架验收未完成。"
+  ],
+  "formalSignOff": false,
+  "formalConformanceRowsUnchanged": 83,
+  "historicalChecklistCountUnchanged": 88,
+  "diagnosticMetrics": {
+    "placements": 4744,
+    "staticOverlapPairsBefore": 1042,
+    "staticOverlapPairsAfter": 0,
+    "maxCenterDistanceInCellsBefore": 6.2670557570178245,
+    "maxCenterDistanceInCellsAfter": 3.7620523435677766
+  },
+  "diagnosticBoundary": "150 bundled levels, forward/reverse solution order, 190/374pt outer boards and requested150ms fake-clock intervals; reduced-motion static rectangles. Not all play orders, raster alpha, normal-motion frame timing or solver/uniqueness revalidation."
+}

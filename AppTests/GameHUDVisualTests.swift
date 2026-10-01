@@ -13,6 +13,73 @@ final class GameHUDVisualTests: XCTestCase {
         [layer] + (layer.sublayers ?? []).flatMap(layers)
     }
 
+    /// Real late-board scenes for proximity and rapid score replacement review.
+    /// Final snapshots occur after the moving interval; these are broad phases,
+    /// not a frame-rate or precise callback-latency benchmark.
+    @MainActor func testDenseLocalScoresInActualRootStayAssociatedAndReadable() async throws {
+        var samples: [[String: Any]] = []
+        let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
+        for (level, reduced) in [(6, true), (6, false), (111, true), (111, false)] {
+            let directory = FileManager.default.temporaryDirectory.appendingPathComponent("dense-score-" + UUID().uuidString)
+            let model = AppModel(saveDirectory: directory, runsTimer: false, feedbackEnabled: false)
+            model.progress.tutorialCompleted = true; model.start(level: level)
+            let solution = try XCTUnwrap(model.session).puzzle.solution
+            let pending = level == 6 ? 2 : 1
+            for index in solution.dropLast(pending) { model.submit(index) }
+            let previous = scene.windows.first(where: \.isKeyWindow), window = UIWindow(windowScene: scene)
+            let surround = UIWindow(windowScene: scene); surround.frame = scene.coordinateSpace.bounds
+            let backdrop = UIViewController(); backdrop.view.backgroundColor = .black
+            surround.rootViewController = backdrop; surround.windowLevel = UIWindow.Level(rawValue: 1)
+            surround.isHidden = false; window.windowLevel = UIWindow.Level(rawValue: 2)
+            window.frame = CGRect(x: 0, y: 0, width: 320, height: 568)
+            var frames: [String: CGRect] = [:]
+            let host = UIHostingController(rootView: RootView(reduceMotionOverride: reduced).environmentObject(model)
+                .environment(\.scenePhase, .active).environment(\.capyLayoutObserver, { frames[$0] = $1 }))
+            window.rootViewController = host; window.makeKeyAndVisible()
+            defer {
+                window.isHidden = true; window.rootViewController = nil
+                surround.isHidden = true; surround.rootViewController = nil; previous?.makeKeyAndVisible()
+                model.flushPendingSaves(); try? FileManager.default.removeItem(at: directory)
+            }
+            try await Task.sleep(nanoseconds: 500_000_000)
+            let board = try XCTUnwrap(descendants(host.view).compactMap { $0 as? PuzzleGridUIView }.first)
+            let initial = try XCTUnwrap(model.session), boardFrame = try XCTUnwrap(frames["puzzle_board"])
+            let elements = try XCTUnwrap(board.accessibilityElements as? [UIAccessibilityElement])
+            let cells = elements.map { board.convert($0.accessibilityFrameInContainerSpace, to: window) }
+            var lastAmount = 0
+            for index in solution.suffix(pending) {
+                let oldScore = model.session!.score
+                XCTAssertTrue(board.activate(index: index, submit: true))
+                lastAmount = model.session!.score - oldScore
+                try await Task.sleep(nanoseconds: 150_000_000)
+            }
+            for _ in 0..<10 where frames["local_score_\(lastAmount)"] == nil {
+                try await Task.sleep(nanoseconds: 20_000_000)
+            }
+            let badge = try XCTUnwrap(frames["local_score_\(lastAmount)"]), source = cells[solution.last!]
+            samples.append(["level": level, "reduced": reduced, "amount": lastAmount,
+                "sourceFrame": NSCoder.string(for: source), "labelFrame": NSCoder.string(for: badge),
+                "centerDistanceInCells": hypot(badge.midX - source.midX, badge.midY - source.midY) / source.width])
+            XCTAssertEqual(model.session?.status, .won); XCTAssertEqual(model.session?.found, Set(solution))
+            XCTAssertEqual(model.session?.lives, initial.lives)
+            XCTAssertEqual(frames["puzzle_board"], boardFrame)
+            for cell in cells.enumerated() where solution.contains(cell.offset) {
+                XCTAssertFalse(badge.intersects(cell.element), "Latest score must not cover any character.")
+            }
+            let accepted = model.session
+            model.submit(solution.last!); XCTAssertEqual(model.session, accepted)
+            let image = UIGraphicsImageRenderer(bounds: window.bounds).image { _ in
+                window.drawHierarchy(in: window.bounds, afterScreenUpdates: false)
+            }
+            let a = XCTAttachment(image: image); a.name = "dense-score-L\(level)-reduced-\(reduced)"
+            a.lifetime = .keepAlways; add(a)
+        }
+        let data = try JSONSerialization.data(withJSONObject: ["samples": samples,
+            "boundary": "Real Root320x568 viewport;150ms requested intervals and final layout observations. Static reduced-motion collisions and natural final-flight frames are visually reviewed; no compositor phase or actual input latency is inferred."], options: [.prettyPrinted, .sortedKeys])
+        let a = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+        a.name = "dense-score-root-geometry"; a.lifetime = .keepAlways; add(a)
+    }
+
     @MainActor func testLocalScoreFitsActualRootWithoutCoveringItsCharacterAtBoardEdges() async throws {
         var samples: [[String: Any]] = []
         for (width, level, reduced) in [(CGFloat(402), 6, false), (CGFloat(320), 101, false), (CGFloat(320), 101, true), (CGFloat(320), 47, false)] {

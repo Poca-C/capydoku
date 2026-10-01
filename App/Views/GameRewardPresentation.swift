@@ -173,7 +173,11 @@ final class FeedbackWindowFrameView: UIView {
               placement.center.x.isFinite, placement.center.y.isFinite else { return }
         let token = generation
         let item = LocalScore(amount: amount, placement: placement, reduceMotion: reduceMotion)
-        localScores = Array((localScores + [item]).suffix(4))
+        // A fresh award stays tied to its source instead of moving farther
+        // away to make room for old text. Retire only conflicting decoration;
+        // each remaining item keeps its UUID and original expiry deadline.
+        let retained = localScores.filter { !$0.placement.sweptFrame.intersects(placement.sweptFrame) }
+        localScores = Array((retained + [item]).suffix(4))
         schedule(0.72) { [weak self] in
             guard self?.generation == token else { return }
             self?.localScores.removeAll { $0.id == item.id }
@@ -345,6 +349,7 @@ struct CellScorePlacement {
     let size: CGSize
     let verticalTravel: CGFloat
     let fontSize: CGFloat
+    var horizontalPadding: CGFloat { fontSize <= 15 ? 3 : 6 }
 
     init(amount: Int, center: CGPoint, verticalTravel: CGFloat = -12) {
         self.init(amount: amount, center: center, verticalTravel: verticalTravel, fontSize: 19)
@@ -355,7 +360,8 @@ struct CellScorePlacement {
         let font = UIFont(descriptor: base.fontDescriptor.withDesign(.rounded) ?? base.fontDescriptor, size: fontSize)
         let textWidth = ("+\(amount)" as NSString).size(withAttributes: [.font: font]).width
         self.center = center; self.fontSize = fontSize
-        size = CGSize(width: ceil(textWidth) + 12, height: max(ceil(font.lineHeight) + 4, ceil(fontSize * 24 / 19) + 4))
+        size = CGSize(width: ceil(textWidth) + (fontSize <= 15 ? 6 : 12),
+                      height: max(ceil(font.lineHeight) + 4, ceil(fontSize * 24 / 19) + 4))
         self.verticalTravel = verticalTravel
     }
 
@@ -371,10 +377,23 @@ struct CellScorePlacement {
 
     static func anchored(amount: Int, cellFrame: CGRect, boardFrame: CGRect, avoiding: [CGRect] = []) -> CellScorePlacement? {
         let preferredSize = max(15, min(19, cellFrame.width * 0.6))
-        if let preferred = place(amount: amount, cellFrame: cellFrame, boardFrame: boardFrame,
-                                 avoiding: avoiding, fontSize: preferredSize) { return preferred }
-        guard preferredSize > 15 else { return nil }
-        return place(amount: amount, cellFrame: cellFrame, boardFrame: boardFrame, avoiding: avoiding, fontSize: 15)
+        let preferred = place(amount: amount, cellFrame: cellFrame, boardFrame: boardFrame,
+                              avoiding: avoiding, fontSize: preferredSize)
+        guard preferredSize > 15 else { return preferred }
+        let compact = place(amount: amount, cellFrame: cellFrame, boardFrame: boardFrame,
+                            avoiding: avoiding, fontSize: 15)
+        guard let preferred else { return compact }
+        guard let compact else { return preferred }
+        // Preserve the more readable original type unless smaller text makes
+        // a material difference to its association with the new character.
+        let compactCost = compact.proximityCost(to: cellFrame) + (preferredSize - 15) * 2
+        return compactCost + 0.001 < preferred.proximityCost(to: cellFrame) ? compact : preferred
+    }
+
+    private func proximityCost(to cell: CGRect) -> CGFloat {
+        // Small tie-break preference for visible drift; never send a badge
+        // across the board merely to keep a full12pt upward movement.
+        hypot(center.x - cell.midX, center.y - cell.midY) + (12 - abs(verticalTravel)) * 0.25
     }
 
     private static func place(amount: Int, cellFrame: CGRect, boardFrame: CGRect, avoiding: [CGRect], fontSize: CGFloat) -> CellScorePlacement? {
@@ -395,41 +414,51 @@ struct CellScorePlacement {
             return result
         }
         let x = clampX(cellFrame.midX)
+        var best: CellScorePlacement?
+        var bestCost = CGFloat.infinity
+        func consider(_ option: CellScorePlacement?) {
+            guard let option else { return }
+            let cost = option.proximityCost(to: cellFrame)
+            if cost + 0.001 < bestCost { best = option; bestCost = cost }
+        }
         for direction in [CGFloat(-1), CGFloat(1)] {
             let y = direction < 0 ? cellFrame.minY - 4 - size.height / 2 : cellFrame.maxY + 4 + size.height / 2
-            if let direct = candidate(x: x, y: y, direction: direction) { return direct }
+            let direct = candidate(x: x, y: y, direction: direction)
+            // Aligned above/below is the shortest clear axis for this wide
+            // label. Keep the normal-board fast path and its familiar motion.
+            if let direct, abs(x - cellFrame.midX) < 0.001 { return direct }
+            consider(direct)
         }
         // Tight late-game boards may have another animal above and below.
         // Search only obstacle edges and board limits, then choose the closest
         // clear position; at most 10 occupied cells bound this small search.
+        // Search just beyond the required2pt exclusion. Using the normal4pt
+        // aesthetic gap here can miss valid narrow slots between two animals.
+        let searchGap: CGFloat = 2.25
         var horizontal = [x, bounds.minX + size.width / 2, bounds.maxX - size.width / 2]
         for obstacle in obstacles {
-            horizontal.append(clampX(obstacle.minX - 4 - size.width / 2))
-            horizontal.append(clampX(obstacle.maxX + 4 + size.width / 2))
+            horizontal.append(clampX(obstacle.minX - searchGap - size.width / 2))
+            horizontal.append(clampX(obstacle.maxX + searchGap + size.width / 2))
         }
         let xs = Array(Set(horizontal)).sorted()
         for travel in [CGFloat(12), CGFloat(6), CGFloat(0)] {
-            var best: CellScorePlacement?
-            var bestDistance = CGFloat.infinity
             for direction in [CGFloat(-1), CGFloat(1)] {
                 let upward: CGFloat = direction < 0 ? travel : 0
                 let downward: CGFloat = direction > 0 ? travel : 0
-                var vertical = [bounds.minY + size.height / 2 + upward,
+                var vertical = [cellFrame.midY, bounds.minY + size.height / 2 + upward,
                                 bounds.maxY - size.height / 2 - downward]
                 for obstacle in obstacles {
-                    vertical.append(obstacle.minY - 4 - size.height / 2 - downward)
-                    vertical.append(obstacle.maxY + 4 + size.height / 2 + upward)
+                    vertical.append(obstacle.minY - searchGap - size.height / 2 - downward)
+                    vertical.append(obstacle.maxY + searchGap + size.height / 2 + upward)
                 }
                 let ys = Array(Set(vertical)).sorted()
                 for cx in xs { for cy in ys {
                     guard let option = candidate(x: cx, y: cy, direction: direction, travel: travel) else { continue }
-                    let distance = pow(cx - cellFrame.midX, 2) + pow(cy - cellFrame.midY, 2)
-                    if distance < bestDistance { best = option; bestDistance = distance }
+                    consider(option)
                 } }
             }
-            if let best { return best }
         }
-        return nil
+        return best
     }
 }
 
@@ -441,7 +470,7 @@ struct CellScoreLabel: View {
             .font(.system(size: item.placement.fontSize, weight: .heavy, design: .rounded))
             .foregroundColor(CapyPalette.actionOrange)
             .lineLimit(1).minimumScaleFactor(0.5)
-            .padding(.horizontal, 6)
+            .padding(.horizontal, item.placement.horizontalPadding)
             .frame(width: item.placement.size.width, height: item.placement.size.height)
             .background(CapyPalette.paper.opacity(0.96)).clipShape(Capsule())
             .capyLayoutProbe("local_score_\(item.amount)")

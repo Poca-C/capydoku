@@ -1,0 +1,190 @@
+{
+  "boundary" : "Actual bundled150 pack, forward\/reverse and190\/374pt. Requested150ms clock intervals and reduced-motion static labels; rectangle intersections do not measure raster alpha or normal-motion phase collisions.",
+  "furthestPlacements" : [
+    {
+      "cellWidthsFromSource" : 3.7620523435677766,
+      "font" : 15,
+      "host" : 190,
+      "level" : 101,
+      "order" : "reverse",
+      "scoreFrame" : "{{54.700000000000003, 67.200000000000003}, {48, 23}}",
+      "source" : 0,
+      "sourceFrame" : "{{17.25, 29.75}, {17.600000000000001, 17.600000000000001}}",
+      "step" : 9,
+      "travel" : 12
+    },
+    {
+      "cellWidthsFromSource" : 3.694929656338434,
+      "font" : 15,
+      "host" : 190,
+      "level" : 89,
+      "order" : "reverse",
+      "scoreFrame" : "{{85.5, 31.75}, {48, 23}}",
+      "source" : 0,
+      "sourceFrame" : "{{17.25, 29.75}, {22, 22}}",
+      "step" : 7,
+      "travel" : 12
+    },
+    {
+      "cellWidthsFromSource" : 3.4305762352387861,
+      "font" : 15,
+      "host" : 190,
+      "level" : 74,
+      "order" : "forward",
+      "scoreFrame" : "{{63.5, 136.5}, {48, 23}}",
+      "source" : 56,
+      "sourceFrame" : "{{17.25, 183.75}, {22, 22}}",
+      "step" : 7,
+      "travel" : -12
+    },
+    {
+      "cellWidthsFromSource" : 3.4305762352387861,
+      "font" : 15,
+      "host" : 190,
+      "level" : 110,
+      "order" : "reverse",
+      "scoreFrame" : "{{63.5, 76}, {48, 23}}",
+      "source" : 0,
+      "sourceFrame" : "{{17.25, 29.75}, {22, 22}}",
+      "step" : 7,
+      "travel" : 12
+    },
+    {
+      "cellWidthsFromSource" : 3.4277731466412287,
+      "font" : 15,
+      "host" : 190,
+      "level" : 103,
+      "order" : "forward",
+      "scoreFrame" : "{{125.40000000000001, 127.70000000000002}, {48, 23}}",
+      "source" : 98,
+      "sourceFrame" : "{{158.05000000000001, 188.15000000000001}, {17.600000000000001, 17.600000000000001}}",
+      "step" : 9,
+      "travel" : -12
+    },
+    {
+      "cellWidthsFromSource" : 3.2009570495490647,
+      "font" : 15,
+      "host" : 190,
+      "level" : 63,
+      "order" : "forward",
+      "scoreFrame" : "{{121, 114.5}, {48, 23}}",
+      "source" : 62,
+      "sourceFrame" : "{{149.25, 183.75}, {22, 22}}",
+      "step" : 7,
+      "travel" : -12
+    },
+    {
+      "cellWidthsFromSource" : 3.2009570495490647,
+      "font" : 15,
+      "host" : 190,
+      "level" : 83,
+      "order" : "reverse",
+      "scoreFrame" : "{{121, 98}, {48, 23}}",
+      "source" : 6,
+      "sourceFrame" : "{{149.25, 29.75}, {22, 22}}",
+      "step" : 7,
+      "travel" : 12
+    },
+    {
+      "cellWidthsFromSource" : 2.4873939665510791,
+      "font" : 15,
+      "host" : 190,
+      "level" : 111,
+      "order" : "reverse",
+      "scoreFrame" : "{{54.700000000000003, 67.200000000000003}, {48, 23}}",
+      "source" : 2,
+      "sourceFrame" : "{{52.450000000000003, 29.75}, {17.600000000000001, 17.600000000000001}}",
+      "step" : 9,
+      "travel" : 12
+    },
+    {
+      "cellWidthsFromSource" : 2.4817662150112119,
+      "font" : 15,
+      "host" : 190,
+      "level" : 103,
+      "order" : "reverse",
+      "scoreFrame" : "{{19.25, 67.200000000000003}, {48, 23}}",
+      "source" : 0,
+      "sourceFrame" : "{{17.25, 29.75}, {17.600000000000001, 17.600000000000001}}",
+      "step" : 9,
+      "travel" : 6
+    },
+    {
+      "cellWidthsFromSource" : 2.2352015643019425,
+      "font" : 15,
+      "host" : 190,
+      "level" : 64,
+      "order" : "reverse",
+      "scoreFrame" : "{{121, 76}, {48, 23}}",
+      "source" : 6,
+      "sourceFrame" : "{{149.25, 29.75}, {22, 22}}",
+      "step" : 7,
+      "travel" : 12
+    },
+    {
+      "cellWidthsFromSource" : 2.2352015643019425,
+      "font" : 15,
+      "host" : 190,
+      "level" : 83,
+      "order" : "forward",
+      "scoreFrame" : "{{63.5, 136.5}, {48, 23}}",
+      "source" : 58,
+      "sourceFrame" : "{{61.25, 183.75}, {22, 22}}",
+      "step" : 7,
+      "travel" : -12
+    },
+    {
+      "cellWidthsFromSource" : 2.2317036167595936,
+      "font" : 15,
+      "host" : 190,
+      "level" : 88,
+      "order" : "reverse",
+      "scoreFrame" : "{{143.25, 76}, {48, 23}}",
+      "source" : 7,
+      "sourceFrame" : "{{171.25, 29.75}, {22, 22}}",
+      "step" : 7,
+      "travel" : 12
+    },
+    {
+      "cellWidthsFromSource" : 2.2317036167595936,
+      "font" : 15,
+      "host" : 190,
+      "level" : 94,
+      "order" : "reverse",
+      "scoreFrame" : "{{19.25, 76}, {48, 23}}",
+      "source" : 0,
+      "sourceFrame" : "{{17.25, 29.75}, {22, 22}}",
+      "step" : 7,
+      "travel" : 12
+    },
+    {
+      "cellWidthsFromSource" : 2.2317036167595936,
+      "font" : 15,
+      "host" : 190,
+      "level" : 97,
+      "order" : "reverse",
+      "scoreFrame" : "{{143.25, 76}, {48, 23}}",
+      "source" : 7,
+      "sourceFrame" : "{{171.25, 29.75}, {22, 22}}",
+      "step" : 7,
+      "travel" : 12
+    },
+    {
+      "cellWidthsFromSource" : 2.0112392424297152,
+      "font" : 15,
+      "host" : 190,
+      "level" : 123,
+      "order" : "reverse",
+      "scoreFrame" : "{{54.700000000000003, 39.700000000000003}, {48, 23}}",
+      "source" : 11,
+      "sourceFrame" : "{{34.850000000000001, 47.350000000000001}, {17.600000000000001, 17.600000000000001}}",
+      "step" : 8,
+      "travel" : -6
+    }
+  ],
+  "largestOverlaps" : [
+
+  ],
+  "sampled" : 4744,
+  "staticOverlapCount" : 0
+}
