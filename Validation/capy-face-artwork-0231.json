@@ -1,0 +1,461 @@
+{
+  "schemaVersion": 1,
+  "version": "0.2.31",
+  "status": "Art candidate decomposed into 10 genuine independent transparent parts, manually registered and visually reviewed in native assembly. Production integration/runtime verification are owned by root and have not been run by this art subagent.",
+  "scope": "Original requirement paragraphs 241/248/249/254: two fixed head bases, two eye states and two mouth states for each mood. No body, pose, clothes, full-head swapping, input timing or new module change.",
+  "source": {
+    "path": "App/Resources/Assets.xcassets/CapyRigCore0229.imageset/CapyRigCore0229.png",
+    "sha256": "dd18d6fbe11447ccdcb29e4988fadf4c584ee109e2c14e142a6c74b5add067d9",
+    "role": "Only source artwork supplied to built-in image generation; our original happy/sad heads were edited and decomposed. Source atlas and real 0.2.30 250pt joyful/sad runtime captures were actually viewed before generation."
+  },
+  "generator": {
+    "mode": "built-in image_gen.imagegen",
+    "skill": "/Users/poca/.codex/skills/.system/imagegen/SKILL.md",
+    "prompt": "Use case: precise-object-edit.\nAsset type: original Capydoku 2D facial animation cutout atlas, genuinely transparent RGBA background.\nInput image 1 is the source artwork to EDIT AND DECOMPOSE: only the existing golden capybara happy and sad heads. The torso and star must NOT appear in the output. Keep the exact established hand-drawn warm-gold style, large rounded head, brown short muzzle, asymmetrical three-quarter face pointing right, two ears, dark fur outline, shading and nostrils.\nOutput a single wide 5:2 image, a precise 5-column by 2-row grid of TEN equal SQUARE registration cells. No visible grid lines or text. Each cell is a full head-registration canvas; do not enlarge small features to fill cells. Every cell within one row uses the IDENTICAL virtual head placement and feature coordinates, so laying the eye and mouth cells over cell 1 produces a correctly aligned complete face.\n\nTOP ROW, columns 1–5, happy:\n1. One complete HAPPY HEAD BASE ONLY: remove both eyes, all eyebrow strokes and the mouth completely; heal those small areas with the matching underlying golden fur or brown muzzle. Keep both nostrils, muzzle, full ears, outer silhouette and shading.\n2. ONLY two calm OPEN EYES (and subtle matching brow expression if necessary), dark brown with tiny white highlights. Left/near eye naturally larger, right/far eye smaller and higher, respecting the original perspective. No head, fur patch, muzzle or nose. Eyes placed where they would belong over happy base.\n3. ONLY the two joyful CLOSED CRESCENT EYES from the original happy face, at their same correctly registered eye positions. No head, no fur patches.\n4. ONLY one small relaxed smiling MOUTH stroke, dark brown, no surrounding brown skin patch, placed precisely on the lower-right muzzle position of the happy base.\n5. ONLY the original excited OPEN HAPPY MOUTH, dark brown outline and pink tongue/interior, registered at the same mouth location; no muzzle skin or head around it.\n\nBOTTOM ROW, columns 1–5, sad:\n1. One complete SAD HEAD BASE ONLY: remove both eyes, worried eyebrow strokes and downturned mouth completely, heal the underlying areas; retain original ears, fur silhouette, soft brown muzzle, shading and both nostrils.\n2. ONLY the original two OPEN SAD EYES plus worried eyebrows, with small white eye highlights, correctly registered to the sad base. No fur patch, head or muzzle.\n3. ONLY two briefly CLOSED SAD EYES plus the SAME worried eyebrows, soft downward lids, correctly registered over the sad base, no head or skin patch.\n4. ONLY the original small downturned FROWN MOUTH stroke, in its original place on the sad base muzzle, no muzzle skin patch.\n5. ONLY a small pursed EXHALE MOUTH (a subtle rounded 'o' or softly puckered small curve), same location and dark-brown line weight as the frown, no bubbles, no surrounding skin.\n\nREGISTRATION: In both base cells, the complete head fits roughly x=5–95% and y=18–82% of its cell, preserving original head aspect. In feature cells, use the corresponding virtual base at the exact same position. Approximate happy near/far eye centers are (30%,45%) and (73%,33%); sad eye centers (31%,47%) and (74%,40%); mouths about (74%,69%). Preserve three-quarter asymmetry; these are not front-facing emoji faces. Keep feature size naturally small (mouth about 15–20% of cell width, not huge).\nINVARIANTS: Do not add bodies, limbs, accessories, new characters, full heads in feature cells, flesh-colored eye/mouth patches, nose parts in feature cells, drop shadows, typography, cell borders, extra parts, poses, watermark, checkerboard pixels or colored background. No alternative face style, no human teeth, no giant glossy eyes. The two base heads must have NO leftover eyes, eyebrow or mouth marks. All other cells contain only their named transparent cutout features at their registered positions.",
+    "generatedPath": "/Users/poca/.codex/generated_images/01a0f6eb-c91e-7e01-b286-1a0ab4836d11/exec-e3d84f6f-409a-46b0-b46e-31409ee642db.png",
+    "generatedSHA256": "9ed7d534139dc376ca3621083ede594e4d670c552a7027f94ad795bf6bf94cd2",
+    "calls": 1,
+    "postGenerationEditing": "None. No hand painting, Python pixel editing, CLI fallback, compositing into saved production PNG or recoloring. Native CoreGraphics was used only for read-only audits and review assemblies."
+  },
+  "selectedAsset": {
+    "path": "App/Resources/Assets.xcassets/CapyResultFaces0231.imageset/CapyResultFaces0231.png",
+    "sha256": "9ed7d534139dc376ca3621083ede594e4d670c552a7027f94ad795bf6bf94cd2",
+    "byteIdenticalToGenerated": true,
+    "width": 1983,
+    "height": 793,
+    "alphaDigest": "402d849c63529e2b584c19538d645ec8cc078f4919aad0410a2488337039c3ca"
+  },
+  "layoutDeviation": "The generator did not preserve an equal-width 5×2 registration grid: head-base cells are wider and feature offsets differ. Actual non-overlapping part rectangles are used instead; no grid-based crop or automatic feature centering is valid.",
+  "metadataForRoot": {
+    "schemaVersion": 1,
+    "atlasName": "CapyResultFaces0231",
+    "width": 1983,
+    "height": 793,
+    "alphaDigest": "402d849c63529e2b584c19538d645ec8cc078f4919aad0410a2488337039c3ca",
+    "parts": {
+      "happyBase": {
+        "rect": [
+          29,
+          71,
+          443,
+          304
+        ],
+        "frame": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
+      "happyOpenEyes": {
+        "rect": [
+          568,
+          147,
+          220,
+          83
+        ],
+        "frame": [
+          0.25733634311512416,
+          0.25,
+          0.4966139954853273,
+          0.2730263157894737
+        ]
+      },
+      "happyClosedEyes": {
+        "rect": [
+          903,
+          145,
+          249,
+          86
+        ],
+        "frame": [
+          0.21218961625282168,
+          0.24342105263157895,
+          0.5620767494356659,
+          0.28289473684210525
+        ]
+      },
+      "happySmileMouth": {
+        "rect": [
+          1402,
+          272,
+          111,
+          34
+        ],
+        "frame": [
+          0.6655191873589165,
+          0.7156250000000001,
+          0.21297968397291195,
+          0.0950657894736842
+        ]
+      },
+      "happyCheerMouth": {
+        "rect": [
+          1725,
+          240,
+          130,
+          88
+        ],
+        "frame": [
+          0.6472911963882618,
+          0.6401315789473685,
+          0.24943566591422123,
+          0.24605263157894736
+        ]
+      },
+      "sadBase": {
+        "rect": [
+          28,
+          436,
+          448,
+          309
+        ],
+        "frame": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
+      "sadOpenEyes": {
+        "rect": [
+          559,
+          483,
+          251,
+          111
+        ],
+        "frame": [
+          0.2700892857142857,
+          0.19093851132686085,
+          0.5042410714285714,
+          0.34126213592233007
+        ]
+      },
+      "sadClosedEyes": {
+        "rect": [
+          903,
+          501,
+          264,
+          90
+        ],
+        "frame": [
+          0.25223214285714285,
+          0.20388349514563106,
+          0.5303571428571429,
+          0.2766990291262136
+        ]
+      },
+      "sadFrownMouth": {
+        "rect": [
+          1402,
+          634,
+          87,
+          38
+        ],
+        "frame": [
+          0.6901785714285714,
+          0.7145631067961163,
+          0.1553571428571429,
+          0.09838187702265373
+        ]
+      },
+      "sadSighMouth": {
+        "rect": [
+          1796,
+          641,
+          33,
+          35
+        ],
+        "frame": [
+          0.7365513392857144,
+          0.7156148867313916,
+          0.06261160714285714,
+          0.09627831715210355
+        ]
+      }
+    },
+    "sadSighAnchor": [
+      0.8,
+      0.764
+    ]
+  },
+  "metadataContract": "rect is the actual atlas crop with 2px transparent padding already included; crop it unchanged, with no additional inset. frame is a normalized x/y/width/height inside the corresponding padded head base (both base frames are 0/0/1/1). Eight feature frames were calibrated in native assemblies, not inferred from nominal atlas-cell placement. sadSighAnchor is beside the open exhale-mouth right edge, not the resting frown edge.",
+  "registrationCalibration": {
+    "happyEyes": "Original three-quarter asymmetry retained; open and closed pairs each have their own fitted frame on one fixed happy base.",
+    "mouths": "Happy feature sizes normalized at 85% of source-pixel size relative to the new base; sad frown 80%, sad exhale 85%, all visually fitted into the preserved brown muzzle. These are declared rendering placements, not modifications to source pixels.",
+    "sadEyes": "v1 placed the far eyebrow/eye near or over head contour. v2 adjusts both sad-eye frames to 90% source width and 95% source height and moves them down; fixed bases and feature pixels remain unchanged.",
+    "sighAnchor": [
+      0.8,
+      0.764
+    ],
+    "sighAnchorMeaning": "Open exhale-mouth frame center is approximately (0.7679,0.7638); right edge about 0.7992. Anchor (0.8,0.764) emits existing bubbles just beyond that edge; align visible bubble period with exhale mouth state."
+  },
+  "alphaAudit": {
+    "alphaDigest": "402d849c63529e2b584c19538d645ec8cc078f4919aad0410a2488337039c3ca",
+    "height": 793,
+    "parts": [
+      {
+        "meaningfulEdgePixels": 0,
+        "name": "happyBase",
+        "opaquePixels": 97692,
+        "searchRect": [
+          0,
+          0,
+          500,
+          396
+        ],
+        "sourceRect": [
+          31,
+          73,
+          439,
+          300
+        ],
+        "transparentPixels": 96489
+      },
+      {
+        "meaningfulEdgePixels": 0,
+        "name": "happyOpenEyes",
+        "opaquePixels": 3031,
+        "searchRect": [
+          500,
+          0,
+          350,
+          396
+        ],
+        "sourceRect": [
+          570,
+          149,
+          216,
+          79
+        ],
+        "transparentPixels": 134192
+      },
+      {
+        "meaningfulEdgePixels": 0,
+        "name": "happyClosedEyes",
+        "opaquePixels": 2125,
+        "searchRect": [
+          850,
+          0,
+          400,
+          396
+        ],
+        "sourceRect": [
+          905,
+          147,
+          245,
+          82
+        ],
+        "transparentPixels": 154636
+      },
+      {
+        "meaningfulEdgePixels": 0,
+        "name": "happySmileMouth",
+        "opaquePixels": 672,
+        "searchRect": [
+          1250,
+          0,
+          350,
+          396
+        ],
+        "sourceRect": [
+          1404,
+          274,
+          107,
+          30
+        ],
+        "transparentPixels": 136922
+      },
+      {
+        "meaningfulEdgePixels": 0,
+        "name": "happyCheerMouth",
+        "opaquePixels": 4806,
+        "searchRect": [
+          1600,
+          0,
+          383,
+          396
+        ],
+        "sourceRect": [
+          1727,
+          242,
+          126,
+          84
+        ],
+        "transparentPixels": 145686
+      },
+      {
+        "meaningfulEdgePixels": 0,
+        "name": "sadBase",
+        "opaquePixels": 100164,
+        "searchRect": [
+          0,
+          396,
+          500,
+          397
+        ],
+        "sourceRect": [
+          30,
+          438,
+          444,
+          305
+        ],
+        "transparentPixels": 94293
+      },
+      {
+        "meaningfulEdgePixels": 0,
+        "name": "sadOpenEyes",
+        "opaquePixels": 4170,
+        "searchRect": [
+          500,
+          396,
+          350,
+          397
+        ],
+        "sourceRect": [
+          561,
+          485,
+          247,
+          107
+        ],
+        "transparentPixels": 133187
+      },
+      {
+        "meaningfulEdgePixels": 0,
+        "name": "sadClosedEyes",
+        "opaquePixels": 2321,
+        "searchRect": [
+          850,
+          396,
+          400,
+          397
+        ],
+        "sourceRect": [
+          905,
+          503,
+          260,
+          86
+        ],
+        "transparentPixels": 154278
+      },
+      {
+        "meaningfulEdgePixels": 0,
+        "name": "sadFrownMouth",
+        "opaquePixels": 568,
+        "searchRect": [
+          1250,
+          396,
+          350,
+          397
+        ],
+        "sourceRect": [
+          1404,
+          636,
+          83,
+          34
+        ],
+        "transparentPixels": 137574
+      },
+      {
+        "meaningfulEdgePixels": 0,
+        "name": "sadSighMouth",
+        "opaquePixels": 337,
+        "searchRect": [
+          1600,
+          396,
+          383,
+          397
+        ],
+        "sourceRect": [
+          1798,
+          643,
+          29,
+          31
+        ],
+        "transparentPixels": 151107
+      }
+    ],
+    "path": "/Users/poca/.codex/generated_images/01a0f6eb-c91e-7e01-b286-1a0ab4836d11/exec-e3d84f6f-409a-46b0-b46e-31409ee642db.png",
+    "width": 1983
+  },
+  "registrationAudit": {
+    "method": "Native CoreGraphics alpha decode. For every feature source pixel with alpha>16, map its center through the declared frame into the padded base and check the target base alpha>16. This tests registration containment, not aesthetics or UIKit animation.",
+    "results": [
+      {
+        "checkedFeaturePixels": 5292,
+        "name": "happyCheerMouth",
+        "outsideBaseSilhouettePixels": 0
+      },
+      {
+        "checkedFeaturePixels": 2668,
+        "name": "happyClosedEyes",
+        "outsideBaseSilhouettePixels": 0
+      },
+      {
+        "checkedFeaturePixels": 3426,
+        "name": "happyOpenEyes",
+        "outsideBaseSilhouettePixels": 0
+      },
+      {
+        "checkedFeaturePixels": 1084,
+        "name": "happySmileMouth",
+        "outsideBaseSilhouettePixels": 0
+      },
+      {
+        "checkedFeaturePixels": 3251,
+        "name": "sadClosedEyes",
+        "outsideBaseSilhouettePixels": 0
+      },
+      {
+        "checkedFeaturePixels": 886,
+        "name": "sadFrownMouth",
+        "outsideBaseSilhouettePixels": 0
+      },
+      {
+        "checkedFeaturePixels": 4826,
+        "name": "sadOpenEyes",
+        "outsideBaseSilhouettePixels": 0
+      },
+      {
+        "checkedFeaturePixels": 564,
+        "name": "sadSighMouth",
+        "outsideBaseSilhouettePixels": 0
+      }
+    ],
+    "allMappedFeaturePixelsInsideHead": true
+  },
+  "visualReview": {
+    "atlas": "Actually viewed generated candidate. Only base cells contain heads/nose/ears; feature cells contain eye/brow or mouth cutouts, with no flesh-colored patch, full-head silhouette, body or baked backdrop. Both base cells are visibly free of eyes/brows/mouth marks.",
+    "v1RejectedRegistration": "Sad far eyebrow crossed the head contour; the first metadata registration was rejected. Kept original generated pixels and corrected registration rather than masking the protrusion.",
+    "finalPreviews": [
+      {
+        "path": ".build/face-0231-preview/faces-v2.png",
+        "sha256": "77690fe8d4ddbb2a0960b93d34c54d89a0ea467a7103f87551f65c5b32105c43",
+        "actuallyViewed": true
+      },
+      {
+        "path": ".build/face-0231-preview/assembly-faces-v2.png",
+        "sha256": "6dafa1d43c1a64660efddde31cd7156259d93638ba408ff06bdab0c0a30b9846",
+        "actuallyViewed": true
+      }
+    ],
+    "method": "Native CoreGraphics renders the exact adopted crops and declared frames over unchanged 0.2.30 body/limbs using production ResultRigMotion.swift at phases 0/.38/1. Preview is not a UIKit screenshot or actual animation recording.",
+    "finding": "v2 assembled happy open-smile/closed-cheer/open-smile and sad open-frown/closed-exhale/open-frown are visibly distinct, readable, and aligned on their fixed bases. Far sad eyebrow stays inside head. Star/paw overlap remains legible. The base silhouette is fixed within each performance, so facial state changes require no full-head or body artwork replacement.",
+    "styleLimit": "New blank bases retain the golden fur/brown muzzle style and proportions closely, but are generated derivatives, not pixel-identical original heads."
+  },
+  "ownership": "Only new asset imageset, this Validation record and .build preview/audit files were changed. Root owns Resources/result-face-artwork-0231.json, production Swift, Xcode project, and tests.",
+  "limitations": [
+    "No production build, XCTest, simulator recording or physical-iPhone validation was run by this subagent.",
+    "Two raster eye states and two mouth states do not themselves prove smooth transitions; root must verify contents/scale timing on the actual host.",
+    "No facial mesh deformation or new eye tracking is claimed.",
+    "No Meowdoku asset was used; no aesthetic equivalence, per-frame timing match or FPS claim."
+  ],
+  "runtimeFollowUp": {
+    "build": "0.2.31 (34)",
+    "owner": "root",
+    "applicationCasesPassed": 482,
+    "images": "Docs/original-feel-0231/manifest.json",
+    "scope": "Root viewed9 face states and2 whole character images; artwork reviewer viewed9 whole characters plus3 mouth images. Root additionally sampled actual simulator movies. Complete UI follow-up and distribution limits are in Validation/original-0231-feedback.json.",
+    "aestheticEquivalenceClaimed": false
+  }
+}

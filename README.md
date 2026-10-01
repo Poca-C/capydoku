@@ -1,6 +1,6 @@
 # Capydoku · 原文对齐 Demo
 
-原生 Swift / SwiftUI iPhone 应用，默认简体中文、可在设置中切换 English、竖屏，最低编译目标 iOS 15。当前本地开发版本 **0.2.30（33）**，尚未达到正式验收或上架状态。手机最近确认安装的是0.2.29；按用户要求，本轮暂停打包分发、手机更新和GitHub上传。
+原生 Swift / SwiftUI iPhone 应用，默认简体中文、可在设置中切换 English、竖屏，最低编译目标 iOS 15。当前本地开发版本 **0.2.31（34）**，尚未达到正式验收或上架状态。手机最近确认安装的是0.2.29；按用户要求，本轮暂停打包分发、手机更新和GitHub上传。
 
 ## 唯一需求基准
 
@@ -19,6 +19,14 @@
 下列主页面图册保留0.2.1的实测版本；0.2.4新增操作反馈，分时组件截图见 Docs/original-feedback/manifest.json，不能用旧图替代新构建验收：[首页](Docs/original-reference/01-home.png) · [游戏](Docs/original-reference/04-gameplay.png) · [提示](Docs/original-reference/05-hint.png) · [设置](Docs/original-reference/02-settings.png) · [签到](Docs/original-reference/03-check-in.png)。
 
 无需第三方依赖或真实广告 SDK。模拟器运行/测试须保留本地签名（CODE_SIGNING_ALLOWED=YES），工程仅为模拟器配置钥匙串权限；禁用签名只能验证编译，不能验证真实钥匙串。0.2.29（32）已无线覆盖安装并由设备查询确认。请求启动前的安装前后8份文件逐字节一致，第10关对局、287条事件、38条奖励及设置/签到/身份保持，见[真机记录](Validation/original-0229-physical-install.json)。本次自动启动被手机锁屏阻止，需解锁后打开App；未记录为启动成功或真机手感验收。
+
+## 0.2.31 胜败角色独立五官
+
+- 固定头部轮廓，单独变化眼睛和嘴型：欢呼眨眼开口、抱星闭眼微笑、失败闭眼呼气再恢复。沿用原身体动作及共同时钟；气泡在呼气嘴形成后出现，取消与静态政策不重播。
+- 新原创图集10部件一次预热，尺寸、透明度、配准和完整性校验失败时保留旧完整脸。[素材与完整生成提示词](Validation/capy-face-artwork-0231.json)记录实际非等宽布局和眉眼配准修正；不声称新头底与旧头像素相同。
+- 最终482项App通过（185.768秒），包含首次失败后修正的透明背景故障注入测试；该次43项专项42过/1失败（8断言）的历史保留。17e九项UI也全部通过（240.075秒），均0失败/跳过。完整结果见[当前验证记录](Validation/original-0231-feedback.json)。
+- [21张运行图和2段实际模拟器录屏](Docs/original-feel-0231/manifest.json)有限目视通过，包含三尺寸全身、嘴角气泡及独立眼口状态。过渡中间帧仍有短暂双态淡化，身体仍能辨认刚性部件；不是与Meowdoku同等自然度或真机手感验收。
+- 九类参考观察方向已有Demo落实；声音已有9个本地测试原声，但真人连续操作、音画/触觉和参考精确节奏仍未验。见本轮记录的referenceCoverage及[Checklist增量](Validation/checklist-0231-feedback-delta.json)。核心关卡与正式83/历史88项状态保持；手机仍为0.2.29，分发与GitHub暂停。
 
 ## 0.2.30 连续操作反馈与角色局部修整
 

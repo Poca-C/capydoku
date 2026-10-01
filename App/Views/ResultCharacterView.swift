@@ -48,6 +48,9 @@ final class ResultCharacterUIView: UIView {
     private var rigLayers: [ResultRigPart: CALayer] = [:]
     private var rigReady = false
     private let prepareRig: () -> Bool
+    private let loadFace: (ResultCharacterPerformance) -> ResultFaceParts?
+    private let facePresentation = ResultFacePresentation()
+    private var faceParts: ResultFaceParts?
     private let groundShadow = CAShapeLayer()
     private let crown = CALayer()
     private var crownStars: [CAShapeLayer] = []
@@ -78,8 +81,10 @@ final class ResultCharacterUIView: UIView {
         self.init(frame: frame, prepareRig: ResultCharacterArtwork.prewarmRig)
     }
 
-    init(frame: CGRect, prepareRig: @escaping () -> Bool) {
+    init(frame: CGRect, prepareRig: @escaping () -> Bool,
+         loadFace: @escaping (ResultCharacterPerformance) -> ResultFaceParts? = { ResultFaceArtwork.parts(for: $0) }) {
         self.prepareRig = prepareRig
+        self.loadFace = loadFace
         super.init(frame: frame)
         isUserInteractionEnabled = false; isAccessibilityElement = false; accessibilityElementsHidden = true
         backgroundColor = .clear; clipsToBounds = true
@@ -172,6 +177,7 @@ final class ResultCharacterUIView: UIView {
         pendingEvent = nil; activeEventID = nil; generation = UUID()
         cleanup?.cancel(); cleanup = nil
         for target in allLayers { target.removeAllAnimations() }
+        facePresentation.cancel()
     }
 
     @objc private func suspend() { applicationActive = false; cancelPresentation() }
@@ -193,11 +199,18 @@ final class ResultCharacterUIView: UIView {
     private func updateArtwork() {
         CATransaction.begin(); CATransaction.setDisableActions(true)
         rigReady = prepareRig()
+        faceParts = rigReady ? loadFace(performance) : nil
         if rigReady {
             character.contents = nil
             for (part,piece) in rigLayers { piece.contents = ResultCharacterArtwork.rigImage(part)?.cgImage }
             applyRigPose(ResultRigMotion.pose(performance, phase:1))
+            if let faceParts {
+                let head = rigLayers[performance == .gentleRetry ? .sadHead : .happyHead]
+                head?.contents = faceParts.base.cgImage
+                facePresentation.configure(parts: faceParts, on: head)
+            } else { facePresentation.configure(parts: nil, on: nil) }
         } else {
+            facePresentation.configure(parts: nil, on: nil)
             // Only a missing/invalid component atlas uses the old complete art.
             // A successful rig never switches to this image at completion.
             character.contents = (ResultCharacterArtwork.poses(for: performance).last
@@ -235,6 +248,10 @@ final class ResultCharacterUIView: UIView {
         let footprint: CGFloat = rigReady ? 0.76 : 0.80
         character.frame = square((1 - footprint) / 2, 0.898 - footprint * 0.96, footprint)
         if rigReady { applyRigPose(ResultRigMotion.pose(performance, phase:1)) }
+        if let faceParts {
+            facePresentation.configure(parts: faceParts,
+                on: rigLayers[performance == .gentleRetry ? .sadHead : .happyHead])
+        }
         groundShadow.frame = CGRect(x: origin.x + side * 0.28, y: origin.y + side * 0.865, width: side * 0.44, height: side * 0.055)
         groundShadow.path = UIBezierPath(ovalIn: groundShadow.bounds).cgPath
         crown.frame = bounds
@@ -257,7 +274,7 @@ final class ResultCharacterUIView: UIView {
         // A head child inherits both the nod and the whole-body motion. The
         // complete-image fallback has its own calibrated mouth location.
         let owner = rigReady ? (rigLayers[.sadHead] ?? character) : character
-        let mouth = rigReady ? CGPoint(x: 0.835, y: 0.815) : CGPoint(x: 0.805, y: 0.446)
+        let mouth = rigReady ? (faceParts?.sighAnchor ?? CGPoint(x: 0.835, y: 0.815)) : CGPoint(x: 0.805, y: 0.446)
         if mouthOrigin.superlayer !== owner { owner.addSublayer(mouthOrigin) }
         mouthOrigin.position = CGPoint(x: owner.bounds.width * mouth.x, y: owner.bounds.height * mouth.y)
         let side = min(bounds.width, bounds.height)
@@ -291,6 +308,7 @@ final class ResultCharacterUIView: UIView {
         presentationStartTime = CACurrentMediaTime()
         let duration = won ? (variant == .joyfulBounce ? 1.05 : 1.20) : 0.92
         playRig(duration: duration)
+        facePresentation.play(performance: performance, duration: duration, startTime: presentationStartTime)
         if won && variant == .joyfulBounce { playBounce(duration: duration) }
         else if won { playCrown(duration: duration) }
         else { playSigh(duration: duration) }
@@ -379,8 +397,16 @@ final class ResultCharacterUIView: UIView {
         keyframes(character, key: "transform.scale.y", values: [1, 1.01, 0.94, 0.94, 1.015, 1],
                   times: [0, 0.08, 0.32, 0.56, 0.88, 1], duration: duration)
         for (index, sigh) in sighs.enumerated() {
-            keyframes(sigh, key: "opacity", values: [0, 0, 0.9, 0],
-                      times: [0, NSNumber(value: 0.18 + Double(index) * 0.07), 0.58, 1], duration: duration)
+            if faceParts != nil {
+                // The new small exhale mouth is open from phase .36 through .72.
+                // Do not emit bubbles from the earlier closed frown.
+                keyframes(sigh, key: "opacity", values: [0, 0, 0.9, 0, 0],
+                          times: [0, NSNumber(value: 0.36 + Double(index) * 0.035),
+                                  NSNumber(value: 0.54 + Double(index) * 0.035), 0.74, 1], duration: duration)
+            } else {
+                keyframes(sigh, key: "opacity", values: [0, 0, 0.9, 0],
+                          times: [0, NSNumber(value: 0.18 + Double(index) * 0.07), 0.58, 1], duration: duration)
+            }
             keyframes(sigh, key: "transform.translation.x", values: [0, side * 0.035], times: [0, 1], duration: duration)
             keyframes(sigh, key: "transform.translation.y", values: [0, -side * 0.025], times: [0, 1], duration: duration)
             keyframes(sigh, key: "transform.scale", values: [0.6, 1.08], times: [0, 1], duration: duration)

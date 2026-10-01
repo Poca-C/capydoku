@@ -1,0 +1,209 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.31 (34)",
+  "date": "2026-10-01",
+  "status": "verified_scoped_demo_improvements_simulator_only_distribution_paused",
+  "authority": "初始Word[241,248,249,250,254]及用户允许临时原创美术、继续本地打磨的授权；不将临时表演值记为冻结参考参数。",
+  "previousReport": "Validation/original-0230-feedback.json",
+  "sourceParagraphs": [
+    241,
+    248,
+    249,
+    250,
+    254
+  ],
+  "changes": [
+    {
+      "area": "胜败独立五官",
+      "detail": "固定开心/失落头底上叠加真实独立眼睛和嘴型。两次欢呼眨眼、抱星时闭眼微笑、失败闭眼开口再恢复；眼口时序独立，共用既有1.05/1.20/0.92秒动作时钟，无新计时任务或事件。",
+      "files": [
+        "App/Views/ResultFaceArtwork.swift",
+        "App/Views/ResultFacePresentation.swift",
+        "App/Views/ResultCharacterView.swift",
+        "Resources/result-face-artwork-0231.json"
+      ]
+    },
+    {
+      "area": "叹气跟随呼气嘴",
+      "detail": "新脸的叹气锚点随头部移动，气泡在呼气嘴形成后才显现，嘴回收时淡出；缺少独立脸时保留旧完整头和旧叹气时序。"
+    },
+    {
+      "area": "完整素材回退及有限展示",
+      "detail": "10部件作为整套校验并预热一次，几何/尺寸/透明度不符或缺件时保持原完整脸。重复布局不换缓存身份或重启动作；中断、遮挡、离页、尺寸变化、静态政策沿用既有取消及不重播规则。"
+    }
+  ],
+  "artwork": {
+    "report": "Validation/capy-face-artwork-0231.json",
+    "mode": "built-in image_gen",
+    "asset": "App/Resources/Assets.xcassets/CapyResultFaces0231.imageset/CapyResultFaces0231.png",
+    "scope": "10原创栅格部件；实际生成图未遵守等宽网格，采用实测裁剪和配准；不是旧头像素不变。原身体部件和轨迹保持。"
+  },
+  "initialVerification": {
+    "status": "Failed",
+    "cases": 43,
+    "passed": 42,
+    "failed": 1,
+    "skipped": 0,
+    "seconds": 25.58,
+    "suiteSeconds": 25.599,
+    "scope": "Character, face artwork/presentation and startup preparation groups before malformed-alpha test fixture correction.",
+    "log": "Validation/test-runs/original-0231-targeted.log",
+    "summary": "Validation/test-runs/original-0231-targeted-summary.json",
+    "bundle": "Validation/test-runs/original-0231-targeted.xcresult",
+    "assertionFailures": 8,
+    "failedTest": "ResultFaceArtworkTests/testWrongAtlasDimensionsOrFlattenedAlphaFallsBackAsOneSetWithoutRetry",
+    "cause": "测试只设置renderer.opaque并绘原图，未实际得到不透明背景，导致本应损坏的测试图片仍通过透明度校验。",
+    "fix": "测试先明确填充不透明背景，再绘原图；新增alpha摘要确实变化的前置断言，保留原回退和不重试断言。生产校验未修改。",
+    "resolution": "Included and passed in final complete App run."
+  },
+  "applicationTests": {
+    "status": "Passed",
+    "cases": 482,
+    "passed": 482,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 185.768,
+    "suiteSeconds": 185.904,
+    "scope": "Complete CapydokuAppTests on iPhone17 Pro simulator/iOS26.5; no exclusions.",
+    "log": "Validation/test-runs/original-0231-app.log",
+    "summary": "Validation/test-runs/original-0231-app-summary.json",
+    "bundle": "Validation/test-runs/original-0231-app.xcresult"
+  },
+  "uiTests": {
+    "status": "Passed",
+    "cases": 9,
+    "passed": 9,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 240.075,
+    "suiteSeconds": 240.087,
+    "scope": "Same nine selected native UI cases as0.2.30 on iPhone17e/iOS26.5, one test action, no repeats; not the full88 or human-played150 levels.",
+    "log": "Validation/test-runs/original-0231-17e-ui.log",
+    "summary": "Validation/test-runs/original-0231-17e-ui-summary.json",
+    "bundle": "Validation/test-runs/original-0231-17e-ui.xcresult"
+  },
+  "visualEvidence": {
+    "manifest": "Docs/original-feel-0231/manifest.json",
+    "status": "reviewed_scoped_runtime_images_and_movie_samples",
+    "boundary": [
+      "Images come from targeted run:43cases42passed/1failed malformed-alpha fixture; character and face presentation cases passed. Only test fixture changed afterward; final complete App482passed.",
+      "Image names containing0229/0230 are unchanged historical test identifiers; actual image build is0231.",
+      "Real component hosts and finite video sampling; not every movie frame, native touch timing, reference FPS/equivalence or physical sound/haptics."
+    ],
+    "review": {
+      "root": "实际查看9张独立脸部闭眼开口/睁眼开口/恢复截图，以及2张250pt全身图；头底稳定，眼口注册可读。另看完整脸部视频0–4.6秒24帧汇总及全身视频3.8–8.0秒22帧汇总，覆盖三种动作；不是全片逐帧检查。",
+      "characterReviewer": "逐张查看9张三尺寸三动作全身活动表情及3张三尺寸非fallback嘴角气泡图；未见新增错位、头颈裂缝或裁切，嘴气泡低于鼻孔；旧臂段轮廓仍可辨。",
+      "remainingVisualLimits": "过渡采用短交叉淡化，采样中间帧仍可见双态叠影；不是眼皮几何变形，身体仍为刚性部件。不将这些图片或参数通过解释为与Meowdoku同等细腻度。"
+    }
+  },
+  "reference": {
+    "latestActualPlaytest": "Validation/meowdoku-playtest-comparison-0229.json",
+    "newPlaytestThisRound": false,
+    "liveAuditoryAB": false,
+    "frameAccurateTimingCompared": false
+  },
+  "referenceCoverage": [
+    {
+      "observation": "OBS-01",
+      "area": "教学",
+      "implemented": "手指、点击圈、横纵轨迹和目标暗化",
+      "remaining": "参考教学逐帧节奏未对标"
+    },
+    {
+      "observation": "OBS-02",
+      "area": "角色反应",
+      "implemented": "棋盘眨眼侧看、正确开心、错误双方惊讶；本轮补胜败独立眼口",
+      "remaining": "全身仍为刚性部件，未认定同等表现质量"
+    },
+    {
+      "observation": "OBS-03",
+      "area": "正确奖励",
+      "implemented": "实际格内加分、顶部反馈、多色/区域碎片、连续操作保留彩粒和分数回弹",
+      "remaining": "真人连续操作及音画A/B未验"
+    },
+    {
+      "observation": "OBS-04",
+      "area": "错误解释",
+      "implemented": "可见区域/行列/邻接冲突高亮、连线及规则卡反馈",
+      "remaining": "全部多冲突优先级未冻结"
+    },
+    {
+      "observation": "OBS-05",
+      "area": "扣命",
+      "implemented": "爱心破裂和剩一命聚焦提醒",
+      "remaining": "真机触感与声音配合未验"
+    },
+    {
+      "observation": "OBS-06",
+      "area": "通关与Combo",
+      "implemented": "三档Combo、整盘庆祝、两胜一负分层演出、连续肢体及本轮五官",
+      "remaining": "参考节奏及同等细腻度未验"
+    },
+    {
+      "observation": "OBS-07",
+      "area": "新盘",
+      "implemented": "错峰入场，触摸撤下入场装饰，恢复不重播",
+      "remaining": "保留本项目重开规则，不用单次参考观察替换正式规则"
+    },
+    {
+      "observation": "OBS-08",
+      "area": "道具",
+      "implemented": "空心X预览、Apply实填、直接答案局部确认",
+      "remaining": "没有原样引入参考Clear文案"
+    },
+    {
+      "observation": "OBS-09",
+      "area": "签到",
+      "implemented": "保存成功才点亮奖励、强调连签/当天/真实库存增量",
+      "remaining": "使用本项目主题，不复制毛线球外观"
+    }
+  ],
+  "observedButNotCopied": [
+    "鼓掌装饰",
+    "每只通关角色都冒爱心",
+    "彩粒飞出棋盘",
+    "荧光棒服装",
+    "Patient Paws/Double Paws/Perfect文案"
+  ],
+  "audio": {
+    "changed": false,
+    "localWAVFiles": 9,
+    "formalManifestClipsEmpty": true,
+    "formalReferenceVerified": false,
+    "debugInventory": "Validation/test-runs/original-0231-audio-debug-inventory.json",
+    "releaseExclusion": "0.2.27 historical evidence only; no Release rebuild this round.",
+    "liveAuditoryAB": false
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "evidence": "Validation/test-runs/original-0224-core.log",
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "physicalUpdate": {
+    "status": "not_built_or_installed_this_round_user_paused_distribution",
+    "installedThisRound": false,
+    "physicalBuildCreatedThisRound": false,
+    "latestVerifiedVersion": "0.2.29 (32)",
+    "latestEvidence": "Validation/original-0229-physical-install.json",
+    "latestEvidenceBoundary": "手机最近确认安装0.2.29，本轮未制作手机构建、安装或进行真机手感测试。"
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "boundary": "本轮仅本地研发与模拟器验证；不制作手机包、不安装、不归档、不打包分发、不上传GitHub。"
+  },
+  "remaining": [
+    "完整真人连续试玩和真机音画/触觉配合未验。",
+    "仍是栅格刚性肢体和局部眼口变化，没有网格形变或逐帧参考对标，不宣称达到Meowdoku同等自然度。",
+    "正式难度/计分/音频与参考冻结、外部服务及上架验收保持待验。"
+  ],
+  "formalSignOff": false,
+  "formalConformanceRowsUnchanged": 83,
+  "historicalChecklistCountUnchanged": 88
+}

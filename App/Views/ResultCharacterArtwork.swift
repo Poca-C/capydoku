@@ -41,6 +41,7 @@ enum ResultCharacterArtwork {
     @discardableResult static func prewarmRig() -> Bool {
         let ready = rigCache.prepare()
         ResultRigMotion.prewarm()
+        if ready { _ = ResultFaceArtwork.prewarm() }
         return ready
     }
 

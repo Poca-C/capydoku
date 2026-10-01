@@ -1,0 +1,201 @@
+{
+  "build": "0.2.31 (34)",
+  "sourceBundle": "Validation/test-runs/original-0231-targeted.xcresult",
+  "status": "reviewed_scoped_runtime_images_and_movie_samples",
+  "images": [
+    {
+      "file": "result-face-0231-gentleRetry-250pt-live.png",
+      "sourceAttachment": "4589A78C-50A3-4A10-916E-EE0964907E77.png",
+      "originalName": "result-face-0231-gentleRetry-250pt-live_0_D298CA42-BDA1-4573-B271-58D19DB49C70.png",
+      "test": "ResultCharacterTests/testFacialPartsFollowMovingHeadAtThreeSizesWithoutRestartingClock()",
+      "sha256": "d7f0195dfce50368e79cb9ee9dc54144f08e00d418b9cd00fbf98add76e8d3fd"
+    },
+    {
+      "file": "result-face-0231-starHug-250pt-live.png",
+      "sourceAttachment": "433F12E4-5DB6-4EE8-AE9D-09A4867D5538.png",
+      "originalName": "result-face-0231-starHug-250pt-live_0_00EDB392-D6FC-4254-B01D-CE5D5EE0A83F.png",
+      "test": "ResultCharacterTests/testFacialPartsFollowMovingHeadAtThreeSizesWithoutRestartingClock()",
+      "sha256": "b1729e91c1fc907b5aff6f268eb4479bc1a6a171cc0f6435c17fa1facbb822cb"
+    },
+    {
+      "file": "result-face-0231-joyfulRaise-250pt-live.png",
+      "sourceAttachment": "BD1F3795-1F9A-432B-8E5D-D5AA6E0E20EA.png",
+      "originalName": "result-face-0231-joyfulRaise-250pt-live_0_A768BB47-19AE-48EC-9A57-63EF1665D6BB.png",
+      "test": "ResultCharacterTests/testFacialPartsFollowMovingHeadAtThreeSizesWithoutRestartingClock()",
+      "sha256": "dfdbd612d003690b5fab9d4eedb97850eeb26096f4dc1e23a169a516b2972214"
+    },
+    {
+      "file": "result-face-0231-gentleRetry-168pt-live.png",
+      "sourceAttachment": "49025E21-2A8C-4BF4-AAC1-E98D7A9DF00A.png",
+      "originalName": "result-face-0231-gentleRetry-168pt-live_0_68CCCFBA-23EF-4FCD-8F89-00FC477962BD.png",
+      "test": "ResultCharacterTests/testFacialPartsFollowMovingHeadAtThreeSizesWithoutRestartingClock()",
+      "sha256": "2d46c70d98a3d9d673a058d28157b92cca2c493618ac2d1acb7d18e97949ba62"
+    },
+    {
+      "file": "result-face-0231-starHug-168pt-live.png",
+      "sourceAttachment": "2DC61CF0-6A71-4BD1-AFA9-5775615F4ED5.png",
+      "originalName": "result-face-0231-starHug-168pt-live_0_6038C80F-A7E0-40FB-B473-F3989809DADB.png",
+      "test": "ResultCharacterTests/testFacialPartsFollowMovingHeadAtThreeSizesWithoutRestartingClock()",
+      "sha256": "f47c4a719e526dca9fcc8b6c6f1dfd0d3eb6d2ad3c077982bd1e1e45e6a20d12"
+    },
+    {
+      "file": "result-face-0231-joyfulRaise-168pt-live.png",
+      "sourceAttachment": "DEFB4B04-A28C-4D69-84F7-33C714DFF04F.png",
+      "originalName": "result-face-0231-joyfulRaise-168pt-live_0_1FA613EF-A993-4D68-986B-06638605A321.png",
+      "test": "ResultCharacterTests/testFacialPartsFollowMovingHeadAtThreeSizesWithoutRestartingClock()",
+      "sha256": "5fa7eb068b5966abb0a40788601c5b45318b0a6f64ee46a3ab6cd7c2d63ac3e4"
+    },
+    {
+      "file": "result-face-0231-gentleRetry-140pt-live.png",
+      "sourceAttachment": "00788B6E-AA93-4116-BF01-39D4D052BD77.png",
+      "originalName": "result-face-0231-gentleRetry-140pt-live_0_1B316E07-514F-4D42-9EC4-D6E073849C99.png",
+      "test": "ResultCharacterTests/testFacialPartsFollowMovingHeadAtThreeSizesWithoutRestartingClock()",
+      "sha256": "cca027fe9d50da65beefad70cbd4dd9da00e5610daf20dd6a83b7e9c6453a843"
+    },
+    {
+      "file": "result-face-0231-starHug-140pt-live.png",
+      "sourceAttachment": "704C0CE5-4FA6-41ED-BBDA-0837BB4E2575.png",
+      "originalName": "result-face-0231-starHug-140pt-live_0_E5DCE6CF-407D-43DB-BB7C-DB25E5294152.png",
+      "test": "ResultCharacterTests/testFacialPartsFollowMovingHeadAtThreeSizesWithoutRestartingClock()",
+      "sha256": "c9e3fae50199f3146e61a33058b4820aa09c58ee5e8a41c1d394d117991db200"
+    },
+    {
+      "file": "result-face-0231-joyfulRaise-140pt-live.png",
+      "sourceAttachment": "6B0ACC55-E245-40A0-A875-DD3D9ABA7424.png",
+      "originalName": "result-face-0231-joyfulRaise-140pt-live_0_628E1517-32AF-4F93-89E0-864F11210662.png",
+      "test": "ResultCharacterTests/testFacialPartsFollowMovingHeadAtThreeSizesWithoutRestartingClock()",
+      "sha256": "e0a1eb23adfdaaccc523a2ce9e1509cd7114c192d316ff2f21cc60f181a82f81"
+    },
+    {
+      "file": "result-mouth-0230-rig-250pt-380ms.png",
+      "sourceAttachment": "7AAF2F51-139C-4BA2-B234-1642E5E63418.png",
+      "originalName": "result-mouth-0230-rig-250pt-380ms_0_F5A5AD48-5E42-43DD-8B37-35E86948E726.png",
+      "test": "ResultCharacterTests/testSighFollowsActualMouthDuringNodAtThreeSizesIncludingFallback()",
+      "sha256": "5879ff8fe693f823bc0a30e2ecfda27add13ac1d9a9272cea0b74a776f11c5cc"
+    },
+    {
+      "file": "result-mouth-0230-rig-168pt-380ms.png",
+      "sourceAttachment": "BA3FCA0A-D26D-4702-902F-63C3E57F48CE.png",
+      "originalName": "result-mouth-0230-rig-168pt-380ms_0_38877CA3-0338-4007-8069-A173AA0DA5C3.png",
+      "test": "ResultCharacterTests/testSighFollowsActualMouthDuringNodAtThreeSizesIncludingFallback()",
+      "sha256": "1a34cfc5ffd9450cf21f1381de497b9a08b061c048df92aaae10d87477d78ce6"
+    },
+    {
+      "file": "result-mouth-0230-rig-140pt-380ms.png",
+      "sourceAttachment": "89716170-DE69-4374-B50D-3C5E3E996119.png",
+      "originalName": "result-mouth-0230-rig-140pt-380ms_0_A86FFC0B-81A8-4179-9A28-DA5CAE1B2547.png",
+      "test": "ResultCharacterTests/testSighFollowsActualMouthDuringNodAtThreeSizesIncludingFallback()",
+      "sha256": "af2ae601b091e1a2ed791249633bed86a6a77e422a9483f1ff47b72ff7395acd"
+    },
+    {
+      "file": "face-0231-gentleRetry-settled.png",
+      "sourceAttachment": "F75AD57F-1E8E-4935-B69B-DAFCE8E8A58D.png",
+      "originalName": "face-0231-gentleRetry-settled_0_BDF7B7E6-563E-4FA8-8A75-FB1245C9FCDF.png",
+      "test": "ResultFacePresentationTests/testActualRasterEyesAndMouthChangeIndependentlyThenRestoreForAllPerformances()",
+      "sha256": "074b62de780019821381a67710cde3241ca040bf4eaa355f6e13f28be7901e1a"
+    },
+    {
+      "file": "face-0231-gentleRetry-open-eyes-active-mouth.png",
+      "sourceAttachment": "A94B31AA-E5E3-446E-9A02-BCF083F6FE29.png",
+      "originalName": "face-0231-gentleRetry-open-eyes-active-mouth_0_4FA4B6B6-2C3C-4BB8-AE74-E417D2F399F4.png",
+      "test": "ResultFacePresentationTests/testActualRasterEyesAndMouthChangeIndependentlyThenRestoreForAllPerformances()",
+      "sha256": "7c90ab6cfa7e17d29c0800532d78ed3e168d19368d9a82c0c4df43a522f35d43"
+    },
+    {
+      "file": "face-0231-gentleRetry-closed-eyes-active-mouth.png",
+      "sourceAttachment": "BBD8A1E7-24A8-4EEC-8C34-EDFF5CDE5954.png",
+      "originalName": "face-0231-gentleRetry-closed-eyes-active-mouth_0_04D93057-9FCF-434B-892C-D492D4B1A16A.png",
+      "test": "ResultFacePresentationTests/testActualRasterEyesAndMouthChangeIndependentlyThenRestoreForAllPerformances()",
+      "sha256": "dcd136f91d938a2d6d0b15ca1e760eb7df613f6e30dfc218a8e3c97cf17db482"
+    },
+    {
+      "file": "face-0231-starHug-settled.png",
+      "sourceAttachment": "77C2B55F-1490-4AE2-A6D0-218C438F1DD9.png",
+      "originalName": "face-0231-starHug-settled_0_09ED247C-D017-4C35-8D49-5212A8B6F036.png",
+      "test": "ResultFacePresentationTests/testActualRasterEyesAndMouthChangeIndependentlyThenRestoreForAllPerformances()",
+      "sha256": "5e09c9a0ccf11f30b51773c0b112d9aeeb78d5981d50f80805a3b927eaa541ef"
+    },
+    {
+      "file": "face-0231-starHug-open-eyes-active-mouth.png",
+      "sourceAttachment": "BEFCA16B-8A9C-4B91-8BC8-9ACE82780661.png",
+      "originalName": "face-0231-starHug-open-eyes-active-mouth_0_8405E9B8-19D7-4AE7-BEC2-C478C5372251.png",
+      "test": "ResultFacePresentationTests/testActualRasterEyesAndMouthChangeIndependentlyThenRestoreForAllPerformances()",
+      "sha256": "ef15dada294099b2d839e23a62272a2ac6203b040f39130e325aa3957a6ccd5e"
+    },
+    {
+      "file": "face-0231-starHug-closed-eyes-active-mouth.png",
+      "sourceAttachment": "558E2756-274D-4A03-9ACD-B172FBE67961.png",
+      "originalName": "face-0231-starHug-closed-eyes-active-mouth_0_B86B76FF-FEDE-4451-9F5F-3654B28B3BE5.png",
+      "test": "ResultFacePresentationTests/testActualRasterEyesAndMouthChangeIndependentlyThenRestoreForAllPerformances()",
+      "sha256": "3018d1aa7d8265a3d50a4838f984b02c2f2058f0b2366c4f4852156b436c93af"
+    },
+    {
+      "file": "face-0231-joyfulRaise-settled.png",
+      "sourceAttachment": "DC1F9C35-2E6B-46D7-9922-A5FCF5B78E3C.png",
+      "originalName": "face-0231-joyfulRaise-settled_0_61033E34-4052-4FE8-8E23-7D2038A0806F.png",
+      "test": "ResultFacePresentationTests/testActualRasterEyesAndMouthChangeIndependentlyThenRestoreForAllPerformances()",
+      "sha256": "5e09c9a0ccf11f30b51773c0b112d9aeeb78d5981d50f80805a3b927eaa541ef"
+    },
+    {
+      "file": "face-0231-joyfulRaise-open-eyes-active-mouth.png",
+      "sourceAttachment": "5EB0D36A-0B2A-4F27-B1B2-34805A47758E.png",
+      "originalName": "face-0231-joyfulRaise-open-eyes-active-mouth_0_233C2DE0-A66E-417E-BB1F-C5227326AF62.png",
+      "test": "ResultFacePresentationTests/testActualRasterEyesAndMouthChangeIndependentlyThenRestoreForAllPerformances()",
+      "sha256": "ef15dada294099b2d839e23a62272a2ac6203b040f39130e325aa3957a6ccd5e"
+    },
+    {
+      "file": "face-0231-joyfulRaise-closed-eyes-active-mouth.png",
+      "sourceAttachment": "817981FB-BE41-4C84-A41F-4A13C593073A.png",
+      "originalName": "face-0231-joyfulRaise-closed-eyes-active-mouth_0_F27FB98E-2848-4C3A-8D37-1E84042B25DC.png",
+      "test": "ResultFacePresentationTests/testActualRasterEyesAndMouthChangeIndependentlyThenRestoreForAllPerformances()",
+      "sha256": "3018d1aa7d8265a3d50a4838f984b02c2f2058f0b2366c4f4852156b436c93af"
+    }
+  ],
+  "videos": [
+    {
+      "file": "continuous-result-performances.mov",
+      "sha256": "6ab9f0f6f40f73ab0ec9e2bfba485df95b70d9f500554af4b8bcaafd2e8fde58",
+      "durationSeconds": 8.61,
+      "sampling": "continuous-result-performances-sampling.json",
+      "contactSheet": "continuous-result-performances-frames.png",
+      "sourceBundle": "Validation/test-runs/original-0231-app.xcresult",
+      "scope": "Actual simulator screen recording of silent UIKit test hosts, real running clock; not normal navigation or physical audio/haptics.",
+      "contactSheetSHA256": "aa4f549733c88fda137b4b633023174c9611010fadd64f83b216062482d770ab"
+    },
+    {
+      "file": "independent-eyes-and-mouth.mov",
+      "sha256": "735f34ae9204f791ac590b5e11b493da58acb94e2e9477b274859aad6a827915",
+      "durationSeconds": 4.798333333333333,
+      "sampling": "independent-eyes-and-mouth-sampling.json",
+      "contactSheet": "independent-eyes-and-mouth-frames.png",
+      "sourceBundle": "Validation/test-runs/original-0231-app.xcresult",
+      "scope": "Actual simulator screen recording of silent UIKit test hosts, real running clock; not normal navigation or physical audio/haptics.",
+      "contactSheetSHA256": "fcf77c9cbe234b49acd5be8d8602e3b54184ae8dc54ef7e708d792e3c82d2caf"
+    }
+  ],
+  "limits": [
+    "Images come from targeted run:43cases42passed/1failed malformed-alpha fixture; character and face presentation cases passed. Only test fixture changed afterward; final complete App482passed.",
+    "Image names containing0229/0230 are unchanged historical test identifiers; actual image build is0231.",
+    "Real component hosts and finite video sampling; not every movie frame, native touch timing, reference FPS/equivalence or physical sound/haptics."
+  ],
+  "review": {
+    "root": "实际查看9张独立脸部闭眼开口/睁眼开口/恢复截图，以及2张250pt全身图；头底稳定，眼口注册可读。另看完整脸部视频0–4.6秒24帧汇总及全身视频3.8–8.0秒22帧汇总，覆盖三种动作；不是全片逐帧检查。",
+    "characterReviewer": "逐张查看9张三尺寸三动作全身活动表情及3张三尺寸非fallback嘴角气泡图；未见新增错位、头颈裂缝或裁切，嘴气泡低于鼻孔；旧臂段轮廓仍可辨。",
+    "remainingVisualLimits": "过渡采用短交叉淡化，采样中间帧仍可见双态叠影；不是眼皮几何变形，身体仍为刚性部件。不将这些图片或参数通过解释为与Meowdoku同等细腻度。"
+  },
+  "finalApplicationTests": {
+    "sourceBundle": "Validation/test-runs/original-0231-app.xcresult",
+    "passed": 482,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 185.768
+  },
+  "finalUITests": {
+    "sourceBundle": "Validation/test-runs/original-0231-17e-ui.xcresult",
+    "passed": 9,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 240.075,
+    "scope": "Nine selected native UI cases, same selection as0.2.30, one test action, no repeats."
+  }
+}

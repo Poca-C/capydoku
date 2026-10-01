@@ -177,7 +177,8 @@ final class ResultCharacterChoreographyTests: XCTestCase {
             let expectedHead = performance == .gentleRetry ? ResultRigPart.sadHead : .happyHead
             let head = try XCTUnwrap(parts.first { $0.name == expectedHead.layerName })
             let texture = try XCTUnwrap(head.contents) as AnyObject
-            let expectedTexture = try XCTUnwrap(ResultCharacterArtwork.rigImage(expectedHead)?.cgImage)
+            let expectedTexture = try XCTUnwrap((ResultFaceArtwork.parts(for:performance)?.base
+                ?? ResultCharacterArtwork.rigImage(expectedHead))?.cgImage)
             XCTAssertTrue(texture === expectedTexture)
             rig.configure(performance,event:UUID())
             for piece in parts where piece.opacity > 0 {

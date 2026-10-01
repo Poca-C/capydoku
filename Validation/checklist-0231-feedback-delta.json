@@ -1,0 +1,197 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.31 (34)",
+  "kind": "scoped_delta_to_88_item_audit",
+  "status": "verified_scoped_demo_improvements_simulator_only_distribution_paused",
+  "baseAudit": "Validation/checklist-0221-audit.json",
+  "previousDelta": "Validation/checklist-0230-feedback-delta.json",
+  "sourceChecklist": "Validation/checklist-source.json",
+  "sourceCaseCount": 88,
+  "scopedRows": 5,
+  "formalSignOff": false,
+  "full88Reexecuted": false,
+  "overallCountsRecomputed": false,
+  "originalParagraphs": [
+    241,
+    248,
+    249,
+    250,
+    254
+  ],
+  "rows": [
+    {
+      "id": "05-06",
+      "title": "结算导航与继续",
+      "originalAcceptanceText": "操作  测试结算下一关、返回首页和继续游戏。\n通过  跳转、进度及反馈正确；主动退出保留策略、击败比例和Rank有确认依据。",
+      "originalRequirementIDs": [
+        "PLAY-10",
+        "UI-04"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "胜败独立五官与嘴角叹气；结算动作仍可即时操作。",
+      "evidence": [
+        "Validation/original-0231-feedback.json",
+        "Docs/original-feel-0231/manifest.json",
+        "Validation/test-runs/original-0231-app-summary.json",
+        "Validation/test-runs/original-0231-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "14-01",
+      "title": "主题资源与全部状态",
+      "originalAcceptanceText": "操作  核对角色、Logo、图标、棋盘和弹窗全部状态。\n通过  资源完整，主题与尺寸统一；没有参考产品品牌或遗漏占位素材。",
+      "originalRequirementIDs": [
+        "ART-01"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "新原创五官atlas及完整校验回退；不等于正式素材全集验收。",
+      "evidence": [
+        "Validation/original-0231-feedback.json",
+        "Docs/original-feel-0231/manifest.json",
+        "Validation/test-runs/original-0231-app-summary.json",
+        "Validation/test-runs/original-0231-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "14-02",
+      "title": "安全区字号与触点",
+      "originalAcceptanceText": "操作  在目标设备检查安全区、最大棋盘与长英文。\n通过  不遮挡、不截字；主要点击区至少44×44pt，正确错误不只靠颜色区分。",
+      "originalRequirementIDs": [
+        "UI-09"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "三种角色尺寸的实际头部注册、范围与静态恢复验证。",
+      "evidence": [
+        "Validation/original-0231-feedback.json",
+        "Docs/original-feel-0231/manifest.json",
+        "Validation/test-runs/original-0231-app-summary.json",
+        "Validation/test-runs/original-0231-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "14-03",
+      "title": "游戏奖励动效与降级",
+      "originalAcceptanceText": "操作  触发正确、错误、Combo、通关及签到动效。\n通过  与业务状态同步，不阻碍后续操作；轻量特效在低性能设备可降级。",
+      "originalRequirementIDs": [
+        "ART-02"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "眼口与身体共用有限时钟，中断与静态政策不重播；参考和真机节奏未验。",
+      "evidence": [
+        "Validation/original-0231-feedback.json",
+        "Docs/original-feel-0231/manifest.json",
+        "Validation/test-runs/original-0231-app-summary.json",
+        "Validation/test-runs/original-0231-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "16-03",
+      "title": "最终构建全部问题复验",
+      "originalAcceptanceText": "操作  在最终构建复测所有失败用例及受影响流程。\n通过  每个Bug均有关联修复版本、复测结论和证据，旧版本通过不能代替复测。",
+      "originalRequirementIDs": [
+        "TECH-07"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "首轮43项42过/1失败（8断言）为故障注入图片仍保留alpha；修正测试样本后完整App及九项UI通过。",
+      "evidence": [
+        "Validation/original-0231-feedback.json",
+        "Docs/original-feel-0231/manifest.json",
+        "Validation/test-runs/original-0231-app-summary.json",
+        "Validation/test-runs/original-0231-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    }
+  ],
+  "verificationSnapshot": {
+    "initial": {
+      "status": "Failed",
+      "cases": 43,
+      "passed": 42,
+      "failed": 1,
+      "skipped": 0,
+      "seconds": 25.58,
+      "suiteSeconds": 25.599,
+      "scope": "Character, face artwork/presentation and startup preparation groups before malformed-alpha test fixture correction.",
+      "log": "Validation/test-runs/original-0231-targeted.log",
+      "summary": "Validation/test-runs/original-0231-targeted-summary.json",
+      "bundle": "Validation/test-runs/original-0231-targeted.xcresult",
+      "assertionFailures": 8,
+      "failedTest": "ResultFaceArtworkTests/testWrongAtlasDimensionsOrFlattenedAlphaFallsBackAsOneSetWithoutRetry",
+      "cause": "测试只设置renderer.opaque并绘原图，未实际得到不透明背景，导致本应损坏的测试图片仍通过透明度校验。",
+      "fix": "测试先明确填充不透明背景，再绘原图；新增alpha摘要确实变化的前置断言，保留原回退和不重试断言。生产校验未修改。",
+      "resolution": "Included and passed in final complete App run."
+    },
+    "application": {
+      "status": "Passed",
+      "cases": 482,
+      "passed": 482,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 185.768,
+      "suiteSeconds": 185.904,
+      "scope": "Complete CapydokuAppTests on iPhone17 Pro simulator/iOS26.5; no exclusions.",
+      "log": "Validation/test-runs/original-0231-app.log",
+      "summary": "Validation/test-runs/original-0231-app-summary.json",
+      "bundle": "Validation/test-runs/original-0231-app.xcresult"
+    },
+    "ui": {
+      "status": "Passed",
+      "cases": 9,
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 240.075,
+      "suiteSeconds": 240.087,
+      "scope": "Same nine selected native UI cases as0.2.30 on iPhone17e/iOS26.5, one test action, no repeats; not the full88 or human-played150 levels.",
+      "log": "Validation/test-runs/original-0231-17e-ui.log",
+      "summary": "Validation/test-runs/original-0231-17e-ui-summary.json",
+      "bundle": "Validation/test-runs/original-0231-17e-ui.xcresult"
+    }
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "boundary": "本轮仅本地研发与模拟器验证；不制作手机包、不安装、不归档、不打包分发、不上传GitHub。"
+  },
+  "unchangedAreas": {
+    "coreAndLevelsModified": false,
+    "audioFilesModified": false,
+    "formalConformanceRows": 83,
+    "historicalChecklistCount": 88
+  },
+  "baselinePreservation": {
+    "files": [
+      {
+        "file": "Validation/checklist-source.json",
+        "sha256": "5bd83dc55739a19e6d69a7aad14e21294ad9536808a82d2ca2d08bb2c32638c4",
+        "byteIdenticalToHEAD": true
+      },
+      {
+        "file": "Validation/checklist-0221-audit.json",
+        "sha256": "c4fea525bc25fe0624b454abe9e4c86c3ff107976113d4ab98da98772a20f0af",
+        "byteIdenticalToHEAD": true
+      },
+      {
+        "file": "Validation/original-conformance.json",
+        "sha256": "3b97d7a7cde6da2f904ad7286ff9584d6546ef2af8939d9455d38a9955ab773c",
+        "byteIdenticalToHEAD": true
+      }
+    ],
+    "formalMarkdownTableUnchanged": true,
+    "formalRows": 83,
+    "sourceCases": 88,
+    "scope": "Markdown顶部更新当前版本与验证链接，83行正式表逐行保持。"
+  }
+}

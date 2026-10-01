@@ -13,14 +13,19 @@ import UIKit
     let button = UIButton(type: .system)
     private let previousWindow: UIWindow?
 
-    init(side: CGFloat = 240, clock: ResultCharacterClock? = nil, prepareRig: (() -> Bool)? = nil) throws {
+    init(side: CGFloat = 240, clock: ResultCharacterClock? = nil, prepareRig: (() -> Bool)? = nil,
+         loadFace: ((ResultCharacterPerformance) -> ResultFaceParts?)? = nil) throws {
         let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
         previousWindow = scene.windows.first(where: \.isKeyWindow)
         window = UIWindow(windowScene: scene); window.frame = scene.coordinateSpace.bounds
         let controller = UIViewController(); controller.view.backgroundColor = UIColor(CapyPalette.ink)
         window.rootViewController = controller; window.makeKeyAndVisible()
         let frame = CGRect(x: 40, y: 120, width: side, height: side)
-        if let prepareRig { view = ResultCharacterUIView(frame: frame, prepareRig: prepareRig) }
+        if let loadFace {
+            view = ResultCharacterUIView(frame: frame, prepareRig: prepareRig ?? ResultCharacterArtwork.prewarmRig,
+                                         loadFace: loadFace)
+        }
+        else if let prepareRig { view = ResultCharacterUIView(frame: frame, prepareRig: prepareRig) }
         else { view = ResultCharacterUIView(frame: frame) }
         if let clock { view.schedule = clock.schedule }
         controller.view.addSubview(view)
@@ -176,7 +181,8 @@ final class ResultCharacterTests: XCTestCase {
         XCTAssertNil(character.contents)
         let head = try XCTUnwrap(character.sublayers?.first { $0.name == ResultRigPart.sadHead.layerName })
         let texture = try XCTUnwrap(head.contents) as AnyObject
-        let expectedTexture = try XCTUnwrap(ResultCharacterArtwork.rigImage(.sadHead)?.cgImage)
+        let expectedTexture = try XCTUnwrap((ResultFaceArtwork.parts(for: .gentleRetry)?.base
+            ?? ResultCharacterArtwork.rigImage(.sadHead))?.cgImage)
         XCTAssertTrue(texture === expectedTexture)
         XCTAssertEqual(head.opacity, 1)
         XCTAssertNotNil(character.animation(forKey: "result-transform.rotation.z"))
@@ -193,6 +199,74 @@ final class ResultCharacterTests: XCTestCase {
         XCTAssertTrue(animations(rig.view).isEmpty)
     }
 
+    @MainActor func testFacialPartsFollowMovingHeadAtThreeSizesWithoutRestartingClock() async throws {
+        for side: CGFloat in [140, 168, 250] {
+            for performance in ResultCharacterPerformance.allCases {
+                let parts = try XCTUnwrap(ResultFaceArtwork.parts(for: performance))
+                let rig = try ResultCharacterRig(side: side); defer { rig.close() }
+                let won = performance != .gentleRetry
+                let variant: ResultCelebrationVariant = performance == .starHug ? .proudCrown : .joyfulBounce
+                rig.configure(won: won, variant: variant, id: nil)
+                let baseline = try modelPixels(rig.view)
+                let event = UUID(); rig.configure(won: won, variant: variant, id: event)
+                let headName = (won ? ResultRigPart.happyHead : .sadHead).layerName
+                let head = try XCTUnwrap(layers(rig.view.layer).first { $0.name == headName })
+                let features = try XCTUnwrap(head.sublayers?.filter { $0.name?.hasPrefix("result-face-") == true })
+                XCTAssertEqual(features.count, 4)
+                let starts = features.map { $0.animation(forKey: "result-face-expression")?.beginTime }
+                XCTAssertTrue(starts.allSatisfy { $0 != nil })
+                let headTexture = try XCTUnwrap(head.contents) as AnyObject
+                XCTAssertTrue(headTexture === parts.base.cgImage)
+                let duration = performance == .joyfulRaise ? 1.05 : performance == .starHug ? 1.2 : 0.92
+                let phase = performance == .joyfulRaise ? 0.23 : performance == .starHug ? 0.39 : 0.43
+                try await Task.sleep(nanoseconds: UInt64(duration * phase * 1_000_000_000))
+                rig.configure(won: won, variant: variant, id: event)
+                XCTAssertEqual(features.map { $0.animation(forKey: "result-face-expression")?.beginTime }, starts)
+                XCTAssertEqual(rig.view.playedEventCount, 1)
+                let actualRoot = try XCTUnwrap(rig.view.layer.presentation())
+                let actualHead = try XCTUnwrap(layers(actualRoot).first { $0.name == headName })
+                let actualFeatures = try XCTUnwrap(actualHead.sublayers?.filter { $0.name?.hasPrefix("result-face-") == true })
+                XCTAssertEqual(actualFeatures.count, 4)
+                for (feature, source) in zip(actualFeatures, [parts.openEyes, parts.closedEyes, parts.restMouth, parts.activeMouth]) {
+                    XCTAssertTrue(feature.superlayer === actualHead)
+                    XCTAssertEqual(feature.frame.minX / actualHead.bounds.width, source.frame.minX, accuracy: 0.0001)
+                    XCTAssertEqual(feature.frame.minY / actualHead.bounds.height, source.frame.minY, accuracy: 0.0001)
+                    XCTAssertTrue(actualHead.bounds.contains(feature.frame))
+                    let point = feature.convert(CGPoint(x: feature.bounds.midX, y: feature.bounds.midY), to: actualRoot)
+                    XCTAssertTrue(rig.view.bounds.contains(point), "Expressions move with the head inside the result viewport.")
+                }
+                XCTAssertGreaterThan(try XCTUnwrap(actualFeatures.first { $0.name == "result-face-eyes-closed" }).opacity, 0.94)
+                XCTAssertGreaterThan(try XCTUnwrap(actualFeatures.first { $0.name == "result-face-mouth-active" }).opacity, 0.94)
+                capture(rig.view, name: "result-face-0231-\(performance.rawValue)-\(Int(side))pt-live")
+                rig.view.cancelPresentation()
+                XCTAssertTrue(animations(rig.view).isEmpty)
+                XCTAssertEqual(try modelPixels(rig.view), baseline)
+                rig.configure(won: won, variant: variant, id: event)
+                XCTAssertTrue(animations(rig.view).isEmpty)
+            }
+        }
+    }
+
+    @MainActor func testMissingFacialSetKeepsCompleteOriginalHeadWithExistingBodyMotion() throws {
+        let clock = ResultCharacterClock()
+        let rig = try ResultCharacterRig(clock: clock, loadFace: { _ in nil }); defer { rig.close() }
+        for performance in ResultCharacterPerformance.allCases {
+            let won = performance != .gentleRetry
+            let variant: ResultCelebrationVariant = performance == .starHug ? .proudCrown : .joyfulBounce
+            rig.configure(won: won, variant: variant, id: UUID())
+            let part: ResultRigPart = won ? .happyHead : .sadHead
+            let head = try XCTUnwrap(layers(rig.view.layer).first { $0.name == part.layerName })
+            let actual = try XCTUnwrap(head.contents) as AnyObject
+            let expected = try XCTUnwrap(ResultCharacterArtwork.rigImage(part)?.cgImage)
+            XCTAssertTrue(actual === expected, "Incomplete facial resources must preserve the complete old face.")
+            XCTAssertEqual(head.opacity, 1)
+            XCTAssertFalse((head.animationKeys() ?? []).isEmpty)
+            XCTAssertFalse(layers(rig.view.layer).contains { $0.name?.hasPrefix("result-face-") == true })
+            clock.jobs.last?.1.perform()
+            XCTAssertTrue(animations(rig.view).isEmpty)
+        }
+    }
+
     @MainActor func testSighFollowsActualMouthDuringNodAtThreeSizesIncludingFallback() async throws {
         for fallback in [false, true] {
             for side: CGFloat in [140,168,250] {
@@ -206,7 +280,8 @@ final class ResultCharacterTests: XCTestCase {
                 let ownerName = fallback ? "result-character" : ResultRigPart.sadHead.layerName
                 let owner = try XCTUnwrap(layers(root).first { $0.name == ownerName })
                 let origin = try XCTUnwrap(owner.sublayers?.first { $0.name == "result-mouth-origin" })
-                let mouth = fallback ? CGPoint(x:0.805,y:0.446) : CGPoint(x:0.835,y:0.815)
+                let mouth = fallback ? CGPoint(x:0.805,y:0.446)
+                    : (ResultFaceArtwork.parts(for:.gentleRetry)?.sighAnchor ?? CGPoint(x:0.835,y:0.815))
                 XCTAssertEqual(origin.position.x / owner.bounds.width,mouth.x,accuracy:0.0001)
                 XCTAssertEqual(origin.position.y / owner.bounds.height,mouth.y,accuracy:0.0001)
                 let firstSigh = try XCTUnwrap(origin.sublayers?.first { $0.name == "result-sigh-0" })
