@@ -12,7 +12,7 @@
       "iPhone 17 Pro",
       "iPhone 17e"
     ],
-    "realDevice": "not tested for this build",
+    "realDevice": "KKKiPhone / iPhone 14 Pro Max / iOS 26.3.1: wireless installation of 0.2.21 (24) and launch confirmed. Initial automatic launch was blocked pending developer trust; after the user confirmed trust and manually opened it, a read-only query verified the Capydoku process (PID 11651). Full physical gameplay and targeted regression remain unverified.",
     "minimumOSRuntime": "not tested; compile target iOS 15"
   },
   "core": {
@@ -661,7 +661,7 @@
     "Reference audio files, detailed playback timing and group mappings",
     "Cross-product corpus and reviewed similarity calibration",
     "Production legal/support endpoints and service adapters/data dashboards",
-    "Physical-device, old-system, TestFlight and App Store release validation",
+    "Complete physical-device gameplay/recovery and targeted regressions beyond confirmed installation/manual launch, plus old-system, TestFlight and App Store release validation",
     "VoiceOver actual focus navigation and full Dynamic Type/readability verification on physical devices",
     "Frozen correct/wrong/Combo animation frames and timing, found-count/star motion synchronization and physical-device Reduce Motion/feedback review",
     "Formal revive/continue attempt/duration definitions pending; result fix preserves existing attempt and cumulative duration.",
@@ -804,10 +804,13 @@
         }
       }
     ],
-    "signingAndDeviceExecution": "Demo Debug locally signed and normally updated on both simulators; unsigned device Release and signed device Debug compile passed. The signed profile does not include the connected, locked iPhone, so no physical install/run was performed. Three optimized candidates were installed and exercised on Pro simulator in candidatePlaythrough0221. No minimum runtime, actual TestFlight distribution or App Store acceptance.",
+    "signingAndDeviceExecution": "Demo Debug normally updated on both simulators; unsigned device Release and historical generic signed Debug compile passed. A fresh device-targeted Debug rebuild passed strict local codesign verification with a new profile containing KKKiPhone. Wireless installation succeeded and the device reports 0.2.21 (24). Initial automatic launch failed pending developer trust; after the user confirmed trust and manually opened the app, a read-only query verified Capydoku running (PID 11651). This confirms physical installation and launch, not successful automatic-launch retry, full physical gameplay, minimum-runtime, TestFlight distribution or App Store acceptance.",
     "candidateSupplement": "0.2.21 optimized three-candidate rebuild/normal-install and recorded L1 playthrough verified separately in candidatePlaythrough0221; previous device Production build remains 0.2.20.",
-    "genericIOSSignedDebug": "passed with existing development certificate/profile; profile excludes the connected iPhone",
-    "signedDebugLog": "Validation/test-runs/original-0221-signed-device-build.log"
+    "genericIOSSignedDebug": "passed in the historical preflight with the previous profile, which excluded the phone; superseded for the current device-install state by physicalInstall0221",
+    "signedDebugLog": "Validation/test-runs/original-0221-signed-device-build.log",
+    "physicalIOSSignedDebug": "fresh device-targeted Debug build and strict local signature verification passed; new embedded profile includes the target phone",
+    "physicalDebugLog": "Validation/test-runs/original-0221-iphone-wireless-fresh-build.log",
+    "physicalInstallEvidence": "Validation/original-0221-physical-install.json"
   },
   "audioContract": {
     "policyTestsPassed": 13,
@@ -2990,6 +2993,49 @@
     ],
     "physicalRun": "not performed",
     "scope": "This is device-build/preflight evidence only; no physical UI, gestures, save recovery, audio or signing trust acceptance.",
-    "deviceSpecificBuildAttempt": "Terminal exit 70: locked iPhone prevented destination readiness. Existing embedded profile unchanged; no installation or new signing success claimed."
+    "deviceSpecificBuildAttempt": "Terminal exit 70: locked iPhone prevented destination readiness. Existing embedded profile unchanged; no installation or new signing success claimed.",
+    "historical": true,
+    "currentFollowUp": "physicalInstall0221; original lock/profile observations above are retained as preflight history, not current blockers"
+  },
+  "physicalInstall0221": {
+    "evidence": "Validation/original-0221-physical-install.json",
+    "build": "0.2.21 (24)",
+    "phone": "KKKiPhone / iPhone 14 Pro Max / iOS 26.3.1",
+    "status": "wireless_install_and_manual_launch_confirmed",
+    "freshBuild": {
+      "result": "passed",
+      "directory": ".build/PhysicalWireless0221",
+      "log": "Validation/test-runs/original-0221-iphone-wireless-fresh-build.log"
+    },
+    "strictLocalSignatureVerification": "passed",
+    "deviceProvisioning": "Device-specific automatic provisioning succeeded; the new embedded profile includes the target phone.",
+    "wirelessInstall": "passed over local network; device application query confirms com.capydoku.demo version 0.2.21 (24)",
+    "nextAction": "Complete physical-device gameplay, gestures, permissions, Keychain behavior, save recovery and other targeted regressions; distribution gates remain open.",
+    "history": [
+      "Initial preflight was blocked by a locked phone and a previous profile that excluded it.",
+      "After unlock and device-specific provisioning, an incremental package failed with sealed resource invalid; the final package was fully rebuilt in a separate directory."
+    ],
+    "scope": "Wireless installation, installed version and manual launch confirmed by user acknowledgement plus read-only running-process evidence. No successful automatic-launch retry, full physical gameplay, gestures, permissions flow, Keychain behavior, save recovery, audio, or distribution acceptance is claimed.",
+    "initialAutomaticLaunch": {
+      "result": "failed",
+      "coreDeviceCode": 10002,
+      "underlyingDomain": "FBSOpenApplicationErrorDomain",
+      "underlyingCode": 3,
+      "reason": "Security",
+      "reportedPossibleCauses": [
+        "invalid code signature",
+        "inadequate entitlements",
+        "profile not explicitly trusted"
+      ]
+    },
+    "confirmedLaunch": {
+      "method": "User confirmed developer trust and manually opened the app",
+      "userConfirmation": "已信任，可以打开",
+      "readOnlyProcessQuery": "passed",
+      "runningExecutable": "Capydoku.app/Capydoku",
+      "processID": 11651,
+      "automaticLaunchRetry": "not claimed"
+    },
+    "diagnosis": "Initial developer trust was incomplete. The user then confirmed trust and opening the app; a read-only process query verified it was running."
   }
 }

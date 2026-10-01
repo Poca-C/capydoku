@@ -1,0 +1,79 @@
+{
+  "build": "0.2.21 (24)",
+  "timestampUTC": "2026-10-01T04:08:30.483900+00:00",
+  "scope": "Wireless development provisioning, fresh signed device build, installation and startup on the paired iPhone. First programmatic launch was blocked by developer trust; user then confirmed trust and opened the app, and read-only process inspection confirmed it running. No physical gameplay acceptance claimed. Private device identifiers and certificate owner omitted.",
+  "device": {
+    "model": "iPhone 14 Pro Max",
+    "osVersion": "26.3.1",
+    "transport": "localNetwork",
+    "paired": true,
+    "tunnelConnected": true,
+    "developerModeEnabled": true,
+    "developerDiskServicesAvailable": true,
+    "passcodeRequiredAtPreflight": false
+  },
+  "provisioning": {
+    "status": "passed",
+    "profileIncludesPhone": true,
+    "profileExpiresUTC": "2026-10-08 04:04:05",
+    "log": "Validation/test-runs/original-0221-iphone-wireless-provisioning.log",
+    "historicalBlockResolved": "Device unlocked; Xcode registered/provisioned the phone through the existing development team."
+  },
+  "incrementalBuild": {
+    "buildExitCode": 0,
+    "strictSignatureVerification": "failed: a sealed resource is missing or invalid",
+    "installed": false,
+    "action": "Rebuilt into a fresh derived data directory before attempting installation."
+  },
+  "freshBuild": {
+    "app": ".build/PhysicalWireless0221/Build/Products/Debug-iphoneos/Capydoku.app",
+    "version": "0.2.21",
+    "build": "24",
+    "bundle": "com.capydoku.demo",
+    "profileIncludesPhone": true,
+    "profileExpiresUTC": "2026-10-08 04:04:05",
+    "signatureValid": true,
+    "signatureMessage": "",
+    "binarySHA256": "ca6fc47e5729dc11f0affcdc49c868df35a1696d3a40cfdac06d0ecf99ded16a",
+    "embeddedProfileSHA256": "dc7aeb627c7e99394d0f3ff199a71d79fa277855fe6ad7055100e98d63e20f57",
+    "status": "passed",
+    "log": "Validation/test-runs/original-0221-iphone-wireless-fresh-build.log",
+    "applicationIdentifierMatchesProfile": true,
+    "teamIdentifierMatchesProfile": true,
+    "getTaskAllowMatchesProfile": true,
+    "explicitKeychainAccessGroupsInApp": false
+  },
+  "installation": {
+    "status": "passed",
+    "normalBundleIdentifier": "com.capydoku.demo",
+    "preexistingMatchingAppCount": 0,
+    "uninstalledOrResetExistingApps": false,
+    "result": "Validation/test-runs/physical-iphone-wireless-install-0221.json",
+    "postInstallQuery": "Validation/test-runs/physical-iphone-wireless-app-after-0221.json",
+    "verifiedVersion": "0.2.21",
+    "verifiedBuild": "24"
+  },
+  "launch": {
+    "normalLaunchWithoutTestArguments": true,
+    "result": "Validation/test-runs/physical-iphone-wireless-launch-0221.json",
+    "errorDomains": [
+      "com.apple.dt.CoreDeviceError:10002",
+      "FBSOpenApplicationErrorDomain:3"
+    ],
+    "launched": true,
+    "initialAttemptStatus": "blocked_by_ios_security",
+    "initialAttemptReason": "iOS reported invalid code signature, inadequate entitlements or profile not explicitly trusted by user. Local strict signature and profile/device checks passed. Developer trust is the next user-side check; final cause has not been confirmed.",
+    "status": "confirmed_running_after_user_trust",
+    "userConfirmation": "已信任，可以打开",
+    "runningProcessVerification": {
+      "status": "passed",
+      "executable": "Capydoku.app/Capydoku",
+      "processIdentifier": 11651,
+      "result": "Validation/test-runs/physical-iphone-wireless-processes-0221.json",
+      "method": "Read-only process query; app was not terminated or relaunched."
+    }
+  },
+  "nextAction": "User can play the installed demo; continue planned physical gesture, persistence/recovery and permissions checks separately.",
+  "acceptanceBoundary": "Installation and startup verified. Gestures, persistence/recovery, permissions, Keychain and full physical regression remain pending; formal distribution signing and App Store/TestFlight upload are not covered.",
+  "historicalPreflight": "Validation/original-0221-physical-preflight.json"
+}
