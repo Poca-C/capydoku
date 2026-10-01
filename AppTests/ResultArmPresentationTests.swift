@@ -174,6 +174,129 @@ final class ResultArmPresentationTests: XCTestCase {
         }
     }
 
+    @MainActor func testActualBodyFollowKeepsShouldersRegisteredAndPartsInBoundsAcrossThreePerformancesAndSizes() async throws {
+        for side: CGFloat in [140, 168, 250] {
+            for performance in ResultCharacterPerformance.allCases {
+                let host = try ResultArmHost(side: side); defer { host.close() }
+                let targets: [Double]
+                let shoulders: [CGPoint]
+                switch performance {
+                case .joyfulRaise:
+                    targets = [0.32, 0.50]
+                    shoulders = [CGPoint(x: 0.29, y: 0.59), CGPoint(x: 0.76, y: 0.59)]
+                case .starHug:
+                    targets = [0.34, 0.80]
+                    shoulders = [CGPoint(x: 0.28, y: 0.61), CGPoint(x: 0.78, y: 0.67)]
+                case .gentleRetry:
+                    targets = [0.36, 0.86]
+                    shoulders = [CGPoint(x: 0.31, y: 0.54), CGPoint(x: 0.73, y: 0.53)]
+                }
+                // Registration comes from the unchanged torso artwork layout,
+                // not from evaluating the moving production pose a second time.
+                let shoulderRegistration = shoulders.map {
+                    CGPoint(x: 0.5 + ($0.x - 0.48) / 0.74,
+                            y: 0.5 + ($0.y - 0.665) / 0.59)
+                }
+                host.configure(performance, event: UUID())
+                let model = try XCTUnwrap(host.view.layer.sublayers?.first { $0.name == "result-character" })
+                let modelTorso = try XCTUnwrap(model.sublayers?.first { $0.name == "result-rig-torso" })
+                let clock = try XCTUnwrap(modelTorso.animation(forKey: "result-rig-position"))
+                let expectedDuration = performance == .joyfulRaise ? 1.05 : performance == .starHug ? 1.20 : 0.92
+                XCTAssertEqual(clock.duration, expectedDuration, accuracy: 0.000001)
+                var samples: [[String: Double]] = []
+                var captures: [(name: String, image: UIImage)] = []
+                var capturedPhases: [Double] = []
+                while true {
+                    let phase = (modelTorso.convertTime(CACurrentMediaTime(), from: nil) - clock.beginTime) / clock.duration
+                    if phase > 0.94 { break }
+                    if phase >= 0.07, let root = host.view.layer.presentation(),
+                       let character = root.sublayers?.first(where: { $0.name == "result-character" }) {
+                        let torso = try XCTUnwrap(character.sublayers?.first { $0.name == "result-rig-torso" })
+                        let viewport = host.view.bounds.insetBy(dx: -0.5, dy: -0.5)
+                        // Includes the head, torso, both feet/paws, and held star
+                        // when present. Transparent sleeve canvases are checked
+                        // by their visible ink separately below.
+                        let visibleParts = (character.sublayers ?? []).filter {
+                            $0.opacity > 0 && $0.name?.hasPrefix("result-rig-") == true
+                        }
+                        XCTAssertEqual(visibleParts.count, performance == .starHug ? 7 : 6)
+                        for part in visibleParts {
+                            XCTAssertTrue(viewport.contains(character.convert(part.frame, to: root)),
+                                "\(performance) \(side)pt phase \(phase): \(part.name ?? "part") must remain in the viewport")
+                        }
+                        var maximumShoulderError: CGFloat = 0
+                        var maximumWristError: CGFloat = 0
+                        for (index, hand) in ["left", "right"].enumerated() {
+                            let sleeve = try XCTUnwrap(character.sublayers?.first { $0.name == "result-arm-\(hand)-back" })
+                            let ink = try XCTUnwrap(sleeve.sublayers?.first { $0.name?.hasSuffix("-outline") == true } as? CAShapeLayer)
+                            let contour = try XCTUnwrap(ink.path)
+                            let occupied = contour.copy(strokingWithWidth: ink.lineWidth, lineCap: .round,
+                                                        lineJoin: .round, miterLimit: 1).boundingBoxOfPath
+                            XCTAssertTrue(viewport.contains(ink.convert(occupied, to: root)))
+                            var shoulder: CGPoint?
+                            contour.applyWithBlock { element in
+                                if element.pointee.type == .moveToPoint { shoulder = element.pointee.points[0] }
+                            }
+                            let registered = ink.convert(try XCTUnwrap(shoulder), to: torso)
+                            let expected = CGPoint(x: torso.bounds.minX + shoulderRegistration[index].x * torso.bounds.width,
+                                                   y: torso.bounds.minY + shoulderRegistration[index].y * torso.bounds.height)
+                            let shoulderError = hypot(registered.x - expected.x, registered.y - expected.y)
+                            maximumShoulderError = max(maximumShoulderError, shoulderError)
+                            XCTAssertLessThan(shoulderError, 0.25,
+                                "The actual interpolated sleeve root must stay attached to the same point on the rotating torso")
+                            let front = try XCTUnwrap(character.sublayers?.first { $0.name == "result-arm-\(hand)-front" })
+                            let mask = try XCTUnwrap((front.mask?.presentation() ?? front.mask) as? CAShapeLayer)
+                            let wrist = mask.convert(try XCTUnwrap(mask.path).currentPoint, to: character)
+                            let paw = try XCTUnwrap(character.sublayers?.first { $0.name == "result-rig-\(hand)Paw" })
+                            let wristError = hypot(wrist.x - paw.position.x, wrist.y - paw.position.y)
+                            maximumWristError = max(maximumWristError, wristError)
+                            XCTAssertLessThan(wristError, 0.25,
+                                "Moving the shoulder must not detach the existing paw from its sleeve")
+                        }
+                        let lean = atan2(torso.transform.m12, torso.transform.m11)
+                        samples.append(["phase": phase, "torsoLean": Double(lean),
+                                        "shoulderRegistrationErrorPoints": Double(maximumShoulderError),
+                                        "wristErrorPoints": Double(maximumWristError)])
+                        if captures.count < targets.count, phase >= targets[captures.count] {
+                            let format = UIGraphicsImageRendererFormat(); format.scale = 2; format.opaque = true
+                            let image = UIGraphicsImageRenderer(bounds: host.view.bounds, format: format).image {
+                                UIColor(CapyPalette.ink).setFill(); $0.fill(host.view.bounds); root.render(in: $0.cgContext)
+                            }
+                            let moment = captures.isEmpty ? "lean" : "reverse"
+                            captures.append(("body-follow-\(performance.rawValue)-\(Int(side))pt-\(moment)", image))
+                            capturedPhases.append(phase)
+                        }
+                    }
+                    // Let Core Animation run normally; never seek or freeze a
+                    // presentation clock to manufacture a requested pose.
+                    try await Task.sleep(nanoseconds: 8_000_000)
+                }
+                XCTAssertGreaterThan(samples.count, 12)
+                XCTAssertTrue(samples.contains { ($0["phase"] ?? 1) < 0.20 })
+                XCTAssertTrue(samples.contains { ($0["phase"] ?? 0) > 0.88 })
+                XCTAssertTrue(samples.contains { ($0["torsoLean"] ?? 0) > 0.008 })
+                XCTAssertTrue(samples.contains { ($0["torsoLean"] ?? 0) < -0.008 },
+                    "Natural playback must sample both sides of the internal torso reversal")
+                XCTAssertEqual(captures.count, 2)
+                for (actual, target) in zip(capturedPhases, targets) {
+                    XCTAssertLessThan(actual - target, 0.08,
+                        "A late screenshot must not be labelled as the requested lean or reversal pose")
+                }
+                for (name, image) in captures {
+                    let attachment = XCTAttachment(image: image)
+                    attachment.name = name; attachment.lifetime = .keepAlways; add(attachment)
+                }
+                let evidence: [String: Any] = ["performance": performance.rawValue, "sidePoints": Double(side),
+                                                "durationSeconds": clock.duration, "targetPhases": targets,
+                                                "capturedPhases": capturedPhases, "samples": samples]
+                let data = try JSONSerialization.data(withJSONObject: evidence, options: [.prettyPrinted, .sortedKeys])
+                let log = XCTAttachment(string: try XCTUnwrap(String(data: data, encoding: .utf8)))
+                log.name = "body-follow-\(performance.rawValue)-\(Int(side))pt-natural-samples"
+                log.lifetime = .keepAlways; add(log)
+            }
+        }
+    }
+
     @MainActor func testSleeveCancellationAndBackgroundRestoreRemoveMaskAnimationsWithoutReplay() throws {
         let host = try ResultArmHost(); defer { host.close() }
         for performance in ResultCharacterPerformance.allCases {

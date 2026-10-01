@@ -1,0 +1,112 @@
+{
+  "source": "result-body-follow.mov",
+  "durationSeconds": 4.226666666666667,
+  "extractedIntervalSeconds": 0.1,
+  "reviewedFrames": [
+    {
+      "actualSeconds": 0,
+      "file": "frame-000.000.png",
+      "requestedSeconds": 0
+    },
+    {
+      "actualSeconds": 0.18833333333333332,
+      "file": "frame-000.200.png",
+      "requestedSeconds": 0.2
+    },
+    {
+      "actualSeconds": 0.4,
+      "file": "frame-000.400.png",
+      "requestedSeconds": 0.4
+    },
+    {
+      "actualSeconds": 0.59,
+      "file": "frame-000.600.png",
+      "requestedSeconds": 0.6000000000000001
+    },
+    {
+      "actualSeconds": 0.7866666666666666,
+      "file": "frame-000.800.png",
+      "requestedSeconds": 0.8
+    },
+    {
+      "actualSeconds": 0.9866666666666667,
+      "file": "frame-001.000.png",
+      "requestedSeconds": 1
+    },
+    {
+      "actualSeconds": 1.1866666666666668,
+      "file": "frame-001.200.png",
+      "requestedSeconds": 1.2000000000000002
+    },
+    {
+      "actualSeconds": 1.39,
+      "file": "frame-001.400.png",
+      "requestedSeconds": 1.4000000000000001
+    },
+    {
+      "actualSeconds": 1.6,
+      "file": "frame-001.600.png",
+      "requestedSeconds": 1.6
+    },
+    {
+      "actualSeconds": 1.8,
+      "file": "frame-001.800.png",
+      "requestedSeconds": 1.8
+    },
+    {
+      "actualSeconds": 1.9883333333333333,
+      "file": "frame-002.000.png",
+      "requestedSeconds": 2
+    },
+    {
+      "actualSeconds": 2.195,
+      "file": "frame-002.200.png",
+      "requestedSeconds": 2.2
+    },
+    {
+      "actualSeconds": 2.39,
+      "file": "frame-002.400.png",
+      "requestedSeconds": 2.4000000000000004
+    },
+    {
+      "actualSeconds": 2.5866666666666664,
+      "file": "frame-002.600.png",
+      "requestedSeconds": 2.6
+    },
+    {
+      "actualSeconds": 2.8,
+      "file": "frame-002.800.png",
+      "requestedSeconds": 2.8000000000000003
+    },
+    {
+      "actualSeconds": 3,
+      "file": "frame-003.000.png",
+      "requestedSeconds": 3
+    },
+    {
+      "actualSeconds": 3.1866666666666665,
+      "file": "frame-003.200.png",
+      "requestedSeconds": 3.2
+    },
+    {
+      "actualSeconds": 3.385,
+      "file": "frame-003.400.png",
+      "requestedSeconds": 3.4000000000000004
+    },
+    {
+      "actualSeconds": 3.5866666666666664,
+      "file": "frame-003.600.png",
+      "requestedSeconds": 3.6
+    },
+    {
+      "actualSeconds": 3.785,
+      "file": "frame-003.800.png",
+      "requestedSeconds": 3.8000000000000003
+    },
+    {
+      "actualSeconds": 3.9983333333333335,
+      "file": "frame-004.000.png",
+      "requestedSeconds": 4
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "kind": "scoped_delta_to_88_item_audit",
+  "baseAudit": "Validation/checklist-0221-audit.json",
+  "sourceChecklist": "Validation/checklist-source.json",
+  "sourceCaseCount": 88,
+  "formalSignOff": false,
+  "full88Reexecuted": false,
+  "overallCountsRecomputed": false,
+  "build": "0.2.41 (44)",
+  "status": "scoped_result_body_follow_verified_simulator_only",
+  "previousDelta": "Validation/checklist-0240-feedback-delta.json",
+  "scopedRows": 3,
+  "rows": [
+    {
+      "id": "05-06",
+      "title": "结算导航与继续",
+      "originalAcceptanceText": "操作  测试结算下一关、返回首页和继续游戏。\n通过  跳转、进度及反馈正确；主动退出保留策略、击败比例和Rank有确认依据。",
+      "originalRequirementIDs": [
+        "PLAY-10",
+        "UI-04"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "结果操作时机保持；最终胜利下一关及失败复活UI通过，非正式完整导航或参考验收。",
+      "evidence": [
+        "Validation/original-0241-feedback.json",
+        "Docs/original-feel-0241/manifest.json",
+        "Validation/test-runs/original-0241-app-final-summary.json",
+        "Validation/test-runs/original-0241-17e-ui-summary.json",
+        "Validation/test-runs/original-0241-ik-boundary-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "14-03",
+      "title": "游戏奖励动效与降级",
+      "originalAcceptanceText": "操作  触发正确、错误、Combo、通关及签到动效。\n通过  与业务状态同步，不阻碍后续操作；轻量特效在低性能设备可降级。",
+      "originalRequirementIDs": [
+        "ART-02"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "三套结果角色的肩胸/头部联动、密集几何约束及三尺寸自然播放通过；取消/降级保持，不改变立即操作契约。",
+      "evidence": [
+        "Validation/original-0241-feedback.json",
+        "Docs/original-feel-0241/manifest.json",
+        "Validation/test-runs/original-0241-app-final-summary.json",
+        "Validation/test-runs/original-0241-17e-ui-summary.json",
+        "Validation/test-runs/original-0241-ik-boundary-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "16-03",
+      "title": "最终构建全部问题复验",
+      "originalAcceptanceText": "操作  在最终构建复测所有失败用例及受影响流程。\n通过  每个Bug均有关联修复版本、复测结论和证据，旧版本通过不能代替复测。",
+      "originalRequirementIDs": [
+        "TECH-07"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "保留原版缺少身体运动的9条诊断断言；最终相关App与两项UI通过，无全量App/Core或真机重验。 审查发现新IK测试同值比较，强化后4项专项复验通过；生产代码未再改变。",
+      "evidence": [
+        "Validation/original-0241-feedback.json",
+        "Docs/original-feel-0241/manifest.json",
+        "Validation/test-runs/original-0241-app-final-summary.json",
+        "Validation/test-runs/original-0241-17e-ui-summary.json",
+        "Validation/test-runs/original-0241-ik-boundary-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    }
+  ],
+  "verificationSnapshot": {
+    "app": {
+      "status": "Passed",
+      "cases": 45,
+      "passed": 45,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 56.545,
+      "scope": "17 Pro / iOS26.5: result rig, continuous sleeves, eyes/mouth, actual Root choreography, cancellation and accessibility. No full App/Core rerun.",
+      "summary": "Validation/test-runs/original-0241-app-final-summary.json",
+      "log": "Validation/test-runs/original-0241-app-final.log",
+      "bundle": "Validation/test-runs/original-0241-app-final.xcresult"
+    },
+    "ui": {
+      "status": "Passed",
+      "cases": 2,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 37.587,
+      "scope": "17e / iOS26.5: solve/advance and lose/simulated revive; existing UI fixtures.",
+      "summary": "Validation/test-runs/original-0241-17e-ui-summary.json",
+      "log": "Validation/test-runs/original-0241-17e-ui.log",
+      "bundle": "Validation/test-runs/original-0241-17e-ui.xcresult"
+    },
+    "finalAssertions": {
+      "status": "Passed",
+      "cases": 4,
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 0.05,
+      "scope": "After tightening dense IK assertions: reachable-arm interior margin, bone lengths and settled endpoints; original wrist/key-pose/grip/transit checks. Production code unchanged since the 45-case suite and 2 UI cases.",
+      "summary": "Validation/test-runs/original-0241-ik-boundary-summary.json",
+      "log": "Validation/test-runs/original-0241-ik-boundary.log",
+      "bundle": "Validation/test-runs/original-0241-ik-boundary.xcresult"
+    }
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  },
+  "baselinePreservation": {
+    "sourceChecklist88AndAuditUnchanged": true,
+    "formal83IDsAndStatusesUnchanged": true,
+    "levelsAndArtworkUnchanged": true,
+    "resultBodyMotionChanged": true
+  }
+}

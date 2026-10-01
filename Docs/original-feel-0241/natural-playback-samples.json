@@ -1,0 +1,4779 @@
+{
+  "build": "0.2.41 (44)",
+  "groups": [
+    {
+      "capturedPhases": [
+        0.3610555707659248,
+        0.8690434330871896
+      ],
+      "durationSeconds": 0.92,
+      "performance": "gentleRetry",
+      "samples": [
+        {
+          "phase": 0.07681290760798298,
+          "shoulderRegistrationErrorPoints": 3.866003078752947e-05,
+          "torsoLean": -0.01053008613966994,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.08814642205834389,
+          "shoulderRegistrationErrorPoints": 2.2776786412108546e-05,
+          "torsoLean": -0.01232455417867804,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.09940833324040084,
+          "shoulderRegistrationErrorPoints": 5.003745295151345e-06,
+          "torsoLean": -0.013770117196831053,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.11063034433628553,
+          "shoulderRegistrationErrorPoints": 5.003745295151345e-06,
+          "torsoLean": -0.013770117196831053,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.12179719203192255,
+          "shoulderRegistrationErrorPoints": 1.0036898927727502e-07,
+          "torsoLean": -0.014876765856892125,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.13115484591411508,
+          "shoulderRegistrationErrorPoints": 1.0036898927727502e-07,
+          "torsoLean": -0.014876765856892125,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.14231775371033858,
+          "shoulderRegistrationErrorPoints": 2.7230072547426923e-05,
+          "torsoLean": -0.013191639732417701,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.15356490039266646,
+          "shoulderRegistrationErrorPoints": 1.6297517938243763e-05,
+          "torsoLean": -0.011248489319003428,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.1648330162583,
+          "shoulderRegistrationErrorPoints": 1.6297517938243763e-05,
+          "torsoLean": -0.011248489319003428,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.17471462867789617,
+          "shoulderRegistrationErrorPoints": 0.00011651247990174666,
+          "torsoLean": -0.005647019980073454,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.18421766302629333,
+          "shoulderRegistrationErrorPoints": 0.00011651247990174666,
+          "torsoLean": -0.005647019980073454,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.19536884071345886,
+          "shoulderRegistrationErrorPoints": 4.988323765061656e-05,
+          "torsoLean": 0.001390953208240859,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.2066312952513766,
+          "shoulderRegistrationErrorPoints": 8.576848067445754e-05,
+          "torsoLean": 0.005801963645730069,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.21789062505021042,
+          "shoulderRegistrationErrorPoints": 8.576848067445754e-05,
+          "torsoLean": 0.005801963645730069,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.22781064313755411,
+          "shoulderRegistrationErrorPoints": 0.00023535889128653445,
+          "torsoLean": 0.014705544642621526,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.23919039851297502,
+          "shoulderRegistrationErrorPoints": 0.00023535889128653445,
+          "torsoLean": 0.014705544642621526,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.24993206531254816,
+          "shoulderRegistrationErrorPoints": 1.7133108553070904e-06,
+          "torsoLean": 0.024354389778827368,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.2615813859333487,
+          "shoulderRegistrationErrorPoints": 0.00013149221332094734,
+          "torsoLean": 0.02933268984490537,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.2737175270854293,
+          "shoulderRegistrationErrorPoints": 0.00013149221332094734,
+          "torsoLean": 0.02933268984490537,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.28525461953983683,
+          "shoulderRegistrationErrorPoints": 0.00018297502551239424,
+          "torsoLean": 0.03881326044070462,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.2951278986470045,
+          "shoulderRegistrationErrorPoints": 0.00010803477267114263,
+          "torsoLean": 0.0423625859122052,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.3050322011720551,
+          "shoulderRegistrationErrorPoints": 0.00010803477267114263,
+          "torsoLean": 0.0423625859122052,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.3164978260073163,
+          "shoulderRegistrationErrorPoints": 6.656733532917862e-05,
+          "torsoLean": 0.04886790576871521,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.32647522647217236,
+          "shoulderRegistrationErrorPoints": 6.656733532917862e-05,
+          "torsoLean": 0.04886790576871521,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.338325905866678,
+          "shoulderRegistrationErrorPoints": 2.079329906833213e-05,
+          "torsoLean": 0.053260498654161666,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.34948473735510005,
+          "shoulderRegistrationErrorPoints": 1.2154534547223535e-06,
+          "torsoLean": 0.0545197894576727,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.3610555707659248,
+          "shoulderRegistrationErrorPoints": 1.2154534547223535e-06,
+          "torsoLean": 0.0545197894576727,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.40696480984637595,
+          "shoulderRegistrationErrorPoints": 2.48910771284412e-06,
+          "torsoLean": 0.053812975774325054,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.41822110500146187,
+          "shoulderRegistrationErrorPoints": 1.6251652464528887e-06,
+          "torsoLean": 0.0532641646750022,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.4294889040149586,
+          "shoulderRegistrationErrorPoints": 1.1521568793622134e-06,
+          "torsoLean": 0.05263358801410796,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.44312667577405984,
+          "shoulderRegistrationErrorPoints": 1.7207414130122204e-06,
+          "torsoLean": 0.05179265427329052,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.4544293477564402,
+          "shoulderRegistrationErrorPoints": 1.7207414130122204e-06,
+          "torsoLean": 0.05179265427329052,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.46558310682682885,
+          "shoulderRegistrationErrorPoints": 6.00064135843728e-06,
+          "torsoLean": 0.050299216594818084,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.47670656703817454,
+          "shoulderRegistrationErrorPoints": 5.2106469942874615e-06,
+          "torsoLean": 0.04954460733617283,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.48761354157012765,
+          "shoulderRegistrationErrorPoints": 5.2106469942874615e-06,
+          "torsoLean": 0.04954460733617283,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.4989347825555698,
+          "shoulderRegistrationErrorPoints": 1.5495784542321467e-06,
+          "torsoLean": 0.04807398146428997,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.5103819294954124,
+          "shoulderRegistrationErrorPoints": 1.5495784542321467e-06,
+          "torsoLean": 0.04807398146428997,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.5217874999684484,
+          "shoulderRegistrationErrorPoints": 3.652701206271073e-06,
+          "torsoLean": 0.04674111764553452,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.5336367299921972,
+          "shoulderRegistrationErrorPoints": 2.5163000189866322e-06,
+          "torsoLean": 0.04616103207223406,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.5445060689690644,
+          "shoulderRegistrationErrorPoints": 2.5163000189866322e-06,
+          "torsoLean": 0.04616103207223406,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.556198324319785,
+          "shoulderRegistrationErrorPoints": 9.760897143538404e-08,
+          "torsoLean": 0.045329148493341055,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.5669468297602851,
+          "shoulderRegistrationErrorPoints": 3.019008359660901e-07,
+          "torsoLean": 0.045116178870554344,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.5787102809256833,
+          "shoulderRegistrationErrorPoints": 3.019008359660901e-07,
+          "torsoLean": 0.045116178870554344,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.5887097372855667,
+          "shoulderRegistrationErrorPoints": 2.7874509434591592e-06,
+          "torsoLean": 0.04471696110032891,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.6006308876828331,
+          "shoulderRegistrationErrorPoints": 2.7874509434591592e-06,
+          "torsoLean": 0.04471696110032891,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.612141621430688,
+          "shoulderRegistrationErrorPoints": 9.37098424772334e-06,
+          "torsoLean": 0.04266821663246137,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.6241091033545039,
+          "shoulderRegistrationErrorPoints": 7.644217713736875e-06,
+          "torsoLean": 0.04077877316984259,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.6361192482037712,
+          "shoulderRegistrationErrorPoints": 7.644217713736875e-06,
+          "torsoLean": 0.04077877316984259,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.6457966486619704,
+          "shoulderRegistrationErrorPoints": 7.654951542055165e-05,
+          "torsoLean": 0.03612727122254794,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.6575583786521431,
+          "shoulderRegistrationErrorPoints": 8.88272641515689e-05,
+          "torsoLean": 0.03312570462498855,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.6692943841461901,
+          "shoulderRegistrationErrorPoints": 8.88272641515689e-05,
+          "torsoLean": 0.03312570462498855,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.6794766305297937,
+          "shoulderRegistrationErrorPoints": 3.240749057715401e-05,
+          "torsoLean": 0.026771477363950493,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.6916568386773376,
+          "shoulderRegistrationErrorPoints": 3.240749057715401e-05,
+          "torsoLean": 0.026771477363950493,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.7022293932411982,
+          "shoulderRegistrationErrorPoints": 0.00014050626023788564,
+          "torsoLean": 0.01943500679250378,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.7120296647569732,
+          "shoulderRegistrationErrorPoints": 0.00011571689680601766,
+          "torsoLean": 0.016177580061131448,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.7223754982038846,
+          "shoulderRegistrationErrorPoints": 0.00011571689680601766,
+          "torsoLean": 0.016177580061131448,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.7338281250153871,
+          "shoulderRegistrationErrorPoints": 7.987987804521119e-05,
+          "torsoLean": 0.00884419491287978,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.7455458333108412,
+          "shoulderRegistrationErrorPoints": 7.987987804521119e-05,
+          "torsoLean": 0.00884419491287978,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.7566440670811774,
+          "shoulderRegistrationErrorPoints": 0.00012792256396394787,
+          "torsoLean": 0.0014350511903279029,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.7663943387223813,
+          "shoulderRegistrationErrorPoints": 6.667843401148452e-05,
+          "torsoLean": -0.0015708791911217455,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.7764045743818354,
+          "shoulderRegistrationErrorPoints": 6.667843401148452e-05,
+          "torsoLean": -0.0015708791911217455,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.7869894474582827,
+          "shoulderRegistrationErrorPoints": 8.149372442663625e-05,
+          "torsoLean": -0.007341893530594135,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.7992390851976107,
+          "shoulderRegistrationErrorPoints": 8.149372442663625e-05,
+          "torsoLean": -0.007341893530594135,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.8094996375882106,
+          "shoulderRegistrationErrorPoints": 3.839917903413773e-05,
+          "torsoLean": -0.012536772504741129,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.8204921196801993,
+          "shoulderRegistrationErrorPoints": 7.440158837584528e-06,
+          "torsoLean": -0.014568815367816764,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.8332836051957438,
+          "shoulderRegistrationErrorPoints": 7.440158837584528e-06,
+          "torsoLean": -0.014568815367816764,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.8447699276629187,
+          "shoulderRegistrationErrorPoints": 5.809282205038555e-06,
+          "torsoLean": -0.017405470786608583,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.8568342390429714,
+          "shoulderRegistrationErrorPoints": 8.207983876027023e-07,
+          "torsoLean": -0.017880690029901954,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.8690434330871896,
+          "shoulderRegistrationErrorPoints": 8.207983876027023e-07,
+          "torsoLean": -0.017880690029901954,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.9036594655101552,
+          "shoulderRegistrationErrorPoints": 9.75672426695908e-06,
+          "torsoLean": -0.013827280291071196,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.9151158515242455,
+          "shoulderRegistrationErrorPoints": 1.577046466920477e-05,
+          "torsoLean": -0.011808768469248037,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.9267315217901183,
+          "shoulderRegistrationErrorPoints": 3.749435693826043e-05,
+          "torsoLean": -0.009613967120595937,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.9385241395490163,
+          "shoulderRegistrationErrorPoints": 4.590388678909399e-05,
+          "torsoLean": -0.0073722215421033604,
+          "wristErrorPoints": 1.4210854715202004e-14
+        }
+      ],
+      "sidePoints": 250,
+      "targetPhases": [
+        0.36,
+        0.86
+      ]
+    },
+    {
+      "capturedPhases": [
+        0.3451596528369313,
+        0.803106770811913
+      ],
+      "durationSeconds": 1.2,
+      "performance": "starHug",
+      "samples": [
+        {
+          "phase": 0.07641048616884898,
+          "shoulderRegistrationErrorPoints": 5.901811373365181e-05,
+          "torsoLean": -0.0125526252209237,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.08513475690657894,
+          "shoulderRegistrationErrorPoints": 1.7276716002979873e-05,
+          "torsoLean": -0.014286236667833754,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.09382951383789381,
+          "shoulderRegistrationErrorPoints": 2.8160457282949403e-05,
+          "torsoLean": -0.015736400578215723,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.10254274297039956,
+          "shoulderRegistrationErrorPoints": 1.3560399917150069e-05,
+          "torsoLean": -0.016845897111757886,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.11153815973860523,
+          "shoulderRegistrationErrorPoints": 1.3560399917150069e-05,
+          "torsoLean": -0.016845897111757886,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.12021045142319053,
+          "shoulderRegistrationErrorPoints": 6.675371602228982e-07,
+          "torsoLean": -0.017931171067241746,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.1292682986240834,
+          "shoulderRegistrationErrorPoints": 6.675371602228982e-07,
+          "torsoLean": -0.017931171067241746,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.1379015277295063,
+          "shoulderRegistrationErrorPoints": 5.00716298050262e-07,
+          "torsoLean": -0.01852675057668744,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.14674104168079793,
+          "shoulderRegistrationErrorPoints": 7.81258239630875e-06,
+          "torsoLean": -0.01916167230120399,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.15440256936320415,
+          "shoulderRegistrationErrorPoints": 7.81258239630875e-06,
+          "torsoLean": -0.01916167230120399,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.16322784727284065,
+          "shoulderRegistrationErrorPoints": 1.2044453055623813e-05,
+          "torsoLean": -0.02075814063108216,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.17147635420163473,
+          "shoulderRegistrationErrorPoints": 1.2044453055623813e-05,
+          "torsoLean": -0.02075814063108216,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.18021548613129806,
+          "shoulderRegistrationErrorPoints": 2.227298224991913e-06,
+          "torsoLean": -0.022968262700320506,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.18790263896031928,
+          "shoulderRegistrationErrorPoints": 3.348127509399926e-05,
+          "torsoLean": -0.024163733131339953,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.19714847226471952,
+          "shoulderRegistrationErrorPoints": 3.348127509399926e-05,
+          "torsoLean": -0.024163733131339953,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.20573635410983115,
+          "shoulderRegistrationErrorPoints": 2.436106620473704e-05,
+          "torsoLean": -0.02712237313684317,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.2135496181047832,
+          "shoulderRegistrationErrorPoints": 4.206965150262298e-05,
+          "torsoLean": -0.02850672720389226,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.2224617360237365,
+          "shoulderRegistrationErrorPoints": 4.206965150262298e-05,
+          "torsoLean": -0.02850672720389226,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.23133788199629635,
+          "shoulderRegistrationErrorPoints": 4.178973380435926e-05,
+          "torsoLean": -0.03175180361270041,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.24077170140420398,
+          "shoulderRegistrationErrorPoints": 4.178973380435926e-05,
+          "torsoLean": -0.03175180361270041,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.24889312490510446,
+          "shoulderRegistrationErrorPoints": 1.2932102782013192e-05,
+          "torsoLean": -0.0349458587682758,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.2580118055144946,
+          "shoulderRegistrationErrorPoints": 4.000213251569541e-05,
+          "torsoLean": -0.03653262990873509,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.2675568748963997,
+          "shoulderRegistrationErrorPoints": 4.000213251569541e-05,
+          "torsoLean": -0.03653262990873509,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.27480017355022335,
+          "shoulderRegistrationErrorPoints": 2.304658732177933e-05,
+          "torsoLean": -0.03927636623827702,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.28300145834994817,
+          "shoulderRegistrationErrorPoints": 2.4692679786295925e-05,
+          "torsoLean": -0.04046616390214791,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.29172888879353803,
+          "shoulderRegistrationErrorPoints": 2.4692679786295925e-05,
+          "torsoLean": -0.04046616390214791,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.30097878460461897,
+          "shoulderRegistrationErrorPoints": 1.5234802696248595e-05,
+          "torsoLean": -0.0427123646555626,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.3091939236037433,
+          "shoulderRegistrationErrorPoints": 1.5234802696248595e-05,
+          "torsoLean": -0.0427123646555626,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.3179364583532637,
+          "shoulderRegistrationErrorPoints": 3.3795717525972156e-06,
+          "torsoLean": -0.044217900505599116,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.3270760069911679,
+          "shoulderRegistrationErrorPoints": 2.4560851076393764e-06,
+          "torsoLean": -0.04466233045442433,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.3361511110172918,
+          "shoulderRegistrationErrorPoints": 2.4560851076393764e-06,
+          "torsoLean": -0.04466233045442433,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.3451596528369313,
+          "shoulderRegistrationErrorPoints": 7.616769743146213e-09,
+          "torsoLean": -0.04496661112407779,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.37776899310604983,
+          "shoulderRegistrationErrorPoints": 1.1397423778519857e-06,
+          "torsoLean": -0.04432399440694375,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.3865256597055122,
+          "shoulderRegistrationErrorPoints": 1.0030573524840938e-06,
+          "torsoLean": -0.04400899014310207,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.3939980555636188,
+          "shoulderRegistrationErrorPoints": 2.539291270915898e-06,
+          "torsoLean": -0.04369642092041213,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.40264184024029726,
+          "shoulderRegistrationErrorPoints": 2.539291270915898e-06,
+          "torsoLean": -0.04369642092041213,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.4112047222830976,
+          "shoulderRegistrationErrorPoints": 3.4732420334912177e-06,
+          "torsoLean": -0.04287148302727168,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.4198593401815742,
+          "shoulderRegistrationErrorPoints": 3.4732420334912177e-06,
+          "torsoLean": -0.04287148302727168,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.4284878818240638,
+          "shoulderRegistrationErrorPoints": 2.2187215343916985e-06,
+          "torsoLean": -0.04191929574878269,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.43585093750152737,
+          "shoulderRegistrationErrorPoints": 4.710402958754334e-06,
+          "torsoLean": -0.041483587906682794,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.4448408680036664,
+          "shoulderRegistrationErrorPoints": 4.710402958754334e-06,
+          "torsoLean": -0.041483587906682794,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.4537066665943712,
+          "shoulderRegistrationErrorPoints": 4.691387232076339e-06,
+          "torsoLean": -0.04038904553746425,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.462795173516497,
+          "shoulderRegistrationErrorPoints": 4.691387232076339e-06,
+          "torsoLean": -0.04038904553746425,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.47154069451304775,
+          "shoulderRegistrationErrorPoints": 9.62698925310376e-07,
+          "torsoLean": -0.039279718785930735,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.4799364582868293,
+          "shoulderRegistrationErrorPoints": 5.023012439771144e-06,
+          "torsoLean": -0.03876874338187638,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.4872023611096665,
+          "shoulderRegistrationErrorPoints": 5.023012439771144e-06,
+          "torsoLean": -0.03876874338187638,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.49517524312250316,
+          "shoulderRegistrationErrorPoints": 4.144781506054829e-06,
+          "torsoLean": -0.03787041315386239,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.5040176736656576,
+          "shoulderRegistrationErrorPoints": 4.144781506054829e-06,
+          "torsoLean": -0.03787041315386239,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.5126883334014565,
+          "shoulderRegistrationErrorPoints": 1.192336616864254e-06,
+          "torsoLean": -0.03692060235265791,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.5215791319884981,
+          "shoulderRegistrationErrorPoints": 2.9192241103763926e-06,
+          "torsoLean": -0.03650071318313925,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.5305251735262573,
+          "shoulderRegistrationErrorPoints": 2.9192241103763926e-06,
+          "torsoLean": -0.03650071318313925,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.5395951735166212,
+          "shoulderRegistrationErrorPoints": 1.0086376377204005e-06,
+          "torsoLean": -0.03576208243532736,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.5474560416769236,
+          "shoulderRegistrationErrorPoints": 1.0750052799498181e-06,
+          "torsoLean": -0.035519324963591746,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.5556031250550102,
+          "shoulderRegistrationErrorPoints": 1.0750052799498181e-06,
+          "torsoLean": -0.035519324963591746,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.5644212847497936,
+          "shoulderRegistrationErrorPoints": 3.57663118812156e-07,
+          "torsoLean": -0.035139855823619406,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.5721998957839485,
+          "shoulderRegistrationErrorPoints": 3.57663118812156e-07,
+          "torsoLean": -0.035139855823619406,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.5797156943784406,
+          "shoulderRegistrationErrorPoints": 4.952661932767552e-08,
+          "torsoLean": -0.03498576293853891,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.5886014236602932,
+          "shoulderRegistrationErrorPoints": 6.117661220085187e-06,
+          "torsoLean": -0.03459833059480902,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.5976532985611509,
+          "shoulderRegistrationErrorPoints": 6.117661220085187e-06,
+          "torsoLean": -0.03459833059480902,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.6052298958335693,
+          "shoulderRegistrationErrorPoints": 3.077183003708462e-05,
+          "torsoLean": -0.03278992426698172,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.6143238193665942,
+          "shoulderRegistrationErrorPoints": 3.077183003708462e-05,
+          "torsoLean": -0.03278992426698172,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.6230790624006962,
+          "shoulderRegistrationErrorPoints": 3.193161175677686e-05,
+          "torsoLean": -0.02924223027558591,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.6323559027320396,
+          "shoulderRegistrationErrorPoints": 0.00010724180397754442,
+          "torsoLean": -0.026755638573253977,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.6417622915857162,
+          "shoulderRegistrationErrorPoints": 0.00010724180397754442,
+          "torsoLean": -0.026755638573253977,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.6505913541574653,
+          "shoulderRegistrationErrorPoints": 7.648801205010914e-05,
+          "torsoLean": -0.02111671543405104,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.6581028124007087,
+          "shoulderRegistrationErrorPoints": 0.000167398961035837,
+          "torsoLean": -0.018498524004626902,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.6662656250409782,
+          "shoulderRegistrationErrorPoints": 0.000167398961035837,
+          "torsoLean": -0.018498524004626902,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.6746407986308138,
+          "shoulderRegistrationErrorPoints": 0.00019343083792709698,
+          "torsoLean": -0.012397980639067335,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.6834943749709055,
+          "shoulderRegistrationErrorPoints": 0.00019343083792709698,
+          "torsoLean": -0.012397980639067335,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.6925554166082293,
+          "shoulderRegistrationErrorPoints": 9.605573423838002e-05,
+          "torsoLean": -0.005495978183813738,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.7013525693522146,
+          "shoulderRegistrationErrorPoints": 0.00020264488107285937,
+          "torsoLean": -0.002114052317267489,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.7101450346332665,
+          "shoulderRegistrationErrorPoints": 0.00020264488107285937,
+          "torsoLean": -0.002114052317267489,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.7188429512704413,
+          "shoulderRegistrationErrorPoints": 0.00013612852863606928,
+          "torsoLean": 0.004431180172291593,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.7274904860726868,
+          "shoulderRegistrationErrorPoints": 0.00014879410753912067,
+          "torsoLean": 0.0074545982197567065,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.7361760762675356,
+          "shoulderRegistrationErrorPoints": 0.00014879410753912067,
+          "torsoLean": 0.0074545982197567065,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.7434042708094543,
+          "shoulderRegistrationErrorPoints": 0.0001215005985896543,
+          "torsoLean": 0.012546200771594478,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.751723715220578,
+          "shoulderRegistrationErrorPoints": 0.0001215005985896543,
+          "torsoLean": 0.012546200771594478,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.7607966319968303,
+          "shoulderRegistrationErrorPoints": 5.641484459682781e-05,
+          "torsoLean": 0.017147964908711733,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.7691359374439344,
+          "shoulderRegistrationErrorPoints": 4.1122897611434796e-05,
+          "torsoLean": 0.01883546428685992,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.7781240625384575,
+          "shoulderRegistrationErrorPoints": 4.1122897611434796e-05,
+          "torsoLean": 0.01883546428685992,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.785384374903515,
+          "shoulderRegistrationErrorPoints": 1.3597246673383773e-05,
+          "torsoLean": 0.021135055255043996,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.7943193055689335,
+          "shoulderRegistrationErrorPoints": 1.3597246673383773e-05,
+          "torsoLean": 0.021135055255043996,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.803106770811913,
+          "shoulderRegistrationErrorPoints": 1.4688329740147337e-07,
+          "torsoLean": 0.02191702212723983,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.8342062846835082,
+          "shoulderRegistrationErrorPoints": 3.6805389363511226e-06,
+          "torsoLean": 0.02027658628868854,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.8430187499228244,
+          "shoulderRegistrationErrorPoints": 1.297368917174444e-05,
+          "torsoLean": 0.0193426388035278,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.851926388956296,
+          "shoulderRegistrationErrorPoints": 1.297368917174444e-05,
+          "torsoLean": 0.0193426388035278,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.8605675694222252,
+          "shoulderRegistrationErrorPoints": 3.1686382511944394e-06,
+          "torsoLean": 0.0171569783767859,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.8694697221896301,
+          "shoulderRegistrationErrorPoints": 2.879440503391992e-05,
+          "torsoLean": 0.01585476784085387,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.8777944097528234,
+          "shoulderRegistrationErrorPoints": 2.879440503391992e-05,
+          "torsoLean": 0.01585476784085387,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.886578784751085,
+          "shoulderRegistrationErrorPoints": 1.9192903744684478e-05,
+          "torsoLean": 0.013189927554150879,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.8941170485923067,
+          "shoulderRegistrationErrorPoints": 3.492882711942706e-05,
+          "torsoLean": 0.011964439396627972,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.9022641667009642,
+          "shoulderRegistrationErrorPoints": 3.492882711942706e-05,
+          "torsoLean": 0.011964439396627972,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.9093622568373879,
+          "shoulderRegistrationErrorPoints": 3.6510102182660466e-05,
+          "torsoLean": 0.009464970172904449,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.91830100689549,
+          "shoulderRegistrationErrorPoints": 3.6510102182660466e-05,
+          "torsoLean": 0.009464970172904449,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.9270772568803902,
+          "shoulderRegistrationErrorPoints": 2.4894189376754688e-05,
+          "torsoLean": 0.006653792195632768,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.9344952083968868,
+          "shoulderRegistrationErrorPoints": 2.4894189376754688e-05,
+          "torsoLean": 0.006653792195632768,
+          "wristErrorPoints": 1.4210854715202004e-14
+        }
+      ],
+      "sidePoints": 250,
+      "targetPhases": [
+        0.34,
+        0.8
+      ]
+    },
+    {
+      "capturedPhases": [
+        0.3219884523146209,
+        0.5082575395880711
+      ],
+      "durationSeconds": 1.05,
+      "performance": "joyfulRaise",
+      "samples": [
+        {
+          "phase": 0.07611781735682771,
+          "shoulderRegistrationErrorPoints": 0.00021531174241279843,
+          "torsoLean": -0.02429719930888106,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.08473206333638657,
+          "shoulderRegistrationErrorPoints": 5.087664375370759e-05,
+          "torsoLean": -0.027650439552759802,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.09471876968053125,
+          "shoulderRegistrationErrorPoints": 8.234213570149765e-05,
+          "torsoLean": -0.030885708648316888,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.10375178552099636,
+          "shoulderRegistrationErrorPoints": 5.213967772266915e-05,
+          "torsoLean": -0.032993556810796944,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.1137575793213078,
+          "shoulderRegistrationErrorPoints": 5.213967772266915e-05,
+          "torsoLean": -0.032993556810796944,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.12365551576727912,
+          "shoulderRegistrationErrorPoints": 4.3421925146865784e-07,
+          "torsoLean": -0.03483942249548544,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.13381265857744784,
+          "shoulderRegistrationErrorPoints": 4.3421925146865784e-07,
+          "torsoLean": -0.03483942249548544,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.1436422618904284,
+          "shoulderRegistrationErrorPoints": 5.715093542432403e-05,
+          "torsoLean": -0.032330132864389134,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.15362321421326625,
+          "shoulderRegistrationErrorPoints": 2.919189626085553e-05,
+          "torsoLean": -0.030072070269990363,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.16354817453594434,
+          "shoulderRegistrationErrorPoints": 2.919189626085553e-05,
+          "torsoLean": -0.030072070269990363,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.17332765872457198,
+          "shoulderRegistrationErrorPoints": 0.00019328721514200365,
+          "torsoLean": -0.023489279821371837,
+          "wristErrorPoints": 7.105427357601002e-15
+        },
+        {
+          "phase": 0.18326099185893932,
+          "shoulderRegistrationErrorPoints": 0.00015819510366418018,
+          "torsoLean": -0.019550751038667866,
+          "wristErrorPoints": 7.105427357601002e-15
+        },
+        {
+          "phase": 0.19343857143429063,
+          "shoulderRegistrationErrorPoints": 0.00015819510366418018,
+          "torsoLean": -0.019550751038667866,
+          "wristErrorPoints": 7.105427357601002e-15
+        },
+        {
+          "phase": 0.2025726983057601,
+          "shoulderRegistrationErrorPoints": 0.0002841597958683056,
+          "torsoLean": -0.010853135436039829,
+          "wristErrorPoints": 7.105427357601002e-15
+        },
+        {
+          "phase": 0.213014563501236,
+          "shoulderRegistrationErrorPoints": 0.0002841597958683056,
+          "torsoLean": -0.010853135436039829,
+          "wristErrorPoints": 7.105427357601002e-15
+        },
+        {
+          "phase": 0.22301968253616775,
+          "shoulderRegistrationErrorPoints": 7.070643640673559e-05,
+          "torsoLean": -0.0010089736768510741,
+          "wristErrorPoints": 7.105427357601002e-15
+        },
+        {
+          "phase": 0.23367134920720542,
+          "shoulderRegistrationErrorPoints": 0.00017721738516653654,
+          "torsoLean": 0.004124953823154041,
+          "wristErrorPoints": 7.105427357601002e-15
+        },
+        {
+          "phase": 0.24423396813550163,
+          "shoulderRegistrationErrorPoints": 0.00017721738516653654,
+          "torsoLean": 0.004124953823154041,
+          "wristErrorPoints": 7.105427357601002e-15
+        },
+        {
+          "phase": 0.25393940464016934,
+          "shoulderRegistrationErrorPoints": 0.00019193742548990388,
+          "torsoLean": 0.01336150893977373,
+          "wristErrorPoints": 7.105427357601002e-15
+        },
+        {
+          "phase": 0.2640202379829827,
+          "shoulderRegistrationErrorPoints": 7.379547332448884e-06,
+          "torsoLean": 0.017576122309076042,
+          "wristErrorPoints": 1.5888218580782548e-14
+        },
+        {
+          "phase": 0.2743456745520234,
+          "shoulderRegistrationErrorPoints": 7.379547332448884e-06,
+          "torsoLean": 0.017576122309076042,
+          "wristErrorPoints": 1.5888218580782548e-14
+        },
+        {
+          "phase": 0.28512702367845033,
+          "shoulderRegistrationErrorPoints": 0.00010554323418998028,
+          "torsoLean": 0.024621183154652445,
+          "wristErrorPoints": 1.5888218580782548e-14
+        },
+        {
+          "phase": 0.29430952366618884,
+          "shoulderRegistrationErrorPoints": 2.824509397247114e-05,
+          "torsoLean": 0.02694836701113005,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.30331650793197606,
+          "shoulderRegistrationErrorPoints": 2.824509397247114e-05,
+          "torsoLean": 0.02694836701113005,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.31339730158270823,
+          "shoulderRegistrationErrorPoints": 6.317507490443597e-06,
+          "torsoLean": 0.029579920031126975,
+          "wristErrorPoints": 1.5888218580782548e-14
+        },
+        {
+          "phase": 0.3219884523146209,
+          "shoulderRegistrationErrorPoints": 6.317507490443597e-06,
+          "torsoLean": 0.029579920031126975,
+          "wristErrorPoints": 1.5888218580782548e-14
+        },
+        {
+          "phase": 0.35595249983349014,
+          "shoulderRegistrationErrorPoints": 9.785070629239356e-05,
+          "torsoLean": 0.02414967056594405,
+          "wristErrorPoints": 1.5888218580782548e-14
+        },
+        {
+          "phase": 0.36531992057072266,
+          "shoulderRegistrationErrorPoints": 0.0001437837610784103,
+          "torsoLean": 0.021195458044042322,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.37356924598238295,
+          "shoulderRegistrationErrorPoints": 6.274991205286402e-05,
+          "torsoLean": 0.018243958940784087,
+          "wristErrorPoints": 7.105427357601002e-15
+        },
+        {
+          "phase": 0.3834424205567865,
+          "shoulderRegistrationErrorPoints": 6.274991205286402e-05,
+          "torsoLean": 0.018243958940784087,
+          "wristErrorPoints": 7.105427357601002e-15
+        },
+        {
+          "phase": 0.39326281730263,
+          "shoulderRegistrationErrorPoints": 0.00022825020609948312,
+          "torsoLean": 0.01004403176129239,
+          "wristErrorPoints": 1.5888218580782548e-14
+        },
+        {
+          "phase": 0.40325547612848733,
+          "shoulderRegistrationErrorPoints": 0.00022825020609948312,
+          "torsoLean": 0.01004403176129239,
+          "wristErrorPoints": 1.5888218580782548e-14
+        },
+        {
+          "phase": 0.413029801455282,
+          "shoulderRegistrationErrorPoints": 0.00021465215574338945,
+          "torsoLean": 0.0011114819946786475,
+          "wristErrorPoints": 1.5888218580782548e-14
+        },
+        {
+          "phase": 0.42118694433676346,
+          "shoulderRegistrationErrorPoints": 0.00023301725218106628,
+          "torsoLean": -0.0025713452510284936,
+          "wristErrorPoints": 1.5888218580782548e-14
+        },
+        {
+          "phase": 0.4310963094411861,
+          "shoulderRegistrationErrorPoints": 0.00023301725218106628,
+          "torsoLean": -0.0025713452510284936,
+          "wristErrorPoints": 1.5888218580782548e-14
+        },
+        {
+          "phase": 0.4408947220959124,
+          "shoulderRegistrationErrorPoints": 0.00017359998742458546,
+          "torsoLean": -0.011046399556328395,
+          "wristErrorPoints": 1.5888218580782548e-14
+        },
+        {
+          "phase": 0.4508347618615343,
+          "shoulderRegistrationErrorPoints": 0.00017359998742458546,
+          "torsoLean": -0.011046399556328395,
+          "wristErrorPoints": 1.5888218580782548e-14
+        },
+        {
+          "phase": 0.4606132936619577,
+          "shoulderRegistrationErrorPoints": 5.906663451200838e-05,
+          "torsoLean": -0.01817265110824413,
+          "wristErrorPoints": 1.5888218580782548e-14
+        },
+        {
+          "phase": 0.4688149998851475,
+          "shoulderRegistrationErrorPoints": 7.957384578802774e-05,
+          "torsoLean": -0.02050609859539383,
+          "wristErrorPoints": 7.105427357601002e-15
+        },
+        {
+          "phase": 0.4787680555489801,
+          "shoulderRegistrationErrorPoints": 7.957384578802774e-05,
+          "torsoLean": -0.02050609859539383,
+          "wristErrorPoints": 7.105427357601002e-15
+        },
+        {
+          "phase": 0.4881775396920386,
+          "shoulderRegistrationErrorPoints": 3.0371670933425163e-06,
+          "torsoLean": -0.024207299379254595,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.4981911903069842,
+          "shoulderRegistrationErrorPoints": 3.0371670933425163e-06,
+          "torsoLean": -0.024207299379254595,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.5082575395880711,
+          "shoulderRegistrationErrorPoints": 5.24132027580675e-06,
+          "torsoLean": -0.02446764605855035,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.5377347618784932,
+          "shoulderRegistrationErrorPoints": 7.74272784459435e-05,
+          "torsoLean": -0.018961180193755988,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.5479115873043026,
+          "shoulderRegistrationErrorPoints": 0.00014999507132521273,
+          "torsoLean": -0.015803290090351817,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.5577169442992834,
+          "shoulderRegistrationErrorPoints": 0.0001035601391153514,
+          "torsoLean": -0.012388414273038969,
+          "wristErrorPoints": 7.105427357601002e-15
+        },
+        {
+          "phase": 0.5665404365087549,
+          "shoulderRegistrationErrorPoints": 0.00012976310773178703,
+          "torsoLean": -0.008993169509095804,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.5765317063335151,
+          "shoulderRegistrationErrorPoints": 0.00012976310773178703,
+          "torsoLean": -0.008993169509095804,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.5863280157514271,
+          "shoulderRegistrationErrorPoints": 0.00015291290469544565,
+          "torsoLean": -0.0009536352491109002,
+          "wristErrorPoints": 7.105427357601002e-15
+        },
+        {
+          "phase": 0.5983700000104449,
+          "shoulderRegistrationErrorPoints": 6.231717787704058e-05,
+          "torsoLean": 0.0039861379540092655,
+          "wristErrorPoints": 1.5888218580782548e-14
+        },
+        {
+          "phase": 0.6083456349248687,
+          "shoulderRegistrationErrorPoints": 6.231717787704058e-05,
+          "torsoLean": 0.0039861379540092655,
+          "wristErrorPoints": 1.5888218580782548e-14
+        },
+        {
+          "phase": 0.618151110996093,
+          "shoulderRegistrationErrorPoints": 0.00016363967993511798,
+          "torsoLean": 0.01146085386968966,
+          "wristErrorPoints": 1.5888218580782548e-14
+        },
+        {
+          "phase": 0.6275239682179831,
+          "shoulderRegistrationErrorPoints": 6.535376819513745e-05,
+          "torsoLean": 0.014591105720360487,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.6374680554671657,
+          "shoulderRegistrationErrorPoints": 6.535376819513745e-05,
+          "torsoLean": 0.014591105720360487,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.64725214282849,
+          "shoulderRegistrationErrorPoints": 5.158810689738059e-05,
+          "torsoLean": 0.019538823864134983,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.657267261828695,
+          "shoulderRegistrationErrorPoints": 5.158810689738059e-05,
+          "torsoLean": 0.019538823864134983,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.6670680950351414,
+          "shoulderRegistrationErrorPoints": 8.569365486168764e-08,
+          "torsoLean": 0.02193657382396988,
+          "wristErrorPoints": 1.5888218580782548e-14
+        },
+        {
+          "phase": 0.676112301381571,
+          "shoulderRegistrationErrorPoints": 6.258095209939813e-07,
+          "torsoLean": 0.021726180905947877,
+          "wristErrorPoints": 7.105427357601002e-15
+        },
+        {
+          "phase": 0.686363372951746,
+          "shoulderRegistrationErrorPoints": 6.258095209939813e-07,
+          "torsoLean": 0.021726180905947877,
+          "wristErrorPoints": 7.105427357601002e-15
+        },
+        {
+          "phase": 0.6962484125757501,
+          "shoulderRegistrationErrorPoints": 1.9546206988129533e-05,
+          "torsoLean": 0.019766626631281578,
+          "wristErrorPoints": 1.5888218580782548e-14
+        },
+        {
+          "phase": 0.7049576188659383,
+          "shoulderRegistrationErrorPoints": 1.9546206988129533e-05,
+          "torsoLean": 0.019766626631281578,
+          "wristErrorPoints": 1.5888218580782548e-14
+        },
+        {
+          "phase": 0.7148500793569145,
+          "shoulderRegistrationErrorPoints": 7.237683552649548e-05,
+          "torsoLean": 0.016060159164832263,
+          "wristErrorPoints": 7.105427357601002e-15
+        },
+        {
+          "phase": 0.7253621824617896,
+          "shoulderRegistrationErrorPoints": 6.905284022882737e-05,
+          "torsoLean": 0.013484551174192148,
+          "wristErrorPoints": 1.5888218580782548e-14
+        },
+        {
+          "phase": 0.7358800395879717,
+          "shoulderRegistrationErrorPoints": 6.905284022882737e-05,
+          "torsoLean": 0.013484551174192148,
+          "wristErrorPoints": 1.5888218580782548e-14
+        },
+        {
+          "phase": 0.7459251190136585,
+          "shoulderRegistrationErrorPoints": 9.418809942579251e-05,
+          "torsoLean": 0.007680659589395205,
+          "wristErrorPoints": 7.105427357601002e-15
+        },
+        {
+          "phase": 0.7546499205221022,
+          "shoulderRegistrationErrorPoints": 0.00010600941782179944,
+          "torsoLean": 0.005103922086641416,
+          "wristErrorPoints": 7.105427357601002e-15
+        },
+        {
+          "phase": 0.7647940871261415,
+          "shoulderRegistrationErrorPoints": 0.00010600941782179944,
+          "torsoLean": 0.005103922086641416,
+          "wristErrorPoints": 7.105427357601002e-15
+        },
+        {
+          "phase": 0.774683769836667,
+          "shoulderRegistrationErrorPoints": 7.650182781390266e-05,
+          "torsoLean": -0.0007803187551371057,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.7848304760686698,
+          "shoulderRegistrationErrorPoints": 7.650182781390266e-05,
+          "torsoLean": -0.0007803187551371057,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.7948017856549648,
+          "shoulderRegistrationErrorPoints": 4.540084060203606e-05,
+          "torsoLean": -0.006015469029170856,
+          "wristErrorPoints": 1.5888218580782548e-14
+        },
+        {
+          "phase": 0.8048666268587112,
+          "shoulderRegistrationErrorPoints": 1.1839669874134937e-05,
+          "torsoLean": -0.008230652351605198,
+          "wristErrorPoints": 7.105427357601002e-15
+        },
+        {
+          "phase": 0.8139382934729967,
+          "shoulderRegistrationErrorPoints": 1.1839669874134937e-05,
+          "torsoLean": -0.008230652351605198,
+          "wristErrorPoints": 7.105427357601002e-15
+        },
+        {
+          "phase": 0.8248853967303321,
+          "shoulderRegistrationErrorPoints": 9.758580337910627e-06,
+          "torsoLean": -0.011108858164162235,
+          "wristErrorPoints": 7.105427357601002e-15
+        },
+        {
+          "phase": 0.8340107141772196,
+          "shoulderRegistrationErrorPoints": 8.647487978683163e-09,
+          "torsoLean": -0.011851286513288511,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.8442246825212524,
+          "shoulderRegistrationErrorPoints": 8.647487978683163e-09,
+          "torsoLean": -0.011851286513288511,
+          "wristErrorPoints": 1.4210854715202004e-14
+        },
+        {
+          "phase": 0.8533914285224108,
+          "shoulderRegistrationErrorPoints": 1.7049375199840257e-06,
+          "torsoLean": -0.011705139577465712,
+          "wristErrorPoints": 7.105427357601002e-15
+        },
+        {
+          "phase": 0.8642072618628541,
+          "shoulderRegistrationErrorPoints": 1.7049375199840257e-06,
+          "torsoLean": -0.011705139577465712,
+          "wristErrorPoints": 7.105427357601002e-15
+        },
+        {
+          "phase": 0.8739561507744448,
+          "shoulderRegistrationErrorPoints": 1.4558663691005464e-06,
+          "torsoLean": -0.010591755588677875,
+          "wristErrorPoints": 7.105427357601002e-15
+        },
+        {
+          "phase": 0.8830949602027733,
+          "shoulderRegistrationErrorPoints": 9.715968590797213e-06,
+          "torsoLean": -0.009825141176167222,
+          "wristErrorPoints": 1.5888218580782548e-14
+        },
+        {
+          "phase": 0.8933496823356974,
+          "shoulderRegistrationErrorPoints": 9.715968590797213e-06,
+          "torsoLean": -0.009825141176167222,
+          "wristErrorPoints": 1.5888218580782548e-14
+        },
+        {
+          "phase": 0.9037437301040405,
+          "shoulderRegistrationErrorPoints": 4.423757375096549e-06,
+          "torsoLean": -0.0077944101474866955,
+          "wristErrorPoints": 1.5888218580782548e-14
+        },
+        {
+          "phase": 0.9133417061751796,
+          "shoulderRegistrationErrorPoints": 1.1755238693053573e-05,
+          "torsoLean": -0.006740575865942709,
+          "wristErrorPoints": 1.5888218580782548e-14
+        },
+        {
+          "phase": 0.9235688491857478,
+          "shoulderRegistrationErrorPoints": 1.1755238693053573e-05,
+          "torsoLean": -0.006740575865942709,
+          "wristErrorPoints": 1.5888218580782548e-14
+        },
+        {
+          "phase": 0.9326753967131177,
+          "shoulderRegistrationErrorPoints": 7.967916108089863e-06,
+          "torsoLean": -0.004588442942731262,
+          "wristErrorPoints": 1.4210854715202004e-14
+        }
+      ],
+      "sidePoints": 250,
+      "targetPhases": [
+        0.32,
+        0.5
+      ]
+    },
+    {
+      "capturedPhases": [
+        0.3673619562861226,
+        0.861667663000686
+      ],
+      "durationSeconds": 0.92,
+      "performance": "gentleRetry",
+      "samples": [
+        {
+          "phase": 0.07691734581780822,
+          "shoulderRegistrationErrorPoints": 2.5922569483894043e-05,
+          "torsoLean": -0.01054876107836115,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.08824171179541103,
+          "shoulderRegistrationErrorPoints": 1.543534409425549e-05,
+          "torsoLean": -0.01233691688074613,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.09943152165404803,
+          "shoulderRegistrationErrorPoints": 3.3911609013955337e-06,
+          "torsoLean": -0.013772074264469856,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.11067273545726809,
+          "shoulderRegistrationErrorPoints": 3.3911609013955337e-06,
+          "torsoLean": -0.013772074264469856,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.12183876799257552,
+          "shoulderRegistrationErrorPoints": 6.680162663409612e-08,
+          "torsoLean": -0.014877219270480245,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.13294275343904027,
+          "shoulderRegistrationErrorPoints": 5.7963329296921295e-06,
+          "torsoLean": -0.014255972587183186,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.1442550271547035,
+          "shoulderRegistrationErrorPoints": 5.7963329296921295e-06,
+          "torsoLean": -0.014255972587183186,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.15544596902580687,
+          "shoulderRegistrationErrorPoints": 3.1745933679817694e-05,
+          "torsoLean": -0.01079201714611491,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.16686834227901112,
+          "shoulderRegistrationErrorPoints": 3.1745933679817694e-05,
+          "torsoLean": -0.01079201714611491,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.1780913947858726,
+          "shoulderRegistrationErrorPoints": 4.676278160550046e-05,
+          "torsoLean": -0.0046234959957674,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.18732798913412768,
+          "shoulderRegistrationErrorPoints": 0.00010910532034824719,
+          "torsoLean": -0.0014843566249273655,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.19869076077947798,
+          "shoulderRegistrationErrorPoints": 0.00010910532034824719,
+          "torsoLean": -0.0014843566249273655,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.2081682968823968,
+          "shoulderRegistrationErrorPoints": 5.730558059179408e-06,
+          "torsoLean": 0.006408717975551916,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.21903482771924007,
+          "shoulderRegistrationErrorPoints": 5.730558059179408e-06,
+          "torsoLean": 0.006408717975551916,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.2293158965387746,
+          "shoulderRegistrationErrorPoints": 0.00016423785626259343,
+          "torsoLean": 0.015363958166868613,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.24101471897903018,
+          "shoulderRegistrationErrorPoints": 0.00016423785626259343,
+          "torsoLean": 0.015363958166868613,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.2525124547031263,
+          "shoulderRegistrationErrorPoints": 9.621170500380608e-05,
+          "torsoLean": 0.0254571635784115,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.26419370450362883,
+          "shoulderRegistrationErrorPoints": 1.3804167506510626e-05,
+          "torsoLean": 0.030450925705207302,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.2760043929573958,
+          "shoulderRegistrationErrorPoints": 1.3804167506510626e-05,
+          "torsoLean": 0.030450925705207302,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.28744125890586036,
+          "shoulderRegistrationErrorPoints": 0.00010415172999547043,
+          "torsoLean": 0.0396360755777666,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.29816798000272526,
+          "shoulderRegistrationErrorPoints": 9.642661955951281e-05,
+          "torsoLean": 0.04337610325274645,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.31053469182275556,
+          "shoulderRegistrationErrorPoints": 9.642661955951281e-05,
+          "torsoLean": 0.04337610325274645,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.32030013567039173,
+          "shoulderRegistrationErrorPoints": 9.381318865797499e-06,
+          "torsoLean": 0.04986841813328973,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.3320789852928694,
+          "shoulderRegistrationErrorPoints": 9.381318865797499e-06,
+          "torsoLean": 0.04986841813328973,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.3434346014451559,
+          "shoulderRegistrationErrorPoints": 1.1898992546779783e-05,
+          "torsoLean": 0.053934481743468016,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.35531385852347896,
+          "shoulderRegistrationErrorPoints": 1.4475356349055009e-06,
+          "torsoLean": 0.054761367805999654,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.3673619562861226,
+          "shoulderRegistrationErrorPoints": 1.4475356349055009e-06,
+          "torsoLean": 0.054761367805999654,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.40053654887268075,
+          "shoulderRegistrationErrorPoints": 6.459385120566295e-07,
+          "torsoLean": 0.054095025300200966,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.4120554800307297,
+          "shoulderRegistrationErrorPoints": 1.7551152767599286e-06,
+          "torsoLean": 0.0535699174839577,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.42364583325410343,
+          "shoulderRegistrationErrorPoints": 2.739221371391567e-06,
+          "torsoLean": 0.052957358603217854,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.4343013585362907,
+          "shoulderRegistrationErrorPoints": 2.6683959460257706e-06,
+          "torsoLean": 0.05234033387272589,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.4458119563819111,
+          "shoulderRegistrationErrorPoints": 1.3977150065432742e-06,
+          "torsoLean": 0.0516176965950921,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.457139809757633,
+          "shoulderRegistrationErrorPoints": 1.3977150065432742e-06,
+          "torsoLean": 0.0516176965950921,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.4685817934248758,
+          "shoulderRegistrationErrorPoints": 3.0973233572434816e-06,
+          "torsoLean": 0.050092438731065024,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.4804467390109177,
+          "shoulderRegistrationErrorPoints": 3.858861331173745e-06,
+          "torsoLean": 0.04929091830540974,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.4920142662266026,
+          "shoulderRegistrationErrorPoints": 3.858861331173745e-06,
+          "torsoLean": 0.04929091830540974,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.5034356884172428,
+          "shoulderRegistrationErrorPoints": 2.3919871993694364e-06,
+          "torsoLean": 0.04779571844577284,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.5137056610850698,
+          "shoulderRegistrationErrorPoints": 1.4742358462162711e-07,
+          "torsoLean": 0.04717616991524663,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.5242955615318825,
+          "shoulderRegistrationErrorPoints": 1.4742358462162711e-07,
+          "torsoLean": 0.04717616991524663,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.5357162136098612,
+          "shoulderRegistrationErrorPoints": 1.6927141600343337e-06,
+          "torsoLean": 0.046067907581384016,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.5476026719881464,
+          "shoulderRegistrationErrorPoints": 1.6927141600343337e-06,
+          "torsoLean": 0.046067907581384016,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.558912545270489,
+          "shoulderRegistrationErrorPoints": 2.546501017118485e-07,
+          "torsoLean": 0.045275718386458816,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.5740612317585264,
+          "shoulderRegistrationErrorPoints": 3.51698825832519e-08,
+          "torsoLean": 0.04503573200201643,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.5856349636577879,
+          "shoulderRegistrationErrorPoints": 3.51698825832519e-08,
+          "torsoLean": 0.04503573200201643,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.5971619110230518,
+          "shoulderRegistrationErrorPoints": 8.94948603829159e-09,
+          "torsoLean": 0.04431503965261811,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.6076372281708957,
+          "shoulderRegistrationErrorPoints": 7.3451770556117965e-06,
+          "torsoLean": 0.043204348479512794,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.6177336954430718,
+          "shoulderRegistrationErrorPoints": 7.3451770556117965e-06,
+          "torsoLean": 0.043204348479512794,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.6278511774523751,
+          "shoulderRegistrationErrorPoints": 2.3915654897513715e-05,
+          "torsoLean": 0.04005295155483868,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.6400232334904696,
+          "shoulderRegistrationErrorPoints": 2.3915654897513715e-05,
+          "torsoLean": 0.04005295155483868,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.6513944293028149,
+          "shoulderRegistrationErrorPoints": 1.793640411069772e-05,
+          "torsoLean": 0.03476889400450867,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.6616224183032856,
+          "shoulderRegistrationErrorPoints": 6.0872482120122914e-05,
+          "torsoLean": 0.03200560221095863,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.6731843747927443,
+          "shoulderRegistrationErrorPoints": 6.0872482120122914e-05,
+          "torsoLean": 0.03200560221095863,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.6843415306597623,
+          "shoulderRegistrationErrorPoints": 7.103117385020019e-05,
+          "torsoLean": 0.02524094447508041,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.6948650814592838,
+          "shoulderRegistrationErrorPoints": 1.1776174473160124e-05,
+          "torsoLean": 0.021883472061289405,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.707043568684679,
+          "shoulderRegistrationErrorPoints": 1.1776174473160124e-05,
+          "torsoLean": 0.021883472061289405,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.7185395379328047,
+          "shoulderRegistrationErrorPoints": 7.678150057649476e-05,
+          "torsoLean": 0.013976317296612915,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.729640353086364,
+          "shoulderRegistrationErrorPoints": 7.678150057649476e-05,
+          "torsoLean": 0.013976317296612915,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.7411475088346101,
+          "shoulderRegistrationErrorPoints": 8.728647625899225e-05,
+          "torsoLean": 0.006423231663342828,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.7529197463198848,
+          "shoulderRegistrationErrorPoints": 5.754467273373706e-05,
+          "torsoLean": 0.0026058770108059555,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.7649097824469209,
+          "shoulderRegistrationErrorPoints": 5.754467273373706e-05,
+          "torsoLean": 0.0026058770108059555,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.7751177535797267,
+          "shoulderRegistrationErrorPoints": 4.5934330435131634e-05,
+          "torsoLean": -0.004124982350737437,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.7853567481304154,
+          "shoulderRegistrationErrorPoints": 6.093764885912039e-05,
+          "torsoLean": -0.0069051764322522625,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.7968961048628325,
+          "shoulderRegistrationErrorPoints": 6.093764885912039e-05,
+          "torsoLean": -0.0069051764322522625,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.8078525361665727,
+          "shoulderRegistrationErrorPoints": 1.7685267798252924e-05,
+          "torsoLean": -0.012225148451418012,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.8182232789492802,
+          "shoulderRegistrationErrorPoints": 1.7685267798252924e-05,
+          "torsoLean": -0.012225148451418012,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.8283569745759924,
+          "shoulderRegistrationErrorPoints": 1.625238445341876e-05,
+          "torsoLean": -0.015690505706580676,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.8396448820586437,
+          "shoulderRegistrationErrorPoints": 6.737819560387548e-06,
+          "torsoLean": -0.016952039075336312,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.8514790760312715,
+          "shoulderRegistrationErrorPoints": 6.737819560387548e-06,
+          "torsoLean": -0.016952039075336312,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.861667663000686,
+          "shoulderRegistrationErrorPoints": 2.39737147308141e-07,
+          "torsoLean": -0.01797250311148792,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.886728170165873,
+          "shoulderRegistrationErrorPoints": 4.638108362789918e-06,
+          "torsoLean": -0.016231317694943844,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.8978302081864651,
+          "shoulderRegistrationErrorPoints": 1.712206173293772e-05,
+          "torsoLean": -0.014704638362312053,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.9095605070520516,
+          "shoulderRegistrationErrorPoints": 1.712206173293772e-05,
+          "torsoLean": -0.014704638362312053,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.921026268042624,
+          "shoulderRegistrationErrorPoints": 2.749271465784268e-05,
+          "torsoLean": -0.010702958359063824,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.9324989582756129,
+          "shoulderRegistrationErrorPoints": 1.5445570120282478e-05,
+          "torsoLean": -0.008516518671614105,
+          "wristErrorPoints": 2.0097183471152322e-14
+        }
+      ],
+      "sidePoints": 168,
+      "targetPhases": [
+        0.36,
+        0.86
+      ]
+    },
+    {
+      "capturedPhases": [
+        0.3429124306421727,
+        0.8013093056312453
+      ],
+      "durationSeconds": 1.2,
+      "performance": "starHug",
+      "samples": [
+        {
+          "phase": 0.07531986106187105,
+          "shoulderRegistrationErrorPoints": 3.875343031248095e-05,
+          "torsoLean": -0.012328732485501167,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.08411593754620603,
+          "shoulderRegistrationErrorPoints": 5.491934598312709e-06,
+          "torsoLean": -0.014116620626035149,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.09282354168438664,
+          "shoulderRegistrationErrorPoints": 2.2210158969961705e-05,
+          "torsoLean": -0.015567930603283188,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.10144902781272928,
+          "shoulderRegistrationErrorPoints": 8.15370215642167e-06,
+          "torsoLean": -0.016732311712928837,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.11007704869067918,
+          "shoulderRegistrationErrorPoints": 2.6388532344480447e-06,
+          "torsoLean": -0.017613394852188106,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.11871934034085523,
+          "shoulderRegistrationErrorPoints": 2.6388532344480447e-06,
+          "torsoLean": -0.017613394852188106,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.12727625008362037,
+          "shoulderRegistrationErrorPoints": 7.172525016568192e-07,
+          "torsoLean": -0.018127127755194285,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.13462010421790183,
+          "shoulderRegistrationErrorPoints": 1.1086541132414069e-06,
+          "torsoLean": -0.01840291401342552,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.14322024304419756,
+          "shoulderRegistrationErrorPoints": 1.1086541132414069e-06,
+          "torsoLean": -0.01840291401342552,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.15174503476979834,
+          "shoulderRegistrationErrorPoints": 1.4642377907740794e-06,
+          "torsoLean": -0.019541312371397758,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.15984256945860884,
+          "shoulderRegistrationErrorPoints": 1.4642377907740794e-06,
+          "torsoLean": -0.019541312371397758,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.16837142369089028,
+          "shoulderRegistrationErrorPoints": 7.368490691338984e-06,
+          "torsoLean": -0.02136263417608849,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.17622708342969418,
+          "shoulderRegistrationErrorPoints": 1.454245846560107e-05,
+          "torsoLean": -0.022424703996949614,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.18474576393297565,
+          "shoulderRegistrationErrorPoints": 1.454245846560107e-05,
+          "torsoLean": -0.022424703996949614,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.19323836798624447,
+          "shoulderRegistrationErrorPoints": 7.049451535064387e-06,
+          "torsoLean": -0.024997233617269826,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.2020504513833051,
+          "shoulderRegistrationErrorPoints": 7.049451535064387e-06,
+          "torsoLean": -0.024997233617269826,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.21052086803441247,
+          "shoulderRegistrationErrorPoints": 1.601069353999507e-05,
+          "torsoLean": -0.027958749121701737,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.21788552093009156,
+          "shoulderRegistrationErrorPoints": 2.5858215991703613e-05,
+          "torsoLean": -0.029288001803653207,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.22638670130011937,
+          "shoulderRegistrationErrorPoints": 2.5858215991703613e-05,
+          "torsoLean": -0.029288001803653207,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.23486517369747162,
+          "shoulderRegistrationErrorPoints": 1.0129216375885092e-05,
+          "torsoLean": -0.03239648628124696,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.24348888895474374,
+          "shoulderRegistrationErrorPoints": 1.0129216375885092e-05,
+          "torsoLean": -0.03239648628124696,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.2519779861904681,
+          "shoulderRegistrationErrorPoints": 1.350059711013283e-05,
+          "torsoLean": -0.035483818828800244,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.2595592361952489,
+          "shoulderRegistrationErrorPoints": 2.3650978209719948e-05,
+          "torsoLean": -0.03679432723185734,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.2681395485221098,
+          "shoulderRegistrationErrorPoints": 2.3650978209719948e-05,
+          "torsoLean": -0.03679432723185734,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.2766224305378273,
+          "shoulderRegistrationErrorPoints": 7.0387816191357715e-06,
+          "torsoLean": -0.039560357080368605,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.2851739236696934,
+          "shoulderRegistrationErrorPoints": 7.0387816191357715e-06,
+          "torsoLean": -0.039560357080368605,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.2936479165994873,
+          "shoulderRegistrationErrorPoints": 5.7075397608352535e-06,
+          "torsoLean": -0.04188611181999988,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.3012155207882946,
+          "shoulderRegistrationErrorPoints": 9.99186394986276e-06,
+          "torsoLean": -0.0427351762068927,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.3097370486163224,
+          "shoulderRegistrationErrorPoints": 9.99186394986276e-06,
+          "torsoLean": -0.0427351762068927,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.31820256942107034,
+          "shoulderRegistrationErrorPoints": 1.93067780603381e-06,
+          "torsoLean": -0.04423771221589928,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.32679340278264135,
+          "shoulderRegistrationErrorPoints": 1.93067780603381e-06,
+          "torsoLean": -0.04423771221589928,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.33530871519663685,
+          "shoulderRegistrationErrorPoints": 5.015975619120646e-09,
+          "torsoLean": -0.044933726727252016,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.3429124306421727,
+          "shoulderRegistrationErrorPoints": 8.769812889998668e-09,
+          "torsoLean": -0.04495902820755973,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.3568952777034914,
+          "shoulderRegistrationErrorPoints": 1.4906706504322562e-07,
+          "torsoLean": -0.04483970775810785,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.36384631937835366,
+          "shoulderRegistrationErrorPoints": 1.4906706504322562e-07,
+          "torsoLean": -0.04483970775810785,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.370699791625763,
+          "shoulderRegistrationErrorPoints": 5.231059338033504e-07,
+          "torsoLean": -0.04453464419245316,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.3792558332982784,
+          "shoulderRegistrationErrorPoints": 5.231059338033504e-07,
+          "torsoLean": -0.04453464419245316,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.38777354173362255,
+          "shoulderRegistrationErrorPoints": 3.5171624150854873e-07,
+          "torsoLean": -0.0439641259055802,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.3963390625237177,
+          "shoulderRegistrationErrorPoints": 3.5171624150854873e-07,
+          "torsoLean": -0.0439641259055802,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.4048195485180865,
+          "shoulderRegistrationErrorPoints": 1.2281128177957641e-06,
+          "torsoLean": -0.04320012147470653,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.41233909723814577,
+          "shoulderRegistrationErrorPoints": 2.097669701511757e-06,
+          "torsoLean": -0.04281309890582153,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.4209312499733642,
+          "shoulderRegistrationErrorPoints": 2.097669701511757e-06,
+          "torsoLean": -0.04281309890582153,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.42944041662849486,
+          "shoulderRegistrationErrorPoints": 8.725160902599514e-07,
+          "torsoLean": -0.041866228224477824,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.438034861193349,
+          "shoulderRegistrationErrorPoints": 8.725160902599514e-07,
+          "torsoLean": -0.041866228224477824,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.4465629860836392,
+          "shoulderRegistrationErrorPoints": 1.8458150328026921e-06,
+          "torsoLean": -0.04083490617989789,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.45402513894562924,
+          "shoulderRegistrationErrorPoints": 3.0480521813444266e-06,
+          "torsoLean": -0.040371461126984316,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.4626467360261207,
+          "shoulderRegistrationErrorPoints": 3.0480521813444266e-06,
+          "torsoLean": -0.040371461126984316,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.47038670144199085,
+          "shoulderRegistrationErrorPoints": 1.6433857376072543e-06,
+          "torsoLean": -0.03935296472276692,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.47902593757802003,
+          "shoulderRegistrationErrorPoints": 1.6433857376072543e-06,
+          "torsoLean": -0.03935296472276692,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.4875690973130986,
+          "shoulderRegistrationErrorPoints": 1.1579294275560836e-06,
+          "torsoLean": -0.038309486941487385,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.49576833339718485,
+          "shoulderRegistrationErrorPoints": 2.60241107126015e-06,
+          "torsoLean": -0.0378362792070752,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.504046249940681,
+          "shoulderRegistrationErrorPoints": 2.60241107126015e-06,
+          "torsoLean": -0.0378362792070752,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.5113561806501821,
+          "shoulderRegistrationErrorPoints": 1.5298209424328295e-06,
+          "torsoLean": -0.036991144364027985,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.5203077777211245,
+          "shoulderRegistrationErrorPoints": 1.5298209424328295e-06,
+          "torsoLean": -0.036991144364027985,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.5290776388331627,
+          "shoulderRegistrationErrorPoints": 4.665794744404396e-07,
+          "torsoLean": -0.03616357592256627,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.5375264235772192,
+          "shoulderRegistrationErrorPoints": 1.1258376482714163e-06,
+          "torsoLean": -0.03584146784351859,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.5464677431154996,
+          "shoulderRegistrationErrorPoints": 1.1258376482714163e-06,
+          "torsoLean": -0.03584146784351859,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.5553704861085862,
+          "shoulderRegistrationErrorPoints": 3.233815139619641e-08,
+          "torsoLean": -0.03529441746499714,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.5645285764088234,
+          "shoulderRegistrationErrorPoints": 3.233815139619641e-08,
+          "torsoLean": -0.03529441746499714,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.5728136806283146,
+          "shoulderRegistrationErrorPoints": 3.2141665507423054e-08,
+          "torsoLean": -0.03503296800502931,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.5837667360901833,
+          "shoulderRegistrationErrorPoints": 5.408750438898986e-07,
+          "torsoLean": -0.034930574140295365,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.592798437573947,
+          "shoulderRegistrationErrorPoints": 5.408750438898986e-07,
+          "torsoLean": -0.034930574140295365,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.6016494444338605,
+          "shoulderRegistrationErrorPoints": 1.8510655664590926e-05,
+          "torsoLean": -0.03332939146327698,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.6097952082442741,
+          "shoulderRegistrationErrorPoints": 7.144888641455001e-06,
+          "torsoLean": -0.032098178127845,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.6189906597137451,
+          "shoulderRegistrationErrorPoints": 7.144888641455001e-06,
+          "torsoLean": -0.032098178127845,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.6269454860982175,
+          "shoulderRegistrationErrorPoints": 3.52274989453337e-05,
+          "torsoLean": -0.02826981858683034,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.6346393056446686,
+          "shoulderRegistrationErrorPoints": 6.139009532361762e-05,
+          "torsoLean": -0.02612116958456919,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.6434344096730154,
+          "shoulderRegistrationErrorPoints": 6.139009532361762e-05,
+          "torsoLean": -0.02612116958456919,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.652212499990128,
+          "shoulderRegistrationErrorPoints": 1.4503211238734807e-05,
+          "torsoLean": -0.0205879909810747,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.6615251735396063,
+          "shoulderRegistrationErrorPoints": 1.4503211238734807e-05,
+          "torsoLean": -0.0205879909810747,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.6705121874498825,
+          "shoulderRegistrationErrorPoints": 0.00010688943993694106,
+          "torsoLean": -0.013965063186199073,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.6785945138350751,
+          "shoulderRegistrationErrorPoints": 6.4038636849138e-05,
+          "torsoLean": -0.01089893016383114,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.6867114582564682,
+          "shoulderRegistrationErrorPoints": 6.4038636849138e-05,
+          "torsoLean": -0.01089893016383114,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.6956494791666046,
+          "shoulderRegistrationErrorPoints": 4.4104317666515424e-05,
+          "torsoLean": -0.004299777227056923,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.7040956944304829,
+          "shoulderRegistrationErrorPoints": 0.00011535757078913408,
+          "torsoLean": -0.0010647380215329239,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.7130084722302854,
+          "shoulderRegistrationErrorPoints": 0.00011535757078913408,
+          "torsoLean": -0.0010647380215329239,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.7220856944331899,
+          "shoulderRegistrationErrorPoints": 3.892353379472188e-06,
+          "torsoLean": 0.00562442905643476,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.7313383681078752,
+          "shoulderRegistrationErrorPoints": 3.892353379472188e-06,
+          "torsoLean": 0.00562442905643476,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.7400103819478925,
+          "shoulderRegistrationErrorPoints": 6.635537209858812e-05,
+          "torsoLean": 0.011538175498622419,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.7491984375519678,
+          "shoulderRegistrationErrorPoints": 1.7236646693160877e-05,
+          "torsoLean": 0.014275158203467525,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.7584078472185259,
+          "shoulderRegistrationErrorPoints": 1.7236646693160877e-05,
+          "torsoLean": 0.014275158203467525,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.7671847568902498,
+          "shoulderRegistrationErrorPoints": 2.140014094367754e-05,
+          "torsoLean": 0.01849057699639804,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.7764160763084268,
+          "shoulderRegistrationErrorPoints": 1.0187420606948782e-05,
+          "torsoLean": 0.0201351389452733,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.7846347915862377,
+          "shoulderRegistrationErrorPoints": 1.0187420606948782e-05,
+          "torsoLean": 0.0201351389452733,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.7933801736605044,
+          "shoulderRegistrationErrorPoints": 7.489788340739979e-08,
+          "torsoLean": 0.02178446317550173,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.8013093056312453,
+          "shoulderRegistrationErrorPoints": 1.453234377962812e-07,
+          "torsoLean": 0.021892305303096722,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.8242704513637971,
+          "shoulderRegistrationErrorPoints": 4.774801874225367e-06,
+          "torsoLean": 0.0210495850741777,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.8336099652418246,
+          "shoulderRegistrationErrorPoints": 8.94079136495793e-07,
+          "torsoLean": 0.020337914143011802,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.8427871179689344,
+          "shoulderRegistrationErrorPoints": 8.94079136495793e-07,
+          "torsoLean": 0.020337914143011802,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.8501078124390915,
+          "shoulderRegistrationErrorPoints": 1.0350858919141971e-05,
+          "torsoLean": 0.01852140212626374,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.8574778124845277,
+          "shoulderRegistrationErrorPoints": 1.2042766506569326e-05,
+          "torsoLean": 0.017563796144241365,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.8654151041992009,
+          "shoulderRegistrationErrorPoints": 1.2042766506569326e-05,
+          "torsoLean": 0.017563796144241365,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.872913333393323,
+          "shoulderRegistrationErrorPoints": 1.0251855125540958e-05,
+          "torsoLean": 0.015345261459058696,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.8806870138505474,
+          "shoulderRegistrationErrorPoints": 1.0251855125540958e-05,
+          "torsoLean": 0.015345261459058696,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.8880374999716878,
+          "shoulderRegistrationErrorPoints": 5.2994788658418336e-06,
+          "torsoLean": 0.012958784383195953,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.8957799652125686,
+          "shoulderRegistrationErrorPoints": 5.2994788658418336e-06,
+          "torsoLean": 0.012958784383195953,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.904479791643098,
+          "shoulderRegistrationErrorPoints": 1.0694642690313855e-05,
+          "torsoLean": 0.010260517055741884,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.9124214929761365,
+          "shoulderRegistrationErrorPoints": 2.085490021482493e-05,
+          "torsoLean": 0.008966708083944312,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.9218755901868766,
+          "shoulderRegistrationErrorPoints": 2.085490021482493e-05,
+          "torsoLean": 0.008966708083944312,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.9299542361016696,
+          "shoulderRegistrationErrorPoints": 3.5273093345729965e-06,
+          "torsoLean": 0.0062041411096797365,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.939041319458435,
+          "shoulderRegistrationErrorPoints": 3.5273093345729965e-06,
+          "torsoLean": 0.0062041411096797365,
+          "wristErrorPoints": 2.0097183471152322e-14
+        }
+      ],
+      "sidePoints": 168,
+      "targetPhases": [
+        0.34,
+        0.8
+      ]
+    },
+    {
+      "capturedPhases": [
+        0.32640853164983646,
+        0.5038682936823794
+      ],
+      "durationSeconds": 1.05,
+      "performance": "joyfulRaise",
+      "samples": [
+        {
+          "phase": 0.07690837296346822,
+          "shoulderRegistrationErrorPoints": 0.00014402026628247355,
+          "torsoLean": -0.024609962136456817,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.0870035318214269,
+          "shoulderRegistrationErrorPoints": 7.296951550543201e-05,
+          "torsoLean": -0.028384660375683376,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.09692357143475895,
+          "shoulderRegistrationErrorPoints": 7.760919341706676e-06,
+          "torsoLean": -0.031600442756092084,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.10686273819633892,
+          "shoulderRegistrationErrorPoints": 7.760919341706676e-06,
+          "torsoLean": -0.031600442756092084,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.11665329359294403,
+          "shoulderRegistrationErrorPoints": 8.135860738949975e-07,
+          "torsoLean": -0.03462385622336806,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.12523353166346038,
+          "shoulderRegistrationErrorPoints": 7.183697570443263e-07,
+          "torsoLean": -0.034853994528192704,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.1352696825883218,
+          "shoulderRegistrationErrorPoints": 7.183697570443263e-07,
+          "torsoLean": -0.034853994528192704,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.1451754762924143,
+          "shoulderRegistrationErrorPoints": 4.229134278539854e-05,
+          "torsoLean": -0.031987448583846646,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.15519626992976382,
+          "shoulderRegistrationErrorPoints": 4.229134278539854e-05,
+          "torsoLean": -0.031987448583846646,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.16524702377085174,
+          "shoulderRegistrationErrorPoints": 3.062007607509068e-05,
+          "torsoLean": -0.026462094832333253,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.17438166663937624,
+          "shoulderRegistrationErrorPoints": 0.00012840894358540512,
+          "torsoLean": -0.02308136465766679,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.18473722218048005,
+          "shoulderRegistrationErrorPoints": 0.00012840894358540512,
+          "torsoLean": -0.02308136465766679,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.1949104762059592,
+          "shoulderRegistrationErrorPoints": 2.7101468893282556e-05,
+          "torsoLean": -0.014454387103146763,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.20466142866228307,
+          "shoulderRegistrationErrorPoints": 0.00015292974349880405,
+          "torsoLean": -0.009881294402417936,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.214895714251768,
+          "shoulderRegistrationErrorPoints": 0.00015292974349880405,
+          "torsoLean": -0.009881294402417936,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.22499988099471444,
+          "shoulderRegistrationErrorPoints": 0.00013473313429511352,
+          "torsoLean": -5.327123179773391e-05,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.2337455159674088,
+          "shoulderRegistrationErrorPoints": 0.00013473313429511352,
+          "torsoLean": -5.327123179773391e-05,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.2438824206945442,
+          "shoulderRegistrationErrorPoints": 0.00018664542586296331,
+          "torsoLean": 0.008878772202620653,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.2542767063936307,
+          "shoulderRegistrationErrorPoints": 0.00013453689262449696,
+          "torsoLean": 0.01348881300530986,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.2650107935603176,
+          "shoulderRegistrationErrorPoints": 0.00013453689262449696,
+          "torsoLean": 0.01348881300530986,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.2742126586270474,
+          "shoulderRegistrationErrorPoints": 8.769734789671549e-05,
+          "torsoLean": 0.021266929871846474,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.28414511897911626,
+          "shoulderRegistrationErrorPoints": 7.075624735108773e-05,
+          "torsoLean": 0.024335371782026865,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.2952146825070182,
+          "shoulderRegistrationErrorPoints": 7.075624735108773e-05,
+          "torsoLean": 0.024335371782026865,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.30553789676300114,
+          "shoulderRegistrationErrorPoints": 2.1612262833575446e-08,
+          "torsoLean": 0.029033052973543493,
+          "wristErrorPoints": 3.1776437161565096e-14
+        },
+        {
+          "phase": 0.315921428569016,
+          "shoulderRegistrationErrorPoints": 3.2613201109508787e-06,
+          "torsoLean": 0.02975468842988175,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.32640853164983646,
+          "shoulderRegistrationErrorPoints": 3.2613201109508787e-06,
+          "torsoLean": 0.02975468842988175,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.3549112301940719,
+          "shoulderRegistrationErrorPoints": 6.958743808946596e-05,
+          "torsoLean": 0.02443519458296107,
+          "wristErrorPoints": 3.1776437161565096e-14
+        },
+        {
+          "phase": 0.3648417460776511,
+          "shoulderRegistrationErrorPoints": 9.012082005974235e-05,
+          "torsoLean": 0.021361173069607085,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.3751759523791926,
+          "shoulderRegistrationErrorPoints": 8.770195758113826e-06,
+          "torsoLean": 0.017649110343696383,
+          "wristErrorPoints": 3.1776437161565096e-14
+        },
+        {
+          "phase": 0.38539400789886713,
+          "shoulderRegistrationErrorPoints": 0.00011412864235980879,
+          "torsoLean": 0.01343260037958598,
+          "wristErrorPoints": 3.1776437161565096e-14
+        },
+        {
+          "phase": 0.3953124602724399,
+          "shoulderRegistrationErrorPoints": 0.0001766419681179981,
+          "torsoLean": 0.00912488485657651,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.405587222249735,
+          "shoulderRegistrationErrorPoints": 0.0001766419681179981,
+          "torsoLean": 0.00912488485657651,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.4144714284865629,
+          "shoulderRegistrationErrorPoints": 9.833948009218865e-05,
+          "torsoLean": 0.00044110843546577385,
+          "wristErrorPoints": 3.1776437161565096e-14
+        },
+        {
+          "phase": 0.42478722231906085,
+          "shoulderRegistrationErrorPoints": 9.833948009218865e-05,
+          "torsoLean": 0.00044110843546577385,
+          "wristErrorPoints": 3.1776437161565096e-14
+        },
+        {
+          "phase": 0.4346601984330586,
+          "shoulderRegistrationErrorPoints": 0.00012810825333722664,
+          "torsoLean": -0.008467208775662306,
+          "wristErrorPoints": 3.1776437161565096e-14
+        },
+        {
+          "phase": 0.44381011898318923,
+          "shoulderRegistrationErrorPoints": 2.5859511118545936e-05,
+          "torsoLean": -0.012262406062568662,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.4540959920822864,
+          "shoulderRegistrationErrorPoints": 2.5859511118545936e-05,
+          "torsoLean": -0.012262406062568662,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.4638635715292323,
+          "shoulderRegistrationErrorPoints": 6.9543270492343e-05,
+          "torsoLean": -0.01911687138180195,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.4742407142406418,
+          "shoulderRegistrationErrorPoints": 6.9543270492343e-05,
+          "torsoLean": -0.01911687138180195,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.4832751190822039,
+          "shoulderRegistrationErrorPoints": 2.0015166004571323e-05,
+          "torsoLean": -0.023545950300210672,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.4935987302589984,
+          "shoulderRegistrationErrorPoints": 3.990040477463086e-06,
+          "torsoLean": -0.02457233342442466,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.5038682936823794,
+          "shoulderRegistrationErrorPoints": 3.990040477463086e-06,
+          "torsoLean": -0.02457233342442466,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.5261048016005329,
+          "shoulderRegistrationErrorPoints": 1.1809585137950557e-05,
+          "torsoLean": -0.02193951373191801,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.5361943252916846,
+          "shoulderRegistrationErrorPoints": 6.150529124452519e-05,
+          "torsoLean": -0.019382283892430255,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.5461967064599905,
+          "shoulderRegistrationErrorPoints": 8.967781010320284e-05,
+          "torsoLean": -0.016378103486894658,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.5557801984694032,
+          "shoulderRegistrationErrorPoints": 9.153010552425255e-06,
+          "torsoLean": -0.013128139720870421,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.5646802777690546,
+          "shoulderRegistrationErrorPoints": 9.153010552425255e-06,
+          "torsoLean": -0.013128139720870421,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.5746868651892457,
+          "shoulderRegistrationErrorPoints": 0.0001410964533431648,
+          "torsoLean": -0.0057157178622839555,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.5853027380293324,
+          "shoulderRegistrationErrorPoints": 0.0001410964533431648,
+          "torsoLean": -0.0057157178622839555,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.5952491666678161,
+          "shoulderRegistrationErrorPoints": 7.27089614441294e-05,
+          "torsoLean": 0.002736297804127734,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.6056712698634891,
+          "shoulderRegistrationErrorPoints": 0.0001309671603748305,
+          "torsoLean": 0.006860431649094191,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.6160098808773217,
+          "shoulderRegistrationErrorPoints": 0.0001309671603748305,
+          "torsoLean": 0.006860431649094191,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.625954682583965,
+          "shoulderRegistrationErrorPoints": 1.9533528108091513e-05,
+          "torsoLean": 0.01414861237962647,
+          "wristErrorPoints": 3.1776437161565096e-14
+        },
+        {
+          "phase": 0.6360976189552319,
+          "shoulderRegistrationErrorPoints": 4.695992196179644e-05,
+          "torsoLean": 0.017059886718131616,
+          "wristErrorPoints": 3.1776437161565096e-14
+        },
+        {
+          "phase": 0.6449829762624133,
+          "shoulderRegistrationErrorPoints": 4.695992196179644e-05,
+          "torsoLean": 0.017059886718131616,
+          "wristErrorPoints": 3.1776437161565096e-14
+        },
+        {
+          "phase": 0.6553860316940007,
+          "shoulderRegistrationErrorPoints": 4.769407279355014e-06,
+          "torsoLean": 0.020895964666078005,
+          "wristErrorPoints": 3.1776437161565096e-14
+        },
+        {
+          "phase": 0.6649184524125996,
+          "shoulderRegistrationErrorPoints": 3.403744826994922e-06,
+          "torsoLean": 0.021784244981034488,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.6750016666150519,
+          "shoulderRegistrationErrorPoints": 3.403744826994922e-06,
+          "torsoLean": 0.021784244981034488,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.6838392856575194,
+          "shoulderRegistrationErrorPoints": 7.82698102487134e-06,
+          "torsoLean": 0.021260766351790403,
+          "wristErrorPoints": 3.1776437161565096e-14
+        },
+        {
+          "phase": 0.6943253174956355,
+          "shoulderRegistrationErrorPoints": 7.82698102487134e-06,
+          "torsoLean": 0.021260766351790403,
+          "wristErrorPoints": 3.1776437161565096e-14
+        },
+        {
+          "phase": 0.7044381348948393,
+          "shoulderRegistrationErrorPoints": 2.3245022575037246e-05,
+          "torsoLean": 0.01828993223970328,
+          "wristErrorPoints": 3.1776437161565096e-14
+        },
+        {
+          "phase": 0.71424773805553,
+          "shoulderRegistrationErrorPoints": 4.776969764807142e-05,
+          "torsoLean": 0.016204317879421434,
+          "wristErrorPoints": 3.1776437161565096e-14
+        },
+        {
+          "phase": 0.7254482142715937,
+          "shoulderRegistrationErrorPoints": 4.776969764807142e-05,
+          "torsoLean": 0.016204317879421434,
+          "wristErrorPoints": 3.1776437161565096e-14
+        },
+        {
+          "phase": 0.7345186111827691,
+          "shoulderRegistrationErrorPoints": 2.621331581410281e-05,
+          "torsoLean": 0.010996277833084385,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.7432584921341566,
+          "shoulderRegistrationErrorPoints": 2.621331581410281e-05,
+          "torsoLean": 0.010996277833084385,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.7531687302426213,
+          "shoulderRegistrationErrorPoints": 5.661572852321452e-05,
+          "torsoLean": 0.0055418342528606125,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.7635199205417718,
+          "shoulderRegistrationErrorPoints": 7.783718253529422e-06,
+          "torsoLean": 0.0024468752913293737,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.7720309524752554,
+          "shoulderRegistrationErrorPoints": 7.783718253529422e-06,
+          "torsoLean": 0.0024468752913293737,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.781360595220966,
+          "shoulderRegistrationErrorPoints": 4.739828834285678e-05,
+          "torsoLean": -0.0026187912989526566,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.7898953572536508,
+          "shoulderRegistrationErrorPoints": 4.739828834285678e-05,
+          "torsoLean": -0.0026187912989526566,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.7999806746929174,
+          "shoulderRegistrationErrorPoints": 4.152385517463143e-05,
+          "torsoLean": -0.0071607972284496255,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.8107517063174219,
+          "shoulderRegistrationErrorPoints": 2.199657593246246e-05,
+          "torsoLean": -0.009224793746885902,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.8201222618420918,
+          "shoulderRegistrationErrorPoints": 2.199657593246246e-05,
+          "torsoLean": -0.009224793746885902,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.8302040475731094,
+          "shoulderRegistrationErrorPoints": 4.744538860313901e-06,
+          "torsoLean": -0.011576731420146496,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.8395929760964853,
+          "shoulderRegistrationErrorPoints": 3.053107151199557e-08,
+          "torsoLean": -0.01188410572951356,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.8498859919962428,
+          "shoulderRegistrationErrorPoints": 3.053107151199557e-08,
+          "torsoLean": -0.01188410572951356,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.8599260713284214,
+          "shoulderRegistrationErrorPoints": 3.530107451495504e-07,
+          "torsoLean": -0.011469963369544912,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.868937301538175,
+          "shoulderRegistrationErrorPoints": 3.530107451495504e-07,
+          "torsoLean": -0.011469963369544912,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.8789644443563053,
+          "shoulderRegistrationErrorPoints": 5.506751269400352e-06,
+          "torsoLean": -0.010181860483435267,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.8890973809840423,
+          "shoulderRegistrationErrorPoints": 5.937023272612074e-07,
+          "torsoLean": -0.009300527573391558,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.8989830951516826,
+          "shoulderRegistrationErrorPoints": 5.937023272612074e-07,
+          "torsoLean": -0.009300527573391558,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.9094392856405604,
+          "shoulderRegistrationErrorPoints": 1.085536809778419e-05,
+          "torsoLean": -0.0071685822803123555,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.9190029761798325,
+          "shoulderRegistrationErrorPoints": 6.302533806741909e-06,
+          "torsoLean": -0.0061111218611331584,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.9294303570918384,
+          "shoulderRegistrationErrorPoints": 6.302533806741909e-06,
+          "torsoLean": -0.0061111218611331584,
+          "wristErrorPoints": 2.0097183471152322e-14
+        },
+        {
+          "phase": 0.93947007941703,
+          "shoulderRegistrationErrorPoints": 9.338234199085998e-06,
+          "torsoLean": -0.003863484343663437,
+          "wristErrorPoints": 2.0097183471152322e-14
+        }
+      ],
+      "sidePoints": 168,
+      "targetPhases": [
+        0.32,
+        0.5
+      ]
+    },
+    {
+      "capturedPhases": [
+        0.3678378170740831,
+        0.8694073370070723
+      ],
+      "durationSeconds": 0.92,
+      "performance": "gentleRetry",
+      "samples": [
+        {
+          "phase": 0.07639542581392046,
+          "shoulderRegistrationErrorPoints": 2.1733702778117744e-05,
+          "torsoLean": -0.01046039894126209,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.08776059789259148,
+          "shoulderRegistrationErrorPoints": 1.2227043582092511e-05,
+          "torsoLean": -0.012270271346348857,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.09910914864715026,
+          "shoulderRegistrationErrorPoints": 2.494148683004072e-06,
+          "torsoLean": -0.01374566899157025,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.1088552536321399,
+          "shoulderRegistrationErrorPoints": 2.8629985733909906e-06,
+          "torsoLean": -0.014573984357924319,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.1201765399183268,
+          "shoulderRegistrationErrorPoints": 2.8629985733909906e-06,
+          "torsoLean": -0.014573984357924319,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.13142146737031313,
+          "shoulderRegistrationErrorPoints": 4.909057745161819e-06,
+          "torsoLean": -0.014379361798220467,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.14301476438286836,
+          "shoulderRegistrationErrorPoints": 4.909057745161819e-06,
+          "torsoLean": -0.014379361798220467,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.15422626798365102,
+          "shoulderRegistrationErrorPoints": 1.5949833810372722e-05,
+          "torsoLean": -0.011087679681883645,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.16566073375187165,
+          "shoulderRegistrationErrorPoints": 1.1008769239695918e-05,
+          "torsoLean": -0.008323118797960865,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.17720135865206627,
+          "shoulderRegistrationErrorPoints": 1.1008769239695918e-05,
+          "torsoLean": -0.008323118797960865,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.18762056159017526,
+          "shoulderRegistrationErrorPoints": 9.08920945449885e-05,
+          "torsoLean": -0.0013537038402636824,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.19961077892019047,
+          "shoulderRegistrationErrorPoints": 0.00010464887378839738,
+          "torsoLean": 0.0030569241702372955,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.21101598724034493,
+          "shoulderRegistrationErrorPoints": 0.00010464887378839738,
+          "torsoLean": 0.0030569241702372955,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.2217076086115254,
+          "shoulderRegistrationErrorPoints": 1.729477255452031e-05,
+          "torsoLean": 0.012075082911747177,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.23353953805306682,
+          "shoulderRegistrationErrorPoints": 1.729477255452031e-05,
+          "torsoLean": 0.012075082911747177,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.2450437953128763,
+          "shoulderRegistrationErrorPoints": 0.0001266554876904779,
+          "torsoLean": 0.0222368918642398,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.25553641304292757,
+          "shoulderRegistrationErrorPoints": 0.00012840398679284142,
+          "torsoLean": 0.026746626246301308,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.267566213860055,
+          "shoulderRegistrationErrorPoints": 0.00012840398679284142,
+          "torsoLean": 0.026746626246301308,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.278810280850967,
+          "shoulderRegistrationErrorPoints": 3.0246830524324303e-05,
+          "torsoLean": 0.03639782648400892,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.2903962409144024,
+          "shoulderRegistrationErrorPoints": 3.370972374889934e-05,
+          "torsoLean": 0.04073855286252108,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.30213002717810805,
+          "shoulderRegistrationErrorPoints": 3.370972374889934e-05,
+          "torsoLean": 0.04073855286252108,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.3117227807904229,
+          "shoulderRegistrationErrorPoints": 5.541586626943116e-05,
+          "torsoLean": 0.04754702250926054,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.32353872286520247,
+          "shoulderRegistrationErrorPoints": 5.541586626943116e-05,
+          "torsoLean": 0.04754702250926054,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.3349773097358158,
+          "shoulderRegistrationErrorPoints": 5.36380814305114e-06,
+          "torsoLean": 0.052820497233185514,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.34677327899059845,
+          "shoulderRegistrationErrorPoints": 1.5152238134971486e-06,
+          "torsoLean": 0.05436922438065799,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.3575996829844687,
+          "shoulderRegistrationErrorPoints": 1.5152238134971486e-06,
+          "torsoLean": 0.05436922438065799,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.3678378170740831,
+          "shoulderRegistrationErrorPoints": 6.615786985739776e-08,
+          "torsoLean": 0.05493477800230144,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.39789628632285673,
+          "shoulderRegistrationErrorPoints": 9.121177491281664e-07,
+          "torsoLean": 0.0541928077860008,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.40942454715664295,
+          "shoulderRegistrationErrorPoints": 1.650028906302609e-06,
+          "torsoLean": 0.05369566598214693,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.42095656693994027,
+          "shoulderRegistrationErrorPoints": 1.9568787490630838e-06,
+          "torsoLean": 0.05310968695015151,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.43044868659268576,
+          "shoulderRegistrationErrorPoints": 1.9568787490630838e-06,
+          "torsoLean": 0.05310968695015151,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.4415803442142256,
+          "shoulderRegistrationErrorPoints": 1.8279436583357758e-06,
+          "torsoLean": 0.05188710168238294,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.4520955614482417,
+          "shoulderRegistrationErrorPoints": 1.8279436583357758e-06,
+          "torsoLean": 0.05188710168238294,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.4624345109534814,
+          "shoulderRegistrationErrorPoints": 2.8217152263585456e-06,
+          "torsoLean": 0.050510457803224905,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.4740603260554211,
+          "shoulderRegistrationErrorPoints": 1.544851478196459e-06,
+          "torsoLean": 0.049722869555142074,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.48566721000141744,
+          "shoulderRegistrationErrorPoints": 1.544851478196459e-06,
+          "torsoLean": 0.049722869555142074,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.49559492744383926,
+          "shoulderRegistrationErrorPoints": 2.647175646348179e-06,
+          "torsoLean": 0.048286371802677586,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.5076905796000653,
+          "shoulderRegistrationErrorPoints": 2.627402393658513e-06,
+          "torsoLean": 0.047539870812607375,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.5212813405745217,
+          "shoulderRegistrationErrorPoints": 2.627402393658513e-06,
+          "torsoLean": 0.047539870812607375,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.5317306158679497,
+          "shoulderRegistrationErrorPoints": 1.1821799712916745e-06,
+          "torsoLean": 0.04624521688183966,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.5437699728645384,
+          "shoulderRegistrationErrorPoints": 4.174642322397159e-07,
+          "torsoLean": 0.04573447183096446,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.5566806610896373,
+          "shoulderRegistrationErrorPoints": 4.174642322397159e-07,
+          "torsoLean": 0.04573447183096446,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.5682684329297879,
+          "shoulderRegistrationErrorPoints": 8.518964252154316e-08,
+          "torsoLean": 0.04508905193837338,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.5802947010480515,
+          "shoulderRegistrationErrorPoints": 2.2414099595797476e-08,
+          "torsoLean": 0.04499369704212476,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.5921519928328369,
+          "shoulderRegistrationErrorPoints": 2.2414099595797476e-08,
+          "torsoLean": 0.04499369704212476,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.6030148550685819,
+          "shoulderRegistrationErrorPoints": 8.012916139929477e-06,
+          "torsoLean": 0.04369362897959323,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.6154423913634989,
+          "shoulderRegistrationErrorPoints": 8.012916139929477e-06,
+          "torsoLean": 0.04369362897959323,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.6267866848603538,
+          "shoulderRegistrationErrorPoints": 1.3784872396943857e-05,
+          "torsoLean": 0.04027035986869831,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.6373930254282997,
+          "shoulderRegistrationErrorPoints": 1.1385947646094522e-05,
+          "torsoLean": 0.03810959912911786,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.649714900393282,
+          "shoulderRegistrationErrorPoints": 1.1385947646094522e-05,
+          "torsoLean": 0.03810959912911786,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.6612963766952895,
+          "shoulderRegistrationErrorPoints": 5.1969848644996375e-05,
+          "torsoLean": 0.03208967905052855,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.6786407609267727,
+          "shoulderRegistrationErrorPoints": 3.0887810504322834e-05,
+          "torsoLean": 0.027027626406243222,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.6958453804659455,
+          "shoulderRegistrationErrorPoints": 2.9241287950644177e-05,
+          "torsoLean": 0.02156109472493194,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.7075773549529359,
+          "shoulderRegistrationErrorPoints": 1.5881086032404812e-05,
+          "torsoLean": 0.01766937333591957,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.7184427988249809,
+          "shoulderRegistrationErrorPoints": 1.5881086032404812e-05,
+          "torsoLean": 0.01766937333591957,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.7311800725089953,
+          "shoulderRegistrationErrorPoints": 7.488064585676095e-05,
+          "torsoLean": 0.009723144075774577,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.7433499999182379,
+          "shoulderRegistrationErrorPoints": 7.8298695068586e-05,
+          "torsoLean": 0.00570636597579732,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.7546153531976691,
+          "shoulderRegistrationErrorPoints": 7.8298695068586e-05,
+          "torsoLean": 0.00570636597579732,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.7663491847621196,
+          "shoulderRegistrationErrorPoints": 3.677357032559252e-05,
+          "torsoLean": -0.0015564284213497633,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.778330616025335,
+          "shoulderRegistrationErrorPoints": 3.677357032559252e-05,
+          "torsoLean": -0.0015564284213497633,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.7897144021547359,
+          "shoulderRegistrationErrorPoints": 2.428409059157974e-05,
+          "torsoLean": -0.00806889078486922,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.8012478713087899,
+          "shoulderRegistrationErrorPoints": 3.310148666342653e-05,
+          "torsoLean": -0.010793434650684795,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.813181521674699,
+          "shoulderRegistrationErrorPoints": 3.310148666342653e-05,
+          "torsoLean": -0.010793434650684795,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.8245926631270382,
+          "shoulderRegistrationErrorPoints": 1.381121678356717e-05,
+          "torsoLean": -0.015154941049422044,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.8362058876588454,
+          "shoulderRegistrationErrorPoints": 3.7317604808475244e-06,
+          "torsoLean": -0.01664933228334959,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.8482022190709476,
+          "shoulderRegistrationErrorPoints": 3.7317604808475244e-06,
+          "torsoLean": -0.01664933228334959,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.858168070629725,
+          "shoulderRegistrationErrorPoints": 3.5790986715065085e-07,
+          "torsoLean": -0.017917441709208157,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.8694073370070723,
+          "shoulderRegistrationErrorPoints": 3.5790986715065085e-07,
+          "torsoLean": -0.017917441709208157,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.8933424818046066,
+          "shoulderRegistrationErrorPoints": 1.3686082262466955e-05,
+          "torsoLean": -0.015356764627218458,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.9051065216266104,
+          "shoulderRegistrationErrorPoints": 1.2772805362628558e-05,
+          "torsoLean": -0.013568744475534463,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.9165740035393315,
+          "shoulderRegistrationErrorPoints": 2.1428902881889733e-07,
+          "torsoLean": -0.011546142577208663,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.9271011776392064,
+          "shoulderRegistrationErrorPoints": 1.972636395484138e-05,
+          "torsoLean": -0.009547855206024577,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.9387544384124972,
+          "shoulderRegistrationErrorPoints": 1.972636395484138e-05,
+          "torsoLean": -0.009547855206024577,
+          "wristErrorPoints": 0
+        }
+      ],
+      "sidePoints": 140,
+      "targetPhases": [
+        0.36,
+        0.86
+      ]
+    },
+    {
+      "capturedPhases": [
+        0.34866357649055624,
+        0.8089072916967174
+      ],
+      "durationSeconds": 1.2,
+      "performance": "starHug",
+      "samples": [
+        {
+          "phase": 0.07232503480433176,
+          "shoulderRegistrationErrorPoints": 2.184798099278625e-05,
+          "torsoLean": -0.01170864078298709,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.08110357642484209,
+          "shoulderRegistrationErrorPoints": 1.775752379437549e-05,
+          "torsoLean": -0.013525215307512299,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.08990475694493702,
+          "shoulderRegistrationErrorPoints": 2.1336421647521823e-05,
+          "torsoLean": -0.015084440374911292,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.09780354176958403,
+          "shoulderRegistrationErrorPoints": 1.2995093828469761e-06,
+          "torsoLean": -0.016360560401816517,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.10646732640452683,
+          "shoulderRegistrationErrorPoints": 7.133953581429234e-06,
+          "torsoLean": -0.017245191471299024,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.11397093747897695,
+          "shoulderRegistrationErrorPoints": 7.133953581429234e-06,
+          "torsoLean": -0.017245191471299024,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.12255409732460976,
+          "shoulderRegistrationErrorPoints": 2.409818408938498e-07,
+          "torsoLean": -0.017984480015045164,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.1312477430716778,
+          "shoulderRegistrationErrorPoints": 2.409818408938498e-07,
+          "torsoLean": -0.017984480015045164,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.1387131945618118,
+          "shoulderRegistrationErrorPoints": 5.295400783224634e-08,
+          "torsoLean": -0.018556491484205635,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.14741795137524605,
+          "shoulderRegistrationErrorPoints": 4.217462761515484e-06,
+          "torsoLean": -0.019213008355139956,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.15594249998684973,
+          "shoulderRegistrationErrorPoints": 4.217462761515484e-06,
+          "torsoLean": -0.019213008355139956,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.163604201322111,
+          "shoulderRegistrationErrorPoints": 6.211165820767168e-06,
+          "torsoLean": -0.02079947466357987,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.17258010416602096,
+          "shoulderRegistrationErrorPoints": 6.211165820767168e-06,
+          "torsoLean": -0.02079947466357987,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.1813390625951191,
+          "shoulderRegistrationErrorPoints": 4.181108918606143e-06,
+          "torsoLean": -0.0231389288784916,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.18935079860966653,
+          "shoulderRegistrationErrorPoints": 1.7450334110672062e-05,
+          "torsoLean": -0.024389703427796176,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.19826281253093234,
+          "shoulderRegistrationErrorPoints": 1.7450334110672062e-05,
+          "torsoLean": -0.024389703427796176,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.20704854163341224,
+          "shoulderRegistrationErrorPoints": 7.44790141417637e-06,
+          "torsoLean": -0.027347420516976785,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.2149049999813239,
+          "shoulderRegistrationErrorPoints": 2.502633988661131e-05,
+          "torsoLean": -0.028752003974591246,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.22407180552060407,
+          "shoulderRegistrationErrorPoints": 2.502633988661131e-05,
+          "torsoLean": -0.028752003974591246,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.23206475695284706,
+          "shoulderRegistrationErrorPoints": 2.1400018223063604e-05,
+          "torsoLean": -0.03188491856303453,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.24120763894946626,
+          "shoulderRegistrationErrorPoints": 2.1400018223063604e-05,
+          "torsoLean": -0.03188491856303453,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.2500259722971047,
+          "shoulderRegistrationErrorPoints": 4.207660662469315e-07,
+          "torsoLean": -0.03515228124723692,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.2592003471606101,
+          "shoulderRegistrationErrorPoints": 2.0499769760296406e-05,
+          "torsoLean": -0.036735898994461356,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.2684898265094186,
+          "shoulderRegistrationErrorPoints": 2.0499769760296406e-05,
+          "torsoLean": -0.036735898994461356,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.27723937508805346,
+          "shoulderRegistrationErrorPoints": 2.7293416317912425e-06,
+          "torsoLean": -0.03966171757052094,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.28647270829727256,
+          "shoulderRegistrationErrorPoints": 1.3749535168492941e-05,
+          "torsoLean": -0.04094936288679172,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.2956020486696313,
+          "shoulderRegistrationErrorPoints": 1.3749535168492941e-05,
+          "torsoLean": -0.04094936288679172,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.3028949305492764,
+          "shoulderRegistrationErrorPoints": 5.930870264079205e-06,
+          "torsoLean": -0.0429279789909302,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.3120309721756106,
+          "shoulderRegistrationErrorPoints": 4.9415509871414465e-06,
+          "torsoLean": -0.04374262535468901,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.32077986106742173,
+          "shoulderRegistrationErrorPoints": 4.9415509871414465e-06,
+          "torsoLean": -0.04374262535468901,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.3304227777213479,
+          "shoulderRegistrationErrorPoints": 9.108760016855482e-07,
+          "torsoLean": -0.04480528519262121,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.33989187504630536,
+          "shoulderRegistrationErrorPoints": 8.51568698699538e-09,
+          "torsoLean": -0.04494906497793851,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.34866357649055624,
+          "shoulderRegistrationErrorPoints": 8.51568698699538e-09,
+          "torsoLean": -0.04494906497793851,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.3710793750360608,
+          "shoulderRegistrationErrorPoints": 4.115164791037278e-07,
+          "torsoLean": -0.04452421741828592,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.38025583334577584,
+          "shoulderRegistrationErrorPoints": 9.394737229242194e-07,
+          "torsoLean": -0.0442340747554595,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.38912503475633764,
+          "shoulderRegistrationErrorPoints": 1.2589929889709784e-07,
+          "torsoLean": -0.04391118029051143,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.398126354169411,
+          "shoulderRegistrationErrorPoints": 1.358377785537749e-06,
+          "torsoLean": -0.04351153203977187,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.405496076370279,
+          "shoulderRegistrationErrorPoints": 1.358377785537749e-06,
+          "torsoLean": -0.04351153203977187,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.4143378819571808,
+          "shoulderRegistrationErrorPoints": 1.1299483225598694e-06,
+          "torsoLean": -0.042709400827579014,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.42312395836537087,
+          "shoulderRegistrationErrorPoints": 2.4620250029264564e-06,
+          "torsoLean": -0.04222354002909897,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.43207107635680586,
+          "shoulderRegistrationErrorPoints": 2.4620250029264564e-06,
+          "torsoLean": -0.04222354002909897,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.4404496180359274,
+          "shoulderRegistrationErrorPoints": 2.280062859599422e-06,
+          "torsoLean": -0.04120583865081769,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.44953635428100824,
+          "shoulderRegistrationErrorPoints": 2.280062859599422e-06,
+          "torsoLean": -0.04120583865081769,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.456884548572513,
+          "shoulderRegistrationErrorPoints": 1.0946713217467937e-06,
+          "torsoLean": -0.04019276148293754,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.4648264930195486,
+          "shoulderRegistrationErrorPoints": 2.976575449588521e-06,
+          "torsoLean": -0.03969895459584472,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.4737845138879493,
+          "shoulderRegistrationErrorPoints": 2.976575449588521e-06,
+          "torsoLean": -0.03969895459584472,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.48256104171741754,
+          "shoulderRegistrationErrorPoints": 2.1593856417541574e-06,
+          "torsoLean": -0.038608434776191636,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.4916219444324573,
+          "shoulderRegistrationErrorPoints": 2.1593856417541574e-06,
+          "torsoLean": -0.038608434776191636,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.5003670139315849,
+          "shoulderRegistrationErrorPoints": 2.4322970500547223e-07,
+          "torsoLean": -0.037571217054624094,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.5085690973404174,
+          "shoulderRegistrationErrorPoints": 2.031869627820743e-06,
+          "torsoLean": -0.0371389613553638,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.5175989930285141,
+          "shoulderRegistrationErrorPoints": 2.031869627820743e-06,
+          "torsoLean": -0.0371389613553638,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.5249994791423281,
+          "shoulderRegistrationErrorPoints": 1.0516146961223757e-06,
+          "torsoLean": -0.03634192146597098,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.5334958333211641,
+          "shoulderRegistrationErrorPoints": 1.0516146961223757e-06,
+          "torsoLean": -0.03634192146597098,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.5422688194084913,
+          "shoulderRegistrationErrorPoints": 1.0791100030120389e-07,
+          "torsoLean": -0.03566585070763178,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.5511113541433588,
+          "shoulderRegistrationErrorPoints": 5.368084903093796e-07,
+          "torsoLean": -0.03541532621246375,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.5601933332703387,
+          "shoulderRegistrationErrorPoints": 5.368084903093796e-07,
+          "torsoLean": -0.03541532621246375,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.5689926041911046,
+          "shoulderRegistrationErrorPoints": 2.6056218416492984e-08,
+          "torsoLean": -0.03506353501947959,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.5779778819608813,
+          "shoulderRegistrationErrorPoints": 3.420926430955307e-08,
+          "torsoLean": -0.0349976846770778,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.5870134028373286,
+          "shoulderRegistrationErrorPoints": 3.420926430955307e-08,
+          "torsoLean": -0.0349976846770778,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.5957647917481761,
+          "shoulderRegistrationErrorPoints": 1.3431707347503376e-06,
+          "torsoLean": -0.034105060403371405,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.603661770777156,
+          "shoulderRegistrationErrorPoints": 1.7576241359492043e-05,
+          "torsoLean": -0.033029699163280156,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.6127391666329156,
+          "shoulderRegistrationErrorPoints": 1.7576241359492043e-05,
+          "torsoLean": -0.033029699163280156,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.620504270773381,
+          "shoulderRegistrationErrorPoints": 3.309468467194987e-05,
+          "torsoLean": -0.02981357758175938,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.6297074304893613,
+          "shoulderRegistrationErrorPoints": 3.309468467194987e-05,
+          "torsoLean": -0.02981357758175938,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.6375032640062273,
+          "shoulderRegistrationErrorPoints": 2.123669017649652e-05,
+          "torsoLean": -0.02531342692261419,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.6453553820028901,
+          "shoulderRegistrationErrorPoints": 8.11754295611433e-05,
+          "torsoLean": -0.022825447246574905,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.6543675695623582,
+          "shoulderRegistrationErrorPoints": 8.11754295611433e-05,
+          "torsoLean": -0.022825447246574905,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.6628168403403834,
+          "shoulderRegistrationErrorPoints": 7.918968023045575e-05,
+          "torsoLean": -0.016808066793257956,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.6708167708711699,
+          "shoulderRegistrationErrorPoints": 7.918968023045575e-05,
+          "torsoLean": -0.016808066793257956,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.679197118151933,
+          "shoulderRegistrationErrorPoints": 3.872789846579742e-05,
+          "torsoLean": -0.010671023414134043,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.6873295834520832,
+          "shoulderRegistrationErrorPoints": 0.00011577459958847684,
+          "torsoLean": -0.007530534248103721,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.6953477778006345,
+          "shoulderRegistrationErrorPoints": 0.00011577459958847684,
+          "torsoLean": -0.007530534248103721,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.703971111215651,
+          "shoulderRegistrationErrorPoints": 9.744634618795135e-05,
+          "torsoLean": -0.0011050262564675894,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.7125231943791732,
+          "shoulderRegistrationErrorPoints": 9.744634618795135e-05,
+          "torsoLean": -0.0011050262564675894,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.7214125346702834,
+          "shoulderRegistrationErrorPoints": 2.2104384302869513e-05,
+          "torsoLean": 0.005377130655208121,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.7304328472431129,
+          "shoulderRegistrationErrorPoints": 8.538473473140122e-05,
+          "torsoLean": 0.008451238015026924,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.7393360070030516,
+          "shoulderRegistrationErrorPoints": 8.538473473140122e-05,
+          "torsoLean": 0.008451238015026924,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.7478782986678805,
+          "shoulderRegistrationErrorPoints": 3.457928958275972e-05,
+          "torsoLean": 0.013890079447816568,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.7564835417239617,
+          "shoulderRegistrationErrorPoints": 4.5705025037525056e-05,
+          "torsoLean": 0.016091724798138186,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.765426458286432,
+          "shoulderRegistrationErrorPoints": 4.5705025037525056e-05,
+          "torsoLean": 0.016091724798138186,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.7741893750304978,
+          "shoulderRegistrationErrorPoints": 1.864253655484491e-05,
+          "torsoLean": 0.019738576038768028,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.7833156596946841,
+          "shoulderRegistrationErrorPoints": 1.864253655484491e-05,
+          "torsoLean": 0.019738576038768028,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.7917112500096362,
+          "shoulderRegistrationErrorPoints": 2.846107684959373e-09,
+          "torsoLean": 0.02176179178070891,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.7998882639609899,
+          "shoulderRegistrationErrorPoints": 1.3785434488997777e-07,
+          "torsoLean": 0.02187304563986671,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.8089072916967174,
+          "shoulderRegistrationErrorPoints": 1.3785434488997777e-07,
+          "torsoLean": 0.02187304563986671,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.8282684722992902,
+          "shoulderRegistrationErrorPoints": 4.0388123292011325e-06,
+          "torsoLean": 0.020749879275580845,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.8372617708907153,
+          "shoulderRegistrationErrorPoints": 7.033387218835447e-06,
+          "torsoLean": 0.019951362188275337,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.846225069447731,
+          "shoulderRegistrationErrorPoints": 2.24435388375457e-06,
+          "torsoLean": 0.01900256155951419,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.8537737846684953,
+          "shoulderRegistrationErrorPoints": 1.2985983677280847e-05,
+          "torsoLean": 0.0180452841405507,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.8627530903322622,
+          "shoulderRegistrationErrorPoints": 1.2985983677280847e-05,
+          "torsoLean": 0.0180452841405507,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.8715145833169421,
+          "shoulderRegistrationErrorPoints": 1.261700244163952e-05,
+          "torsoLean": 0.015551896684193683,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.8803905209060758,
+          "shoulderRegistrationErrorPoints": 1.261700244163952e-05,
+          "torsoLean": 0.015551896684193683,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.8891248264505218,
+          "shoulderRegistrationErrorPoints": 1.5870944191784559e-06,
+          "torsoLean": 0.012781393404538877,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.8979976388703411,
+          "shoulderRegistrationErrorPoints": 1.874111147726127e-05,
+          "torsoLean": 0.011323125289934495,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.9071192013410231,
+          "shoulderRegistrationErrorPoints": 1.874111147726127e-05,
+          "torsoLean": 0.011323125289934495,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.9159748611273244,
+          "shoulderRegistrationErrorPoints": 3.7360264339751077e-06,
+          "torsoLean": 0.008383929173893906,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.9250907638731103,
+          "shoulderRegistrationErrorPoints": 1.775980718457751e-05,
+          "torsoLean": 0.0069629096288894516,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.9337723612164458,
+          "shoulderRegistrationErrorPoints": 1.775980718457751e-05,
+          "torsoLean": 0.0069629096288894516,
+          "wristErrorPoints": 0
+        }
+      ],
+      "sidePoints": 140,
+      "targetPhases": [
+        0.34,
+        0.8
+      ]
+    },
+    {
+      "capturedPhases": [
+        0.32957468270545914,
+        0.50611539699492
+      ],
+      "durationSeconds": 1.05,
+      "performance": "joyfulRaise",
+      "samples": [
+        {
+          "phase": 0.07680809524442468,
+          "shoulderRegistrationErrorPoints": 0.00012024472433721564,
+          "torsoLean": -0.024572133865323337,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.08749591275340035,
+          "shoulderRegistrationErrorPoints": 6.566035871618315e-05,
+          "torsoLean": -0.02854524953893391,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.09738452399947813,
+          "shoulderRegistrationErrorPoints": 1.4531138842441222e-06,
+          "torsoLean": -0.03173022912307468,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.10739408743878205,
+          "shoulderRegistrationErrorPoints": 2.2908684019760915e-05,
+          "torsoLean": -0.03371764121634444,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.11764476208814552,
+          "shoulderRegistrationErrorPoints": 7.034297588994968e-07,
+          "torsoLean": -0.03465413730531325,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.12663309528891528,
+          "shoulderRegistrationErrorPoints": 7.034297588994968e-07,
+          "torsoLean": -0.03465413730531325,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.13628805566224314,
+          "shoulderRegistrationErrorPoints": 5.334794036651052e-06,
+          "torsoLean": -0.03365178954501464,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.1463175398696746,
+          "shoulderRegistrationErrorPoints": 5.334794036651052e-06,
+          "torsoLean": -0.03365178954501464,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.15611392867174886,
+          "shoulderRegistrationErrorPoints": 5.2080450729015806e-05,
+          "torsoLean": -0.02930048461423716,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.16607242082023904,
+          "shoulderRegistrationErrorPoints": 1.1584442356484502e-05,
+          "torsoLean": -0.026217262574470095,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.17599670637753748,
+          "shoulderRegistrationErrorPoints": 1.1584442356484502e-05,
+          "torsoLean": -0.026217262574470095,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.1857908730882974,
+          "shoulderRegistrationErrorPoints": 0.00013238249149172582,
+          "torsoLean": -0.018451360809297997,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.1943878572256792,
+          "shoulderRegistrationErrorPoints": 2.0196159030567464e-06,
+          "torsoLean": -0.014708864977619855,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.20431615079620055,
+          "shoulderRegistrationErrorPoints": 2.0196159030567464e-06,
+          "torsoLean": -0.014708864977619855,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.2141372619995049,
+          "shoulderRegistrationErrorPoints": 0.00017070925608744832,
+          "torsoLean": -0.005340093409208531,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.2241126587614417,
+          "shoulderRegistrationErrorPoints": 0.00017070925608744832,
+          "torsoLean": -0.005340093409208531,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.2339177778256791,
+          "shoulderRegistrationErrorPoints": 9.200519212470492e-05,
+          "torsoLean": 0.004229579191221672,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.24202182556369473,
+          "shoulderRegistrationErrorPoints": 0.00015444096050942947,
+          "torsoLean": 0.008011658103849462,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.2519715477579406,
+          "shoulderRegistrationErrorPoints": 0.00015444096050942947,
+          "torsoLean": 0.008011658103849462,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.26179472228423467,
+          "shoulderRegistrationErrorPoints": 6.668944659442817e-05,
+          "torsoLean": 0.01665100159480244,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.2711495238223246,
+          "shoulderRegistrationErrorPoints": 6.668944659442817e-05,
+          "torsoLean": 0.01665100159480244,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.281167023903912,
+          "shoulderRegistrationErrorPoints": 4.3953462018123064e-05,
+          "torsoLean": 0.023494944088696852,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.2896830557091605,
+          "shoulderRegistrationErrorPoints": 2.8952388213987852e-05,
+          "torsoLean": 0.025898281673306902,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.29974749999209527,
+          "shoulderRegistrationErrorPoints": 2.8952388213987852e-05,
+          "torsoLean": 0.025898281673306902,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.3096157937709774,
+          "shoulderRegistrationErrorPoints": 2.9918093315241414e-06,
+          "torsoLean": 0.029316177920679178,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.3197557144310503,
+          "shoulderRegistrationErrorPoints": 2.9918093315241414e-06,
+          "torsoLean": 0.029316177920679178,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.32957468270545914,
+          "shoulderRegistrationErrorPoints": 2.2445805361152255e-06,
+          "torsoLean": 0.029371500751752343,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.34953678581154063,
+          "shoulderRegistrationErrorPoints": 3.274474344576924e-05,
+          "torsoLean": 0.025953246434613608,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.35955623013987426,
+          "shoulderRegistrationErrorPoints": 2.3179911946553228e-05,
+          "torsoLean": 0.02313661362482983,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.3689898016108643,
+          "shoulderRegistrationErrorPoints": 9.351321730461304e-05,
+          "torsoLean": 0.019882973503304455,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.37888896828960805,
+          "shoulderRegistrationErrorPoints": 9.351321730461304e-05,
+          "torsoLean": 0.019882973503304455,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.3873954762128137,
+          "shoulderRegistrationErrorPoints": 4.857863531461229e-05,
+          "torsoLean": 0.012613825700753714,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.39729178572694457,
+          "shoulderRegistrationErrorPoints": 4.857863531461229e-05,
+          "torsoLean": 0.012613825700753714,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.4070699206065564,
+          "shoulderRegistrationErrorPoints": 0.0001329753535071285,
+          "torsoLean": 0.0038379008237146117,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.4167600000454556,
+          "shoulderRegistrationErrorPoints": 4.378108311544881e-06,
+          "torsoLean": -0.000596044520013113,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.4267177382661473,
+          "shoulderRegistrationErrorPoints": 4.378108311544881e-06,
+          "torsoLean": -0.000596044520013113,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.4365750000856462,
+          "shoulderRegistrationErrorPoints": 0.00012562323939496295,
+          "torsoLean": -0.009256490114660223,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.44666019844866933,
+          "shoulderRegistrationErrorPoints": 0.00012562323939496295,
+          "torsoLean": -0.009256490114660223,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.4566299207952051,
+          "shoulderRegistrationErrorPoints": 4.147101122027302e-05,
+          "torsoLean": -0.016911199719377646,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.46662448417572744,
+          "shoulderRegistrationErrorPoints": 5.788651946363688e-05,
+          "torsoLean": -0.01988659560956892,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.4761969047554192,
+          "shoulderRegistrationErrorPoints": 5.788651946363688e-05,
+          "torsoLean": -0.01988659560956892,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.485693650941054,
+          "shoulderRegistrationErrorPoints": 2.7261135990917353e-06,
+          "torsoLean": -0.023998107969173506,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.49615547637499513,
+          "shoulderRegistrationErrorPoints": 2.6745199896680743e-06,
+          "torsoLean": -0.024743000165953148,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.50611539699492,
+          "shoulderRegistrationErrorPoints": 2.6745199896680743e-06,
+          "torsoLean": -0.024743000165953148,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.526772063624646,
+          "shoulderRegistrationErrorPoints": 6.238651612608887e-06,
+          "torsoLean": -0.02182233913866683,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.5368503176474145,
+          "shoulderRegistrationErrorPoints": 4.862344680206483e-05,
+          "torsoLean": -0.019206485422572833,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.546821230312898,
+          "shoulderRegistrationErrorPoints": 7.925003963120832e-05,
+          "torsoLean": -0.01617069140515567,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.5569198809652811,
+          "shoulderRegistrationErrorPoints": 7.925003963120832e-05,
+          "torsoLean": -0.01617069140515567,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.5669069842302373,
+          "shoulderRegistrationErrorPoints": 6.48855983563024e-05,
+          "torsoLean": -0.008838821428730182,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.5754696826140085,
+          "shoulderRegistrationErrorPoints": 0.00012259174304743523,
+          "torsoLean": -0.005407012477148494,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.5855346032019172,
+          "shoulderRegistrationErrorPoints": 0.00012259174304743523,
+          "torsoLean": -0.005407012477148494,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.5937235319011268,
+          "shoulderRegistrationErrorPoints": 9.493733787989312e-05,
+          "torsoLean": 0.0020985245496525735,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.6032369842398024,
+          "shoulderRegistrationErrorPoints": 9.493733787989312e-05,
+          "torsoLean": 0.0020985245496525735,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.6139195635027829,
+          "shoulderRegistrationErrorPoints": 5.96554579388433e-05,
+          "torsoLean": 0.009985223273078337,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.6230886508932426,
+          "shoulderRegistrationErrorPoints": 4.330047415109044e-05,
+          "torsoLean": 0.013196579544744964,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.6332028969856245,
+          "shoulderRegistrationErrorPoints": 4.330047415109044e-05,
+          "torsoLean": 0.013196579544744964,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.6414667461510924,
+          "shoulderRegistrationErrorPoints": 1.8338719874131283e-05,
+          "torsoLean": 0.018376858670912512,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.6501470237881655,
+          "shoulderRegistrationErrorPoints": 1.8338719874131283e-05,
+          "torsoLean": 0.018376858670912512,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.6593740476472747,
+          "shoulderRegistrationErrorPoints": 6.459780234019541e-06,
+          "torsoLean": 0.02126812675606183,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.6696550000370258,
+          "shoulderRegistrationErrorPoints": 6.459780234019541e-06,
+          "torsoLean": 0.02126812675606183,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.679580238204272,
+          "shoulderRegistrationErrorPoints": 1.0148137215968245e-07,
+          "torsoLean": 0.021644847490344506,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.6890260714239308,
+          "shoulderRegistrationErrorPoints": 8.575497730198264e-06,
+          "torsoLean": 0.020687882158977964,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.6993217857199765,
+          "shoulderRegistrationErrorPoints": 8.575497730198264e-06,
+          "torsoLean": 0.020687882158977964,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.7093020238070971,
+          "shoulderRegistrationErrorPoints": 1.0783864946774695e-05,
+          "torsoLean": 0.01736146611107952,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.7183684523971308,
+          "shoulderRegistrationErrorPoints": 3.254135876948552e-05,
+          "torsoLean": 0.015244178269987259,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.7285515476195585,
+          "shoulderRegistrationErrorPoints": 3.254135876948552e-05,
+          "torsoLean": 0.015244178269987259,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.738595277957973,
+          "shoulderRegistrationErrorPoints": 3.797683914428587e-05,
+          "torsoLean": 0.009835442467658745,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.7490031747147441,
+          "shoulderRegistrationErrorPoints": 3.797683914428587e-05,
+          "torsoLean": 0.009835442467658745,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.7589480158917251,
+          "shoulderRegistrationErrorPoints": 6.0882751708914e-05,
+          "torsoLean": 0.0038136680623270503,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.7679455159675507,
+          "shoulderRegistrationErrorPoints": 5.15289607949826e-05,
+          "torsoLean": 0.0011638238934842616,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.7785873017495586,
+          "shoulderRegistrationErrorPoints": 5.15289607949826e-05,
+          "torsoLean": 0.0011638238934842616,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.7869779762058031,
+          "shoulderRegistrationErrorPoints": 4.5813500692860216e-05,
+          "torsoLean": -0.004090408793920192,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.7957844048117597,
+          "shoulderRegistrationErrorPoints": 4.5813500692860216e-05,
+          "torsoLean": -0.004090408793920192,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.8041761906462765,
+          "shoulderRegistrationErrorPoints": 1.2775035085837722e-05,
+          "torsoLean": -0.008078149400873732,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.8129319444387442,
+          "shoulderRegistrationErrorPoints": 1.2775035085837722e-05,
+          "torsoLean": -0.008078149400873732,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.8218013096068586,
+          "shoulderRegistrationErrorPoints": 3.263703264701789e-06,
+          "torsoLean": -0.010838793416749168,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.8308192460043798,
+          "shoulderRegistrationErrorPoints": 3.3770774278209543e-06,
+          "torsoLean": -0.011628057115816019,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.8403094445488283,
+          "shoulderRegistrationErrorPoints": 3.3770774278209543e-06,
+          "torsoLean": -0.011628057115816019,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.849094841451872,
+          "shoulderRegistrationErrorPoints": 4.5965842382127015e-07,
+          "torsoLean": -0.011859756952061514,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.858292222200405,
+          "shoulderRegistrationErrorPoints": 4.5965842382127015e-07,
+          "torsoLean": -0.011859756952061514,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.8667389285706338,
+          "shoulderRegistrationErrorPoints": 3.0139336488681467e-06,
+          "torsoLean": -0.011062031937769829,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.875188373029232,
+          "shoulderRegistrationErrorPoints": 3.0139336488681467e-06,
+          "torsoLean": -0.011062031937769829,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.8833744048717476,
+          "shoulderRegistrationErrorPoints": 5.347724040085012e-06,
+          "torsoLean": -0.009798665528606715,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.8921065079491762,
+          "shoulderRegistrationErrorPoints": 5.347724040085012e-06,
+          "torsoLean": -0.009798665528606715,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.9001694047557456,
+          "shoulderRegistrationErrorPoints": 4.670107035442441e-06,
+          "torsoLean": -0.008170122090082313,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.9087864684295796,
+          "shoulderRegistrationErrorPoints": 8.89692211369824e-06,
+          "torsoLean": -0.007243290277863991,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.9175575001253968,
+          "shoulderRegistrationErrorPoints": 8.89692211369824e-06,
+          "torsoLean": -0.007243290277863991,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.9258200793660113,
+          "shoulderRegistrationErrorPoints": 8.363757620157034e-06,
+          "torsoLean": -0.005347180094235106,
+          "wristErrorPoints": 0
+        },
+        {
+          "phase": 0.9363186904894454,
+          "shoulderRegistrationErrorPoints": 8.363757620157034e-06,
+          "torsoLean": -0.005347180094235106,
+          "wristErrorPoints": 0
+        }
+      ],
+      "sidePoints": 140,
+      "targetPhases": [
+        0.32,
+        0.5
+      ]
+    }
+  ],
+  "totalSamples": 773
+}

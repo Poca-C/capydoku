@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.41 (44)",
+  "date": "2026-10-02",
+  "status": "scoped_result_body_follow_verified_simulator_only",
+  "previousReport": "Validation/original-0240-feedback.json",
+  "previousGoalTurn": {
+    "classification": "no_progress",
+    "reason": "上一轮只读核对并答复已有落实情况，没有推进代码；本轮重新核对当前实现后，落实身体联动。"
+  },
+  "sourceParagraphs": [
+    136,
+    241,
+    249,
+    254
+  ],
+  "referenceObservation": "Validation/meowdoku-playtest-comparison-0229.json#R0229-03",
+  "finding": "原结算手腕和肘部运动时，内部躯干/肩根固定；现有外层缩放和摆动不能提供肩胸与头部的独立跟随。",
+  "changes": [
+    "欢呼、抱星和失败三套动作加入小幅躯干倾斜与起伏；躯干中心及两肩共用绕臀部变换，再重新求肘。",
+    "头部以受限幅度稍后跟随，保留原点头角度；脚部锚点、手腕/星心目标、素材、总时长和结束姿态保持。",
+    "沿用原73样本、统一播放时钟与取消机制，不增加循环或输入等待。"
+  ],
+  "temporaryTuning": "新增倾斜、位移及跟随系数是原创Demo参数，不是对Meowdoku逐帧测量或正式冻结值。",
+  "verificationHistory": [
+    {
+      "status": "Failed",
+      "cases": 1,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "seconds": 0.157,
+      "scope": "0.2.40 + new independent-body requirement: 1 expected failure, nine movement assertions.",
+      "summary": "Validation/test-runs/original-0241-body-red-summary.json",
+      "log": "Validation/test-runs/original-0241-body-red.log",
+      "bundle": "Validation/test-runs/original-0241-body-red.xcresult"
+    },
+    {
+      "status": "Passed",
+      "cases": 43,
+      "passed": 43,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 47.19,
+      "scope": "First body candidate before final version and additional dense/runtime coverage: 43 passed.",
+      "summary": "Validation/test-runs/original-0241-body-candidate-summary.json",
+      "log": "Validation/test-runs/original-0241-body-candidate.log",
+      "bundle": "Validation/test-runs/original-0241-body-candidate.xcresult"
+    }
+  ],
+  "applicationTests": {
+    "status": "Passed",
+    "cases": 45,
+    "passed": 45,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 56.545,
+    "scope": "17 Pro / iOS26.5: result rig, continuous sleeves, eyes/mouth, actual Root choreography, cancellation and accessibility. No full App/Core rerun. Run before final dense IK assertion tightening; see finalAssertionVerification for the four-case final recheck.",
+    "summary": "Validation/test-runs/original-0241-app-final-summary.json",
+    "log": "Validation/test-runs/original-0241-app-final.log",
+    "bundle": "Validation/test-runs/original-0241-app-final.xcresult"
+  },
+  "uiTests": {
+    "status": "Passed",
+    "cases": 2,
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 37.587,
+    "scope": "17e / iOS26.5: solve/advance and lose/simulated revive; existing UI fixtures.",
+    "summary": "Validation/test-runs/original-0241-17e-ui-summary.json",
+    "log": "Validation/test-runs/original-0241-17e-ui.log",
+    "bundle": "Validation/test-runs/original-0241-17e-ui.xcresult"
+  },
+  "visualEvidence": "Docs/original-feel-0241/manifest.json",
+  "naturalPlaybackSampleCount": 773,
+  "denseGeometry": {
+    "samplesPerPerformance": 1441,
+    "performances": 3,
+    "checks": "Solved shoulder-wrist distance strictly inside IK clamp boundaries, both bone lengths, rest at both endpoints; original wrist key points and star grip covered by separate retained tests. Separate 721-point torso/shoulder registration and grounded-feet check."
+  },
+  "reference": {
+    "latestSuccessfulPlaytest": "Validation/meowdoku-playtest-comparison-0229.json",
+    "newSuccessfulPlaytestThisRound": false,
+    "equivalenceClaimed": false
+  },
+  "audio": {
+    "modified": false,
+    "localTestWAVCount": 9,
+    "currentDebugInventory": "Validation/audio-isolation-0241-debug.json",
+    "formalManifestClipsEmpty": true,
+    "liveAuditoryAB": false,
+    "releaseRebuilt": false
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  },
+  "remaining": [
+    "整体角色自然度与连续音画/触觉仍需真人验证，五官仍为离散图像状态。",
+    "手机仍0.2.29；未完成真机、最低系统、正式冻结参考或上架验收。"
+  ],
+  "formalSignOff": false,
+  "formalConformanceRowsUnchanged": 83,
+  "historicalChecklistCountUnchanged": 88,
+  "testAuditCorrection": {
+    "finding": "密集IK测试最初比较已求解腕与由同一结果定位的手爪，属于同值比较，不能证明无钳制。",
+    "change": "改为每套1441个采样检查肩腕距离严格位于(.001, 2*length-.001)；现有IK钳制返回.0001或2*length-.0001，因此两端钳制均会被拒绝。保留骨长、星心握持及原腕关键点验证。",
+    "productionChangedAfter45CaseRun": false,
+    "finalRecheck": {
+      "status": "Passed",
+      "cases": 4,
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 0.05,
+      "scope": "After tightening dense IK assertions: reachable-arm interior margin, bone lengths and settled endpoints; original wrist/key-pose/grip/transit checks. Production code unchanged since the 45-case suite and 2 UI cases.",
+      "summary": "Validation/test-runs/original-0241-ik-boundary-summary.json",
+      "log": "Validation/test-runs/original-0241-ik-boundary.log",
+      "bundle": "Validation/test-runs/original-0241-ik-boundary.xcresult"
+    }
+  },
+  "finalAssertionVerification": {
+    "status": "Passed",
+    "cases": 4,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 0.05,
+    "scope": "After tightening dense IK assertions: reachable-arm interior margin, bone lengths and settled endpoints; original wrist/key-pose/grip/transit checks. Production code unchanged since the 45-case suite and 2 UI cases.",
+    "summary": "Validation/test-runs/original-0241-ik-boundary-summary.json",
+    "log": "Validation/test-runs/original-0241-ik-boundary.log",
+    "bundle": "Validation/test-runs/original-0241-ik-boundary.xcresult"
+  }
+}

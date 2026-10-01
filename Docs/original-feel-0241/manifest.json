@@ -1,0 +1,178 @@
+{
+  "build": "0.2.41 (44)",
+  "items": [
+    {
+      "file": "body-follow-gentleRetry-250pt-reverse.png",
+      "sourceBundle": "Validation/test-runs/original-0241-app-final.xcresult",
+      "test": "ResultArmPresentationTests/testActualBodyFollowKeepsShouldersRegisteredAndPartsInBoundsAcrossThreePerformancesAndSizes()",
+      "sourceAttachment": "5448BCFA-D9CD-4290-9430-BA134A278A9F.png",
+      "sha256": "68fcf073414d44635c28b6483fae44b779b2e35403497b04cfd270a83462a6bb"
+    },
+    {
+      "file": "body-follow-gentleRetry-250pt-lean.png",
+      "sourceBundle": "Validation/test-runs/original-0241-app-final.xcresult",
+      "test": "ResultArmPresentationTests/testActualBodyFollowKeepsShouldersRegisteredAndPartsInBoundsAcrossThreePerformancesAndSizes()",
+      "sourceAttachment": "9C90BE9E-90D2-4611-A1D2-FA7530E27625.png",
+      "sha256": "e4ee81c18672fb714ef220b8b0a45c6822cf28bdfdf7868eeccd10f5a22ca303"
+    },
+    {
+      "file": "body-follow-starHug-250pt-reverse.png",
+      "sourceBundle": "Validation/test-runs/original-0241-app-final.xcresult",
+      "test": "ResultArmPresentationTests/testActualBodyFollowKeepsShouldersRegisteredAndPartsInBoundsAcrossThreePerformancesAndSizes()",
+      "sourceAttachment": "C9E5A585-C409-44C3-AEB7-C07DD956D00C.png",
+      "sha256": "b88f0f589faef06e279982f3ea7c47ffe7714147b0449d87e8121b9758a4c32f"
+    },
+    {
+      "file": "body-follow-starHug-250pt-lean.png",
+      "sourceBundle": "Validation/test-runs/original-0241-app-final.xcresult",
+      "test": "ResultArmPresentationTests/testActualBodyFollowKeepsShouldersRegisteredAndPartsInBoundsAcrossThreePerformancesAndSizes()",
+      "sourceAttachment": "2325FA8B-B9DC-49F0-A62A-2E481F910BEB.png",
+      "sha256": "e4100a150121a4bdf1650c0c893231c123b5dd2a2f3ba5ee22ebcaf7d19d30b0"
+    },
+    {
+      "file": "body-follow-joyfulRaise-250pt-reverse.png",
+      "sourceBundle": "Validation/test-runs/original-0241-app-final.xcresult",
+      "test": "ResultArmPresentationTests/testActualBodyFollowKeepsShouldersRegisteredAndPartsInBoundsAcrossThreePerformancesAndSizes()",
+      "sourceAttachment": "F8436D63-1A7F-46CE-8F6B-8089F26E2339.png",
+      "sha256": "31b9f92d6797630e63760ff478faee55a7a699bbf7a668468a0770be9c39c724"
+    },
+    {
+      "file": "body-follow-joyfulRaise-250pt-lean.png",
+      "sourceBundle": "Validation/test-runs/original-0241-app-final.xcresult",
+      "test": "ResultArmPresentationTests/testActualBodyFollowKeepsShouldersRegisteredAndPartsInBoundsAcrossThreePerformancesAndSizes()",
+      "sourceAttachment": "DCE03A98-AC5E-4F41-8453-01B70B22C648.png",
+      "sha256": "4ae8d49ef9455e1ef001bf06138856b13cc0988c1b68af764d95ccc69ed0935e"
+    },
+    {
+      "file": "body-follow-gentleRetry-168pt-reverse.png",
+      "sourceBundle": "Validation/test-runs/original-0241-app-final.xcresult",
+      "test": "ResultArmPresentationTests/testActualBodyFollowKeepsShouldersRegisteredAndPartsInBoundsAcrossThreePerformancesAndSizes()",
+      "sourceAttachment": "87413781-09DB-415B-B816-DB1558C07956.png",
+      "sha256": "ae65c60c47eee491de072aa44d61c96a3dbf9f1cc44f62f66d794c4cbdd9dea8"
+    },
+    {
+      "file": "body-follow-gentleRetry-168pt-lean.png",
+      "sourceBundle": "Validation/test-runs/original-0241-app-final.xcresult",
+      "test": "ResultArmPresentationTests/testActualBodyFollowKeepsShouldersRegisteredAndPartsInBoundsAcrossThreePerformancesAndSizes()",
+      "sourceAttachment": "183FB984-4C33-43C6-BE3E-4FE47EABDB35.png",
+      "sha256": "4e5497b2df7be102b8a7daade81b19bcef9c51df9fab2445970b458c8f3d5811"
+    },
+    {
+      "file": "body-follow-starHug-168pt-reverse.png",
+      "sourceBundle": "Validation/test-runs/original-0241-app-final.xcresult",
+      "test": "ResultArmPresentationTests/testActualBodyFollowKeepsShouldersRegisteredAndPartsInBoundsAcrossThreePerformancesAndSizes()",
+      "sourceAttachment": "3711F580-50F7-4E01-BE79-12B2EE013B40.png",
+      "sha256": "6cbf37a38747c3d4e9ceb01d334d2a8fc2fd1d842978200b0a113b65ef6b6ad4"
+    },
+    {
+      "file": "body-follow-starHug-168pt-lean.png",
+      "sourceBundle": "Validation/test-runs/original-0241-app-final.xcresult",
+      "test": "ResultArmPresentationTests/testActualBodyFollowKeepsShouldersRegisteredAndPartsInBoundsAcrossThreePerformancesAndSizes()",
+      "sourceAttachment": "C157422B-E797-48D2-A562-B4815BF478E6.png",
+      "sha256": "5d24aec6def1beb2183e266a26c105133314fbf3235ca6af8fb8e7518da25c41"
+    },
+    {
+      "file": "body-follow-joyfulRaise-168pt-reverse.png",
+      "sourceBundle": "Validation/test-runs/original-0241-app-final.xcresult",
+      "test": "ResultArmPresentationTests/testActualBodyFollowKeepsShouldersRegisteredAndPartsInBoundsAcrossThreePerformancesAndSizes()",
+      "sourceAttachment": "EE758B47-CD4C-498F-A656-55F5707CE06B.png",
+      "sha256": "67d1a2fcf685caecb14e654dc8f81bb1e5f348156a0505bece00a0ce435841d8"
+    },
+    {
+      "file": "body-follow-joyfulRaise-168pt-lean.png",
+      "sourceBundle": "Validation/test-runs/original-0241-app-final.xcresult",
+      "test": "ResultArmPresentationTests/testActualBodyFollowKeepsShouldersRegisteredAndPartsInBoundsAcrossThreePerformancesAndSizes()",
+      "sourceAttachment": "26AA8D57-A049-4958-9C79-3766AD22CE4A.png",
+      "sha256": "b8cfb5943b0fd9ff10efda77353e3c92655c2c5d6a0d9097a10baf9a304bdb0b"
+    },
+    {
+      "file": "body-follow-gentleRetry-140pt-reverse.png",
+      "sourceBundle": "Validation/test-runs/original-0241-app-final.xcresult",
+      "test": "ResultArmPresentationTests/testActualBodyFollowKeepsShouldersRegisteredAndPartsInBoundsAcrossThreePerformancesAndSizes()",
+      "sourceAttachment": "B9DF9E40-33D0-4A9E-B05B-CBE0C6DE94CB.png",
+      "sha256": "bc912197d26fae799d1709962ca483ebb0406ccabe7e965390aee5277a98a1f5"
+    },
+    {
+      "file": "body-follow-gentleRetry-140pt-lean.png",
+      "sourceBundle": "Validation/test-runs/original-0241-app-final.xcresult",
+      "test": "ResultArmPresentationTests/testActualBodyFollowKeepsShouldersRegisteredAndPartsInBoundsAcrossThreePerformancesAndSizes()",
+      "sourceAttachment": "672CAC6E-0D2C-474A-AC25-7C93EB259360.png",
+      "sha256": "30db9d4267c1193036eda4493569f55fba1de96d48dbf8b867157bdd67c522fa"
+    },
+    {
+      "file": "body-follow-starHug-140pt-reverse.png",
+      "sourceBundle": "Validation/test-runs/original-0241-app-final.xcresult",
+      "test": "ResultArmPresentationTests/testActualBodyFollowKeepsShouldersRegisteredAndPartsInBoundsAcrossThreePerformancesAndSizes()",
+      "sourceAttachment": "3E98BEB3-AC95-4A11-853A-BD9491928A42.png",
+      "sha256": "cef0cde85e11150eb21e9611030e359223b6c0d94275cb2cf6d8f7fa8576688a"
+    },
+    {
+      "file": "body-follow-starHug-140pt-lean.png",
+      "sourceBundle": "Validation/test-runs/original-0241-app-final.xcresult",
+      "test": "ResultArmPresentationTests/testActualBodyFollowKeepsShouldersRegisteredAndPartsInBoundsAcrossThreePerformancesAndSizes()",
+      "sourceAttachment": "92B836DE-624E-477F-8F0F-52D6370D2799.png",
+      "sha256": "35fb7a4a7cc98a38abacf4e90209ff18e2db1d6dcef96d3848071617c690dec7"
+    },
+    {
+      "file": "body-follow-joyfulRaise-140pt-reverse.png",
+      "sourceBundle": "Validation/test-runs/original-0241-app-final.xcresult",
+      "test": "ResultArmPresentationTests/testActualBodyFollowKeepsShouldersRegisteredAndPartsInBoundsAcrossThreePerformancesAndSizes()",
+      "sourceAttachment": "9A9BF9D6-5D22-4AB2-8905-96ABEA19AD39.png",
+      "sha256": "7bde124e0f0bb1f6ffe8c2a9f78dec2250d5a4cfbb0bb36f20ac84325a3020b5"
+    },
+    {
+      "file": "body-follow-joyfulRaise-140pt-lean.png",
+      "sourceBundle": "Validation/test-runs/original-0241-app-final.xcresult",
+      "test": "ResultArmPresentationTests/testActualBodyFollowKeepsShouldersRegisteredAndPartsInBoundsAcrossThreePerformancesAndSizes()",
+      "sourceAttachment": "8A29ED9F-06FB-42C9-BDAD-DAFC6AE2E5C5.png",
+      "sha256": "60779687a00e1b389d56aad15fa59309cadd7876b4f3a756ca63d246a9d7f2ea"
+    },
+    {
+      "file": "current-L6-complete-celebration-1500ms.png",
+      "sourceBundle": "Validation/test-runs/original-0241-app-final.xcresult",
+      "test": "ResultChoreographyTests/testCurrentLevelSixRootShowsSequentialResultAndAccessibleImmediateAction()",
+      "sourceAttachment": "9AB8FCB6-4D4F-48C2-818F-D271A4BB1543.png",
+      "sha256": "cd8dc2c4845c33a42836960fd15c4fc535043eb7e7daf8008c6298fa9e75a960"
+    },
+    {
+      "file": "current-L6-title-second-1070ms.png",
+      "sourceBundle": "Validation/test-runs/original-0241-app-final.xcresult",
+      "test": "ResultChoreographyTests/testCurrentLevelSixRootShowsSequentialResultAndAccessibleImmediateAction()",
+      "sourceAttachment": "A2A85A05-FD58-44D0-8450-CA16FF0B7C75.png",
+      "sha256": "a0cd05d1fffdf33de5a42a7770d80162db32f6de27072144cc88f20845404772"
+    },
+    {
+      "file": "current-L6-character-first-880ms.png",
+      "sourceBundle": "Validation/test-runs/original-0241-app-final.xcresult",
+      "test": "ResultChoreographyTests/testCurrentLevelSixRootShowsSequentialResultAndAccessibleImmediateAction()",
+      "sourceAttachment": "2F92BDEE-3F47-44A1-B723-79356F3CC110.png",
+      "sha256": "29d1efa35d2c1ef95c3cf7a7d1290e0804feb5bf47c2e750c8e21fdf92f2c3a3"
+    },
+    {
+      "file": "current-L6-final-board-200ms.png",
+      "sourceBundle": "Validation/test-runs/original-0241-app-final.xcresult",
+      "test": "ResultChoreographyTests/testCurrentLevelSixRootShowsSequentialResultAndAccessibleImmediateAction()",
+      "sourceAttachment": "A51D40BA-92BD-4914-9FC2-88F1E0FC9CAD.png",
+      "sha256": "30c89676acdc16532f8855160d1eae788759b37d77202cc74099d0e9aeaa1184"
+    }
+  ],
+  "naturalPlaybackSamples": "natural-playback-samples.json",
+  "review": "18张三尺寸/三动作倾斜与反向实际运行图、4张当前L6 Root画面逐张检查肩、颈、臀脚接缝与握持；录屏有限抽帧检查完整三套动作。",
+  "video": {
+    "file": "result-body-follow.mov",
+    "sourceBundle": "Validation/test-runs/original-0241-app-final.xcresult",
+    "durationSeconds": 4.226666666666667,
+    "sampling": "video-sampling.json",
+    "sha256": "785853793658ab9a8381660f2d6748b81116d645ef45285f6cf601954cfbd821"
+  },
+  "baseline": {
+    "build": "0.2.38 (41)",
+    "file": "../original-feel-0238/final-result-performances.mov",
+    "reason": "039/040没有修改结算角色轨迹；旧录屏仅作定性参考，非同秒精确对照。"
+  },
+  "limitations": [
+    "结算角色录像及18张图来自真实UIKit组件测试宿主；4张Root图来自当前关卡包第6关。",
+    "自然采样未冻结/跳转CA时钟；有限画面能检查连接与裁切，不证明主观自然度已达到参考品质。",
+    "无新的Meowdoku成功试玩、听觉A/B、真机安装或分发。"
+  ]
+}

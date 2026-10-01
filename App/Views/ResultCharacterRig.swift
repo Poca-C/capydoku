@@ -85,14 +85,48 @@ enum ResultRigMotion {
             wrist: point(shoulder.x + ux * distance, shoulder.y + uy * distance))
     }
 
+    /// Secondary motion is authored in the same normalized rig space as the
+    /// hands. Rotate the chest and its shoulder roots together around the hips;
+    /// moving the complete character alone leaves the upper body rigid.
+    /// These small Demo curves supplement the existing takeoff/contact motion.
+    private static func bodyMotion(_ performance: ResultCharacterPerformance, phase: CGFloat)
+        -> (lean: CGFloat, lift: CGFloat) {
+        let beats: [CGFloat], leans: [CGFloat], lifts: [CGFloat]
+        switch performance {
+        case .joyfulRaise:
+            beats = [0, 0.12, 0.32, 0.50, 0.67, 0.84, 1]
+            leans = [0, -0.035, 0.030, -0.025, 0.022, -0.012, 0]
+            lifts = [0, 0.012, -0.014, 0.012, -0.009, 0.007, 0]
+        case .starHug:
+            beats = [0, 0.12, 0.34, 0.58, 0.80, 1]
+            leans = [0, -0.018, -0.045, -0.035, 0.022, 0]
+            lifts = [0, 0.006, -0.008, -0.006, 0.003, 0]
+        case .gentleRetry:
+            beats = [0, 0.12, 0.36, 0.58, 0.86, 1]
+            leans = [0, -0.015, 0.055, 0.045, -0.018, 0]
+            lifts = [0, -0.004, 0.017, 0.017, -0.006, 0]
+        }
+        return (interpolate(phase, times: beats, values: leans),
+                interpolate(phase, times: beats, values: lifts))
+    }
+
+    private static func carriedByBody(_ point: CGPoint, lean: CGFloat, lift: CGFloat) -> CGPoint {
+        let hip = CGPoint(x: 0.50, y: 0.90)
+        let x = point.x - hip.x, y = point.y - hip.y
+        return CGPoint(x: hip.x + cos(lean) * x - sin(lean) * y,
+                       y: hip.y + sin(lean) * x + cos(lean) * y + lift)
+    }
+
     static func pose(_ performance: ResultCharacterPerformance, phase: CGFloat) -> ResultRigPose {
         let joy = performance == .joyfulRaise
         let hugging = performance == .starHug
-        let shoulderL = point(joy ? 0.29 : (hugging ? 0.28 : 0.31), joy ? 0.59 : (hugging ? 0.61 : 0.54))
+        let body = bodyMotion(performance, phase: phase)
+        func carried(_ point: CGPoint) -> CGPoint { carriedByBody(point, lean: body.lean, lift: body.lift) }
+        let shoulderL = carried(point(joy ? 0.29 : (hugging ? 0.28 : 0.31), joy ? 0.59 : (hugging ? 0.61 : 0.54)))
         // The old hug shoulder at x=.83 sat on the torso's outer alpha edge,
         // exposing its attachment as a hook. Move that joint into the body;
         // the authored wrist/star path and both bone lengths remain unchanged.
-        let shoulderR = point(joy ? 0.76 : (hugging ? 0.78 : 0.73), joy ? 0.59 : (hugging ? 0.67 : 0.53))
+        let shoulderR = carried(point(joy ? 0.76 : (hugging ? 0.78 : 0.73), joy ? 0.59 : (hugging ? 0.67 : 0.53)))
         let wristL: CGPoint, wristR: CGPoint, nod: CGFloat, star: CGPoint?
         let pawAngleL: CGFloat, pawAngleR: CGFloat
         switch performance {
@@ -133,7 +167,7 @@ enum ResultRigMotion {
                    hypot(end.x - start.x, end.y - start.y) / 0.64,
                    atan2(end.y - start.y, end.x - start.x) - .pi / 2)
         }
-        sprite(.torso, point(0.48,0.665), 0.74, 0.59)
+        sprite(.torso, carried(point(0.48,0.665)), 0.74, 0.59, body.lean)
         let footTurn = joy ? interpolate(phase, times: [0, 0.36, 0.50, 0.67, 0.84, 1], values: [0, 0.065, 0, 0.045, 0, 0]) : 0
         sprite(.leftFoot, point(0.32,0.88), 0.20, 0.185, -footTurn)
         sprite(.rightFoot, point(0.70,0.88), 0.20, 0.185, footTurn)
@@ -141,7 +175,14 @@ enum ResultRigMotion {
         segment(.rightUpperArm, right.shoulder, right.elbow, 0.17)
         segment(.leftForearm, left.elbow, left.wrist, 0.15)
         segment(.rightForearm, right.elbow, right.wrist, 0.15)
-        sprite(performance == .gentleRetry ? .sadHead : .happyHead, point(0.55,0.31 + abs(nod) * 0.3), 0.79, 0.566, nod)
+        // The head follows a little after the chest, retaining its own nod.
+        // Ease both ends to the original pose before the finite animation ends;
+        // no hard coordinate clamp, extra timer, or completion-time pose swap.
+        let headPhase = min(1, max(0, (phase - 0.035) / 0.94))
+        let follow = bodyMotion(performance, phase: headPhase)
+        let head = carriedByBody(point(0.55,0.31 + abs(nod) * 0.3),
+                                 lean: follow.lean * 0.8, lift: follow.lift * 0.8)
+        sprite(performance == .gentleRetry ? .sadHead : .happyHead, head, 0.79, 0.566, nod)
         if let star { sprite(.star, star, 0.29, 0.278) }
         sprite(.leftPaw, left.wrist, 0.12, 0.12, pawAngleL)
         sprite(.rightPaw, right.wrist, 0.12, 0.12, pawAngleR)

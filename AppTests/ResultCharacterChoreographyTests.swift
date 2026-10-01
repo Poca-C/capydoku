@@ -27,6 +27,80 @@ import UIKit
 }
 
 final class ResultCharacterChoreographyTests: XCTestCase {
+    func testChestAndShouldersMoveTogetherWhileFeetStayAnchoredAndHeadFollows() throws {
+        for performance in ResultCharacterPerformance.allCases {
+            let initial = ResultRigMotion.pose(performance, phase: 0)
+            let initialTorso = try XCTUnwrap(initial.parts[.torso])
+            let headPart: ResultRigPart = performance == .gentleRetry ? .sadHead : .happyHead
+            let initialHead = try XCTUnwrap(initial.parts[headPart])
+            func shoulderInTorso(_ shoulder: CGPoint, _ torso: ResultRigPartPose) -> CGPoint {
+                let dx = shoulder.x - torso.center.x, dy = shoulder.y - torso.center.y
+                return CGPoint(x: cos(torso.rotation) * dx + sin(torso.rotation) * dy,
+                               y: -sin(torso.rotation) * dx + cos(torso.rotation) * dy)
+            }
+            var torsoMotion: CGFloat = 0, shoulderMotion: CGFloat = 0, headMotion: CGFloat = 0
+            for sample in 0...720 {
+                let pose = ResultRigMotion.pose(performance, phase: CGFloat(sample) / 720)
+                let torso = try XCTUnwrap(pose.parts[.torso])
+                let head = try XCTUnwrap(pose.parts[headPart])
+                torsoMotion = max(torsoMotion, abs(torso.rotation))
+                headMotion = max(headMotion, abs(head.center.x - initialHead.center.x))
+                XCTAssertLessThan(hypot(head.center.x - initialHead.center.x, head.center.y - initialHead.center.y), 0.065,
+                    "Secondary head motion stays within the neck overlap and viewport budget.")
+                for (arm, original) in [(pose.leftArm, initial.leftArm), (pose.rightArm, initial.rightArm)] {
+                    shoulderMotion = max(shoulderMotion, hypot(arm.shoulder.x-original.shoulder.x, arm.shoulder.y-original.shoulder.y))
+                    let actual = shoulderInTorso(arm.shoulder, torso)
+                    let expected = shoulderInTorso(original.shoulder, initialTorso)
+                    XCTAssertEqual(actual.x, expected.x, accuracy: 0.000001,
+                        "The sleeve root must remain attached to the same place on the leaning torso.")
+                    XCTAssertEqual(actual.y, expected.y, accuracy: 0.000001)
+                }
+                for part in [ResultRigPart.leftFoot, .rightFoot] {
+                    XCTAssertEqual(try XCTUnwrap(pose.parts[part]).center, try XCTUnwrap(initial.parts[part]).center,
+                        "Internal upper-body motion must not drag either foot away from its original ground anchor.")
+                }
+            }
+            XCTAssertGreaterThan(torsoMotion, 0.025, "The chest must participate in the action, beyond a whole-image sway.")
+            XCTAssertGreaterThan(shoulderMotion, 0.01, "Hands must not move on an otherwise frozen shoulder girdle.")
+            XCTAssertGreaterThan(headMotion, 0.008, "The head must follow the body's lean as well as nod.")
+            let finalTorso = try XCTUnwrap(ResultRigMotion.pose(performance, phase: 1).parts[.torso])
+            XCTAssertEqual(finalTorso.center, initialTorso.center)
+            XCTAssertEqual(finalTorso.rotation, initialTorso.rotation)
+        }
+    }
+
+    func testMovingShouldersNeverPullPawsAwayFromRequestedTargetsAndSettleWithoutASnap() throws {
+        for performance in ResultCharacterPerformance.allCases {
+            for sample in 0...1440 {
+                let pose = ResultRigMotion.pose(performance, phase: CGFloat(sample) / 1440)
+                for arm in [pose.leftArm, pose.rightArm] {
+                    let length: CGFloat = performance == .joyfulRaise ? 0.20 : 0.18
+                    let reach = hypot(arm.wrist.x-arm.shoulder.x, arm.wrist.y-arm.shoulder.y)
+                    // Paw sprites use the solved wrist, so comparing those two
+                    // positions would also pass after an unwanted IK clamp.
+                    // A clamped result lands at .0001 or 2*length-.0001;
+                    // require a strict interior margin at every dense sample.
+                    XCTAssertGreaterThan(reach, 0.001, "The wrist must stay away from the inner IK clamp.")
+                    XCTAssertLessThan(reach, 2*length-0.001,
+                        "A moving shoulder must not pull the original wrist target beyond the arm's reach.")
+                    XCTAssertEqual(hypot(arm.elbow.x-arm.shoulder.x, arm.elbow.y-arm.shoulder.y), length, accuracy: 0.000001)
+                    XCTAssertEqual(hypot(arm.wrist.x-arm.elbow.x, arm.wrist.y-arm.elbow.y), length, accuracy: 0.000001)
+                }
+            }
+            let epsilon: CGFloat = 0.00001
+            for endpoint: CGFloat in [0, 1] {
+                let pose = ResultRigMotion.pose(performance, phase: endpoint)
+                let near = ResultRigMotion.pose(performance, phase: endpoint == 0 ? epsilon : 1-epsilon)
+                for part in pose.parts.keys {
+                    let a = try XCTUnwrap(pose.parts[part]), b = try XCTUnwrap(near.parts[part])
+                    XCTAssertLessThan(hypot(a.center.x-b.center.x, a.center.y-b.center.y)/epsilon, 0.01,
+                        "Every carried part must enter and settle at rest, not snap when its animation is removed.")
+                    XCTAssertLessThan(abs(a.rotation-b.rotation)/epsilon, 0.01)
+                }
+            }
+        }
+    }
+
     func testStarHugLiftPassesThroughItsEarlyWaypointWithoutLosingGripOrContactPauses() throws {
         func star(_ phase: CGFloat) throws -> CGPoint {
             try XCTUnwrap(ResultRigMotion.pose(.starHug, phase: phase).parts[.star]).center
