@@ -171,7 +171,12 @@ final class ResultCharacterTests: XCTestCase {
         let clock = ResultCharacterClock(), rig = try ResultCharacterRig(clock: clock); defer { rig.close() }
         rig.configure(won: false, id: UUID())
         let character = try XCTUnwrap(layers(rig.view.layer).first { $0.name == "result-character" })
-        XCTAssertNotNil(character.contents)
+        XCTAssertNil(character.contents)
+        let head = try XCTUnwrap(character.sublayers?.first { $0.name == ResultRigPart.sadHead.layerName })
+        let texture = try XCTUnwrap(head.contents) as AnyObject
+        let expectedTexture = try XCTUnwrap(ResultCharacterArtwork.rigImage(.sadHead)?.cgImage)
+        XCTAssertTrue(texture === expectedTexture)
+        XCTAssertEqual(head.opacity, 1)
         XCTAssertNotNil(character.animation(forKey: "result-transform.rotation.z"))
         let sighs = layers(rig.view.layer).filter { $0.name?.hasPrefix("result-sigh-") == true }
         XCTAssertEqual(sighs.count, 3)

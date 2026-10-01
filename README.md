@@ -1,12 +1,12 @@
 # Capydoku · 原文对齐 Demo
 
-原生 Swift / SwiftUI iPhone 应用，默认简体中文、可在设置中切换 English、竖屏，最低编译目标 iOS 15。当前版本 **0.2.28（31）**，可内部试玩，尚未达到正式验收或上架状态。
+原生 Swift / SwiftUI iPhone 应用，默认简体中文、可在设置中切换 English、竖屏，最低编译目标 iOS 15。当前版本 **0.2.29（32）**，可内部试玩，尚未达到正式验收或上架状态。
 
 ## 唯一需求基准
 
 以工作区原始《卡皮巴拉主题（Capydoku）区域逻辑小游戏需求说明 V1.3》的正文和内嵌截图为准。`Reference/Original/document.json` 保存源文件校验值与提取结果。后续报告及88条 Checklist只作核查，不能覆盖原文。用户于2026-10-01明确补充面向中文市场，语言条款按此更新为默认简体中文并内置英文切换；其他原文要求继续有效。0.1.x 的功能测试通过记录不证明符合原文。
 
-当前逐章对照与未完成项见 `Validation/original-conformance.md`；本轮实际测试记录见 `Validation/original-verification.json`。
+当前逐章对照与未完成项见 `Validation/original-conformance.md`；本轮进展与验证边界见 `Validation/original-0229-feedback.json`，综合历史记录保留在 `Validation/original-verification.json`。
 
 ## 运行和试玩
 
@@ -18,7 +18,15 @@
 
 下列主页面图册保留0.2.1的实测版本；0.2.4新增操作反馈，分时组件截图见 Docs/original-feedback/manifest.json，不能用旧图替代新构建验收：[首页](Docs/original-reference/01-home.png) · [游戏](Docs/original-reference/04-gameplay.png) · [提示](Docs/original-reference/05-hint.png) · [设置](Docs/original-reference/02-settings.png) · [签到](Docs/original-reference/03-check-in.png)。
 
-无需第三方依赖或真实广告 SDK。模拟器运行/测试须保留本地签名（CODE_SIGNING_ALLOWED=YES），工程仅为模拟器配置钥匙串权限；禁用签名只能验证编译，不能验证真实钥匙串。0.2.28（31）已无线覆盖安装并自动启动。请求启动前的安装前后8份文件逐字节一致，第10关对局、285条事件、38条奖励及设置/签到/身份保持，见[真机记录](Validation/original-0228-physical-install.json)。声音听测及完整真机手感仍待验。
+无需第三方依赖或真实广告 SDK。模拟器运行/测试须保留本地签名（CODE_SIGNING_ALLOWED=YES），工程仅为模拟器配置钥匙串权限；禁用签名只能验证编译，不能验证真实钥匙串。0.2.29（32）已无线覆盖安装并由设备查询确认。请求启动前的安装前后8份文件逐字节一致，第10关对局、287条事件、38条奖励及设置/签到/身份保持，见[真机记录](Validation/original-0229-physical-install.json)。本次自动启动被手机锁屏阻止，需解锁后打开App；未记录为启动成功或真机手感验收。
+
+## 0.2.29 连续角色动作、跨格彩粒与音效预热
+
+- 全身角色改用两张原创图集的12个部件，让肩肘、手爪、头身和星星连续移动；三套演出仍有限、可取消，结束不换回旧整图。图库与轨迹在加载阶段预热，缺失时完整回退。[素材及提示词](Validation/capy-rig-artwork-0229.json)保留来源；这是刚性部件动画，眼口仍为固定贴图。
+- 正确落格新增12枚稀疏星点/区域碎片，0.62秒内沿弧线跨格但留在棋盘内，每盘最多2组；局部爱心保留，粒子位于头像盖层后。触摸或展示门禁撤除，减少动态效果与低电量简化，不增加操作等待。
+- 已有短音效在加载阶段预热并复用独立声部，缓存最多24个、每文件6个，缓存不足保留原播放方式；9个WAV及音量、延迟不变。静音、中断、重置和临时准备失败的恢复已覆盖。[音频诊断](Validation/audio-timing-0229.json)区分本机准备成本与尚未测量的真机声音延迟。
+- 最终466项App（170.380秒）、17e九项UI（241.035秒）通过，均0失败/跳过；[14张运行图及8.42秒实际模拟器录屏抽帧](Docs/original-feel-0229/manifest.json)已核对。保留83项早期通过及100项专项99过/1失败历史；欢呼前臂越界经缩至76%占位修正，未放宽断言。手机已保留数据安装0.2.29，本次自动启动因锁屏被拒，声音/触觉及完整真机手感未验。
+- 本轮重新试玩Meowdoku第3关至通关，观察到爱心、跨格彩粒和结果姿态变化，末档为 **Perfect**；不把它写成Excellent或修改正式配置。[参考记录](Validation/meowdoku-playtest-comparison-0229.json) · [本轮验证](Validation/original-0229-feedback.json) · [Checklist增量](Validation/checklist-0229-feedback-delta.json)。177项Core沿用0.2.24，83正式状态与88历史统计保持，分发/GitHub仍暂停。
 
 ## 0.2.28 待机侧看、正确细节与姿态衔接
 

@@ -1278,6 +1278,8 @@ final class AppModel: ObservableObject {
         flushInterstitialEvents()
         if !pendingRewardObservations.isEmpty || !progress.pendingBuffEvents.isEmpty || !progress.pendingLevelResultEvents.isEmpty || progress.rewardLedger.values.contains(where: { $0.completionEvent != nil || $0.analyticsOfferPending || !$0.pendingAdEvents.isEmpty }) { save(force: true) }
     }
+    /// Prepare local feedback during loading, before Home becomes interactive.
+    func prepareStartupFeedback() async { await feedback.prepareShortEffects() }
     /// Called only after the startup view reaches Home, including optional permission completion.
     /// This permits local adapter use; it does not claim a real SDK/CMP has been initialized.
     func startupReady() {

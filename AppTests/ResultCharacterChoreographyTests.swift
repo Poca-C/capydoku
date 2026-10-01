@@ -6,13 +6,13 @@ import UIKit
     let window: UIWindow
     let view: ResultCharacterUIView
     private let previous: UIWindow?
-    init() throws {
+    init(side: CGFloat = 168) throws {
         let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
         previous = scene.windows.first(where: \.isKeyWindow)
         window = UIWindow(windowScene: scene); window.frame = scene.coordinateSpace.bounds
         let controller = UIViewController(); controller.view.backgroundColor = UIColor(CapyPalette.ink)
         window.rootViewController = controller; window.makeKeyAndVisible()
-        view = ResultCharacterUIView(frame: CGRect(x: 30, y: 120, width: 168, height: 168))
+        view = ResultCharacterUIView(frame: CGRect(x: 30, y: 120, width: side, height: side))
         controller.view.addSubview(view); view.layoutIfNeeded()
     }
     func configure(_ performance: ResultCharacterPerformance, event: UUID?, reduceMotion: Bool = false) {
@@ -86,205 +86,193 @@ final class ResultCharacterChoreographyTests: XCTestCase {
         XCTAssertEqual(calls.filter { $0 == "CapySad" }.count, 1)
     }
 
-    @MainActor func testFreshResultUsesRealPoseContentsAndCancellationImmediatelyRestoresFinalPose() throws {
+    @MainActor private func layers(_ root: CALayer) -> [CALayer] {
+        [root] + (root.sublayers ?? []).flatMap(layers)
+    }
+
+    @MainActor private func modelPixels(_ view: UIView) throws -> Data {
+        let format = UIGraphicsImageRendererFormat(); format.scale = 1
+        let picture = UIGraphicsImageRenderer(bounds:view.bounds,format:format).image { view.layer.render(in:$0.cgContext) }
+        return try XCTUnwrap(picture.cgImage?.dataProvider?.data) as Data
+    }
+
+    @MainActor func testAllTwelveRigPartsPrepareOnceWithVerifiedBoundsAndCachedDecodedImages() throws {
+        var calls:[String:Int] = [:]
+        let cache = ResultRigImageCache { name in calls[name,default:0] += 1; return UIImage(named:name) }
+        XCTAssertTrue(cache.prepare()); XCTAssertTrue(cache.prepare())
+        XCTAssertEqual(cache.digestChecks,2); XCTAssertEqual(cache.alphaScanCount,0)
+        var unique = Set<Data>()
+        for part in ResultRigPart.allCases {
+            let image = try XCTUnwrap(cache.image(part))
+            XCTAssertTrue(image === cache.image(part))
+            let bitmap = try XCTUnwrap(image.cgImage)
+            let data = try pixels(bitmap); unique.insert(Data(data))
+            let alpha = stride(from:3,to:data.count,by:4).map { data[$0] }
+            XCTAssertGreaterThan(alpha.filter { $0 == 0 }.count, bitmap.width * bitmap.height / 100)
+            XCTAssertGreaterThan(alpha.filter { $0 > 240 }.count, bitmap.width * bitmap.height / 5)
+            XCTAssertLessThanOrEqual(max(bitmap.width,bitmap.height),640)
+        }
+        XCTAssertEqual(unique.count,12)
+        XCTAssertEqual(calls,["CapyRigCore0229":1,"CapyRigLimbs0229":1])
+    }
+
+    @MainActor func testUnknownReplacementRigCannotReuseStaleJointRectanglesOrPartiallyAssemble() throws {
+        let format = UIGraphicsImageRendererFormat(); format.scale = 1
+        let replacement = UIGraphicsImageRenderer(size:CGSize(width:1254,height:1254),format:format).image {
+            UIColor.orange.setFill(); $0.fill(CGRect(x:0,y:0,width:1254,height:1254))
+        }
+        var calls = 0
+        let cache = ResultRigImageCache { _ in calls += 1; return replacement }
+        XCTAssertFalse(cache.prepare()); XCTAssertFalse(cache.prepare())
+        for part in ResultRigPart.allCases { XCTAssertNil(cache.image(part)) }
+        XCTAssertEqual(calls,1); XCTAssertEqual(cache.digestChecks,1)
+        let missingSecond = ResultRigImageCache { $0 == "CapyRigCore0229" ? UIImage(named:$0) : nil }
+        XCTAssertFalse(missingSecond.prepare())
+        for part in ResultRigPart.allCases { XCTAssertNil(missingSecond.image(part),"No headless or armless partial rig") }
+    }
+
+    @MainActor func testFreshResultMovesIndependentJointsWithoutChangingTexturesAndCancelsToSameRig() throws {
         let rig = try CharacterChoreographyRig(); defer { rig.close() }
         for performance in ResultCharacterPerformance.allCases {
-            rig.configure(performance, event: nil)
+            rig.configure(performance,event:nil)
+            let settled = try modelPixels(rig.view)
             let character = try XCTUnwrap(rig.view.layer.sublayers?.first { $0.name == "result-character" })
-            let settled = try XCTUnwrap(character.contents) as AnyObject
-            let expected = try XCTUnwrap(ResultCharacterArtwork.poses(for: performance).last?.cgImage)
-            XCTAssertTrue(settled === expected, "The layer must retain the cached terminal pose")
-            XCTAssertNil(character.animation(forKey: "result-pose-sequence"))
-            rig.configure(performance, event: UUID())
-            let sequence = try XCTUnwrap(character.animation(forKey: "result-pose-sequence") as? CAKeyframeAnimation)
-            XCTAssertEqual(sequence.calculationMode, .discrete)
-            let images = try XCTUnwrap(sequence.values as? [CGImage])
-            XCTAssertEqual(Set(try images.map { Data(try pixels($0)) }).count, 3)
-            XCTAssertEqual(sequence.repeatCount, 0); XCTAssertLessThanOrEqual(sequence.duration, 1.2)
+            XCTAssertNil(character.contents,"A valid rig never displays a complete-character fallback image")
+            let parts = try XCTUnwrap(character.sublayers)
+            XCTAssertEqual(parts.count,12)
+            XCTAssertEqual(parts.filter { $0.opacity > 0 }.count,performance == .starHug ? 11 : 10)
+            let expectedHead = performance == .gentleRetry ? ResultRigPart.sadHead : .happyHead
+            let head = try XCTUnwrap(parts.first { $0.name == expectedHead.layerName })
+            let texture = try XCTUnwrap(head.contents) as AnyObject
+            let expectedTexture = try XCTUnwrap(ResultCharacterArtwork.rigImage(expectedHead)?.cgImage)
+            XCTAssertTrue(texture === expectedTexture)
+            rig.configure(performance,event:UUID())
+            for piece in parts where piece.opacity > 0 {
+                XCTAssertNil(piece.animation(forKey:"contents"))
+                XCTAssertNil(piece.animation(forKey:"result-opacity"),"No crossfaded duplicate silhouettes")
+                let position = try XCTUnwrap(piece.animation(forKey:"result-rig-position") as? CAKeyframeAnimation)
+                XCTAssertEqual(position.calculationMode,.linear)
+                XCTAssertEqual(position.values?.count,ResultRigMotion.sampleCount)
+                XCTAssertEqual(position.repeatCount,0)
+                XCTAssertLessThanOrEqual(position.duration,1.2)
+            }
+            for part in [ResultRigPart.leftForearm,.rightForearm] {
+                let piece = try XCTUnwrap(parts.first { $0.name == part.layerName })
+                let rotation = try XCTUnwrap(piece.animation(forKey:"result-rig-rotation") as? CAKeyframeAnimation)
+                let values = try XCTUnwrap(rotation.values as? [NSNumber]).map(\.doubleValue)
+                XCTAssertGreaterThan(try XCTUnwrap(values.max()) - XCTUnwrap(values.min()),0.1,
+                    "A forearm must articulate independently; whole-mascot motion alone is not a rig")
+            }
+            let lower = try XCTUnwrap(parts.firstIndex { $0.name == ResultRigPart.leftUpperArm.layerName })
+            let torso = try XCTUnwrap(parts.firstIndex { $0.name == ResultRigPart.torso.layerName })
+            XCTAssertLessThan(lower,torso,"Shoulder roots stay behind the body without changing layer order")
             rig.view.cancelPresentation()
-            XCTAssertNil(character.animation(forKey: "result-pose-sequence"))
-            let cancelled = try XCTUnwrap(character.contents) as AnyObject
-            XCTAssertTrue(cancelled === expected, "Cancelling must expose the same terminal pose immediately")
+            XCTAssertTrue(layers(rig.view.layer).allSatisfy { $0.animationKeys()?.isEmpty ?? true })
+            XCTAssertNil(character.contents)
+            XCTAssertEqual(try modelPixels(rig.view),settled,"Completion/cancel must retain the same rig terminal pose")
         }
     }
 
-    @MainActor func testReducedMotionRetainsExpressiveFinalPoseWithoutAnyMotionOrLaterReplay() throws {
+    @MainActor func testReducedMotionShowsCompleteTerminalRigWithoutDelayedReplay() throws {
         let rig = try CharacterChoreographyRig(); defer { rig.close() }
         for performance in ResultCharacterPerformance.allCases {
-            let event = UUID(); rig.configure(performance, event: event, reduceMotion: true)
+            let event = UUID(); rig.configure(performance,event:event,reduceMotion:true)
+            XCTAssertTrue(layers(rig.view.layer).allSatisfy { $0.animationKeys()?.isEmpty ?? true })
             let character = try XCTUnwrap(rig.view.layer.sublayers?.first { $0.name == "result-character" })
-            XCTAssertTrue(character.animationKeys()?.isEmpty ?? true)
-            let expected = try XCTUnwrap(ResultCharacterArtwork.poses(for: performance).last?.cgImage)
-            let settled = try XCTUnwrap(character.contents) as AnyObject
-            XCTAssertTrue(settled === expected, "Reduce Motion still displays the expressive terminal pose")
-            rig.configure(performance, event: event)
-            XCTAssertEqual(rig.view.playedEventCount, 0)
+            XCTAssertNil(character.contents)
+            XCTAssertEqual(character.sublayers?.filter { $0.opacity > 0 }.count,performance == .starHug ? 11 : 10)
+            let finalPixels = try modelPixels(rig.view)
+            rig.configure(performance,event:event)
+            XCTAssertEqual(rig.view.playedEventCount,0)
+            XCTAssertEqual(try modelPixels(rig.view),finalPixels)
         }
     }
 
-    @MainActor func testPoseTimingUsesOneOpaqueCharacterAndGroundedPerPhaseMotion() throws {
-        let rig = try CharacterChoreographyRig(); defer { rig.close() }
+    func testContinuousTracksPreserveBoneLengthsStarGripAndSubpixelInterpolatedElbowContact() throws {
         for performance in ResultCharacterPerformance.allCases {
-            rig.configure(performance, event: UUID())
-            let character = try XCTUnwrap(rig.view.layer.sublayers?.first { $0.name == "result-character" })
-            XCTAssertEqual(character.anchorPoint.x, 0.5, accuracy: 0.0001)
-            XCTAssertEqual(character.anchorPoint.y, 0.96, accuracy: 0.0001)
-            XCTAssertEqual(character.opacity, 1)
-            XCTAssertEqual(rig.view.layer.sublayers?.filter { $0.contents != nil }.count, 1,
-                "There is one complete silhouette; pose changes must not crossfade doubled faces/paws")
-            let poses = try XCTUnwrap(character.animation(forKey: "result-pose-sequence") as? CAKeyframeAnimation)
-            XCTAssertEqual(poses.calculationMode, .discrete)
-            XCTAssertNil(character.animation(forKey: "result-opacity"))
-            XCTAssertNil(character.animation(forKey: "result-transform.scale"), "Squash uses independent axes around the feet")
-            for key in ["transform.scale.x", "transform.scale.y", "transform.rotation.z"] {
-                let motion = try XCTUnwrap(character.animation(forKey: "result-" + key) as? CAKeyframeAnimation)
-                XCTAssertEqual(motion.beginTime, poses.beginTime, accuracy: 0.0001)
-                XCTAssertEqual(motion.duration, poses.duration)
-                XCTAssertNil(motion.timingFunction, "Global easing would move motion beats away from fixed pose changes")
-                XCTAssertEqual(motion.timingFunctions?.count, try XCTUnwrap(motion.keyTimes).count - 1)
-            }
-            if performance == .joyfulRaise {
-                let translation = try XCTUnwrap(character.animation(forKey: "result-transform.translation.y") as? CAKeyframeAnimation)
-                let values = try XCTUnwrap(translation.values as? [NSNumber])
-                let times = try XCTUnwrap(translation.keyTimes)
-                for contact in [0.43, 0.78] {
-                    let index = try XCTUnwrap(times.firstIndex { abs($0.doubleValue - contact) < 0.0001 })
-                    XCTAssertEqual(values[index].doubleValue, 0, accuracy: 0.0001, "Each landing returns to the ground plane")
+            let poses = ResultRigMotion.samples(performance)
+            XCTAssertEqual(poses.count,73)
+            for pose in poses {
+                for arm in [pose.leftArm,pose.rightArm] {
+                    let length:CGFloat = performance == .joyfulRaise ? 0.20 : 0.18
+                    XCTAssertEqual(hypot(arm.elbow.x-arm.shoulder.x,arm.elbow.y-arm.shoulder.y),length,accuracy:0.000001)
+                    XCTAssertEqual(hypot(arm.wrist.x-arm.elbow.x,arm.wrist.y-arm.elbow.y),length,accuracy:0.000001)
                 }
-            } else if performance == .starHug {
-                let sway = try XCTUnwrap(character.animation(forKey: "result-transform.rotation.z") as? CAKeyframeAnimation)
-                let stops = try XCTUnwrap(sway.keyTimes).map(\.doubleValue)
-                XCTAssertFalse(stops.contains(0.20)); XCTAssertFalse(stops.contains(0.66),
-                    "The star moves while the character is leaning, not during a stationary pose swap")
-            } else {
-                XCTAssertNil(character.animation(forKey: "result-transform.translation.y"),
-                    "A seated sigh may squash at the feet but must not push them through the ground")
+                if let star = pose.parts[.star] {
+                    XCTAssertEqual(pose.leftArm.wrist.x,star.center.x-0.11,accuracy:0.000001)
+                    XCTAssertEqual(pose.leftArm.wrist.y,star.center.y+0.035,accuracy:0.000001)
+                    XCTAssertEqual(pose.rightArm.wrist.x,star.center.x+0.11,accuracy:0.000001)
+                    XCTAssertEqual(pose.rightArm.wrist.y,star.center.y+0.04,accuracy:0.000001)
+                }
             }
-        }
-    }
-
-    /// Replays the exact 0.2.27 body transforms over unchanged production pose
-    /// assets. This is comparison evidence, not another production animation path.
-    @MainActor private func installLegacyBodyMotion(on view: ResultCharacterUIView, performance: ResultCharacterPerformance) throws {
-        let character = try XCTUnwrap(view.layer.sublayers?.first { $0.name == "result-character" })
-        let shadow = try XCTUnwrap(view.layer.sublayers?.first { $0.name == "result-ground-shadow" })
-        let poses = try XCTUnwrap(character.animation(forKey: "result-pose-sequence"))
-        let duration = poses.duration, start = poses.beginTime, side = min(view.bounds.width, view.bounds.height)
-        for key in character.animationKeys() ?? [] where key != "result-pose-sequence" { character.removeAnimation(forKey: key) }
-        shadow.removeAllAnimations()
-        CATransaction.begin(); CATransaction.setDisableActions(true)
-        character.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        character.frame = CGRect(x: side * 0.10, y: side * 0.13, width: side * 0.80, height: side * 0.80)
-        CATransaction.commit()
-        func add(_ target: CALayer, _ key: String, _ values: [CGFloat], _ times: [NSNumber]) {
-            let animation = CAKeyframeAnimation(keyPath: key)
-            animation.values = values; animation.keyTimes = times; animation.duration = duration
-            animation.beginTime = start; animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-            target.add(animation, forKey: "result-" + key)
-        }
-        switch performance {
-        case .joyfulRaise:
-            add(character, "transform.translation.y", [0, 2, -side * 0.07, 0, -side * 0.045, 0, 0], [0, 0.10, 0.27, 0.43, 0.61, 0.78, 1])
-            add(character, "transform.scale", [1, 0.97, 1.03, 0.97, 1.02, 1, 1], [0, 0.10, 0.27, 0.43, 0.61, 0.78, 1])
-            add(character, "transform.rotation.z", [0, -0.055, 0.055, -0.04, 0.035, 0], [0, 0.23, 0.42, 0.61, 0.78, 1])
-            add(shadow, "transform.scale", [1, 0.70, 1, 0.78, 1], [0, 0.27, 0.43, 0.61, 1])
-        case .starHug:
-            add(character, "transform.rotation.z", [0, -0.085, 0.085, -0.04, 0.025, 0], [0, 0.20, 0.44, 0.64, 0.81, 1])
-            add(character, "transform.scale", [1, 1.035, 1.02, 1], [0, 0.24, 0.72, 1])
-        case .gentleRetry:
-            add(character, "transform.translation.y", [0, side * 0.022, side * 0.022, 0], [0, 0.28, 0.70, 1])
-            add(character, "transform.rotation.z", [0, 0.04, -0.025, 0.022, 0], [0, 0.23, 0.43, 0.63, 1])
-            add(character, "transform.scale.y", [1, 0.97, 0.97, 1], [0, 0.28, 0.70, 1])
-        }
-    }
-
-    @MainActor func testActualHostCapturesOldAndNewMotionAroundPoseChangesWithoutBlendedSilhouettes() async throws {
-        for performance in ResultCharacterPerformance.allCases {
-            var samples: [UIImage] = []
-            var sampleTiming: [String] = []
-            let phases: [Double] = performance == .joyfulRaise ? [0.12, 0.19, 0.26, 0.38, 0.45, 0.52]
-                : performance == .starHug ? [0.15, 0.22, 0.29, 0.61, 0.68, 0.75] : [0.15, 0.22, 0.29, 0.67, 0.74, 0.81]
-            for legacy in [true, false] {
-                let rig = try CharacterChoreographyRig(); defer { rig.close() }
-                // Capture a running presentation tree in a real UIWindow.
-                // Pausing before its first commit can capture the model at the
-                // first sample, so never seek or fall back to that model here.
-                rig.view.schedule = { _, _ in }
-                rig.configure(performance, event: UUID())
-                if legacy { try installLegacyBodyMotion(on: rig.view, performance: performance) }
-                let character = try XCTUnwrap(rig.view.layer.sublayers?.first { $0.name == "result-character" })
-                let poses = try XCTUnwrap(character.animation(forKey: "result-pose-sequence"))
-                CATransaction.flush()
-                for phase in phases {
-                    let targetTime = poses.beginTime + phase * poses.duration
-                    let remaining = targetTime - character.convertTime(CACurrentMediaTime(), from: nil)
-                    if remaining > 0 { try await Task.sleep(nanoseconds: UInt64(remaining * 1_000_000_000)) }
-                    let presented = try XCTUnwrap(rig.view.layer.presentation())
-                    let presentedCharacter = try XCTUnwrap(character.presentation())
-                    if phase == phases.first {
-                        XCTAssertFalse(CATransform3DEqualToTransform(presentedCharacter.transform, character.transform),
-                            "The first sample must capture active body motion, not the static model layer")
+            for i in 1..<poses.count {
+                for pair in [(ResultRigPart.leftUpperArm,ResultRigPart.leftForearm),(.rightUpperArm,.rightForearm)] {
+                    func interpolatedJoint(_ part:ResultRigPart,_ direction:CGFloat) throws -> CGPoint {
+                        let a = try XCTUnwrap(poses[i-1].parts[part]), b = try XCTUnwrap(poses[i].parts[part])
+                        let angles = ResultRigMotion.unwrapped([a.rotation,b.rotation])
+                        let angle = (angles[0]+angles[1])/2 + .pi/2, halfLength = a.size.height * 0.64/2
+                        return CGPoint(x:(a.center.x+b.center.x)/2 + cos(angle)*halfLength*direction,
+                                       y:(a.center.y+b.center.y)/2 + sin(angle)*halfLength*direction)
                     }
-                    let actualPhase = (character.convertTime(CACurrentMediaTime(), from: nil) - poses.beginTime) / poses.duration
-                    sampleTiming.append("\(legacy ? "0227" : "0228") target=\(phase) actual=\(actualPhase)")
-                    let format = UIGraphicsImageRendererFormat(); format.scale = 2; format.opaque = true
-                    samples.append(UIGraphicsImageRenderer(size: rig.view.bounds.size, format: format).image { context in
-                        UIColor(CapyPalette.ink).setFill(); context.fill(rig.view.bounds)
-                        presented.render(in: context.cgContext)
-                    })
-                    XCTAssertEqual(rig.view.layer.sublayers?.filter { $0.contents != nil }.count, 1)
-                    XCTAssertFalse(rig.view.isUserInteractionEnabled)
+                    let upperEnd = try interpolatedJoint(pair.0,1), lowerStart = try interpolatedJoint(pair.1,-1)
+                    XCTAssertLessThan(hypot(upperEnd.x-lowerStart.x,upperEnd.y-lowerStart.y),0.0025,
+                        "Interpolated elbow gap must remain under 0.5pt at the largest 250pt result (80% footprint)")
                 }
             }
-            let tile: CGFloat = 168
-            let format = UIGraphicsImageRendererFormat(); format.scale = 2; format.opaque = true
-            let strip = UIGraphicsImageRenderer(size: CGSize(width: tile * 6, height: tile * 2), format: format).image { _ in
-                for (index, sample) in samples.enumerated() {
-                    sample.draw(in: CGRect(x: CGFloat(index % 6) * tile, y: CGFloat(index / 6) * tile, width: tile, height: tile))
+            for phase in stride(from:CGFloat(0.01),through:0.99,by:0.01) {
+                let before = ResultRigMotion.pose(performance,phase:phase-0.00001)
+                let after = ResultRigMotion.pose(performance,phase:phase+0.00001)
+                for part in before.parts.keys {
+                    let a = try XCTUnwrap(before.parts[part]), b = try XCTUnwrap(after.parts[part])
+                    XCTAssertLessThan(hypot(a.center.x-b.center.x,a.center.y-b.center.y),0.001)
+                    let angles = ResultRigMotion.unwrapped([a.rotation,b.rotation])
+                    XCTAssertLessThan(abs(angles[1]-angles[0]),0.002,"No threshold may swap an elbow branch or full pose")
                 }
             }
-            let attachment = XCTAttachment(image: strip)
-            attachment.name = "result-pose-boundaries-\(performance.rawValue)-top-0227-bottom-0228"
-            attachment.lifetime = .keepAlways; add(attachment)
-            let timing = XCTAttachment(string: sampleTiming.joined(separator: "\n"))
-            timing.name = "result-pose-boundaries-\(performance.rawValue)-actual-sampling-times"
-            timing.lifetime = .keepAlways; add(timing)
-            XCTAssertEqual(samples.count, 12)
-            XCTAssertNotEqual(samples[0].pngData(), samples[6].pngData(), "Grounded motion must create an actual visible change")
         }
     }
 
-    @MainActor func testActualSmallHostCapturesAnticipationActionAndRecoveryForThreePerformances() async throws {
-        let rig = try CharacterChoreographyRig(); defer { rig.close() }
-        var samples: [UIImage] = []
-        for performance in ResultCharacterPerformance.allCases {
-            rig.configure(performance, event: UUID())
-            var elapsed: UInt64 = 0
-            for sample in [100_000_000, 350_000_000, 900_000_000] as [UInt64] {
-                try await Task.sleep(nanoseconds: sample - elapsed); elapsed = sample
+    @MainActor func testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving() async throws {
+        for side:CGFloat in [140,168,250] {
+            let rig = try CharacterChoreographyRig(side:side); defer { rig.close() }
+            for performance in ResultCharacterPerformance.allCases {
+                rig.configure(performance,event:nil)
+                let settled = try modelPixels(rig.view)
+                rig.configure(performance,event:UUID())
+                try await Task.sleep(nanoseconds:380_000_000)
+                let root = try XCTUnwrap(rig.view.layer.presentation())
+                let character = try XCTUnwrap(root.sublayers?.first { $0.name == "result-character" })
+                for part in character.sublayers ?? [] where part.opacity > 0 {
+                    let occupied = character.convert(part.frame,to:root)
+                    XCTAssertTrue(rig.view.bounds.insetBy(dx:-0.5,dy:-0.5).contains(occupied),
+                        "\(performance) \(side) \(part.name ?? "part") frame \(occupied) exceeds the allocated result decoration \(rig.view.bounds)")
+                }
                 let format = UIGraphicsImageRendererFormat(); format.scale = 2; format.opaque = true
-                samples.append(UIGraphicsImageRenderer(size: rig.view.bounds.size, format: format).image { context in
-                    UIColor(CapyPalette.ink).setFill(); context.fill(rig.view.bounds)
-                    (rig.view.layer.presentation() ?? rig.view.layer).render(in: context.cgContext)
-                })
-            }
-            rig.view.cancelPresentation()
-        }
-        let tile: CGFloat = 168
-        let format = UIGraphicsImageRendererFormat(); format.scale = 2; format.opaque = true
-        let contactSheet = UIGraphicsImageRenderer(size: CGSize(width: tile * 3, height: tile * 3), format: format).image { context in
-            UIColor(CapyPalette.ink).setFill(); context.fill(CGRect(x: 0, y: 0, width: tile * 3, height: tile * 3))
-            for (index, sample) in samples.enumerated() {
-                sample.draw(in: CGRect(x: CGFloat(index % 3) * tile, y: CGFloat(index / 3) * tile, width: tile, height: tile))
+                let image = UIGraphicsImageRenderer(size:rig.view.bounds.size,format:format).image {
+                    UIColor(CapyPalette.ink).setFill(); $0.fill(rig.view.bounds); root.render(in:$0.cgContext)
+                }
+                let attachment = XCTAttachment(image:image)
+                attachment.name = "rig-0229-\(performance)-\(Int(side))pt-actual-380ms"
+                attachment.lifetime = .keepAlways; add(attachment)
+                rig.view.cancelPresentation()
+                XCTAssertEqual(try modelPixels(rig.view),settled)
             }
         }
-        let attachment = XCTAttachment(image: contactSheet)
-        attachment.name = "result-real-pose-choreography-rows-joy-star-retry-columns-100-350-900ms"
-        attachment.lifetime = .keepAlways; add(attachment)
-        XCTAssertEqual(samples.count, 9)
-        for row in 0..<3 {
-            XCTAssertNotEqual(samples[row * 3].pngData(), samples[row * 3 + 1].pngData())
-            XCTAssertNotEqual(samples[row * 3 + 1].pngData(), samples[row * 3 + 2].pngData())
+    }
+
+    /// Root records this test's real simulator window. Do not freeze or seek CA.
+    /// The extra hold belongs to this evidence host, not to player animations.
+    @MainActor func testActualRigPerformancesRunContinuouslyForVideoReview() async throws {
+        let rig = try CharacterChoreographyRig(side:250); defer { rig.close() }
+        let label = UILabel(frame:CGRect(x:30,y:72,width:320,height:36))
+        label.textColor = UIColor(CapyPalette.paper); label.font = .systemFont(ofSize:24,weight:.bold)
+        rig.window.rootViewController?.view.addSubview(label)
+        for (performance,title) in [(ResultCharacterPerformance.joyfulRaise,"欢呼"),(.starHug,"抱星"),(.gentleRetry,"再试一次")] {
+            label.text = title
+            rig.configure(performance,event:UUID())
+            try await Task.sleep(nanoseconds:1_400_000_000)
+            XCTAssertNil(rig.view.activeEventID)
+            XCTAssertTrue(layers(rig.view.layer).allSatisfy { $0.animationKeys()?.isEmpty ?? true })
         }
     }
 }

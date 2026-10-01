@@ -1,0 +1,392 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.29 (32)",
+  "kind": "scoped_delta_to_88_item_audit",
+  "status": "verified_scoped_demo_improvements_physical_launch_locked_formal_acceptance_unchanged",
+  "baseAudit": "Validation/checklist-0221-audit.json",
+  "previousDelta": "Validation/checklist-0228-feedback-delta.json",
+  "sourceChecklist": "Validation/checklist-source.json",
+  "sourceCaseCount": 88,
+  "formalSignOff": false,
+  "full88Reexecuted": false,
+  "overallCountsRecomputed": false,
+  "unchangedStatusReason": "本轮只追加10项相关范围；所有原验收文本及既有状态保持，不改83行正式状态或88项历史统计。",
+  "originalParagraphs": [
+    241,
+    248,
+    249,
+    252,
+    254,
+    324,
+    325,
+    326,
+    330,
+    331,
+    332,
+    333,
+    334,
+    335,
+    336,
+    337,
+    338,
+    339,
+    341,
+    342,
+    343,
+    344
+  ],
+  "verificationSnapshot": {
+    "targeted": {
+      "status": "historical_character_bounds_failure_resolved_in_full_app",
+      "device": "iPhone 17 Pro simulator / iOS 26.5",
+      "cases": 100,
+      "passed": 99,
+      "failed": 1,
+      "assertionFailures": 3,
+      "skipped": 0,
+      "seconds": 24.367,
+      "groups": {
+        "AudioPolicyTests": 35,
+        "StartupPreparationTests": 16,
+        "LocalTestAudioImportTests": 7,
+        "BoardPlacementBurstTests": 5,
+        "BoardCellPresentationTests": 6,
+        "BoardGuidancePresentationTests": 15,
+        "ResultCharacterChoreographyTests": 9,
+        "ResultCharacterTests": 7
+      },
+      "failedTest": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving",
+      "failureScope": "joyfulRaise右前臂曾在140/168/250pt三种尺寸超出结果装饰分配范围；1个用例3条边界断言失败，已由最终466例全量复验通过。",
+      "log": "Validation/test-runs/original-0229-targeted-final.log",
+      "summary": "Validation/test-runs/original-0229-targeted-final-summary.json",
+      "bundle": "Validation/test-runs/original-0229-targeted-final.xcresult",
+      "boundary": "最终候选专项首轮，不是最终已通过构建。音频35、启动16、本地音频7、粒子5、格内6、引导15及旧角色7均通过；编排9项中8项通过。"
+    },
+    "application": {
+      "status": "passed",
+      "build": "0.2.29 (32)",
+      "device": "iPhone 17 Pro simulator / iOS 26.5",
+      "passed": 466,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 170.38,
+      "suiteSecondsIncludingOverhead": 170.532,
+      "scope": "完整CapydokuAppTests；比0.2.28增加17例，包含音频35例及修正后三种尺寸的角色边界，不作排除。",
+      "log": "Validation/test-runs/original-0229-app.log",
+      "summary": "Validation/test-runs/original-0229-app-summary.json",
+      "bundle": "Validation/test-runs/original-0229-app.xcresult"
+    },
+    "ui": {
+      "status": "passed",
+      "build": "0.2.29 (32)",
+      "device": "iPhone 17e simulator / iOS 26.5",
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 241.035,
+      "suiteSecondsIncludingOverhead": 241.046,
+      "log": "Validation/test-runs/original-0229-17e-ui.log",
+      "summary": "Validation/test-runs/original-0229-17e-ui-summary.json",
+      "bundle": "Validation/test-runs/original-0229-17e-ui.xcresult",
+      "repeatedTestAction": false,
+      "scope": "与0.2.28相同九个选定UI用例，不重复执行，无排除/跳过；教学、原生手势及道具、通关下一关、失败复活、一命提示与恢复、连续混合手势、离盘停止滑动、弹层可访问性及4/6/8/10尺寸。夹具边界保持，不代表150关全部人工试玩。",
+      "cases": [
+        "CapydokuUITests.CapydokuUITests testGuidedTutorialCoversRulesTapUndoBothSwipesAndFind",
+        "CapydokuUITests.CapydokuUITests testLastLifeSpotlightDismissalDoesNotSpendLifeOrMarkAndColdRestoreDoesNotReplayIt",
+        "CapydokuUITests.CapydokuUITests testLoseAndSimulatedRevivePreservesBoard",
+        "CapydokuUITests.CapydokuUITests testSolveEntirePuzzleAndAdvance",
+        "CapydokuUITests.CapydokuUITests testToolsResumeAfterNativeTapDoubleTapAndPanRecognizersFinish",
+        "CapydokuUITests.HardeningUITests testMixedBackToBackGesturesNeverRepeatDamageOrScore",
+        "CapydokuUITests.HardeningUITests testSwipeStopsWhenFingerLeavesBoard",
+        "CapydokuUITests.OriginalReferenceUITests testAllFourBoardSizesKeepNavigationRulesAndToolsInOrder",
+        "CapydokuUITests.OriginalReferenceUITests testModalControlsExcludeBackgroundAndReturnToTheSameBoard"
+      ]
+    },
+    "physical": {
+      "status": "installed_and_version_verified_automatic_launch_blocked_by_device_lock",
+      "installedThisRound": true,
+      "verifiedVersion": "0.2.29 (32)",
+      "strictSignaturePassed": true,
+      "automatedLaunchSucceeded": false,
+      "launchReason": "FBSOpenApplicationErrorDomain error7: device was not, or could not be, unlocked. 手机锁屏，非开发者未信任。",
+      "dataScope": "实际安装前后只读快照，位于请求启动之前；无卸载、清档、回滚或恢复覆盖。",
+      "observedFilesIdentical": 8,
+      "historicalEventsUnchanged": 287,
+      "rewardEntriesUnchanged": 38,
+      "primaryAndBackupChecksumsValid": 4,
+      "currentLevel": 10,
+      "sessionUnchanged": true,
+      "completedLevelsRetained": true,
+      "settingsCheckInIdentityRetained": true,
+      "evidence": "Validation/original-0229-physical-install.json",
+      "boundary": "签名、无线覆盖安装和设备版本查询已验证；新版本自动启动、连续运行、声音/触觉及真人手感未验证。"
+    },
+    "visual": {
+      "status": "reviewed_passed_scoped_runtime_images_and_movie_samples",
+      "manifest": "Docs/original-feel-0229/manifest.json",
+      "imagesReviewed": 14,
+      "imageScope": "最终466项App附件：9张角色（3动作×140/168/250pt）、4张粒子（100/280/480/730ms）、当前包第6关实际SwiftUI结算页。",
+      "imageIntegrity": "14张原图已按manifest逐一复核SHA256。",
+      "reviewers": {
+        "root": "4张粒子、当前L6结算页、录屏抽帧三套动作。",
+        "resultCharacterAgent": "9张最终角色图逐张目视及抽帧检查；主任务已确认。"
+      },
+      "sourceBundle": "Validation/test-runs/original-0229-app.xcresult",
+      "video": {
+        "file": "Docs/original-feel-0229/continuous-result-performances.mov",
+        "durationSeconds": 8.421666666666667,
+        "sampleContactSheet": "Docs/original-feel-0229/continuous-result-video-frames.png",
+        "sampleIntervalSeconds": 0.2,
+        "sampledFrames": 43,
+        "actualTimestampRecord": "Docs/original-feel-0229/video-sampling.json",
+        "scope": "实际iPhone17 Pro模拟器屏幕录制，Core Animation未暂停/seek；包含三尺寸宿主后连续三动作，为静音测试夹具，不是普通导航或真机录屏。"
+      },
+      "boundary": "有限目视样本验证边界、层次、关节衔接和清理；仍有刚性部件轮廓/明暗接缝，固定头部贴图无独立眼口动画。不代表真机帧率、声音/触觉、连续真人手感或Meowdoku审美/时序等效。"
+    },
+    "core": {
+      "modified": false,
+      "rerunThisBuild": false,
+      "latestCoreBuild": "0.2.24 (27)",
+      "latestCorePassed": 177,
+      "evidence": "Validation/test-runs/original-0224-core.log",
+      "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+    },
+    "targetedHistory": [
+      {
+        "status": "passed_before_final_review_corrections",
+        "device": "iPhone 17 Pro simulator / iOS 26.5",
+        "cases": 83,
+        "passed": 83,
+        "failed": 0,
+        "skipped": 0,
+        "seconds": 11.117,
+        "groups": {
+          "AudioPolicyTests": 34,
+          "StartupPreparationTests": 16,
+          "LocalTestAudioImportTests": 7,
+          "BoardPlacementBurstTests": 5,
+          "BoardCellPresentationTests": 6,
+          "BoardGuidancePresentationTests": 15
+        },
+        "log": "Validation/test-runs/original-0229-targeted.log",
+        "bundle": "Validation/test-runs/original-0229-targeted.xcresult",
+        "boundary": "先于音乐显式恢复缓存、临时prepare失败后的缓存恢复及粒子头像层次修正；不能替代最终构建全量。"
+      }
+    ]
+  },
+  "stillOpen": [
+    "0.2.29已安装，但本次自动启动被手机锁屏阻止；解锁后启动及声音/触觉、连续真人试玩仍未验。安装、签名和模拟器样本不能替代这些结论。",
+    "12个刚性部件提供连续关节动作，固定开心/失落头贴图没有独立眼口动画；细看仍有部件明暗与轮廓接缝。未宣称网格变形、真机帧率或Meowdoku审美/逐帧时序等效。",
+    "低性能设备及系统减少动态效果专项、冻结参考参数/音频清单、正式素材全集、外部服务交接及上架验收保持待验。本轮Perfect观察不改正式需求。"
+  ],
+  "rows": [
+    {
+      "id": "04-03",
+      "title": "正确双击只提交一次",
+      "originalAcceptanceText": "操作  双击正确空格和带普通X的正确格。\n通过  各提交一次，清除原X并显示动物；不为其他格自动打叉。",
+      "originalRequirementIDs": [
+        "PLAY-02",
+        "PLAY-06"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "真实找对后跨格粒子与局部头像/爱心联动，分数和业务提交保持；最终466项App、17e相关UI及4张粒子运行图通过。",
+      "evidence": [
+        "Validation/original-0229-feedback.json",
+        "Validation/test-runs/original-0229-app.xcresult",
+        "Validation/test-runs/original-0229-17e-ui.xcresult"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "04-06",
+      "title": "快速手势切换",
+      "originalAcceptanceText": "操作  快速切换单击、双击和滑动，并中途离开棋盘。\n通过  手势不串扰、不重复扣血；双击优先，滑动结束后不继续标记。",
+      "originalRequirementIDs": [
+        "PLAY-02"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "每盘最多2组跨格粒子，首次触摸撤除，不增加手势等待；最终App和17e连续混合手势、离盘滑动等选定UI通过。",
+      "evidence": [
+        "Validation/original-0229-feedback.json",
+        "Validation/test-runs/original-0229-app.xcresult",
+        "Validation/test-runs/original-0229-17e-ui.xcresult"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "04-07",
+      "title": "弹窗及等待锁盘",
+      "originalAcceptanceText": "操作  在提示、设置、结算和外部等待期间操作棋盘。\n通过  不穿透、不改盘、不扣血；结束后按当前对局状态恢复输入。",
+      "originalRequirementIDs": [
+        "ADS-01",
+        "PLAY-08"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "装饰不接收输入/读屏，预览、后台和离页等门禁清理，通关末格衔接保留；最终App及17e弹层可访问性/同盘恢复UI通过。",
+      "evidence": [
+        "Validation/original-0229-feedback.json",
+        "Validation/test-runs/original-0229-app.xcresult",
+        "Validation/test-runs/original-0229-17e-ui.xcresult"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "05-06",
+      "title": "结算导航与继续",
+      "originalAcceptanceText": "操作  测试结算下一关、返回首页和继续游戏。\n通过  跳转、进度及反馈正确；主动退出保留策略、击败比例和Rank有确认依据。",
+      "originalRequirementIDs": [
+        "PLAY-10",
+        "UI-04"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "结果演出改为原创部件连续动作，终态/取消保持同一rig；最终App、三尺寸9张角色图、当前L6结算页及17e通关下一关/复活UI核对通过，未改正式Rank等待定要求。",
+      "evidence": [
+        "Validation/original-0229-feedback.json",
+        "Docs/original-feel-0229/manifest.json",
+        "Validation/test-runs/original-0229-app.xcresult",
+        "Validation/test-runs/original-0229-17e-ui.xcresult"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "14-01",
+      "title": "主题资源与全部状态",
+      "originalAcceptanceText": "操作  核对角色、Logo、图标、棋盘和弹窗全部状态。\n通过  资源完整，主题与尺寸统一；没有参考产品品牌或遗漏占位素材。",
+      "originalRequirementIDs": [
+        "ART-01"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "两张原创图集提供12部件，校验/预热/整体缺失回退通过；最终三动作三尺寸9图已逐张核对，保留固定眼口和刚性部件限制，不表示正式素材全集验收。",
+      "evidence": [
+        "Validation/original-0229-feedback.json",
+        "Docs/original-feel-0229/manifest.json",
+        "Validation/test-runs/original-0229-app.xcresult",
+        "Validation/test-runs/original-0229-17e-ui.xcresult"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "14-02",
+      "title": "安全区字号与触点",
+      "originalAcceptanceText": "操作  在目标设备检查安全区、最大棋盘与长英文。\n通过  不遮挡、不截字；主要点击区至少44×44pt，正确错误不只靠颜色区分。",
+      "originalRequirementIDs": [
+        "UI-09"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "跨格完整弧线限制在棋盘内；角色占位缩至76%保留脚底后三尺寸边界通过。14张实际运行图及17e四尺寸/弹层可访问性选定UI通过，未覆盖所有目标设备与设置组合。",
+      "evidence": [
+        "Validation/original-0229-feedback.json",
+        "Docs/original-feel-0229/manifest.json",
+        "Validation/test-runs/original-0229-app.xcresult",
+        "Validation/test-runs/original-0229-17e-ui.xcresult"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "14-03",
+      "title": "游戏奖励动效与降级",
+      "originalAcceptanceText": "操作  触发正确、错误、Combo、通关及签到动效。\n通过  与业务状态同步，不阻碍后续操作；轻量特效在低性能设备可降级。",
+      "originalRequirementIDs": [
+        "ART-02"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "12粒子/0.62秒/最多2组与低动态/低电量门禁；12部件三套有限连续动作。最终App、14图和8.42秒实际模拟器录屏43帧抽样核对通过，不替代真机或冻结参考节奏验收。",
+      "evidence": [
+        "Validation/original-0229-feedback.json",
+        "Docs/original-feel-0229/manifest.json",
+        "Validation/test-runs/original-0229-app.xcresult",
+        "Validation/test-runs/original-0229-17e-ui.xcresult"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "14-04",
+      "title": "原音频文件与触发验收",
+      "originalAcceptanceText": "操作  逐项触发按钮、X、滑动、撤销、正确错误及Combo声音。\n通过  文件、触发次数、节奏和分组符合冻结音频表；没有未经确认的额外声音。",
+      "originalRequirementIDs": [
+        "AUDIO-01",
+        "AUDIO-04",
+        "AUDIO-05"
+      ],
+      "priorStatus": "pending",
+      "formalStatusAfterThisRound": "pending",
+      "newEvidenceScope": "9个本地测试原声文件不变，只预热/复用播放实例；最终Debug模拟器及手机包各9WAV资源核验通过，没有新声音或裁切。正式音频映射、音量和时序仍未冻结，未做听觉A/B。",
+      "evidence": [
+        "Validation/original-0229-feedback.json",
+        "Validation/audio-timing-0229.json",
+        "Validation/test-runs/original-0229-app.xcresult",
+        "Validation/test-runs/original-0229-17e-ui.xcresult"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "14-05",
+      "title": "音频叠加打断与恢复",
+      "originalAcceptanceText": "操作  快速操作并切前后台，测试外部播放前后及四个开关。\n通过  声音不失控叠加、不漏停或错误重播；恢复前次开关与播放状态。",
+      "originalRequirementIDs": [
+        "AUDIO-02",
+        "AUDIO-03",
+        "AUDIO-06"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "最终466项App通过，含音频35、启动16和本地音频7项，覆盖显式音乐恢复及临时prepare失败恢复；手机安装验证不等于听觉验收，实际声音及冻结参考策略仍未验。",
+      "evidence": [
+        "Validation/original-0229-feedback.json",
+        "Validation/audio-timing-0229.json",
+        "Validation/test-runs/original-0229-app.xcresult",
+        "Validation/test-runs/original-0229-17e-ui.xcresult"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "16-03",
+      "title": "最终构建全部问题复验",
+      "originalAcceptanceText": "操作  在最终构建复测所有失败用例及受影响流程。\n通过  每个Bug均有关联修复版本、复测结论和证据，旧版本通过不能代替复测。",
+      "originalRequirementIDs": [
+        "TECH-07"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "83项早期与100项候选99过/1失败历史保留；角色边界修正后466项App、17e九项UI及14图/录屏抽帧核对通过。0.2.29严格验签、无线覆盖安装及版本查询通过，安装前后8文件一致、287事件/38奖励及第10关状态保留；自动启动因锁屏被拒，未记作真机运行/手感验收。",
+      "evidence": [
+        "Validation/original-0229-feedback.json",
+        "Docs/original-feel-0229/manifest.json",
+        "Validation/test-runs/original-0229-app.xcresult",
+        "Validation/test-runs/original-0229-17e-ui.xcresult",
+        "Validation/original-0229-physical-install.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    }
+  ],
+  "baselinePreservation": {
+    "status": "read_only_verified",
+    "sourceChecklistCases": 88,
+    "formalConformanceRows": 83,
+    "files": [
+      {
+        "file": "Validation/checklist-source.json",
+        "sha256": "5bd83dc55739a19e6d69a7aad14e21294ad9536808a82d2ca2d08bb2c32638c4",
+        "byteIdenticalToHEAD": true
+      },
+      {
+        "file": "Validation/checklist-0221-audit.json",
+        "sha256": "c4fea525bc25fe0624b454abe9e4c86c3ff107976113d4ab98da98772a20f0af",
+        "byteIdenticalToHEAD": true
+      },
+      {
+        "file": "Validation/original-conformance.json",
+        "sha256": "3b97d7a7cde6da2f904ad7286ff9584d6546ef2af8939d9455d38a9955ab773c",
+        "byteIdenticalToHEAD": true
+      }
+    ],
+    "scope": "最终文档收口时再次只读核对；源表、基线审计及83正式状态与HEAD字节一致。"
+  }
+}

@@ -31,8 +31,66 @@ enum ResultCharacterPerformance: String, CaseIterable {
 
 enum ResultCharacterArtwork {
     private static let cache = ResultCharacterImageCache { UIImage(named: $0) }
+    private static let rigCache = ResultRigImageCache { UIImage(named: $0) }
     static func poses(for performance: ResultCharacterPerformance) -> [UIImage] {
         cache.poses(for: performance)
+    }
+
+    /// Call from the existing loading gate: decode all cutouts and build the
+    /// three short joint tracks before the first result can be presented.
+    @discardableResult static func prewarmRig() -> Bool {
+        let ready = rigCache.prepare()
+        ResultRigMotion.prewarm()
+        return ready
+    }
+
+    static func rigImage(_ part: ResultRigPart) -> UIImage? { rigCache.image(part) }
+}
+
+/// The generated atlases have transparent fractional-cell margins (the limbs
+/// sheet is 1774×887). Explicit verified rectangles avoid rounding assumptions.
+final class ResultRigImageCache {
+    private let load: (String) -> UIImage?
+    private var prepared = false
+    private var images: [ResultRigPart: UIImage] = [:]
+    private(set) var digestChecks = 0
+    private(set) var alphaScanCount = 0
+    init(load: @escaping (String) -> UIImage?) { self.load = load }
+
+    static let coreBounds = [CGRect(x:45,y:102,width:569,height:505), CGRect(x:657,y:135,width:571,height:410),
+        CGRect(x:47,y:722,width:576,height:420), CGRect(x:705,y:693,width:470,height:450)]
+    static let limbBounds = [CGRect(x:117,y:62,width:251,height:364), CGRect(x:594,y:90,width:195,height:315),
+        CGRect(x:1003,y:187,width:213,height:214), CGRect(x:1394,y:145,width:289,height:265),
+        CGRect(x:105,y:477,width:247,height:359), CGRect(x:567,y:499,width:207,height:309),
+        CGRect(x:997,y:592,width:210,height:198), CGRect(x:1399,y:553,width:296,height:269)]
+
+    func image(_ part: ResultRigPart) -> UIImage? { _ = prepare(); return images[part] }
+
+    @discardableResult func prepare() -> Bool {
+        if prepared { return images.count == ResultRigPart.allCases.count }
+        prepared = true
+        let atlases: [(String, Int, Int, String, [CGRect], [ResultRigPart])] = [
+            ("CapyRigCore0229",1254,1254,"b60a16842ffe4666eadcea26ae757c49e8f263c201634b961d8325c3988b1a5d",Self.coreBounds,[.torso,.happyHead,.sadHead,.star]),
+            ("CapyRigLimbs0229",1774,887,"5354358b312919d57dd9aa0351a047d19a5bbb35e249e1082d7f64fae2252353",Self.limbBounds,[.leftUpperArm,.leftForearm,.leftPaw,.leftFoot,.rightUpperArm,.rightForearm,.rightPaw,.rightFoot])]
+        for (name,width,height,digest,bounds,parts) in atlases {
+            guard let image = load(name), image.imageOrientation == .up, let source = image.cgImage,
+                  source.width == width, source.height == height else { images.removeAll(); return false }
+            digestChecks += 1
+            // An unknown/replaced sheet must not reuse old joint cutouts. Fail
+            // to the complete existing mascot instead of silently misrigging it.
+            guard CapyAlphaPlane.digest(in: source) == digest else { images.removeAll(); return false }
+            for (part,rect) in zip(parts,bounds) {
+                let cropRect = rect.insetBy(dx:-2,dy:-2).intersection(CGRect(x:0,y:0,width:width,height:height))
+                guard let crop = source.cropping(to: cropRect) else { images.removeAll(); return false }
+                let format = UIGraphicsImageRendererFormat(); format.scale = 1; format.opaque = false
+                // Decode once now, not when a newly discovered part first animates.
+                let size = CGSize(width:crop.width,height:crop.height)
+                images[part] = UIGraphicsImageRenderer(size:size,format:format).image { _ in
+                    UIImage(cgImage:crop).draw(in:CGRect(origin:.zero,size:size))
+                }
+            }
+        }
+        return images.count == ResultRigPart.allCases.count
     }
 }
 

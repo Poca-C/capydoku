@@ -36,6 +36,16 @@ final class FeedbackPlayer {
         var music = false
     }
     typealias Scheduler = (TimeInterval, @escaping () -> Void) -> AudioScheduledTask
+    /// Cached handles are leased to exactly one Playing object at a time. File
+    /// sharing (mark/swipe) never shares an active playback cursor or fade task.
+    private final class PreparedEffect {
+        let file: String
+        let handle: AudioPlaybackHandle
+        var leased = false
+        var ready = false
+        var preparationTask: AudioScheduledTask?
+        init(file: String, handle: AudioPlaybackHandle) { self.file = file; self.handle = handle }
+    }
     private final class Playing {
         let key: String
         let clip: AudioClipPolicy
@@ -45,6 +55,9 @@ final class FeedbackPlayer {
         var loopTask: AudioScheduledTask?
         var naturalFadeTask: AudioScheduledTask?
         var fadeCompletionTask: AudioScheduledTask?
+        var playbackEndTask: AudioScheduledTask?
+        var prepared: PreparedEffect?
+        var retired = false
         init(key: String, clip: AudioClipPolicy, handle: AudioPlaybackHandle, started: TimeInterval) {
             self.key = key; self.clip = clip; self.handle = handle; self.started = started; remainingLoops = clip.loops
         }
@@ -67,6 +80,7 @@ final class FeedbackPlayer {
     private let sessionControl: (Bool) -> Bool
     private let haptics: HapticFeedbackPlayer
     private let suppressProductionAudio: Bool
+    private let usesInjectedPlayer: Bool
     private(set) var environment = FeedbackEnvironment(page: .startup)
     private var blocks: Set<FeedbackAudioBlock> { environment.blocks }
     private var musicBlocked: Bool { !blocks.intersection([.paused, .advertisement, .background]).isEmpty }
@@ -80,6 +94,16 @@ final class FeedbackPlayer {
     private var swipeQueue = SwipeAudioQueue()
     private var swiping = false
     private var observers: [NSObjectProtocol] = []
+    private var preparedEffects: [String: [PreparedEffect]] = [:]
+    private var preparedPoolEnabled = false
+    private var preparationGeneration = 0
+    private var rewarmTask: Task<Void, Never>?
+    // Cache budgets, not gameplay concurrency limits. Overflow uses an uncached
+    // player and still obeys the imported event/concurrency-group policy.
+    private let preparedTotalLimit = 24
+    private let preparedFileLimit = 6
+    private var preparedCount: Int { preparedEffects.values.reduce(0) { $0 + $1.count } }
+
 
     init(manifest: ReferenceAudioManifest? = nil, resourceResolver: ((String) -> URL?)? = nil,
          playerFactory: ((URL) -> AudioPlaybackHandle?)? = nil, scheduler: Scheduler? = nil,
@@ -117,6 +141,7 @@ final class FeedbackPlayer {
                 return true
             } catch { return false }
         }
+        usesInjectedPlayer = playerFactory != nil
         suppressProductionAudio = playerFactory == nil && Self.isTesting
         validationErrors = self.manifest.validationErrors(resourceExists: { resource($0) != nil }, validateUnverified: usesLocalTestAudio)
         if observeSystem {
@@ -142,8 +167,14 @@ final class FeedbackPlayer {
         for (id, item) in effects where !enabled(item.clip) { stop(item); effects.removeValue(forKey: id) }
         if !settings.sound { endSwipe(cancelled: true) }
         if previous.music != settings.music {
+            let resumesExplicitly = settings.music && interrupted
             if settings.music { interrupted = false } // Explicit user re-enable may resume after a non-resumable interruption.
             transition(settings.music ? .musicEnabled : .musicDisabled)
+            if resumesExplicitly { requestEffectPreparation() }
+        }
+        if previous.sound != settings.sound || previous.voice != settings.voice {
+            discardPreparedEffects()
+            requestEffectPreparation()
         }
         syncHaptics()
     }
@@ -159,7 +190,9 @@ final class FeedbackPlayer {
         syncHaptics()
         let contextChanged = old.page != updated.page || old.level != updated.level || old.overlay != updated.overlay
         let newBlocks = updated.blocks.subtracting(old.blocks)
-        if !newBlocks.intersection([.paused, .advertisement, .background]).isEmpty { cancelTransient() }
+        if !newBlocks.intersection([.paused, .advertisement, .background]).isEmpty {
+            cancelTransient(); discardPreparedEffects()
+        }
         else {
             if contextChanged || newBlocks.contains(.inputLocked) { endSwipe(cancelled: true) }
             if contextChanged { cancelOutOfScopeAudio() }
@@ -180,6 +213,7 @@ final class FeedbackPlayer {
             transition(blockEvent(reason, active: updated.blocks.contains(reason)))
         }
         if music == nil { deactivateIfBlocked() }
+        if !old.blocks.intersection([.paused, .advertisement, .background]).isEmpty && !musicBlocked { requestEffectPreparation() }
     }
     /// Call with separate reasons so ending an ad cannot unpause a backgrounded app.
     func setBlocked(_ reason: FeedbackAudioBlock, active: Bool) {
@@ -264,15 +298,15 @@ final class FeedbackPlayer {
     }
     func handleInterruption(began: Bool, shouldResume: Bool) {
         sessionReady = false
-        if began { interrupted = true; cancelTransient(); transition(.interruptionBegan) }
-        else if shouldResume { interrupted = false; transition(.interruptionEnded) }
+        if began { interrupted = true; cancelTransient(); discardPreparedEffects(); transition(.interruptionBegan) }
+        else if shouldResume { interrupted = false; transition(.interruptionEnded); requestEffectPreparation() }
         syncHaptics()
         // No shouldResume means no automatic restart, even if a later settings refresh occurs.
     }
     func handleMediaServicesReset() {
-        cancelTransient(); if let music { stop(music) }; music = nil
+        cancelTransient(); discardPreparedEffects(); if let music { stop(music) }; music = nil
         musicTransitionTask?.cancel(); musicTransitionTask = nil; sessionReady = false
-        transition(.mediaReset)
+        transition(.mediaReset); requestEffectPreparation()
     }
     private static var isTesting: Bool { ProcessInfo.processInfo.arguments.contains("-ui-testing") || ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil }
     private var trusted: Bool { (manifest.referenceVerified || usesLocalTestAudio) && validationErrors.isEmpty && !suppressProductionAudio }
@@ -304,7 +338,7 @@ final class FeedbackPlayer {
             guard let clip = self.playable(key, acceptedIn: triggerContext), (!swipe || self.swiping) else { return }
             self.effects = self.effects.filter { _, item in
                 if !item.handle.isPlaying {
-                    item.loopTask?.cancel(); item.naturalFadeTask?.cancel(); item.fadeCompletionTask?.cancel(); return false
+                    self.stop(item); return false
                 }; return true
             }
             let existing = self.effects.filter {
@@ -315,20 +349,110 @@ final class FeedbackPlayer {
                 if clip.overflow == .dropNewest { return }
                 if let oldest = existing.min(by: { $0.value.started < $1.value.started }) { self.stop(oldest.value); self.effects.removeValue(forKey: oldest.key) }
             }
-            if let playing = self.newPlayer(key: key, clip: clip) { self.effects[id] = playing; self.start(playing, restart: false) }
+            if let playing = self.newPlayer(key: key, clip: clip) {
+                self.effects[id] = playing; self.start(playing, restart: false)
+                if !playing.handle.isPlaying { self.stop(playing); self.effects.removeValue(forKey: id) }
+                else { self.schedulePreparedPlaybackEnd(playing, id: id) }
+            }
         }
         let task = schedule(delay, action)
         pending[id] = Pending(key: key, swipe: swipe, dueAt: dueAt, task: task, action: action)
     }
     private func newPlayer(key: String, clip: AudioClipPolicy) -> Playing? {
-        guard trusted, let url = resource(clip.file), let handle = makePlayer(url), handle.duration.isFinite, handle.duration > 0 else { return nil }
-        if let loop = clip.loopRange, loop.end > handle.duration { return nil }
-        guard clip.fadeIn <= handle.duration, clip.fadeOut <= handle.duration else { return nil }
+        guard trusted else { return nil }
+        let cached = preparedPoolEnabled && clip.group != .music && clip.loops == 0
+            ? preparedEffects[clip.file]?.first(where: { !$0.leased && $0.ready }) : nil
+        let handle: AudioPlaybackHandle
+        if let cached { handle = cached.handle }
+        else {
+            guard let url = resource(clip.file), let created = makePlayer(url) else { return nil }
+            handle = created
+        }
+        guard valid(handle, for: clip) else { return nil }
         handle.numberOfLoops = clip.loopRange == nil ? clip.loops : 0
-        guard handle.prepareToPlay() else { return nil }
-        return Playing(key: key, clip: clip, handle: handle, started: clock())
+        handle.currentTime = 0
+        if cached == nil, !handle.prepareToPlay() { return nil }
+        let playing = Playing(key: key, clip: clip, handle: handle, started: clock())
+        if let cached { cached.leased = true; cached.ready = false; playing.prepared = cached }
+        return playing
+    }
+    private func valid(_ handle: AudioPlaybackHandle, for clip: AudioClipPolicy) -> Bool {
+        handle.duration.isFinite && handle.duration > 0
+            && (clip.loopRange.map { $0.end <= handle.duration } ?? true)
+            && clip.fadeIn <= handle.duration && clip.fadeOut <= handle.duration
+    }
+    /// Called during the existing loading stage. It never calls play(), adds a
+    /// cue or changes imported timing; yielding between handles keeps it cancellable.
+    func prepareShortEffects() async {
+        preparedPoolEnabled = true
+        let generation = preparationGeneration
+        guard trusted, !interrupted, !musicBlocked else { return }
+        // prepareToPlay may allocate audio resources. Configure ambient mixing
+        // before preparation so warming cannot adopt a default exclusive category.
+        if !Self.isTesting && !usesInjectedPlayer {
+            do { try AVAudioSession.sharedInstance().setCategory(.ambient, mode: .default, options: [.mixWithOthers]) }
+            catch { return }
+        }
+        let clips = manifest.clips.sorted { $0.key < $1.key }.map(\.value)
+            .filter { $0.group != .music && $0.loops == 0 && enabled($0) }
+        var visited = Set<String>()
+        for clip in clips where visited.insert(clip.file).inserted {
+            // A transient prepare failure must not occupy a dead cache slot.
+            // Retry each idle, unready entry once per explicit warm request;
+            // never loop until success or touch a leased playback cursor.
+            for entry in preparedEffects[clip.file] ?? [] where !entry.leased && !entry.ready {
+                guard !Task.isCancelled, generation == preparationGeneration, !interrupted, !musicBlocked, enabled(clip) else { return }
+                entry.preparationTask?.cancel(); entry.preparationTask = nil
+                entry.handle.currentTime = 0; entry.handle.numberOfLoops = 0; entry.handle.volume = 0
+                entry.ready = entry.handle.prepareToPlay()
+                await Task.yield()
+            }
+            let capacity = min(preparedFileLimit, clips.filter { $0.file == clip.file }.reduce(0) { $0 + $1.maximumConcurrent })
+            while (preparedEffects[clip.file]?.count ?? 0) < capacity && preparedCount < preparedTotalLimit {
+                guard !Task.isCancelled, generation == preparationGeneration, !interrupted, !musicBlocked,
+                      enabled(clip), let url = resource(clip.file), let handle = makePlayer(url), valid(handle, for: clip) else { return }
+                handle.currentTime = 0; handle.numberOfLoops = 0; handle.volume = 0
+                guard handle.prepareToPlay() else { break }
+                let entry = PreparedEffect(file: clip.file, handle: handle); entry.ready = true
+                preparedEffects[clip.file, default: []].append(entry)
+                await Task.yield()
+            }
+        }
+    }
+    private func requestEffectPreparation() {
+        guard preparedPoolEnabled, trusted, !interrupted, !musicBlocked else { return }
+        rewarmTask?.cancel()
+        rewarmTask = Task { [weak self] in await self?.prepareShortEffects() }
+    }
+    private func discardPreparedEffects() {
+        preparationGeneration += 1; rewarmTask?.cancel(); rewarmTask = nil
+        for entry in preparedEffects.values.flatMap({ $0 }) { entry.preparationTask?.cancel() }
+        preparedEffects.removeAll()
+    }
+    private func releasePreparedEffect(_ item: Playing) {
+        guard let entry = item.prepared else { return }
+        entry.leased = false; entry.ready = false
+        let generation = preparationGeneration
+        entry.preparationTask = schedule(0) { [weak self, weak entry] in
+            guard let self, let entry, generation == self.preparationGeneration, !entry.leased,
+                  !self.interrupted, !self.musicBlocked,
+                  self.preparedEffects[entry.file]?.contains(where: { $0 === entry }) == true,
+                  self.manifest.clips.values.contains(where: { $0.file == entry.file && self.enabled($0) }) else { return }
+            entry.handle.currentTime = 0; entry.handle.numberOfLoops = 0; entry.handle.volume = 0
+            entry.ready = entry.handle.prepareToPlay()
+        }
+    }
+    private func schedulePreparedPlaybackEnd(_ item: Playing, id: UUID) {
+        guard item.prepared != nil else { return }
+        // A small cleanup tolerance does not alter playback. If the device still
+        // reports active audio, the normal next-event sweep owns its retirement.
+        item.playbackEndTask = schedule(item.handle.duration + 0.04) { [weak self, weak item] in
+            guard let self, let item, self.effects[id] === item, !item.handle.isPlaying else { return }
+            self.stop(item); self.effects.removeValue(forKey: id)
+        }
     }
     private func start(_ item: Playing, restart: Bool) {
+        item.retired = false
         guard prepareSession() else { return }
         if restart { item.handle.currentTime = 0; item.remainingLoops = item.clip.loops }
         item.handle.volume = item.clip.fadeIn > 0 ? 0 : item.clip.volume
@@ -367,7 +491,10 @@ final class FeedbackPlayer {
         }
     }
     private func stop(_ item: Playing) {
-        item.loopTask?.cancel(); item.naturalFadeTask?.cancel(); item.fadeCompletionTask?.cancel(); item.handle.stop()
+        guard !item.retired else { return }
+        item.retired = true
+        item.loopTask?.cancel(); item.naturalFadeTask?.cancel(); item.fadeCompletionTask?.cancel(); item.playbackEndTask?.cancel()
+        item.handle.stop(); releasePreparedEffect(item)
     }
     private func cancelTransient() {
         for item in pending.values { item.task.cancel() }; pending.removeAll()

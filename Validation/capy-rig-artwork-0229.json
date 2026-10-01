@@ -1,0 +1,360 @@
+{
+  "version": "0.2.29",
+  "createdDate": "2026-10-01",
+  "status": "Final unified App run passed 466/466 tests with 0 failures and 0 skipped. Reviewed all nine actual 380ms UIKit screenshots at 140/168/250pt and the final actual simulator-recording contact sheet; cheer margin correction verified without weakening bounds assertions.",
+  "tool": "Built-in image_gen.imagegen; no CLI fallback",
+  "source": "Only original Capydoku Mascot, Joyful and Retry assets as generation style references. Existing Sad asset additionally viewed for identity review. No Meowdoku artwork used, copied or extracted.",
+  "inputSHA256": {
+    "App/Resources/Assets.xcassets/CapyMascot.imageset/CapyMascot.png": "462fbf8050c203ecd8b8b8e08dd33f58971cc1c5cc927e77f742205948d468a7",
+    "App/Resources/Assets.xcassets/CapySad.imageset/CapySad.png": "ee8cce1f80225bc67904b1bdbfa566f1909be5b7205702b8980499490a6e254d",
+    "App/Resources/Assets.xcassets/CapyJoyfulPoses0226.imageset/CapyJoyfulPoses0226.png": "ca775e930c0f2ef83330f4cecd1d4cc06b35a82b5504358caf83d9aa64e0be36",
+    "App/Resources/Assets.xcassets/CapyRetryPoses0226.imageset/CapyRetryPoses0226.png": "97fd16c870ba477a4b5e2a6dc5e2d1d4c2773c6dfdde824491af6dce5945aad5"
+  },
+  "selectedAssets": [
+    {
+      "asset": "CapyRigCore0229",
+      "path": "App/Resources/Assets.xcassets/CapyRigCore0229.imageset/CapyRigCore0229.png",
+      "sourceGeneration": "exec-dd7e2aaf-f18d-4148-a3ab-9163afa994c2.png",
+      "sha256": "dd18d6fbe11447ccdcb29e4988fadf4c584ee109e2c14e142a6c74b5add067d9",
+      "alphaAudit": {
+        "alphaDigest": "b60a16842ffe4666eadcea26ae757c49e8f263c201634b961d8325c3988b1a5d",
+        "columns": 2,
+        "height": 1254,
+        "name": "core",
+        "path": "/Users/poca/.codex/generated_images/01a0f6eb-c91e-7e01-b286-1a0ab4836d11/exec-dd7e2aaf-f18d-4148-a3ab-9163afa994c2.png",
+        "pieces": [
+          {
+            "bounds": [
+              45,
+              102,
+              569,
+              505
+            ],
+            "index": 0,
+            "meaningfulEdgePixels": 0,
+            "opaquePixels": 210296,
+            "transparentPixels": 177171
+          },
+          {
+            "bounds": [
+              30,
+              135,
+              571,
+              410
+            ],
+            "index": 1,
+            "meaningfulEdgePixels": 0,
+            "opaquePixels": 174100,
+            "transparentPixels": 213602
+          },
+          {
+            "bounds": [
+              47,
+              95,
+              576,
+              420
+            ],
+            "index": 2,
+            "meaningfulEdgePixels": 0,
+            "opaquePixels": 179802,
+            "transparentPixels": 207161
+          },
+          {
+            "bounds": [
+              78,
+              66,
+              470,
+              450
+            ],
+            "index": 3,
+            "meaningfulEdgePixels": 0,
+            "opaquePixels": 124900,
+            "transparentPixels": 260658
+          }
+        ],
+        "rows": 2,
+        "width": 1254
+      }
+    },
+    {
+      "asset": "CapyRigLimbs0229",
+      "path": "App/Resources/Assets.xcassets/CapyRigLimbs0229.imageset/CapyRigLimbs0229.png",
+      "sourceGeneration": "exec-4bfefcf1-873e-46ec-bb34-9e9a0bd5393d.png",
+      "sha256": "164dbbb442ec2e96eb0a0c58ea6fdf3254ac979c0d77da71bcb4f2682b9e3af5",
+      "alphaAudit": {
+        "alphaDigest": "5354358b312919d57dd9aa0351a047d19a5bbb35e249e1082d7f64fae2252353",
+        "columns": 4,
+        "height": 887,
+        "name": "limbs",
+        "path": "/Users/poca/.codex/generated_images/01a0f6eb-c91e-7e01-b286-1a0ab4836d11/exec-4bfefcf1-873e-46ec-bb34-9e9a0bd5393d.png",
+        "pieces": [
+          {
+            "bounds": [
+              117,
+              62,
+              251,
+              364
+            ],
+            "index": 0,
+            "meaningfulEdgePixels": 0,
+            "opaquePixels": 65312,
+            "transparentPixels": 127264
+          },
+          {
+            "bounds": [
+              151,
+              90,
+              195,
+              315
+            ],
+            "index": 1,
+            "meaningfulEdgePixels": 0,
+            "opaquePixels": 44366,
+            "transparentPixels": 149094
+          },
+          {
+            "bounds": [
+              117,
+              187,
+              213,
+              214
+            ],
+            "index": 2,
+            "meaningfulEdgePixels": 0,
+            "opaquePixels": 34615,
+            "transparentPixels": 159427
+          },
+          {
+            "bounds": [
+              65,
+              145,
+              289,
+              265
+            ],
+            "index": 3,
+            "meaningfulEdgePixels": 0,
+            "opaquePixels": 56993,
+            "transparentPixels": 136464
+          },
+          {
+            "bounds": [
+              105,
+              34,
+              247,
+              359
+            ],
+            "index": 4,
+            "meaningfulEdgePixels": 0,
+            "opaquePixels": 64226,
+            "transparentPixels": 128433
+          },
+          {
+            "bounds": [
+              124,
+              56,
+              207,
+              309
+            ],
+            "index": 5,
+            "meaningfulEdgePixels": 0,
+            "opaquePixels": 46038,
+            "transparentPixels": 147445
+          },
+          {
+            "bounds": [
+              111,
+              149,
+              210,
+              198
+            ],
+            "index": 6,
+            "meaningfulEdgePixels": 0,
+            "opaquePixels": 32582,
+            "transparentPixels": 161560
+          },
+          {
+            "bounds": [
+              70,
+              110,
+              296,
+              269
+            ],
+            "index": 7,
+            "meaningfulEdgePixels": 0,
+            "opaquePixels": 59207,
+            "transparentPixels": 134138
+          }
+        ],
+        "rows": 2,
+        "width": 1774
+      }
+    }
+  ],
+  "finalPromptSet": {
+    "core": "Use case: illustration-story.\nAsset type: original Capydoku iOS game 2D cutout-rig atlas A, four transparent components for one original capybara.\nInput image 1 (CapyMascot) is our own character/style reference; image 2 (joyful strip) and image 3 (gentle retry strip) are our own emotion references. Derive reusable isolated components, not a finished character scene.\nCanvas: a SQUARE atlas with exactly 2 columns by 2 rows, FOUR equal square cells, real transparent alpha background everywhere outside the components. No matte, no checkerboard, no text, no labels, no dividing lines. Each isolated component is fully contained in its own cell with 10% transparent breathing room.\nTOP LEFT: one complete pear-shaped seated TORSO ONLY, warm golden-brown fur, soft creamy belly, rounded hips. NO head, neck face, arms, paws, feet or toes. Fill the entire chest/abdomen that arms would hide. Upper torso ends in a softly rounded solid shoulder/neck backing hidden behind the future head. It is a complete soft bean-shaped body with no open hole and no harsh straight cut line.\nTOP RIGHT: one complete detached HAPPY HEAD ONLY, same chunky rounded rectangular brown snout, two little pink ears, EXACTLY TWO joyful closed crescent eyes, open delighted little smile with pink tongue. No neck, torso, hands or props. Complete lower jaw and continuous clean silhouette. Three-quarter view facing slightly to viewer's right.\nBOTTOM LEFT: one complete detached gently SAD HEAD ONLY, matching the happy head's size, proportions, perspective and outline as closely as possible. Exactly two sad eyes and soft worried brows, downturned mouth, no tears. No neck/body/hands. Keep full ears and jaw.\nBOTTOM RIGHT: one complete GOLDEN FIVE-POINT STAR prop ONLY, rounded corners, orange-brown clean outline, soft warm yellow shading with a small gentle highlight. No face or hands. Front-facing.\nStyle must match our reference exactly: polished casual-game illustration, fine dark-brown outline, warm soft gradients, not pixel art, not 3D, not clay. Match the original capybara, especially broad snout, ear shape and chunky seated torso. This is an animation component sheet to assemble in code; isolated torso and isolated heads must NOT become full characters. No shadows outside components, no ornaments, no duplicate extra pieces.",
+    "limbs": "Use case: illustration-story.\nAsset type: original Capydoku 2D cutout-rig atlas B, EIGHT isolated limb components.\nInput image 1 is our original CapyMascot reference. Input image 2 is the newly accepted torso/head/star component atlas A; match its exact warm golden-brown palette, soft shading, fine clean dark-brown outlines and proportions.\nCanvas: 4 COLUMNS by 2 ROWS of equal SQUARE cells, overall 2:1 horizontal canvas. Exactly ONE isolated piece centered within each cell, with at least 12% genuinely TRANSPARENT alpha margins. No labels, no grid, no white/matte/checkerboard, no shadow outside shapes.\nThese are reusable parts of a small chubby seated capybara in three-quarter view facing slightly toward the viewer's right. The two arms will be articulated at shoulder AND elbow; we need separate upper arm, forearm and paw, NOT a full arm in one cell.\nTOP ROW, from left:\n1. Near/SCREEN-LEFT UPPER ARM only: plump short golden-fur tapered capsule, vertical orientation, shoulder end at top, elbow end at bottom. NO paw, fingers, head or body. Soft rounded ends with solid fill; no flat cut line.\n2. Near/SCREEN-LEFT FOREARM only: slightly narrower plump short golden-fur capsule, vertical orientation, elbow end at top, wrist end at bottom. NO paw or toes.\n3. Near/SCREEN-LEFT PAW only: dark brown rounded compact mitten with three subtle curved digit divisions, top wrist attachment hidden under future forearm, paw points DOWN; no golden arm.\n4. Near/SCREEN-LEFT FOOT only: larger rounded dark-brown foot seen from the front at a slight seated angle, three chunky rounded toes, like the reference seated feet; no golden thigh.\nBOTTOM ROW:\n1. Far/SCREEN-RIGHT UPPER ARM only, matching top upper arm in size and palette, opposite-side subtle contour.\n2. Far/SCREEN-RIGHT FOREARM only, same matching size and palette.\n3. Far/SCREEN-RIGHT PAW only, dark brown compact mirrored hand silhouette, wrist at top, paw points DOWN.\n4. Far/SCREEN-RIGHT FOOT only, matching opposite seated foot.\nJoints must overlap cleanly when assembled: both ends of upper arms/forearms are softly rounded solid fur, and their extreme cap ends should have NO dark transverse seam; keep dark outlines along the visible sides, fading them before attachment caps. Complete hidden areas; no hollow sockets, black holes or squared cut faces.\nGolden segments should look like the reference's chubby little arms, not long human arms, sausages or dismembered realistic anatomy. Flat polished cartoon component illustrations only. The eight pieces are independent; do NOT assemble a character or merge neighbouring pieces.",
+    "limbJointCorrection": "Use case: precise-object-edit.\nEdit target: the supplied original Capydoku limb atlas, eight cells arranged 4 by 2. Make ONE precise rigging correction to the FOUR GOLDEN ARM SEGMENTS in columns 1 and 2 of both rows.\nRemove the dark-brown outline ONLY along each arm segment's rounded TOP attachment cap and BOTTOM attachment cap. Replace those short curved cap strokes with matching opaque warm golden fur color continuous with the interior. Both cap ends must remain complete, rounded, opaque and smoothly shaded, but have no dark horizontal/curved seam at the attachment. Keep the dark-brown outlines along the LEFT and RIGHT long visible side edges, fading those side outlines before they reach either cap. This is necessary because the cap ends overlap at animated joints and black transverse arcs would become false elbow seams.\nDo not change the four brown paw/foot pieces in columns 3 and 4 at all. Do not change any part placement, count, size, shape, interior shading, fur details, palette or the 4x2 cell layout. Preserve real transparent alpha outside all eight pieces. No matte, text, grid, new parts, background shadow or added outlines."
+  },
+  "rejectedDrafts": [
+    {
+      "file": "exec-7ad08a87-35fc-4dfa-9180-e5405eb37e34.png",
+      "reason": "Four golden segments had dark outline arcs over attachment caps. Built-in targeted edit removed those transverse cap outlines before assembly."
+    }
+  ],
+  "visualReview": {
+    "individualComponents": "Actually viewed core atlas, first limb atlas, and corrected limb atlas. Core has torso, happy head, sad head, star. Limbs have two upper arms, two forearms, two paws and two feet. Both heads have two eyes; all components are complete and isolated.",
+    "assemblySamples": [
+      ".build/rig-0229-preview/assembly-v1.png",
+      ".build/rig-0229-preview/assembly-v2.png",
+      ".build/rig-0229-preview/assembly-v3-production-track.png"
+    ],
+    "assemblyMethod": "Native macOS CoreGraphics renders actual isolated cutouts and joint poses. v3 uses production ResultCharacterRig.swift trajectory code and fixed layer order; this is a component assembly preview, not a UIKit runtime screenshot.",
+    "v1Finding": "Joy arms were occluded by head and a paw touched the snout; rejected geometry.",
+    "v2Finding": "Adjusted joy elbow branch, lowered shoulders and outward wrist targets. Root and subagent inspected and approved proportions/style for UIKit verification.",
+    "v3Finding": "Fixed upper-arm roots behind torso, kept same depth for all phases. Avoided a near-shoulder star wrist trajectory that created a rapid elbow swing. Viewed all three assembled action rows; complete limbs and star grips remain readable. Soft segmented elbow texture still needs actual-size and video review.",
+    "finalUIKitReview": {
+      "attachmentManifest": ".build/0229-app-attachments/manifest.json",
+      "reviewedImageCount": 9,
+      "screenshots": [
+        {
+          "name": "rig-0229-gentleRetry-250pt-actual-380ms_0_4E21C535-31C9-4A59-82E8-A88CB6B9F920.png",
+          "file": ".build/0229-app-attachments/A37B315F-0C90-4C98-BAA9-536A455F4BEE.png",
+          "sha256": "1171a293b0b9fcd943f2744e115697b13e0764ec30af8257397d9d5960c4ab22",
+          "sourceTest": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+          "visualReview": "Opened and visually reviewed individually. Character and effects fit inside the decoration; no visible missing limb, open joint gap or clipped paw. Star performance keeps both paws over the held star."
+        },
+        {
+          "name": "rig-0229-starHug-250pt-actual-380ms_0_ADE2D2D7-A369-48B7-A8F7-54405FC809B6.png",
+          "file": ".build/0229-app-attachments/6EF1D45E-5D8A-4AA5-8DF4-2F0361BA4D1A.png",
+          "sha256": "9de340f7bbe893a048a66e79f8c6f7c96ebe5f180aff9c5d9b2f830076b4375e",
+          "sourceTest": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+          "visualReview": "Opened and visually reviewed individually. Character and effects fit inside the decoration; no visible missing limb, open joint gap or clipped paw. Star performance keeps both paws over the held star."
+        },
+        {
+          "name": "rig-0229-joyfulRaise-250pt-actual-380ms_0_5632C19F-25DD-4658-99A7-28A393A79C92.png",
+          "file": ".build/0229-app-attachments/A0C132F0-930E-4A7F-9794-11FEAAFCD4C0.png",
+          "sha256": "34d290836ad05f5a9622d1cbfd56f50f602e1c9a6b7d5bef48362d2306b45ab7",
+          "sourceTest": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+          "visualReview": "Opened and visually reviewed individually. Character and effects fit inside the decoration; no visible missing limb, open joint gap or clipped paw. Star performance keeps both paws over the held star."
+        },
+        {
+          "name": "rig-0229-gentleRetry-168pt-actual-380ms_0_7F20B9E0-AB7E-43BE-82D0-CB8F7D56958C.png",
+          "file": ".build/0229-app-attachments/0B5823FF-1752-4D12-A704-C57DC4F2E380.png",
+          "sha256": "b995cba211c090d3aab3cd308f8bdadf9d79a0699202ceac60b3cb0638503686",
+          "sourceTest": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+          "visualReview": "Opened and visually reviewed individually. Character and effects fit inside the decoration; no visible missing limb, open joint gap or clipped paw. Star performance keeps both paws over the held star."
+        },
+        {
+          "name": "rig-0229-starHug-168pt-actual-380ms_0_466256D1-39AE-47AD-88DA-2A330998EE93.png",
+          "file": ".build/0229-app-attachments/E4BC7294-16DC-47BB-A88F-A44400237015.png",
+          "sha256": "605410e4b1c34f8daf58800484fde9770f91fdb040fe04e03adcd4d3f8ffb661",
+          "sourceTest": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+          "visualReview": "Opened and visually reviewed individually. Character and effects fit inside the decoration; no visible missing limb, open joint gap or clipped paw. Star performance keeps both paws over the held star."
+        },
+        {
+          "name": "rig-0229-joyfulRaise-168pt-actual-380ms_0_7A0CF6BE-CA83-4345-A926-56F6D8154B6B.png",
+          "file": ".build/0229-app-attachments/B85B0876-CA40-4408-90C7-79C81786430E.png",
+          "sha256": "4503cea145fa3f47a76eef1d34c0926c246f0e6a721e9ff6d8a6409aa43efa24",
+          "sourceTest": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+          "visualReview": "Opened and visually reviewed individually. Character and effects fit inside the decoration; no visible missing limb, open joint gap or clipped paw. Star performance keeps both paws over the held star."
+        },
+        {
+          "name": "rig-0229-gentleRetry-140pt-actual-380ms_0_D214DFF3-77B5-4216-A229-F9142E421601.png",
+          "file": ".build/0229-app-attachments/D31041A0-3F1C-4A77-B278-1EEAC99B608A.png",
+          "sha256": "96b262825f804b5954d0cfb5638d4301d2d05b3e7007fca8f87c53e0f6f819fe",
+          "sourceTest": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+          "visualReview": "Opened and visually reviewed individually. Character and effects fit inside the decoration; no visible missing limb, open joint gap or clipped paw. Star performance keeps both paws over the held star."
+        },
+        {
+          "name": "rig-0229-starHug-140pt-actual-380ms_0_7999CA81-3050-4316-82FB-CF7A6F54250A.png",
+          "file": ".build/0229-app-attachments/0E06D26F-6202-4B51-9EAD-2887806D0B90.png",
+          "sha256": "0b2a9cc56f6ee5c3a17d0602f426dcc38205b78b5f233548c4a2f19afa814d67",
+          "sourceTest": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+          "visualReview": "Opened and visually reviewed individually. Character and effects fit inside the decoration; no visible missing limb, open joint gap or clipped paw. Star performance keeps both paws over the held star."
+        },
+        {
+          "name": "rig-0229-joyfulRaise-140pt-actual-380ms_0_4BCA7424-D1B7-4CFF-91B7-C627498283AB.png",
+          "file": ".build/0229-app-attachments/77686186-502F-400E-80DE-B0F7A54208FB.png",
+          "sha256": "2697251aacefb2dc1aace5588fef78cc13c1a2b1b35b27574f11172e5c6a1a33",
+          "sourceTest": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+          "visualReview": "Opened and visually reviewed individually. Character and effects fit inside the decoration; no visible missing limb, open joint gap or clipped paw. Star performance keeps both paws over the held star."
+        }
+      ],
+      "findings": {
+        "boundaries": "All three performances at 140, 168 and 250pt retain visible margin. At the sampled cheer apex, the right forearm/paw no longer crowds the frame. Strict actual-layer bounds assertions passed.",
+        "joints": "Shoulder roots remain behind torso/head. Elbow overlap reads as connected arms at all reviewed sizes, with no visible open gap or separated limb. Component shading/outline transitions remain visible on close inspection; this is an articulated cutout rig.",
+        "starGrip": "Both paws visibly stay attached to opposite sides of the star in all three actual-size captures; the raised star partly covers the left cheek by design without detaching hands.",
+        "retry": "Sad head, folded arms and sigh marks remain complete and readable; no whole-image texture substitution was observed in sampled settled frames."
+      },
+      "recordingContactSheet": {
+        "file": ".build/rig-0229-final-contacts.png",
+        "sha256": "c52a235cd714c7723cf73341db159ba8bd18922877bd2aec26598204587dfc05",
+        "sourceRecording": ".build/rig-0229-final.mov",
+        "recordingSHA256": "61d5694f0e6534d52b7b82a2f19d87d779323d20dc01e74209a0f6a140d5adaa",
+        "sourceTest": "ResultCharacterChoreographyTests/testActualRigPerformancesRunContinuouslyForVideoReview()",
+        "sampling": "Parent extracted actual simulator-recording frames every 0.2 seconds. Contact sheet includes 3.4–8.4s; three labeled performances are visible approximately 3.6–7.8s. Later frames show the test host returning to the game.",
+        "review": "Opened and visually reviewed the contact sheet. Raise/open/settle, star lift/hold/settle, and sad nod/arm return retain one connected character through sampled intermediate poses and settled states. No obvious detached part or double silhouette in reviewed frames.",
+        "scope": "This review is of extracted actual-recording frames, not live video playback. A 0.2-second sampling interval cannot establish per-frame smoothness, absence of every transient artifact, FPS or physical-device feel."
+      }
+    }
+  },
+  "packaging": "Selected PNGs copied byte-for-byte into new versioned asset sets. No matte removal/recoloring/source pixel editing in code. Runtime uses explicit audited rectangles, with 2px alpha padding, decoded once; all parts share authored rig coordinates.",
+  "prewarmAPI": "ResultCharacterArtwork.prewarmRig() -> Bool. Two CapyAlphaPlane alpha-digest checks; no per-part alpha scan. Mismatched/missing atlas fails as a whole to the existing static complete-character artwork. Joint tracks for all three performances are cached once.",
+  "implementation": {
+    "newSource": "App/Views/ResultCharacterRig.swift",
+    "parts": 12,
+    "samplesPerPerformance": 73,
+    "timing": "Shared Core Animation start time, linear interpolation between precomputed continuous two-bone poses; no contents animation, no character crossfade, no loop/display timer. Original 1.05s/1.20s/0.92s total durations retained. Joy takeoff/apex/contact phases retimed to .12/.36/.50/.67/.84 to allow the arm arc.",
+    "models": "Terminal model remains the same assembled rig; cancel, background, occlusion and reduced-motion reveal that rig, never swap back to the old whole-image art on a valid atlas.",
+    "headChoice": "Happy fixed head texture for both victories; sad fixed head texture for retry. Head nod is continuous. Eyes/mouth are not independently animated in this iteration.",
+    "footprint": "Rig container occupies 76% of the decoration width, with ground pivot y=0.898 unchanged. Legacy static fallback remains 80%. Joint paths, relative proportions and durations unchanged; full rotated forearm rectangles retain margin at cheer apex."
+  },
+  "diagnostic": {
+    "method": "Native macOS Swift Foundation/CoreGraphics geometry calculation, not iPhone runtime performance measurement. Midpoint tests reproduce the position/angle interpolation of adjacent CA keys.",
+    "maxInterpolatedElbowGapNormalized": {
+      "joyfulRaise": 0.00119205417076487,
+      "starHug": 0.0002002688125009212,
+      "gentleRetry": 4.675462221218549e-05
+    },
+    "largestResultMeaning": "At 250pt with a 76% rig footprint, worst measured midpoint gap is about 0.227pt. No frame rate claim.",
+    "cheerBoundsCorrection": {
+      "method": "Exact four-corner affine transform of right forearm at phase 0.36, including body scale/rotation/translation. Normalized to decoration size. This is geometry evidence, not a new runtime pass.",
+      "oldFootprint": 0.8,
+      "oldExactMaxX": 1.0041484658,
+      "oldTwiceAABBMaxX": 1.0052534674,
+      "newFootprint": 0.76,
+      "newExactMaxX": 0.9789410425,
+      "newTwiceAABBMaxX": 0.9799907941,
+      "conclusion": "The exact rotated rectangle did extend beyond decoration; this was not only a conservative test conversion. Production margin increased without relaxing the assertion.",
+      "finalVerification": "The unchanged actual-layer bounds test passed for all three performances at all three sizes in the final 466-test run. Nine final UIKit captures were individually reviewed and showed visible frame margin."
+    }
+  },
+  "plannedTests": [
+    "ResultCharacterChoreographyTests/testAllTwelveRigPartsPrepareOnceWithVerifiedBoundsAndCachedDecodedImages",
+    "ResultCharacterChoreographyTests/testUnknownReplacementRigCannotReuseStaleJointRectanglesOrPartiallyAssemble",
+    "ResultCharacterChoreographyTests/testFreshResultMovesIndependentJointsWithoutChangingTexturesAndCancelsToSameRig",
+    "ResultCharacterChoreographyTests/testReducedMotionShowsCompleteTerminalRigWithoutDelayedReplay",
+    "ResultCharacterChoreographyTests/testContinuousTracksPreserveBoneLengthsStarGripAndSubpixelInterpolatedElbowContact",
+    "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving",
+    "ResultCharacterChoreographyTests/testActualRigPerformancesRunContinuouslyForVideoReview",
+    "ResultCharacterTests"
+  ],
+  "limitations": [
+    "The 12 cutouts provide continuous joint/body/prop motion, not a deformable mesh; fixed happy/sad head textures do not animate eyes or mouth.",
+    "Assembly previews alone are not runtime evidence. Final UIKit screenshots and actual simulator-recording extracted frames were additionally reviewed, but this subagent did not watch live video or perform a physical-iPhone playtest.",
+    "The recording contact sheet samples every 0.2 seconds and cannot prove per-frame smoothness or exclude every short transient artifact.",
+    "No claim of Meowdoku aesthetic equivalence, measured frame rate, or true-device touch/audio/haptic experience."
+  ],
+  "finalVerification": {
+    "summary": "Validation/test-runs/original-0229-app-summary.json",
+    "log": "Validation/test-runs/original-0229-app.log",
+    "passedTests": 466,
+    "failedTests": 0,
+    "skippedTests": 0,
+    "testExecutionSeconds": 170.38,
+    "platform": "iOS Simulator",
+    "device": "iPhone 17 Pro",
+    "osVersion": "26.5",
+    "reviewMethod": "Read final summary and log; visually opened nine individual actual UIKit capture images plus one contact sheet of the real simulator recording. No production or test changes during this final evidence review."
+  }
+}

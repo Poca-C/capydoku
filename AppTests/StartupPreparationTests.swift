@@ -69,6 +69,31 @@ final class StartupPreparationTests: XCTestCase {
         try DurableStateFile<StartupConsent>(url: root.appendingPathComponent("consent.json")).save(consent)
     }
 
+    @MainActor func testAudioPreparationFinishesWithinLoadingBeforeWelcomeAndPermissions() async throws {
+        let resources = PreparationResources(), permissions = PreparationPermissions()
+        let controller = StartupController(directory: directory(), permissions: permissions,
+            resources: resources, timing: .immediate)
+        let gate = StartupPreparationGate()
+        var audioCalls = 0
+        controller.prepareFeedback = {
+            audioCalls += 1
+            XCTAssertEqual(resources.calls, 1)
+            XCTAssertEqual(controller.stage, .loading)
+            try? await gate.wait()
+        }
+        let beginning = Task { await controller.begin() }
+        try await waitUntil { audioCalls == 1 }
+        XCTAssertEqual(controller.stage, .loading)
+        XCTAssertTrue(permissions.calls.isEmpty)
+        await controller.begin()
+        XCTAssertEqual(audioCalls, 1)
+        gate.succeed(); await beginning.value
+        XCTAssertEqual(controller.stage, .welcome)
+        await controller.begin()
+        XCTAssertEqual(audioCalls, 1)
+        XCTAssertTrue(permissions.calls.isEmpty)
+    }
+
     @MainActor func testResourcesAndBothPresentationStagesPrecedeWelcomeAndAnyPermission() async throws {
         let root = directory(), resources = PreparationResources(), permissions = PreparationPermissions()
         let gate = StartupPreparationGate(); resources.gates = [gate]

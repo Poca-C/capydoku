@@ -1,0 +1,130 @@
+{
+  "build": "0.2.29 (32)",
+  "sourceBundle": "Validation/test-runs/original-0229-app.xcresult",
+  "appTests": {
+    "passed": 466,
+    "failed": 0,
+    "skipped": 0
+  },
+  "status": "reviewed_passed_scoped_runtime_screens_and_movie_samples",
+  "images": [
+    {
+      "file": "placement-burst-730ms-clean.png",
+      "sourceAttachment": "DF2B7623-1357-4E4B-BE12-BF22AEB7BD59.png",
+      "originalName": "placement-burst-730ms-clean_0_D056BBFD-704D-4A22-8116-475D96AB4C6B.png",
+      "test": "BoardPlacementBurstTests/testActualBoardCapturesExpandingAndFallingParticlesThenCleanBoard()",
+      "sha256": "ff2113f13d7dbd44454c1bc8f4fa99ea270d7c4160e86792794eb1867298af5b"
+    },
+    {
+      "file": "placement-burst-480ms.png",
+      "sourceAttachment": "231A2AD8-9B0A-496B-AEDE-A48FBEAF8035.png",
+      "originalName": "placement-burst-480ms_0_F43066B9-4E3B-44A6-90D1-5609189ED48F.png",
+      "test": "BoardPlacementBurstTests/testActualBoardCapturesExpandingAndFallingParticlesThenCleanBoard()",
+      "sha256": "6463610f74c1b338c38a782cf004a515bd556780122732d7c9f6c3a10038cb50"
+    },
+    {
+      "file": "placement-burst-280ms.png",
+      "sourceAttachment": "FC646DF1-1631-4CBE-AE8D-267AA346024B.png",
+      "originalName": "placement-burst-280ms_0_9104096B-7341-4595-8D2D-36AA9FA40730.png",
+      "test": "BoardPlacementBurstTests/testActualBoardCapturesExpandingAndFallingParticlesThenCleanBoard()",
+      "sha256": "77c5160efd07d2f46167492a5069a1f505b1d751fb196568c0765a009a17e04f"
+    },
+    {
+      "file": "placement-burst-100ms.png",
+      "sourceAttachment": "FA66D365-608E-4CA4-B9AA-BB902E187F54.png",
+      "originalName": "placement-burst-100ms_0_D841207E-03B8-43A1-A167-FBC5F1F46646.png",
+      "test": "BoardPlacementBurstTests/testActualBoardCapturesExpandingAndFallingParticlesThenCleanBoard()",
+      "sha256": "e730ff360622c11f0f44e932ea02481205b7d922dd1be2053ad9d8ba79a9827e"
+    },
+    {
+      "file": "current-level-6-result-character-1070ms.png",
+      "sourceAttachment": "82EAAE5B-542E-4117-98BD-C63ABFAC4462.png",
+      "originalName": "current-level-6-result-character-1070ms_0_2A180B38-7C61-4708-9356-7661E248A67A.png",
+      "test": "CompletionFeedbackTests/testCurrentPackRootDirectAndCompleteBoardCaptureWithImmediateNextAction()",
+      "sha256": "12c3c697f5bd88464884af87c12cd27549c5c7879a3d8f6e549082f818a7e38b"
+    },
+    {
+      "file": "rig-0229-gentleRetry-250pt-actual-380ms.png",
+      "sourceAttachment": "A37B315F-0C90-4C98-BAA9-536A455F4BEE.png",
+      "originalName": "rig-0229-gentleRetry-250pt-actual-380ms_0_4E21C535-31C9-4A59-82E8-A88CB6B9F920.png",
+      "test": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+      "sha256": "1171a293b0b9fcd943f2744e115697b13e0764ec30af8257397d9d5960c4ab22"
+    },
+    {
+      "file": "rig-0229-starHug-250pt-actual-380ms.png",
+      "sourceAttachment": "6EF1D45E-5D8A-4AA5-8DF4-2F0361BA4D1A.png",
+      "originalName": "rig-0229-starHug-250pt-actual-380ms_0_ADE2D2D7-A369-48B7-A8F7-54405FC809B6.png",
+      "test": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+      "sha256": "9de340f7bbe893a048a66e79f8c6f7c96ebe5f180aff9c5d9b2f830076b4375e"
+    },
+    {
+      "file": "rig-0229-joyfulRaise-250pt-actual-380ms.png",
+      "sourceAttachment": "A0C132F0-930E-4A7F-9794-11FEAAFCD4C0.png",
+      "originalName": "rig-0229-joyfulRaise-250pt-actual-380ms_0_5632C19F-25DD-4658-99A7-28A393A79C92.png",
+      "test": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+      "sha256": "34d290836ad05f5a9622d1cbfd56f50f602e1c9a6b7d5bef48362d2306b45ab7"
+    },
+    {
+      "file": "rig-0229-gentleRetry-168pt-actual-380ms.png",
+      "sourceAttachment": "0B5823FF-1752-4D12-A704-C57DC4F2E380.png",
+      "originalName": "rig-0229-gentleRetry-168pt-actual-380ms_0_7F20B9E0-AB7E-43BE-82D0-CB8F7D56958C.png",
+      "test": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+      "sha256": "b995cba211c090d3aab3cd308f8bdadf9d79a0699202ceac60b3cb0638503686"
+    },
+    {
+      "file": "rig-0229-starHug-168pt-actual-380ms.png",
+      "sourceAttachment": "E4BC7294-16DC-47BB-A88F-A44400237015.png",
+      "originalName": "rig-0229-starHug-168pt-actual-380ms_0_466256D1-39AE-47AD-88DA-2A330998EE93.png",
+      "test": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+      "sha256": "605410e4b1c34f8daf58800484fde9770f91fdb040fe04e03adcd4d3f8ffb661"
+    },
+    {
+      "file": "rig-0229-joyfulRaise-168pt-actual-380ms.png",
+      "sourceAttachment": "B85B0876-CA40-4408-90C7-79C81786430E.png",
+      "originalName": "rig-0229-joyfulRaise-168pt-actual-380ms_0_7A0CF6BE-CA83-4345-A926-56F6D8154B6B.png",
+      "test": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+      "sha256": "4503cea145fa3f47a76eef1d34c0926c246f0e6a721e9ff6d8a6409aa43efa24"
+    },
+    {
+      "file": "rig-0229-gentleRetry-140pt-actual-380ms.png",
+      "sourceAttachment": "D31041A0-3F1C-4A77-B278-1EEAC99B608A.png",
+      "originalName": "rig-0229-gentleRetry-140pt-actual-380ms_0_D214DFF3-77B5-4216-A229-F9142E421601.png",
+      "test": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+      "sha256": "96b262825f804b5954d0cfb5638d4301d2d05b3e7007fca8f87c53e0f6f819fe"
+    },
+    {
+      "file": "rig-0229-starHug-140pt-actual-380ms.png",
+      "sourceAttachment": "0E06D26F-6202-4B51-9EAD-2887806D0B90.png",
+      "originalName": "rig-0229-starHug-140pt-actual-380ms_0_7999CA81-3050-4316-82FB-CF7A6F54250A.png",
+      "test": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+      "sha256": "0b2a9cc56f6ee5c3a17d0602f426dcc38205b78b5f233548c4a2f19afa814d67"
+    },
+    {
+      "file": "rig-0229-joyfulRaise-140pt-actual-380ms.png",
+      "sourceAttachment": "77686186-502F-400E-80DE-B0F7A54208FB.png",
+      "originalName": "rig-0229-joyfulRaise-140pt-actual-380ms_0_4BCA7424-D1B7-4CFF-91B7-C627498283AB.png",
+      "test": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving()",
+      "sha256": "2697251aacefb2dc1aace5588fef78cc13c1a2b1b35b27574f11172e5c6a1a33"
+    }
+  ],
+  "video": {
+    "file": "continuous-result-performances.mov",
+    "durationSeconds": 8.421666666666667,
+    "device": "iPhone 17 Pro simulator / iOS 26.5",
+    "recording": "Actual simulator screen recorded while the final ResultCharacterChoreographyTests ran; Core Animation never paused or seeked. Includes 3 sizes host before three continuous250pt performances. Silent test fixture, not normal app navigation or physical iPhone.",
+    "sampleContactSheet": "continuous-result-video-frames.png",
+    "sampling": "Actual movie frames sampled every0.2s, crop x75/y200/790x900 only for review, tiled and labeled with requested movie timestamps. Exact actual sample timestamps in video-sampling.json.",
+    "review": "Root inspected all three action sequences in the sampled contact sheet: continuous hand/star/head movement and terminal same rig, more side margin after76% correction. Not a frame-rate or real-time-perception measurement."
+  },
+  "review": {
+    "board": "Root viewed100/280/480/730ms final captures; early face is unobscured, color stars/fragments visibly cross tile edges, then settle to clean unchanged board.",
+    "page": "Root viewed current L6 actual SwiftUI victory, character, praise and next action separated and readable.",
+    "character": "Result character agent individually opened all9 final140/168/250pt runtime images: frame margin, no visible clipped paws or joint detachment; star grips consistent. Root reviewed final continuous movie sample contact sheet. Close inspection still reveals cutout shading/contours; no claim of reference visual equivalence."
+  },
+  "limits": [
+    "No physical audio/haptic/long-play acceptance",
+    "No claimed Meowdoku visual or timing equivalence",
+    "Happy/sad head textures fixed; continuous cutout joints, not facial or mesh animation",
+    "Reference and formal83/88 acceptance statuses unchanged"
+  ]
+}

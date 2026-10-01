@@ -267,6 +267,10 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         }
         if !preview.isEmpty || (hideAccessibility && found.count != size) { clearScenePresentation() }
         if locked || hideAccessibility || !preview.isEmpty { clearGuidance() }
+        if !preview.isEmpty || ((locked || hideAccessibility) && found.count != size) { clearPlacementBursts() }
+        for effect in feedbackOverlay.subviews.compactMap({ $0 as? BoardPlacementBurstView }) where !found.contains(effect.cellIndex) {
+            effect.removeFromSuperview()
+        }
         for effect in feedbackOverlay.subviews.compactMap({ $0 as? BoardCellFeedbackView }) {
             let valid = effect.kind == .found ? found.contains(effect.cellIndex)
                 : effect.kind == .markAdded ? marks.contains(effect.cellIndex) && !found.contains(effect.cellIndex) && !errors.contains(effect.cellIndex)
@@ -373,6 +377,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     /// tap is recognized. These methods only own a transient highlight.
     func beginCellPress(at point: CGPoint) {
         removeIdleExpressions()
+        clearPlacementBursts()
         clearEntrancePresentation()
         endCellPress()
         guard let index = cell(at: point), canPress(index) else { return }
@@ -406,11 +411,29 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         for effect in feedbackOverlay.subviews.compactMap({ $0 as? BoardCellFeedbackView }) where effect.cellIndex == index { effect.removeFromSuperview() }
         let palette = ((region(index) % CapyPalette.regionColors.count) + CapyPalette.regionColors.count) % CapyPalette.regionColors.count
         let gap = max(1.1, min(2, cellSide * 0.028))
+        let lowPower = ProcessInfo.processInfo.isLowPowerModeEnabled
+        let expanded = kind == .found && !reducesMotion && !lowPower && preview.isEmpty
+            && ((!locked && !hideAccessibility) || found.count == size)
         let effect = BoardCellFeedbackView(cellIndex: index, kind: kind,
             frame: rect(for: index).insetBy(dx: gap, dy: gap), tileColor: UIColor(CapyPalette.regionColors[palette]),
-            reduceMotion: reducesMotion, lowPower: ProcessInfo.processInfo.isLowPowerModeEnabled,
-            errorMark: errorMark)
+            reduceMotion: reducesMotion, lowPower: lowPower,
+            errorMark: errorMark, localParticles: !expanded)
         feedbackOverlay.addSubview(effect); effect.play()
+        if expanded {
+            let current = feedbackOverlay.subviews.compactMap { $0 as? BoardPlacementBurstView }
+            current.filter { $0.cellIndex == index }.forEach { $0.removeFromSuperview() }
+            let remaining = feedbackOverlay.subviews.compactMap { $0 as? BoardPlacementBurstView }
+            if remaining.count >= 2 { remaining.prefix(remaining.count - 1).forEach { $0.removeFromSuperview() } }
+            let burst = BoardPlacementBurstView(cellIndex: index, frame: bounds, boardRect: boardRect,
+                cellRect: rect(for: index), regionColor: UIColor(CapyPalette.regionColors[palette]))
+            // The cell cover keeps early particles behind the face. They become
+            // visible as the arc leaves the tile, preserving expression clarity.
+            feedbackOverlay.insertSubview(burst, belowSubview: effect); burst.play()
+        }
+    }
+
+    private func clearPlacementBursts() {
+        feedbackOverlay.subviews.compactMap { $0 as? BoardPlacementBurstView }.forEach { $0.removeFromSuperview() }
     }
 
     private var boardRect: CGRect {
@@ -572,6 +595,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         // Dropping an in-flight decoration is preferable to replaying it with
         // a new policy; the underlying board already contains the final state.
         clearScenePresentation()
+        clearPlacementBursts()
     }
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool { false }
@@ -798,7 +822,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         guard canPresentIdleBlink, !trackingContact, !inputActivity.isBusy,
               !feedbackOverlay.subviews.contains(where: {
                   $0 is BoardCellFeedbackView || $0 is BoardMistakeFeedbackView
-                      || $0 is BoardConflictFeedbackView || $0 is CapyFaceExpressionView || $0 is CapyIdleGazeView || $0 is BoardSceneFeedbackView
+                      || $0 is BoardConflictFeedbackView || $0 is CapyFaceExpressionView || $0 is CapyIdleGazeView || $0 is BoardSceneFeedbackView || $0 is BoardPlacementBurstView
               }) else { return }
         let ordered = found.sorted()
         guard let index = ordered.first(where: { $0 > (lastBlinkedCell ?? -1) }) ?? ordered.first else { return }

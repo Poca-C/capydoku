@@ -1,0 +1,288 @@
+{
+  "build": "0.2.29 (32)",
+  "date": "2026-10-01",
+  "status": "verified_scoped_demo_improvements_physical_launch_locked_formal_acceptance_unchanged",
+  "authority": "原始Word正文及截图、中文市场补充与用户明确授权的本地原声测试为依据。Meowdoku本轮实际观察是改进参考，不等同冻结Pawdoku参数；不提高83行正式状态或88项历史统计。",
+  "sourceParagraphs": [
+    241,
+    248,
+    249,
+    252,
+    254,
+    324,
+    325,
+    326,
+    330,
+    331,
+    332,
+    333,
+    334,
+    335,
+    336,
+    337,
+    338,
+    339,
+    341,
+    342,
+    343,
+    344
+  ],
+  "changes": [
+    {
+      "area": "正确操作的跨格粒子",
+      "status": "implemented_full_app_and_scoped_visual_review_passed",
+      "detail": "已提交找对后，在棋盘坐标中增加12枚稀疏星点/区域色碎片，沿有限弧线运动0.62秒。可跨格但整体轨迹缩放在棋盘内部；每盘最多2组，同格不叠加。局部爱心保留，跨格粒子放在头像盖层后，避免起始阶段遮住表情。",
+      "boundaries": "装饰不接收触摸或读屏，不改分数、存档、答案、手势及操作可用时间。首次触摸、预览、后台/离页等展示门禁清理；减少动态效果或低电量不创建跨格粒子。通关最后一格可衔接已有全盘演出。",
+      "sources": [
+        "App/Views/BoardPlacementBurstView.swift",
+        "App/Views/PuzzleBoardView.swift",
+        "AppTests/BoardPlacementBurstTests.swift"
+      ]
+    },
+    {
+      "area": "短音效预热与独立声部复用",
+      "status": "implemented_full_app_passed",
+      "detail": "现有loading资源准备阶段预热已信任可用的短音效。总缓存最多24个播放器、每文件最多6个；本地当前策略预热21个声部、8个短音效文件，mark/swipe共享资源池但不共享活动播放游标。自然结束或停止后在单独回调中重新prepare，资源不足时保留即时创建回退及原并发策略。",
+      "lifecycle": "静音、后台/广告/暂停、中断及media reset使旧准备任务失效；合法恢复时重新准备。复审补齐用户重新开启音乐解除不可自动恢复中断后的缓存恢复，shouldResume=false仍不会自动播放。 临时prepare失败保留有效播放回退，并在后续明确预热请求中逐项最多重试一次，不无限循环或干扰活动声部。",
+      "evidence": "Validation/audio-timing-0229.json",
+      "boundaries": "9个原WAV、音量、延迟、Combo/滑动策略及正式音频manifest均未改。启动需承担预热成本；零延迟提示仍沿用调度回调。没有新声音、裁切、增益、ducking或真机输出延迟/听觉对标结论。"
+    },
+    {
+      "area": "全身角色动作连续性",
+      "status": "implemented_bounds_corrected_full_app_and_scoped_visual_review_passed",
+      "detail": "两张原创图集拆成12个部件，以肩肘等关节连续插值替代整幅姿态换图；加载阶段提前解码与准备三套各73采样轨迹，保留取消检查与yield。可选rig缺失整体回退，不阻塞启动。角色边界修正后最终466项App通过，9张实际角色图与真实模拟器录屏的有限抽帧目视通过。",
+      "implementationEvidence": {
+        "source": "App/Views/ResultCharacterRig.swift",
+        "artworkRecord": "Validation/capy-rig-artwork-0229.json",
+        "originalAtlasCount": 2,
+        "cutoutCount": 12,
+        "samplesPerPerformance": 73,
+        "motions": "头、身体、肩/肘/爪、脚和星星使用共同起始时钟与连续插值，避免整幅姿态contents切换；保留三套1.05/1.20/0.92秒有限演出。",
+        "fallback": "素材缺失或校验不匹配时整体退回旧完整角色，避免半身装配；正常结束/取消留在同一rig终态。",
+        "currentCorrection": "欢呼前臂边界失败后，角色占位从80%缩至76%且保持脚底，未放宽断言；修正后三种尺寸边界在最终466项全量通过。",
+        "limits": "部件为刚性贴图，开心/失落头贴图固定，不代表网格变形或嘴眼逐帧动画；最终UIKit图像和实际模拟器录屏的有限抽帧已核对，真机手感仍未验。"
+      }
+    }
+  ],
+  "referenceObservation": {
+    "source": "Validation/meowdoku-playtest-comparison-0229.json",
+    "successfulNewPlaytestThisRound": true,
+    "scope": "本机官方Meowdoku 1.19.1 (457)，恢复第3关后完成4次正确双击并观察通关；记录小爱心、越格彩粒及两张不同结果姿态。",
+    "labels": "本次依次采样Nice、Great及最终Perfect；Perfect不是Excellent，不据此替换正式Combo文案、阈值或分数规则。",
+    "boundary": "未做听觉A/B、触觉测量、逐帧节奏/FPS或完整后期关卡对标；两个动作截图不证明其动画实现方式。"
+  },
+  "targetedTests": {
+    "status": "historical_character_bounds_failure_resolved_in_full_app",
+    "device": "iPhone 17 Pro simulator / iOS 26.5",
+    "cases": 100,
+    "passed": 99,
+    "failed": 1,
+    "assertionFailures": 3,
+    "skipped": 0,
+    "seconds": 24.367,
+    "groups": {
+      "AudioPolicyTests": 35,
+      "StartupPreparationTests": 16,
+      "LocalTestAudioImportTests": 7,
+      "BoardPlacementBurstTests": 5,
+      "BoardCellPresentationTests": 6,
+      "BoardGuidancePresentationTests": 15,
+      "ResultCharacterChoreographyTests": 9,
+      "ResultCharacterTests": 7
+    },
+    "failedTest": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving",
+    "failureScope": "joyfulRaise右前臂曾在140/168/250pt三种尺寸超出结果装饰分配范围；1个用例3条边界断言失败，已由最终466例全量复验通过。",
+    "log": "Validation/test-runs/original-0229-targeted-final.log",
+    "summary": "Validation/test-runs/original-0229-targeted-final-summary.json",
+    "bundle": "Validation/test-runs/original-0229-targeted-final.xcresult",
+    "boundary": "最终候选专项首轮，不是最终已通过构建。音频35、启动16、本地音频7、粒子5、格内6、引导15及旧角色7均通过；编排9项中8项通过。"
+  },
+  "applicationTests": {
+    "status": "passed",
+    "build": "0.2.29 (32)",
+    "device": "iPhone 17 Pro simulator / iOS 26.5",
+    "passed": 466,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 170.38,
+    "suiteSecondsIncludingOverhead": 170.532,
+    "scope": "完整CapydokuAppTests；比0.2.28增加17例，包含音频35例及修正后三种尺寸的角色边界，不作排除。",
+    "log": "Validation/test-runs/original-0229-app.log",
+    "summary": "Validation/test-runs/original-0229-app-summary.json",
+    "bundle": "Validation/test-runs/original-0229-app.xcresult"
+  },
+  "uiTests": {
+    "status": "passed",
+    "build": "0.2.29 (32)",
+    "device": "iPhone 17e simulator / iOS 26.5",
+    "passed": 9,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 241.035,
+    "suiteSecondsIncludingOverhead": 241.046,
+    "log": "Validation/test-runs/original-0229-17e-ui.log",
+    "summary": "Validation/test-runs/original-0229-17e-ui-summary.json",
+    "bundle": "Validation/test-runs/original-0229-17e-ui.xcresult",
+    "repeatedTestAction": false,
+    "scope": "与0.2.28相同九个选定UI用例，不重复执行，无排除/跳过；教学、原生手势及道具、通关下一关、失败复活、一命提示与恢复、连续混合手势、离盘停止滑动、弹层可访问性及4/6/8/10尺寸。夹具边界保持，不代表150关全部人工试玩。",
+    "cases": [
+      "CapydokuUITests.CapydokuUITests testGuidedTutorialCoversRulesTapUndoBothSwipesAndFind",
+      "CapydokuUITests.CapydokuUITests testLastLifeSpotlightDismissalDoesNotSpendLifeOrMarkAndColdRestoreDoesNotReplayIt",
+      "CapydokuUITests.CapydokuUITests testLoseAndSimulatedRevivePreservesBoard",
+      "CapydokuUITests.CapydokuUITests testSolveEntirePuzzleAndAdvance",
+      "CapydokuUITests.CapydokuUITests testToolsResumeAfterNativeTapDoubleTapAndPanRecognizersFinish",
+      "CapydokuUITests.HardeningUITests testMixedBackToBackGesturesNeverRepeatDamageOrScore",
+      "CapydokuUITests.HardeningUITests testSwipeStopsWhenFingerLeavesBoard",
+      "CapydokuUITests.OriginalReferenceUITests testAllFourBoardSizesKeepNavigationRulesAndToolsInOrder",
+      "CapydokuUITests.OriginalReferenceUITests testModalControlsExcludeBackgroundAndReturnToTheSameBoard"
+    ]
+  },
+  "visualEvidence": {
+    "status": "reviewed_passed_scoped_runtime_images_and_movie_samples",
+    "manifest": "Docs/original-feel-0229/manifest.json",
+    "imagesReviewed": 14,
+    "imageScope": "最终466项App附件：9张角色（3动作×140/168/250pt）、4张粒子（100/280/480/730ms）、当前包第6关实际SwiftUI结算页。",
+    "imageIntegrity": "14张原图已按manifest逐一复核SHA256。",
+    "reviewers": {
+      "root": "4张粒子、当前L6结算页、录屏抽帧三套动作。",
+      "resultCharacterAgent": "9张最终角色图逐张目视及抽帧检查；主任务已确认。"
+    },
+    "sourceBundle": "Validation/test-runs/original-0229-app.xcresult",
+    "video": {
+      "file": "Docs/original-feel-0229/continuous-result-performances.mov",
+      "durationSeconds": 8.421666666666667,
+      "sampleContactSheet": "Docs/original-feel-0229/continuous-result-video-frames.png",
+      "sampleIntervalSeconds": 0.2,
+      "sampledFrames": 43,
+      "actualTimestampRecord": "Docs/original-feel-0229/video-sampling.json",
+      "scope": "实际iPhone17 Pro模拟器屏幕录制，Core Animation未暂停/seek；包含三尺寸宿主后连续三动作，为静音测试夹具，不是普通导航或真机录屏。"
+    },
+    "boundary": "有限目视样本验证边界、层次、关节衔接和清理；仍有刚性部件轮廓/明暗接缝，固定头部贴图无独立眼口动画。不代表真机帧率、声音/触觉、连续真人手感或Meowdoku审美/时序等效。"
+  },
+  "audio": {
+    "audioPlaybackImplementationModified": true,
+    "sourceWAVModified": false,
+    "localWAVFiles": 9,
+    "gitIgnored": true,
+    "formalReferenceVerified": false,
+    "newAudioAdded": false,
+    "liveAuditoryABThisRound": false,
+    "sourceEvidence": "Validation/meowdoku-audio-test-0226.json",
+    "timingEvidence": "Validation/audio-timing-0229.json",
+    "resourceAuditThisBuild": {
+      "status": "passed",
+      "scope": "final Debug simulator and signed physical internal_demo",
+      "localWAVFilesPerArtifact": 9,
+      "reports": [
+        "Validation/test-runs/original-0229-audio-debug-inventory.json",
+        "Validation/test-runs/original-0229-audio-physical-inventory.json"
+      ]
+    },
+    "releaseExclusion": {
+      "status": "historical_0227_evidence_only",
+      "evidence": "Validation/test-runs/original-0227-audio-release-inventory.json"
+    }
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "evidence": "Validation/test-runs/original-0224-core.log",
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "physicalUpdate": {
+    "status": "installed_and_version_verified_automatic_launch_blocked_by_device_lock",
+    "installedThisRound": true,
+    "verifiedVersion": "0.2.29 (32)",
+    "strictSignaturePassed": true,
+    "automatedLaunchSucceeded": false,
+    "launchReason": "FBSOpenApplicationErrorDomain error7: device was not, or could not be, unlocked. 手机锁屏，非开发者未信任。",
+    "dataScope": "实际安装前后只读快照，位于请求启动之前；无卸载、清档、回滚或恢复覆盖。",
+    "observedFilesIdentical": 8,
+    "historicalEventsUnchanged": 287,
+    "rewardEntriesUnchanged": 38,
+    "primaryAndBackupChecksumsValid": 4,
+    "currentLevel": 10,
+    "sessionUnchanged": true,
+    "completedLevelsRetained": true,
+    "settingsCheckInIdentityRetained": true,
+    "evidence": "Validation/original-0229-physical-install.json",
+    "boundary": "签名、无线覆盖安装和设备版本查询已验证；新版本自动启动、连续运行、声音/触觉及真人手感未验证。"
+  },
+  "builds": {
+    "signedPhysicalDebug": {
+      "status": "passed_final_rebuild",
+      "log": "Validation/test-runs/original-0229-physical-final-build.log",
+      "strictSignaturePassed": true,
+      "signatureLog": "Validation/test-runs/original-0229-codesign.log",
+      "installed": true,
+      "automaticLaunchSucceeded": false
+    },
+    "release": {
+      "status": "not_run_this_round"
+    },
+    "simulatorBuildForTesting": {
+      "status": "passed_before_character_bounds_fix",
+      "log": "Validation/test-runs/original-0229-final-build-for-testing.log"
+    },
+    "signedPhysicalDebugHistory": [
+      {
+        "status": "passed_before_character_bounds_fix",
+        "log": "Validation/test-runs/original-0229-physical-build.log",
+        "finalRebuild": "superseded_by_passed_final_rebuild_record_above",
+        "installed": false
+      }
+    ],
+    "simulatorDebug": {
+      "status": "passed_final_app_build_and_tests",
+      "log": "Validation/test-runs/original-0229-app.log"
+    }
+  },
+  "remaining": [
+    "0.2.29已安装，但本次自动启动被手机锁屏阻止；解锁后启动及声音/触觉、连续真人试玩仍未验。安装、签名和模拟器样本不能替代这些结论。",
+    "12个刚性部件提供连续关节动作，固定开心/失落头贴图没有独立眼口动画；细看仍有部件明暗与轮廓接缝。未宣称网格变形、真机帧率或Meowdoku审美/逐帧时序等效。",
+    "低性能设备及系统减少动态效果专项、冻结参考参数/音频清单、正式素材全集、外部服务交接及上架验收保持待验。本轮Perfect观察不改正式需求。"
+  ],
+  "formalSignOff": false,
+  "distribution": {
+    "githubPublished": false,
+    "distributionArchiveCreated": false,
+    "boundary": "分发仍暂停，仅本地开发与用户已授权的内部测试。"
+  },
+  "targetedTestsHistory": [
+    {
+      "status": "passed_before_final_review_corrections",
+      "device": "iPhone 17 Pro simulator / iOS 26.5",
+      "cases": 83,
+      "passed": 83,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 11.117,
+      "groups": {
+        "AudioPolicyTests": 34,
+        "StartupPreparationTests": 16,
+        "LocalTestAudioImportTests": 7,
+        "BoardPlacementBurstTests": 5,
+        "BoardCellPresentationTests": 6,
+        "BoardGuidancePresentationTests": 15
+      },
+      "log": "Validation/test-runs/original-0229-targeted.log",
+      "bundle": "Validation/test-runs/original-0229-targeted.xcresult",
+      "boundary": "先于音乐显式恢复缓存、临时prepare失败后的缓存恢复及粒子头像层次修正；不能替代最终构建全量。"
+    }
+  ],
+  "initialFailures": [
+    {
+      "run": "targeted-final",
+      "kind": "one_failed_case_three_assertions",
+      "test": "ResultCharacterChoreographyTests/testActualRigAtThreeSizesKeepsPartsInBoundsAndTexturesFixedWhileMoving",
+      "observed": "候选专项中，joyfulRaise右前臂在140/168/250pt三种尺寸超出结果装饰分配范围；同一用例3条边界断言失败。",
+      "resolutionStatus": "resolved_in_final_466_case_app_run",
+      "log": "Validation/test-runs/original-0229-targeted-final.log",
+      "bundle": "Validation/test-runs/original-0229-targeted-final.xcresult",
+      "fix": "角色占位从80%调整为76%，保留脚底锚点，不放宽边界断言。",
+      "resolutionEvidence": "Validation/test-runs/original-0229-app.xcresult"
+    }
+  ]
+}

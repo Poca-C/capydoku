@@ -19,7 +19,7 @@ final class BoardCellFeedbackView: UIView {
     private var fragments: [CAShapeLayer] = []
     private var cleanupTask: DispatchWorkItem?
 
-    init(cellIndex: Int, kind: Kind, frame: CGRect, tileColor: UIColor, reduceMotion: Bool, lowPower: Bool = false, errorMark: Bool = false) {
+    init(cellIndex: Int, kind: Kind, frame: CGRect, tileColor: UIColor, reduceMotion: Bool, lowPower: Bool = false, errorMark: Bool = false, localParticles: Bool = true) {
         self.cellIndex = cellIndex; self.kind = kind; self.reduceMotion = reduceMotion
         duration = reduceMotion ? 0.10 : kind == .found ? 0.32 : kind == .markAdded ? 0.16 : 0.13
         super.init(frame: frame)
@@ -29,7 +29,7 @@ final class BoardCellFeedbackView: UIView {
         layer.cornerRadius = max(3, bounds.width * 0.05)
 
         if kind == .found {
-            if !reduceMotion && !lowPower { makeFoundAccents(tileColor: tileColor) }
+            if !reduceMotion && !lowPower { makeFoundAccents(tileColor: tileColor, particles: localParticles) }
             symbol.frame = bounds.insetBy(dx: bounds.width * 0.07, dy: bounds.height * 0.07)
             symbol.name = "found-face-happy"
             symbol.contents = CapyExpressionArtwork.image(.happy)?.cgImage
@@ -102,7 +102,7 @@ final class BoardCellFeedbackView: UIView {
         super.willMove(toSuperview: newSuperview)
     }
 
-    private func makeFoundAccents(tileColor: UIColor) {
+    private func makeFoundAccents(tileColor: UIColor, particles: Bool) {
         let glow = CAGradientLayer()
         self.glow = glow
         glow.name = "found-local-glow"
@@ -116,8 +116,8 @@ final class BoardCellFeedbackView: UIView {
         layer.addSublayer(glow)
         // OBS-02/03: a small affection heart, colored sparkles and confetti
         // matching this region. These are original vectors, not copied assets.
-        let points = [CGPoint(x: 0.17, y: 0.18), CGPoint(x: 0.86, y: 0.43),
-                      CGPoint(x: 0.71, y: 0.84), CGPoint(x: 0.15, y: 0.73)]
+        let points: [CGPoint] = particles ? [CGPoint(x: 0.17, y: 0.18), CGPoint(x: 0.86, y: 0.43),
+                      CGPoint(x: 0.71, y: 0.84), CGPoint(x: 0.15, y: 0.73)] : []
         let colors = [2, 4, 8, 9].map { UIColor(CapyPalette.regionColors[$0]) }
         let side = min(9, max(2.5, bounds.width * 0.105))
         for (index, point) in points.enumerated() {
@@ -138,8 +138,8 @@ final class BoardCellFeedbackView: UIView {
             star.lineWidth = 0.6; star.opacity = 0; star.zPosition = 1
             layer.addSublayer(star); stars.append(star)
         }
-        let fragmentPoints = [CGPoint(x: 0.12, y: 0.42), CGPoint(x: 0.41, y: 0.14),
-                              CGPoint(x: 0.86, y: 0.76), CGPoint(x: 0.39, y: 0.87)]
+        let fragmentPoints: [CGPoint] = particles ? [CGPoint(x: 0.12, y: 0.42), CGPoint(x: 0.41, y: 0.14),
+                              CGPoint(x: 0.86, y: 0.76), CGPoint(x: 0.39, y: 0.87)] : []
         let fragmentSide = min(7, max(2.5, bounds.width * 0.075))
         for (index, point) in fragmentPoints.enumerated() {
             let fragment = CAShapeLayer(); fragment.name = "found-region-fragment-\(index)"

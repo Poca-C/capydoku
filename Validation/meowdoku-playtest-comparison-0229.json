@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-01",
+  "capydokuBaseline": "0.2.28 (31)",
+  "implementationBuild": "0.2.29 (32)",
+  "reference": {
+    "name": "Meowdoku",
+    "version": "1.19.1 (457)",
+    "versionEvidence": "Read current installed reference Info.plist after this live playtest",
+    "surface": "Official installed iOS app running on Mac; live native CUA screenshots and double-clicks",
+    "currentBundleMetadata": {
+      "CFBundleIdentifier": "com.oakever.meowdoku",
+      "CFBundleShortVersionString": "1.19.1",
+      "CFBundleVersion": "457"
+    }
+  },
+  "completed": [
+    "Opened Home level3 into restored6x6 board with two found cats and576score",
+    "Four correct double-clicks at R2C6,R3C2,R4C4,R5C1",
+    "Observed victory overlay with level4 available; left at victory"
+  ],
+  "observations": [
+    {
+      "id": "R0229-01",
+      "seen": "Correct reward includes small local heart, bright multicolor sparkles and region-colored fragments travelling outside the source tile, including below the board. A clapping-hands decoration and floating score accompany sampled corrects.",
+      "boundary": "Do not copy competitor artwork or add its English praise variants wholesale; preserve original Capydoku no-obstruction and immediate-input requirements."
+    },
+    {
+      "id": "R0229-02",
+      "seen": "Sampled post-restore sequence showed Patient Paws!, then Double Paws! with Nice, then Great, then Perfect on the final find. Floating increments672,768,864,960; HUD subsequently updated.",
+      "boundary": "Perfect is an observed label in this sampled version, not proof of Excellent or a frozen combo/scoring specification. Current formal config is unchanged."
+    },
+    {
+      "id": "R0229-03",
+      "seen": "Final-board cats smile with small hearts. Victory presents a large party cat with glow sticks, split blue/purple light, confetti and Chinese praise. Two later screenshots show different head/arm/body poses while the action remains visible.",
+      "boundary": "Two snapshots do not establish frame rate, continuous interpolation technology, loop duration or precise motion timing. Capydoku keeps its own original art and short non-blocking presentation."
+    }
+  ],
+  "implementationDecisions": [
+    "Add bounded sparse board-coordinate particle arcs that cross tile edges but remain inside the board; no interaction layer or delayed score/save",
+    "Replace whole-image pose swaps with original articulated assets if assembly quality passes runtime review",
+    "Prewarm trusted existing short audio handles during loading; leave9source WAVs and volume/delay unchanged"
+  ],
+  "notVerified": [
+    "Audible reference or Capydoku A/B",
+    "Physical haptics",
+    "Reference per-frame timing/FPS",
+    "Formal frozen reference or complete late-game behavior"
+  ],
+  "audioListening": false,
+  "screenshotsEvidence": "Native CUA tool responses in this task: reference level3 correct/Combo/final-board/victory images; no local screenshot file exported.",
+  "newSuccessfulPlaytestThisRound": true,
+  "formalScopeChanged": false
+}

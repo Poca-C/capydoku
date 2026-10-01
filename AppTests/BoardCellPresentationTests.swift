@@ -228,8 +228,9 @@ final class BoardCellPresentationTests: XCTestCase {
         capture(rig.board, name: "cell-found-070ms-heart-arriving-and-regional-fragments")
         try await Task.sleep(nanoseconds: 100_000_000)
         capture(rig.board, name: "cell-found-170ms-intact-heart-multicolor-sparkles-regional-fragments")
-        try await Task.sleep(nanoseconds: 230_000_000)
-        capture(rig.window, name: "cell-found-400ms-settled-board")
+        // The local face ends at320ms; the board-level reward arc ends at620ms.
+        try await Task.sleep(nanoseconds: 540_000_000)
+        capture(rig.window, name: "cell-found-710ms-settled-board")
         XCTAssertTrue(rig.effects.isEmpty); XCTAssertEqual(rig.session, committed)
         let restored = PuzzleGridUIView(frame: rig.board.frame)
         rig.window.rootViewController?.view.addSubview(restored)

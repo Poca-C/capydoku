@@ -1,0 +1,90 @@
+{
+  "build": "0.2.29 (32)",
+  "timestampUTC": "2026-10-01T12:24:04.628160+00:00",
+  "device": {
+    "model": "iPhone 14 Pro Max",
+    "os": "26.3.1",
+    "transport": "localNetwork"
+  },
+  "package": {
+    "version": "0.2.29",
+    "build": "32",
+    "bundle": "com.capydoku.demo",
+    "profileIncludesPhone": true,
+    "profileExpiresUTC": "2026-10-08 04:04:05",
+    "binarySHA256": "9762948d2d161e9a451d410d26e56e84c466e15b2ee6eeac0e3a93f10f2e07f9"
+  },
+  "signature": {
+    "strictVerification": true,
+    "buildLog": "Validation/test-runs/original-0229-physical-final-build.log",
+    "signatureLog": "Validation/test-runs/original-0229-codesign.log"
+  },
+  "installation": {
+    "passed": true,
+    "resetOrUninstall": false,
+    "normalBundleIdentifier": "com.capydoku.demo",
+    "verifiedVersion": "0.2.29",
+    "verifiedBuild": "32",
+    "result": "Validation/test-runs/physical-0229-install.json",
+    "queriedVersionEvidence": "Validation/test-runs/physical-0229-final-apps.json"
+  },
+  "launch": {
+    "passed": false,
+    "automatedLaunchSucceeded": false,
+    "status": "blocked_by_device_lock_after_verified_install",
+    "evidence": "Validation/test-runs/physical-0229-launch.json",
+    "log": "Validation/test-runs/physical-0229-launch.log",
+    "systemReason": "FBSOpenApplicationErrorDomain error7: device was not, or could not be, unlocked",
+    "terminatedExistingProcess": false,
+    "continuousOperation": "not_observed"
+  },
+  "data": {
+    "observedFilesBefore": 8,
+    "observedFilesAfter": 8,
+    "allFilesIdentical": true,
+    "changedFiles": [],
+    "primaryAndBackupChecksums": [
+      {
+        "snapshot": "before",
+        "file": "progress.json",
+        "valid": true
+      },
+      {
+        "snapshot": "before",
+        "file": "progress.backup.json",
+        "valid": true
+      },
+      {
+        "snapshot": "after",
+        "file": "progress.json",
+        "valid": true
+      },
+      {
+        "snapshot": "after",
+        "file": "progress.backup.json",
+        "valid": true
+      }
+    ],
+    "historicalEventsCount": 287,
+    "eventsAfter": 287,
+    "allHistoricalEventsUnchanged": true,
+    "previousRewardEntries": 38,
+    "rewardEntriesAfter": 38,
+    "allPreviousRewardEntriesUnchanged": true,
+    "completedLevelsRetained": true,
+    "settingsUnchanged": true,
+    "checkInUnchanged": true,
+    "identityNamespaceUnchanged": true,
+    "currentLevelBefore": 10,
+    "currentLevelAfter": 10,
+    "sessionUnchanged": true,
+    "comparisonNote": "Read-only snapshots immediately before and after in-place update, before requested launch. No uninstall, reset or data restore."
+  },
+  "audio": {
+    "debugLocalTestResourcesPresent": true,
+    "files": 9,
+    "inventory": "Validation/test-runs/original-0229-audio-physical-inventory.json",
+    "audiblePlaybackOnDevice": "not_verified_by_assistant"
+  },
+  "acceptanceBoundary": "Development signature, strict signature verification, wireless in-place installation and queried0.2.29(32) version verified. Eight before/after install files byte-identical;287 historical events and38 reward entries retained. Automatic launch rejected because phone is locked, not a developer-trust failure. No uninstall, reset, rollback, physical gesture/haptic/audio acceptance or continuous-running claim. No distribution archive, TestFlight/App Store upload or GitHub publication."
+}

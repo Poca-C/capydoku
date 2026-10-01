@@ -59,6 +59,7 @@ struct StartupFlowView: View {
             .accessibilityHidden(controller.stage != .welcome)
         }
         .task {
+            controller.prepareFeedback = { await model.prepareStartupFeedback() }
             controller.onAccepted = { model.consentAccepted() }
             controller.onReady = { model.startupReady() }
             controller.setActive((scenePhaseOverride ?? scenePhase) == .active)

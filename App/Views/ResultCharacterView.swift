@@ -45,6 +45,8 @@ private struct ResultCharacterBridge: UIViewRepresentable {
 /// timer or a loop. The underlying model layers are always the static result.
 final class ResultCharacterUIView: UIView {
     private let character = CALayer()
+    private var rigLayers: [ResultRigPart: CALayer] = [:]
+    private var rigReady = false
     private let groundShadow = CAShapeLayer()
     private let crown = CALayer()
     private var crownStars: [CAShapeLayer] = []
@@ -79,6 +81,14 @@ final class ResultCharacterUIView: UIView {
         layer.addSublayer(groundShadow)
         character.name = "result-character"; character.contentsGravity = .resizeAspect
         layer.addSublayer(character)
+        // Fixed depth throughout every performance: shoulder roots disappear
+        // naturally behind the torso; elbows/paws never pop across a z-order swap.
+        let partOrder: [ResultRigPart] = [.leftUpperArm,.rightUpperArm,.torso,.leftFoot,.rightFoot,
+            .leftForearm,.rightForearm,.happyHead,.sadHead,.star,.leftPaw,.rightPaw]
+        for part in partOrder {
+            let piece = CALayer(); piece.name = part.layerName; piece.contentsGravity = .resize
+            character.addSublayer(piece); rigLayers[part] = piece
+        }
         crown.name = "result-star-crown"; layer.addSublayer(crown)
         for index in 0..<3 {
             let star = CAShapeLayer(); star.name = "result-crown-star-\(index)"
@@ -166,7 +176,7 @@ final class ResultCharacterUIView: UIView {
         if UIAccessibility.isReduceMotionEnabled { cancelPresentation() }
     }
 
-    private var allLayers: [CALayer] { [layer, character, groundShadow, crown] + crownStars + wingStars + sighs }
+    private var allLayers: [CALayer] { [layer, character, groundShadow, crown] + Array(rigLayers.values) + crownStars + wingStars + sighs }
 
     private var performance: ResultCharacterPerformance {
         won ? (variant == .joyfulBounce ? .joyfulRaise : .starHug) : .gentleRetry
@@ -174,10 +184,31 @@ final class ResultCharacterUIView: UIView {
 
     private func updateArtwork() {
         CATransaction.begin(); CATransaction.setDisableActions(true)
-        character.contents = (ResultCharacterArtwork.poses(for: performance).last
-            ?? CapyExpressionArtwork.image(won ? .happy : .neutral))?.cgImage
+        rigReady = ResultCharacterArtwork.prewarmRig()
+        if rigReady {
+            character.contents = nil
+            for (part,piece) in rigLayers { piece.contents = ResultCharacterArtwork.rigImage(part)?.cgImage }
+            applyRigPose(ResultRigMotion.pose(performance, phase:1))
+        } else {
+            // Only a missing/invalid component atlas uses the old complete art.
+            // A successful rig never switches to this image at completion.
+            character.contents = (ResultCharacterArtwork.poses(for: performance).last
+                ?? CapyExpressionArtwork.image(won ? .happy : .neutral))?.cgImage
+            for piece in rigLayers.values { piece.opacity = 0 }
+        }
         crown.opacity = won && variant == .proudCrown ? 1 : 0
         CATransaction.commit()
+    }
+
+    private func applyRigPose(_ pose: ResultRigPose) {
+        for (part,piece) in rigLayers {
+            guard let state = pose.parts[part] else { piece.opacity = 0; continue }
+            piece.opacity = 1
+            piece.bounds = CGRect(origin:.zero,size:CGSize(width:state.size.width * character.bounds.width,
+                                                          height:state.size.height * character.bounds.height))
+            piece.position = CGPoint(x:state.center.x * character.bounds.width, y:state.center.y * character.bounds.height)
+            piece.setAffineTransform(CGAffineTransform(rotationAngle:state.rotation))
+        }
     }
 
     private func layoutArtwork() {
@@ -187,11 +218,14 @@ final class ResultCharacterUIView: UIView {
             CGRect(x: origin.x + side * x, y: origin.y + side * y, width: side * width, height: side * width)
         }
         CATransaction.begin(); CATransaction.setDisableActions(true)
-        // Motion uses the spare margin around this 80% character footprint.
+        // The articulated forearms need room for their full rotated rectangles.
+        // Keep the same ground contact while leaving a margin at the cheer apex.
         // Keep squash/lean grounded at the shared foot baseline in the atlas.
         // Centre scaling made the feet float whenever an anticipation compressed.
         character.anchorPoint = CGPoint(x: 0.5, y: 0.96)
-        character.frame = square(0.10, 0.13, 0.80)
+        let footprint: CGFloat = rigReady ? 0.76 : 0.80
+        character.frame = square((1 - footprint) / 2, 0.898 - footprint * 0.96, footprint)
+        if rigReady { applyRigPose(ResultRigMotion.pose(performance, phase:1)) }
         groundShadow.frame = CGRect(x: origin.x + side * 0.28, y: origin.y + side * 0.865, width: side * 0.44, height: side * 0.055)
         groundShadow.path = UIBezierPath(ovalIn: groundShadow.bounds).cgPath
         crown.frame = bounds
@@ -234,7 +268,7 @@ final class ResultCharacterUIView: UIView {
         generation = UUID(); let token = generation
         presentationStartTime = CACurrentMediaTime()
         let duration = won ? (variant == .joyfulBounce ? 1.05 : 1.20) : 0.92
-        playPoses(duration: duration)
+        playRig(duration: duration)
         if won && variant == .joyfulBounce { playBounce(duration: duration) }
         else if won { playCrown(duration: duration) }
         else { playSigh(duration: duration) }
@@ -245,16 +279,25 @@ final class ResultCharacterUIView: UIView {
         cleanup = work; schedule(duration + 0.03, work)
     }
 
-    private func playPoses(duration: TimeInterval) {
-        let poses = ResultCharacterArtwork.poses(for: performance)
-        guard poses.count == 3 else { return }
-        let animation = CAKeyframeAnimation(keyPath: "contents")
-        animation.values = performance.poseIndices.compactMap { poses[$0].cgImage }
-        animation.keyTimes = performance.poseTimes
-        animation.calculationMode = .discrete
-        animation.duration = duration
-        animation.beginTime = character.convertTime(presentationStartTime, from: nil)
-        character.add(animation, forKey: "result-pose-sequence")
+    private func playRig(duration: TimeInterval) {
+        guard rigReady else { return }
+        let poses = ResultRigMotion.samples(performance)
+        let times = ResultRigMotion.phases.map { NSNumber(value:Double($0)) }
+        for (part,piece) in rigLayers {
+            let states = poses.compactMap { $0.parts[part] }
+            guard states.count == poses.count else { continue }
+            let position = CAKeyframeAnimation(keyPath:"position")
+            position.values = states.map { NSValue(cgPoint:CGPoint(x:$0.center.x * character.bounds.width,
+                                                                   y:$0.center.y * character.bounds.height)) }
+            let rotation = CAKeyframeAnimation(keyPath:"transform.rotation.z")
+            rotation.values = ResultRigMotion.unwrapped(states.map(\.rotation))
+            for (key,animation) in [("result-rig-position",position),("result-rig-rotation",rotation)] {
+                animation.keyTimes = times; animation.duration = duration
+                animation.calculationMode = .linear
+                animation.beginTime = piece.convertTime(presentationStartTime, from:nil)
+                piece.add(animation,forKey:key)
+            }
+        }
     }
 
     private func keyframes(_ target: CALayer, key: String, values: [CGFloat], times: [NSNumber], duration: TimeInterval,
@@ -272,27 +315,26 @@ final class ResultCharacterUIView: UIView {
     private func playBounce(duration: TimeInterval) {
         let side = min(bounds.width, bounds.height)
         keyframes(character, key: "transform.translation.y", values: [0, 0, -side * 0.07, 0, -side * 0.045, 0, 0],
-                  times: [0, 0.10, 0.27, 0.43, 0.61, 0.78, 1], duration: duration,
+                  times: [0, 0.12, 0.36, 0.50, 0.67, 0.84, 1], duration: duration,
                   easing: [.easeInEaseOut, .easeOut, .easeIn, .easeOut, .easeIn, .easeOut])
-        let contacts: [NSNumber] = [0, 0.10, 0.17, 0.27, 0.43, 0.49, 0.53, 0.61, 0.78, 0.86, 1]
+        let contacts: [NSNumber] = [0, 0.12, 0.23, 0.36, 0.50, 0.56, 0.60, 0.67, 0.84, 0.92, 1]
         keyframes(character, key: "transform.scale.x", values: [1, 1.025, 0.985, 0.99, 1.045, 1.015, 0.99, 0.995, 1.03, 0.995, 1],
                   times: contacts, duration: duration)
         keyframes(character, key: "transform.scale.y", values: [1, 0.95, 1.035, 1.015, 0.91, 0.97, 1.025, 1.012, 0.94, 1.005, 1],
                   times: contacts, duration: duration)
         keyframes(character, key: "transform.rotation.z", values: [0, -0.025, 0.025, -0.020, 0.016, 0],
-                  times: [0, 0.10, 0.32, 0.49, 0.68, 1], duration: duration)
+                  times: [0, 0.12, 0.36, 0.56, 0.76, 1], duration: duration)
         keyframes(groundShadow, key: "transform.scale", values: [1, 0.70, 1.10, 0.78, 1.06, 1],
-                  times: [0, 0.27, 0.43, 0.61, 0.78, 1], duration: duration)
+                  times: [0, 0.36, 0.50, 0.67, 0.84, 1], duration: duration)
         for (index, star) in wingStars.enumerated() {
-            keyframes(star, key: "opacity", values: [0, 1, 0.4, 1, 0], times: [0, 0.24, 0.43, 0.67, 1], duration: duration)
+            keyframes(star, key: "opacity", values: [0, 1, 0.4, 1, 0], times: [0, 0.34, 0.50, 0.73, 1], duration: duration)
             keyframes(star, key: "transform.rotation.z", values: [0, index < 2 ? -0.4 : 0.4, 0], times: [0, 0.55, 1], duration: duration)
             keyframes(star, key: "transform.translation.y", values: [side * 0.02, -side * 0.025, 0], times: [0, 0.55, 1], duration: duration)
         }
     }
 
     private func playCrown(duration: TimeInterval) {
-        // The two redraws at .20/.66 occur during a lift/presentation, rather
-        // than at a stationary sway endpoint where they read as a picture swap.
+        // The outer sway accompanies continuous hand/star joint trajectories.
         keyframes(character, key: "transform.rotation.z", values: [0, -0.065, 0.065, 0.04, -0.04, 0],
                   times: [0, 0.10, 0.34, 0.54, 0.80, 1], duration: duration)
         keyframes(character, key: "transform.scale.x", values: [1, 1.02, 0.99, 1.008, 1.015, 1],

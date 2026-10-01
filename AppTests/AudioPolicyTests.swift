@@ -269,7 +269,9 @@ private final class AudioTestHandle: AudioPlaybackHandle {
     var playCount = 0, pauseCount = 0, stopCount = 0
     var fades: [(Float, TimeInterval)] = []
     init(_ clock: AudioTestClock) { self.clock = clock }
-    func prepareToPlay() -> Bool { true }
+    var prepareCount = 0
+    var preparationSucceeds = true
+    func prepareToPlay() -> Bool { prepareCount += 1; return preparationSucceeds }
     func play() -> Bool { if !isPlaying { started = clock.now }; isPlaying = true; playCount += 1; return true }
     func pause() { position = currentTime; isPlaying = false; pauseCount += 1 }
     func stop() { isPlaying = false; position = 0; stopCount += 1 }
@@ -280,10 +282,11 @@ private final class AudioTestRig {
     let clock = AudioTestClock()
     var handles: [AudioTestHandle] = []
     var sessionChanges: [Bool] = []
+    var onPlayerCreated: (() -> Void)?
     func player(_ manifest: ReferenceAudioManifest, resourcesExist: Bool = true) -> FeedbackPlayer {
         FeedbackPlayer(manifest: manifest,
             resourceResolver: { resourcesExist ? URL(fileURLWithPath: "/contract-test-only/" + $0) : nil },
-            playerFactory: { [unowned self] _ in let handle = AudioTestHandle(clock); handles.append(handle); return handle },
+            playerFactory: { [unowned self] _ in let handle = AudioTestHandle(clock); handles.append(handle); onPlayerCreated?(); return handle },
             scheduler: clock.schedule, clock: { [unowned self] in clock.now },
             sessionControl: { [unowned self] value in sessionChanges.append(value); return true }, observeSystem: false)
     }
@@ -303,6 +306,178 @@ final class AudioPolicyTests: XCTestCase {
         transitions[AudioFlowEvent.mediaReset.rawValue] = .restart
         return ReferenceAudioManifest(version: "synthetic-contract-only", referenceVerified: true, clips: ["background_music": track], musicTransitions: transitions)
     }
+    @MainActor func testPreparedEffectsStartWithoutConstructingOrPreparingInsideTheCue() async {
+        var effect = clip(); effect.delay = 0; effect.minimumInterval = 0; effect.maximumConcurrent = 2
+        let rig = AudioTestRig(), player = rig.player(ReferenceAudioManifest(version: "pool", referenceVerified: true, clips: ["mark_x": effect]))
+        player.setContext(page: .game)
+        await player.prepareShortEffects()
+        XCTAssertEqual(rig.handles.count, 2)
+        XCTAssertTrue(rig.handles.allSatisfy { $0.prepareCount == 1 && $0.playCount == 0 })
+        XCTAssertTrue(rig.sessionChanges.isEmpty, "Warming does not explicitly activate the playback session or play audio")
+        player.play(.mark); rig.clock.advance(0)
+        XCTAssertEqual(rig.handles.count, 2)
+        XCTAssertEqual(rig.handles.map(\.playCount), [1, 0])
+        XCTAssertEqual(rig.handles.map(\.prepareCount), [1, 1])
+        XCTAssertEqual(rig.handles[0].volume, effect.volume)
+        rig.handles[0].isPlaying = false // Controlled natural completion.
+        rig.clock.advance(10.04)
+        XCTAssertEqual(rig.handles[0].prepareCount, 2)
+        player.play(.mark); rig.clock.advance(0)
+        XCTAssertEqual(rig.handles.count, 2)
+        XCTAssertEqual(rig.handles[0].playCount, 2)
+        XCTAssertEqual(rig.handles[0].currentTime, 0)
+    }
+
+    @MainActor func testPreparedFilePoolDeduplicatesMarkAndSwipeWithoutSharingActiveCursor() async {
+        var effect = clip(); effect.delay = 0; effect.minimumInterval = 0; effect.maximumConcurrent = 3
+        let manifest = ReferenceAudioManifest(version: "shared-file-pool", referenceVerified: true,
+            clips: ["mark_x": effect, "swipe_x": effect],
+            swipe: .init(mode: .perCell, cadenceSeconds: 0, maximumQueued: 12, end: .finishCurrent, cancel: .immediately))
+        let rig = AudioTestRig(), player = rig.player(manifest)
+        player.setContext(page: .game); await player.prepareShortEffects(); await player.prepareShortEffects()
+        XCTAssertEqual(rig.handles.count, 6, "One bounded resource pool, no duplicate prewarm on reentry")
+        player.play(.mark); rig.clock.advance(0)
+        player.beginSwipe(); player.playMarks(count: 3); rig.clock.advance(0)
+        XCTAssertEqual(rig.handles.filter(\.isPlaying).count, 4)
+        XCTAssertEqual(rig.handles.filter { $0.playCount == 1 }.count, 4)
+        player.endSwipe(cancelled: true); rig.clock.advance(0)
+        XCTAssertEqual(rig.handles.filter(\.isPlaying).count, 1, "Cancelling swipe cannot stop the distinct single-tap voice")
+    }
+
+    @MainActor func testPreparedPoolBudgetsDoNotBecomePlaybackConcurrencyLimits() async {
+        var effect = clip(); effect.delay = 0; effect.minimumInterval = 0; effect.maximumConcurrent = 8
+        var clips: [String: AudioClipPolicy] = [:]
+        for event in ["mark_x", "swipe_x", "erase_x", "double_tap_correct", "double_tap_wrong"] {
+            var sample = effect; sample.file = event + ".wav"; clips[event] = sample
+        }
+        let manifest = ReferenceAudioManifest(version: "bounded-pool", referenceVerified: true, clips: clips,
+            swipe: .init(mode: .perCell, cadenceSeconds: 0, maximumQueued: 12, end: .finishCurrent, cancel: .immediately))
+        let rig = AudioTestRig(), player = rig.player(manifest)
+        player.setContext(page: .game); await player.prepareShortEffects()
+        XCTAssertEqual(rig.handles.count, 24)
+        for _ in 0..<8 { player.play(.correct); rig.clock.advance(0) }
+        XCTAssertEqual(rig.handles.filter(\.isPlaying).count, 8, "Two uncached fallback handles preserve the imported limit of eight")
+        XCTAssertEqual(rig.handles.count, 26)
+        player.play(.correct); rig.clock.advance(0)
+        XCTAssertEqual(rig.handles.count, 26, "The ninth remains rejected by the original dropNewest policy")
+    }
+
+    @MainActor func testPreparedPlaybackRetainsDelayAndCancelsQueuedCueWhenMuted() async {
+        let rig = AudioTestRig(), player = rig.player(ReferenceAudioManifest(version: "delayed-pool", referenceVerified: true, clips: ["mark_x": clip()]))
+        player.setContext(page: .game); await player.prepareShortEffects()
+        player.play(.mark); rig.clock.advance(0.19)
+        XCTAssertTrue(rig.handles.allSatisfy { $0.playCount == 0 })
+        player.apply(settings: .init(sound: false)); rig.clock.advance(1)
+        XCTAssertTrue(rig.handles.allSatisfy { $0.playCount == 0 })
+        await player.prepareShortEffects()
+        XCTAssertEqual(rig.handles.count, 4, "Disabled sound cannot be warmed or replayed")
+        player.apply(settings: .init(sound: true)); await player.prepareShortEffects()
+        player.play(.mark); rig.clock.advance(0.2)
+        XCTAssertEqual(rig.handles.filter { $0.playCount > 0 }.count, 1)
+        XCTAssertEqual(rig.handles.count, 8, "A new setting generation does not reuse invalidated handles")
+    }
+
+    @MainActor func testPreparedHandlesAreInvalidatedAcrossBackgroundInterruptionAndMediaReset() async {
+        var effect = clip(); effect.delay = 0; effect.minimumInterval = 0; effect.maximumConcurrent = 1
+        for boundary in 0..<4 {
+            let rig = AudioTestRig(), player = rig.player(ReferenceAudioManifest(version: "lifecycle-pool", referenceVerified: true, clips: ["mark_x": effect]))
+            player.setContext(page: .game); await player.prepareShortEffects()
+            player.play(.mark); rig.clock.advance(0)
+            switch boundary {
+            case 0: player.setBlocked(.background, active: true)
+            case 1, 3: player.handleInterruption(began: true, shouldResume: false)
+            default: player.handleMediaServicesReset()
+            }
+            XCTAssertFalse(rig.handles[0].isPlaying)
+            rig.clock.advance(0)
+            XCTAssertEqual(rig.handles[0].prepareCount, 1, "The old queued recycle must be invalidated")
+            if boundary == 0 { player.setBlocked(.background, active: false) }
+            if boundary == 1 { player.handleInterruption(began: false, shouldResume: true) }
+            if boundary == 3 {
+                player.handleInterruption(began: false, shouldResume: false)
+                await player.prepareShortEffects()
+                player.play(.mark); rig.clock.advance(0)
+                XCTAssertEqual(rig.handles.count, 1, "No automatic preparation or playback without shouldResume")
+                let warmed = expectation(description: "Explicit music re-enable rebuilds the short-effect cache")
+                rig.onPlayerCreated = { if rig.handles.count == 2 { warmed.fulfill() } }
+                player.apply(settings: .init(sound: true, haptic: false, voice: false, music: true))
+                await fulfillment(of: [warmed], timeout: 1)
+                rig.onPlayerCreated = nil
+            } else { await player.prepareShortEffects() }
+            player.play(.mark); rig.clock.advance(0)
+            XCTAssertEqual(rig.handles.count, 2)
+            XCTAssertEqual(rig.handles.map(\.playCount), [1, 1])
+            player.setBlocked(.background, active: true)
+        }
+    }
+
+    @MainActor func testPreparedStopOldestAndStaleCleanupNeverStopAReusedHandle() async {
+        var effect = clip(); effect.delay = 0; effect.minimumInterval = 0; effect.maximumConcurrent = 1; effect.overflow = .stopOldest
+        let rig = AudioTestRig(), player = rig.player(ReferenceAudioManifest(version: "reuse-pool", referenceVerified: true, clips: ["mark_x": effect]))
+        player.setContext(page: .game); await player.prepareShortEffects()
+        rig.handles[0].duration = 0.2
+        player.play(.mark); rig.clock.advance(0)
+        rig.clock.advance(0.05); player.play(.mark); rig.clock.advance(0)
+        XCTAssertEqual(rig.handles.count, 2, "A just-stopped handle is not leased before deferred re-preparation")
+        rig.clock.advance(0.05); player.play(.mark); rig.clock.advance(0)
+        XCTAssertEqual(rig.handles[0].playCount, 2)
+        XCTAssertTrue(rig.handles[0].isPlaying)
+        rig.clock.advance(0.15) // Beyond the first lease's old completion callback.
+        XCTAssertTrue(rig.handles[0].isPlaying)
+        XCTAssertEqual(rig.handles[0].stopCount, 1)
+        XCTAssertEqual(rig.handles[1].stopCount, 1)
+    }
+
+    @MainActor func testFailedIdlePreparationFallsBackWithoutLosingCueAndExplicitWarmRecoversReuse() async {
+        var effect = clip(); effect.delay = 0; effect.minimumInterval = 0; effect.maximumConcurrent = 1
+        let rig = AudioTestRig(), player = rig.player(ReferenceAudioManifest(version: "recover-pool", referenceVerified: true, clips: ["mark_x": effect]))
+        player.setContext(page: .game); await player.prepareShortEffects()
+        let cached = rig.handles[0]; cached.duration = 0.2
+        player.play(.mark); rig.clock.advance(0)
+        cached.preparationSucceeds = false; cached.isPlaying = false
+        rig.clock.advance(0.25) // Natural completion followed by a transient prepare failure.
+        let attempts = cached.prepareCount
+        await player.prepareShortEffects()
+        XCTAssertEqual(cached.prepareCount, attempts + 1, "One failed retry per request; no busy retry loop")
+        XCTAssertEqual(cached.playCount, 1, "Preparation cannot replay the completed cue")
+        player.play(.mark); rig.clock.advance(0)
+        XCTAssertEqual(rig.handles.count, 2)
+        let fallback = rig.handles[1]
+        XCTAssertTrue(fallback.isPlaying, "An unavailable cache must not swallow a valid cue")
+        cached.preparationSucceeds = true
+        await player.prepareShortEffects()
+        XCTAssertTrue(fallback.isPlaying, "Rewarming an idle handle cannot disturb the active fallback")
+        XCTAssertEqual(fallback.stopCount, 0)
+        fallback.isPlaying = false
+        player.play(.mark); rig.clock.advance(0)
+        XCTAssertEqual(rig.handles.count, 2, "The recovered cache is reused without another construction")
+        XCTAssertTrue(cached.isPlaying); XCTAssertEqual(cached.playCount, 2)
+        XCTAssertEqual(cached.currentTime, 0)
+    }
+
+    @MainActor func testUnverifiedAndMutedPoolWarmupDoesNotReadOrPrepareAudio() async {
+        let rig = AudioTestRig(), player = rig.player(.silent)
+        await player.prepareShortEffects()
+        XCTAssertTrue(rig.handles.isEmpty); XCTAssertTrue(rig.sessionChanges.isEmpty)
+        let local = AudioTestRig(), muted = local.player(ReferenceAudioManifest(version: "muted-pool", referenceVerified: true, clips: ["mark_x": clip()]))
+        muted.apply(settings: .init(sound: false, haptic: false, voice: false, music: false))
+        await muted.prepareShortEffects()
+        XCTAssertTrue(local.handles.isEmpty); XCTAssertTrue(local.sessionChanges.isEmpty)
+    }
+
+    @MainActor func testLocalPreparedAudioKeepsWaveformsAndPolicyButRemovesCueTimeCreation() async throws {
+        let rig = AudioExperienceDiagnosticRig(), player = try rig.player()
+        await player.prepareShortEffects()
+        XCTAssertEqual(rig.handles.count, 21)
+        XCTAssertEqual(Set(rig.resources).count, 8, "Music is not a prepared short effect; mark and swipe share their file pool")
+        XCTAssertTrue(rig.handles.allSatisfy { $0.playCount == 0 && $0.prepareCount == 1 })
+        player.play(.correct); player.play(.combo(2)); rig.clock.advance(0)
+        XCTAssertEqual(rig.handles.count, 21)
+        XCTAssertEqual(rig.handles.filter(\.isPlaying).count, 2)
+        XCTAssertTrue(rig.handles.allSatisfy { $0.prepareCount == 1 })
+        print("AUDIO_DIAGNOSTIC prepared local playback: 21 bounded handles / 8 unchanged effect files warmed before input; correct + Nice create/prepare zero additional players at their scheduled cue. No physical output latency measured.")
+    }
+
     @MainActor func testUnverifiedEmptyOrMissingResourceManifestNeverCreatesPlayerOrAudioSession() {
         let rig = AudioTestRig(), player = rig.player(.silent)
         player.setContext(page: .game, level: 1); player.apply(settings: .init(sound: true, haptic: false, voice: true, music: true))

@@ -1,0 +1,490 @@
+{
+  "schemaVersion": 1,
+  "status": "final_app_passed_device_audio_latency_and_listening_unverified",
+  "baselineCommit": "c1ac3eb",
+  "scope": "Baseline c1ac3eb source audit and unchanged local WAV sample analysis, followed by 0.2.29 bounded prepared-player implementation and verification. No subjective listening or physical-device output latency measured.",
+  "originalRequirements": [
+    324,
+    325,
+    326,
+    327,
+    328,
+    329,
+    330,
+    331,
+    332,
+    333,
+    334,
+    335,
+    336,
+    337,
+    338,
+    339,
+    340,
+    341,
+    342,
+    343,
+    344
+  ],
+  "method": {
+    "pcm": "Signed little endian 16-bit integer, normalized by 32768; onset thresholds compare maximum absolute sample across channels. Window RMS combines channels, non-overlapping 10 ms windows.",
+    "limits": "Sample threshold crossings are waveform evidence only, not human perceptual onset. RMS/peak is not loudness/masking proof. The source clips and production manifest were not changed."
+  },
+  "files": [
+    {
+      "file": "meow-test-bgm_meowdoku_melody.wav",
+      "sha256": "7977f4802ea5715c9e935636d56555bdfce9ff3fca1d9dad8937875a74e2f593",
+      "channels": 2,
+      "sample_rate_hz": 44100,
+      "duration_ms": 74571.451,
+      "first_nonzero_ms": 0.0,
+      "first_minus_60_dbfs_ms": 0.703,
+      "first_minus_40_dbfs_ms": 9.955,
+      "peak_dbfs": -11.643,
+      "rms_dbfs_entire_file": -27.303,
+      "peak_10ms_rms_dbfs": -19.576,
+      "first_10ms_window_rms_at_least_minus_40_dbfs_ms": 10,
+      "temporary_mapping": [
+        {
+          "event": "background_music",
+          "volume": 0.4,
+          "delay_ms": 0,
+          "fade_in_ms": 250.0
+        }
+      ]
+    },
+    {
+      "file": "meow-test-btn_click_2.wav",
+      "sha256": "714a1f358a079040af73038456571d69c566c04638a319b4ba6467d19b7e70dd",
+      "channels": 2,
+      "sample_rate_hz": 44100,
+      "duration_ms": 261.95,
+      "first_nonzero_ms": 0.0,
+      "first_minus_60_dbfs_ms": 0.0,
+      "first_minus_40_dbfs_ms": 3.016,
+      "peak_dbfs": -13.556,
+      "rms_dbfs_entire_file": -33.902,
+      "peak_10ms_rms_dbfs": -22.875,
+      "first_10ms_window_rms_at_least_minus_40_dbfs_ms": 0,
+      "temporary_mapping": [
+        {
+          "event": "button_tap",
+          "volume": 0.9,
+          "delay_ms": 0,
+          "fade_in_ms": 0
+        }
+      ]
+    },
+    {
+      "file": "meow-test-combo_excellent_s6.wav",
+      "sha256": "ab9b9da86ce1cb26b73e1b0f187bf4e4e8275873e9543140aebc78d4ee86c21f",
+      "channels": 1,
+      "sample_rate_hz": 44100,
+      "duration_ms": 1442.812,
+      "first_nonzero_ms": 92.902,
+      "first_minus_60_dbfs_ms": 101.814,
+      "first_minus_40_dbfs_ms": 102.789,
+      "peak_dbfs": -8.074,
+      "rms_dbfs_entire_file": -25.853,
+      "peak_10ms_rms_dbfs": -16.531,
+      "first_10ms_window_rms_at_least_minus_40_dbfs_ms": 100,
+      "temporary_mapping": [
+        {
+          "event": "excellent",
+          "volume": 0.9,
+          "delay_ms": 0,
+          "fade_in_ms": 0
+        }
+      ]
+    },
+    {
+      "file": "meow-test-combo_great_s6.wav",
+      "sha256": "156cdb517d0fc4c136126b31b269ef5872c064eabf71d3377983c8e4c91b74e7",
+      "channels": 1,
+      "sample_rate_hz": 44100,
+      "duration_ms": 1384.943,
+      "first_nonzero_ms": 84.195,
+      "first_minus_60_dbfs_ms": 89.637,
+      "first_minus_40_dbfs_ms": 118.73,
+      "peak_dbfs": -8.267,
+      "rms_dbfs_entire_file": -23.891,
+      "peak_10ms_rms_dbfs": -15.193,
+      "first_10ms_window_rms_at_least_minus_40_dbfs_ms": 120,
+      "temporary_mapping": [
+        {
+          "event": "great",
+          "volume": 0.9,
+          "delay_ms": 0,
+          "fade_in_ms": 0
+        }
+      ]
+    },
+    {
+      "file": "meow-test-combo_nice_s6.wav",
+      "sha256": "f90f0fa1dab21ec10f9123e14dc681087b333ee2f3ad424b2fcb482a97e32086",
+      "channels": 1,
+      "sample_rate_hz": 44100,
+      "duration_ms": 1416.417,
+      "first_nonzero_ms": 24.671,
+      "first_minus_60_dbfs_ms": 48.912,
+      "first_minus_40_dbfs_ms": 60.159,
+      "peak_dbfs": -7.788,
+      "rms_dbfs_entire_file": -25.126,
+      "peak_10ms_rms_dbfs": -17.264,
+      "first_10ms_window_rms_at_least_minus_40_dbfs_ms": 60,
+      "temporary_mapping": [
+        {
+          "event": "nice",
+          "volume": 0.9,
+          "delay_ms": 0,
+          "fade_in_ms": 0
+        }
+      ]
+    },
+    {
+      "file": "meow-test-mark_cat.wav",
+      "sha256": "52dd253b6940c0afad4806ac12ba592f031258b1c075c020ad66ecaf9eeb2b0e",
+      "channels": 2,
+      "sample_rate_hz": 44100,
+      "duration_ms": 1111.497,
+      "first_nonzero_ms": 5.85,
+      "first_minus_60_dbfs_ms": 15.442,
+      "first_minus_40_dbfs_ms": 18.095,
+      "peak_dbfs": -14.54,
+      "rms_dbfs_entire_file": -37.639,
+      "peak_10ms_rms_dbfs": -24.881,
+      "first_10ms_window_rms_at_least_minus_40_dbfs_ms": 20,
+      "temporary_mapping": [
+        {
+          "event": "double_tap_correct",
+          "volume": 0.9,
+          "delay_ms": 0,
+          "fade_in_ms": 0
+        }
+      ]
+    },
+    {
+      "file": "meow-test-mark_wrong_1.wav",
+      "sha256": "1ec4ca3156b856f3a46a1dc6391dab26c2a2241401fa93ca81786d0c26ab2ab9",
+      "channels": 2,
+      "sample_rate_hz": 44100,
+      "duration_ms": 1513.039,
+      "first_nonzero_ms": 0.0,
+      "first_minus_60_dbfs_ms": 1.179,
+      "first_minus_40_dbfs_ms": 2.336,
+      "peak_dbfs": -8.942,
+      "rms_dbfs_entire_file": -26.531,
+      "peak_10ms_rms_dbfs": -15.251,
+      "first_10ms_window_rms_at_least_minus_40_dbfs_ms": 0,
+      "temporary_mapping": [
+        {
+          "event": "double_tap_wrong",
+          "volume": 0.9,
+          "delay_ms": 0,
+          "fade_in_ms": 0
+        }
+      ]
+    },
+    {
+      "file": "meow-test-mark_x_2.wav",
+      "sha256": "30f0bc23ab6d145afafaed161bb97fdd72605150dadb3e9f5883a889eeaf73d4",
+      "channels": 2,
+      "sample_rate_hz": 44100,
+      "duration_ms": 182.381,
+      "first_nonzero_ms": 0.0,
+      "first_minus_60_dbfs_ms": 0.068,
+      "first_minus_40_dbfs_ms": 4.785,
+      "peak_dbfs": -21.614,
+      "rms_dbfs_entire_file": -36.825,
+      "peak_10ms_rms_dbfs": -30.612,
+      "first_10ms_window_rms_at_least_minus_40_dbfs_ms": 20,
+      "temporary_mapping": [
+        {
+          "event": "mark_x",
+          "volume": 0.9,
+          "delay_ms": 0,
+          "fade_in_ms": 0
+        },
+        {
+          "event": "swipe_x",
+          "volume": 0.9,
+          "delay_ms": 0,
+          "fade_in_ms": 0
+        }
+      ]
+    },
+    {
+      "file": "meow-test-unmark_x_2.wav",
+      "sha256": "d3b19049ca95d326d0d9f1a0415eae51247ab290a9b9a8415a2de73ea35bc6b2",
+      "channels": 2,
+      "sample_rate_hz": 44100,
+      "duration_ms": 168.639,
+      "first_nonzero_ms": 0.0,
+      "first_minus_60_dbfs_ms": 0.0,
+      "first_minus_40_dbfs_ms": 1.61,
+      "peak_dbfs": -10.053,
+      "rms_dbfs_entire_file": -28.706,
+      "peak_10ms_rms_dbfs": -17.168,
+      "first_10ms_window_rms_at_least_minus_40_dbfs_ms": 0,
+      "temporary_mapping": [
+        {
+          "event": "erase_x",
+          "volume": 0.9,
+          "delay_ms": 0,
+          "fade_in_ms": 0
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "AUDIO-0229-01",
+      "status": "confirmed-implementation-cost",
+      "finding": "Every short effect creates and prepares a fresh AVAudioPlayer in its scheduled main-queue callback, including zero-delay cues. No prepared-player reuse exists.",
+      "evidence": [
+        "App/Services/FeedbackPlayer.swift:304",
+        "App/Services/FeedbackPlayer.swift:325",
+        "AppTests/AudioPolicyTests.swift:224"
+      ],
+      "implication": "Avoidable construction and decoding preparation remains on the interaction-response path. Actual iPhone output latency is unmeasured.",
+      "recommendedScope": "Prewarm and reuse a bounded number of idle short-effect players without changing waveform, volume, scope, cadence, delay, concurrency or cancellation policies.",
+      "resolution": "In 0.2.29, startup prepares a bounded pool; ready short-effect cues lease without construction or prepare at the cue. Cache exhaustion/failure retains immediate-construction fallback. Verified by final 35 AudioPolicy cases within 466 App tests; physical audio latency remains unmeasured."
+    },
+    {
+      "id": "AUDIO-0229-02",
+      "status": "waveform-fact-not-perceptual-claim",
+      "finding": "Combo source clips have unequal leading low-level or silent content: Nice/Great/Excellent first sample at or above -40 dBFS occurs at 60.159/118.730/102.789 ms. All local configured event delays are zero; temporary visual Combo delay is zero.",
+      "implication": "Zero scheduling delay does not guarantee same-frame perceived word onset. This alone does not establish a mismatch to Meowdoku.",
+      "recommendedScope": "Keep original waveforms intact. Record timings for later actual reference/device A/B instead of trimming source samples or inventing alignment offsets."
+    },
+    {
+      "id": "AUDIO-0229-03",
+      "status": "unverified-listening-risk",
+      "finding": "Temporary music gain remains 0.4 and effects/voice 0.9; background music, correct cue and Combo can overlap. Their PCM RMS/peak differ.",
+      "implication": "The audit has no subjective listening evidence that masking occurs; waveform RMS is not perceptual loudness.",
+      "recommendedScope": "Do not change gain or introduce ducking based on these measurements alone."
+    },
+    {
+      "id": "AUDIO-0229-04",
+      "status": "existing-verified-policy-no-new-change-needed",
+      "finding": "0.2.27 local Combo shared voice channel replaces previous voice; normal swipe finishCurrent preserves active 182.381 ms mark samples and at most one already-due cue, discarding future queued cues.",
+      "evidence": [
+        "App/Services/FeedbackPlayer.swift:239",
+        "AppTests/AudioPolicyTests.swift:177",
+        "AppTests/AudioPolicyTests.swift:189",
+        "AppTests/AudioPolicyTests.swift:201"
+      ],
+      "limitation": "No new reference-game audio playback comparison or iPhone audio listening performed during this audit."
+    }
+  ],
+  "preparationProbe": {
+    "host": "macOS local command-line AVAudioPlayer; no play() or audio output",
+    "os": "Version 26.5.1 (Build 25F80)",
+    "scope": "Sequential construction and prepareToPlay only, first per-file and 11 warm repetitions; not cold install, iPhone, simulator or action-to-audible latency.",
+    "audiblePlaybackPerformed": false,
+    "samples": [
+      {
+        "file": "meow-test-btn_click_2.wav",
+        "firstConstructionMs": 2.4131666868925095,
+        "firstPreparationMs": 109.77224982343614,
+        "firstTotalMs": 112.18541651032865,
+        "warmMedianTotalMs": 0.7422082126140594,
+        "iterations": 12,
+        "allPrepared": true
+      },
+      {
+        "file": "meow-test-combo_excellent_s6.wav",
+        "firstConstructionMs": 0.22754166275262833,
+        "firstPreparationMs": 0.674624927341938,
+        "firstTotalMs": 0.9021665900945663,
+        "warmMedianTotalMs": 0.3401248250156641,
+        "iterations": 12,
+        "allPrepared": true
+      },
+      {
+        "file": "meow-test-combo_great_s6.wav",
+        "firstConstructionMs": 0.18841656856238842,
+        "firstPreparationMs": 6.621041567996144,
+        "firstTotalMs": 6.809458136558533,
+        "warmMedianTotalMs": 6.4997083973139524,
+        "iterations": 12,
+        "allPrepared": true
+      },
+      {
+        "file": "meow-test-combo_nice_s6.wav",
+        "firstConstructionMs": 0.28083333745598793,
+        "firstPreparationMs": 5.514791700989008,
+        "firstTotalMs": 5.795625038444996,
+        "warmMedianTotalMs": 6.494958186522126,
+        "iterations": 12,
+        "allPrepared": true
+      },
+      {
+        "file": "meow-test-mark_cat.wav",
+        "firstConstructionMs": 0.22287480533123016,
+        "firstPreparationMs": 6.797624984756112,
+        "firstTotalMs": 7.020499790087342,
+        "warmMedianTotalMs": 6.477791583165526,
+        "iterations": 12,
+        "allPrepared": true
+      },
+      {
+        "file": "meow-test-mark_wrong_1.wav",
+        "firstConstructionMs": 0.24916674010455608,
+        "firstPreparationMs": 6.718666758388281,
+        "firstTotalMs": 6.967833498492837,
+        "warmMedianTotalMs": 6.613083183765411,
+        "iterations": 12,
+        "allPrepared": true
+      },
+      {
+        "file": "meow-test-mark_x_2.wav",
+        "firstConstructionMs": 0.35291677340865135,
+        "firstPreparationMs": 6.7652082070708275,
+        "firstTotalMs": 7.118124980479479,
+        "warmMedianTotalMs": 6.777000147849321,
+        "iterations": 12,
+        "allPrepared": true
+      },
+      {
+        "file": "meow-test-unmark_x_2.wav",
+        "firstConstructionMs": 2.843666821718216,
+        "firstPreparationMs": 6.70883315615356,
+        "firstTotalMs": 9.552499977871776,
+        "warmMedianTotalMs": 6.7610417027026415,
+        "iterations": 12,
+        "allPrepared": true
+      }
+    ]
+  },
+  "modificationsAtDiagnosticStage": [
+    "New report and ignored .build read-only audit scripts only; production code, tests, local audio configuration, WAV files and source reference manifest unchanged."
+  ],
+  "implementation": {
+    "preparedHandleBudget": {
+      "total": 24,
+      "perFile": 6,
+      "localUnchangedManifestWarmCountExpected": 21,
+      "uniqueLocalShortEffectFiles": 8
+    },
+    "startup": "The existing loading resource phase awaits optional audio preparation before Welcome. It never calls play(). Ambient category is set before real player preparation; no explicit session activation is requested by warmup.",
+    "ownership": "Each prepared handle is exclusively leased to one playback. Shared mark/swipe files share cache capacity, not an active cursor. Cache overflow retains uncached fallback and original event/group concurrency handling.",
+    "lifecycle": "Settings sound/voice changes, blocking background/ad/pause, interruption and media reset invalidate cache generations. Idle recycling prepares on a separate scheduled callback. Successful foreground/interrupt resume and reset request rewarming.",
+    "unchanged": [
+      "9 source WAV hashes",
+      "Local test volume/delay/swipe/Combo policy",
+      "Production referenceVerified false and empty formal clips",
+      "Audio scopes, minimum interval, per-event/shared-group playback limits and cancellation"
+    ],
+    "validation": "最终466项CapydokuAppTests全部通过，含35项AudioPolicy与16项StartupPreparation；音频池及两项生命周期/异常准备复审修复已覆盖。实际设备输出延迟和听觉A/B仍未测量。"
+  },
+  "isolationReadOnlyRecheck": {
+    "wavCount": 9,
+    "allSourceWaveformHashesMatchExistingEnvelope": true,
+    "formalReferenceVerified": false,
+    "formalClipCount": 0,
+    "audioAssetsModified": false,
+    "localPlaybackPolicyModified": false
+  },
+  "validation": {
+    "targeted": {
+      "status": "passed",
+      "tests": 83,
+      "failed": 0,
+      "skipped": 0,
+      "durationSeconds": 11.117,
+      "audioPolicyTests": 34,
+      "startupPreparationTests": 16,
+      "localTestAudioImportTests": 7,
+      "scope": "Root-managed combined targeted run also includes board tests; only the named audio/startup groups are this report scope.",
+      "log": "Validation/test-runs/original-0229-targeted.log",
+      "xcresult": "Validation/test-runs/original-0229-targeted.xcresult"
+    },
+    "fullApp": {
+      "status": "passed",
+      "build": "0.2.29 (32)",
+      "device": "iPhone 17 Pro simulator / iOS 26.5",
+      "passed": 466,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 170.38,
+      "suiteSecondsIncludingOverhead": 170.532,
+      "scope": "完整CapydokuAppTests；比0.2.28增加17例，包含音频35例及修正后三种尺寸的角色边界，不作排除。",
+      "log": "Validation/test-runs/original-0229-app.log",
+      "summary": "Validation/test-runs/original-0229-app-summary.json",
+      "bundle": "Validation/test-runs/original-0229-app.xcresult"
+    },
+    "actualDeviceAudioLatency": "not measured",
+    "auditoryReferenceAB": "not performed",
+    "finalTargetedAudioScope": {
+      "status": "passed",
+      "audioPolicyTests": 35,
+      "startupPreparationTests": 16,
+      "localTestAudioImportTests": 7,
+      "failedInTheseGroups": 0,
+      "skippedInTheseGroups": 0,
+      "combinedRunCases": 100,
+      "combinedRunPassed": 99,
+      "combinedRunFailed": 1,
+      "combinedFailureOutsideAudio": "ResultCharacterChoreographyTests: right forearm bounds at three sizes",
+      "log": "Validation/test-runs/original-0229-targeted-final.log",
+      "summary": "Validation/test-runs/original-0229-targeted-final-summary.json",
+      "xcresult": "Validation/test-runs/original-0229-targeted-final.xcresult"
+    },
+    "artifactIsolation": {
+      "status": "passed",
+      "scope": "final Debug simulator and signed physical internal_demo",
+      "localWAVFilesPerArtifact": 9,
+      "reports": [
+        "Validation/test-runs/original-0229-audio-debug-inventory.json",
+        "Validation/test-runs/original-0229-audio-physical-inventory.json"
+      ]
+    },
+    "selectedUI": {
+      "status": "passed",
+      "build": "0.2.29 (32)",
+      "device": "iPhone 17e simulator / iOS 26.5",
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 241.035,
+      "suiteSecondsIncludingOverhead": 241.046,
+      "log": "Validation/test-runs/original-0229-17e-ui.log",
+      "summary": "Validation/test-runs/original-0229-17e-ui-summary.json",
+      "bundle": "Validation/test-runs/original-0229-17e-ui.xcresult",
+      "repeatedTestAction": false,
+      "scope": "与0.2.28相同九个选定UI用例，不重复执行，无排除/跳过；教学、原生手势及道具、通关下一关、失败复活、一命提示与恢复、连续混合手势、离盘停止滑动、弹层可访问性及4/6/8/10尺寸。夹具边界保持，不代表150关全部人工试玩。",
+      "cases": [
+        "CapydokuUITests.CapydokuUITests testGuidedTutorialCoversRulesTapUndoBothSwipesAndFind",
+        "CapydokuUITests.CapydokuUITests testLastLifeSpotlightDismissalDoesNotSpendLifeOrMarkAndColdRestoreDoesNotReplayIt",
+        "CapydokuUITests.CapydokuUITests testLoseAndSimulatedRevivePreservesBoard",
+        "CapydokuUITests.CapydokuUITests testSolveEntirePuzzleAndAdvance",
+        "CapydokuUITests.CapydokuUITests testToolsResumeAfterNativeTapDoubleTapAndPanRecognizersFinish",
+        "CapydokuUITests.HardeningUITests testMixedBackToBackGesturesNeverRepeatDamageOrScore",
+        "CapydokuUITests.HardeningUITests testSwipeStopsWhenFingerLeavesBoard",
+        "CapydokuUITests.OriginalReferenceUITests testAllFourBoardSizesKeepNavigationRulesAndToolsInOrder",
+        "CapydokuUITests.OriginalReferenceUITests testModalControlsExcludeBackgroundAndReturnToTheSameBoard"
+      ]
+    },
+    "physicalInstall": {
+      "version": "0.2.29 (32)",
+      "installedAndQueried": true,
+      "automaticLaunchSucceeded": false,
+      "reason": "Phone locked; FBSOpenApplicationErrorDomain error7, not developer trust.",
+      "physicalAuditoryAcceptance": false,
+      "evidence": "Validation/original-0229-physical-install.json"
+    }
+  },
+  "reviewFix": {
+    "issue": "The existing explicit music re-enable path clears a non-resumable interruption, but did not request short-effect cache rebuilding when sound/voice settings were unchanged. Playback correctly fell back to immediate construction, losing the optimization.",
+    "fix": "Request cache rewarming only when an explicit music off-to-on change actually clears interrupted. shouldResume=false still prevents automatic playback/preparation.",
+    "test": "Extended the existing lifecycle cache test with a fourth branch: non-resumable interruption remains silent and cacheless; explicit music re-enable triggers asynchronous new cache construction without calling manual preparation for that recovery.",
+    "validation": "Passed in final 466-case App run, including all 35 AudioPolicy cases."
+  },
+  "additionalReadOnlyReviewFix": {
+    "issue": "A failed deferred prepare left an idle, unready entry occupying cache capacity; a later warm call counted that entry but did not retry preparation. Audio still used a valid uncached fallback.",
+    "fix": "Each explicit warm request retries each idle unready handle once, cancels its older queued preparation, yields between entries, and preserves generation/background/interruption checks. It never retries until success or changes a leased cursor.",
+    "test": "Added a failure/recovery test proving a valid cue still plays through fallback, failed warm retries are bounded, successful warm does not stop the active fallback, and the repaired cached handle is subsequently reused at time zero.",
+    "validation": "Passed in final 466-case App run, including the failure/recovery scenario; AppModel startup comment corrected."
+  }
+}

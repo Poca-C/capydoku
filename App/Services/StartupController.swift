@@ -78,6 +78,12 @@ struct BundledStartupResources: StartupResources {
             _ = CapyIdleGazeArtwork.image(direction)
             await Task.yield()
         }
+        // Keep first-win atlas decoding and joint-trajectory preparation out of
+        // the final accepted move. Missing optional rig art retains its fallback.
+        try Task.checkCancellation()
+        _ = ResultCharacterArtwork.prewarmRig()
+        await Task.yield()
+        try Task.checkCancellation()
     }
 }
 
@@ -98,6 +104,7 @@ final class StartupController: ObservableObject {
     private var preparationComplete = false
     private var advancing = false
     private var acceptedDelivered = false
+    var prepareFeedback: (() async -> Void)?
     var onAccepted: (() -> Void)?
     var onReady: (() -> Void)?
 
@@ -129,6 +136,9 @@ final class StartupController: ObservableObject {
                 stage = .loading
                 try await waitForForeground()
                 try await resources.prepare()
+                try Task.checkCancellation()
+                await prepareFeedback?()
+                try Task.checkCancellation()
                 try await holdVisible(for: timing.loadingMinimum)
                 stage = .brandLoading
                 try await holdVisible(for: timing.brandMinimum)
