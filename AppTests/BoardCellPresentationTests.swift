@@ -214,6 +214,150 @@ final class BoardCellPresentationTests: XCTestCase {
         XCTAssertNil(lowPower.superview); XCTAssertTrue(animations(lowPower.layer).isEmpty)
     }
 
+    @MainActor func testFoundPopHasReadableLiftAndLandingInsideItsPreviousFullRectangleEnvelope() throws {
+        var evidence: [[String: Any]] = []
+        func control(_ function: CAMediaTimingFunction, _ index: Int) -> [Double] {
+            var point = [Float](repeating: 0, count: 2)
+            point.withUnsafeMutableBufferPointer { function.getControlPoint(at: index, values: $0.baseAddress!) }
+            return point.map(Double.init)
+        }
+        func bezier(_ first: Double, _ second: Double, _ t: Double) -> Double {
+            let u = 1 - t
+            return 3 * u * u * t * first + 3 * u * t * t * second + t * t * t
+        }
+        func eased(_ time: Double, _ function: CAMediaTimingFunction) -> CGFloat {
+            let first = control(function, 1), second = control(function, 2)
+            var lower = 0.0, upper = 1.0
+            for _ in 0..<32 {
+                let mid = (lower + upper) / 2
+                if bezier(first[0], second[0], mid) < time { lower = mid } else { upper = mid }
+            }
+            return CGFloat(bezier(first[1], second[1], (lower + upper) / 2))
+        }
+        for size in 4...10 {
+            for boardSide in [CGFloat(190), CGFloat(340)] {
+                let cellSide = (boardSide - 14) / CGFloat(size)
+                let gap = max(1.1, min(2, cellSide * 0.028)), tileSide = cellSide - 2 * gap
+                let view = BoardCellFeedbackView(cellIndex: 0, kind: .found,
+                    frame: CGRect(x: 0, y: 0, width: tileSide, height: tileSide),
+                    tileColor: UIColor(CapyPalette.regionColors[0]), reduceMotion: false)
+                let host = UIView(frame: view.bounds); host.addSubview(view); view.play()
+                defer { view.removeFromSuperview() }
+                let face = try XCTUnwrap(view.layer.sublayers?.first { $0.name == "found-face-happy" })
+                let track = try XCTUnwrap(face.animation(forKey: "found-pop") as? CAKeyframeAnimation)
+                XCTAssertEqual(track.keyPath, "transform"); XCTAssertEqual(track.duration, 0.32)
+                XCTAssertEqual(view.duration, 0.60, "A different landing cannot delay the existing expression or input.")
+                let poses = try XCTUnwrap(track.values as? [NSValue]).map(\.caTransform3DValue)
+                let times = try XCTUnwrap(track.keyTimes).map(\.doubleValue)
+                let timing = try XCTUnwrap(track.timingFunctions)
+                XCTAssertEqual(poses.count, times.count); XCTAssertEqual(timing.count, poses.count - 1)
+                XCTAssertEqual(times.first, 0); XCTAssertEqual(times.last, 1)
+                XCTAssertTrue(zip(times, times.dropFirst()).allSatisfy { $0.0 < $0.1 })
+                XCTAssertTrue(CATransform3DIsIdentity(try XCTUnwrap(poses.last)))
+                XCTAssertTrue(CATransform3DIsIdentity(face.transform), "The model must remain at rest for cancellation and handoff.")
+                let stretched = try XCTUnwrap(poses.indices.first { poses[$0].m22 > poses[$0].m11 + 0.06 && poses[$0].m22 > 1.04 })
+                let landed = try XCTUnwrap(poses.indices.last { poses[$0].m11 > poses[$0].m22 + 0.08 && poses[$0].m11 > 1.04 })
+                XCTAssertLessThan(stretched, landed, "An upward stretch must precede the horizontal landing squash.")
+                XCTAssertLessThan(poses[stretched].m42 / face.bounds.height, -0.01)
+                XCTAssertGreaterThan(poses[landed].m42 / face.bounds.height, 0)
+                for pose in poses {
+                    XCTAssertTrue(CATransform3DIsAffine(pose)); XCTAssertEqual(pose.m12, 0); XCTAssertEqual(pose.m21, 0)
+                    XCTAssertGreaterThan(pose.m11, 0); XCTAssertGreaterThan(pose.m22, 0)
+                }
+                for function in timing {
+                    let first = control(function, 1), second = control(function, 2)
+                    for axis in 0..<2 {
+                        XCTAssertGreaterThanOrEqual(first[axis], 0); XCTAssertLessThanOrEqual(second[axis], 1)
+                        XCTAssertLessThanOrEqual(first[axis], second[axis], "Monotone per-segment easing cannot escape its two affine endpoint poses.")
+                    }
+                }
+                let width = face.bounds.width, height = face.bounds.height
+                let oldEnvelope = CGRect(x: -width * 0.57, y: -height * 0.57, width: width * 1.14, height: height * 1.14)
+                let corners = [CGPoint(x: -width / 2, y: -height / 2), CGPoint(x: width / 2, y: -height / 2),
+                               CGPoint(x: -width / 2, y: height / 2), CGPoint(x: width / 2, y: height / 2)]
+                var maxX: CGFloat = 0, maxY: CGFloat = 0, checks = 0
+                for segment in 0..<(poses.count - 1) {
+                    let start = poses[segment], end = poses[segment + 1]
+                    for sample in 0...32 {
+                        // Invert the actual cubic x(time), then use y(progress).
+                        // Interpolating raw keyframe indices would ignore easing.
+                        let t = eased(Double(sample) / 32, timing[segment])
+                        var pose = CATransform3DMakeScale(start.m11 + (end.m11 - start.m11) * t,
+                                                       start.m22 + (end.m22 - start.m22) * t, 1)
+                        pose.m41 = start.m41 + (end.m41 - start.m41) * t
+                        pose.m42 = start.m42 + (end.m42 - start.m42) * t
+                        for corner in corners {
+                            let point = corner.applying(CATransform3DGetAffineTransform(pose))
+                            XCTAssertGreaterThanOrEqual(point.x, oldEnvelope.minX - 0.00001)
+                            XCTAssertLessThanOrEqual(point.x, oldEnvelope.maxX + 0.00001)
+                            XCTAssertGreaterThanOrEqual(point.y, oldEnvelope.minY - 0.00001)
+                            XCTAssertLessThanOrEqual(point.y, oldEnvelope.maxY + 0.00001)
+                            maxX = max(maxX, abs(point.x) / width); maxY = max(maxY, abs(point.y) / height)
+                            checks += 1
+                        }
+                    }
+                }
+                evidence.append(["boardSize": size, "boardSidePoints": Double(boardSide), "tileSidePoints": Double(tileSide),
+                                 "maximumNormalizedHalfExtentX": Double(maxX), "maximumNormalizedHalfExtentY": Double(maxY),
+                                 "previousHalfExtent": 0.57, "cornerChecks": checks])
+            }
+        }
+        let attachment = XCTAttachment(data: try JSONSerialization.data(withJSONObject: evidence, options: [.prettyPrinted, .sortedKeys]),
+                                       uniformTypeIdentifier: "public.json")
+        attachment.name = "found-pop-full-envelope-checks"; attachment.lifetime = .keepAlways; add(attachment)
+    }
+
+    @MainActor func testFoundPopNaturallyStretchesLandsAndReturnsToRestAtThreeVisibleSizes() async throws {
+        let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
+        let previous = scene.windows.first(where: \.isKeyWindow), window = UIWindow(windowScene: scene)
+        window.frame = scene.coordinateSpace.bounds
+        let controller = UIViewController(); controller.view.backgroundColor = UIColor(CapyPalette.cream)
+        window.rootViewController = controller; window.makeKeyAndVisible()
+        defer { window.isHidden = true; window.rootViewController = nil; previous?.makeKeyAndVisible() }
+        var evidence: [[String: Any]] = []
+        for (size, boardSide) in [(4, CGFloat(340)), (6, CGFloat(340)), (10, CGFloat(190))] {
+            let cellSide = (boardSide - 14) / CGFloat(size)
+            let tileSide = cellSide - 2 * max(1.1, min(2, cellSide * 0.028))
+            let view = BoardCellFeedbackView(cellIndex: 0, kind: .found,
+                frame: CGRect(x: 120, y: 260, width: tileSide, height: tileSide),
+                tileColor: UIColor(CapyPalette.regionColors[0]), reduceMotion: false)
+            controller.view.addSubview(view)
+            defer { view.removeFromSuperview() }
+            try await Task.sleep(nanoseconds: 50_000_000)
+            let began = CACurrentMediaTime(); view.play()
+            let face = try XCTUnwrap(view.layer.sublayers?.first { $0.name == "found-face-happy" })
+            var samples: [(time: Double, x: Double, y: Double, lift: Double)] = []
+            // Read only the live presentation transform. No raster readback,
+            // layer speed/timeOffset changes, or forced frame commits in flight.
+            while CACurrentMediaTime() - began < 0.40 {
+                if let presented = face.presentation() {
+                    let pose = presented.transform
+                    samples.append((CACurrentMediaTime() - began, Double(pose.m11), Double(pose.m22), Double(pose.m42 / face.bounds.height)))
+                }
+                try await Task.sleep(nanoseconds: 8_000_000)
+            }
+            XCTAssertGreaterThan(samples.count, 12)
+            let rise = try XCTUnwrap(samples.first { $0.y > $0.x + 0.05 && $0.y > 1.01 && $0.lift < -0.005 },
+                                    "Natural playback must show an upward stretch, not only a changing uniform zoom.")
+            let landing = try XCTUnwrap(samples.first { $0.time > rise.time && $0.x > $0.y + 0.06 && $0.x > 1.02 && $0.lift > 0 },
+                                       "Natural playback must visibly pass through the later horizontal landing squash.")
+            XCTAssertLessThan(rise.time, landing.time)
+            let last = try XCTUnwrap(samples.last)
+            XCTAssertEqual(last.x, 1, accuracy: 0.001); XCTAssertEqual(last.y, 1, accuracy: 0.001)
+            XCTAssertEqual(last.lift, 0, accuracy: 0.001)
+            XCTAssertNotNil(view.superview, "The settled pose remains available for the existing happy-expression tail.")
+            XCTAssertFalse(view.isUserInteractionEnabled)
+            evidence.append(["boardSize": size, "boardSidePoints": Double(boardSide), "tileSidePoints": Double(tileSide),
+                             "samples": samples.map { ["secondsFromPlay": $0.time, "scaleX": $0.x, "scaleY": $0.y, "translationYInFaceHeights": $0.lift] },
+                             "boundary": "Visible component in a real UIWindow; presentation transforms sampled during natural playback, no in-flight screenshots. Root integration and actual rendered appearance are verified separately."])
+            view.removeFromSuperview()
+            XCTAssertTrue(animations(view.layer).isEmpty)
+        }
+        let attachment = XCTAttachment(data: try JSONSerialization.data(withJSONObject: evidence, options: [.prettyPrinted, .sortedKeys]),
+                                       uniformTypeIdentifier: "public.json")
+        attachment.name = "found-pop-natural-presentation-samples"; attachment.lifetime = .keepAlways; add(attachment)
+    }
+
     @MainActor func testFoundExpressionSettlesOnOneFaceAndItsFinalPixelsMatchTheUncoveredBoard() async throws {
         let rig = try CellPresentationRig(); defer { rig.close() }
         rig.board.activate(index: 1, submit: true)

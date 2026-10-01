@@ -73,10 +73,7 @@ final class BoardCellFeedbackView: UIView {
         startedAt = CACurrentMediaTime()
         if !reduceMotion {
             if kind == .found {
-                let pop = CAKeyframeAnimation(keyPath: "transform.scale")
-                pop.values = [0.28, 1.14, 0.96, 1]; pop.keyTimes = [0, 0.5, 0.8, 1]
-                pop.duration = accentDuration; pop.timingFunction = CAMediaTimingFunction(name: .easeOut)
-                symbol.add(pop, forKey: "found-pop")
+                playFoundPop()
                 animate(symbol, key: "opacity", from: 0.25, to: 1, duration: 0.10)
                 animate(ring, key: "opacity", from: 0.85, to: 0, duration: accentDuration)
                 animate(ring, key: "transform.scale", from: 0.55, to: 1.25, duration: accentDuration)
@@ -96,6 +93,30 @@ final class BoardCellFeedbackView: UIView {
             }
         }
         scheduleCleanup(after: duration)
+    }
+
+    private func playFoundPop() {
+        // Rise from the lower part of the tile, stretch on the way up, then
+        // land with a small squash and settle. A uniform zoom has no weight.
+        // Every complete transformed rectangle stays inside the old 1.14x
+        // envelope, including translation; reward routes keep their clearance.
+        let poses: [(CGFloat, CGFloat, CGFloat)] = [
+            (0.28, 0.28, 0.23), (0.93, 1.08, -0.024),
+            (1.075, 0.94, 0.014), (0.985, 1.025, -0.006), (1, 1, 0)
+        ]
+        let pop = CAKeyframeAnimation(keyPath: "transform")
+        pop.values = poses.map { x, y, lift in
+            var transform = CATransform3DMakeScale(x, y, 1)
+            transform.m42 = symbol.bounds.height * lift
+            return NSValue(caTransform3D: transform)
+        }
+        pop.keyTimes = [0, 0.35, 0.64, 0.84, 1]
+        pop.duration = accentDuration
+        // Keep each phase on the same clock as the ring/heart; a global
+        // timingFunction would warp all five authored beats together.
+        pop.timingFunctions = [CAMediaTimingFunctionName.easeOut, .easeIn, .easeOut, .easeInEaseOut]
+            .map { CAMediaTimingFunction(name: $0) }
+        symbol.add(pop, forKey: "found-pop")
     }
 
     private func playExpressionSettle() {

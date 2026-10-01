@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.50 (53)",
+  "date": "2026-10-02",
+  "status": "scoped_weighted_found_pop_verified_simulator_only",
+  "previousReport": "Validation/original-0249-feedback.json",
+  "previousGoalTurn": {
+    "classification": "progress",
+    "reason": "2e8c41e changed authoritative source-column reward routes and recorded106App/4UI plus finite real-Root video evidence."
+  },
+  "sourceParagraphs": [
+    129,
+    136,
+    249,
+    252,
+    254
+  ],
+  "finding": "The accepted character only used a uniform whole-image zoom. The smile was readable, but the movement lacked a rise/landing action. Current pre-change Root recording and production animation confirmed this; baseline state test passed, not a failing functional regression.",
+  "changes": [
+    "Replace uniform zoom with one finite rise/stretch, light landing squash and small recovery on the same face layer.",
+    "Use per-segment timing on the existing0.32second clock. Keep the existing0.60second happy/blink/neutral tail and final-cell celebration handoff.",
+    "Keep the complete transformed face within the old1.14x envelope, including translation, preserving the existing reward-clearance bound. Model transform remains identity; input/game state never waits."
+  ],
+  "temporaryTuning": "Five poses, nonuniform scales, vertical offsets and segment timing are original Demo tuning, not measured Meowdoku constants.",
+  "verificationHistory": [
+    {
+      "status": "Passed",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 11.482,
+      "scope": "One actual Root normal-play baseline on0.2.49; state assertions plus continuous video.",
+      "summary": "Validation/test-runs/original-0250-pop-before-summary.json",
+      "log": "Validation/test-runs/original-0250-pop-before.log",
+      "bundle": "Validation/test-runs/original-0250-pop-before.xcresult"
+    },
+    {
+      "status": "Passed",
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 16.265,
+      "scope": "Two actual Root candidate sequences before final tests/version bump; same production motion.",
+      "summary": "Validation/test-runs/original-0250-pop-candidate-summary.json",
+      "log": "Validation/test-runs/original-0250-pop-candidate.log",
+      "bundle": "Validation/test-runs/original-0250-pop-candidate.xcresult"
+    }
+  ],
+  "applicationTests": {
+    "status": "Passed",
+    "passed": 78,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 92.972,
+    "scope": "17Pro/iOS26.5; affected cell/expression/interaction/scene/burst/reward/Root/flight suites only, not full App/Core.",
+    "summary": "Validation/test-runs/original-0250-app-final-summary.json",
+    "log": "Validation/test-runs/original-0250-app-final.log",
+    "bundle": "Validation/test-runs/original-0250-app-final.xcresult"
+  },
+  "uiTests": {
+    "status": "Passed",
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 146.133,
+    "scope": "17e/iOS26.5;native tap/double-tap/pan and tools, solve/advance, simulated revive, hint preview/Apply.",
+    "summary": "Validation/test-runs/original-0250-17e-ui-summary.json",
+    "log": "Validation/test-runs/original-0250-17e-ui.log",
+    "bundle": "Validation/test-runs/original-0250-17e-ui.xcresult"
+  },
+  "visualEvidence": "Docs/original-feel-0250/manifest.json",
+  "reference": {
+    "latestSuccessfulPlaytest": "Validation/meowdoku-playtest-comparison-0249.json",
+    "newSuccessfulPlaytestThisRound": false,
+    "equivalenceClaimed": false,
+    "implementationSummary": {
+      "status": "Nine observed directions each have Demo implementation; this is not reference-quality sign-off.",
+      "implementedDirections": [
+        "动态手势教学",
+        "角色待机/正确/错误表情",
+        "浮分/彩粒/飞星/鼓掌及顶部联动",
+        "错误原因与规则可视化",
+        "扣命与一命提醒",
+        "Combo及分层胜败演出",
+        "新盘错峰入场",
+        "提示与找答案反馈",
+        "签到点亮与实际到账演出"
+      ],
+      "audio": "9 local Debug-only reference WAVs remain an authorized testing experiment; no live audio or physical haptic A/B in this round.",
+      "qualityGaps": [
+        "角色动作自然度与整段节奏",
+        "密集浮分离源距离",
+        "真机声音/震动配合",
+        "正式参考和发布资源验收"
+      ],
+      "notReplicatedFromLatestPlaytest": [
+        "Reference horn-playing character pose",
+        "Every observed praise phrase",
+        "Automatic check-in interstitial during victory; current Demo check-in entry remains on home"
+      ]
+    }
+  },
+  "audio": {
+    "modified": false,
+    "localTestWAVCount": 9,
+    "currentDebugInventory": "Validation/audio-isolation-0250-debug.json",
+    "formalManifestClipsEmpty": true,
+    "liveAuditoryAB": false,
+    "releaseRebuilt": false
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  },
+  "remaining": [
+    "完整角色自然度与连续操作的整体节奏仍需要真机评估；本轮改善正确落点动作，不声称追平参考品质。",
+    "密集末盘浮分离源距离、全量中断组合、最低系统/低端性能及正式音频和上架验收仍未完成。",
+    "手机仍0.2.29；未进行本轮真机声音/震动对比。"
+  ],
+  "formalSignOff": false,
+  "formalConformanceRowsUnchanged": 83,
+  "historicalChecklistCountUnchanged": 88,
+  "motionVerification": {
+    "layouts": 14,
+    "cornerChecks": 7392,
+    "previousNormalizedHalfExtent": 0.57,
+    "maximumNormalizedHalfExtentX": 0.5375,
+    "maximumNormalizedHalfExtentY": 0.5640000000000001,
+    "naturalSamples": [
+      {
+        "boardSize": 4,
+        "tileSidePoints": 77.5,
+        "samples": 42
+      },
+      {
+        "boardSize": 6,
+        "tileSidePoints": 51.29066666666667,
+        "samples": 42
+      },
+      {
+        "boardSize": 10,
+        "tileSidePoints": 15.400000000000002,
+        "samples": 42
+      }
+    ],
+    "boundary": "Finite transform samples with monotone affine endpoint bounds; separate real Root videos. Not per-frame pixel collision or physical touch-latency measurement."
+  }
+}

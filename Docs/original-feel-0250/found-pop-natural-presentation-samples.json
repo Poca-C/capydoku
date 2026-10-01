@@ -1,0 +1,782 @@
+[
+  {
+    "boardSidePoints" : 340,
+    "boardSize" : 4,
+    "boundary" : "Visible component in a real UIWindow; presentation transforms sampled during natural playback, no in-flight screenshots. Root integration and actual rendered appearance are verified separately.",
+    "samples" : [
+      {
+        "scaleX" : 1,
+        "scaleY" : 1,
+        "secondsFromPlay" : 0.00016541662625968456,
+        "translationYInFaceHeights" : 0
+      },
+      {
+        "scaleX" : 0.37398573115468026,
+        "scaleY" : 0.39567474603652958,
+        "secondsFromPlay" : 0.010307666612789035,
+        "translationYInFaceHeights" : 0.19327326813340187
+      },
+      {
+        "scaleX" : 0.46188526332378393,
+        "scaleY" : 0.50385878562927255,
+        "secondsFromPlay" : 0.02042724983766675,
+        "translationYInFaceHeights" : 0.15892483556270601
+      },
+      {
+        "scaleX" : 0.46188526332378393,
+        "scaleY" : 0.50385878562927255,
+        "secondsFromPlay" : 0.030596249969676137,
+        "translationYInFaceHeights" : 0.15892483556270601
+      },
+      {
+        "scaleX" : 0.62042778015136724,
+        "scaleY" : 0.69898803710937507,
+        "secondsFromPlay" : 0.040735291549935937,
+        "translationYInFaceHeights" : 0.096971298217773436
+      },
+      {
+        "scaleX" : 0.68116827189922335,
+        "scaleY" : 0.77374556541442874,
+        "secondsFromPlay" : 0.049480916699394584,
+        "translationYInFaceHeights" : 0.073235782980918873
+      },
+      {
+        "scaleX" : 0.68116827189922335,
+        "scaleY" : 0.77374556541442874,
+        "secondsFromPlay" : 0.059565958334133029,
+        "translationYInFaceHeights" : 0.073235782980918873
+      },
+      {
+        "scaleX" : 0.80236860096454621,
+        "scaleY" : 0.92291520118713388,
+        "secondsFromPlay" : 0.069717374863103032,
+        "translationYInFaceHeights" : 0.025874423623085015
+      },
+      {
+        "scaleX" : 0.80236860096454621,
+        "scaleY" : 0.92291520118713388,
+        "secondsFromPlay" : 0.078562833135947585,
+        "translationYInFaceHeights" : 0.025874423623085015
+      },
+      {
+        "scaleX" : 0.88558438301086428,
+        "scaleY" : 1.0253346252441407,
+        "secondsFromPlay" : 0.088701666565611959,
+        "translationYInFaceHeights" : -0.0066437435150146548
+      },
+      {
+        "scaleX" : 0.91182634711265564,
+        "scaleY" : 1.0576324272155762,
+        "secondsFromPlay" : 0.097704916493967175,
+        "translationYInFaceHeights" : -0.01689829564094544
+      },
+      {
+        "scaleX" : 0.91182634711265564,
+        "scaleY" : 1.0576324272155762,
+        "secondsFromPlay" : 0.10777479154057801,
+        "translationYInFaceHeights" : -0.01689829564094544
+      },
+      {
+        "scaleX" : 0.93093669281806801,
+        "scaleY" : 1.0790956069342792,
+        "secondsFromPlay" : 0.11785087501630187,
+        "translationYInFaceHeights" : -0.023754521882161497
+      },
+      {
+        "scaleX" : 0.93093669281806801,
+        "scaleY" : 1.0790956069342792,
+        "secondsFromPlay" : 0.12712116655893624,
+        "translationYInFaceHeights" : -0.023754521882161497
+      },
+      {
+        "scaleX" : 0.94554545905441045,
+        "scaleY" : 1.0649905912578106,
+        "secondsFromPlay" : 0.13732133316807449,
+        "translationYInFaceHeights" : -0.019926017627120016
+      },
+      {
+        "scaleX" : 0.94554545905441045,
+        "scaleY" : 1.0649905912578106,
+        "secondsFromPlay" : 0.14571333327330649,
+        "translationYInFaceHeights" : -0.019926017627120016
+      },
+      {
+        "scaleX" : 0.971155006736517,
+        "scaleY" : 1.0402641314268113,
+        "secondsFromPlay" : 0.15593208326026797,
+        "translationYInFaceHeights" : -0.013214549958705902
+      },
+      {
+        "scaleX" : 0.98584076285362243,
+        "scaleY" : 1.0260847806930542,
+        "secondsFromPlay" : 0.16449095821008086,
+        "translationYInFaceHeights" : -0.0093658690452575674
+      },
+      {
+        "scaleX" : 0.98584076285362243,
+        "scaleY" : 1.0260847806930542,
+        "secondsFromPlay" : 0.17464224994182587,
+        "translationYInFaceHeights" : -0.0093658690452575674
+      },
+      {
+        "scaleX" : 1.0253442800045014,
+        "scaleY" : 0.98794345378875725,
+        "secondsFromPlay" : 0.18428462487645447,
+        "translationYInFaceHeights" : 0.00098677682876586884
+      },
+      {
+        "scaleX" : 1.0253442800045014,
+        "scaleY" : 0.98794345378875725,
+        "secondsFromPlay" : 0.19514591665938497,
+        "translationYInFaceHeights" : 0.00098677682876586884
+      },
+      {
+        "scaleX" : 1.0714692172408105,
+        "scaleY" : 0.94340903162956224,
+        "secondsFromPlay" : 0.20372683322057128,
+        "translationYInFaceHeights" : 0.013074691414833068
+      },
+      {
+        "scaleX" : 1.0714692172408105,
+        "scaleY" : 0.94340903162956224,
+        "secondsFromPlay" : 0.21323408326134086,
+        "translationYInFaceHeights" : 0.013074691414833068
+      },
+      {
+        "scaleX" : 1.036892955303192,
+        "scaleY" : 0.97598998665809611,
+        "secondsFromPlay" : 0.22323849983513355,
+        "translationYInFaceHeights" : 0.0055317678451538097
+      },
+      {
+        "scaleX" : 1.019084144234657,
+        "scaleY" : 0.99280941933393474,
+        "secondsFromPlay" : 0.23342524981126189,
+        "translationYInFaceHeights" : 0.0015742542743682865
+      },
+      {
+        "scaleX" : 1.019084144234657,
+        "scaleY" : 0.99280941933393474,
+        "secondsFromPlay" : 0.24310841667465866,
+        "translationYInFaceHeights" : 0.0015742542743682865
+      },
+      {
+        "scaleX" : 0.99321735501289354,
+        "scaleY" : 1.0172391647100447,
+        "secondsFromPlay" : 0.25329287489876151,
+        "translationYInFaceHeights" : -0.0041739211082458495
+      },
+      {
+        "scaleX" : 0.99321735501289354,
+        "scaleY" : 1.0172391647100447,
+        "secondsFromPlay" : 0.26343262498266995,
+        "translationYInFaceHeights" : -0.0041739211082458495
+      },
+      {
+        "scaleX" : 0.98509714778745538,
+        "scaleY" : 1.0248380870209075,
+        "secondsFromPlay" : 0.27204533317126334,
+        "translationYInFaceHeights" : -0.0059611408850178118
+      },
+      {
+        "scaleX" : 0.98673246227204792,
+        "scaleY" : 1.0221125628799199,
+        "secondsFromPlay" : 0.28120637498795986,
+        "translationYInFaceHeights" : -0.0053070150911808016
+      },
+      {
+        "scaleX" : 0.98673246227204792,
+        "scaleY" : 1.0221125628799199,
+        "secondsFromPlay" : 0.29009816655889153,
+        "translationYInFaceHeights" : -0.0053070150911808016
+      },
+      {
+        "scaleX" : 0.99522075951099398,
+        "scaleY" : 1.0079654008150101,
+        "secondsFromPlay" : 0.30022595822811127,
+        "translationYInFaceHeights" : -0.0019116961956024171
+      },
+      {
+        "scaleX" : 0.99522075951099398,
+        "scaleY" : 1.0079654008150101,
+        "secondsFromPlay" : 0.30850437493063509,
+        "translationYInFaceHeights" : -0.0019116961956024171
+      },
+      {
+        "scaleX" : 0.99997125655412678,
+        "scaleY" : 1.0000479057431222,
+        "secondsFromPlay" : 0.31867616646923125,
+        "translationYInFaceHeights" : -1.14973783493042e-05
+      },
+      {
+        "scaleX" : 0.99997125655412678,
+        "scaleY" : 1.0000479057431222,
+        "secondsFromPlay" : 0.32723933318629861,
+        "translationYInFaceHeights" : -1.14973783493042e-05
+      },
+      {
+        "scaleX" : 1,
+        "scaleY" : 1,
+        "secondsFromPlay" : 0.33749108319170773,
+        "translationYInFaceHeights" : 0
+      },
+      {
+        "scaleX" : 1,
+        "scaleY" : 1,
+        "secondsFromPlay" : 0.34770049992948771,
+        "translationYInFaceHeights" : 0
+      },
+      {
+        "scaleX" : 1,
+        "scaleY" : 1,
+        "secondsFromPlay" : 0.35620958334766328,
+        "translationYInFaceHeights" : 0
+      },
+      {
+        "scaleX" : 1,
+        "scaleY" : 1,
+        "secondsFromPlay" : 0.36456795828416944,
+        "translationYInFaceHeights" : 0
+      },
+      {
+        "scaleX" : 1,
+        "scaleY" : 1,
+        "secondsFromPlay" : 0.37469912483356893,
+        "translationYInFaceHeights" : 0
+      },
+      {
+        "scaleX" : 1,
+        "scaleY" : 1,
+        "secondsFromPlay" : 0.3849029999691993,
+        "translationYInFaceHeights" : 0
+      },
+      {
+        "scaleX" : 1,
+        "scaleY" : 1,
+        "secondsFromPlay" : 0.39503641659393907,
+        "translationYInFaceHeights" : 0
+      }
+    ],
+    "tileSidePoints" : 77.5
+  },
+  {
+    "boardSidePoints" : 340,
+    "boardSize" : 6,
+    "boundary" : "Visible component in a real UIWindow; presentation transforms sampled during natural playback, no in-flight screenshots. Root integration and actual rendered appearance are verified separately.",
+    "samples" : [
+      {
+        "scaleX" : 1,
+        "scaleY" : 1,
+        "secondsFromPlay" : 0.00072720833122730255,
+        "translationYInFaceHeights" : 0
+      },
+      {
+        "scaleX" : 0.35987101003527644,
+        "scaleY" : 0.37830278158187869,
+        "secondsFromPlay" : 0.0095917915459722281,
+        "translationYInFaceHeights" : 0.19878886684775354
+      },
+      {
+        "scaleX" : 0.4496963801980019,
+        "scaleY" : 0.48885708332061772,
+        "secondsFromPlay" : 0.019859291613101959,
+        "translationYInFaceHeights" : 0.1636878760457039
+      },
+      {
+        "scaleX" : 0.5338135573267937,
+        "scaleY" : 0.59238591670989993,
+        "secondsFromPlay" : 0.030142666539177299,
+        "translationYInFaceHeights" : 0.13081747144460679
+      },
+      {
+        "scaleX" : 0.60297238409519194,
+        "scaleY" : 0.67750447273254399,
+        "secondsFromPlay" : 0.0391954998485744,
+        "translationYInFaceHeights" : 0.1037923299074173
+      },
+      {
+        "scaleX" : 0.60297238409519194,
+        "scaleY" : 0.67750447273254399,
+        "secondsFromPlay" : 0.049311166629195213,
+        "translationYInFaceHeights" : 0.1037923299074173
+      },
+      {
+        "scaleX" : 0.73144644379615786,
+        "scaleY" : 0.83562639236450198,
+        "secondsFromPlay" : 0.058178708190098405,
+        "translationYInFaceHeights" : 0.053588620424270615
+      },
+      {
+        "scaleX" : 0.73144644379615786,
+        "scaleY" : 0.83562639236450198,
+        "secondsFromPlay" : 0.068339499877765775,
+        "translationYInFaceHeights" : 0.053588620424270615
+      },
+      {
+        "scaleX" : 0.84154612302780152,
+        "scaleY" : 0.97113368988037119,
+        "secondsFromPlay" : 0.078565041534602642,
+        "translationYInFaceHeights" : 0.010565053462982161
+      },
+      {
+        "scaleX" : 0.84154612302780152,
+        "scaleY" : 0.97113368988037119,
+        "secondsFromPlay" : 0.087549499934539199,
+        "translationYInFaceHeights" : 0.010565053462982161
+      },
+      {
+        "scaleX" : 0.9101139444112778,
+        "scaleY" : 1.0555248546600342,
+        "secondsFromPlay" : 0.097892916528508067,
+        "translationYInFaceHeights" : -0.016229141354560873
+      },
+      {
+        "scaleX" : 0.93000000000000005,
+        "scaleY" : 1.0800000000000001,
+        "secondsFromPlay" : 0.11103316652588546,
+        "translationYInFaceHeights" : -0.024
+      },
+      {
+        "scaleX" : 0.93000000000000005,
+        "scaleY" : 1.0800000000000001,
+        "secondsFromPlay" : 0.12033154163509607,
+        "translationYInFaceHeights" : -0.024
+      },
+      {
+        "scaleX" : 0.93768993001431233,
+        "scaleY" : 1.0725752399861814,
+        "secondsFromPlay" : 0.13017799984663725,
+        "translationYInFaceHeights" : -0.0219847079962492
+      },
+      {
+        "scaleX" : 0.94713245809078217,
+        "scaleY" : 1.0634583163261415,
+        "secondsFromPlay" : 0.13952479162253439,
+        "translationYInFaceHeights" : -0.019510114431381228
+      },
+      {
+        "scaleX" : 0.94713245809078217,
+        "scaleY" : 1.0634583163261415,
+        "secondsFromPlay" : 0.14784308313392103,
+        "translationYInFaceHeights" : -0.019510114431381228
+      },
+      {
+        "scaleX" : 0.9732570734620094,
+        "scaleY" : 1.0382345497608185,
+        "secondsFromPlay" : 0.15802624984644353,
+        "translationYInFaceHeights" : -0.012663663506507874
+      },
+      {
+        "scaleX" : 0.9732570734620094,
+        "scaleY" : 1.0382345497608185,
+        "secondsFromPlay" : 0.16639908333308995,
+        "translationYInFaceHeights" : -0.012663663506507874
+      },
+      {
+        "scaleX" : 1.0074558386206627,
+        "scaleY" : 1.0052150523662564,
+        "secondsFromPlay" : 0.1765906666405499,
+        "translationYInFaceHeights" : -0.0037012284994125369
+      },
+      {
+        "scaleX" : 1.0074558386206627,
+        "scaleY" : 1.0052150523662564,
+        "secondsFromPlay" : 0.18518475000746548,
+        "translationYInFaceHeights" : -0.0037012284994125369
+      },
+      {
+        "scaleX" : 1.0456976637244224,
+        "scaleY" : 0.96829191088676436,
+        "secondsFromPlay" : 0.19408741663210094,
+        "translationYInFaceHeights" : 0.0063207670450210578
+      },
+      {
+        "scaleX" : 1.0456976637244224,
+        "scaleY" : 0.96829191088676436,
+        "secondsFromPlay" : 0.20437008328735828,
+        "translationYInFaceHeights" : 0.0063207670450210578
+      },
+      {
+        "scaleX" : 1.0556734032928943,
+        "scaleY" : 0.958252896890044,
+        "secondsFromPlay" : 0.21461741649545729,
+        "translationYInFaceHeights" : 0.0097052007317543036
+      },
+      {
+        "scaleX" : 1.0354977962374687,
+        "scaleY" : 0.97730763688683486,
+        "secondsFromPlay" : 0.22479662485420704,
+        "translationYInFaceHeights" : 0.0052217324972152713
+      },
+      {
+        "scaleX" : 1.0354977962374687,
+        "scaleY" : 0.97730763688683486,
+        "secondsFromPlay" : 0.23496441659517586,
+        "translationYInFaceHeights" : 0.0052217324972152713
+      },
+      {
+        "scaleX" : 1.0051641499996182,
+        "scaleY" : 1.0059560805559158,
+        "secondsFromPlay" : 0.24368216656148434,
+        "translationYInFaceHeights" : -0.0015190777778625489
+      },
+      {
+        "scaleX" : 1.0051641499996182,
+        "scaleY" : 1.0059560805559158,
+        "secondsFromPlay" : 0.25380787486210465,
+        "translationYInFaceHeights" : -0.0015190777778625489
+      },
+      {
+        "scaleX" : 0.98625230193138114,
+        "scaleY" : 1.0238172703981399,
+        "secondsFromPlay" : 0.26423691655509174,
+        "translationYInFaceHeights" : -0.0057217106819152834
+      },
+      {
+        "scaleX" : 0.98507847575703622,
+        "scaleY" : 1.0248692070716059,
+        "secondsFromPlay" : 0.27256970829330385,
+        "translationYInFaceHeights" : -0.0059686096971854567
+      },
+      {
+        "scaleX" : 0.98507847575703622,
+        "scaleY" : 1.0248692070716059,
+        "secondsFromPlay" : 0.28130933316424489,
+        "translationYInFaceHeights" : -0.0059686096971854567
+      },
+      {
+        "scaleX" : 0.98984020218253121,
+        "scaleY" : 1.0169329963624476,
+        "secondsFromPlay" : 0.29009333322755992,
+        "translationYInFaceHeights" : -0.004063919126987457
+      },
+      {
+        "scaleX" : 0.98984020218253121,
+        "scaleY" : 1.0169329963624476,
+        "secondsFromPlay" : 0.30026841652579606,
+        "translationYInFaceHeights" : -0.004063919126987457
+      },
+      {
+        "scaleX" : 0.99867062121629713,
+        "scaleY" : 1.0022156313061714,
+        "secondsFromPlay" : 0.31044712499715388,
+        "translationYInFaceHeights" : -0.00053175151348114021
+      },
+      {
+        "scaleX" : 0.99867062121629713,
+        "scaleY" : 1.0022156313061714,
+        "secondsFromPlay" : 0.32060633320361376,
+        "translationYInFaceHeights" : -0.00053175151348114021
+      },
+      {
+        "scaleX" : 1,
+        "scaleY" : 1,
+        "secondsFromPlay" : 0.33103295834735036,
+        "translationYInFaceHeights" : 0
+      },
+      {
+        "scaleX" : 1,
+        "scaleY" : 1,
+        "secondsFromPlay" : 0.33921624999493361,
+        "translationYInFaceHeights" : 0
+      },
+      {
+        "scaleX" : 1,
+        "scaleY" : 1,
+        "secondsFromPlay" : 0.34854549984447658,
+        "translationYInFaceHeights" : 0
+      },
+      {
+        "scaleX" : 1,
+        "scaleY" : 1,
+        "secondsFromPlay" : 0.35743970819748938,
+        "translationYInFaceHeights" : 0
+      },
+      {
+        "scaleX" : 1,
+        "scaleY" : 1,
+        "secondsFromPlay" : 0.3660287915263325,
+        "translationYInFaceHeights" : 0
+      },
+      {
+        "scaleX" : 1,
+        "scaleY" : 1,
+        "secondsFromPlay" : 0.3762152916751802,
+        "translationYInFaceHeights" : 0
+      },
+      {
+        "scaleX" : 1,
+        "scaleY" : 1,
+        "secondsFromPlay" : 0.38640137482434511,
+        "translationYInFaceHeights" : 0
+      },
+      {
+        "scaleX" : 1,
+        "scaleY" : 1,
+        "secondsFromPlay" : 0.39661658322438598,
+        "translationYInFaceHeights" : 0
+      }
+    ],
+    "tileSidePoints" : 51.290666666666667
+  },
+  {
+    "boardSidePoints" : 190,
+    "boardSize" : 10,
+    "boundary" : "Visible component in a real UIWindow; presentation transforms sampled during natural playback, no in-flight screenshots. Root integration and actual rendered appearance are verified separately.",
+    "samples" : [
+      {
+        "scaleX" : 1,
+        "scaleY" : 1,
+        "secondsFromPlay" : 0.00039574992842972279,
+        "translationYInFaceHeights" : 0
+      },
+      {
+        "scaleX" : 0.37613920375704768,
+        "scaleY" : 0.39832517385482791,
+        "secondsFromPlay" : 0.010942124994471669,
+        "translationYInFaceHeights" : 0.19243175730109216
+      },
+      {
+        "scaleX" : 0.46175572603940968,
+        "scaleY" : 0.50369935512542729,
+        "secondsFromPlay" : 0.020731624914333224,
+        "translationYInFaceHeights" : 0.15897545474767685
+      },
+      {
+        "scaleX" : 0.54467219889163976,
+        "scaleY" : 0.60575039863586433,
+        "secondsFromPlay" : 0.031070208409801126,
+        "translationYInFaceHeights" : 0.1265742484331131
+      },
+      {
+        "scaleX" : 0.54467219889163976,
+        "scaleY" : 0.60575039863586433,
+        "secondsFromPlay" : 0.041221333434805274,
+        "translationYInFaceHeights" : 0.1265742484331131
+      },
+      {
+        "scaleX" : 0.69187083721160891,
+        "scaleY" : 0.78691795349121096,
+        "secondsFromPlay" : 0.051405291771516204,
+        "translationYInFaceHeights" : 0.069053549766540545
+      },
+      {
+        "scaleX" : 0.69187083721160891,
+        "scaleY" : 0.78691795349121096,
+        "secondsFromPlay" : 0.061537583358585835,
+        "translationYInFaceHeights" : 0.069053549766540545
+      },
+      {
+        "scaleX" : 0.81112599551677711,
+        "scaleY" : 0.9336935329437257,
+        "secondsFromPlay" : 0.071749541675671935,
+        "translationYInFaceHeights" : 0.02245230329036714
+      },
+      {
+        "scaleX" : 0.85576930522918704,
+        "scaleY" : 0.98863914489746096,
+        "secondsFromPlay" : 0.081265083281323314,
+        "translationYInFaceHeights" : 0.005007071495056162
+      },
+      {
+        "scaleX" : 0.85576930522918704,
+        "scaleY" : 0.98863914489746096,
+        "secondsFromPlay" : 0.091289583360776305,
+        "translationYInFaceHeights" : 0.005007071495056162
+      },
+      {
+        "scaleX" : 0.91919964730739601,
+        "scaleY" : 1.0667072582244874,
+        "secondsFromPlay" : 0.10155091667547822,
+        "translationYInFaceHeights" : -0.019779554486274709
+      },
+      {
+        "scaleX" : 0.91919964730739601,
+        "scaleY" : 1.0667072582244874,
+        "secondsFromPlay" : 0.1110575832426548,
+        "translationYInFaceHeights" : -0.019779554486274709
+      },
+      {
+        "scaleX" : 0.93215898831840605,
+        "scaleY" : 1.0779154595546425,
+        "secondsFromPlay" : 0.1212228334043175,
+        "translationYInFaceHeights" : -0.023434196164831517
+      },
+      {
+        "scaleX" : 0.93797817343845968,
+        "scaleY" : 1.0722969359904528,
+        "secondsFromPlay" : 0.12992304167710245,
+        "translationYInFaceHeights" : -0.021909168340265749
+      },
+      {
+        "scaleX" : 0.93797817343845968,
+        "scaleY" : 1.0722969359904528,
+        "secondsFromPlay" : 0.14006512495689094,
+        "translationYInFaceHeights" : -0.021909168340265749
+      },
+      {
+        "scaleX" : 0.96102051705121994,
+        "scaleY" : 1.0500491559505463,
+        "secondsFromPlay" : 0.14958945824764669,
+        "translationYInFaceHeights" : -0.015870485186576841
+      },
+      {
+        "scaleX" : 0.96102051705121994,
+        "scaleY" : 1.0500491559505463,
+        "secondsFromPlay" : 0.15971708344295621,
+        "translationYInFaceHeights" : -0.015870485186576841
+      },
+      {
+        "scaleX" : 0.99519512593746184,
+        "scaleY" : 1.017052981853485,
+        "secondsFromPlay" : 0.16982562490738928,
+        "translationYInFaceHeights" : -0.0069143807888030996
+      },
+      {
+        "scaleX" : 1.0128085833787919,
+        "scaleY" : 1.0000468850135802,
+        "secondsFromPlay" : 0.1786801666021347,
+        "translationYInFaceHeights" : -0.0022984402179718013
+      },
+      {
+        "scaleX" : 1.0128085833787919,
+        "scaleY" : 1.0000468850135802,
+        "secondsFromPlay" : 0.18721370841376483,
+        "translationYInFaceHeights" : -0.0022984402179718013
+      },
+      {
+        "scaleX" : 1.0515471893548964,
+        "scaleY" : 0.96264409303665144,
+        "secondsFromPlay" : 0.19602916669100523,
+        "translationYInFaceHeights" : 0.007853746175765992
+      },
+      {
+        "scaleX" : 1.0515471893548964,
+        "scaleY" : 0.96264409303665144,
+        "secondsFromPlay" : 0.2062129583209753,
+        "translationYInFaceHeights" : 0.007853746175765992
+      },
+      {
+        "scaleX" : 1.0521809297800064,
+        "scaleY" : 0.96155134409666043,
+        "secondsFromPlay" : 0.21573483338579535,
+        "translationYInFaceHeights" : 0.0089290955066680909
+      },
+      {
+        "scaleX" : 1.0521809297800064,
+        "scaleY" : 0.96155134409666043,
+        "secondsFromPlay" : 0.22597829159349203,
+        "translationYInFaceHeights" : 0.0089290955066680909
+      },
+      {
+        "scaleX" : 1.015243403315544,
+        "scaleY" : 0.99643678575754158,
+        "secondsFromPlay" : 0.23616354167461395,
+        "translationYInFaceHeights" : 0.00072075629234314125
+      },
+      {
+        "scaleX" : 1.0023590099811552,
+        "scaleY" : 1.008605379462242,
+        "secondsFromPlay" : 0.24531129165552557,
+        "translationYInFaceHeights" : -0.0021424422264099104
+      },
+      {
+        "scaleX" : 1.0023590099811552,
+        "scaleY" : 1.008605379462242,
+        "secondsFromPlay" : 0.25399891659617424,
+        "translationYInFaceHeights" : -0.0021424422264099104
+      },
+      {
+        "scaleX" : 0.98674218595027907,
+        "scaleY" : 1.0233546021580695,
+        "secondsFromPlay" : 0.26253770827315748,
+        "translationYInFaceHeights" : -0.005612847566604612
+      },
+      {
+        "scaleX" : 0.98674218595027907,
+        "scaleY" : 1.0233546021580695,
+        "secondsFromPlay" : 0.27287670830264688,
+        "translationYInFaceHeights" : -0.005612847566604612
+      },
+      {
+        "scaleX" : 0.98722436666488633,
+        "scaleY" : 1.0212927222251891,
+        "secondsFromPlay" : 0.28305612504482269,
+        "translationYInFaceHeights" : -0.0051102533340454098
+      },
+      {
+        "scaleX" : 0.98722436666488633,
+        "scaleY" : 1.0212927222251891,
+        "secondsFromPlay" : 0.29316741670481861,
+        "translationYInFaceHeights" : -0.0051102533340454098
+      },
+      {
+        "scaleX" : 0.99648884445428842,
+        "scaleY" : 1.0058519259095191,
+        "secondsFromPlay" : 0.30345958331599832,
+        "translationYInFaceHeights" : -0.001404462218284607
+      },
+      {
+        "scaleX" : 0.99914648354053492,
+        "scaleY" : 1.0014225274324418,
+        "secondsFromPlay" : 0.31197616667486727,
+        "translationYInFaceHeights" : -0.00034140658378601073
+      },
+      {
+        "scaleX" : 0.99914648354053492,
+        "scaleY" : 1.0014225274324418,
+        "secondsFromPlay" : 0.32213766663335264,
+        "translationYInFaceHeights" : -0.00034140658378601073
+      },
+      {
+        "scaleX" : 1,
+        "scaleY" : 1,
+        "secondsFromPlay" : 0.33082824992015958,
+        "translationYInFaceHeights" : 0
+      },
+      {
+        "scaleX" : 1,
+        "scaleY" : 1,
+        "secondsFromPlay" : 0.34115041675977409,
+        "translationYInFaceHeights" : 0
+      },
+      {
+        "scaleX" : 1,
+        "scaleY" : 1,
+        "secondsFromPlay" : 0.35131995845586061,
+        "translationYInFaceHeights" : 0
+      },
+      {
+        "scaleX" : 1,
+        "scaleY" : 1,
+        "secondsFromPlay" : 0.36072929156944156,
+        "translationYInFaceHeights" : 0
+      },
+      {
+        "scaleX" : 1,
+        "scaleY" : 1,
+        "secondsFromPlay" : 0.36958020832389593,
+        "translationYInFaceHeights" : 0
+      },
+      {
+        "scaleX" : 1,
+        "scaleY" : 1,
+        "secondsFromPlay" : 0.37865716661326587,
+        "translationYInFaceHeights" : 0
+      },
+      {
+        "scaleX" : 1,
+        "scaleY" : 1,
+        "secondsFromPlay" : 0.38882912509143353,
+        "translationYInFaceHeights" : 0
+      },
+      {
+        "scaleX" : 1,
+        "scaleY" : 1,
+        "secondsFromPlay" : 0.39789529168047011,
+        "translationYInFaceHeights" : 0
+      }
+    ],
+    "tileSidePoints" : 15.400000000000002
+  }
+]

@@ -1,0 +1,68 @@
+{
+  "build": "0.2.50 (53)",
+  "baselineBuild": "0.2.49 (52)",
+  "items": [
+    {
+      "file": "before-correct-face.mov",
+      "sha256": "982a530264d6fb0c4a88f114c5b77622f19a3c8bea43b3e1ff8a7976c7e9264f",
+      "scope": "Actual0.2.49 Root L6; continuous normal-speed capture."
+    },
+    {
+      "file": "final-correct-face.mov",
+      "sha256": "886276aed693903d269315dd52b95f30bc2cdcb49b9d7ab2afb6a1664a43ee70",
+      "scope": "Actual0.2.50 Root L6:correct,mark during settle,another correct,mistake during settle; no mid-sequence screenshot."
+    },
+    {
+      "file": "final-rapid-finds.mov",
+      "sha256": "4a71a39a542ff00eae5c4256c708d804b09f45ae04b5902953d2a64fb79ba234",
+      "scope": "Actual0.2.50 Root:L12 at320/402pt and L101 at320pt; final two submissions120ms apart."
+    },
+    {
+      "file": "before-pop-detail.png",
+      "sha256": "72402ca1ce35e4a646ea5802bf17108411815e952831439ab9fa704525d7086b",
+      "scope": "First source cell cropped from finite25ms video extraction; baseline recording clock."
+    },
+    {
+      "file": "final-pop-detail.png",
+      "sha256": "f779aa4530c4fafd2f431794b3459e12b561f712d8a7853ffe53fc854bc18695",
+      "scope": "First source cell cropped from finite25ms video extraction; clocks are independent, not phase-aligned A/B."
+    },
+    {
+      "file": "final-rapid-overview.png",
+      "sha256": "55e2a49d8644bae0e67828fdbe75f544dd874e7a65364733229f63aba646b46f",
+      "scope": "Full-frame overview of rapid-find fixtures at250ms requested intervals."
+    },
+    {
+      "file": "final-extraction-index.json",
+      "sha256": "0bda71d43d2870e699d53431a3c9a0f3aea94bd2ea1ad2b763541e131fb675d0",
+      "scope": "Requested/actual extraction times for final normal sequence."
+    },
+    {
+      "file": "cell-found-native-handoff-diagnostics.json",
+      "sha256": "2cb9e26e97aea5ad627c32c6e64f9099df6312ea47173ac44ad480a56e6deef4",
+      "scope": "Unedited final XCTest attachment: BoardCellPresentationTests/testFoundExpressionSettlesOnOneFaceAndItsFinalPixelsMatchTheUncoveredBoard()"
+    },
+    {
+      "file": "found-pop-full-envelope-checks.json",
+      "sha256": "6ad4c7415eda5587f95d5130bfe836d5010929c898fe37b95afaa8ee14dec50e",
+      "scope": "Unedited final XCTest attachment: BoardCellPresentationTests/testFoundPopHasReadableLiftAndLandingInsideItsPreviousFullRectangleEnvelope()"
+    },
+    {
+      "file": "found-pop-natural-presentation-samples.json",
+      "sha256": "439cca9a0871fff477c28522716c40356ff6454629ddbb4a7f177f19f34946f6",
+      "scope": "Unedited final XCTest attachment: BoardCellPresentationTests/testFoundPopNaturallyStretchesLandsAndReturnsToRestAtThreeVisibleSizes()"
+    },
+    {
+      "file": "correct-face-continuous-event-times.json",
+      "sha256": "c847b5df74e62460071d78c34291e179b283f3a498872fe9c4ea4415b3a805da",
+      "scope": "Unedited final XCTest attachment: GameFeelVisualTests/testActualRootCorrectFacePlaysContinuouslyIntoRest()"
+    },
+    {
+      "file": "flight-neighbour-sequence.json",
+      "sha256": "0f0157b01ee013d06d248e695c69c62973be18be43805187bfc722e94d514f06",
+      "scope": "Unedited final XCTest attachment: GameFeelVisualTests/testActualRootFlightsPreserveEarlierAndRapidlyAddedCharacters()"
+    }
+  ],
+  "reviewed": "Finite extracted before/final frames show a rising/stretched face, light landing squash and return to the same happy resting pose. Continuous Root sequences include normal play and rapid final finds.",
+  "boundary": "Presentation-layer samples and finite video frames are separate evidence, not physical touch latency, FPS, audio/haptic A/B or reference-quality sign-off. Demo timing remains provisional."
+}

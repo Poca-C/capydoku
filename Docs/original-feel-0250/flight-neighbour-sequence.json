@@ -1,0 +1,100 @@
+{
+  "boundary" : "Actual Root\/native board,120ms requested between final two finds. No screenshots within flight. Video review plus separate path geometry tests assess face clearance; this test alone asserts unchanged committed state, not pixels or touch latency.",
+  "events" : [
+    {
+      "board" : "{{65, 270}, {190, 190}}",
+      "found" : [
+        4,
+        8,
+        12,
+        21,
+        29
+      ],
+      "level" : 12,
+      "secondsFromSequenceStart" : 0.0083873751573264599,
+      "source" : 29,
+      "width" : 320
+    },
+    {
+      "board" : "{{65, 270}, {190, 190}}",
+      "found" : [
+        4,
+        8,
+        12,
+        21,
+        29,
+        31
+      ],
+      "level" : 12,
+      "secondsFromSequenceStart" : 0.13323633349500597,
+      "source" : 31,
+      "width" : 320
+    },
+    {
+      "board" : "{{37, 310}, {328, 328}}",
+      "found" : [
+        4,
+        8,
+        12,
+        21,
+        29
+      ],
+      "level" : 12,
+      "secondsFromSequenceStart" : 0.0058540417812764645,
+      "source" : 29,
+      "width" : 402
+    },
+    {
+      "board" : "{{37, 310}, {328, 328}}",
+      "found" : [
+        4,
+        8,
+        12,
+        21,
+        29,
+        31
+      ],
+      "level" : 12,
+      "secondsFromSequenceStart" : 0.13487916672602296,
+      "source" : 31,
+      "width" : 402
+    },
+    {
+      "board" : "{{65, 270}, {190, 190}}",
+      "found" : [
+        0,
+        12,
+        29,
+        31,
+        45,
+        53,
+        67,
+        74,
+        86
+      ],
+      "level" : 101,
+      "secondsFromSequenceStart" : 0.0056995833292603493,
+      "source" : 86,
+      "width" : 320
+    },
+    {
+      "board" : "{{65, 270}, {190, 190}}",
+      "found" : [
+        0,
+        12,
+        29,
+        31,
+        45,
+        53,
+        67,
+        74,
+        86,
+        98
+      ],
+      "level" : 101,
+      "secondsFromSequenceStart" : 0.1350602915044874,
+      "source" : 98,
+      "width" : 320
+    }
+  ]
+}
