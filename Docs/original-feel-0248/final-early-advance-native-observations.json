@@ -1,0 +1,737 @@
+{
+  "boundary" : "Actual Root, requested120ms after final find, then next\/restart via AppModel. CADisplayLink observes native reward identity without screenshot readback. Samples are finite and do not prove per-frame pixel\/FPS or physical touch latency.",
+  "cases" : [
+    {
+      "advancedAtUptime" : 1198594.8345961252,
+      "observations" : [
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.032821333268657327
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.049934666603803635
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.066682583186775446
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.083348458167165518
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.10005158325657248
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.11676204157993197
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.14928524987772107
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.16603624983690679
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.1827378747984767
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.19942887499928474
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.21607162500731647
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.23277174984104931
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.24941837484948337
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.2660675416700542
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.28280129167251289
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.29957208316773176
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.31610620813444257
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.33286495832726359
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.34948183316737413
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.36628949991427362
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.38275691657327116
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.39947374979965389
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.41608099988661706
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.43272195826284587
+        }
+      ],
+      "reduced" : false,
+      "restart" : false,
+      "width" : 320
+    },
+    {
+      "advancedAtUptime" : 1198596.3144722085,
+      "observations" : [
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.016285833204165101
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.020199291640892625
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.037227249937132001
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.054022458149120212
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.070688124978914857
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.087479749927297235
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.10413604159839451
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.12100645829923451
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.13758937502279878
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.15433129156008363
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.17106862482614815
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.1863906248472631
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.20354308327659965
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.2204148331657052
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.23700195830315351
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.25379745825193822
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.2705441250000149
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.30279466649517417
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.31958966655656695
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.33616037480533123
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.35282512498088181
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.36959133320488036
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.38622254156507552
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.40282224980182946
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.41945487493649125
+        }
+      ],
+      "reduced" : false,
+      "restart" : true,
+      "width" : 320
+    },
+    {
+      "advancedAtUptime" : 1198597.7747302083,
+      "observations" : [
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.018362333299592137
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.025813916698098183
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.04249250004068017
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.05914429179392755
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.075811000075191259
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.092469458468258381
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.10913958330638707
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.12579741678200662
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.14246016670949757
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.15918704168871045
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.17590341670438647
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.19256887515075505
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.20922391675412655
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.22591020842082798
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.24261345830745995
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.25925954175181687
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.2760373333003372
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.29260129178874195
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.30936879175715148
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.32589833345264196
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.34254845837131143
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.35926079167984426
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.37589641683734953
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.3926147916354239
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.40919866668991745
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.42601020843721926
+        }
+      ],
+      "reduced" : false,
+      "restart" : false,
+      "width" : 402
+    },
+    {
+      "advancedAtUptime" : 1198599.3326714584,
+      "observations" : [
+        {
+          "found" : 0,
+          "newApplauseOwner" : false,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.017835208447650075
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.034941500052809715
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.05182779161259532
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.068512583384290338
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.085239625070244074
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.10194033337756991
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.11863233335316181
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.13534645829349756
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.15219712513498962
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.16887162509374321
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.18562850006856024
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.21793591673485935
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.23468287498690188
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.25127187510952353
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.26795366662554443
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.28461887501180172
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.30131466663442552
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.31792937498539686
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.33462045830674469
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.35131658334285021
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.36793887498788536
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.38467429159209132
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.4012712084222585
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.41791504179127514
+        },
+        {
+          "found" : 0,
+          "newApplauseOwner" : true,
+          "oldApplauseEvent" : false,
+          "resultCharacterPlaying" : false,
+          "secondsAfterAdvance" : 0.43463333346880972
+        }
+      ],
+      "reduced" : true,
+      "restart" : false,
+      "width" : 320
+    }
+  ]
+}

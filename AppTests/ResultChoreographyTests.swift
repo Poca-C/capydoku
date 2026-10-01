@@ -57,6 +57,7 @@ private struct ResultChromePixels {
         } }
         return count
     }
+
 }
 
 final class ResultChoreographyTests: XCTestCase {
@@ -334,6 +335,103 @@ final class ResultChoreographyTests: XCTestCase {
         XCTAssertNotNil(expected.claimResult(.quit))
         XCTAssertTrue(expected.resumeAfterQuit())
         XCTAssertEqual(model.session, expected)
+    }
+
+    @MainActor func testActualRootOneLifeFocusDoesNotCrossIntoFreshOrRestoredSession() async throws {
+        var observations = [[String: Any]]()
+        let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
+        for reduced in [false, true] { for restoreOneLife in [false, true] {
+            let name = "one-life-replace-\(restoreOneLife ? "restored" : "fresh")-\(reduced ? "reduced" : "normal")"
+            let directory = FileManager.default.temporaryDirectory.appendingPathComponent(name + UUID().uuidString)
+            let restoredDirectory = directory.appendingPathComponent("saved-one-life")
+            let savedModel = AppModel(saveDirectory: restoredDirectory, runsTimer: false, feedbackEnabled: false)
+            savedModel.progress.tutorialCompleted = true; savedModel.start(level: 6)
+            let savedInitial = try XCTUnwrap(savedModel.session)
+            let savedWrong = savedInitial.puzzle.regions.indices.filter { !savedInitial.puzzle.solution.contains($0) }
+            for index in savedWrong.prefix(savedInitial.lives - 1) { savedModel.submit(index) }
+            savedModel.flushPendingSaves()
+            let loadedModel = AppModel(saveDirectory: restoredDirectory, runsTimer: false, feedbackEnabled: false)
+            let restored = try XCTUnwrap(loadedModel.session)
+            XCTAssertEqual(restored.lives, 1); XCTAssertEqual(restored.status, .playing)
+
+            let model = AppModel(saveDirectory: directory, runsTimer: false, feedbackEnabled: false)
+            model.progress.tutorialCompleted = true; model.start(level: 6)
+            let previous = scene.windows.first(where: \.isKeyWindow), window = UIWindow(windowScene: scene)
+            window.frame = CGRect(x: 0, y: 0, width: 320, height: 568)
+            window.overrideUserInterfaceStyle = .light
+            var frames = [String: CGRect]()
+            let host = UIHostingController(rootView: RootView(reduceMotionOverride: reduced).environmentObject(model)
+                .environment(\.scenePhase, .active).environment(\.capyLayoutObserver, { frames[$0] = $1 }))
+            window.rootViewController = host; window.makeKeyAndVisible()
+            defer {
+                window.isHidden = true; window.rootViewController = nil; previous?.makeKeyAndVisible()
+                model.flushPendingSaves(); loadedModel.flushPendingSaves(); savedModel.flushPendingSaves()
+                try? FileManager.default.removeItem(at: directory)
+            }
+            func nativeBoard(in view: UIView) -> PuzzleGridUIView? {
+                if let board = view as? PuzzleGridUIView { return board }
+                for child in view.subviews { if let board = nativeBoard(in: child) { return board } }
+                return nil
+            }
+            try await Task.sleep(nanoseconds: 300_000_000)
+            let board = try XCTUnwrap(nativeBoard(in: host.view))
+            let initial = try XCTUnwrap(model.session)
+            let correct = try XCTUnwrap(initial.puzzle.solution.first)
+            // Two distinct wrong cells in the found character's row make the
+            // prior session own both a rule explanation and one-life mode.
+            let rowWrong = initial.puzzle.regions.indices.filter {
+                $0 / initial.puzzle.size == correct / initial.puzzle.size && !initial.puzzle.solution.contains($0)
+            }
+            XCTAssertGreaterThanOrEqual(rowWrong.count, 2)
+            XCTAssertTrue(board.activate(index: correct, submit: true))
+            try await Task.sleep(nanoseconds: 100_000_000)
+            XCTAssertTrue(board.activate(index: rowWrong[0], submit: true))
+            try await Task.sleep(nanoseconds: 100_000_000)
+            XCTAssertTrue(board.activate(index: rowWrong[1], submit: true))
+            for _ in 0..<40 {
+                if board.accessibilityElements?.isEmpty == true, frames["last_life_continue"] != nil { break }
+                try await Task.sleep(nanoseconds: 5_000_000)
+            }
+            let departed = try XCTUnwrap(model.session)
+            XCTAssertEqual(departed.lives, 1); XCTAssertEqual(departed.status, .playing)
+            XCTAssertNotNil(frames["last_life_continue"])
+            XCTAssertTrue(board.accessibilityElements?.isEmpty == true)
+            XCTAssertFalse(board.activate(index: rowWrong[0], submit: false), "The same-session one-life acknowledgement must still lock input.")
+
+            if restoreOneLife { model.progress.session = restored }
+            else { model.start(level: 6) }
+            let replacement = try XCTUnwrap(model.session)
+            XCTAssertNotEqual(replacement.id, departed.id)
+            XCTAssertEqual(replacement.lives, restoreOneLife ? 1 : initial.lives)
+            for _ in 0..<40 {
+                if board.accessibilityElements?.count == replacement.puzzle.size * replacement.puzzle.size { break }
+                try await Task.sleep(nanoseconds: 5_000_000)
+            }
+            let currentBoard = try XCTUnwrap(nativeBoard(in: host.view))
+            let cells = try XCTUnwrap(currentBoard.accessibilityElements as? [UIAccessibilityElement])
+            XCTAssertEqual(cells.count, replacement.puzzle.size * replacement.puzzle.size)
+            let usableIndex = try XCTUnwrap(replacement.puzzle.regions.indices.first {
+                !replacement.found.contains($0) && !replacement.errors.contains($0)
+            })
+            let cell = try XCTUnwrap(cells.first { $0.accessibilityIdentifier == "cell_\(usableIndex)" })
+            XCTAssertFalse(cell.accessibilityTraits.contains(.notEnabled))
+            XCTAssertEqual(cell.accessibilityCustomActions?.count, 2)
+            XCTAssertEqual(cell.accessibilityValue, "empty")
+            XCTAssertEqual(model.session, replacement, "Presentation reset must not mutate the restored or new game.")
+            XCTAssertTrue(cell.accessibilityActivate())
+            XCTAssertTrue(model.session?.marks.contains(usableIndex) == true)
+            XCTAssertTrue(currentBoard.activate(index: usableIndex, submit: false))
+            XCTAssertEqual(model.session?.marks, replacement.marks)
+            XCTAssertTrue(currentBoard.activate(index: try XCTUnwrap(replacement.puzzle.solution.first), submit: true))
+            XCTAssertEqual(model.session?.found.count, replacement.found.count + 1)
+            XCTAssertEqual(model.session?.lives, replacement.lives)
+            observations.append(["restoredOneLife": restoreOneLife, "reduceMotion": reduced,
+                "replacementAccessibleCells": cells.count, "replacementLives": replacement.lives])
+        } }
+        let data = try JSONSerialization.data(withJSONObject: ["cases": observations,
+            "boundary": "Actual Root remains mounted while its session changes. Native board accessibility and activation verify the current input mode. This does not measure transition pixels, rule-strip tint, display FPS, physical touch latency, or VoiceOver speech/focus timing."], options: [.prettyPrinted, .sortedKeys])
+        let a = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+        a.name = "one-life-session-replacement-observations"; a.lifetime = .keepAlways; add(a)
     }
 
     @MainActor private func capture(_ view: UIView, _ name: String) {

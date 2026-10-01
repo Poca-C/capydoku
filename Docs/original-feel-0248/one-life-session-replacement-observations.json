@@ -1,0 +1,29 @@
+{
+  "boundary" : "Actual Root remains mounted while its session changes. Native board accessibility and activation verify the current input mode. This does not measure transition pixels, rule-strip tint, display FPS, physical touch latency, or VoiceOver speech\/focus timing.",
+  "cases" : [
+    {
+      "reduceMotion" : false,
+      "replacementAccessibleCells" : 36,
+      "replacementLives" : 3,
+      "restoredOneLife" : false
+    },
+    {
+      "reduceMotion" : false,
+      "replacementAccessibleCells" : 36,
+      "replacementLives" : 1,
+      "restoredOneLife" : true
+    },
+    {
+      "reduceMotion" : true,
+      "replacementAccessibleCells" : 36,
+      "replacementLives" : 3,
+      "restoredOneLife" : false
+    },
+    {
+      "reduceMotion" : true,
+      "replacementAccessibleCells" : 36,
+      "replacementLives" : 1,
+      "restoredOneLife" : true
+    }
+  ]
+}

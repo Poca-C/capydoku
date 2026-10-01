@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "kind": "scoped_delta_to_88_item_audit",
+  "baseAudit": "Validation/checklist-0221-audit.json",
+  "sourceChecklist": "Validation/checklist-source.json",
+  "sourceCaseCount": 88,
+  "formalSignOff": false,
+  "full88Reexecuted": false,
+  "overallCountsRecomputed": false,
+  "build": "0.2.48 (51)",
+  "status": "scoped_cross_session_feedback_verified_simulator_only",
+  "previousDelta": "Validation/checklist-0247-feedback-delta.json",
+  "scopedRows": 3,
+  "rows": [
+    {
+      "id": "05-06",
+      "title": "结算导航与继续",
+      "originalAcceptanceText": "操作  测试结算下一关、返回首页和继续游戏。\n通过  跳转、进度及反馈正确；主动退出保留策略、击败比例和Rank有确认依据。",
+      "originalRequirementIDs": [
+        "PLAY-10",
+        "UI-04"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "实际Root快速下一关/重开旧反馈隔离，且新局首次操作仍有奖励；既有正常下一关、复活和跨页操作复验。",
+      "evidence": [
+        "Validation/original-0248-feedback.json",
+        "Docs/original-feel-0248/manifest.json",
+        "Validation/test-runs/original-0248-app-final-summary.json",
+        "Validation/test-runs/original-0248-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "14-03",
+      "title": "游戏奖励动效与降级",
+      "originalAcceptanceText": "操作  触发正确、错误、Combo、通关及签到动效。\n通过  与业务状态同步，不阻碍后续操作；轻量特效在低性能设备可降级。",
+      "originalRequirementIDs": [
+        "ART-02"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "门控上一局浮分、飞星、鼓掌、Combo、道具、生命与HUD反馈；不延迟棋盘输入。减少动态、一命替换与新局反馈检查。",
+      "evidence": [
+        "Validation/original-0248-feedback.json",
+        "Docs/original-feel-0248/manifest.json",
+        "Validation/test-runs/original-0248-app-final-summary.json",
+        "Validation/test-runs/original-0248-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "16-03",
+      "title": "最终构建全部问题复验",
+      "originalAcceptanceText": "操作  在最终构建复测所有失败用例及受影响流程。\n通过  每个Bug均有关联修复版本、复测结论和证据，旧版本通过不能代替复测。",
+      "originalRequirementIDs": [
+        "TECH-07"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "基线3处断言失败；最终65项相关App及5项UI通过。当前范围复验，不是全量App/Core或正式验收。",
+      "evidence": [
+        "Validation/original-0248-feedback.json",
+        "Docs/original-feel-0248/manifest.json",
+        "Validation/test-runs/original-0248-app-final-summary.json",
+        "Validation/test-runs/original-0248-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    }
+  ],
+  "verificationSnapshot": {
+    "app": {
+      "status": "Passed",
+      "cases": 65,
+      "passed": 65,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 101.555,
+      "scope": "17Pro/iOS26.5; affected Root, reward, HUD, feedback, applause, choreography, accessibility and visual suites; not full App/Core.",
+      "summary": "Validation/test-runs/original-0248-app-final-summary.json",
+      "log": "Validation/test-runs/original-0248-app-final.log",
+      "bundle": "Validation/test-runs/original-0248-app-final.xcresult"
+    },
+    "ui": {
+      "status": "Passed",
+      "cases": 5,
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 179.634,
+      "scope": "17e/iOS26.5; result→home/settings/check-in→next board, native gestures/tools, solve/advance, simulated revive, hint preview/Apply.",
+      "summary": "Validation/test-runs/original-0248-17e-ui-summary.json",
+      "log": "Validation/test-runs/original-0248-17e-ui.log",
+      "bundle": "Validation/test-runs/original-0248-17e-ui.xcresult"
+    }
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  }
+}

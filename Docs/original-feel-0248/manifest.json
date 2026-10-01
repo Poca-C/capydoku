@@ -1,0 +1,173 @@
+{
+  "build": "0.2.48 (51)",
+  "baselineBuild": "0.2.47 (50)",
+  "items": [
+    {
+      "file": "before-early-advance-native-observations.json",
+      "kind": "Unedited XCTest attachment",
+      "sha256": "92c788a4052786b33349d8b6631fa4a081f9d6d27863223e02573926d7925636",
+      "sourceBundle": "Validation/test-runs/original-0248-early-baseline.xcresult",
+      "test": "GameHUDVisualTests/testActualRootEarlyAdvanceDoesNotCarryOldRewardsIntoTheNextBoard()"
+    },
+    {
+      "file": "final-early-advance-native-observations.json",
+      "kind": "Unedited XCTest attachment",
+      "sha256": "bcbe1a8b341dd4194a02cc7f3cdc45e72882d9f455fc4da478b47c7ec7bf734e",
+      "sourceBundle": "Validation/test-runs/original-0248-app-final.xcresult",
+      "test": "GameHUDVisualTests/testActualRootEarlyAdvanceDoesNotCarryOldRewardsIntoTheNextBoard()"
+    },
+    {
+      "file": "final-early-advance-320-restart-false-reduced-true-fresh-reward.png",
+      "kind": "Unedited XCTest attachment",
+      "sha256": "704320193dfa9601ca9e8a60a4d220ad6a186ac2d185f3f9cb27e332a787d9a7",
+      "sourceBundle": "Validation/test-runs/original-0248-app-final.xcresult",
+      "test": "GameHUDVisualTests/testActualRootEarlyAdvanceDoesNotCarryOldRewardsIntoTheNextBoard()"
+    },
+    {
+      "file": "final-early-advance-402-restart-false-reduced-false-fresh-reward.png",
+      "kind": "Unedited XCTest attachment",
+      "sha256": "ed766880bb8954658b3473e21d8467e79a4b61bdcaab6aef1f22a841d7996d11",
+      "sourceBundle": "Validation/test-runs/original-0248-app-final.xcresult",
+      "test": "GameHUDVisualTests/testActualRootEarlyAdvanceDoesNotCarryOldRewardsIntoTheNextBoard()"
+    },
+    {
+      "file": "final-early-advance-320-restart-true-reduced-false-fresh-reward.png",
+      "kind": "Unedited XCTest attachment",
+      "sha256": "13c2f51b42e9e922a56c14b20ccfe19cfce407c2870294fd8483fdcc4c6e7a25",
+      "sourceBundle": "Validation/test-runs/original-0248-app-final.xcresult",
+      "test": "GameHUDVisualTests/testActualRootEarlyAdvanceDoesNotCarryOldRewardsIntoTheNextBoard()"
+    },
+    {
+      "file": "final-early-advance-320-restart-false-reduced-false-fresh-reward.png",
+      "kind": "Unedited XCTest attachment",
+      "sha256": "3393f35fa4146a2d4037bca3f2e14fad981b9332879c9b50e8fda0c5759c4a94",
+      "sourceBundle": "Validation/test-runs/original-0248-app-final.xcresult",
+      "test": "GameHUDVisualTests/testActualRootEarlyAdvanceDoesNotCarryOldRewardsIntoTheNextBoard()"
+    },
+    {
+      "file": "one-life-session-replacement-observations.json",
+      "kind": "Current native input-mode observations",
+      "sha256": "19ff6e75203d577a142367c4b27209c46c2e24680b4d23d7a5e60f95fd703207",
+      "test": "ResultChoreographyTests/testActualRootOneLifeFocusDoesNotCrossIntoFreshOrRestoredSession()"
+    },
+    {
+      "file": "before-early-advance.mov",
+      "kind": "0.2.47 actual Root early next/restart recording; no screenshot readback during handoff.",
+      "sha256": "f12ea5e80e831f8326e3f12190410af2ad97c154afcb09c512fd997b0cf4dd7b"
+    },
+    {
+      "file": "before-extraction-index.json",
+      "kind": "Finite video extraction index, requested50ms intervals.",
+      "sha256": "dbeca3115f55d60c235095e89c8adf936ec0471c944fc6749d45067c474fe032"
+    },
+    {
+      "file": "before-compact-next.png",
+      "kind": "Contact sheet0.60–1.20s at50ms; old +200/star/applause over new empty board.",
+      "sha256": "2ff50476067e08af8ba55cccc4aa53d826f90ae494b5139578d990110ffc375a"
+    },
+    {
+      "file": "final-early-advance.mov",
+      "kind": "0.2.48 actual Root early next/restart recording.",
+      "sha256": "3f3c7c2343ba438aaff36a07d79b9e4a15bfe0e49d16ba0095fdd82b685d074b"
+    },
+    {
+      "file": "final-extraction-index.json",
+      "kind": "Finite video extraction index, requested50ms intervals.",
+      "sha256": "8cda51b373c7c5e266ba41fdef71643f65cdea374d6154d0e2b8564a69bb9419"
+    },
+    {
+      "file": "final-overview.png",
+      "kind": "Finite full-sequence contact sheet.",
+      "sha256": "8226e34d0f35dafef6ee09b4516f0b96e618b6f95e9ed0a03dac797fd19b3adb"
+    },
+    {
+      "file": "final-compact-next.png",
+      "kind": "Finite compact next handoff contact sheet.",
+      "sha256": "cef6424db0691695a852f15314b8f32af231649c6869120c729711205521d3cf"
+    }
+  ],
+  "observations": {
+    "before": [
+      {
+        "width": 320,
+        "restart": false,
+        "reduced": false,
+        "samples": 24,
+        "oldEventOnNewOwnerSamples": 24,
+        "lastOldEventSeconds": 0.4182467916980386,
+        "lateResultCharacterSamples": 0
+      },
+      {
+        "width": 320,
+        "restart": true,
+        "reduced": false,
+        "samples": 24,
+        "oldEventOnNewOwnerSamples": 24,
+        "lastOldEventSeconds": 0.43078445829451084,
+        "lateResultCharacterSamples": 0
+      },
+      {
+        "width": 402,
+        "restart": false,
+        "reduced": false,
+        "samples": 25,
+        "oldEventOnNewOwnerSamples": 25,
+        "lastOldEventSeconds": 0.4327119584195316,
+        "lateResultCharacterSamples": 0
+      },
+      {
+        "width": 320,
+        "restart": false,
+        "reduced": true,
+        "samples": 25,
+        "oldEventOnNewOwnerSamples": 0,
+        "lastOldEventSeconds": null,
+        "lateResultCharacterSamples": 0
+      }
+    ],
+    "final": [
+      {
+        "width": 320,
+        "restart": false,
+        "reduced": false,
+        "samples": 24,
+        "oldEventOnNewOwnerSamples": 0,
+        "lastOldEventSeconds": null,
+        "lateResultCharacterSamples": 0
+      },
+      {
+        "width": 320,
+        "restart": true,
+        "reduced": false,
+        "samples": 25,
+        "oldEventOnNewOwnerSamples": 0,
+        "lastOldEventSeconds": null,
+        "lateResultCharacterSamples": 0
+      },
+      {
+        "width": 402,
+        "restart": false,
+        "reduced": false,
+        "samples": 26,
+        "oldEventOnNewOwnerSamples": 0,
+        "lastOldEventSeconds": null,
+        "lateResultCharacterSamples": 0
+      },
+      {
+        "width": 320,
+        "restart": false,
+        "reduced": true,
+        "samples": 25,
+        "oldEventOnNewOwnerSamples": 0,
+        "lastOldEventSeconds": null,
+        "lateResultCharacterSamples": 0
+      }
+    ]
+  },
+  "review": {
+    "fixture": "Actual Root:320pt next/restart,402pt next,320pt reduced-motion next. Final find through native board.activate; next/restart through AppModel. Requested120ms before leaving and420ms observation. New-board first-find acknowledgement also checked.",
+    "finding": "Baseline normal-motion cases consumed an old applause event in the newly keyed native view. Natural playback also shows +200 and a star over the empty new board; the previous screenshot suspicion is resolved as a runtime defect.",
+    "final": "Reviewed finite continuous-recording frames and native-owner samples; old reward does not carry into new board in these cases. The new first correct move still presents its own reward.",
+    "boundary": "Finite simulator evidence, not per-frame pixel/FPS, physical-touch latency, audio/haptic A/B or Meowdoku quality equivalence. Reduced-motion injected; no new live reference playtest."
+  }
+}

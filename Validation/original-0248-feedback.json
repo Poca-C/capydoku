@@ -1,0 +1,158 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.48 (51)",
+  "date": "2026-10-02",
+  "status": "scoped_cross_session_feedback_verified_simulator_only",
+  "previousReport": "Validation/original-0247-feedback.json",
+  "previousGoalTurn": {
+    "classification": "progress",
+    "reason": "0.2.47 separated immediate result controls from decoration;33App/5UI passed and commit17c2784 preserved an unresolved early-next observation."
+  },
+  "sourceParagraphs": [
+    129,
+    136,
+    249,
+    253,
+    254
+  ],
+  "finding": "Actual Root early-next/restart reproduced old applause on the new native owner in all3 normal-motion cases. Continuous recording additionally showed old +200/star on the empty new board. No business-state mutation was observed.",
+  "changes": [
+    "A single feedback session identity gates all reward/Combo/HUD/one-life presentation at render time while the real board and input stay available.",
+    "Bind replacement presentation from the incoming session ID and current committed session, avoiding the prior captured session value. Only expose that ownership after all3 presentation models are reset/bound.",
+    "Reject cross-session captured combo/lives/score observers; pass nil to the new applause view instead of letting it consume an old event. No input delay or new timer."
+  ],
+  "temporaryTuning": "No gameplay, animation timing, art, score or audio values changed in this round.",
+  "verificationHistory": [
+    {
+      "status": "Failed",
+      "cases": 1,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "seconds": 25.04,
+      "scope": "Initial harness:3normal cases exposed old event, but repeated per-tick assertions and an incorrect expectation of reduced-motion terminal applause produced69 assertions. Retained as exploratory evidence only.",
+      "summary": "Validation/test-runs/original-0248-early-before-summary.json",
+      "log": "Validation/test-runs/original-0248-early-before.log",
+      "bundle": "Validation/test-runs/original-0248-early-before.xcresult"
+    },
+    {
+      "status": "Failed",
+      "cases": 1,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "seconds": 22.149,
+      "scope": "Corrected identical baseline test:4cases complete;1test fails3normal-motion stale-event assertions; reduced-motion correctly has no terminal applause.",
+      "summary": "Validation/test-runs/original-0248-early-baseline-summary.json",
+      "log": "Validation/test-runs/original-0248-early-baseline.log",
+      "bundle": "Validation/test-runs/original-0248-early-baseline.xcresult"
+    },
+    {
+      "status": "Failed",
+      "cases": 1,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "seconds": 19.143,
+      "scope": "First ownership-gate candidate removed the old event but failed new-first-find feedback because replacement binding still used captured session; not accepted.",
+      "summary": "Validation/test-runs/original-0248-early-candidate-summary.json",
+      "log": "Validation/test-runs/original-0248-early-candidate.log",
+      "bundle": "Validation/test-runs/original-0248-early-candidate.xcresult"
+    },
+    {
+      "status": "Passed",
+      "cases": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 12.974,
+      "scope": "Live-session binding candidate passed4cases. Final build additionally includes explicit captured-session observer guards and the one-life replacement test.",
+      "summary": "Validation/test-runs/original-0248-early-candidate2-summary.json",
+      "log": "Validation/test-runs/original-0248-early-candidate2.log",
+      "bundle": "Validation/test-runs/original-0248-early-candidate2.xcresult"
+    }
+  ],
+  "applicationTests": {
+    "status": "Passed",
+    "cases": 65,
+    "passed": 65,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 101.555,
+    "scope": "17Pro/iOS26.5; affected Root, reward, HUD, feedback, applause, choreography, accessibility and visual suites; not full App/Core.",
+    "summary": "Validation/test-runs/original-0248-app-final-summary.json",
+    "log": "Validation/test-runs/original-0248-app-final.log",
+    "bundle": "Validation/test-runs/original-0248-app-final.xcresult"
+  },
+  "uiTests": {
+    "status": "Passed",
+    "cases": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 179.634,
+    "scope": "17e/iOS26.5; result→home/settings/check-in→next board, native gestures/tools, solve/advance, simulated revive, hint preview/Apply.",
+    "summary": "Validation/test-runs/original-0248-17e-ui-summary.json",
+    "log": "Validation/test-runs/original-0248-17e-ui.log",
+    "bundle": "Validation/test-runs/original-0248-17e-ui.xcresult"
+  },
+  "visualEvidence": "Docs/original-feel-0248/manifest.json",
+  "reference": {
+    "latestSuccessfulPlaytest": "Validation/meowdoku-playtest-comparison-0229.json",
+    "newSuccessfulPlaytestThisRound": false,
+    "equivalenceClaimed": false,
+    "implementationSummary": {
+      "status": "Nine observed directions each have Demo implementation; this is not reference-quality sign-off.",
+      "implementedDirections": [
+        "动态手势教学",
+        "角色待机/正确/错误表情",
+        "浮分/彩粒/飞星/鼓掌及顶部联动",
+        "错误原因与规则可视化",
+        "扣命与一命提醒",
+        "Combo及分层胜败演出",
+        "新盘错峰入场",
+        "提示与找答案反馈",
+        "签到点亮与实际到账演出"
+      ],
+      "audio": "9 local Debug-only reference WAVs remain an authorized testing experiment; no live audio or physical haptic A/B in this round.",
+      "qualityGaps": [
+        "角色动作自然度与整段节奏",
+        "密集浮分离源距离与飞星避让",
+        "真机声音/震动配合",
+        "正式参考和发布资源验收"
+      ]
+    }
+  },
+  "audio": {
+    "modified": false,
+    "localTestWAVCount": 9,
+    "currentDebugInventory": "Validation/audio-isolation-0248-debug.json",
+    "formalManifestClipsEmpty": true,
+    "liveAuditoryAB": false,
+    "releaseRebuilt": false
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  },
+  "remaining": [
+    "九类参考反馈方向已各有Demo实现；角色自然度、整段节奏、连续音画和触觉A/B仍待真人评估，不声称参考品质验收。",
+    "密集浮分最远3.762格及飞星途经其他角色排列的局限未在本轮修改。",
+    "结算装饰仍可短暂淡出覆盖目的页；所有弹窗/后台/低端设备中断组合尚未穷尽。",
+    "手机仍0.2.29；最低系统、冻结参考和正式上架验收未完成。"
+  ],
+  "formalSignOff": false,
+  "formalConformanceRowsUnchanged": 83,
+  "historicalChecklistCountUnchanged": 88
+}

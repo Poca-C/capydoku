@@ -329,6 +329,7 @@ struct GameView: View {
     @StateObject private var feedback = GameFeedbackPresentation()
     @StateObject private var rewards = GameRewardPresentation()
     @StateObject private var hud = GameHUDPresentation()
+    @State private var feedbackSessionID: UUID?
     @State private var progressFrame = CGRect.zero
     @State private var gameWindowFrame = CGRect.zero
     @State private var ruleWindowFrame = CGRect.zero
@@ -343,9 +344,23 @@ struct GameView: View {
         model.screen == .game && scenePhase == .active && model.hint == nil && model.sheet == nil && !model.loading && !model.rewardBusy && !model.interstitialBusy &&
         !model.challengePending && model.errorMessage == nil && model.notice == nil
     }
+    // SwiftUI can render the replacement board before its onChange handlers
+    // clear the old StateObjects. Never hand those old events to a new native
+    // view, whose consumed-event ledger is necessarily empty.
+    private var ownsFeedback: Bool {
+        feedbackSessionID != nil && feedbackSessionID == model.session?.id
+    }
+    private func bindFeedback(to session: GameSession) {
+        guard feedbackSessionID != session.id else { return }
+        feedback.clear()
+        rewards.bind(sessionID: session.id, score: session.score)
+        hud.bind(sessionID: session.id, lives: session.lives)
+        comboBadgeWindowFrame = .zero; comboBadgeFrameRevision = nil
+        feedbackSessionID = session.id
+    }
     private var flightTextFrames: [CGRect] {
         var frames = [ruleWindowFrame]
-        if feedback.comboText != nil {
+        if ownsFeedback && feedback.comboText != nil {
             // A new badge uses the row only until its own current bounds arrive;
             // an empty feedback band never hides a flying star.
             let currentBadge = comboBadgeFrameRevision == feedback.comboRevision && !comboBadgeWindowFrame.isEmpty
@@ -357,7 +372,7 @@ struct GameView: View {
     }
     private var flightTextMeasurementsReady: Bool {
         !ruleWindowFrame.isEmpty && !gameWindowFrame.isEmpty &&
-            (feedback.comboText == nil || !comboBandWindowFrame.isEmpty)
+            (!ownsFeedback || feedback.comboText == nil || !comboBandWindowFrame.isEmpty)
     }
     var body: some View {
         GeometryReader { geometry in
@@ -376,7 +391,7 @@ struct GameView: View {
                 let maximumHintHeight = max(66, geometry.size.height - fixedHeight - 190)
                 let hintHeight = model.hint == nil ? ruleHeight : min(max(66, hintContentHeight), maximumHintHeight)
                 let boardSide = max(190, min(geometry.size.width - 28, geometry.size.height - fixedHeight - hintHeight, 500))
-                let lifeFocused = feedback.showLastLife && s.status == .playing && canPresentFeedback
+                let lifeFocused = ownsFeedback && feedback.showLastLife && s.status == .playing && canPresentFeedback
                 let covered = s.status != .playing || model.sheet != nil || model.loading || model.challengePending || lifeFocused
                 ZStack {
                     VStack(spacing: 0) {
@@ -397,7 +412,7 @@ struct GameView: View {
                                 .capyLayoutProbe("level_title")
                             VStack(spacing: 0) {
                                 Text(language.text("Score")).font(.system(size: compact ? 14 : 17, weight: .medium, design: .rounded))
-                                ScorePulseView(score: s.score, sessionID: s.id, pulseID: rewards.scorePulseID,
+                                ScorePulseView(score: s.score, sessionID: s.id, pulseID: ownsFeedback ? rewards.scorePulseID : nil,
                                                fontSize: compact ? 22 : 25, reduceMotion: reduceMotion,
                                                presentationEnabled: canPresentFeedback && !lifeFocused)
                                     .fixedSize()
@@ -408,7 +423,7 @@ struct GameView: View {
                             HStack(spacing: 4) {
                                 ForEach(0..<s.config.initialLives, id: \.self) { index in
                                     LifeHeartView(available: index < s.lives, size: compact ? 19 : 22,
-                                                  lossID: hud.lifeLosses.first(where: { $0.index == index })?.id,
+                                                  lossID: ownsFeedback ? hud.lifeLosses.first(where: { $0.index == index })?.id : nil,
                                                   reduceMotion: reduceMotion)
                                 }
                             }.padding(.horizontal, 10).padding(.vertical, 5).background(CapyPalette.paper).clipShape(Capsule())
@@ -448,7 +463,7 @@ struct GameView: View {
                                         if !loading { model.hintDidAppear(useID: useID) }
                                     }
                             }
-                            else { RuleStrip(compact: compact, highlightedRules: hud.highlightedRules) }
+                            else { RuleStrip(compact: compact, highlightedRules: ownsFeedback ? hud.highlightedRules : []) }
                         }.frame(height: hintHeight).padding(.top, compact ? 4 : 8)
                             .background(FeedbackWindowFrameReader { ruleWindowFrame = $0 })
                         comboBadge(compact: compact).frame(height: feedbackHeight)
@@ -534,7 +549,7 @@ struct GameView: View {
                         Color.clear.frame(height: bannerHeight).accessibilityIdentifier("banner_reservation")
                     }.disabled(s.status != .playing || lifeFocused).accessibilityElement(children: covered ? .ignore : .contain).accessibilityHidden(covered).padding(.horizontal, 14).padding(.top, 4).padding(.bottom, 4)
                     ZStack {
-                        ForEach(rewards.flights) { ProgressFlightStar(flight: $0) }
+                        ForEach(ownsFeedback ? rewards.flights : []) { ProgressFlightStar(flight: $0) }
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .mask {
@@ -544,8 +559,8 @@ struct GameView: View {
                     // decoration. Accepted state and its arrival still advance.
                     .opacity(flightTextMeasurementsReady ? 1 : 0)
                     .allowsHitTesting(false).accessibilityHidden(true)
-                    ForEach(rewards.localScores) { CellScoreLabel(item: $0) }
-                    if let reveal = rewards.toolReveal { DirectToolRevealView(reveal: reveal).id(reveal.id) }
+                    ForEach(ownsFeedback ? rewards.localScores : []) { CellScoreLabel(item: $0) }
+                    if ownsFeedback, let reveal = rewards.toolReveal { DirectToolRevealView(reveal: reveal).id(reveal.id) }
                     if lifeFocused {
                         LastLifeSpotlightView(livesFrame: livesWindowFrame.offsetBy(dx: -gameWindowFrame.minX, dy: -gameWindowFrame.minY)) {
                             feedback.dismissLastLife()
@@ -554,10 +569,12 @@ struct GameView: View {
                 }
                 .background(FeedbackWindowFrameReader { gameWindowFrame = $0 })
                 .onChange(of: s.combo) { combo in
+                    guard ownsFeedback, model.session?.id == s.id else { return }
                     feedback.setPresentationEnabled(canPresentFeedback)
                     feedback.combo(model.comboFeedbackPresentation(for: combo))
                 }
                 .onChange(of: s.lives) {
+                    guard ownsFeedback, model.session?.id == s.id else { return }
                     // A newer mistake owns the visual explanation. Stop older
                     // celebration, while the accepted score stays in the model.
                     rewards.clear()
@@ -569,7 +586,7 @@ struct GameView: View {
                     if status != .playing { feedback.dismissLastLife() }
                 }
                 .onChange(of: feedback.showLastLife) { showing in
-                    if showing {
+                    if showing && ownsFeedback {
                         lifeFocusReturn = focus?.wrappedValue
                         focus?.wrappedValue = "last_life_continue"
                     } else if focus?.wrappedValue == "last_life_continue" {
@@ -577,26 +594,32 @@ struct GameView: View {
                     }
                 }
                 .onChange(of: s.score) {
+                    guard ownsFeedback, model.session?.id == s.id else { return }
                     rewards.scoreChanged($0, sessionID: s.id, visible: canPresentFeedback && (model.session?.combo ?? 0) > 0)
                 }
-                .onChange(of: s.id) { _ in
-                    feedback.clear(); rewards.bind(sessionID: s.id, score: s.score)
-                    hud.bind(sessionID: s.id, lives: s.lives)
+                .onChange(of: s.id) { sessionID in
+                    // Read the committed replacement, not the session value
+                    // captured by the previous GeometryReader transaction.
+                    guard let current = model.session, current.id == sessionID else { return }
+                    bindFeedback(to: current)
                 }
                 .onChange(of: canPresentFeedback) {
                     feedback.setPresentationEnabled($0)
                     rewards.setPresentationEnabled($0); hud.setPresentationEnabled($0)
                 }
                 .onAppear {
-                    feedback.setPresentationEnabled(canPresentFeedback); rewards.bind(sessionID: s.id, score: s.score)
-                    hud.bind(sessionID: s.id, lives: s.lives)
+                    bindFeedback(to: s)
+                    feedback.setPresentationEnabled(canPresentFeedback)
                     rewards.setPresentationEnabled(canPresentFeedback); hud.setPresentationEnabled(canPresentFeedback)
                 }
                 .onDisappear {
                     feedback.setPresentationEnabled(false)
                     rewards.setPresentationEnabled(false); hud.setPresentationEnabled(false)
                 }
-                .animation(reduceMotion ? nil : .easeOut(duration: 0.15), value: feedback.showLastLife)
+                .animation(reduceMotion ? nil : .easeOut(duration: 0.15), value: ownsFeedback && feedback.showLastLife)
+                .transaction {
+                    if !ownsFeedback { $0.animation = nil; $0.disablesAnimations = true }
+                }
                 .accessibilityAddTraits(model.hint != nil ? .isModal : [])
             }
         }
@@ -655,9 +678,9 @@ struct GameView: View {
             }
         }.padding(.horizontal, 9).padding(.vertical, 4).background(CapyPalette.paper).clipShape(Capsule())
             .background(FeedbackWindowFrameReader { progressFrame = $0 })
-            .overlay(Capsule().stroke(CapyPalette.orange.opacity(rewards.progressPulse ? 0.9 : 0), lineWidth: 2))
-            .modifier(ProgressArrivalPulseModifier(sessionID: s.id, arrivalID: rewards.progressArrivalID,
-                                                  enabled: canPresentFeedback && !feedback.showLastLife,
+            .overlay(Capsule().stroke(CapyPalette.orange.opacity(ownsFeedback && rewards.progressPulse ? 0.9 : 0), lineWidth: 2))
+            .modifier(ProgressArrivalPulseModifier(sessionID: s.id, arrivalID: ownsFeedback ? rewards.progressArrivalID : nil,
+                                                  enabled: canPresentFeedback && ownsFeedback && !feedback.showLastLife,
                                                   reduceMotion: reduceMotion))
             .accessibilityElement(children: .ignore).accessibilityLabel(language.text(s.lives == 1 ? "One heart left. \(s.found.count) of \(s.puzzle.size) found" : "\(s.found.count) of \(s.puzzle.size) found")).accessibilityIdentifier("found_count")
             .capyLayoutProbe("found_count")
@@ -669,8 +692,8 @@ struct GameView: View {
             Color.clear
             HStack {
                 Spacer()
-                ApplauseFeedbackView(eventID: rewards.applauseID,
-                                     enabled: canPresentFeedback && !feedback.showLastLife && !resultDecorationReady,
+                ApplauseFeedbackView(eventID: ownsFeedback ? rewards.applauseID : nil,
+                                     enabled: canPresentFeedback && ownsFeedback && !feedback.showLastLife && !resultDecorationReady,
                                      reduceMotion: reduceMotion,
                                      lowPower: ProcessInfo.processInfo.isLowPowerModeEnabled)
                     // At most ten accepted finds belong to one board. Retire
@@ -679,7 +702,7 @@ struct GameView: View {
                     .frame(width: compact ? 28 : 34, height: compact ? 24 : 30)
                     .capyLayoutProbe("applause_feedback")
             }
-            if let combo = feedback.comboText {
+            if ownsFeedback, let combo = feedback.comboText {
                 ComboCelebrationView(text: language.text(combo), tier: ComboVisualTier(text: combo), compact: compact,
                                      reduceMotion: reduceMotion || ProcessInfo.processInfo.isLowPowerModeEnabled)
                     .background(FeedbackWindowFrameReader { [revision = feedback.comboRevision] frame in

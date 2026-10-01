@@ -4,7 +4,98 @@ import UIKit
 import CapydokuCore
 @testable import Capydoku
 
+@MainActor private final class EarlyAdvanceDisplaySampler: NSObject {
+    var sample: (() -> Void)?
+    private var link: CADisplayLink?
+    func start() {
+        let link = CADisplayLink(target: self, selector: #selector(tick))
+        self.link = link; link.add(to: .main, forMode: .common)
+    }
+    @objc private func tick() { sample?() }
+    func stop() { link?.invalidate(); link = nil; sample = nil }
+}
+
 final class GameHUDVisualTests: XCTestCase {
+    /// Watch actual newly mounted native reward views while the result is
+    /// skipped before its character entrance. Never read back a screenshot in
+    /// that interval: keep the recording useful for the mixed-renderer window.
+    @MainActor func testActualRootEarlyAdvanceDoesNotCarryOldRewardsIntoTheNextBoard() async throws {
+        var cases: [[String: Any]] = []
+        let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
+        for (width, restart, reduced) in [(320, false, false), (320, true, false), (402, false, false), (320, false, true)] {
+            let directory = FileManager.default.temporaryDirectory.appendingPathComponent("early-advance-" + UUID().uuidString)
+            let model = AppModel(saveDirectory: directory, runsTimer: false, feedbackEnabled: false)
+            model.progress.tutorialCompleted = true; model.start(level: 6)
+            let initial = try XCTUnwrap(model.session), last = try XCTUnwrap(initial.puzzle.solution.last)
+            for index in initial.puzzle.solution.dropLast() { model.submit(index) }
+            let previous = scene.windows.first(where: \.isKeyWindow), window = UIWindow(windowScene: scene)
+            let surround = UIWindow(windowScene: scene); surround.frame = scene.coordinateSpace.bounds
+            let backdrop = UIViewController(); backdrop.view.backgroundColor = .black
+            surround.rootViewController = backdrop; surround.windowLevel = UIWindow.Level(rawValue: 1); surround.isHidden = false
+            window.windowLevel = UIWindow.Level(rawValue: 2)
+            window.frame = CGRect(x: 0, y: 0, width: width, height: width == 320 ? 568 : 874)
+            let host = UIHostingController(rootView: RootView(reduceMotionOverride: reduced).environmentObject(model).environment(\.scenePhase, .active))
+            window.rootViewController = host; window.makeKeyAndVisible()
+            let sampler = EarlyAdvanceDisplaySampler()
+            defer {
+                sampler.stop(); window.isHidden = true; window.rootViewController = nil
+                surround.isHidden = true; surround.rootViewController = nil; previous?.makeKeyAndVisible()
+                model.flushPendingSaves(); try? FileManager.default.removeItem(at: directory)
+            }
+            try await Task.sleep(nanoseconds: 620_000_000)
+            let board = try XCTUnwrap(descendants(host.view).compactMap { $0 as? PuzzleGridUIView }.first)
+            XCTAssertTrue(board.activate(index: last, submit: true))
+            try await Task.sleep(nanoseconds: 120_000_000)
+            XCTAssertEqual(model.session?.status, .won)
+            let previousApplause = try XCTUnwrap(descendants(host.view).compactMap { $0 as? ApplauseFeedbackUIView }.first)
+            // Reduced motion shows the result immediately and suppresses its
+            // departing board applause; a missing event is expected there.
+            let previousEvent = previousApplause.activeEventID
+            if !reduced { XCTAssertNotNil(previousEvent) }
+            let departedSession = try XCTUnwrap(model.session), advancedAt = ProcessInfo.processInfo.systemUptime
+            var observations: [[String: Any]] = []
+            sampler.sample = {
+                let native = self.descendants(host.view)
+                let applause = native.compactMap { $0 as? ApplauseFeedbackUIView }.first
+                let newOwner = applause != nil && applause !== previousApplause
+                let oldEvent = previousEvent != nil && applause?.activeEventID == previousEvent
+                let resultPlaying = native.compactMap { $0 as? ResultCharacterUIView }.contains { $0.activeEventID != nil }
+                observations.append(["secondsAfterAdvance": ProcessInfo.processInfo.systemUptime - advancedAt,
+                    "newApplauseOwner": newOwner, "oldApplauseEvent": oldEvent,
+                    "resultCharacterPlaying": resultPlaying, "found": model.session?.found.count ?? -1])
+            }
+            sampler.start()
+            if restart { model.restart() } else { model.next() }
+            let next = try XCTUnwrap(model.session)
+            XCTAssertNotEqual(next.id, departedSession.id); XCTAssertEqual(next.status, .playing)
+            XCTAssertEqual(next.puzzle.id, restart ? 6 : 7); XCTAssertEqual(next.score, 0); XCTAssertTrue(next.found.isEmpty)
+            try await Task.sleep(nanoseconds: 420_000_000)
+            sampler.stop()
+            XCTAssertTrue(observations.contains { $0["newApplauseOwner"] as? Bool == true })
+            XCTAssertFalse(observations.contains {
+                $0["newApplauseOwner"] as? Bool == true && $0["oldApplauseEvent"] as? Bool == true
+            }, "A new board must never consume the previous board's applause event.")
+            XCTAssertFalse(observations.contains { $0["resultCharacterPlaying"] as? Bool == true },
+                "Skipping before result decoration must not start a late result character.")
+            XCTAssertEqual(model.session, next, "A delayed presentation may not mutate the new board.")
+            let newBoard = try XCTUnwrap(descendants(host.view).compactMap { $0 as? PuzzleGridUIView }.first)
+            XCTAssertTrue(newBoard.activate(index: try XCTUnwrap(next.puzzle.solution.first), submit: true))
+            try await Task.sleep(nanoseconds: 120_000_000)
+            let newEvent = try XCTUnwrap(descendants(host.view).compactMap { $0 as? ApplauseFeedbackUIView }.first?.activeEventID)
+            XCTAssertNotEqual(newEvent, previousEvent, "A real new find must still receive its own reward.")
+            XCTAssertEqual(model.session?.found.count, 1); XCTAssertGreaterThan(model.session?.score ?? 0, 0)
+            cases.append(["width": width, "restart": restart, "reduced": reduced,
+                "advancedAtUptime": advancedAt, "observations": observations])
+            let image = UIGraphicsImageRenderer(bounds: window.bounds).image { _ in window.drawHierarchy(in: window.bounds, afterScreenUpdates: false) }
+            let a = XCTAttachment(image: image); a.name = "early-advance-\(width)-restart-\(restart)-reduced-\(reduced)-fresh-reward"
+            a.lifetime = .keepAlways; add(a)
+        }
+        let data = try JSONSerialization.data(withJSONObject: ["cases": cases,
+            "boundary": "Actual Root, requested120ms after final find, then next/restart via AppModel. CADisplayLink observes native reward identity without screenshot readback. Samples are finite and do not prove per-frame pixel/FPS or physical touch latency."], options: [.prettyPrinted, .sortedKeys])
+        let a = XCTAttachment(data: data, uniformTypeIdentifier: "public.json"); a.name = "early-advance-native-observations"
+        a.lifetime = .keepAlways; add(a)
+    }
+
     /// Continuous actual Root handoff; no screenshot readback during entrance.
     /// Wall-clock observations describe this fixture, not touch latency or FPS.
     @MainActor func testActualRootResultControlHandoffPlaysContinuously() async throws {
