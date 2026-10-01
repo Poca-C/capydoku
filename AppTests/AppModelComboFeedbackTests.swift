@@ -79,6 +79,13 @@ final class AppModelComboFeedbackTests: XCTestCase {
         app.config = config; app.start(level: 1)
         return app
     }
+    @MainActor private func drainRewardCallbacks() async {
+        // The adapter routes signals onto this serial queue. Resume only after
+        // all signals already sent by the test have actually reached AppModel.
+        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+            DispatchQueue.main.async { continuation.resume() }
+        }
+    }
 
     @MainActor func testFirstCorrectAndWinningCorrectReachConfiguredPlayerAtConfiguredDelayWithoutComboHaptics() throws {
         let rig = ComboTestRig(), app = model(rig, manifest: manifest())
@@ -153,19 +160,90 @@ final class AppModelComboFeedbackTests: XCTestCase {
             let rig = ComboTestRig(), rewards = ComboRewards()
             let app = model(rig, manifest: manifest(cues: [.init(count: 4, event: "excellent")], context: context),
                             config: DemoConfig(directPerLevel: 0), rewards: rewards)
-            for cell in try XCTUnwrap(app.session).puzzle.solution.prefix(3) { app.submit(cell) }
+            let solution = try XCTUnwrap(app.session).puzzle.solution
+            for cell in solution.prefix(3) { app.submit(cell) }
+            XCTAssertEqual(rig.haptics, [.correct, .correct, .correct])
+            rig.haptics.removeAll()
             app.direct()
             XCTAssertTrue(app.rewardBusy)
+            let completion = try XCTUnwrap(rewards.completion)
+            completion(.started)
+            await drainRewardCallbacks()
+            XCTAssertTrue(app.currentAudioEnvironment.blocks.contains(.advertisement))
+            app.submit(solution[3])
+            XCTAssertEqual(app.session?.found.count, 3, "An active ad still owns input until its terminal result.")
+            XCTAssertTrue(rig.haptics.isEmpty)
             if background { app.setActive(false) }
-            try XCTUnwrap(rewards.completion)(.earned)
-            try XCTUnwrap(rewards.completion)(.earned)
-            let end = ProcessInfo.processInfo.systemUptime + 2
-            while app.rewardBusy && ProcessInfo.processInfo.systemUptime < end { try await Task.sleep(nanoseconds: 10_000_000) }
+            completion(.earned); completion(.earned)
+            await drainRewardCallbacks()
             XCTAssertFalse(app.rewardBusy)
             XCTAssertEqual(app.session?.status, .won)
+            XCTAssertEqual(app.currentAudioEnvironment.overlay, .won)
+            XCTAssertFalse(app.currentAudioEnvironment.blocks.contains(.advertisement))
+            XCTAssertEqual(app.currentAudioEnvironment.blocks.contains(.background), background)
             rig.clock.advance(0.25)
-            XCTAssertEqual(rig.played, context == .completeInTriggerScope && !background ? ["excellent.wav"] : [])
-            XCTAssertFalse(rig.haptics.contains { if case .combo = $0 { return true }; return false })
+            let expectedAudio = context == .completeInTriggerScope && !background ? ["excellent.wav"] : []
+            let expectedHaptics: [FeedbackEvent] = background ? [] : [.correct, .win]
+            XCTAssertEqual(rig.played, expectedAudio)
+            XCTAssertEqual(rig.haptics, expectedHaptics, "The committed final reveal emits one correct and one win; Combo adds no extra haptic.")
+
+            let won = app.session
+            app.setActive(true)
+            app.loadProgress(); app.startOrContinue()
+            completion(.earned)
+            await drainRewardCallbacks()
+            rig.clock.advance(1)
+            XCTAssertEqual(app.session, won)
+            XCTAssertEqual(rig.played, expectedAudio, "Foreground/save restoration cannot replay a reward's audio.")
+            XCTAssertEqual(rig.haptics, expectedHaptics, "Neither restoration nor a later duplicate may replay success.")
+        }
+    }
+
+    @MainActor func testCancelledOldAdCannotPlayWinningRevealOnReplacementBoard() async throws {
+        // A replacement attempt at the same level is also a different session.
+        for replacementLevel in [1, 2] {
+            let rig = ComboTestRig(), rewards = ComboRewards()
+            let app = model(rig, manifest: manifest(cues: [.init(count: 4, event: "excellent")]),
+                            config: DemoConfig(directPerLevel: 0), rewards: rewards)
+            let oldSession = try XCTUnwrap(app.session)
+            for cell in oldSession.puzzle.solution.prefix(3) { app.submit(cell) }
+            app.direct()
+            let completion = try XCTUnwrap(rewards.completion)
+            XCTAssertTrue(app.rewardBusy)
+            let offer = try XCTUnwrap(app.progress.rewardLedger.values.first)
+            XCTAssertEqual(offer.sessionID, oldSession.id)
+            rig.haptics.removeAll()
+
+            app.start(level: replacementLevel)
+            // Abandoning an offered (not yet rewarded) transaction cancels it;
+            // only a durable rewarded receipt is eligible for compensation.
+            XCTAssertEqual(app.progress.rewardLedger[offer.id]?.state, .cancelled)
+            XCTAssertEqual(app.progress.rewardLedger.count, 1, "No replacement ad was requested by starting this board.")
+            // start does not tear down the in-memory adapter. Restore through
+            // the actual recovery boundary before accepting input on this board.
+            app.loadProgress(); app.startOrContinue()
+            let replacement = try XCTUnwrap(app.session)
+            XCTAssertNotEqual(replacement.id, oldSession.id)
+            XCTAssertFalse(app.rewardBusy)
+            completion(.earned); completion(.earned)
+            await drainRewardCallbacks()
+            rig.clock.advance(1)
+            XCTAssertFalse(app.rewardBusy)
+            XCTAssertEqual(app.session, replacement, "A stale reward cannot reveal or finish the replacement board.")
+            XCTAssertEqual(app.progress.rewardLedger[offer.id]?.state, .cancelled)
+            XCTAssertEqual(app.progress.bonusDirect, 0)
+            XCTAssertNil(app.directRevealFeedback)
+            XCTAssertTrue(rig.played.isEmpty)
+            XCTAssertTrue(rig.haptics.isEmpty)
+
+            app.loadProgress(); app.startOrContinue()
+            completion(.earned)
+            await drainRewardCallbacks()
+            rig.clock.advance(1)
+            XCTAssertEqual(app.session, replacement)
+            XCTAssertEqual(app.progress.bonusDirect, 0)
+            XCTAssertTrue(rig.played.isEmpty)
+            XCTAssertTrue(rig.haptics.isEmpty, "Restoring the cancelled offer cannot replay the old board's win.")
         }
     }
 
@@ -205,6 +283,6 @@ final class AppModelComboFeedbackTests: XCTestCase {
         XCTAssertEqual(app.session?.status, .won)
         rig.clock.advance(0.25)
         XCTAssertEqual(rig.played, ["excellent.wav"])
-        XCTAssertEqual(rig.haptics.filter { $0 == .correct }.count, 4)
+        XCTAssertEqual(rig.haptics, [.correct, .correct, .correct, .correct, .win])
     }
 }

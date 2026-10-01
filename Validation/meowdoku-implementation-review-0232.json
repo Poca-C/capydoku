@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-01",
+  "baseBuild": "0.2.32 (35)",
+  "scope": "当前参考观察落实情况复核，以及尚未分发的奖励通关反馈修复；未提高正式验收状态。",
+  "referenceEvidence": [
+    "Validation/meowdoku-playtest-comparison-0223.json",
+    "Validation/meowdoku-playtest-comparison-0229.json"
+  ],
+  "implementationEvidence": [
+    "Validation/original-0230-feedback.json",
+    "Validation/original-0231-feedback.json",
+    "Validation/original-0232-feedback.json"
+  ],
+  "conclusion": "九类已观察方向均有Demo对应实现，不代表所有装饰细节均已加入，也不代表整体体验达到参考品质。",
+  "implementedDirections": [
+    "动态教学：手指、点击圈、横纵轨迹及目标暗化",
+    "角色反应：棋盘眨眼侧看、开心/惊讶、结果独立眼口和连续肢体",
+    "正确奖励：格内实际加分、顶部反馈、跨格彩粒、连续得分回弹",
+    "错误解释：依据可见冲突高亮行列/区域/邻接关系、连线和规则卡",
+    "扣命：爱心破裂及剩一命聚焦提醒",
+    "Combo及结算：三档装饰、整盘庆祝、两套胜利和一套失败演出",
+    "新盘：错峰入场、触摸撤下入场装饰、恢复不重播",
+    "道具：空心X预览、Apply实填、直接答案局部确认",
+    "签到：保存成功后点亮、连签日期与实际库存增量反馈"
+  ],
+  "remaining": [
+    "角色仍使用刚性身体部件及栅格眼口状态，动作自然度需要连续体验评估。",
+    "落格、加分、顶部反馈、Combo和结算的整段节奏尚未完成相同操作序列的实际A/B。",
+    "9个原声已按用户授权用于本地内部测试，已优化预热和播放衔接；真机听觉、触觉和音画同步尚未验收。",
+    "鼓掌装饰、通关时每只角色冒爱心等观察细节未加入；参考文案及装扮未照搬，这些均不自动成为正式需求。"
+  ],
+  "rewardWinFix": {
+    "detail": "奖励直接找答案完成最后一格后，已接受的correct与win共用原对局上下文，避免胜利遮罩的输入门禁吞掉win震动；后台、广告及暂停门禁仍有效。不新增胜利声音。",
+    "files": ["App/AppModel.swift", "AppTests/AppModelComboFeedbackTests.swift"],
+    "firstRun": {
+      "passed": 26,
+      "failed": 1,
+      "assertionFailures": 8,
+      "reason": "新测试错误期待未确认奖励换局后补库存，并错误期待Core换局同时清理AppModel广告适配器。修正测试按现有取消与恢复契约执行，生产逻辑未为测试调整。",
+      "evidence": "Validation/test-runs/reward-win-feedback-fix-summary.json"
+    },
+    "finalRun": {
+      "passed": 27,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 0.883,
+      "device": "iPhone 17 Pro simulator / iOS 26.5",
+      "groups": ["AppModelComboFeedbackTests", "HapticFeedbackTests", "AppModelFeedbackRoutingTests", "RewardCompletionRecoveryTests"],
+      "evidence": "Validation/test-runs/reward-win-feedback-fix-r2-summary.json",
+      "boundary": "验证反馈事件和恢复契约；未测量真机马达或重跑完整App/UI。"
+    }
+  },
+  "distribution": {
+    "pausedByUser": true,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)",
+    "packaged": false,
+    "phoneInstalled": false,
+    "githubPublished": false
+  },
+  "formalSignOff": false,
+  "formalConformanceRowsUnchanged": 83,
+  "historicalChecklistCountUnchanged": 88
+}

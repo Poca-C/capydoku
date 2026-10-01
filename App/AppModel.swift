@@ -1105,8 +1105,9 @@ final class AppModel: ObservableObject {
                 case .directRevealed(let cell):
                     publishDirectReveal(cell: cell)
                     if screen == .game {
-                        playRevealFeedback(acceptedIn: FeedbackEnvironment(page: .game, level: session?.puzzle.id))
-                        if session?.status == .won { feedback.play(.win) }
+                        let accepted = FeedbackEnvironment(page: .game, level: session?.puzzle.id)
+                        playRevealFeedback(acceptedIn: accepted)
+                        if session?.status == .won { feedback.play(.win, acceptedIn: accepted) }
                     }
                 case .inventoryGranted: break
                 case .revived: break
