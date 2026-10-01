@@ -1,0 +1,96 @@
+{
+  "boundary" : "Production Flight.position on the current150-level pack, translated190\/320\/374pt geometry and two HUD directions. All possible found faces include pop\/celebration bounds; source uses its full cell. Legacy collision count uses the same481 progress samples and constant maximum rotating radius+1pt glow against the identical obstacles, not previously-found prefixes. Finite geometry samples and equal path progress do not prove actual composited pixels, elapsed-time speed, frame rate, or physical touch latency.",
+  "legacyCollisionExamples" : [
+    {
+      "destinationX" : 185.25,
+      "hostWidth" : 190,
+      "level" : 1,
+      "source" : 8
+    },
+    {
+      "destinationX" : 51.25,
+      "hostWidth" : 190,
+      "level" : 1,
+      "source" : 14
+    },
+    {
+      "destinationX" : 51.25,
+      "hostWidth" : 190,
+      "level" : 2,
+      "source" : 11
+    },
+    {
+      "destinationX" : 185.25,
+      "hostWidth" : 190,
+      "level" : 2,
+      "source" : 13
+    },
+    {
+      "destinationX" : 51.25,
+      "hostWidth" : 190,
+      "level" : 3,
+      "source" : 21
+    }
+  ],
+  "legacyCollisionPathsUnderSameObstacles" : 2765,
+  "maximumStepRatio" : 1.0001641568469863,
+  "medianLengthRatio" : 1.0101683890855573,
+  "minimumClearance" : 0.25846502450965936,
+  "minimumStepRatio" : 0.96971145500350719,
+  "minimumTurnCosine" : 0.87764297131953239,
+  "p95LengthRatio" : 1.1417741086672972,
+  "pointsPerRoute" : 481,
+  "routeCount" : 7116,
+  "worstLengthRatios" : [
+    {
+      "clearance" : 2.0000000000000231,
+      "destinationX" : 369.25,
+      "hostWidth" : 374,
+      "lengthRatio" : 1.1863830114040814,
+      "level" : 1,
+      "newLength" : 510.58647663717773,
+      "oldLength" : 430.37237698886122,
+      "source" : 8
+    },
+    {
+      "clearance" : 2.0000000000000231,
+      "destinationX" : 51.25,
+      "hostWidth" : 374,
+      "lengthRatio" : 1.186383011404081,
+      "level" : 2,
+      "newLength" : 510.58647663717761,
+      "oldLength" : 430.37237698886128,
+      "source" : 11
+    },
+    {
+      "clearance" : 1.9999999999999662,
+      "destinationX" : 51.25,
+      "hostWidth" : 374,
+      "lengthRatio" : 1.1784096687831378,
+      "level" : 26,
+      "newLength" : 638.64545997091454,
+      "oldLength" : 541.9553801102121,
+      "source" : 35
+    },
+    {
+      "clearance" : 1.9999999999999662,
+      "destinationX" : 51.25,
+      "hostWidth" : 374,
+      "lengthRatio" : 1.1784096687831378,
+      "level" : 29,
+      "newLength" : 638.64545997091454,
+      "oldLength" : 541.9553801102121,
+      "source" : 35
+    },
+    {
+      "clearance" : 1.9999999999999662,
+      "destinationX" : 51.25,
+      "hostWidth" : 374,
+      "lengthRatio" : 1.1784096687831378,
+      "level" : 46,
+      "newLength" : 638.64545997091454,
+      "oldLength" : 541.9553801102121,
+      "source" : 35
+    }
+  ]
+}

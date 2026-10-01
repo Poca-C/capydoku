@@ -3,8 +3,8 @@ import UIKit
 import UIKit.UIGestureRecognizerSubclass
 import CapydokuCore
 
-/// Exact geometry of an accepted score source, in the board's UIWindow.
-struct BoardScoreAnchor {
+/// Exact geometry of an accepted feedback source, in the board's UIWindow.
+struct BoardFeedbackAnchor {
     let cellFrame: CGRect
     let boardFrame: CGRect
     let foundFrames: [CGRect]
@@ -36,10 +36,10 @@ struct PuzzleBoardView: UIViewRepresentable {
     var onBeginSwipe: () -> Void = {}
     var onEndSwipe: (Bool) -> Void = { _ in }
     var onInputActivityChange: (UUID, Bool) -> Void = { _, _ in }
-    /// The source cell is in the board's UIWindow coordinates, not local grid space.
-    var onFoundFeedback: (Int, CGRect) -> Void = { _, _ in }
+    /// Source and board geometry use UIWindow coordinates, not local grid space.
+    var onFoundFeedback: (Int, BoardFeedbackAnchor) -> Void = { _, _ in }
     var onConflictFeedback: ([VisibleConflictKind]) -> Void = { _ in }
-    var onScoreFeedback: (Int, BoardScoreAnchor) -> Void = { _, _ in }
+    var onScoreFeedback: (Int, BoardFeedbackAnchor) -> Void = { _, _ in }
 
     func makeUIView(context: Context) -> PuzzleGridUIView {
         let view = PuzzleGridUIView()
@@ -150,9 +150,9 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     private var onBeginSwipe: (() -> Void)?
     private var onEndSwipe: ((Bool) -> Void)?
     private var onInputActivityChange: ((UUID, Bool) -> Void)?
-    private var onFoundFeedback: ((Int, CGRect) -> Void)?
+    private var onFoundFeedback: ((Int, BoardFeedbackAnchor) -> Void)?
     private var onConflictFeedback: (([VisibleConflictKind]) -> Void)?
-    private var onScoreFeedback: ((Int, BoardScoreAnchor) -> Void)?
+    private var onScoreFeedback: ((Int, BoardFeedbackAnchor) -> Void)?
     let inputActivity = BoardInputActivity()
     private var inputRecognizers: [UIGestureRecognizer] = []
     private var swipeFeedbackActive = false
@@ -240,9 +240,9 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
                    onMark: @escaping ([Int]) -> Void,
                    onBeginSwipe: @escaping () -> Void = {}, onEndSwipe: @escaping (Bool) -> Void = { _ in },
                    onInputActivityChange: @escaping (UUID, Bool) -> Void = { _, _ in },
-                   onFoundFeedback: @escaping (Int, CGRect) -> Void = { _, _ in },
+                   onFoundFeedback: @escaping (Int, BoardFeedbackAnchor) -> Void = { _, _ in },
                    onConflictFeedback: @escaping ([VisibleConflictKind]) -> Void = { _ in },
-                   onScoreFeedback: @escaping (Int, BoardScoreAnchor) -> Void = { _, _ in }) {
+                   onScoreFeedback: @escaping (Int, BoardFeedbackAnchor) -> Void = { _, _ in }) {
         refreshDiagnostics.configurations += 1
         let sameBoard = self.size == size && self.regions == regions && self.sessionID == sessionID
         let fullAccessibilityRefresh = !hasConfigured || !sameBoard || self.language != language || self.locked != locked
@@ -366,7 +366,9 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
                 cellFeedback(at: index, kind: .found)
                 if let window {
                     let cell = rect(for: index)
-                    self.onFoundFeedback?(index, convert(cell, to: window))
+                    self.onFoundFeedback?(index, BoardFeedbackAnchor(cellFrame: convert(cell, to: window),
+                        boardFrame: convert(boardRect, to: window),
+                        foundFrames: found.sorted().map { convert(rect(for: $0), to: window) }))
                 }
             }
             for index in changedMarks.sorted() {
@@ -375,7 +377,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
             }
             if !suppressPositiveFeedback, scoreDelta > 0, let index = scoreOrigin, let window {
                 let cell = rect(for: index)
-                self.onScoreFeedback?(scoreDelta, BoardScoreAnchor(cellFrame: convert(cell, to: window),
+                self.onScoreFeedback?(scoreDelta, BoardFeedbackAnchor(cellFrame: convert(cell, to: window),
                     boardFrame: convert(boardRect, to: window),
                     foundFrames: found.sorted().map { convert(rect(for: $0), to: window) }))
             }

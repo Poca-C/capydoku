@@ -1,0 +1,77 @@
+{
+  "build": "0.2.49 (52)",
+  "baselineBuild": "0.2.48 (51)",
+  "items": [
+    {
+      "file": "flight-neighbour-sequence.json",
+      "kind": "Unedited XCTest geometry/sequence attachment",
+      "sha256": "96fbc257ebd5d1172c9ba0b9b5bb971cd4e6a21f9b8013edde0ee0e5feda11a6",
+      "test": "GameFeelVisualTests/testActualRootFlightsPreserveEarlierAndRapidlyAddedCharacters()",
+      "sourceBundle": "Validation/test-runs/original-0249-app-final.xcresult"
+    },
+    {
+      "file": "current-pack-flight-route-geometry.json",
+      "kind": "Unedited XCTest geometry/sequence attachment",
+      "sha256": "b700e98a17cb66dd5b5e094ffa184755603b736f95a3f6c5342f9d02f348e4da",
+      "test": "ProgressArrivalPresentationTests/testCurrent150LevelFlightsClearEveryPossibleFoundFaceWithContinuousBoundedRoutes()",
+      "sourceBundle": "Validation/test-runs/original-0249-app-final.xcresult"
+    },
+    {
+      "file": "before-flight-neighbours.mov",
+      "kind": "Actual0.2.48 Root; three viewports, final two finds120ms apart.",
+      "sha256": "81826a3f0180e1315cba7598ee5a009fb693fcdc57ba8616f67918379e56d849"
+    },
+    {
+      "file": "before-extraction-index.json",
+      "kind": "Finite25ms requested extraction index.",
+      "sha256": "a9563860b89816df3af9f59c0ef3a12879707a4d77ef794cb2818fb44ffaa912"
+    },
+    {
+      "file": "before-compact-detail.png",
+      "kind": "Compact baseline contact sheet0.50–1.075s at25ms.",
+      "sha256": "53163278874515468ff374d0ca1529cf69f7d47788e6f3724b1d7ca8fcb45424"
+    },
+    {
+      "file": "before-normal-flight.png",
+      "kind": "Unedited full-size baseline video frame at requested2.4s.",
+      "sha256": "a413d13cc2113854a38ea8a6bd6f4853ec547382b6a0ea6dfb15b7c781c54fae"
+    },
+    {
+      "file": "final-flight-neighbours.mov",
+      "kind": "Actual0.2.49 Root; no mid-flight screenshot readback.",
+      "sha256": "818b7316fb924c30fc8502ad0d0ff84a5a3f7699a6da1997a3b8d1156b477706"
+    },
+    {
+      "file": "final-extraction-index.json",
+      "kind": "Finite25ms requested extraction index.",
+      "sha256": "1fa5792999fcf9ce3fd0c7e9be53045700f838523613a8634a05a1c9cc684e72"
+    },
+    {
+      "file": "final-compact-detail.png",
+      "kind": "Compact final contact sheet0.50–1.075s at25ms.",
+      "sha256": "c98e2268b0a9ea1ba3e736df2bc60b51ec62ce0469c8af37fade67d4b8f8d03c"
+    },
+    {
+      "file": "final-overview.png",
+      "kind": "Final0–4.5s overview at250ms.",
+      "sha256": "1fd8db8eb70a2578ab95acd262b012758cba5679e8c157573500526850986912"
+    },
+    {
+      "file": "final-dense-detail.png",
+      "kind": "Dense final sequence3.5–4.25s at50ms.",
+      "sha256": "c3b2d54e3a7edb2fa536e9f311043f92ff6b7dae6368a888300d07b50bc60944"
+    },
+    {
+      "file": "final-normal-flight.png",
+      "kind": "Unedited final video frame at requested2.4s; separate recording clock, not phase-aligned A/B.",
+      "sha256": "3ad2d07ccadf1d8d9bec0c1b6393841fd087ca4d47db6543968f7862dce12cfa"
+    }
+  ],
+  "geometry": "current-pack-flight-route-geometry.json",
+  "review": {
+    "fixture": "Actual Root L12 at320/402pt and L101 at320pt. Earlier finds preloaded; final two native board activations120ms apart. Normal playback, no mid-flight snapshots. Finite overview/details plus full frames reviewed.",
+    "change": "Star rises in the source column before turning above the board toward HUD. Stable route also avoids later finds; no runtime solution lookup or transient masking around faces.",
+    "limit": "Geometry samples include possible pop/celebration bounds but do not prove compositor pixels, frame timing, audio/haptics or low-end performance. Existing rule/Combo text masks remain. Missing/invalid source/board or a HUD below the exit uses the legacy fallback, outside the new clearance guarantee.",
+    "reference": "Live Meowdoku L4 playtest recorded separately in Validation/meowdoku-playtest-comparison-0249.json; no equivalence or precise reference-timing claim."
+  }
+}

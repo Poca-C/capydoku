@@ -166,6 +166,54 @@ final class GameRewardPresentationTests: XCTestCase {
 }
 
 final class GameFeelVisualTests: XCTestCase {
+    /// Leave earlier characters visible while a lower-row reward travels past
+    /// them. The next find arrives during that flight; no mid-flight readback.
+    @MainActor func testActualRootFlightsPreserveEarlierAndRapidlyAddedCharacters() async throws {
+        let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
+        var events: [[String: Any]] = []
+        for (width, level) in [(CGFloat(320), 12), (CGFloat(402), 12), (CGFloat(320), 101)] {
+            let directory = FileManager.default.temporaryDirectory.appendingPathComponent("flight-neighbours-" + UUID().uuidString)
+            let model = AppModel(saveDirectory: directory, runsTimer: false, feedbackEnabled: false)
+            model.progress.tutorialCompleted = true; model.start(level: level)
+            let initial = try XCTUnwrap(model.session)
+            for index in initial.puzzle.solution.dropLast(2) { model.submit(index) }
+            let previous = scene.windows.first(where: \.isKeyWindow), window = UIWindow(windowScene: scene)
+            let surround = UIWindow(windowScene: scene); surround.frame = scene.coordinateSpace.bounds
+            let backdrop = UIViewController(); backdrop.view.backgroundColor = .black
+            surround.rootViewController = backdrop; surround.windowLevel = UIWindow.Level(rawValue: 1); surround.isHidden = false
+            window.windowLevel = UIWindow.Level(rawValue: 2)
+            window.frame = CGRect(x: 0, y: 0, width: width, height: width == 320 ? 568 : 874)
+            var frames = [String: CGRect]()
+            let host = UIHostingController(rootView: RootView(reduceMotionOverride: false).environmentObject(model)
+                .environment(\.scenePhase, .active).environment(\.capyLayoutObserver, { frames[$0] = $1 }))
+            window.rootViewController = host; window.makeKeyAndVisible()
+            defer {
+                window.isHidden = true; window.rootViewController = nil
+                surround.isHidden = true; surround.rootViewController = nil; previous?.makeKeyAndVisible()
+                model.flushPendingSaves(); try? FileManager.default.removeItem(at: directory)
+            }
+            try await Task.sleep(nanoseconds: 650_000_000)
+            let board = try XCTUnwrap(grid(in: host.view)), boardFrame = try XCTUnwrap(frames["puzzle_board"])
+            let start = ProcessInfo.processInfo.systemUptime
+            for index in initial.puzzle.solution.suffix(2) {
+                XCTAssertTrue(board.activate(index: index, submit: true))
+                events.append(["level": level, "width": width, "source": index,
+                    "secondsFromSequenceStart": ProcessInfo.processInfo.systemUptime - start,
+                    "board": NSCoder.string(for: boardFrame), "found": model.session!.found.sorted()])
+                try await Task.sleep(nanoseconds: 120_000_000)
+            }
+            let won = try XCTUnwrap(model.session)
+            XCTAssertEqual(won.status, .won); XCTAssertEqual(won.found, Set(initial.puzzle.solution))
+            XCTAssertEqual(won.lives, initial.lives)
+            try await Task.sleep(nanoseconds: 650_000_000)
+            XCTAssertEqual(model.session, won); XCTAssertEqual(frames["puzzle_board"], boardFrame)
+        }
+        let data = try JSONSerialization.data(withJSONObject: ["events": events,
+            "boundary": "Actual Root/native board,120ms requested between final two finds. No screenshots within flight. Video review plus separate path geometry tests assess face clearance; this test alone asserts unchanged committed state, not pixels or touch latency."], options: [.prettyPrinted, .sortedKeys])
+        let a = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+        a.name = "flight-neighbour-sequence"; a.lifetime = .keepAlways; add(a)
+    }
+
     /// Natural playback for source-face visibility and rapid arrival review.
     /// No image readback during flight; simulator video captures the sequence.
     @MainActor func testActualRootProgressFlightAtNormalAndCompactSizes() async throws {

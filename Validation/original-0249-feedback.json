@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.49 (52)",
+  "date": "2026-10-02",
+  "status": "scoped_source_column_flight_verified_simulator_only",
+  "previousReport": "Validation/original-0248-feedback.json",
+  "previousGoalTurn": {
+    "classification": "progress",
+    "reason": "0.2.48 fixed cross-session reward presentation;65App/5UI passed and local commit136942f."
+  },
+  "sourceParagraphs": [
+    129,
+    136,
+    249,
+    253,
+    254
+  ],
+  "finding": "Previous quadratic flight protected only its source and text masks; it could cross another character. New live reference samples reinforce clear source-associated rewards. Production geometric comparison uses the identical full potential-face obstacle set for old/new paths.",
+  "changes": [
+    "Use two tangent-continuous cubic legs:rise within the source column, then turn above the board toward HUD. Legal one-character-per-column boards keep this corridor clear even if another character is found during flight.",
+    "Map progress through a bounded65point arc-length table so the two legs do not pause or jump at the join. Inputs are current cell/board/HUD geometry only, without reading the puzzle solution.",
+    "Share the board callback geometry with scores and forward real board bounds into production Flight. Reparent/resize, duplicate/hidden delivery and current model-state checks retain their existing contracts."
+  ],
+  "temporaryTuning": "Retain8–14pt star,0.44s arrival,0.58s cleanup, shrink/rotation and text protection. Source-column route shape/table resolution are Demo choices, not frozen Meowdoku timings.",
+  "verificationHistory": [
+    {
+      "status": "Passed",
+      "cases": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 10.544,
+      "scope": "Actual0.2.48 Root visual baseline:state assertions pass; this is not a pixel-clearance test.",
+      "summary": "Validation/test-runs/original-0249-flight-before-summary.json",
+      "log": "Validation/test-runs/original-0249-flight-before.log",
+      "bundle": "Validation/test-runs/original-0249-flight-before.xcresult"
+    },
+    {
+      "status": "Passed",
+      "cases": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 15.448,
+      "scope": "New-route candidate actual Root sequence passed before final geometry/anchor coverage and version bump.",
+      "summary": "Validation/test-runs/original-0249-flight-candidate-summary.json",
+      "log": "Validation/test-runs/original-0249-flight-candidate.log",
+      "bundle": "Validation/test-runs/original-0249-flight-candidate.xcresult"
+    }
+  ],
+  "applicationTests": {
+    "status": "Passed",
+    "cases": 106,
+    "passed": 106,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 142.959,
+    "scope": "17Pro/iOS26.5;11related flight/reward/board/HUD/Root/choreography suites, not full App/Core.",
+    "summary": "Validation/test-runs/original-0249-app-final-summary.json",
+    "log": "Validation/test-runs/original-0249-app-final.log",
+    "bundle": "Validation/test-runs/original-0249-app-final.xcresult"
+  },
+  "uiTests": {
+    "status": "Passed",
+    "cases": 4,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 152.876,
+    "scope": "17e/iOS26.5;native tap/double-tap/pan and tools, solve/advance, simulated revive, hint preview/Apply.",
+    "summary": "Validation/test-runs/original-0249-17e-ui-summary.json",
+    "log": "Validation/test-runs/original-0249-17e-ui.log",
+    "bundle": "Validation/test-runs/original-0249-17e-ui.xcresult"
+  },
+  "visualEvidence": "Docs/original-feel-0249/manifest.json",
+  "reference": {
+    "latestSuccessfulPlaytest": "Validation/meowdoku-playtest-comparison-0249.json",
+    "newSuccessfulPlaytestThisRound": true,
+    "equivalenceClaimed": false,
+    "implementationSummary": {
+      "status": "Nine observed directions each have Demo implementation; this is not reference-quality sign-off.",
+      "implementedDirections": [
+        "动态手势教学",
+        "角色待机/正确/错误表情",
+        "浮分/彩粒/飞星/鼓掌及顶部联动",
+        "错误原因与规则可视化",
+        "扣命与一命提醒",
+        "Combo及分层胜败演出",
+        "新盘错峰入场",
+        "提示与找答案反馈",
+        "签到点亮与实际到账演出"
+      ],
+      "audio": "9 local Debug-only reference WAVs remain an authorized testing experiment; no live audio or physical haptic A/B in this round.",
+      "qualityGaps": [
+        "角色动作自然度与整段节奏",
+        "密集浮分离源距离",
+        "真机声音/震动配合",
+        "正式参考和发布资源验收"
+      ],
+      "notReplicatedFromLatestPlaytest": [
+        "Reference horn-playing character pose",
+        "Every observed praise phrase",
+        "Automatic check-in interstitial during victory; current Demo check-in entry remains on home"
+      ]
+    }
+  },
+  "audio": {
+    "modified": false,
+    "localTestWAVCount": 9,
+    "currentDebugInventory": "Validation/audio-isolation-0249-debug.json",
+    "formalManifestClipsEmpty": true,
+    "liveAuditoryAB": false,
+    "releaseRebuilt": false
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  },
+  "remaining": [
+    "角色动作自然度、整段节奏、密集浮分最远3.762格和真机连续音画/触觉A/B仍待打磨或评估；不声称参考品质验收。",
+    "新飞星避脸保证限定合法棋盘和有效布局；兼容fallback、全部屏幕/低端设备及逐帧像素未穷尽。",
+    "结算装饰仍可短暂淡出覆盖目的页；所有弹窗/后台中断组合未穷尽。",
+    "手机仍0.2.29；最低系统、冻结参考和正式上架验收未完成。"
+  ],
+  "formalSignOff": false,
+  "formalConformanceRowsUnchanged": 83,
+  "historicalChecklistCountUnchanged": 88,
+  "routeGeometry": {
+    "routeCount": 7116,
+    "pointsPerRoute": 481,
+    "minimumClearance": 0.25846502450965936,
+    "legacyCollisionPathsUnderSameObstacles": 2765,
+    "currentCollisionPaths": 0,
+    "medianLengthRatio": 1.0101683890855573,
+    "p95LengthRatio": 1.1417741086672972,
+    "maxLengthRatio": 1.1863830114040814,
+    "boundary": "Production Flight.position on the current150-level pack, translated190/320/374pt geometry and two HUD directions. All possible found faces include pop/celebration bounds; source uses its full cell. Legacy collision count uses the same481 progress samples and constant maximum rotating radius+1pt glow against the identical obstacles, not previously-found prefixes. Finite geometry samples and equal path progress do not prove actual composited pixels, elapsed-time speed, frame rate, or physical touch latency."
+  }
+}

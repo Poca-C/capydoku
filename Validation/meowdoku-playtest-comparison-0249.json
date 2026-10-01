@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-02",
+  "capydokuBaseline": "0.2.48 (51)",
+  "reference": {
+    "name": "Meowdoku",
+    "version": "1.19.1 (457)",
+    "versionEvidence": "Read installed official app wrapper Info.plist after this playtest",
+    "surface": "Installed iOS app on Mac, live CUA native screenshots and double-clicks"
+  },
+  "completed": [
+    "Opened the app and selected its running wrapper window after duplicate app identifiers prevented initial binding",
+    "Observed restored level4:6x6 board,2found,576score,two available life fish and one wrong mark",
+    "Four correct double-clicks:R3C3,R4C5,R5C2,R6C4",
+    "Observed the completed happy board, an automatic daily-check-in page showing current/best2, then pressed Continue",
+    "Observed a horn-playing victory character and the level5 action; left at victory"
+  ],
+  "observations": [
+    {
+      "id": "R0249-01",
+      "seen": "Each sampled correct shows a happy expression and small heart at the accepted cell, with bright sparkles and region-colored fragments around it. Floating576/672/768/864 sits near the source rather than far across the board.",
+      "decision": "Keep the accepted character readable and its local acknowledgement associated with that cell. Inspect existing Capydoku reward travel before adding more effects."
+    },
+    {
+      "id": "R0249-02",
+      "seen": "The sequence showed Calm Paws!, Clever Streak!, Nice, then Great. A nearby thumb/clapping decoration appeared in some sampled frames.",
+      "boundary": "Observed text and increments do not define frozen scoring thresholds or authorize replacing the original configuration. No scoring values changed."
+    },
+    {
+      "id": "R0249-03",
+      "seen": "The final board shows smiling cats with hearts. After the check-in page, victory shows a large cat with a party horn, rays and confetti. Two later screenshots show different face/arm/body poses, followed by explanatory copy and the level5 action.",
+      "boundary": "Snapshots do not prove animation duration, interpolation technology, exact button availability timing or frame rate. Capydoku retains original art and immediately usable actions."
+    }
+  ],
+  "implementationFollowUp": "Validation/original-0249-feedback.json",
+  "screenshotsEvidence": "Native CUA tool images in this task; no local reference screenshot files exported",
+  "newSuccessfulPlaytestThisRound": true,
+  "audioListening": false,
+  "formalScopeChanged": false,
+  "notVerified": [
+    "Audible A/B or physical haptics",
+    "Reference per-frame timing or full late-game behavior",
+    "Frozen formal reference and release asset rights deliverables"
+  ]
+}

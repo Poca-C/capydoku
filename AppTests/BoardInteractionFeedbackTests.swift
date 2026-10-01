@@ -51,7 +51,7 @@ import CapydokuCore
             }, onMark: { [weak self] indices in
                 guard let self else { return }; actions += 1
                 session.markMany(indices); refresh()
-            }, onFoundFeedback: { [weak self] index, cellFrame in self?.arrivals.append((index, cellFrame)) })
+            }, onFoundFeedback: { [weak self] index, anchor in self?.arrivals.append((index, anchor.cellFrame)) })
     }
 
     func cellFrame(_ index: Int) throws -> CGRect {

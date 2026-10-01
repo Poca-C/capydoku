@@ -54,8 +54,9 @@ final class FeedbackWindowFrameView: UIView {
         let origin: CGPoint
         let destination: CGPoint
         let diameter: CGFloat
+        private let columnRoute: ColumnRoute?
 
-        init(origin: CGPoint, destination: CGPoint, sourceCell: CGRect? = nil) {
+        init(origin: CGPoint, destination: CGPoint, sourceCell: CGRect? = nil, boardFrame: CGRect? = nil) {
             self.destination = destination
             if let cell = sourceCell, !cell.isEmpty,
                [cell.minX, cell.minY, cell.width, cell.height].allSatisfy(\.isFinite) {
@@ -68,14 +69,74 @@ final class FeedbackWindowFrameView: UIView {
             } else {
                 self.origin = origin; diameter = 14
             }
+            if let cell = sourceCell, let board = boardFrame {
+                columnRoute = ColumnRoute(origin: self.origin, destination: destination,
+                                          source: cell, board: board, diameter: diameter)
+            } else { columnRoute = nil }
         }
 
         func position(at progress: CGFloat) -> CGPoint {
+            if let columnRoute { return columnRoute.position(at: progress) }
             let t = min(1, max(0, progress)), u = 1 - t
             let control = CGPoint(x: origin.x + (destination.x - origin.x) * 0.28,
                                   y: min(origin.y, destination.y) - 30)
             return CGPoint(x: u * u * origin.x + 2 * u * t * control.x + t * t * destination.x,
                            y: u * u * origin.y + 2 * u * t * control.y + t * t * destination.y)
+        }
+
+        /// One character per column makes this corridor safe for both current
+        /// and later finds. It uses layout only, never hidden solution cells.
+        private struct ColumnRoute {
+            let points: [CGPoint]
+            let distances: [CGFloat]
+
+            init?(origin: CGPoint, destination: CGPoint, source: CGRect, board: CGRect, diameter: CGFloat) {
+                guard [origin.x, origin.y, destination.x, destination.y,
+                       source.minX, source.minY, source.width, source.height,
+                       board.minX, board.minY, board.width, board.height].allSatisfy(\.isFinite),
+                      !source.isEmpty, !board.isEmpty, board.insetBy(dx: -0.001, dy: -0.001).contains(source) else { return nil }
+                let radius = diameter * sqrt(2) / 2
+                let exit = CGPoint(x: source.midX, y: board.minY - radius - 3 - max(8, source.width * 0.28))
+                let rise = origin.y - exit.y, headroom = exit.y - destination.y
+                guard rise > 0, headroom > 0 else { return nil }
+                let first = [origin, CGPoint(x: origin.x, y: origin.y - rise * 0.35),
+                             CGPoint(x: source.midX, y: exit.y + rise * 0.35), exit]
+                let second = [exit, CGPoint(x: source.midX, y: exit.y - min(36, headroom * 0.42)),
+                              CGPoint(x: destination.x, y: destination.y + min(18, headroom * 0.25)), destination]
+                func point(_ control: [CGPoint], _ t: CGFloat) -> CGPoint {
+                    let u = 1 - t
+                    return CGPoint(x: u*u*u*control[0].x + 3*u*u*t*control[1].x + 3*u*t*t*control[2].x + t*t*t*control[3].x,
+                                   y: u*u*u*control[0].y + 3*u*u*t*control[1].y + 3*u*t*t*control[2].y + t*t*t*control[3].y)
+                }
+                let path = (0...32).map { point(first, CGFloat($0) / 32) }
+                    + (1...32).map { point(second, CGFloat($0) / 32) }
+                var lengths: [CGFloat] = [0]
+                for index in 1..<path.count {
+                    lengths.append(lengths[index - 1] + hypot(path[index].x - path[index - 1].x,
+                                                               path[index].y - path[index - 1].y))
+                }
+                guard let length = lengths.last, length.isFinite, length > 0 else { return nil }
+                points = path; distances = lengths
+            }
+
+            func position(at progress: CGFloat) -> CGPoint {
+                let t = min(1, max(0, progress))
+                if t == 0 { return points[0] }
+                if t == 1 { return points[points.count - 1] }
+                let target = t * distances[distances.count - 1]
+                var lower = 1, upper = distances.count - 1
+                while lower < upper {
+                    let middle = (lower + upper) / 2
+                    if distances[middle] < target { lower = middle + 1 } else { upper = middle }
+                }
+                let before = points[lower - 1], after = points[lower]
+                let span = distances[lower] - distances[lower - 1]
+                let fraction = span > 0 ? (target - distances[lower - 1]) / span : 0
+                // Arc-length interpolation keeps the two tangent-continuous
+                // curves from pausing or jumping at their shared exit point.
+                return CGPoint(x: before.x + (after.x - before.x) * fraction,
+                               y: before.y + (after.y - before.y) * fraction)
+            }
         }
     }
     struct LocalScore: Identifiable {
@@ -141,7 +202,7 @@ final class FeedbackWindowFrameView: UIView {
         }
     }
 
-    func found(index: Int, sessionID: UUID, origin: CGPoint, destination: CGPoint, sourceCell: CGRect? = nil, reduceMotion: Bool) {
+    func found(index: Int, sessionID: UUID, origin: CGPoint, destination: CGPoint, sourceCell: CGRect? = nil, boardFrame: CGRect? = nil, reduceMotion: Bool) {
         guard self.sessionID == sessionID, acknowledged.insert(index).inserted, presentationEnabled else { return }
         let token = generation
         let event = UUID(); applauseID = event
@@ -153,7 +214,7 @@ final class FeedbackWindowFrameView: UIView {
             pulseProgress()
             return
         }
-        let flight = Flight(origin: origin, destination: destination, sourceCell: sourceCell)
+        let flight = Flight(origin: origin, destination: destination, sourceCell: sourceCell, boardFrame: boardFrame)
         flights = Array((flights + [flight]).suffix(4))
         schedule(0.44) { [weak self] in
             guard let self, self.generation == token,

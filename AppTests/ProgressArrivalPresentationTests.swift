@@ -41,7 +41,7 @@ final class ProgressArrivalPresentationTests: XCTestCase {
                     for targetX in [board.minX + 28, board.maxX - 28] {
                         let destination = CGPoint(x: targetX, y: board.minY - 96)
                         let flight = GameRewardPresentation.Flight(origin: cellCentre,
-                            destination: destination, sourceCell: source)
+                            destination: destination, sourceCell: source, boardFrame: grid)
                         let context = "board \(boardWidth), \(size)×\(size), cell \(row)/\(column), target \(targetX)"
                         XCTAssertGreaterThanOrEqual(flight.diameter, 8, context)
                         XCTAssertLessThanOrEqual(flight.diameter, 14, context)
@@ -74,6 +74,141 @@ final class ProgressArrivalPresentationTests: XCTestCase {
             }
         }
         XCTAssertEqual(checkedFlights, 378)
+    }
+
+    @MainActor func testCurrent150LevelFlightsClearEveryPossibleFoundFaceWithContinuousBoundedRoutes() throws {
+        let url = try XCTUnwrap(Bundle.main.url(forResource: "levels", withExtension: "json"))
+        let puzzles = try JSONDecoder().decode([Puzzle].self, from: Data(contentsOf: url))
+        XCTAssertEqual(puzzles.count, 150)
+        let steps = 480
+        var checked = 0, minimumClearance = CGFloat.infinity, maximumStepRatio: CGFloat = 0
+        var minimumStepRatio = CGFloat.infinity, minimumTurnCosine: CGFloat = 1
+        var diagnostics = [[String: Any]](), lengthRatios = [Double]()
+        var legacyCollisionPaths = 0, legacyExamples = [[String: Any]]()
+        func clearance(_ point: CGPoint, from rect: CGRect, radius: CGFloat) -> CGFloat {
+            let x = min(rect.maxX, max(rect.minX, point.x))
+            let y = min(rect.maxY, max(rect.minY, point.y))
+            return hypot(point.x - x, point.y - y) - radius
+        }
+        for hostWidth: CGFloat in [190, 320, 374] {
+            let hostBoard = CGRect(x: 23.25, y: 241.75, width: hostWidth, height: hostWidth)
+            let grid = hostBoard.insetBy(dx: 7, dy: 7)
+            for puzzle in puzzles {
+                let side = grid.width / CGFloat(puzzle.size)
+                let gap = max(1.1, min(2, side * 0.028))
+                func cell(_ index: Int) -> CGRect {
+                    CGRect(x: grid.minX + CGFloat(index % puzzle.size) * side,
+                           y: grid.minY + CGFloat(index / puzzle.size) * side,
+                           width: side, height: side)
+                }
+                for index in puzzle.solution {
+                    let source = cell(index)
+                    // The entire solution is only a test obstacle set: these
+                    // include animals the player might find during this flight.
+                    // Production receives source/board/target geometry, no answer.
+                    let otherFaces = puzzle.solution.filter { $0 != index }.map { other -> CGRect in
+                        let tile = cell(other).insetBy(dx: gap, dy: gap)
+                        let face = tile.insetBy(dx: tile.width * 0.07, dy: tile.height * 0.07)
+                        let pop = face.insetBy(dx: -face.width * 0.07, dy: -face.height * 0.07)
+                        let victory = face.insetBy(dx: -face.width * 0.035, dy: -face.height * 0.035)
+                            .offsetBy(dx: 0, dy: -min(3.2, face.height * 0.045))
+                        return pop.union(victory)
+                    }
+                    for targetX in [hostBoard.minX + 28, hostBoard.maxX - 28] {
+                        let destination = CGPoint(x: targetX, y: hostBoard.minY - 96)
+                        let flight = GameRewardPresentation.Flight(origin: CGPoint(x: source.midX, y: source.midY),
+                            destination: destination, sourceCell: source, boardFrame: grid)
+                        let context = "L\(puzzle.id), host\(hostWidth), source\(index), targetX\(targetX)"
+                        let points = (0...steps).map { flight.position(at: CGFloat($0) / CGFloat(steps)) }
+                        XCTAssertTrue(points.allSatisfy { $0.x.isFinite && $0.y.isFinite }, context)
+                        XCTAssertEqual(points[0].x, flight.origin.x, accuracy: 0.000001, context)
+                        XCTAssertEqual(points[0].y, flight.origin.y, accuracy: 0.000001, context)
+                        XCTAssertEqual(points[steps].x, destination.x, accuracy: 0.000001, context)
+                        XCTAssertEqual(points[steps].y, destination.y, accuracy: 0.000001, context)
+                        // Constant maximum radius +1pt glow is stricter than
+                        // the real sprite, which shrinks throughout its flight.
+                        let radius = flight.diameter * sqrt(2) / 2 + 1
+                        var routeClearance = CGFloat.infinity
+                        for point in points {
+                            routeClearance = min(routeClearance, clearance(point, from: source, radius: radius))
+                            for face in otherFaces {
+                                routeClearance = min(routeClearance, clearance(point, from: face, radius: radius))
+                            }
+                        }
+                        XCTAssertGreaterThan(routeClearance, 0, "Source or possible found face crossed: " + context)
+                        minimumClearance = min(minimumClearance, routeClearance)
+                        var distances = [CGFloat](), vectors = [CGVector]()
+                        for offset in 1..<points.count {
+                            let dx = points[offset].x - points[offset - 1].x
+                            let dy = points[offset].y - points[offset - 1].y
+                            distances.append(hypot(dx, dy)); vectors.append(CGVector(dx: dx, dy: dy))
+                        }
+                        let length = distances.reduce(0, +), meanStep = length / CGFloat(steps)
+                        let smallStep = try XCTUnwrap(distances.min()) / meanStep
+                        let largeStep = try XCTUnwrap(distances.max()) / meanStep
+                        XCTAssertGreaterThan(smallStep, 0.8, "An equal-progress sample must not stall at the route join: " + context)
+                        XCTAssertLessThan(largeStep, 1.15, "An equal-progress sample must not jump at the route join: " + context)
+                        minimumStepRatio = min(minimumStepRatio, smallStep)
+                        maximumStepRatio = max(maximumStepRatio, largeStep)
+                        var turnCosine: CGFloat = 1
+                        for offset in 1..<vectors.count {
+                            let a = vectors[offset - 1], b = vectors[offset]
+                            let denominator = distances[offset - 1] * distances[offset]
+                            if denominator > 0 {
+                                turnCosine = min(turnCosine, (a.dx * b.dx + a.dy * b.dy) / denominator)
+                            }
+                        }
+                        XCTAssertGreaterThan(turnCosine, 0.8, "The two segments must not form a sharp corner or reversal: " + context)
+                        minimumTurnCosine = min(minimumTurnCosine, turnCosine)
+                        // Compare to the documented pre-0249 quadratic, solely
+                        // as a route-length diagnostic and generous detour cap.
+                        let control = CGPoint(x: flight.origin.x + (destination.x - flight.origin.x) * 0.28,
+                                              y: min(flight.origin.y, destination.y) - 30)
+                        var oldLength: CGFloat = 0, previous = flight.origin
+                        var legacyCrossedFace = clearance(flight.origin, from: source, radius: radius) <= 0
+                            || otherFaces.contains { clearance(flight.origin, from: $0, radius: radius) <= 0 }
+                        for offset in 1...steps {
+                            let t = CGFloat(offset) / CGFloat(steps), u = 1 - t
+                            let point = CGPoint(x: u*u*flight.origin.x + 2*u*t*control.x + t*t*destination.x,
+                                                y: u*u*flight.origin.y + 2*u*t*control.y + t*t*destination.y)
+                            oldLength += hypot(point.x - previous.x, point.y - previous.y); previous = point
+                            if !legacyCrossedFace {
+                                legacyCrossedFace = clearance(point, from: source, radius: radius) <= 0
+                                    || otherFaces.contains { clearance(point, from: $0, radius: radius) <= 0 }
+                            }
+                        }
+                        if legacyCrossedFace {
+                            legacyCollisionPaths += 1
+                            if legacyExamples.count < 5 {
+                                legacyExamples.append(["level": puzzle.id, "hostWidth": Double(hostWidth),
+                                    "source": index, "destinationX": Double(targetX)])
+                            }
+                        }
+                        let ratio = Double(length / oldLength)
+                        XCTAssertLessThan(ratio, 1.3, "A protected route must not make an excessive detour: " + context)
+                        lengthRatios.append(ratio)
+                        diagnostics.append(["level": puzzle.id, "hostWidth": Double(hostWidth), "source": index,
+                            "destinationX": Double(targetX), "newLength": Double(length), "oldLength": Double(oldLength),
+                            "lengthRatio": ratio, "clearance": Double(routeClearance)])
+                        checked += 1
+                    }
+                }
+            }
+        }
+        XCTAssertEqual(checked, 7116)
+        lengthRatios.sort()
+        let worst = diagnostics.sorted { ($0["lengthRatio"] as? Double ?? 0) > ($1["lengthRatio"] as? Double ?? 0) }
+        let data = try JSONSerialization.data(withJSONObject: ["routeCount": checked, "pointsPerRoute": steps + 1,
+            "minimumClearance": Double(minimumClearance), "minimumStepRatio": Double(minimumStepRatio),
+            "maximumStepRatio": Double(maximumStepRatio), "minimumTurnCosine": Double(minimumTurnCosine),
+            "medianLengthRatio": lengthRatios[lengthRatios.count / 2],
+            "p95LengthRatio": lengthRatios[Int(Double(lengthRatios.count) * 0.95)],
+            "legacyCollisionPathsUnderSameObstacles": legacyCollisionPaths,
+            "legacyCollisionExamples": legacyExamples,
+            "worstLengthRatios": Array(worst.prefix(5)),
+            "boundary": "Production Flight.position on the current150-level pack, translated190/320/374pt geometry and two HUD directions. All possible found faces include pop/celebration bounds; source uses its full cell. Legacy collision count uses the same481 progress samples and constant maximum rotating radius+1pt glow against the identical obstacles, not previously-found prefixes. Finite geometry samples and equal path progress do not prove actual composited pixels, elapsed-time speed, frame rate, or physical touch latency."], options: [.prettyPrinted, .sortedKeys])
+        let attachment = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+        attachment.name = "current-pack-flight-route-geometry"; attachment.lifetime = .keepAlways; add(attachment)
     }
 
     @MainActor func testFlightWithoutSourceKeepsItsOriginalEndpointsAndVisibleFallbackSize() {

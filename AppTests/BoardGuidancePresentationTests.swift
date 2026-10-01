@@ -20,7 +20,8 @@ import CapydokuCore
     var reduceMotion = false
     var effectsEnabled = true
     var callbacks = [[VisibleConflictKind]]()
-    var scores = [(Int, BoardScoreAnchor)]()
+    var scores = [(Int, BoardFeedbackAnchor)]()
+    var foundAnchors = [(Int, BoardFeedbackAnchor)]()
 
     init(session: GameSession? = nil, idleBlinkScheduler: ((TimeInterval, DispatchWorkItem) -> Void)? = nil) throws {
         self.session = session ?? GameSession(puzzle: Self.puzzle)
@@ -45,7 +46,8 @@ import CapydokuCore
                 guard let self else { return }; _ = session.submit(cell: index); refresh()
             }, onMark: { [weak self] cells in
                 guard let self else { return }; session.markMany(cells); refresh()
-            }, onConflictFeedback: { [weak self] kinds in self?.callbacks.append(kinds) },
+            }, onFoundFeedback: { [weak self] index, anchor in self?.foundAnchors.append((index, anchor)) },
+            onConflictFeedback: { [weak self] kinds in self?.callbacks.append(kinds) },
             onScoreFeedback: { [weak self] delta, anchor in self?.scores.append((delta, anchor)) })
     }
     var guides: [BoardTutorialGuideView] { board.subviews.flatMap(\.subviews).compactMap { $0 as? BoardTutorialGuideView } }
@@ -350,7 +352,7 @@ final class BoardGuidancePresentationTests: XCTestCase {
 
     @MainActor func testScoreUsesActualCommittedIncreaseOnceAndCoalescedMovesReportOneTotal() throws {
         let rig = try GuidanceRig(); defer { rig.close() }
-        func assertAnchor(_ anchor: BoardScoreAnchor, for index: Int) throws {
+        func assertAnchor(_ anchor: BoardFeedbackAnchor, for index: Int) throws {
             let elements = try XCTUnwrap(rig.board.accessibilityElements as? [UIAccessibilityElement])
             let localCells = elements.map(\.accessibilityFrameInContainerSpace)
             let measuredCell = rig.board.convert(localCells[index], to: rig.window)
@@ -384,6 +386,8 @@ final class BoardGuidancePresentationTests: XCTestCase {
         rig.board.activate(index: 1, submit: true)
         XCTAssertEqual(rig.scores.count, 1); XCTAssertEqual(rig.scores[0].0, rig.session.score - before)
         try assertAnchor(rig.scores[0].1, for: 1)
+        XCTAssertEqual(rig.foundAnchors.map(\.0), [1])
+        try assertAnchor(rig.foundAnchors[0].1, for: 1)
         rig.refresh(); XCTAssertEqual(rig.scores.count, 1)
         // Reparent and resize before a second real callback so a stale frame,
         // unconverted local rect or square-host assumption cannot pass unnoticed.
@@ -396,10 +400,14 @@ final class BoardGuidancePresentationTests: XCTestCase {
         _ = rig.session.submit(cell: 7); _ = rig.session.submit(cell: 8); rig.refresh()
         XCTAssertEqual(rig.scores.count, 2); XCTAssertEqual(rig.scores[1].0, rig.session.score - beforeCombined)
         try assertAnchor(rig.scores[1].1, for: 8)
+        XCTAssertEqual(rig.foundAnchors.map(\.0), [1, 7, 8])
+        try assertAnchor(rig.foundAnchors[1].1, for: 7)
+        try assertAnchor(rig.foundAnchors[2].1, for: 8)
         rig.session = GameSession(puzzle: GuidanceRig.puzzle); rig.refresh()
         XCTAssertEqual(rig.scores.count, 2)
         rig.effectsEnabled = false; _ = rig.session.submit(cell: 1); rig.refresh()
         rig.effectsEnabled = true; rig.refresh(); XCTAssertEqual(rig.scores.count, 2)
+        XCTAssertEqual(rig.foundAnchors.count, 3, "Restoration and hidden finds cannot schedule a deferred flight.")
     }
 
     @MainActor func testActualHostSamplesTutorialMotionConflictExplanationAndSettledCleanup() async throws {
