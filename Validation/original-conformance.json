@@ -31,7 +31,8 @@
     "0.2.22以原文要求完善视觉与触感，319项App、4项真实UI及7张实际宿主图仅证明所述范围；Meowdoku商店地区不可用，未安装试玩，第三方录像不是冻结Pawdoku基线。原音、真机手感、系统Reduce Motion和性能仍待验。",
     "0.2.23仅细化格内X撤销、4星点光晕、错误短抖与红X描边；17 Pro/iOS26.5最终327项App、17e两项UI与11张组件图只验证所述范围，核心169项保持0.2.21证据。真机新包签名检查通过但无线不可用，未更新，仍为0.2.22。Meowdoku地区限制解除且已安装1.19.1（457），停Welcome条款页待用户明确确认，未亲自试玩或听音；不替代冻结Pawdoku参考。",
     "随后在用户明确确认后重新打开Meowdoku 1.19.1（457），直接进入教学；完成教学及前两关，并采样第3关三类冲突、失败重开、提示Apply和直接答案。新增的是实际画面观察与建议，不是正式Pawdoku冻结参数；声音、手机触感、精确帧时序未验。详见Validation/meowdoku-playtest-comparison-0223.json。",
-    "0.2.24补可见冲突解释、动态手指教学、原创四表情、局部分数与生命HUD，177项Core和最终358项App通过，均0失败；17e四个不同UI用例通过，命令误含两个测试动作而重复一轮仍只计4项。当前包L1教学以外三项UI使用既有固定夹具；11张实测图仅3张为当前包第6关实际Root，其余为组件/合成棋盘。Meowdoku本机画面试玩只作改进参考，不替代冻结Pawdoku参数；新时序和表情仍属Demo。0.2.24（27）已严格验签、无线安装并正常启动，安装前后8份已观察文件一致，120条历史事件与身份保留；启动后有新游戏事件，不声称启动后完整状态不变或全面真机体验验收。原音频、系统减少动态效果、低性能设备和上架仍待验。"
+    "0.2.24补可见冲突解释、动态手指教学、原创四表情、局部分数与生命HUD，177项Core和最终358项App通过，均0失败；17e四个不同UI用例通过，命令误含两个测试动作而重复一轮仍只计4项。当前包L1教学以外三项UI使用既有固定夹具；11张实测图仅3张为当前包第6关实际Root，其余为组件/合成棋盘。Meowdoku本机画面试玩只作改进参考，不替代冻结Pawdoku参数；新时序和表情仍属Demo。0.2.24（27）已严格验签、无线安装并正常启动，安装前后8份已观察文件一致，120条历史事件与身份保留；启动后有新游戏事件，不声称启动后完整状态不变或全面真机体验验收。原音频、系统减少动态效果、低性能设备和上架仍待验。",
+    "0.2.25补新盘入场、整盘庆祝、两种胜利与一种失败角色演出、三档Combo及真实道具确认，FEEL-05／FEEL-06为Demo实现完成。17 Pro / iOS 26.5 全量391项App一次通过，0失败、0跳过，含33项新增，耗时139.158秒；17e四项UI通过，0失败、0跳过，耗时146.975秒，无重复测试动作；教学使用当前包L1，另外三项为既有固定夹具。14张图已逐张目视通过：4张为当前包第6关实际Root页面，1张为中英Combo组件，4张为结果角色组件／宿主，5张为合成4×4棋盘。0.2.25（28）已由设备查询确认，经局域网保留数据覆盖安装并无参数正常启动；安装前后8份已观察文件逐字节一致，主/备存档校验有效。启动后完整状态一致未作结论，物理手势、触觉及完整真机试玩仍待验。177项Core保持0.2.24证据；参数仍属Demo，原音频清单为空、临时原创音效许可未收到，正式参考、系统减少动态效果、低性能设备与真机手感未验收。"
   ],
   "priorityClientFollowUps": [
     {
@@ -369,7 +370,7 @@
       ],
       "title": "单击撤销、双击优先、轴向滑动、无自动 X",
       "status": "implemented",
-      "implemented": "UIKit 棋盘手势层及 GameSession 已实现；错误 X 已改为可手动撤销。 0.2.13重新用实际UIKit识别器执行单击/双击/横纵滑动/斜滑/划出棋盘，随后免费提示与零库存模拟广告入口均正常；现行包九步教学亦重验。 0.2.14按[133]修正转弯投影：离开起始行/列立即终止本次新增X，回到原线不重启，既有合法标记保留；已确认动物不能作为滑动起点。 0.2.22补即时接触高亮和X出现/撤销反馈，复用原三个识别器，不修改Core。7项棋盘反馈测试与17e实际手势后道具恢复通过；当前包L1九步教学重验。 0.2.23将X撤销改为逆向逐笔收回，实际Core提交与手势识别不变；17e真实手势后道具恢复通过，最终327项App回归通过。 0.2.24展示层新增教学手指、可见冲突解释与角色反应，保持原手势识别和立即提交；撤销错误标记清除对应解释、同伴表情和规则高亮，装饰不截获触摸。",
+      "implemented": "UIKit 棋盘手势层及 GameSession 已实现；错误 X 已改为可手动撤销。 0.2.13重新用实际UIKit识别器执行单击/双击/横纵滑动/斜滑/划出棋盘，随后免费提示与零库存模拟广告入口均正常；现行包九步教学亦重验。 0.2.14按[133]修正转弯投影：离开起始行/列立即终止本次新增X，回到原线不重启，既有合法标记保留；已确认动物不能作为滑动起点。 0.2.22补即时接触高亮和X出现/撤销反馈，复用原三个识别器，不修改Core。7项棋盘反馈测试与17e实际手势后道具恢复通过；当前包L1九步教学重验。 0.2.23将X撤销改为逆向逐笔收回，实际Core提交与手势识别不变；17e真实手势后道具恢复通过，最终327项App回归通过。 0.2.24展示层新增教学手指、可见冲突解释与角色反应，保持原手势识别和立即提交；撤销错误标记清除对应解释、同伴表情和规则高亮，装饰不截获触摸。 0.2.25新盘入场仅为装饰，首次接触及可访问性激活即撤除，保留现有三个手势识别器和即时提交；7项新棋盘场景测试纳入最终391项App回归并通过。",
       "gap": "新增手势保护及后续道具流程的实际范围见本轮记录；真实多指同时操作、低版本及真机手感仍待验，不将档案棋盘手势fixture当当前全关卡试玩。",
       "evidence": [
         "App/Views/PuzzleBoardView.swift",
@@ -384,7 +385,12 @@
         "AppTests/BoardCellPresentationTests.swift",
         "AppTests/BoardGuidancePresentationTests.swift",
         "Validation/original-0224-feedback.json",
-        "Docs/original-feel-0224/manifest.json"
+        "Docs/original-feel-0224/manifest.json",
+        "Validation/original-0225-feedback.json",
+        "Docs/original-feel-0225/manifest.json",
+        "Validation/checklist-0225-feedback-delta.json",
+        "App/Views/BoardSceneFeedbackView.swift",
+        "AppTests/BoardSceneFeedbackTests.swift"
       ]
     },
     {
@@ -432,13 +438,18 @@
       ],
       "title": "放大镜/灯泡、红数字与绿色视频角标",
       "status": "implemented",
-      "implemented": "工具保持左找答案、右提示，圆按钮及角标，direct 使用头像放大镜。",
+      "implemented": "工具保持左找答案、右提示，圆按钮及角标，direct 使用头像放大镜。 0.2.25直接找答案／提示按钮增加按下反馈，直接工具另有成功飞镜及落格确认；坐标来自实际已找到格回调。",
       "gap": "实际显示节点和视觉节奏须冻结比对；禁用广告后的零库存状态需最终配置场景检查。",
       "evidence": [
         "App/Views/RootView.swift",
         "Reference/Original/image4.jpeg",
         "Reference/Original/image6.jpeg",
-        "Reference/Original/image7.jpeg"
+        "Reference/Original/image7.jpeg",
+        "Validation/original-0225-feedback.json",
+        "Docs/original-feel-0225/manifest.json",
+        "Validation/checklist-0225-feedback-delta.json",
+        "App/Views/ComboCelebrationView.swift",
+        "App/Views/DirectToolRevealView.swift"
       ]
     },
     {
@@ -453,7 +464,7 @@
       ],
       "title": "直接找答案与道具操作幂等",
       "status": "verified",
-      "implemented": "随机揭示未找到答案、计分、不扣生命、不自动 X；消费及奖励重复回调保护存在。 0.2.9 direct扣次、揭示、分数和使用记录原子保存，最后一步通关同事务；写失败不发布成功效果，重复回调不重复执行。 0.2.13新增原文[97]的未完成手势保护：单/双击识别等待和持续滑动期间不发起道具或广告；当前操作继续，识别器结束后放行。",
+      "implemented": "随机揭示未找到答案、计分、不扣生命、不自动 X；消费及奖励重复回调保护存在。 0.2.9 direct扣次、揭示、分数和使用记录原子保存，最后一步通关同事务；写失败不发布成功效果，重复回调不重复执行。 0.2.13新增原文[97]的未完成手势保护：单/双击识别等待和持续滑动期间不发起道具或广告；当前操作继续，识别器结束后放行。 0.2.25库存及模拟奖励的direct成功事务发布临时确认事件，保存失败不发布，重复/隐藏/恢复事件不补播；飞镜只匹配实际session与落格，业务扣次与揭示不等待演出。",
       "gap": "正式道具参数及真机压力仍待验；本轮本地库存与模拟奖励、故障恢复路径通过。",
       "evidence": [
         "Sources/CapydokuCore/GameSession.swift",
@@ -465,7 +476,13 @@
         "Validation/original-verification.json",
         "App/Services/BoardInputActivity.swift",
         "AppTests/BoardInputActivityTests.swift",
-        "AppTests/BoardInputRewardGateTests.swift"
+        "AppTests/BoardInputRewardGateTests.swift",
+        "Validation/original-0225-feedback.json",
+        "Docs/original-feel-0225/manifest.json",
+        "Validation/checklist-0225-feedback-delta.json",
+        "App/Views/DirectToolRevealView.swift",
+        "App/Views/GameRewardPresentation.swift",
+        "AppTests/SceneFeedbackEventTests.swift"
       ]
     },
     {
@@ -538,16 +555,25 @@
       "id": "PLAY-10",
       "section": "2.3",
       "sourceParagraphs": [
+        105,
         106,
         110
       ],
       "title": "胜利判定、锁输入、结算与随机标语",
       "status": "partial",
-      "implemented": "全部找到且生命为正即胜利，显示角色和下一关；存在无失误反馈。",
+      "implemented": "全部找到且生命为正即胜利，显示角色和下一关；存在无失误反馈。 0.2.25真实找齐后增加0.78秒整盘庆祝，结果角色提供两种有限胜利演出；胜利装饰约0.82秒后进入，下一关按钮立即可用。首次加载已完成存档与旧事件不重播，正式标语库和排名口径仍未定义。",
       "gap": "正式随机标语库、击败玩家比例/Rank 口径与分数规则缺冻结资料，不能编造统计。",
       "evidence": [
         "Sources/CapydokuCore/GameSession.swift",
-        "App/Views/RootView.swift"
+        "App/Views/RootView.swift",
+        "Validation/original-0225-feedback.json",
+        "Docs/original-feel-0225/manifest.json",
+        "Validation/checklist-0225-feedback-delta.json",
+        "App/Views/BoardSceneFeedbackView.swift",
+        "App/Views/ResultCharacterView.swift",
+        "AppTests/BoardSceneFeedbackTests.swift",
+        "AppTests/ResultCharacterTests.swift",
+        "AppTests/CompletionFeedbackTests.swift"
       ]
     },
     {
@@ -561,12 +587,18 @@
       ],
       "title": "失败、复活与重试",
       "status": "partial",
-      "implemented": "生命耗尽失败；复活保留棋盘/红X/分数。失败标题/按钮/可关闭状态已接配置；免费复活优先消耗配额。",
+      "implemented": "生命耗尽失败；复活保留棋盘/红X/分数。失败标题/按钮/可关闭状态已接配置；免费复活优先消耗配额。 0.2.25失败结算增加有限失落角色演出；0.60秒只用于装饰，复活和重开动作立即可用；遮挡、后台和旧结果不重播。",
       "gap": "真实失败流程仍待基线；restartCreatesNewBoard尚不支持全路径，不能静默假称新棋盘策略已完成。",
       "evidence": [
         "Sources/CapydokuCore/GameSession.swift",
         "App/Views/RootView.swift",
-        "App/AppModel.swift"
+        "App/AppModel.swift",
+        "Validation/original-0225-feedback.json",
+        "Docs/original-feel-0225/manifest.json",
+        "Validation/checklist-0225-feedback-delta.json",
+        "App/Views/ResultCharacterView.swift",
+        "AppTests/ResultCharacterTests.swift",
+        "AppTests/CompletionFeedbackTests.swift"
       ]
     },
     {
@@ -595,8 +627,8 @@
       ],
       "title": "正确/错误的非纯颜色反馈",
       "status": "partial",
-      "implemented": "已补角色摇头、撕裂爱心淡变红X，并保留正确头像与星星。错误反馈按实际扣命触发，同一红X再错会重播；同次重复送达不扣命也不重播。撤销、重开同盘、离开和后台清理瞬时表现。 0.2.22新增正确头像弹出/光圈和飞星汇入找到数量，进度脉冲与实际分数增量；终局仍保留最后一步视觉反馈。7张实际Root宿主截图经目视核查。 0.2.23正确格补4枚局部星点与光晕，错误格内层及短暂细边框轻抖；固定不透明底板遮住底层已提交红X，过渡红X描边与底层一致。保留摇头/裂心和0.78秒Demo窗口，减少动态分支保持静态形状确认；非交互覆盖层不改业务状态。 0.2.24正确格改用开心表情，错误格及可见冲突同伴显示惊讶；高亮冲突单元、连接已找到角色并强调对应规则卡。局部分数只展示实际提交增量，顶部生命按真实扣命裂开；隐藏、换局、撤销及旧回调有展示门禁，业务提交不等待演出。",
-      "gap": "原创Demo表情已补；完整胜败角色演出、冻结时序、音画同步和真机感受仍待验。新增时长与既有0.78秒错误动画均为明确Demo值。",
+      "implemented": "已补角色摇头、撕裂爱心淡变红X，并保留正确头像与星星。错误反馈按实际扣命触发，同一红X再错会重播；同次重复送达不扣命也不重播。撤销、重开同盘、离开和后台清理瞬时表现。 0.2.22新增正确头像弹出/光圈和飞星汇入找到数量，进度脉冲与实际分数增量；终局仍保留最后一步视觉反馈。7张实际Root宿主截图经目视核查。 0.2.23正确格补4枚局部星点与光晕，错误格内层及短暂细边框轻抖；固定不透明底板遮住底层已提交红X，过渡红X描边与底层一致。保留摇头/裂心和0.78秒Demo窗口，减少动态分支保持静态形状确认；非交互覆盖层不改业务状态。 0.2.24正确格改用开心表情，错误格及可见冲突同伴显示惊讶；高亮冲突单元、连接已找到角色并强调对应规则卡。局部分数只展示实际提交增量，顶部生命按真实扣命裂开；隐藏、换局、撤销及旧回调有展示门禁，业务提交不等待演出。 0.2.25保留最后格正确反馈，并衔接整盘庆祝与角色结果演出；道具成功另有非纯颜色的飞镜和定位确认。新增表现不延迟原业务提交。",
+      "gap": "原创Demo表情与胜败角色演出已补；冻结时序、音画同步和真机感受仍待验。新增时长与既有0.78秒错误动画均为明确Demo值，本轮391项App回归只验证明确列出的本地范围。",
       "evidence": [
         "App/Views/PuzzleBoardView.swift",
         "App/Views/RootView.swift",
@@ -619,7 +651,12 @@
         "AppTests/GameHUDPresentationTests.swift",
         "AppTests/GameHUDVisualTests.swift",
         "Validation/original-0224-feedback.json",
-        "Docs/original-feel-0224/manifest.json"
+        "Docs/original-feel-0224/manifest.json",
+        "Validation/original-0225-feedback.json",
+        "Docs/original-feel-0225/manifest.json",
+        "Validation/checklist-0225-feedback-delta.json",
+        "App/Views/BoardSceneFeedbackView.swift",
+        "App/Views/DirectToolRevealView.swift"
       ]
     },
     {
@@ -988,8 +1025,8 @@
       ],
       "title": "2D 卡皮巴拉主题、颜色、字体与资产",
       "status": "partial",
-      "implemented": "奶油/橙/棕圆润 UI、白 X、多色棋盘和卡皮巴拉资源已替换；核心界面非3D。 0.2.17按[244]为白X/空心预览与红错误X补细暖棕边界，10种区域色及190/340pt棋盘实际像素核验通过；角色与区域配色未改。 0.2.24基于本项目原角色生成中性/眨眼/开心/惊讶四表情图集；运行时按透明边界规范化位置和比例，原头像仍作缺失回退。来源、图集顺序和校验值见本版资源记录，未提取参考产品美术。",
-      "gap": "新增原创四表情和既有主题资源仍属Demo素材；全部状态及尺寸、完整胜败演出、冻结录屏逐帧和真机仍待验。",
+      "implemented": "奶油/橙/棕圆润 UI、白 X、多色棋盘和卡皮巴拉资源已替换；核心界面非3D。 0.2.17按[244]为白X/空心预览与红错误X补细暖棕边界，10种区域色及190/340pt棋盘实际像素核验通过；角色与区域配色未改。 0.2.24基于本项目原角色生成中性/眨眼/开心/惊讶四表情图集；运行时按透明边界规范化位置和比例，原头像仍作缺失回退。来源、图集顺序和校验值见本版资源记录，未提取参考产品美术。 0.2.25复用现有本项目角色资源完成两种胜利与一种失败姿态演出，未提取参考产品美术；完整资源全集与正式各尺寸仍待验。",
+      "gap": "新增原创四表情、胜败演出和既有主题资源仍属Demo素材；全部状态及尺寸、冻结录屏逐帧和真机仍待验。",
       "evidence": [
         "App/Views/CapyStyle.swift",
         "App/Views/PuzzleBoardView.swift",
@@ -1002,13 +1039,24 @@
         "AppTests/CapyExpressionTests.swift",
         "Validation/capy-expression-artwork-0224.json",
         "Validation/original-0224-feedback.json",
-        "Docs/original-feel-0224/manifest.json"
+        "Docs/original-feel-0224/manifest.json",
+        "Validation/original-0225-feedback.json",
+        "Docs/original-feel-0225/manifest.json",
+        "Validation/checklist-0225-feedback-delta.json",
+        "App/Views/ResultCharacterView.swift",
+        "AppTests/ResultCharacterTests.swift"
       ]
     },
     {
       "id": "ART-02",
       "section": "4.1",
       "sourceParagraphs": [
+        105,
+        106,
+        110,
+        113,
+        119,
+        136,
         248,
         249,
         252,
@@ -1017,8 +1065,8 @@
       ],
       "title": "按压/弹窗/正确错误/奖励动效",
       "status": "partial",
-      "implemented": "按钮缩放、中央弹窗、角色/星星/破心、签到弹跳及短粒子、Reduce Motion 支持存在。 原生隔离容器的Hint/结算遮罩安全区裁切已修复，并以最终截图复核。 0.2.4补摇头/裂心至X和Reduce Motion静态序列，6张组件分时图已目视；动画层不接收触摸或辅助功能焦点。 0.2.7补胜败前景中心缩放/淡入和周期末可领奖礼盒短弹跳/粒子；前后台、离页及领奖后清理，25张宿主截图已目视。 0.2.22补格内X/正确反馈、飞星与分数、同级Combo再次确认和短胜利星点；截图发现Combo遮挡关卡后移到棋盘上方独立区域。下一关/复活/重开动作立即出现，0.48/0.60秒只控制装饰层；减少动态效果与冷恢复跳过等待。 0.2.23补X逐笔撤销、正确格4星点/局部光晕及错误轻抖/一致红X描边，固定底色防露底。8项新增测试纳入最终327项App回归；11张组件分时及红X对照图已目视，时长仍为Demo值。 0.2.24补开心/惊讶角色、可见冲突格高亮及连线、规则卡强调、动态教学手指、局部分数与顶部裂心。每棋盘一个4秒定时器轮换眨眼；减少动态效果、遮挡、后台和迟到回调取消装饰，不延迟玩法。完整胜败角色演出和新棋盘入场尚未完成。",
-      "gap": "仍缺完整胜败角色演出、新盘入场、冻结录屏精确节奏，以及真机与低性能设备验证。新增图集为原创Demo表情；Reduce Motion仅为视图注入分支，不代表系统开关或全局无动画已验收。",
+      "implemented": "按钮缩放、中央弹窗、角色/星星/破心、签到弹跳及短粒子、Reduce Motion 支持存在。 原生隔离容器的Hint/结算遮罩安全区裁切已修复，并以最终截图复核。 0.2.4补摇头/裂心至X和Reduce Motion静态序列，6张组件分时图已目视；动画层不接收触摸或辅助功能焦点。 0.2.7补胜败前景中心缩放/淡入和周期末可领奖礼盒短弹跳/粒子；前后台、离页及领奖后清理，25张宿主截图已目视。 0.2.22补格内X/正确反馈、飞星与分数、同级Combo再次确认和短胜利星点；截图发现Combo遮挡关卡后移到棋盘上方独立区域。下一关/复活/重开动作立即出现，0.48/0.60秒只控制装饰层；减少动态效果与冷恢复跳过等待。 0.2.23补X逐笔撤销、正确格4星点/局部光晕及错误轻抖/一致红X描边，固定底色防露底。8项新增测试纳入最终327项App回归；11张组件分时及红X对照图已目视，时长仍为Demo值。 0.2.24补开心/惊讶角色、可见冲突格高亮及连线、规则卡强调、动态教学手指、局部分数与顶部裂心。每棋盘一个4秒定时器轮换眨眼；减少动态效果、遮挡、后台和迟到回调取消装饰，不延迟玩法。完整胜败角色演出和新棋盘入场尚未完成。 0.2.25FEEL-05／FEEL-06的Demo实现已补：0.56秒新盘错峰入场、0.78秒整盘庆祝、两胜一负有限角色演出、三档Combo、道具按下及真实成功飞镜；新事件身份防重，恢复/遮挡/后台不补播。下一步按钮即时可用，减少动态效果及低电量简化。33项新增验证纳入最终391项App回归并通过，正式节奏未验。 0.2.25最终14张分时图已目视通过，包含真实Root与组件/合成棋盘两类，不能混同为真实全关卡或精确参考时序验收。",
+      "gap": "新盘入场和胜败角色演出已有Demo实现；冻结录屏精确节奏、系统减少动态效果与低性能设备验证仍未完成，本轮391项App回归通过，17e四项UI及14张图目视通过，具体夹具与场景范围见本轮记录。已有原创图集不是参考资产；不能据本地视图分支声称全局动态效果或正式验收通过。",
       "evidence": [
         "App/Views/CapyStyle.swift",
         "App/Views/RootView.swift",
@@ -1047,7 +1095,17 @@
         "AppTests/GameHUDVisualTests.swift",
         "Validation/capy-expression-artwork-0224.json",
         "Validation/original-0224-feedback.json",
-        "Docs/original-feel-0224/manifest.json"
+        "Docs/original-feel-0224/manifest.json",
+        "Validation/original-0225-feedback.json",
+        "Docs/original-feel-0225/manifest.json",
+        "Validation/checklist-0225-feedback-delta.json",
+        "App/Views/BoardSceneFeedbackView.swift",
+        "App/Views/ResultCharacterView.swift",
+        "App/Views/ComboCelebrationView.swift",
+        "App/Views/DirectToolRevealView.swift",
+        "AppTests/BoardSceneFeedbackTests.swift",
+        "AppTests/ResultCharacterTests.swift",
+        "AppTests/CompletionFeedbackTests.swift"
       ]
     },
     {
@@ -1168,7 +1226,7 @@
       ],
       "title": "游戏导航、信息区、三规则卡、棋盘、工具及广告留白",
       "status": "verified",
-      "implemented": "4/6/8/10棋盘的导航/Level/进度/规则/棋盘/工具层级及正方形尺寸有UI验证；0.2.7在17e复验。8×8按原图改为八头像，17Pro及17e实际页面截图均完整。 0.2.16补窄屏紧凑排布，实际宿主320×568/390×844四种棋盘及完整Root截图验证控件不裁切；教学与Hint独立滚动，不给棋盘增加滚动祖先。 0.2.24规则卡跟随当前可见冲突强调，HUD生命按实际扣除位置裂开，局部分数与真实增量一致、最多4条。展示关闭仍更新分数/生命基准，恢复不重播隐藏变化。",
+      "implemented": "4/6/8/10棋盘的导航/Level/进度/规则/棋盘/工具层级及正方形尺寸有UI验证；0.2.7在17e复验。8×8按原图改为八头像，17Pro及17e实际页面截图均完整。 0.2.16补窄屏紧凑排布，实际宿主320×568/390×844四种棋盘及完整Root截图验证控件不裁切；教学与Hint独立滚动，不给棋盘增加滚动祖先。 0.2.24规则卡跟随当前可见冲突强调，HUD生命按实际扣除位置裂开，局部分数与真实增量一致、最多4条。展示关闭仍更新分数/生命基准，恢复不重播隐藏变化。 0.2.25三档Combo保留棋盘上方独立反馈栏，道具飞镜使用真实按钮与棋盘窗口坐标，装饰不拦截触摸。",
       "gap": "真机、双语长文案和全部动态字体档位仍待完整验收。",
       "evidence": [
         "App/Views/RootView.swift",
@@ -1184,7 +1242,13 @@
         "AppTests/GameHUDPresentationTests.swift",
         "AppTests/GameHUDVisualTests.swift",
         "Validation/original-0224-feedback.json",
-        "Docs/original-feel-0224/manifest.json"
+        "Docs/original-feel-0224/manifest.json",
+        "Validation/original-0225-feedback.json",
+        "Docs/original-feel-0225/manifest.json",
+        "Validation/checklist-0225-feedback-delta.json",
+        "App/Views/ComboCelebrationView.swift",
+        "App/Views/DirectToolRevealView.swift",
+        "AppTests/CompletionFeedbackTests.swift"
       ]
     },
     {
@@ -1295,11 +1359,14 @@
       ],
       "title": "仅使用原音频及逐文件校验",
       "status": "awaiting_reference",
-      "implemented": "移除自制音频和系统配音，音频 manifest 明确 referenceVerified=false。",
+      "implemented": "移除自制音频和系统配音，音频 manifest 明确 referenceVerified=false。 0.2.25原音清单仍为空，尚未收到本轮临时原创音效许可，没有新增声音；视觉演出完成不构成音画同步或真机听感验收。",
       "gap": "原音乐、效果音、Combo 音频及清单全部未提供，当前缺失事件保持静音；音乐功能不能记为完成。",
       "evidence": [
         "Resources/audio-manifest.json",
-        "App/Services/FeedbackPlayer.swift"
+        "App/Services/FeedbackPlayer.swift",
+        "Validation/original-0225-feedback.json",
+        "Docs/original-feel-0225/manifest.json",
+        "Validation/checklist-0225-feedback-delta.json"
       ]
     },
     {
@@ -1858,7 +1925,7 @@
       ],
       "title": "iOS技术验收与SDK升级兼容",
       "status": "partial",
-      "implemented": "0.2.21全量169项Core与9项签到/奖励定向AppTests通过，含异常存档实际AppModel加载后的签到组件绘制；Demo Debug及通用iOS无签名Release编译通过，正常保留数据覆盖安装两模拟器。上轮0.2.20全量293项App及17e两项UI记录保留原版本；三候选并存仍是0.2.20证据，不重标本轮。 0.2.21三个优化候选在17 Pro正常目录通过中文Welcome、实际通知/Tracking拒绝、九步教学、英中切换、签到和两次冷启动同盘恢复；无调试参数或存档注入，各包本地身份独立，原Demo玩家状态和历史事件保留。 0.2.21真机Debug完整重建及严格签名校验通过，新描述文件包含KKKiPhone（iPhone 14 Pro Max，iOS 26.3.1）；局域网安装成功，设备查询确认0.2.21（24）。首次自动启动因开发者信任未完成被系统Security拒绝；用户确认已信任并手动打开后，只读查询核实Capydoku进程运行（PID 11651）。安装和启动已确认，未声称自动启动重试或完整真机试玩通过。此前锁屏、旧描述文件和增量包签名失败保留为历史。 0.2.22最终全量319项App与17e四项真实UI通过；7张反馈/终局实际宿主截图复核。设备Debug签名构建通过，真机更新详情见本版安装记录。核心/关卡未改，169项Core保留0.2.21版本。 0.2.23最终17 Pro/iOS26.5全量327项App测试通过（0失败、0跳过），含8项新增；17e手势后道具恢复、失败复活两项UI通过。首次像素比对存在不同坐标裁切的亚像素重采样，改为同一棋盘坐标和整数像素裁切后3项专项及最终全量通过，未放宽容差。11张组件图目视通过。设备0.2.23（26）签名构建及严格校验通过，但无线设备unavailable，未安装，手机仍为0.2.22（25）；核心169项保持0.2.21证据。 0.2.24全量177项Core通过，含8项新增可见冲突测试；17 Pro/iOS26.5最终全量358项App通过，0失败、0跳过，含31项新增；17e四个不同UI用例通过。命令误含双测试动作，同四项重复通过一轮，只计4项，完整日志保留两轮；教学使用当前包L1，另三项使用既有固定夹具。11张实测图目视通过，其中3张使用当前包第6关实际Root，其余为组件/合成棋盘。首次新增测试的CF图像条件转换编译问题改为AnyObject身份比较，保留首次失败。早先无线不可用后连接恢复，0.2.24（27）经严格验签、无线覆盖安装并正常启动；安装前后8份已观察文件字节一致，三次快照主/备校验通过，120条历史事件与身份保持。启动后有新游戏事件和关卡进度变化，不声称启动后完整玩家状态一致或已完成真机体验验收。",
+      "implemented": "0.2.21全量169项Core与9项签到/奖励定向AppTests通过，含异常存档实际AppModel加载后的签到组件绘制；Demo Debug及通用iOS无签名Release编译通过，正常保留数据覆盖安装两模拟器。上轮0.2.20全量293项App及17e两项UI记录保留原版本；三候选并存仍是0.2.20证据，不重标本轮。 0.2.21三个优化候选在17 Pro正常目录通过中文Welcome、实际通知/Tracking拒绝、九步教学、英中切换、签到和两次冷启动同盘恢复；无调试参数或存档注入，各包本地身份独立，原Demo玩家状态和历史事件保留。 0.2.21真机Debug完整重建及严格签名校验通过，新描述文件包含KKKiPhone（iPhone 14 Pro Max，iOS 26.3.1）；局域网安装成功，设备查询确认0.2.21（24）。首次自动启动因开发者信任未完成被系统Security拒绝；用户确认已信任并手动打开后，只读查询核实Capydoku进程运行（PID 11651）。安装和启动已确认，未声称自动启动重试或完整真机试玩通过。此前锁屏、旧描述文件和增量包签名失败保留为历史。 0.2.22最终全量319项App与17e四项真实UI通过；7张反馈/终局实际宿主截图复核。设备Debug签名构建通过，真机更新详情见本版安装记录。核心/关卡未改，169项Core保留0.2.21版本。 0.2.23最终17 Pro/iOS26.5全量327项App测试通过（0失败、0跳过），含8项新增；17e手势后道具恢复、失败复活两项UI通过。首次像素比对存在不同坐标裁切的亚像素重采样，改为同一棋盘坐标和整数像素裁切后3项专项及最终全量通过，未放宽容差。11张组件图目视通过。设备0.2.23（26）签名构建及严格校验通过，但无线设备unavailable，未安装，手机仍为0.2.22（25）；核心169项保持0.2.21证据。 0.2.24全量177项Core通过，含8项新增可见冲突测试；17 Pro/iOS26.5最终全量358项App通过，0失败、0跳过，含31项新增；17e四个不同UI用例通过。命令误含双测试动作，同四项重复通过一轮，只计4项，完整日志保留两轮；教学使用当前包L1，另三项使用既有固定夹具。11张实测图目视通过，其中3张使用当前包第6关实际Root，其余为组件/合成棋盘。首次新增测试的CF图像条件转换编译问题改为AnyObject身份比较，保留首次失败。早先无线不可用后连接恢复，0.2.24（27）经严格验签、无线覆盖安装并正常启动；安装前后8份已观察文件字节一致，三次快照主/备校验通过，120条历史事件与身份保持。启动后有新游戏事件和关卡进度变化，不声称启动后完整玩家状态一致或已完成真机体验验收。 0.2.25新增33项App测试；17 Pro / iOS 26.5 最终全量391项一次通过，0失败、0跳过，耗时139.158秒；17e四项UI通过，0失败、0跳过，耗时146.975秒，无重复测试动作；教学使用当前包L1，另外三项为既有固定夹具。14张图已逐张目视通过：4张为当前包第6关实际Root页面，1张为中英Combo组件，4张为结果角色组件／宿主，5张为合成4×4棋盘。0.2.25（28）已由设备查询确认，经局域网保留数据覆盖安装并无参数正常启动；安装前后8份已观察文件逐字节一致，主/备存档校验有效。启动后完整状态一致未作结论，物理手势、触觉及完整真机试玩仍待验。核心与关卡未改，177项Core仍属0.2.24，83行状态和旧88项统计保持。",
       "gap": "这不是全部设备/场景通过；17e升级前无正常统计队列，不能声称该设备历史统计迁移已验证。真机已确认开发包无线安装、正常启动和安装阶段数据保留；真机完整玩法与恢复、最低系统、候选包其余权限组合与胜负/广告/高关/持续生成、真实SDK升级及正式远程关闭仍待验。",
       "evidence": [
         "Validation/original-verification.json",
@@ -1947,7 +2014,17 @@
         "Validation/original-0224-feedback.json",
         "Docs/original-feel-0224/manifest.json",
         "Validation/test-runs/original-0224-app-r2.xcresult",
-        "Validation/test-runs/original-0224-17e-ui.xcresult"
+        "Validation/test-runs/original-0224-17e-ui.xcresult",
+        "Validation/original-0225-feedback.json",
+        "Docs/original-feel-0225/manifest.json",
+        "Validation/checklist-0225-feedback-delta.json",
+        "AppTests/BoardSceneFeedbackTests.swift",
+        "AppTests/ResultCharacterTests.swift",
+        "AppTests/SceneFeedbackEventTests.swift",
+        "AppTests/CompletionFeedbackTests.swift",
+        "Validation/original-0225-physical-install.json",
+        "Validation/test-runs/original-0225-app.xcresult",
+        "Validation/test-runs/original-0225-17e-ui.xcresult"
       ]
     },
     {
@@ -2248,5 +2325,5 @@
       ]
     }
   ],
-  "currentBuild": "0.2.24 (27)"
+  "currentBuild": "0.2.25 (28)"
 }

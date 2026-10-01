@@ -49,7 +49,11 @@ struct RootView: View {
     @StateObject private var resultEntrance = ResultEntrancePresentation()
     private var hasCard: Bool { model.sheet == .settings || model.sheet == .reward }
     private var hasResult: Bool { model.screen == .game && model.session?.status != .playing && model.session != nil }
-    private var animatesResult: Bool { !reduceMotion && scenePhase == .active && model.sheet == nil && !model.loading }
+    private var animatesResult: Bool {
+        !reduceMotion && !ProcessInfo.processInfo.isLowPowerModeEnabled && scenePhase == .active &&
+        model.screen == .game && model.sheet == nil && !model.loading && !model.rewardBusy &&
+        !model.interstitialBusy && !model.challengePending && model.notice == nil && model.errorMessage == nil
+    }
     private var resultDecorationReady: Bool {
         guard hasResult, let session = model.session else { return false }
         return resultEntrance.shows(sessionID: session.id, status: session.status, animate: animatesResult)
@@ -83,6 +87,7 @@ struct RootView: View {
                 case .checkIn: CheckInView(reduceMotionOverride: reduceMotionOverride)
                 }
                 }.environmentObject(model).foregroundColor(CapyPalette.ink)
+                    .environment(\.scenePhase, scenePhase)
                     .environment(\.appLanguage, language)
                     .environment(\.capyMotionOverride, reduceMotion)
                     .environment(\.dynamicTypeSize, dynamicTypeSize)
@@ -92,7 +97,10 @@ struct RootView: View {
             if hasResult && model.sheet != .reward {
                 Color.black.opacity(resultDecorationReady ? 0.78 : 0).ignoresSafeArea().accessibilityHidden(true)
                 CapyAccessibilityHost(hidden: hasCard || model.loading || model.challengePending) {
-                    ResultPanel(won: model.session?.status == .won, showsDecoration: resultDecorationReady).environmentObject(model).foregroundColor(CapyPalette.ink)
+                    ResultPanel(won: model.session?.status == .won, showsDecoration: resultDecorationReady,
+                                animationID: resultEntrance.animationID, presentationEnabled: animatesResult)
+                        .environmentObject(model).foregroundColor(CapyPalette.ink)
+                        .environment(\.scenePhase, scenePhase)
                         .environment(\.appLanguage, language)
                         .environment(\.capyMotionOverride, reduceMotion)
                         .environment(\.dynamicTypeSize, dynamicTypeSize)
@@ -261,9 +269,10 @@ struct GameView: View {
     @State private var progressFrame = CGRect.zero
     @State private var gameWindowFrame = CGRect.zero
     @State private var boardWindowFrame = CGRect.zero
+    @State private var directWindowFrame = CGRect.zero
     @State private var hintContentHeight: CGFloat = 66
     private var canPresentFeedback: Bool {
-        model.screen == .game && scenePhase == .active && model.hint == nil && model.sheet == nil && !model.loading &&
+        model.screen == .game && scenePhase == .active && model.hint == nil && model.sheet == nil && !model.loading && !model.rewardBusy && !model.interstitialBusy &&
         !model.challengePending && model.errorMessage == nil && model.notice == nil
     }
     var body: some View {
@@ -354,7 +363,7 @@ struct GameView: View {
                         }.frame(height: hintHeight).padding(.top, compact ? 4 : 8)
                         comboBadge(compact: compact).frame(height: feedbackHeight)
                         PuzzleBoardView(puzzle: s.puzzle, found: s.found, marks: s.marks, errors: s.errors,
-                                        sessionID: s.id, lives: s.lives, score: s.score,
+                                        sessionID: s.id, entranceID: model.boardEntranceID, lives: s.lives, score: s.score,
                                         effectsEnabled: canPresentFeedback,
                                         preview: Set(model.hint?.cells ?? []), tutorialTargets: Set(model.tutorial?.targetCells ?? []),
                                         tutorialAction: model.tutorial?.action,
@@ -376,6 +385,13 @@ struct GameView: View {
                                                       !progressFrame.isEmpty, !gameWindowFrame.isEmpty else { return }
                                                 rewards.found(index: index, sessionID: s.id, origin: source, destination: target,
                                                               reduceMotion: reduceMotion || ProcessInfo.processInfo.isLowPowerModeEnabled)
+                                                if let event = model.directRevealFeedback, event.sessionID == s.id,
+                                                   event.cell == index, !directWindowFrame.isEmpty {
+                                                    let tool = CGPoint(x: directWindowFrame.midX - gameWindowFrame.minX,
+                                                                       y: directWindowFrame.midY - gameWindowFrame.minY)
+                                                    rewards.directReveal(event, origin: tool, destination: source,
+                                                                         reduceMotion: reduceMotion || ProcessInfo.processInfo.isLowPowerModeEnabled)
+                                                }
                                             }
                                         }, onConflictFeedback: { kinds in
                                             DispatchQueue.main.async {
@@ -416,6 +432,7 @@ struct GameView: View {
                     }.disabled(s.status != .playing).accessibilityElement(children: covered ? .ignore : .contain).accessibilityHidden(covered).padding(.horizontal, 14).padding(.top, 4).padding(.bottom, 4)
                     ForEach(rewards.flights) { ProgressFlightStar(flight: $0) }
                     ForEach(rewards.localScores) { CellScoreLabel(item: $0) }
+                    if let reveal = rewards.toolReveal { DirectToolRevealView(reveal: reveal).id(reveal.id) }
                     if feedback.showLastLife && s.status == .playing && model.hint == nil && model.sheet == nil {
                         VStack {
                             Text(language.text("Only one chance left!"))
@@ -480,6 +497,7 @@ struct GameView: View {
             if model.directVisible {
                 ToolButton(title: "Find a capy", isDirect: true, count: model.progress.availableDirect, id: "direct", action: model.direct)
                     .disabled(!model.directEnabled)
+                    .background(FeedbackWindowFrameReader { directWindowFrame = $0 })
             } else { Color.clear.frame(width: 62, height: 62).accessibilityHidden(true) }
             if compact && model.levelStartFreeVisible { freeToolButton }
             ToolButton(title: "Hint", isDirect: false, count: model.progress.availableHints, id: "hint", action: model.showHint)
@@ -526,11 +544,8 @@ struct GameView: View {
         ZStack {
             Color.clear
             if let combo = feedback.comboText {
-                HStack(spacing: 3) {
-                    Image(systemName: combo == "Excellent" ? "sparkles" : "star.fill").font(.system(size: 12, weight: .bold))
-                    Text(language.text(combo)).font(.system(size: compact ? 17 : 20, weight: .heavy, design: .rounded))
-                }.foregroundColor(CapyPalette.actionOrange).fixedSize()
-                    .padding(.horizontal, 7).padding(.vertical, 2).background(CapyPalette.paper.opacity(0.95)).clipShape(Capsule())
+                ComboCelebrationView(text: language.text(combo), tier: ComboVisualTier(text: combo), compact: compact,
+                                     reduceMotion: reduceMotion || ProcessInfo.processInfo.isLowPowerModeEnabled)
                     .accessibilityIdentifier("combo_feedback").capyLayoutProbe("combo_feedback")
                     .id(feedback.comboRevision)
                     .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
@@ -573,7 +588,7 @@ struct ToolButton: View {
                         }
                     }.foregroundColor(.white).offset(x: 6, y: -5)
                 }
-        }.buttonStyle(CapyPressStyle()).accessibilityLabel(language.text(title))
+        }.buttonStyle(ToolPressStyle(direct: isDirect)).accessibilityLabel(language.text(title))
             .accessibilityValue(language.text(count > 0 ? "\(count) available" : "Video reward"))
             .accessibilityIdentifier(id)
             .capyLayoutProbe(id)
@@ -697,7 +712,12 @@ struct ResultPanel: View {
     private var reduceMotion: Bool { motionOverride ?? systemReduceMotion }
     let won: Bool
     var showsDecoration = true
-    @State private var praise = ["Nice Work", "Intelligent"].randomElement() ?? "Nice Work"
+    var animationID: UUID? = nil
+    var presentationEnabled = true
+    private var variant: ResultCelebrationVariant {
+        (model.session?.id.uuid.0 ?? 0).isMultiple(of: 2) ? .joyfulBounce : .proudCrown
+    }
+    private var praise: String { variant == .joyfulBounce ? "Nice Work" : "Intelligent" }
     private var failure: ReferenceFailureConfiguration? { model.session?.config.referenceGameplay?.failure }
     private var victoryDetail: String {
         guard let session = model.session else { return "All Capybaras found!" }
@@ -719,11 +739,10 @@ struct ResultPanel: View {
                         .accessibilityAddTraits(.isHeader).capyFocus(won ? "win_result" : "loss_result")
                         .accessibilityValue(language.text("Level \(model.session?.puzzle.id ?? 1). Score \(model.session?.score ?? 0). \(model.session?.found.count ?? 0) of \(model.session?.puzzle.size ?? 0) found."))
                         .opacity(showsDecoration ? 1 : 0).accessibilityHidden(!showsDecoration)
-                    ZStack {
-                        if won { Image(systemName: "sun.max.fill").resizable().scaledToFit().foregroundColor(CapyPalette.orange.opacity(0.28)).padding(8) }
-                        CapyMascot(mood: won ? .happy : .sad, size: min(geometry.size.width * 0.65, 250))
-                        if won && showsDecoration && !reduceMotion && !ProcessInfo.processInfo.isLowPowerModeEnabled { VictorySparkles() }
-                    }.frame(height: min(geometry.size.height * 0.34, 270)).opacity(showsDecoration ? 1 : 0).accessibilityHidden(!showsDecoration)
+                    ResultCharacterView(won: won, variant: variant, size: min(geometry.size.width * 0.65, geometry.size.height * 0.34, 250),
+                                        animationID: showsDecoration ? animationID : nil,
+                                        presentationEnabled: presentationEnabled && showsDecoration)
+                        .frame(height: min(geometry.size.height * 0.34, 270)).opacity(showsDecoration ? 1 : 0).accessibilityHidden(!showsDecoration)
                     Text(language.text(won ? victoryDetail : "The next Capybara is close. Your progress is worth keeping!"))
                         .font(.system(size: 20, weight: .bold, design: .rounded))
                         .foregroundColor(won ? Color(red: 1, green: 0.86, blue: 0.39) : CapyPalette.orangeLight)

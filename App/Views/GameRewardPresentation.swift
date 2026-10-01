@@ -59,17 +59,25 @@ final class FeedbackWindowFrameView: UIView {
         let origin: CGPoint
         let reduceMotion: Bool
     }
+    struct ToolReveal: Identifiable {
+        let id: UUID
+        let origin: CGPoint
+        let destination: CGPoint
+        let reduceMotion: Bool
+    }
     typealias Schedule = (TimeInterval, @escaping () -> Void) -> Void
     @Published private(set) var flights: [Flight] = []
     @Published private(set) var progressPulse = false
     @Published private(set) var scoreDelta: Int?
     @Published private(set) var localScores: [LocalScore] = []
+    @Published private(set) var toolReveal: ToolReveal?
     private var sessionID: UUID?
     private var lastScore = 0
     private var generation = UUID()
     private var scoreToken = UUID()
     private var pulseToken = UUID()
     private var acknowledged = Set<Int>()
+    private var acknowledgedTools = Set<UUID>()
     private var presentationEnabled = true
     private let schedule: Schedule
 
@@ -79,7 +87,7 @@ final class FeedbackWindowFrameView: UIView {
 
     func bind(sessionID: UUID, score: Int) {
         guard self.sessionID != sessionID else { return }
-        clear(); self.sessionID = sessionID; lastScore = score; acknowledged = []
+        clear(); self.sessionID = sessionID; lastScore = score; acknowledged = []; acknowledgedTools = []
     }
 
     func setPresentationEnabled(_ enabled: Bool) {
@@ -134,6 +142,17 @@ final class FeedbackWindowFrameView: UIView {
         }
     }
 
+    func directReveal(_ event: DirectRevealFeedback, origin: CGPoint, destination: CGPoint, reduceMotion: Bool) {
+        guard sessionID == event.sessionID, acknowledgedTools.insert(event.id).inserted,
+              presentationEnabled, [origin.x, origin.y, destination.x, destination.y].allSatisfy(\.isFinite) else { return }
+        let token = generation
+        toolReveal = ToolReveal(id: event.id, origin: origin, destination: destination, reduceMotion: reduceMotion)
+        schedule(0.52) { [weak self] in
+            guard self?.generation == token, self?.toolReveal?.id == event.id else { return }
+            self?.toolReveal = nil
+        }
+    }
+
     private func pulseProgress() {
         pulseToken = UUID(); let token = pulseToken
         progressPulse = true
@@ -145,7 +164,7 @@ final class FeedbackWindowFrameView: UIView {
 
     func clear() {
         generation = UUID(); scoreToken = UUID(); pulseToken = UUID()
-        flights = []; progressPulse = false; scoreDelta = nil; localScores = []
+        flights = []; progressPulse = false; scoreDelta = nil; localScores = []; toolReveal = nil
     }
 }
 
@@ -155,6 +174,7 @@ final class FeedbackWindowFrameView: UIView {
 @MainActor final class ResultEntrancePresentation: ObservableObject {
     typealias Schedule = (TimeInterval, @escaping () -> Void) -> Void
     @Published private(set) var ready = true
+    @Published private(set) var animationID: UUID?
     private var sessionID: UUID?
     private var status: GameStatus?
     private var token = UUID()
@@ -176,11 +196,13 @@ final class FeedbackWindowFrameView: UIView {
         self.sessionID = sessionID; self.status = status
         guard changed || !animate else { return }
         token = UUID(); let current = token
+        animationID = nil
         ready = !(freshResult && animate)
         if !ready {
-            schedule(status == .won ? 0.48 : 0.60) { [weak self] in
+            schedule(status == .won ? 0.82 : 0.60) { [weak self] in
                 guard self?.token == current else { return }
                 self?.ready = true
+                self?.animationID = UUID()
             }
         }
     }

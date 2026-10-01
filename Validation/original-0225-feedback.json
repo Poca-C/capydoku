@@ -1,0 +1,162 @@
+{
+  "build": "0.2.25 (28)",
+  "date": "2026-10-01",
+  "status": "verified_scoped_demo_feedback_not_formal_acceptance",
+  "authority": "Original Word remains authoritative; Chinese default is the explicit user override. Actual Meowdoku playtest informs feedback design but is not frozen formal Pawdoku parameters.",
+  "sourceParagraphs": [
+    69,
+    70,
+    71,
+    84,
+    97,
+    105,
+    106,
+    110,
+    112,
+    113,
+    119,
+    125,
+    129,
+    136,
+    241,
+    248,
+    249,
+    252,
+    253,
+    254,
+    303,
+    304,
+    305
+  ],
+  "referenceObservation": "Validation/meowdoku-playtest-comparison-0223.json",
+  "changes": [
+    {
+      "area": "New board entrance",
+      "implementation": "One finite diagonal stagger only for a successfully committed new session, restart or generated board. Restore/home return does not replay. First actual touch or accessibility activation removes the decorative cover before judgment; no input lock."
+    },
+    {
+      "area": "Full-board victory",
+      "implementation": "A fresh same-session completion adds happy found faces, warm board glow and bounded individual stars, preserving the last-cell pop. The result is committed and next action is reachable immediately; only result decoration waits 0.82 seconds."
+    },
+    {
+      "area": "Two victory performances and loss",
+      "implementation": "Finite double bounce/side stars or proud sway/star crown, selected stably per attempt from its random session UUID. Failure bows with a light shake and sigh puffs. Reuses existing mascot and sad artwork; no new full-body sprite assets claimed. Restored outcomes remain static."
+    },
+    {
+      "area": "Combo tiers",
+      "implementation": "Distinct light Nice, warm Great and orange Excellent badges, increasing bounded pop/tilt and ornaments, inside the existing feedback band. Chinese/English verified. Scoring, thresholds and sound mapping unchanged."
+    },
+    {
+      "area": "Direct tool",
+      "implementation": "Press feedback plus a lens confirmation from the actual button to the actual committed cell coordinate. Free and rewarded routes publish only after durable success. Cancel, failure, duplicate callbacks, cold recovery or hidden events do not replay the cue; maximum one lens at once."
+    },
+    {
+      "area": "Lifecycle and accessibility",
+      "implementation": "Session/token guards cancel stale work on new attempts, covers, home, background and reward/interstitial/challenge transitions. Reduced Motion or low-power paths simplify or suppress decorative motion. No new persisted feedback fields."
+    }
+  ],
+  "demoPresentationParameters": {
+    "formalReferenceValues": false,
+    "appliesOnlyToPresentation": true,
+    "entranceStaggerSpreadSeconds": 0.24,
+    "entranceSeconds": 0.56,
+    "victoryBoardSeconds": 0.78,
+    "simplifiedBoardSeconds": 0.18,
+    "resultDecorationDelayWinSeconds": 0.82,
+    "resultDecorationDelayLossSeconds": 0.6,
+    "resultPerformanceApproxSeconds": [
+      0.92,
+      1.2
+    ],
+    "directLensSeconds": 0.48,
+    "directLensRemovalSeconds": 0.52,
+    "maximumConcurrentDirectLens": 1
+  },
+  "applicationTests": {
+    "build": "0.2.25 (28)",
+    "device": "iPhone 17 Pro simulator / iOS 26.5",
+    "passed": 391,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 139.158,
+    "scope": "All CapydokuAppTests without exclusions. 33 new cases: 7 board scene, 7 result character, 13 committed scene event and 6 result/direct/Combo/current-pack Root integration cases. First full run passed.",
+    "bundle": "Validation/test-runs/original-0225-app.xcresult",
+    "log": "Validation/test-runs/original-0225-app.log"
+  },
+  "uiTests": {
+    "status": "passed",
+    "build": "0.2.25 (28)",
+    "device": "iPhone 17e simulator / iOS 26.5",
+    "bundle": "Validation/test-runs/original-0225-17e-ui.xcresult",
+    "log": "Validation/test-runs/original-0225-17e-ui.log",
+    "uniqueCases": 4,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 146.975,
+    "repeatedTestAction": false,
+    "cases": [
+      "testGuidedTutorialCoversRulesTapUndoBothSwipesAndFind",
+      "testToolsResumeAfterNativeTapDoubleTapAndPanRecognizersFinish",
+      "testSolveEntirePuzzleAndAdvance",
+      "testLoseAndSimulatedRevivePreservesBoard"
+    ],
+    "fixtureBoundary": "Tutorial uses current packaged L1. Other three use a preserved deterministic fixture; not all-150 current-pack playthrough."
+  },
+  "core": {
+    "build": "0.2.24 (27)",
+    "passed": 177,
+    "failed": 0,
+    "seconds": 59.426,
+    "log": "Validation/test-runs/original-0224-core.log",
+    "scope": "Full Swift package suite, including 8 new visible-conflict analysis cases. Added pure query only; gameplay rules, scoring and fixed 150 levels unchanged.",
+    "evidenceStatus": "historical_unchanged_core_not_rerun_this_build"
+  },
+  "visualEvidence": "Docs/original-feel-0225/manifest.json",
+  "visualReview": {
+    "imagesReviewed": 14,
+    "passed": true,
+    "scope": "4 current packaged L6 Root frames, 1 Chinese/English three-tier Combo sheet, 4 result component/host captures and 5 synthetic 4x4 board frames. All viewed. Requested sampling delays are not exact measured frame timing."
+  },
+  "codeReview": {
+    "blockingFindings": 0,
+    "scope": "Board/result components and Root/scene event wiring independently cross-reviewed for stale callbacks, foreground/cover transitions, same-session restoration, duplicate rewards, write failure, input isolation and reduced motion."
+  },
+  "audio": {
+    "manifest": "Resources/audio-manifest.json",
+    "referenceVerified": false,
+    "newAudioAdded": false,
+    "originalParagraphs": [
+      314,
+      338,
+      344,
+      349
+    ],
+    "originalClipsAvailable": 0,
+    "temporaryOriginalSubstitutePermission": "awaiting_user_reply",
+    "soundAcceptance": "pending_original_resources_or_explicit_temporary_substitution; no listening claim"
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "coreRerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "physicalInstall": "Validation/original-0225-physical-install.json",
+  "physicalInstallationResult": "0.2.25 (28) installed and normally launched over local network without uninstall/reset/test arguments. All eight observed files identical across install, all primary/backup checksums valid. After launch all player fields equal after ordering only the four declared Swift Set arrays; all 139 historical events and identity unchanged.",
+  "feedbackScope": {
+    "FEEL-05": "demo_implemented_locally_verified_formal_reference_pending",
+    "FEEL-06": "demo_implemented_locally_verified_formal_reference_pending"
+  },
+  "remainingFeelWork": [
+    "Original audio files and timing, or explicit user authorization for temporary original substitutes. No reply to that choice has been received.",
+    "Supervised physical gesture/haptic/Reduce Motion review, measured frame rate and frozen reference timing remain unverified.",
+    "Production services, frozen reference/difficulty configuration, complete release and App Store gates remain outside this scoped feedback completion."
+  ],
+  "notVerified": [
+    "No frozen reference timing/difficulty equivalence, cross-product acceptance, original audio fidelity or complete physical playthrough claimed.",
+    "No real SDK/service integration, minimum-runtime verification, TestFlight or App Store acceptance claimed.",
+    "83 formal statuses and 88-case historical audit counts retained; this is a scoped nine-item checklist evidence delta."
+  ]
+}

@@ -1,0 +1,298 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.25 (28)",
+  "kind": "scoped_delta_to_88_item_audit",
+  "baseAudit": "Validation/checklist-0221-audit.json",
+  "previousDelta": "Validation/checklist-0224-feedback-delta.json",
+  "sourceChecklist": "Validation/checklist-source.json",
+  "sourceCaseCount": 88,
+  "formalSignOff": false,
+  "full88Reexecuted": false,
+  "overallCountsRecomputed": false,
+  "unchangedStatusReason": "仅为原88条中9项追加0.2.25实现和本地验证范围；历史增量/原审计统计不改，正式状态不升级，测试数量不是验收完成率。",
+  "originalParagraphs": [
+    69,
+    70,
+    71,
+    84,
+    97,
+    105,
+    106,
+    110,
+    112,
+    113,
+    119,
+    125,
+    129,
+    136,
+    241,
+    248,
+    249,
+    252,
+    253,
+    254,
+    303,
+    304,
+    305
+  ],
+  "verificationSnapshot": {
+    "core": {
+      "status": "historical_evidence_not_rerun",
+      "build": "0.2.24 (27)",
+      "tests": 177,
+      "evidence": "Validation/test-runs/original-0224-core.log"
+    },
+    "appFinal": {
+      "status": "passed",
+      "tests": 391,
+      "newTests": 33,
+      "failures": 0,
+      "skipped": 0,
+      "durationSeconds": 139.158,
+      "device": "iPhone 17 Pro",
+      "os": "iOS 26.5",
+      "firstFullExecutionPassed": true,
+      "evidence": "Validation/test-runs/original-0225-app.xcresult",
+      "log": "Validation/test-runs/original-0225-app.log"
+    },
+    "ui": {
+      "status": "passed",
+      "device": "iPhone 17e",
+      "os": "iOS 26.5",
+      "uniqueCases": 4,
+      "passed": 4,
+      "failures": 0,
+      "skipped": 0,
+      "durationSeconds": 146.975,
+      "repeatedTestAction": false,
+      "scope": [
+        "当前包L1完整教学",
+        "手势后道具恢复（固定旧夹具）",
+        "通关与下一关（固定旧夹具）",
+        "失败复活（固定旧夹具）"
+      ],
+      "evidence": "Validation/test-runs/original-0225-17e-ui.xcresult",
+      "log": "Validation/test-runs/original-0225-17e-ui.log"
+    },
+    "visual": {
+      "status": "reviewed",
+      "reviewedImages": 14,
+      "currentPackRootImages": 4,
+      "comboChineseEnglishImages": 1,
+      "resultComponentOrHostImages": 4,
+      "syntheticBoardImages": 5,
+      "scope": "14张图已逐张目视通过：4张为当前包第6关实际Root页面，1张为中英Combo组件，4张为结果角色组件／宿主，5张为合成4×4棋盘。合成棋盘为4×4；标签是分时采样，不是逐帧精确对标。",
+      "evidence": "Docs/original-feel-0225/manifest.json"
+    },
+    "physical": {
+      "status": "installed_and_launched",
+      "installedThisRound": true,
+      "normalLaunchVerified": true,
+      "verifiedBuild": "0.2.25 (28)",
+      "deviceVersionQueried": true,
+      "transport": "localNetwork",
+      "normalLaunchArguments": [],
+      "terminatedExistingProcessForLaunch": false,
+      "observedFilesPreservedByteForByteAtInstallation": 8,
+      "validPrimaryAndBackupChecksumsAtInstallation": true,
+      "postLaunchFullPlayerEqualityClaimed": false,
+      "acceptanceBoundary": "确认设备版本、安装、正常启动、安装阶段8份文件字节一致，以及启动后仅规范化四个声明的Set数组顺序后的完整玩家字段一致；不声明完整物理手势/触觉验收。",
+      "evidence": "Validation/original-0225-physical-install.json"
+    },
+    "reference": {
+      "product": "Meowdoku",
+      "observedVersion": "1.19.1 (457)",
+      "firsthandGameplayEvidence": "Validation/meowdoku-playtest-comparison-0223.json",
+      "formalPawdokuBaselineUnchanged": true
+    },
+    "audio": {
+      "newClipsAdded": false,
+      "manifestStillEmpty": true,
+      "temporaryOriginalAudioPermission": "awaiting_user_reply"
+    }
+  },
+  "stillOpen": [
+    "391项App、4项UI、14张图及真机无线安装启动只验证列明的范围；完整物理手势/触觉试玩和正式发布仍待验",
+    "FEEL-05／FEEL-06为Demo实现完成，正式录屏节奏、音画同步及冻结参考尚未验收",
+    "原音频未交付；临时原创音效许可未收到，空清单继续静音",
+    "最低系统、低性能设备、系统减少动态效果、真机手感及完整上架验收待验",
+    "88条原统计与83行正式状态保持，本轮不宣称全量原文验收"
+  ],
+  "rows": [
+    {
+      "id": "04-06",
+      "title": "快速手势切换",
+      "originalAcceptanceText": "操作  快速切换单击、双击和滑动，并中途离开棋盘。\n通过  手势不串扰、不重复扣血；双击优先，滑动结束后不继续标记。",
+      "originalRequirementIDs": [
+        "PLAY-02"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "新盘入场首次接触即撤下，复用原手势识别；装饰和Combo不占点击，7项新棋盘场景测试纳入最终391项App并通过。",
+      "evidence": [
+        "Validation/original-0225-feedback.json",
+        "Docs/original-feel-0225/manifest.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "PLAY-02",
+        "ART-02"
+      ]
+    },
+    {
+      "id": "05-02",
+      "title": "最后一命通关幂等",
+      "originalAcceptanceText": "操作  剩一条命时找到最后一只动物，再快速点击。\n通过  仍判胜利且立即锁定输入；奖励、分数和结算只执行一次。",
+      "originalRequirementIDs": [
+        "PLAY-10"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "真实找齐后补整盘庆祝，保留最后格反馈；锁输入和结果提交即时发生，不等待装饰，新结果事件只播一次。",
+      "evidence": [
+        "Validation/original-0225-feedback.json",
+        "Docs/original-feel-0225/manifest.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "PLAY-10",
+        "ART-02"
+      ]
+    },
+    {
+      "id": "05-03",
+      "title": "一命提醒与失败",
+      "originalAcceptanceText": "操作  观察仅剩一条命的提示，再扣完最后一条命。\n通过  提示与基线一致；生命停在0，失败弹层仅出现一次。",
+      "originalRequirementIDs": [
+        "PLAY-12",
+        "PLAY-11"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "补有限失败角色演出，约0.60秒只影响装饰，不延迟失败状态和复活/重开入口；正式失败节奏仍待参考。",
+      "evidence": [
+        "Validation/original-0225-feedback.json",
+        "Docs/original-feel-0225/manifest.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "PLAY-11",
+        "ART-02"
+      ]
+    },
+    {
+      "id": "05-06",
+      "title": "结算导航与继续",
+      "originalAcceptanceText": "操作  测试结算下一关、返回首页和继续游戏。\n通过  跳转、进度及反馈正确；主动退出保留策略、击败比例和Rank有确认依据。",
+      "originalRequirementIDs": [
+        "PLAY-10",
+        "UI-04"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "新鲜胜利装饰约0.82秒后进入，两种角色演出；下一关、返回和复活相关动作保持立即可操作，旧结果/遮挡不补播。",
+      "evidence": [
+        "Validation/original-0225-feedback.json",
+        "Docs/original-feel-0225/manifest.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "PLAY-10",
+        "PLAY-11",
+        "ART-02"
+      ]
+    },
+    {
+      "id": "07-02",
+      "title": "库存直接找答案",
+      "originalAcceptanceText": "操作  有库存时使用直接找答案并快速重复点击。\n通过  每次有效使用扣一次，只揭示一个正确目标；不扣血、不自动打叉。",
+      "originalRequirementIDs": [
+        "PLAY-06"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "真实库存direct事务成功后发布演出事件，使用实际落格坐标，保存失败/重复回调不发布成功确认；库存与分数逻辑保持。",
+      "evidence": [
+        "Validation/original-0225-feedback.json",
+        "Docs/original-feel-0225/manifest.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "PLAY-06",
+        "ART-02"
+      ]
+    },
+    {
+      "id": "07-06",
+      "title": "重复奖励回调",
+      "originalAcceptanceText": "操作  向同一offer_id重复发送有效奖励回调。\n通过  奖励及功能只执行一次，不多揭示动物、不额外累积库存。",
+      "originalRequirementIDs": [
+        "ADS-07"
+      ],
+      "priorStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "verified_local_scope",
+      "newEvidenceScope": "模拟广告direct成功确认复用已提交结果，仅视觉事件去重；重复、过期及隐藏事件不补演，不新增发奖路径。",
+      "evidence": [
+        "Validation/original-0225-feedback.json",
+        "Docs/original-feel-0225/manifest.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "ADS-07",
+        "PLAY-06",
+        "ART-02"
+      ]
+    },
+    {
+      "id": "14-01",
+      "title": "主题资源与全部状态",
+      "originalAcceptanceText": "操作  核对角色、Logo、图标、棋盘和弹窗全部状态。\n通过  资源完整，主题与尺寸统一；没有参考产品品牌或遗漏占位素材。",
+      "originalRequirementIDs": [
+        "ART-01"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "现有原创角色增加两种胜利和一种失败的有限姿态演出，不使用参考产品资产；正式素材全集/尺寸验收仍未完成。",
+      "evidence": [
+        "Validation/original-0225-feedback.json",
+        "Docs/original-feel-0225/manifest.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "ART-01"
+      ]
+    },
+    {
+      "id": "14-03",
+      "title": "游戏奖励动效与降级",
+      "originalAcceptanceText": "操作  触发正确、错误、Combo、通关及签到动效。\n通过  与业务状态同步，不阻碍后续操作；轻量特效在低性能设备可降级。",
+      "originalRequirementIDs": [
+        "ART-02"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "FEEL-05／FEEL-06的Demo实现补齐：新盘0.56秒、整盘庆祝0.78秒、完整结果角色、三档Combo、道具按下和飞镜；减少动态效果/低电量简化，33项新增测试纳入最终391项App并通过，14张图已逐张目视通过，真实Root与组件/合成棋盘范围分别记录。",
+      "evidence": [
+        "Validation/original-0225-feedback.json",
+        "Docs/original-feel-0225/manifest.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "ART-02"
+      ]
+    },
+    {
+      "id": "16-03",
+      "title": "最终构建全部问题复验",
+      "originalAcceptanceText": "操作  在最终构建复测所有失败用例及受影响流程。\n通过  每个Bug均有关联修复版本、复测结论和证据，旧版本通过不能代替复测。",
+      "originalRequirementIDs": [
+        "TECH-07"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "本轮全量391项App（33项新增）一次通过，0失败、0跳过，耗时139.158秒；17e四项UI通过，0失败、0跳过，耗时146.975秒，无重复测试动作；教学使用当前包L1，另外三项为既有固定夹具。14张图已逐张目视通过：4张为当前包第6关实际Root页面，1张为中英Combo组件，4张为结果角色组件／宿主，5张为合成4×4棋盘。0.2.25（28）已由设备查询确认，经局域网保留数据覆盖安装并无参数正常启动；安装前后8份已观察文件逐字节一致，主/备存档校验有效。启动后仅四个集合字段的存储顺序变化，排序后完整玩家状态一致，139条历史事件及身份保持；物理手势、触觉及完整真机试玩仍待验。177项Core沿用0.2.24历史证据，不扩大本轮验收。",
+      "evidence": [
+        "Validation/original-0225-feedback.json",
+        "Docs/original-feel-0225/manifest.json",
+        "Validation/test-runs/original-0225-app.xcresult",
+        "Validation/test-runs/original-0225-17e-ui.xcresult",
+        "Validation/original-0225-physical-install.json"
+      ],
+      "thisRoundRequirementIDs": [
+        "TECH-07"
+      ]
+    }
+  ]
+}

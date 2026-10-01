@@ -76,7 +76,7 @@ final class GameRewardPresentationTests: XCTestCase {
         entrance.update(sessionID: id, status: .playing, animate: true)
         XCTAssertFalse(entrance.shows(sessionID: id, status: .won, animate: true))
         entrance.update(sessionID: id, status: .won, animate: true)
-        clock.advance(0.47)
+        clock.advance(0.81)
         XCTAssertFalse(entrance.shows(sessionID: id, status: .won, animate: true))
         clock.advance(0.01)
         XCTAssertTrue(entrance.shows(sessionID: id, status: .won, animate: true))
@@ -164,7 +164,7 @@ final class GameFeelVisualTests: XCTestCase {
         try await Task.sleep(nanoseconds: 150_000_000)
         XCTAssertNotNil(frames["result_primary_action"], "Result actions must precede the decoration window.")
         capture("final-move-before-result")
-        try await Task.sleep(nanoseconds: 550_000_000)
+        try await Task.sleep(nanoseconds: 750_000_000)
         capture("win-celebration")
         XCTAssertEqual(model.session?.found.count, solution.count)
     }

@@ -1,0 +1,54 @@
+{
+  "build": "0.2.25 (28)",
+  "timestampUTC": "2026-10-01T09:26:19.699400+00:00",
+  "device": {
+    "model": "iPhone 14 Pro Max",
+    "os": "26.3.1",
+    "transport": "localNetwork"
+  },
+  "package": {
+    "version": "0.2.25",
+    "build": "28",
+    "bundle": "com.capydoku.demo",
+    "profileIncludesPhone": true,
+    "profileExpiresUTC": "2026-10-08 04:04:05",
+    "binarySHA256": "e5949afbc02fc6043369a83413e0df42faa2a4d3cdc7e73c7ffd1466fde050b4"
+  },
+  "signature": {
+    "strictVerification": true,
+    "buildLog": "Validation/test-runs/original-0225-physical-build.log",
+    "signatureLog": "Validation/test-runs/original-0225-codesign.log"
+  },
+  "installation": {
+    "passed": true,
+    "resetOrUninstall": false,
+    "normalBundleIdentifier": "com.capydoku.demo",
+    "verifiedVersion": "0.2.25",
+    "verifiedBuild": "28",
+    "result": "Validation/test-runs/physical-0225-install.json"
+  },
+  "launch": {
+    "passed": true,
+    "noTestArguments": true,
+    "terminatedExistingProcess": false,
+    "result": "Validation/test-runs/physical-0225-launch.json"
+  },
+  "data": {
+    "observedFiles": 8,
+    "allFilesIdentical": true,
+    "validPrimaryAndBackupChecksumsAllThreeSnapshots": true,
+    "historicalEventsUnchanged": 139,
+    "eventsAfterLaunch": 139,
+    "identityNamespaceUnchanged": true,
+    "postLaunchFullPlayerEquality": false,
+    "evidence": [
+      "Validation/test-runs/physical-0225-install-data-check.json",
+      "Validation/test-runs/physical-0225-before-copy.json",
+      "Validation/test-runs/physical-0225-after-install-copy.json",
+      "Validation/test-runs/physical-0225-after-launch-copy.json"
+    ],
+    "postLaunchAllPlayerFieldsEqualAfterDeclaredSetOrdering": true,
+    "comparisonNote": "After launch, the only JSON differences are ordering of four Swift Set fields: completedLevels, freeToolGrantedLevels, session.found and session.marks. Sorting only those declared Set arrays yields exact equality of the entire player payload; no other field is excluded. All 139 historical local events remain exactly equal."
+  },
+  "acceptanceBoundary": "Development installation, normal launch and install-time data preservation verified. No supervised physical gesture/haptic/audio acceptance, TestFlight or App Store upload. Private user/device identifiers omitted."
+}

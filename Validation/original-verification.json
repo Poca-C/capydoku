@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "date": "2026-10-01",
-  "build": "0.2.24 (27)",
+  "build": "0.2.25 (28)",
   "status": "Partial original-spec alignment; remaining client, reference and release gaps open.",
   "originalSHA256": "274bbf15f031bd80bb8b360cf14c0266acff370a230d9cad1b1785461df54dd2",
   "currentPackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49",
@@ -12,7 +12,7 @@
       "iPhone 17 Pro",
       "iPhone 17e"
     ],
-    "realDevice": "KKKiPhone / iPhone 14 Pro Max / iOS 26.3.1: wireless installation of 0.2.21 (24) and launch confirmed. Initial automatic launch was blocked pending developer trust; after the user confirmed trust and manually opened it, a read-only query verified the Capydoku process (PID 11651). Full physical gameplay and targeted regression remain unverified.",
+    "realDevice": "iPhone14 Pro Max / iOS26.3.1: 0.2.25 (28) wireless development installation and normal launch confirmed, install-time data preserved. Complete supervised physical gameplay and haptic/audio acceptance remain unverified.",
     "minimumOSRuntime": "not tested; compile target iOS 15"
   },
   "core": {
@@ -681,6 +681,26 @@
       "uiTestsPassed": 4,
       "failed": 0,
       "scope": "Tutorial uses current packaged L1. Other three use a preserved deterministic fixture; not all-150 current-pack playthrough. Four distinct cases; accidental second test action repeats those four, also passed. Full log retains both; not eight distinct cases."
+    },
+    {
+      "build": "0.2.25 (28)",
+      "device": "iPhone 17 Pro",
+      "bundle": "Validation/test-runs/original-0225-app.xcresult",
+      "appTestsPassed": 391,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 139.158,
+      "scope": "All CapydokuAppTests without exclusions. 33 new cases: 7 board scene, 7 result character, 13 committed scene event and 6 result/direct/Combo/current-pack Root integration cases. First full run passed."
+    },
+    {
+      "build": "0.2.25 (28)",
+      "device": "iPhone 17e",
+      "bundle": "Validation/test-runs/original-0225-17e-ui.xcresult",
+      "uiTestsPassed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 146.975,
+      "scope": "Tutorial uses current packaged L1. Other three use a preserved deterministic fixture; not all-150 current-pack playthrough. Four unique cases, a single test action."
     }
   ],
   "visualEvidence": {
@@ -706,15 +726,15 @@
   ],
   "historicalFailuresRetained": "Initial UI/app runs and first full-core run failed on changed fixture assumptions or real UI issues; these are retained under Validation/test-runs. Only explicitly listed successful reruns count. Old 88-item checklist completion counts are superseded.",
   "applicationTests": {
-    "build": "0.2.24 (27)",
+    "build": "0.2.25 (28)",
     "device": "iPhone 17 Pro simulator / iOS 26.5",
-    "passed": 358,
+    "passed": 391,
     "failed": 0,
     "skipped": 0,
-    "seconds": 131.2,
-    "scope": "All CapydokuAppTests without exclusions. 31 new cases: 13 board guidance/lifecycle, 6 expression normalization/lifecycle, 11 HUD event-state and 1 current-pack Root visual integration.",
-    "bundle": "Validation/test-runs/original-0224-app-r2.xcresult",
-    "log": "Validation/test-runs/original-0224-app-r2.log"
+    "seconds": 139.158,
+    "scope": "All CapydokuAppTests without exclusions. 33 new cases: 7 board scene, 7 result character, 13 committed scene event and 6 result/direct/Combo/current-pack Root integration cases. First full run passed.",
+    "bundle": "Validation/test-runs/original-0225-app.xcresult",
+    "log": "Validation/test-runs/original-0225-app.log"
   },
   "supersededOrInterruptedRuns": [
     "reward-readiness-final was intentionally interrupted to stop two runners targeting one simulator; not counted as success.",
@@ -757,13 +777,13 @@
     }
   ],
   "buildVerification": {
-    "bundleVersion": "0.2.24 (27)",
-    "simulatorDebug": "passed locally signed, 358 full App tests and 4 distinct selected UI tests",
+    "bundleVersion": "0.2.25 (28)",
+    "simulatorDebug": "passed locally signed, all391 App tests and4 selected UI tests",
     "physicalDebugSigned": "fresh build passed strict codesign verification; matching phone included in profile",
-    "physicalBuildLog": "Validation/test-runs/original-0224-physical-build.log",
-    "physicalInstallEvidence": "Validation/original-0224-physical-install.json",
-    "physicalInstall": "installed 0.2.24 (27) over local network; normal launch succeeded, all eight observed app-data files preserved byte-for-byte across installation",
-    "genericIOSReleaseUnsigned": "not rerun this version; latest evidence 0.2.21",
+    "physicalBuildLog": "Validation/test-runs/original-0225-physical-build.log",
+    "physicalInstallEvidence": "Validation/original-0225-physical-install.json",
+    "physicalInstall": "0.2.25 (28) installed and normally launched over local network without uninstall/reset/test arguments. All eight observed files identical across install, all primary/backup checksums valid. After launch all player fields equal after ordering only the four declared Swift Set arrays; all 139 historical events and identity unchanged.",
+    "genericIOSReleaseUnsigned": "not rerun this version; latest evidence0.2.21",
     "normalSimulatorInstall": "Test bundles installed by Xcode use dedicated test data directories; no normal saved-game simulator install claimed this round."
   },
   "audioContract": {
@@ -1034,6 +1054,17 @@
       "scope": "All CapydokuAppTests, no exclusions; 8 new cases covering cell accents, cancellation/reduced motion, in-flight captures and wrong-cell transition.",
       "bundle": "Validation/test-runs/original-0223-app-final.xcresult",
       "log": "Validation/test-runs/original-0223-app-final.log"
+    },
+    {
+      "build": "0.2.24 (27)",
+      "device": "iPhone 17 Pro simulator / iOS 26.5",
+      "passed": 358,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 131.2,
+      "scope": "All CapydokuAppTests without exclusions. 31 new cases: 13 board guidance/lifecycle, 6 expression normalization/lifecycle, 11 HUD event-state and 1 current-pack Root visual integration.",
+      "bundle": "Validation/test-runs/original-0224-app-r2.xcresult",
+      "log": "Validation/test-runs/original-0224-app-r2.log"
     }
   ],
   "remoteConfigurationContract": {
@@ -1811,6 +1842,16 @@
       "physicalInstall": "not attempted: paired device tunnel unavailable",
       "genericIOSReleaseUnsigned": "not rerun this version; latest evidence 0.2.21",
       "normalSimulatorInstall": "Test bundles installed by Xcode use dedicated test data directories; no normal saved-game install claimed this round."
+    },
+    {
+      "bundleVersion": "0.2.24 (27)",
+      "simulatorDebug": "passed locally signed, 358 full App tests and 4 distinct selected UI tests",
+      "physicalDebugSigned": "fresh build passed strict codesign verification; matching phone included in profile",
+      "physicalBuildLog": "Validation/test-runs/original-0224-physical-build.log",
+      "physicalInstallEvidence": "Validation/original-0224-physical-install.json",
+      "physicalInstall": "installed 0.2.24 (27) over local network; normal launch succeeded, all eight observed app-data files preserved byte-for-byte across installation",
+      "genericIOSReleaseUnsigned": "not rerun this version; latest evidence 0.2.21",
+      "normalSimulatorInstall": "Test bundles installed by Xcode use dedicated test data directories; no normal saved-game simulator install claimed this round."
     }
   ],
   "feedbackCorrection": {
@@ -3173,5 +3214,22 @@
       "FEEL-06: staggered board entrance and direct-tool anticipation/acknowledgement.",
       "Original audio files and timing; supervised physical gesture/haptic/Reduce Motion review and measured frame rate."
     ]
+  },
+  "feedbackUpdate0225": {
+    "evidence": "Validation/original-0225-feedback.json",
+    "checklistDelta": "Validation/checklist-0225-feedback-delta.json",
+    "referenceObservation": "Validation/meowdoku-playtest-comparison-0223.json",
+    "visualManifest": "Docs/original-feel-0225/manifest.json",
+    "physicalInstall": "Validation/original-0225-physical-install.json",
+    "feedbackScope": {
+      "FEEL-05": "demo_implemented_locally_verified_formal_reference_pending",
+      "FEEL-06": "demo_implemented_locally_verified_formal_reference_pending"
+    },
+    "remainingFeedbackWork": [
+      "Original audio files and timing, or explicit user authorization for temporary original substitutes. No reply to that choice has been received.",
+      "Supervised physical gesture/haptic/Reduce Motion review, measured frame rate and frozen reference timing remain unverified.",
+      "Production services, frozen reference/difficulty configuration, complete release and App Store gates remain outside this scoped feedback completion."
+    ],
+    "coreEvidenceBoundary": "Core source and fixed150 pack unchanged; latest177-case result remains dated0.2.24, not rerun or relabeled."
   }
 }

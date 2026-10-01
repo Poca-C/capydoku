@@ -1,0 +1,111 @@
+{
+  "build": "0.2.25 (28)",
+  "sourceBundle": "Validation/test-runs/original-0225-app.xcresult",
+  "device": "iPhone 17 Pro simulator / iOS 26.5",
+  "method": "Unmodified XCTest live-host screenshots; all 14 exported images viewed. Filename times describe requested sampling delays, not independently measured exact capture instants.",
+  "review": {
+    "passed": true,
+    "observations": [
+      "Current packaged level 6 shows diagonally staggered tiles, committed direct-tool lens/target ring and local score, full-board happy celebration, an immediately available next-level action, and the following Chinese result presentation.",
+      "Three Combo tiers are visually distinct and readable in Chinese/English within the dedicated feedback band.",
+      "Two victory variants have side stars or a star crown; failure has distinct sad artwork with finite bow/sigh presentation. Transparent component captures are shown against black by the viewer, not an opaque app background.",
+      "Board-component samples show leading/following tile reveal, celebration and settled state; no geometry overflow was observed."
+    ],
+    "scope": {
+      "currentPackRootImages": 4,
+      "comboContactSheetImages": 1,
+      "resultComponentImages": 4,
+      "boardFixtureImages": 5
+    },
+    "limitations": [
+      "Component/fixture evidence is not a complete current-level-pack playthrough.",
+      "Screenshots and animation assertions do not establish measured frame rate, original-reference timing, audio or physical haptic feel."
+    ]
+  },
+  "images": [
+    {
+      "file": "Docs/original-feel-0225/board-victory-850ms-settled.png",
+      "test": "BoardSceneFeedbackTests/testActualHostShowsEntranceWaveAndVisibleWinSequenceWithoutChangingCommittedState()",
+      "sha256": "502c9fe7be9ee65f27d90e4c234da1343826fae82535ec2497a0972baa2701bc",
+      "reviewed": true
+    },
+    {
+      "file": "Docs/original-feel-0225/board-victory-500ms-last-animal-cheer.png",
+      "test": "BoardSceneFeedbackTests/testActualHostShowsEntranceWaveAndVisibleWinSequenceWithoutChangingCommittedState()",
+      "sha256": "a7753e02f091e458d7df304fb0f14a1820186114b9d8adbdd1c80a740253b4ff",
+      "reviewed": true
+    },
+    {
+      "file": "Docs/original-feel-0225/board-victory-140ms-warmth-and-first-cheers.png",
+      "test": "BoardSceneFeedbackTests/testActualHostShowsEntranceWaveAndVisibleWinSequenceWithoutChangingCommittedState()",
+      "sha256": "c2f74e4541cb7be8fe87c3c25f50d86725adb571893b8f066e58ea22f98c1443",
+      "reviewed": true
+    },
+    {
+      "file": "Docs/original-feel-0225/board-entrance-300ms-following-tiles.png",
+      "test": "BoardSceneFeedbackTests/testActualHostShowsEntranceWaveAndVisibleWinSequenceWithoutChangingCommittedState()",
+      "sha256": "cb2cc69b0dbb436f6fd475273f1f44af62cef571a9147fe68fed6accea30642c",
+      "reviewed": true
+    },
+    {
+      "file": "Docs/original-feel-0225/board-entrance-090ms-leading-tiles.png",
+      "test": "BoardSceneFeedbackTests/testActualHostShowsEntranceWaveAndVisibleWinSequenceWithoutChangingCommittedState()",
+      "sha256": "9a41329fdf6f10321f859a4c6b781abf8d7313d7009d44fe8f264ba76ed54785",
+      "reviewed": true
+    },
+    {
+      "file": "Docs/original-feel-0225/current-level-6-result-character-1070ms.png",
+      "test": "CompletionFeedbackTests/testCurrentPackRootDirectAndCompleteBoardCaptureWithImmediateNextAction()",
+      "sha256": "67dff61b8cf9a84fbef07198a7915b056facf8751f10e0803b4cc1ddc531adfb",
+      "reviewed": true
+    },
+    {
+      "file": "Docs/original-feel-0225/current-level-6-full-board-victory-220ms.png",
+      "test": "CompletionFeedbackTests/testCurrentPackRootDirectAndCompleteBoardCaptureWithImmediateNextAction()",
+      "sha256": "259cd8bdc92753efdc2ddfa6a14d31ca5c71fcf4be9b0f27364f42bf34fdd277",
+      "reviewed": true
+    },
+    {
+      "file": "Docs/original-feel-0225/current-level-6-direct-tool-120ms.png",
+      "test": "CompletionFeedbackTests/testCurrentPackRootDirectAndCompleteBoardCaptureWithImmediateNextAction()",
+      "sha256": "251d185276d26f177df272052605eb6ffff97e0a7231f0dd8c50ee5b8079a099",
+      "reviewed": true
+    },
+    {
+      "file": "Docs/original-feel-0225/current-level-6-staggered-entry-120ms.png",
+      "test": "CompletionFeedbackTests/testCurrentPackRootDirectAndCompleteBoardCaptureWithImmediateNextAction()",
+      "sha256": "e699b5fe9aed66fa1849ea2bfe63fb8761c8e578f7bd024c15ab55f90e1a95f3",
+      "reviewed": true
+    },
+    {
+      "file": "Docs/original-feel-0225/combo-three-tiers-chinese-english.png",
+      "test": "CompletionFeedbackTests/testThreeComboTiersFitDedicatedBandInChineseEnglishAndReducedMotion()",
+      "sha256": "fad6206e73074abf1413a8c181b55e51cdf120236f6e0c3a9a57fbc7de4ea595",
+      "reviewed": true
+    },
+    {
+      "file": "Docs/original-feel-0225/result-character-settled-host-with-action.png",
+      "test": "ResultCharacterTests/testActualHostShowsThreeDistinctPerformancesWithinBoundsAndSettlesExactly()",
+      "sha256": "89ed68c481366691fa1a824ef29c7f7314913327f37d551be35e927a72d6355f",
+      "reviewed": true
+    },
+    {
+      "file": "Docs/original-feel-0225/result-character-loss-bow-and-sigh-310ms.png",
+      "test": "ResultCharacterTests/testActualHostShowsThreeDistinctPerformancesWithinBoundsAndSettlesExactly()",
+      "sha256": "20feacbd6341870c5d23e82385e5c14ac1c7d55dde00ed9d5d6a8c75b5d4ea00",
+      "reviewed": true
+    },
+    {
+      "file": "Docs/original-feel-0225/result-character-win-proud-star-crown-310ms.png",
+      "test": "ResultCharacterTests/testActualHostShowsThreeDistinctPerformancesWithinBoundsAndSettlesExactly()",
+      "sha256": "cab0f9b33e4e649cf317e15647056415341bb516b0cebfe6aa729c285dbc1504",
+      "reviewed": true
+    },
+    {
+      "file": "Docs/original-feel-0225/result-character-win-double-bounce-310ms.png",
+      "test": "ResultCharacterTests/testActualHostShowsThreeDistinctPerformancesWithinBoundsAndSettlesExactly()",
+      "sha256": "3982f3c86a516c13359e09b10cdf6b763649685b3efdc32983b273c7e200af24",
+      "reviewed": true
+    }
+  ]
+}

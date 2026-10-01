@@ -4,23 +4,33 @@ import CapydokuCore
 enum AppScreen { case home, game, checkIn }
 enum AppSheet: String, Identifiable { case settings, debug, reward; var id: String { rawValue } }
 
+struct DirectRevealFeedback: Equatable {
+    let id = UUID()
+    let sessionID: UUID
+    let cell: Int
+}
+
 @MainActor
 final class AppModel: ObservableObject {
     @Published var progress = PlayerProgress()
+    // Presentation receipts are deliberately absent from PlayerProgress. A cold
+    // restore or a return from Home must never look like a freshly generated board.
+    @Published private(set) var boardEntranceID: UUID?
+    @Published private(set) var directRevealFeedback: DirectRevealFeedback?
     @Published var screen: AppScreen = .home { didSet {
-        if screen != .game { boardInputOwners.removeAll() }
+        if screen != .game { boardInputOwners.removeAll(); clearSceneFeedback() }
         syncFeedbackState(); restoreSavedHint(); schedulePendingLevelStart()
     } }
-    @Published var sheet: AppSheet? { didSet { syncFeedbackState(); if sheet == nil { restoreSavedHint() }; schedulePendingLevelStart() } }
-    @Published private(set) var hint: PuzzleHint? { didSet { syncFeedbackState(); schedulePendingLevelStart() } }
-    @Published var loading = false { didSet { syncFeedbackState(); if !loading { restoreSavedHint() }; schedulePendingLevelStart() } }
-    @Published var notice: String? { didSet { syncFeedbackState(); schedulePendingLevelStart() } }
-    @Published var errorMessage: String? { didSet { syncFeedbackState(); schedulePendingLevelStart() } }
+    @Published var sheet: AppSheet? { didSet { if sheet != nil { clearSceneFeedback() }; syncFeedbackState(); if sheet == nil { restoreSavedHint() }; schedulePendingLevelStart() } }
+    @Published private(set) var hint: PuzzleHint? { didSet { if hint != nil { clearSceneFeedback() }; syncFeedbackState(); schedulePendingLevelStart() } }
+    @Published var loading = false { didSet { if loading { clearSceneFeedback() }; syncFeedbackState(); if !loading { restoreSavedHint() }; schedulePendingLevelStart() } }
+    @Published var notice: String? { didSet { if notice != nil { clearSceneFeedback() }; syncFeedbackState(); schedulePendingLevelStart() } }
+    @Published var errorMessage: String? { didSet { if errorMessage != nil { clearSceneFeedback() }; syncFeedbackState(); schedulePendingLevelStart() } }
     @Published var rewardKind: RewardKind = .hint
     @Published var rewardScenario: RewardScenario = .success
-    @Published var rewardBusy = false { didSet { schedulePendingLevelStart() } }
-    @Published var interstitialBusy = false { didSet { schedulePendingLevelStart() } }
-    @Published var challengePending = false { didSet { syncFeedbackState(); schedulePendingLevelStart() } }
+    @Published var rewardBusy = false { didSet { if rewardBusy { clearSceneFeedback() }; schedulePendingLevelStart() } }
+    @Published var interstitialBusy = false { didSet { if interstitialBusy { clearSceneFeedback() }; schedulePendingLevelStart() } }
+    @Published var challengePending = false { didSet { if challengePending { clearSceneFeedback() }; syncFeedbackState(); schedulePendingLevelStart() } }
     @Published private(set) var referenceConfiguration: ReferenceGameplayConfiguration?
     @Published private(set) var lastGenerationReport: GenerationPipelineReport?
     private var winTransitionID: UUID?
@@ -274,6 +284,7 @@ final class AppModel: ObservableObject {
     var tutorialCount: Int { session.map { PuzzleHints.tutorial(puzzle: $0.puzzle, version: progress.tutorialPlanVersion).count } ?? 0 }
 
     func loadProgress() {
+        clearSceneFeedback()
         pendingLevelStartID = nil
         flushPendingSaves(); saveRevision += 1
         rewardDeadline?.cancel(); rewardDeadline = nil
@@ -501,11 +512,12 @@ final class AppModel: ObservableObject {
 
     func start(level: Int) {
         guard !loading else { return }
+        clearSceneFeedback()
         pendingLevelStartID = nil
         hint = nil; pendingHintAppearance = nil
         if let puzzle = levels[level] {
             progress.begin(puzzle: puzzle, config: configuration(for: level))
-            screen = .game; save(); trackLevelStart(); preloadRewardPlacementsIfNeeded(); return
+            screen = .game; save(); publishBoardEntrance(); trackLevelStart(); preloadRewardPlacementsIfNeeded(); return
         }
         guard level >= 151 && level <= 100_000 else {
             errorMessage = "This level is not included in the demo pack."; return
@@ -564,7 +576,7 @@ final class AppModel: ObservableObject {
                         }
                         self.progress = candidate
                         self.hint = nil; self.pendingHintAppearance = nil
-                        self.screen = .game; self.trackLevelStart(); self.preloadRewardPlacementsIfNeeded()
+                        self.screen = .game; self.publishBoardEntrance(); self.trackLevelStart(); self.preloadRewardPlacementsIfNeeded()
                     } catch {
                         self.errorMessage = "Generation stopped safely. Your current board is intact. Please retry. \(error.localizedDescription)"
                     }
@@ -769,7 +781,7 @@ final class AppModel: ObservableObject {
         // Settings is also reachable from Home. Restart opens the reset board
         // before recording the new playable attempt (original [291], [364]).
         screen = .game
-        save(); trackLevelStart()
+        save(); publishBoardEntrance(); trackLevelStart()
     }
 
     private func tutorialAllows(_ action: String, cells: [Int]) -> Bool {
@@ -840,16 +852,17 @@ final class AppModel: ObservableObject {
         let source = progress.nextDirectSource
         flushPendingSaves(); saveRevision += 1
         do {
-            let revealed = try store.transaction(progress: &progress) { candidate -> Bool in
+            let revealed = try store.transaction(progress: &progress) { candidate -> Int? in
                 let before = candidate.availableDirect
-                guard candidate.directFind() != nil else { return false }
+                guard let cell = candidate.directFind() else { return nil }
                 stageBuff("direct_find", key: UUID().uuidString, applied: true, before: before,
                           after: candidate.availableDirect, source: source, in: &candidate)
                 if candidate.finishWin() { stageLevelEnd(.win, in: &candidate) }
-                return true
+                return cell
             }
-            guard revealed else { return }
+            guard let revealed else { return }
             lastDirectTime = time
+            publishDirectReveal(cell: revealed)
             if source == nil { unattributedToolUseCount += 1 }
             playRevealFeedback()
             if session?.status == .won { feedback.play(.win) }
@@ -1088,7 +1101,8 @@ final class AppModel: ObservableObject {
                 case .hintReady:
                     deferredRewardHintSessionID = session?.id
                     resumeConfirmedRewardHint()
-                case .directRevealed:
+                case .directRevealed(let cell):
+                    publishDirectReveal(cell: cell)
                     if screen == .game {
                         playRevealFeedback(acceptedIn: FeedbackEnvironment(page: .game, level: session?.puzzle.id))
                         if session?.status == .won { feedback.play(.win) }
@@ -1131,6 +1145,23 @@ final class AppModel: ObservableObject {
         active && startupFlowCompleted && screen == .game && !loading && !rewardBusy && !interstitialBusy &&
         !challengePending && sheet == nil && hint == nil && progress.activeHintUse == nil &&
         notice == nil && errorMessage == nil && session?.status == .playing
+    }
+
+    private func clearSceneFeedback() {
+        boardEntranceID = nil
+        directRevealFeedback = nil
+    }
+    private var canShowSceneFeedback: Bool {
+        active && screen == .game && sheet == nil && !loading && !rewardBusy && !interstitialBusy &&
+        !challengePending && hint == nil && notice == nil && errorMessage == nil
+    }
+    private func publishBoardEntrance() {
+        directRevealFeedback = nil
+        boardEntranceID = canShowSceneFeedback ? session?.id : nil
+    }
+    private func publishDirectReveal(cell: Int) {
+        guard canShowSceneFeedback, let session, session.found.contains(cell) else { return }
+        directRevealFeedback = DirectRevealFeedback(sessionID: session.id, cell: cell)
     }
 
     var boardInputInProgress: Bool {
@@ -1223,7 +1254,7 @@ final class AppModel: ObservableObject {
         }
     }
     func setActive(_ value: Bool) {
-        if !value { boardInputOwners.removeAll() }
+        if !value { boardInputOwners.removeAll(); clearSceneFeedback() }
         active = value; now = Date(); syncFeedbackState()
         if value { analytics.beginSession(source: "resume") } else { analytics.endSession(reason: "background") }
         flushInterstitialEvents()
