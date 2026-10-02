@@ -1,12 +1,12 @@
 # Capydoku · 原文对齐 Demo
 
-原生 Swift / SwiftUI iPhone 应用，默认简体中文、可在设置中切换 English、竖屏，最低编译目标 iOS 15。当前本地开发版本 **0.2.65（68）**，尚未达到正式验收或上架状态。0.2.65（68）已无线覆盖安装到iPhone，8个存档文件完全保留；远程启动被手机锁屏阻止，解锁后可手动打开。GitHub上传仍暂停。
+原生 Swift / SwiftUI iPhone 应用，默认简体中文、可在设置中切换 English、竖屏，最低编译目标 iOS 15。当前本地开发版本 **0.2.66（69）**，尚未达到正式验收或上架状态。0.2.66（69）已无线覆盖安装到iPhone，8个存档文件完全保留；手机仍锁屏，真机实际音频输出尚待解锁核对。GitHub上传仍暂停。
 
 ## 唯一需求基准
 
 以工作区原始《卡皮巴拉主题（Capydoku）区域逻辑小游戏需求说明 V1.3》的正文和内嵌截图为准。`Reference/Original/document.json` 保存源文件校验值与提取结果。后续报告及88条 Checklist只作核查，不能覆盖原文。用户于2026-10-01明确补充面向中文市场，语言条款按此更新为默认简体中文并内置英文切换；其他原文要求继续有效。0.1.x 的功能测试通过记录不证明符合原文。
 
-当前逐章对照与未完成项见 `Validation/original-conformance.md`；本轮进展与验证边界见 `Validation/original-0265-feedback.json`，综合历史记录保留在 `Validation/original-verification.json`。
+当前逐章对照与未完成项见 `Validation/original-conformance.md`；本轮音频修复与验证边界见 `Validation/original-0266-audio.json`，综合历史记录保留在 `Validation/original-verification.json`。
 
 ## 运行和试玩
 

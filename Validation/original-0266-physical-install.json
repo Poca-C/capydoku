@@ -1,0 +1,58 @@
+{
+  "build": "0.2.66 (69)",
+  "timestampUTC": "2026-10-02T02:05:14.727311+00:00",
+  "device": "iPhone 14 Pro Max / iOS 26.3.1 / localNetwork",
+  "package": {
+    "version": "0.2.66",
+    "build": "69",
+    "bundle": "com.capydoku.demo",
+    "binarySHA256": "552c1400d54b24c4b8229711e9cfeaf019dd0ac0636ca5be18ac1a65c878b5a3",
+    "signatureVerified": true
+  },
+  "installation": {
+    "passed": true,
+    "verifiedVersion": "0.2.66",
+    "verifiedBuild": "69",
+    "resetOrUninstall": false,
+    "evidence": "Validation/test-runs/physical-0266-install.json",
+    "appsEvidence": "Validation/test-runs/physical-0266-apps.json"
+  },
+  "data": {
+    "beforeFileCount": 8,
+    "afterFileCount": 8,
+    "allFilesIdentical": true,
+    "changedFiles": [],
+    "checksums": [
+      {
+        "snapshot": "before",
+        "file": "Capydoku/progress.backup.json",
+        "valid": true
+      },
+      {
+        "snapshot": "before",
+        "file": "Capydoku/progress.json",
+        "valid": true
+      },
+      {
+        "snapshot": "after",
+        "file": "Capydoku/progress.backup.json",
+        "valid": true
+      },
+      {
+        "snapshot": "after",
+        "file": "Capydoku/progress.json",
+        "valid": true
+      }
+    ]
+  },
+  "audioInventory": "Validation/test-runs/original-0266-audio-physical-inventory.json",
+  "launch": {
+    "status": "not_attempted_while_locked",
+    "passcodeRequired": true,
+    "userUnlockRequested": true
+  },
+  "physicalPlaybackVerified": false,
+  "physicalAudibilityConfirmedByUser": false,
+  "nextAction": "Unlock iPhone, launch the normal app without test arguments, then read Library/Caches/capydoku-audio-runtime.json. Ask user to confirm actual audibility; isPlaying alone cannot prove sound is heard.",
+  "githubPublished": false
+}

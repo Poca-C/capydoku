@@ -135,17 +135,17 @@ final class HapticFeedbackTests: XCTestCase {
         XCTAssertEqual(rig.driver.emissions, [.correct])
     }
 
-    @MainActor func testInterruptionDropsFeedbackAndDoesNotResumeWithoutPermission() {
+    @MainActor func testInterruptionDropsFeedbackUntilEndedThenAllowsNewActions() {
         let rig = HapticTestRig(); rig.enterGame(); rig.player.play(.mark)
         rig.player.handleInterruption(began: true, shouldResume: false)
         rig.player.play(.wrong); rig.player.playMarks(count: 3)
         rig.player.handleInterruption(began: false, shouldResume: false)
         rig.player.play(.correct)
-        XCTAssertEqual(rig.driver.emissions, [.selection])
+        XCTAssertEqual(rig.driver.emissions, [.selection, .correct])
         rig.player.handleInterruption(began: false, shouldResume: true)
-        XCTAssertEqual(rig.driver.emissions, [.selection])
+        XCTAssertEqual(rig.driver.emissions, [.selection, .correct])
         rig.player.play(.erase)
-        XCTAssertEqual(rig.driver.emissions, [.selection, .selection])
+        XCTAssertEqual(rig.driver.emissions, [.selection, .correct, .selection])
     }
 
     @MainActor func testHardwareIsPreparedOnlyForPlayableInputAndButtonsKeepTheirExistingPolicy() {

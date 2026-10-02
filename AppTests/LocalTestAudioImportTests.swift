@@ -4,6 +4,35 @@ import CryptoKit
 @testable import Capydoku
 
 final class LocalTestAudioImportTests: XCTestCase {
+    @MainActor func testActualAudioSessionStartsAndAdvancesBundledOriginalEffect() async throws {
+        guard LocalTestAudioImport.load() != nil else { throw XCTSkip("Local internal-test audio required") }
+        var handles: [AVAudioPlayer] = []
+        let player = FeedbackPlayer(playerFactory: { url in
+            guard let handle = try? AVAudioPlayer(contentsOf: url) else { return nil }
+            handles.append(handle); return handle
+        }, observeSystem: false)
+        defer { player.setBlocked(.background, active: true) }
+        player.apply(settings: .init(sound: true, haptic: false, voice: false, music: false))
+        player.setContext(page: .game, level: 2)
+        player.play(.correct)
+        let handle = try XCTUnwrap(handles.first)
+        XCTAssertTrue(handle.isPlaying, "Use the real AVAudioSession and AVAudioPlayer, not a success-returning mock")
+        try await Task.sleep(nanoseconds: 100_000_000)
+        XCTAssertGreaterThan(handle.currentTime, 0.02)
+        XCTAssertGreaterThan(handle.volume, 0)
+        let session = AVAudioSession.sharedInstance()
+        XCTAssertEqual(session.category, .playback, "Explicit local listening follows the in-game switch, including silent-ring mode")
+        XCTAssertTrue(session.categoryOptions.contains(.mixWithOthers))
+        print("REAL_AUDIO category=\(session.category.rawValue) options=\(session.categoryOptions.rawValue) outputVolume=\(session.outputVolume) time=\(handle.currentTime) playing=\(handle.isPlaying)")
+    }
+
+    @MainActor func testFormalAmbientPolicyUsesAValidCategoryWithoutExplicitMixOption() throws {
+        let policy = GameAudioSessionPolicy(localReferenceAudio: false)
+        XCTAssertTrue(policy.options.isEmpty)
+        try policy.configure()
+        XCTAssertEqual(AVAudioSession.sharedInstance().category, .ambient)
+    }
+
     private var directory: URL!
     override func setUpWithError() throws {
         directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)

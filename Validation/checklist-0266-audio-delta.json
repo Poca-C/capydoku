@@ -1,0 +1,39 @@
+{
+  "build": "0.2.66 (69)",
+  "sourceChecklist": "Validation/checklist-source.json",
+  "previousDelta": "Validation/checklist-0265-feedback-delta.json",
+  "formalSignOff": false,
+  "full88Reexecuted": false,
+  "rows": [
+    {
+      "id": "14-04",
+      "title": "原音频文件与触发验收",
+      "originalAcceptanceText": "操作  逐项触发按钮、X、滑动、撤销、正确错误及Combo声音。\n通过  文件、触发次数、节奏和分组符合冻结音频表；没有未经确认的额外声音。",
+      "baseAuditStatus": "pending",
+      "formalStatusAfterThisRound": "unchanged",
+      "evidence": [
+        "Validation/original-0266-audio.json"
+      ]
+    },
+    {
+      "id": "14-05",
+      "title": "音频叠加打断与恢复",
+      "originalAcceptanceText": "操作  快速操作并切前后台，测试外部播放前后及四个开关。\n通过  声音不失控叠加、不漏停或错误重播；恢复前次开关与播放状态。",
+      "baseAuditStatus": "partial",
+      "formalStatusAfterThisRound": "unchanged",
+      "evidence": [
+        "Validation/original-0266-audio.json"
+      ]
+    },
+    {
+      "id": "16-03",
+      "title": "最终构建全部问题复验",
+      "originalAcceptanceText": "操作  在最终构建复测所有失败用例及受影响流程。\n通过  每个Bug均有关联修复版本、复测结论和证据，旧版本通过不能代替复测。",
+      "baseAuditStatus": "partial",
+      "formalStatusAfterThisRound": "unchanged",
+      "evidence": [
+        "Validation/original-0266-audio.json"
+      ]
+    }
+  ]
+}

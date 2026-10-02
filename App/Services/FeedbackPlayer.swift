@@ -3,6 +3,25 @@ import UIKit
 
 enum FeedbackEvent: Equatable { case tap, mark, erase, correct, wrong, win, combo(Int) }
 
+struct GameAudioSessionPolicy {
+    let category: AVAudioSession.Category
+    let options: AVAudioSession.CategoryOptions
+    init(localReferenceAudio: Bool) {
+        // The explicitly enabled local listening experiment follows in-game
+        // switches even when the phone's ringer is silent. Ambient already
+        // mixes; explicitly passing mixWithOthers is not valid for that category.
+        category = localReferenceAudio ? .playback : .ambient
+        options = localReferenceAudio ? [.mixWithOthers] : []
+    }
+    func configure() throws {
+        try AVAudioSession.sharedInstance().setCategory(category, mode: .default, options: options)
+    }
+}
+
+private final class AudioRuntimeStatus {
+    var lastError: String?
+}
+
 @MainActor
 protocol AudioPlaybackHandle: AnyObject {
     var isPlaying: Bool { get }
@@ -81,10 +100,15 @@ final class FeedbackPlayer {
     private let haptics: HapticFeedbackPlayer
     private let suppressProductionAudio: Bool
     private let usesInjectedPlayer: Bool
+    private let outputPolicy: GameAudioSessionPolicy
+    private let runtimeStatus: AudioRuntimeStatus
+    private var playbackAttempts = 0
+    private static let diagnosticQueue = DispatchQueue(label: "com.capydoku.local-audio-diagnostics", qos: .utility)
     private(set) var environment = FeedbackEnvironment(page: .startup)
     private var blocks: Set<FeedbackAudioBlock> { environment.blocks }
     private var musicBlocked: Bool { !blocks.intersection([.paused, .advertisement, .background]).isEmpty }
     private var interrupted = false
+    private var musicRequiresUserResume = false
     private var sessionReady = false
     private var effects: [UUID: Playing] = [:]
     private var music: Playing?
@@ -117,6 +141,10 @@ final class FeedbackPlayer {
         let localImport = manifest == nil && !bundledManifest.referenceVerified ? LocalTestAudioImport.load() : nil
         self.manifest = manifest ?? localImport?.manifest ?? bundledManifest
         usesLocalTestAudio = localImport != nil
+        let outputPolicy = GameAudioSessionPolicy(localReferenceAudio: localImport != nil)
+        let runtimeStatus = AudioRuntimeStatus()
+        self.outputPolicy = outputPolicy
+        self.runtimeStatus = runtimeStatus
         resource = resourceResolver ?? { name in
             if let localImport { return localImport.resource(name) }
             guard let url = Bundle.main.url(forResource: name, withExtension: nil),
@@ -137,10 +165,11 @@ final class FeedbackPlayer {
         self.sessionControl = sessionControl ?? { active in
             do {
                 let session = AVAudioSession.sharedInstance()
-                if active { try session.setCategory(.ambient, mode: .default, options: [.mixWithOthers]) }
+                if active { try outputPolicy.configure() }
                 try session.setActive(active, options: active ? [] : [.notifyOthersOnDeactivation])
+                runtimeStatus.lastError = nil
                 return true
-            } catch { return false }
+            } catch { runtimeStatus.lastError = String(describing: error); return false }
         }
         usesInjectedPlayer = playerFactory != nil
         suppressProductionAudio = playerFactory == nil && Self.isTesting
@@ -159,6 +188,7 @@ final class FeedbackPlayer {
                 Task { @MainActor [weak self] in self?.handleMediaServicesReset() }
             })
         }
+        recordRuntime("initialized")
     }
     deinit { observers.forEach { NotificationCenter.default.removeObserver($0) } }
 
@@ -168,8 +198,8 @@ final class FeedbackPlayer {
         for (id, item) in effects where !enabled(item.clip) { stop(item); effects.removeValue(forKey: id) }
         if !settings.sound { endSwipe(cancelled: true) }
         if previous.music != settings.music {
-            let resumesExplicitly = settings.music && interrupted
-            if settings.music { interrupted = false } // Explicit user re-enable may resume after a non-resumable interruption.
+            let resumesExplicitly = settings.music && !interrupted && musicRequiresUserResume
+            if resumesExplicitly { musicRequiresUserResume = false }
             transition(settings.music ? .musicEnabled : .musicDisabled)
             if resumesExplicitly { requestEffectPreparation() }
         }
@@ -178,6 +208,7 @@ final class FeedbackPlayer {
             requestEffectPreparation()
         }
         syncHaptics()
+        recordRuntime("settings")
     }
     func setContext(page: FeedbackAudioPage, level: Int? = nil, overlay: FeedbackAudioOverlay = .none) {
         setEnvironment(FeedbackEnvironment(page: page, level: level, overlay: overlay, blocks: blocks))
@@ -215,6 +246,7 @@ final class FeedbackPlayer {
         }
         if music == nil { deactivateIfBlocked() }
         if !old.blocks.intersection([.paused, .advertisement, .background]).isEmpty && !musicBlocked { requestEffectPreparation() }
+        recordRuntime("context")
     }
     /// Call with separate reasons so ending an ad cannot unpause a backgrounded app.
     func setBlocked(_ reason: FeedbackAudioBlock, active: Bool) {
@@ -311,9 +343,16 @@ final class FeedbackPlayer {
     func handleInterruption(began: Bool, shouldResume: Bool) {
         sessionReady = false
         if began { interrupted = true; cancelTransient(); discardPreparedEffects(); transition(.interruptionBegan) }
-        else if shouldResume { interrupted = false; transition(.interruptionEnded); requestEffectPreparation() }
+        else {
+            interrupted = false
+            musicRequiresUserResume = !shouldResume
+            if shouldResume { transition(.interruptionEnded) }
+            requestEffectPreparation()
+        }
         syncHaptics()
-        // No shouldResume means no automatic restart, even if a later settings refresh occurs.
+        recordRuntime("interruption")
+        // No shouldResume prevents automatic music resumption, not new actions
+        // initiated by the player after the interruption has ended.
     }
     func handleMediaServicesReset() {
         cancelTransient(); discardPreparedEffects(); if let music { stop(music) }; music = nil
@@ -329,6 +368,7 @@ final class FeedbackPlayer {
         let accepted = context != nil
         guard trusted, !interrupted, let clip = manifest.clips[key], enabled(clip),
               (clip.group == .music || key == "button_tap" || accepted) ? !musicBlocked : blocks.isEmpty else { return nil }
+        if clip.group == .music && musicRequiresUserResume { return nil }
         let scope = accepted && clip.contextChange == .completeInTriggerScope ? context! : environment
         guard clip.scope.allows(page: scope.page, level: scope.level, overlay: scope.overlay) else { return nil }
         return clip
@@ -386,13 +426,17 @@ final class FeedbackPlayer {
         let handle: AudioPlaybackHandle
         if let cached { handle = cached.handle }
         else {
-            guard let url = resource(clip.file), let created = makePlayer(url) else { return nil }
+            guard let url = resource(clip.file), let created = makePlayer(url) else {
+                runtimeStatus.lastError = "Cannot open audio for \(key)"; recordRuntime("open-failed"); return nil
+            }
             handle = created
         }
         guard valid(handle, for: clip) else { return nil }
         handle.numberOfLoops = clip.loopRange == nil ? clip.loops : 0
         handle.currentTime = 0
-        if cached == nil, !handle.prepareToPlay() { return nil }
+        if cached == nil, !handle.prepareToPlay() {
+            runtimeStatus.lastError = "prepareToPlay failed for \(key)"; recordRuntime("prepare-failed"); return nil
+        }
         let playing = Playing(key: key, clip: clip, handle: handle, started: clock())
         if let cached { cached.leased = true; cached.ready = false; playing.prepared = cached }
         return playing
@@ -408,11 +452,11 @@ final class FeedbackPlayer {
         preparedPoolEnabled = true
         let generation = preparationGeneration
         guard trusted, !interrupted, !musicBlocked else { return }
-        // prepareToPlay may allocate audio resources. Configure ambient mixing
+        // prepareToPlay may allocate audio resources. Configure the same policy
         // before preparation so warming cannot adopt a default exclusive category.
         if !Self.isTesting && !usesInjectedPlayer {
-            do { try AVAudioSession.sharedInstance().setCategory(.ambient, mode: .default, options: [.mixWithOthers]) }
-            catch { return }
+            do { try outputPolicy.configure() }
+            catch { runtimeStatus.lastError = String(describing: error); recordRuntime("prepare-failed"); return }
         }
         let clips = manifest.clips.sorted { $0.key < $1.key }.map(\.value)
             .filter { $0.group != .music && $0.loops == 0 && enabled($0) }
@@ -474,13 +518,23 @@ final class FeedbackPlayer {
     }
     private func start(_ item: Playing, restart: Bool) {
         item.retired = false
-        guard prepareSession() else { return }
+        playbackAttempts += 1
+        guard prepareSession() else { recordRuntime("session-failed"); return }
         if restart { item.handle.currentTime = 0; item.remainingLoops = item.clip.loops }
         item.handle.volume = item.clip.fadeIn > 0 ? 0 : item.clip.volume
-        guard item.handle.play() else { return }
+        guard item.handle.play() else {
+            runtimeStatus.lastError = "AVAudioPlayer.play returned false for \(item.key)"
+            recordRuntime("play-failed"); return
+        }
         item.handle.setVolume(item.clip.volume, fadeDuration: item.clip.fadeIn)
         scheduleLoop(item)
         if item.clip.group != .music { scheduleEffectFadeOut(item) }
+        if playbackAttempts <= 12 { recordRuntime("playing:\(item.key)") }
+        #if DEBUG
+        if playbackAttempts == 1, !Self.isTesting {
+            _ = schedule(0.3) { [weak self] in self?.recordRuntime("playback-position") }
+        }
+        #endif
     }
     private func scheduleLoop(_ item: Playing) {
         item.loopTask?.cancel(); item.loopTask = nil
@@ -529,9 +583,42 @@ final class FeedbackPlayer {
         for (id, item) in pending where manifest.clips[item.key].map(obsolete) ?? true { item.task.cancel(); pending.removeValue(forKey: id) }
         for (id, item) in effects where obsolete(item.clip) { stop(item); effects.removeValue(forKey: id) }
     }
+
+    /// Bounded local debugging only. No identities, device names or telemetry;
+    /// one latest snapshot is written off the input thread, outside game saves.
+    private func recordRuntime(_ event: String) {
+        #if DEBUG
+        guard !Self.isTesting, !usesInjectedPlayer,
+              AppBuildConfiguration.current.environment == .demo,
+              let cache = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first else { return }
+        let session = AVAudioSession.sharedInstance()
+        let snapshot: [String: Any] = [
+            "version": Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "unknown",
+            "timestamp": Date().timeIntervalSince1970, "event": event,
+            "localAudioLoaded": usesLocalTestAudio, "trusted": trusted, "validationErrors": validationErrors,
+            "soundEnabled": settings.sound, "musicEnabled": settings.music, "voiceEnabled": settings.voice,
+            "page": environment.page.rawValue, "overlay": environment.overlay.rawValue,
+            "blocks": blocks.map(\.rawValue).sorted(), "interrupted": interrupted,
+            "musicRequiresUserResume": musicRequiresUserResume, "sessionReady": sessionReady,
+            "requestedCategory": outputPolicy.category.rawValue, "category": session.category.rawValue,
+            "categoryOptions": session.categoryOptions.rawValue, "outputVolume": session.outputVolume,
+            "outputPorts": session.currentRoute.outputs.map { $0.portType.rawValue },
+            "playbackAttempts": playbackAttempts, "musicPlaying": music?.handle.isPlaying ?? false,
+            "musicPosition": music?.handle.currentTime ?? 0,
+            "effectsPlaying": effects.values.filter { $0.handle.isPlaying }.map(\.key).sorted(),
+            "lastError": runtimeStatus.lastError ?? ""
+        ]
+        guard let data = try? JSONSerialization.data(withJSONObject: snapshot, options: [.sortedKeys, .prettyPrinted]) else { return }
+        Self.diagnosticQueue.async {
+            try? FileManager.default.createDirectory(at: cache, withIntermediateDirectories: true)
+            try? data.write(to: cache.appendingPathComponent("capydoku-audio-runtime.json"), options: .atomic)
+        }
+        #endif
+    }
+
     private func transition(_ event: AudioFlowEvent) {
         guard trusted, let clip = manifest.clips["background_music"], let action = manifest.musicAction(for: event) else { return }
-        let allowed = settings.music && !interrupted && !musicBlocked && clip.scope.allows(page: environment.page, level: environment.level, overlay: environment.overlay)
+        let allowed = settings.music && !interrupted && !musicRequiresUserResume && !musicBlocked && clip.scope.allows(page: environment.page, level: environment.level, overlay: environment.overlay)
         if action == .unchanged && allowed { return }
         musicTransitionTask?.cancel(); musicTransitionTask = nil
         if !allowed && action != .stop && action != .pause { pauseMusic(stop: false, fade: clip.fadeOut); return }

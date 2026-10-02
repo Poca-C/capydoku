@@ -1,0 +1,54 @@
+{
+  "build": "0.2.66 (69)",
+  "request": "User reports no sound at all on the physical iPhone after 0.2.65.",
+  "findings": [
+    "Physical saved music/sound/voice toggles were all true. All 9 unchanged original WAVs contain nonzero PCM samples.",
+    "Old ambient/mix setup follows ring-silent behavior; its explicit mix option is outside the installed SDK category contract, although an actual simulator AVAudioPlayer baseline did play successfully. It is not proven to be the phone failure cause.",
+    "Two reproducible interruption defects: an ended interruption without shouldResume blocked all subsequent user effects indefinitely; toggling music could bypass a still-active interruption."
+  ],
+  "changes": [
+    "Authorized Debug local listening uses playback plus mixWithOthers, controlled by in-game settings even when the ringer is silent. Other audio retains its route and can mix; formal ambient path uses no explicit mix option.",
+    "Separated active system interruption from waiting for user music resume. New sounds and haptics work after interruption ends; existing BGM stays paused until explicitly enabled if shouldResume was absent.",
+    "Added local Debug runtime snapshot of import/errors, effective switches, actual category, output volume/port type and player progress. No device or route names, user IDs, microphone recording or upload; writes only one Caches file off the input thread."
+  ],
+  "validation": {
+    "oldRealPlayback": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0266-real-audio-baseline-summary.json"
+    },
+    "oldInterruptionRegression": {
+      "passed": 0,
+      "failed": 2,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0266-interruption-baseline-summary.json"
+    },
+    "finalAudioRelated": {
+      "passed": 64,
+      "failed": 0,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0266-audio-final-summary.json"
+    },
+    "realPlayerResult": {
+      "category": "AVAudioSessionCategoryPlayback",
+      "options": 1,
+      "simulatorOutputVolume": 0.6,
+      "playing": true,
+      "progressSecondsAfter100ms": 0.08408163265306122,
+      "boundary": "Actual AVAudioSession/AVAudioPlayer on simulator; not injected success and not proof of the phone speaker being audible."
+    },
+    "physicalInstall": "Validation/original-0266-physical-install.json",
+    "audioInventory": "Validation/audio-isolation-0266-debug.json"
+  },
+  "originalAudioFilesChanged": false,
+  "levelPackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49",
+  "formalSignOff": false,
+  "fullChecklistReexecuted": false,
+  "githubPublished": false,
+  "references": [
+    "https://developer.apple.com/documentation/avfaudio/avaudiosession",
+    "https://developer.apple.com/library/archive/documentation/Audio/Conceptual/AudioSessionProgrammingGuide/HandlingAudioInterruptions/HandlingAudioInterruptions.html",
+    "Installed iPhoneOS SDK AVAudioSessionTypes.h:446-448"
+  ]
+}

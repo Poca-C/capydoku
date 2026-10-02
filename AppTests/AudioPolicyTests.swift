@@ -405,13 +405,8 @@ final class AudioPolicyTests: XCTestCase {
             if boundary == 3 {
                 player.handleInterruption(began: false, shouldResume: false)
                 await player.prepareShortEffects()
-                player.play(.mark); rig.clock.advance(0)
-                XCTAssertEqual(rig.handles.count, 1, "No automatic preparation or playback without shouldResume")
-                let warmed = expectation(description: "Explicit music re-enable rebuilds the short-effect cache")
-                rig.onPlayerCreated = { if rig.handles.count == 2 { warmed.fulfill() } }
-                player.apply(settings: .init(sound: true, haptic: false, voice: false, music: true))
-                await fulfillment(of: [warmed], timeout: 1)
-                rig.onPlayerCreated = nil
+                XCTAssertEqual(rig.handles.count, 2, "Ended interruptions allow preparation for a new user action")
+                XCTAssertEqual(rig.handles.map(\.playCount), [1, 0], "Preparing again cannot replay the interrupted effect")
             } else { await player.prepareShortEffects() }
             player.play(.mark); rig.clock.advance(0)
             XCTAssertEqual(rig.handles.count, 2)
@@ -669,5 +664,64 @@ final class AudioPolicyTests: XCTestCase {
         player.handleInterruption(began: true, shouldResume: false)
         player.handleInterruption(began: false, shouldResume: true); rig.clock.advance(1)
         XCTAssertFalse(rig.handles[1].isPlaying)
+    }
+
+    @MainActor func testEndedInterruptionAllowsNewEffectsWithoutAutomaticallyResumingMusic() throws {
+        var manifest = musicManifest()
+        var mark = clip("new-mark.wav"); mark.delay = 0; mark.minimumInterval = 0
+        manifest.clips["mark_x"] = mark
+        let rig = AudioTestRig(), player = rig.player(manifest)
+        player.setContext(page: .game, level: 1)
+        player.apply(settings: .init(sound: true, haptic: false, music: true))
+        rig.clock.advance(0)
+        let music = try XCTUnwrap(rig.handles.first)
+        player.handleInterruption(began: true, shouldResume: false)
+        rig.clock.advance(0.4)
+        player.handleInterruption(began: false, shouldResume: false)
+        player.apply(settings: .init(sound: true, haptic: false, music: true))
+        player.setContext(page: .home)
+        player.setBlocked(.background, active: true)
+        player.setBlocked(.background, active: false)
+        player.setContext(page: .game, level: 2)
+        rig.clock.advance(0)
+        XCTAssertFalse(music.isPlaying)
+        XCTAssertEqual(music.playCount, 1, "Lifecycle and settings refresh cannot automatically resume interrupted music")
+
+        player.play(.mark); rig.clock.advance(0)
+        XCTAssertEqual(rig.handles.count, 2, "A fresh accepted move after the interruption has ended needs its sound")
+        let effect = try XCTUnwrap(rig.handles.dropFirst().first)
+        XCTAssertTrue(effect.isPlaying)
+        XCTAssertEqual(effect.playCount, 1)
+        XCTAssertFalse(music.isPlaying, "A new effect must not implicitly resume the old music")
+
+        player.apply(settings: .init(sound: true, haptic: false, music: false))
+        player.apply(settings: .init(sound: true, haptic: false, music: true))
+        rig.clock.advance(0)
+        XCTAssertTrue(music.isPlaying)
+        XCTAssertEqual(music.playCount, 2, "Explicitly turning music on resumes the existing track")
+    }
+
+    @MainActor func testMusicSettingCannotLiftAnInterruptionThatIsStillActive() throws {
+        var manifest = musicManifest()
+        var mark = clip("new-mark.wav"); mark.delay = 0; mark.minimumInterval = 0
+        manifest.clips["mark_x"] = mark
+        let rig = AudioTestRig(), player = rig.player(manifest)
+        player.setContext(page: .game, level: 1)
+        player.apply(settings: .init(sound: true, haptic: false, music: true))
+        rig.clock.advance(0)
+        let music = try XCTUnwrap(rig.handles.first)
+        player.handleInterruption(began: true, shouldResume: false)
+        rig.clock.advance(0.4)
+        player.apply(settings: .init(sound: true, haptic: false, music: false))
+        player.apply(settings: .init(sound: true, haptic: false, music: true))
+        player.play(.mark); rig.clock.advance(0)
+        XCTAssertEqual(rig.handles.count, 1, "An active system interruption still blocks fresh effects")
+        XCTAssertFalse(music.isPlaying)
+        XCTAssertEqual(music.playCount, 1, "A settings action cannot override an ongoing system interruption")
+
+        player.handleInterruption(began: false, shouldResume: true)
+        rig.clock.advance(0)
+        XCTAssertTrue(music.isPlaying)
+        XCTAssertEqual(music.playCount, 2)
     }
 }
