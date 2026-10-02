@@ -1,5 +1,6 @@
 import XCTest
 import UIKit
+import SwiftUI
 @testable import Capydoku
 
 @MainActor private final class ResultCharacterClock {
@@ -50,6 +51,82 @@ import UIKit
 }
 
 final class ResultCharacterTests: XCTestCase {
+    @MainActor func testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts() async throws {
+        let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
+        let previous = scene.windows.first(where: \.isKeyWindow)
+        let window = UIWindow(windowScene: scene); window.frame = scene.coordinateSpace.bounds
+        window.overrideUserInterfaceStyle = .light
+        let background = UIColor(red: 0.18, green: 0.20, blue: 0.23, alpha: 1)
+        let host = UIHostingController(rootView: AnyView(Color(background)))
+        window.rootViewController = host; window.makeKeyAndVisible()
+        defer { window.isHidden = true; window.rootViewController = nil; previous?.makeKeyAndVisible() }
+        let frame = CGRect(x: 0, y: 0, width: 320, height: 360)
+        func pixels(_ image: UIImage) throws -> [UInt8] {
+            let source = try XCTUnwrap(image.cgImage)
+            var bytes = [UInt8](repeating: 0, count: source.width * source.height * 4)
+            let ok = bytes.withUnsafeMutableBytes { data -> Bool in
+                guard let context = CGContext(data: data.baseAddress, width: source.width, height: source.height,
+                    bitsPerComponent: 8, bytesPerRow: source.width * 4,
+                    space: CGColorSpace(name: CGColorSpace.sRGB)!,
+                    bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue | CGBitmapInfo.byteOrder32Big.rawValue) else { return false }
+                context.draw(source, in: CGRect(x: 0, y: 0, width: source.width, height: source.height)); return true
+            }
+            XCTAssertTrue(ok); return bytes
+        }
+        var observations: [[String: Any]] = []
+        for side: CGFloat in [140, 250] {
+            for performance in ResultCharacterPerformance.allCases {
+                func display(_ alpha: Double) async throws -> UIImage {
+                    host.rootView = AnyView(ResultCharacterView(won: performance != .gentleRetry,
+                        variant: performance == .starHug ? .proudCrown : .joyfulBounce, size: side,
+                        animationID: nil, presentationEnabled: false)
+                        .opacity(alpha).frame(width: frame.width, height: frame.height)
+                        .background(Color(background)).frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                        .background(Color(background)).ignoresSafeArea())
+                    host.view.layoutIfNeeded()
+                    try await Task.sleep(nanoseconds: 120_000_000)
+                    let format = UIGraphicsImageRendererFormat(); format.scale = window.screen.scale; format.opaque = true
+                    format.preferredRange = .standard
+                    var drawn = false
+                    let image = UIGraphicsImageRenderer(bounds: frame, format: format).image { _ in
+                        drawn = host.view.drawHierarchy(in: host.view.bounds, afterScreenUpdates: true)
+                    }
+                    XCTAssertTrue(drawn); return image
+                }
+                let full = try await display(1), actual = try await display(0.45)
+                // A flattened, fully assembled image is the visual oracle for
+                // fading once. It contains the same background, so its fade
+                // cannot reveal torso/arm artwork hidden by an opaque head.
+                let format = UIGraphicsImageRendererFormat(); format.scale = full.scale; format.opaque = true
+                format.preferredRange = .standard
+                let expected = UIGraphicsImageRenderer(bounds: frame, format: format).image { context in
+                    background.setFill(); context.fill(frame)
+                    full.draw(in: frame, blendMode: .normal, alpha: 0.45)
+                }
+                let a = try pixels(actual), e = try pixels(expected)
+                XCTAssertEqual(a.count, e.count)
+                var total = 0, largeErrors = 0, sum = 0
+                for offset in stride(from: 0, to: a.count, by: 4) {
+                    let difference = (0..<3).map { abs(Int(a[offset+$0])-Int(e[offset+$0])) }.max()!
+                    total += 1; sum += difference
+                    if difference > 12 { largeErrors += 1 }
+                }
+                let mean = Double(sum) / Double(total), fraction = Double(largeErrors) / Double(total)
+                observations.append(["performance": performance.rawValue, "side": side,
+                    "meanMaxChannelError": mean, "fractionAbove12": fraction])
+                for (name, image) in [("full", full), ("actual-fade", actual), ("assembled-fade", expected)] {
+                    let attachment = XCTAttachment(image: image)
+                    attachment.name = "result-composite-\(performance.rawValue)-\(Int(side))pt-\(name)"
+                    attachment.lifetime = .keepAlways; add(attachment)
+                }
+                XCTAssertLessThan(mean, 2, "\(performance) \(side)pt must fade as one assembled character.")
+                XCTAssertLessThan(fraction, 0.01, "Hidden parts must not become visible during the SwiftUI fade.")
+            }
+        }
+        let attachment = XCTAttachment(data: try JSONSerialization.data(withJSONObject: observations, options: [.prettyPrinted, .sortedKeys]), uniformTypeIdentifier: "public.json")
+        attachment.name = "result-composite-pixel-observations"; attachment.lifetime = .keepAlways; add(attachment)
+    }
+
     @MainActor func testActualCheerCompressesAfterGroundContactAndReboundsWithoutAnAirborneSquash() async throws {
         for side: CGFloat in [140, 168, 250] {
             let rig = try ResultCharacterRig(side: side); defer { rig.close() }

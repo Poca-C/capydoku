@@ -1,0 +1,44 @@
+[
+  {
+    "performance": "joyfulRaise",
+    "side": 140,
+    "meanMaxChannelError": 0.0,
+    "maxChannelError": 0,
+    "fractionAbove12": 0.0
+  },
+  {
+    "performance": "starHug",
+    "side": 140,
+    "meanMaxChannelError": 0.0,
+    "maxChannelError": 0,
+    "fractionAbove12": 0.0
+  },
+  {
+    "performance": "gentleRetry",
+    "side": 140,
+    "meanMaxChannelError": 0.0,
+    "maxChannelError": 0,
+    "fractionAbove12": 0.0
+  },
+  {
+    "performance": "joyfulRaise",
+    "side": 250,
+    "meanMaxChannelError": 0.0,
+    "maxChannelError": 0,
+    "fractionAbove12": 0.0
+  },
+  {
+    "performance": "starHug",
+    "side": 250,
+    "meanMaxChannelError": 0.0,
+    "maxChannelError": 0,
+    "fractionAbove12": 0.0
+  },
+  {
+    "performance": "gentleRetry",
+    "side": 250,
+    "meanMaxChannelError": 0.0,
+    "maxChannelError": 0,
+    "fractionAbove12": 0.0
+  }
+]

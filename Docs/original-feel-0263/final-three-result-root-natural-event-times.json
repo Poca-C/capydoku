@@ -1,0 +1,1079 @@
+{
+  "boundary" : "Actual Root with normal motion, real bundled L6 submissions through native board endpoints, six complete performances and one departure during entrance. No screenshot readback inside entrance\/exit fades; stable snapshots only. Event observation uses the live monotonic clock, not frame synchronization. This is not physical-touch, live-audio, FPS, exact reference-timing or grouped-opacity pixel verification; external recording has its own time origin.",
+  "fixtures" : [
+    {
+      "earlyExit" : false,
+      "events" : [
+        {
+          "event" : "mounted-playing-L6",
+          "found" : [
+
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 0,
+          "secondsFromSequenceStart" : 0.32736783334985375
+        },
+        {
+          "event" : "native-submit-0",
+          "found" : [
+            0
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 100,
+          "secondsFromSequenceStart" : 0.33372720843181014
+        },
+        {
+          "event" : "native-submit-8",
+          "found" : [
+            0,
+            8
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 220,
+          "secondsFromSequenceStart" : 0.42371104168705642
+        },
+        {
+          "event" : "native-submit-17",
+          "found" : [
+            0,
+            8,
+            17
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 360,
+          "secondsFromSequenceStart" : 0.50763716688379645
+        },
+        {
+          "event" : "native-submit-21",
+          "found" : [
+            0,
+            8,
+            17,
+            21
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 520,
+          "secondsFromSequenceStart" : 0.59473966667428613
+        },
+        {
+          "event" : "native-submit-25",
+          "found" : [
+            0,
+            8,
+            17,
+            21,
+            25
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 700,
+          "secondsFromSequenceStart" : 0.67771420837379992
+        },
+        {
+          "event" : "native-submit-34",
+          "found" : [
+            0,
+            8,
+            17,
+            21,
+            25,
+            34
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 900,
+          "secondsFromSequenceStart" : 0.76076629175804555
+        },
+        {
+          "event" : "terminal-committed",
+          "found" : [
+            0,
+            8,
+            17,
+            21,
+            25,
+            34
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 900,
+          "secondsFromSequenceStart" : 0.76080145849846303
+        },
+        {
+          "event" : "character-event-observed",
+          "found" : [
+            0,
+            8,
+            17,
+            21,
+            25,
+            34
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 900,
+          "secondsFromSequenceStart" : 1.6075232501607388
+        },
+        {
+          "event" : "settled-result-snapshot",
+          "found" : [
+            0,
+            8,
+            17,
+            21,
+            25,
+            34
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 900,
+          "secondsFromSequenceStart" : 3.2060753752011806
+        },
+        {
+          "event" : "leave-home",
+          "found" : [
+            0,
+            8,
+            17,
+            21,
+            25,
+            34
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 900,
+          "secondsFromSequenceStart" : 3.206175500061363
+        },
+        {
+          "event" : "home-continue",
+          "found" : [
+            0,
+            8,
+            17,
+            21,
+            25,
+            34
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 900,
+          "secondsFromSequenceStart" : 3.4992087918799371
+        },
+        {
+          "event" : "resumed-result-next",
+          "found" : [
+
+          ],
+          "level" : 7,
+          "lives" : 3,
+          "score" : 0,
+          "secondsFromSequenceStart" : 3.5092592916917056
+        },
+        {
+          "event" : "destination-mark-undo-first-find-accepted",
+          "found" : [
+            1
+          ],
+          "level" : 7,
+          "lives" : 3,
+          "score" : 100,
+          "secondsFromSequenceStart" : 3.5558490417897701
+        }
+      ],
+      "exitAction" : "home",
+      "fixture" : "three-results-402-joyful",
+      "height" : 874,
+      "observedEntranceDelaySeconds" : 0.84668291662819684,
+      "performance" : "joyful",
+      "sessionID" : "02000000-0000-4000-8000-000000000263",
+      "width" : 402
+    },
+    {
+      "earlyExit" : false,
+      "events" : [
+        {
+          "event" : "mounted-playing-L6",
+          "found" : [
+
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 0,
+          "secondsFromSequenceStart" : 4.3930752084124833
+        },
+        {
+          "event" : "native-submit-0",
+          "found" : [
+            0
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 100,
+          "secondsFromSequenceStart" : 4.3978216249961406
+        },
+        {
+          "event" : "native-submit-8",
+          "found" : [
+            0,
+            8
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 220,
+          "secondsFromSequenceStart" : 4.4826803752221167
+        },
+        {
+          "event" : "native-submit-17",
+          "found" : [
+            0,
+            8,
+            17
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 360,
+          "secondsFromSequenceStart" : 4.5714389584027231
+        },
+        {
+          "event" : "native-submit-21",
+          "found" : [
+            0,
+            8,
+            17,
+            21
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 520,
+          "secondsFromSequenceStart" : 4.6600536666810513
+        },
+        {
+          "event" : "native-submit-25",
+          "found" : [
+            0,
+            8,
+            17,
+            21,
+            25
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 700,
+          "secondsFromSequenceStart" : 4.7451780000701547
+        },
+        {
+          "event" : "native-submit-34",
+          "found" : [
+            0,
+            8,
+            17,
+            21,
+            25,
+            34
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 900,
+          "secondsFromSequenceStart" : 4.8285403752233833
+        },
+        {
+          "event" : "terminal-committed",
+          "found" : [
+            0,
+            8,
+            17,
+            21,
+            25,
+            34
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 900,
+          "secondsFromSequenceStart" : 4.8285612917970866
+        },
+        {
+          "event" : "character-event-observed",
+          "found" : [
+            0,
+            8,
+            17,
+            21,
+            25,
+            34
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 900,
+          "secondsFromSequenceStart" : 5.6645830001216382
+        },
+        {
+          "event" : "settled-result-snapshot",
+          "found" : [
+            0,
+            8,
+            17,
+            21,
+            25,
+            34
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 900,
+          "secondsFromSequenceStart" : 7.3230275001842529
+        },
+        {
+          "event" : "leave-home",
+          "found" : [
+            0,
+            8,
+            17,
+            21,
+            25,
+            34
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 900,
+          "secondsFromSequenceStart" : 7.3230656667146832
+        },
+        {
+          "event" : "home-continue",
+          "found" : [
+            0,
+            8,
+            17,
+            21,
+            25,
+            34
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 900,
+          "secondsFromSequenceStart" : 7.60884950007312
+        },
+        {
+          "event" : "resumed-result-next",
+          "found" : [
+
+          ],
+          "level" : 7,
+          "lives" : 3,
+          "score" : 0,
+          "secondsFromSequenceStart" : 7.6197394584305584
+        },
+        {
+          "event" : "destination-mark-undo-first-find-accepted",
+          "found" : [
+            1
+          ],
+          "level" : 7,
+          "lives" : 3,
+          "score" : 100,
+          "secondsFromSequenceStart" : 7.661233875202015
+        }
+      ],
+      "exitAction" : "home",
+      "fixture" : "three-results-402-star-hug",
+      "height" : 874,
+      "observedEntranceDelaySeconds" : 0.83600666676647961,
+      "performance" : "star-hug",
+      "sessionID" : "01000000-0000-4000-8000-000000000263",
+      "width" : 402
+    },
+    {
+      "earlyExit" : false,
+      "events" : [
+        {
+          "event" : "mounted-playing-L6",
+          "found" : [
+
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 0,
+          "secondsFromSequenceStart" : 8.4945378333795816
+        },
+        {
+          "event" : "native-submit-1",
+          "found" : [
+
+          ],
+          "level" : 6,
+          "lives" : 2,
+          "score" : 0,
+          "secondsFromSequenceStart" : 8.5006979168392718
+        },
+        {
+          "event" : "native-submit-2",
+          "found" : [
+
+          ],
+          "level" : 6,
+          "lives" : 1,
+          "score" : 0,
+          "secondsFromSequenceStart" : 8.5920810417737812
+        },
+        {
+          "event" : "native-submit-3",
+          "found" : [
+
+          ],
+          "level" : 6,
+          "lives" : 0,
+          "score" : 0,
+          "secondsFromSequenceStart" : 8.6772205834276974
+        },
+        {
+          "event" : "terminal-committed",
+          "found" : [
+
+          ],
+          "level" : 6,
+          "lives" : 0,
+          "score" : 0,
+          "secondsFromSequenceStart" : 8.677242333535105
+        },
+        {
+          "event" : "character-event-observed",
+          "found" : [
+
+          ],
+          "level" : 6,
+          "lives" : 0,
+          "score" : 0,
+          "secondsFromSequenceStart" : 9.308336750138551
+        },
+        {
+          "event" : "settled-result-snapshot",
+          "found" : [
+
+          ],
+          "level" : 6,
+          "lives" : 0,
+          "score" : 0,
+          "secondsFromSequenceStart" : 10.907398375216872
+        },
+        {
+          "event" : "leave-restart",
+          "found" : [
+
+          ],
+          "level" : 6,
+          "lives" : 0,
+          "score" : 0,
+          "secondsFromSequenceStart" : 10.907436500070617
+        },
+        {
+          "event" : "destination-mark-undo-first-find-accepted",
+          "found" : [
+            0
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 100,
+          "secondsFromSequenceStart" : 10.97850204189308
+        }
+      ],
+      "exitAction" : "restart",
+      "fixture" : "three-results-402-retry",
+      "height" : 874,
+      "observedEntranceDelaySeconds" : 0.63104274985380471,
+      "performance" : "retry",
+      "sessionID" : "02000000-0000-4000-8000-000000000263",
+      "width" : 402
+    },
+    {
+      "earlyExit" : false,
+      "events" : [
+        {
+          "event" : "mounted-playing-L6",
+          "found" : [
+
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 0,
+          "secondsFromSequenceStart" : 11.810319250216708
+        },
+        {
+          "event" : "native-submit-0",
+          "found" : [
+            0
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 100,
+          "secondsFromSequenceStart" : 11.816812375094742
+        },
+        {
+          "event" : "native-submit-8",
+          "found" : [
+            0,
+            8
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 220,
+          "secondsFromSequenceStart" : 11.901227125199512
+        },
+        {
+          "event" : "native-submit-17",
+          "found" : [
+            0,
+            8,
+            17
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 360,
+          "secondsFromSequenceStart" : 11.990263416664675
+        },
+        {
+          "event" : "native-submit-21",
+          "found" : [
+            0,
+            8,
+            17,
+            21
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 520,
+          "secondsFromSequenceStart" : 12.079230458475649
+        },
+        {
+          "event" : "native-submit-25",
+          "found" : [
+            0,
+            8,
+            17,
+            21,
+            25
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 700,
+          "secondsFromSequenceStart" : 12.162853250047192
+        },
+        {
+          "event" : "native-submit-34",
+          "found" : [
+            0,
+            8,
+            17,
+            21,
+            25,
+            34
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 900,
+          "secondsFromSequenceStart" : 12.248195625143126
+        },
+        {
+          "event" : "terminal-committed",
+          "found" : [
+            0,
+            8,
+            17,
+            21,
+            25,
+            34
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 900,
+          "secondsFromSequenceStart" : 12.248215208528563
+        },
+        {
+          "event" : "character-event-observed",
+          "found" : [
+            0,
+            8,
+            17,
+            21,
+            25,
+            34
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 900,
+          "secondsFromSequenceStart" : 13.11274579167366
+        },
+        {
+          "event" : "settled-result-snapshot",
+          "found" : [
+            0,
+            8,
+            17,
+            21,
+            25,
+            34
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 900,
+          "secondsFromSequenceStart" : 14.643244708422571
+        },
+        {
+          "event" : "leave-next",
+          "found" : [
+            0,
+            8,
+            17,
+            21,
+            25,
+            34
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 900,
+          "secondsFromSequenceStart" : 14.643294541863725
+        },
+        {
+          "event" : "destination-mark-undo-first-find-accepted",
+          "found" : [
+            1
+          ],
+          "level" : 7,
+          "lives" : 3,
+          "score" : 100,
+          "secondsFromSequenceStart" : 14.715879958355799
+        }
+      ],
+      "exitAction" : "next",
+      "fixture" : "three-results-320-joyful",
+      "height" : 568,
+      "observedEntranceDelaySeconds" : 0.86449587484821677,
+      "performance" : "joyful",
+      "sessionID" : "02000000-0000-4000-8000-000000000263",
+      "width" : 320
+    },
+    {
+      "earlyExit" : false,
+      "events" : [
+        {
+          "event" : "mounted-playing-L6",
+          "found" : [
+
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 0,
+          "secondsFromSequenceStart" : 15.477270875126123
+        },
+        {
+          "event" : "native-submit-0",
+          "found" : [
+            0
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 100,
+          "secondsFromSequenceStart" : 15.4835085417144
+        },
+        {
+          "event" : "native-submit-8",
+          "found" : [
+            0,
+            8
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 220,
+          "secondsFromSequenceStart" : 15.574214750202373
+        },
+        {
+          "event" : "native-submit-17",
+          "found" : [
+            0,
+            8,
+            17
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 360,
+          "secondsFromSequenceStart" : 15.658285958459601
+        },
+        {
+          "event" : "native-submit-21",
+          "found" : [
+            0,
+            8,
+            17,
+            21
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 520,
+          "secondsFromSequenceStart" : 15.740989416837692
+        },
+        {
+          "event" : "native-submit-25",
+          "found" : [
+            0,
+            8,
+            17,
+            21,
+            25
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 700,
+          "secondsFromSequenceStart" : 15.827314125141129
+        },
+        {
+          "event" : "native-submit-34",
+          "found" : [
+            0,
+            8,
+            17,
+            21,
+            25,
+            34
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 900,
+          "secondsFromSequenceStart" : 15.911152125103399
+        },
+        {
+          "event" : "terminal-committed",
+          "found" : [
+            0,
+            8,
+            17,
+            21,
+            25,
+            34
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 900,
+          "secondsFromSequenceStart" : 15.911166500067338
+        },
+        {
+          "event" : "character-event-observed",
+          "found" : [
+            0,
+            8,
+            17,
+            21,
+            25,
+            34
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 900,
+          "secondsFromSequenceStart" : 16.779300833353773
+        },
+        {
+          "event" : "settled-result-snapshot",
+          "found" : [
+            0,
+            8,
+            17,
+            21,
+            25,
+            34
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 900,
+          "secondsFromSequenceStart" : 18.289530416717753
+        },
+        {
+          "event" : "leave-next",
+          "found" : [
+            0,
+            8,
+            17,
+            21,
+            25,
+            34
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 900,
+          "secondsFromSequenceStart" : 18.289572916692123
+        },
+        {
+          "event" : "destination-mark-undo-first-find-accepted",
+          "found" : [
+            1
+          ],
+          "level" : 7,
+          "lives" : 3,
+          "score" : 100,
+          "secondsFromSequenceStart" : 18.363369250204414
+        }
+      ],
+      "exitAction" : "next",
+      "fixture" : "three-results-320-star-hug",
+      "height" : 568,
+      "observedEntranceDelaySeconds" : 0.86806862498633564,
+      "performance" : "star-hug",
+      "sessionID" : "01000000-0000-4000-8000-000000000263",
+      "width" : 320
+    },
+    {
+      "earlyExit" : false,
+      "events" : [
+        {
+          "event" : "mounted-playing-L6",
+          "found" : [
+
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 0,
+          "secondsFromSequenceStart" : 19.143894000211731
+        },
+        {
+          "event" : "native-submit-1",
+          "found" : [
+
+          ],
+          "level" : 6,
+          "lives" : 2,
+          "score" : 0,
+          "secondsFromSequenceStart" : 19.148424500133842
+        },
+        {
+          "event" : "native-submit-2",
+          "found" : [
+
+          ],
+          "level" : 6,
+          "lives" : 1,
+          "score" : 0,
+          "secondsFromSequenceStart" : 19.234266291838139
+        },
+        {
+          "event" : "native-submit-3",
+          "found" : [
+
+          ],
+          "level" : 6,
+          "lives" : 0,
+          "score" : 0,
+          "secondsFromSequenceStart" : 19.324256875086576
+        },
+        {
+          "event" : "terminal-committed",
+          "found" : [
+
+          ],
+          "level" : 6,
+          "lives" : 0,
+          "score" : 0,
+          "secondsFromSequenceStart" : 19.324290000135079
+        },
+        {
+          "event" : "character-event-observed",
+          "found" : [
+
+          ],
+          "level" : 6,
+          "lives" : 0,
+          "score" : 0,
+          "secondsFromSequenceStart" : 19.954777750186622
+        },
+        {
+          "event" : "settled-result-snapshot",
+          "found" : [
+
+          ],
+          "level" : 6,
+          "lives" : 0,
+          "score" : 0,
+          "secondsFromSequenceStart" : 21.43546750000678
+        },
+        {
+          "event" : "leave-restart",
+          "found" : [
+
+          ],
+          "level" : 6,
+          "lives" : 0,
+          "score" : 0,
+          "secondsFromSequenceStart" : 21.435506958514452
+        },
+        {
+          "event" : "destination-mark-undo-first-find-accepted",
+          "found" : [
+            0
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 100,
+          "secondsFromSequenceStart" : 21.50485650007613
+        }
+      ],
+      "exitAction" : "restart",
+      "fixture" : "three-results-320-retry",
+      "height" : 568,
+      "observedEntranceDelaySeconds" : 0.6304339999333024,
+      "performance" : "retry",
+      "sessionID" : "02000000-0000-4000-8000-000000000263",
+      "width" : 320
+    },
+    {
+      "earlyExit" : true,
+      "events" : [
+        {
+          "event" : "mounted-playing-L6",
+          "found" : [
+
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 0,
+          "secondsFromSequenceStart" : 22.256310041761026
+        },
+        {
+          "event" : "native-submit-0",
+          "found" : [
+            0
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 100,
+          "secondsFromSequenceStart" : 22.260506166843697
+        },
+        {
+          "event" : "native-submit-8",
+          "found" : [
+            0,
+            8
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 220,
+          "secondsFromSequenceStart" : 22.346257291734219
+        },
+        {
+          "event" : "native-submit-17",
+          "found" : [
+            0,
+            8,
+            17
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 360,
+          "secondsFromSequenceStart" : 22.431720416760072
+        },
+        {
+          "event" : "native-submit-21",
+          "found" : [
+            0,
+            8,
+            17,
+            21
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 520,
+          "secondsFromSequenceStart" : 22.515041291713715
+        },
+        {
+          "event" : "native-submit-25",
+          "found" : [
+            0,
+            8,
+            17,
+            21,
+            25
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 700,
+          "secondsFromSequenceStart" : 22.598201791755855
+        },
+        {
+          "event" : "native-submit-34",
+          "found" : [
+            0,
+            8,
+            17,
+            21,
+            25,
+            34
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 900,
+          "secondsFromSequenceStart" : 22.681809250032529
+        },
+        {
+          "event" : "terminal-committed",
+          "found" : [
+            0,
+            8,
+            17,
+            21,
+            25,
+            34
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 900,
+          "secondsFromSequenceStart" : 22.681827375199646
+        },
+        {
+          "event" : "character-event-observed",
+          "found" : [
+            0,
+            8,
+            17,
+            21,
+            25,
+            34
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 900,
+          "secondsFromSequenceStart" : 23.540819541784003
+        },
+        {
+          "event" : "leave-next-during-entrance",
+          "found" : [
+            0,
+            8,
+            17,
+            21,
+            25,
+            34
+          ],
+          "level" : 6,
+          "lives" : 3,
+          "score" : 900,
+          "secondsFromSequenceStart" : 23.602547875139862
+        },
+        {
+          "event" : "destination-mark-undo-first-find-accepted",
+          "found" : [
+            1
+          ],
+          "level" : 7,
+          "lives" : 3,
+          "score" : 100,
+          "secondsFromSequenceStart" : 23.67821400007233
+        }
+      ],
+      "exitAction" : "next",
+      "fixture" : "three-results-320-joyful-early-exit",
+      "height" : 568,
+      "observedEntranceDelaySeconds" : 0.85896654170937836,
+      "performance" : "joyful",
+      "sessionID" : "02000000-0000-4000-8000-000000000263",
+      "width" : 320
+    }
+  ]
+}

@@ -1,5 +1,12 @@
 # Demo 变更记录
 
+## 0.2.63 · 2026-10-02 · 结算角色淡入去重影
+
+- 角色先整体合成再应用透明度，消除头、身体、手臂与脚在淡入时相互透出的轮廓；保留现有速度、动作、按钮和取消机制。
+- 旧版六组像素对照复现9条断言失败；最终52项相关App和17e3项UI通过。两尺寸三动作及早退的真实Root录屏有限抽帧已检查；全显六组样本像素保持，不代表真机或所有动态帧验收。
+- [前后对比](Docs/original-feel-0263/before-after-fade.png) · [真实界面录屏](Docs/original-feel-0263/final-root-result-entrances.mov) · [验证详情](Validation/original-0263-feedback.json) · [Checklist增量](Validation/checklist-0263-feedback-delta.json)。9个本地测试原声与150关包保持；手机仍0.2.29，打包/GitHub暂停。
+
+
 ## 0.2.62 · 2026-10-02 · 通关双跳的落地承重
 
 - 欢呼角色先落到原触地基线，再压缩和回弹，避免下降途中提前压扁；影子同步调整，两跳与1.05秒总时长保持，参数属Demo调校。

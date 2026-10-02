@@ -1,0 +1,1773 @@
+{
+  "audioTracks": 0,
+  "boundary": "Video zero is independent of the test event clock; sampled brackets are observations, not exact phase timing.",
+  "durationSeconds": 25.108333333333334,
+  "frames": [
+    {
+      "actualSeconds": 1.3566666666666667,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-joyful-001.358.png",
+      "fixture": "three-results-402-joyful",
+      "requestedSeconds": 1.3575232501607388,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 1.3766666666666667,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-joyful-001.383.png",
+      "fixture": "three-results-402-joyful",
+      "requestedSeconds": 1.3825232501607387,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 1.3933333333333333,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-joyful-001.408.png",
+      "fixture": "three-results-402-joyful",
+      "requestedSeconds": 1.4075232501607389,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 1.4266666666666667,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-joyful-001.433.png",
+      "fixture": "three-results-402-joyful",
+      "requestedSeconds": 1.4325232501607388,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 1.4483333333333333,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-joyful-001.458.png",
+      "fixture": "three-results-402-joyful",
+      "requestedSeconds": 1.457523250160739,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 1.475,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-joyful-001.483.png",
+      "fixture": "three-results-402-joyful",
+      "requestedSeconds": 1.4825232501607388,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 1.5033333333333334,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-joyful-001.508.png",
+      "fixture": "three-results-402-joyful",
+      "requestedSeconds": 1.5075232501607387,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 1.5233333333333334,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-joyful-001.533.png",
+      "fixture": "three-results-402-joyful",
+      "requestedSeconds": 1.5325232501607389,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 1.5566666666666666,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-joyful-001.558.png",
+      "fixture": "three-results-402-joyful",
+      "requestedSeconds": 1.5575232501607388,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 1.5733333333333333,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-joyful-001.583.png",
+      "fixture": "three-results-402-joyful",
+      "requestedSeconds": 1.582523250160739,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 1.6033333333333333,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-joyful-001.608.png",
+      "fixture": "three-results-402-joyful",
+      "requestedSeconds": 1.6075232501607388,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 1.6266666666666667,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-joyful-001.633.png",
+      "fixture": "three-results-402-joyful",
+      "requestedSeconds": 1.6325232501607387,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 1.6433333333333333,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-joyful-001.658.png",
+      "fixture": "three-results-402-joyful",
+      "requestedSeconds": 1.6575232501607389,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 1.6733333333333333,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-joyful-001.683.png",
+      "fixture": "three-results-402-joyful",
+      "requestedSeconds": 1.6825232501607388,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 1.7066666666666668,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-joyful-001.708.png",
+      "fixture": "three-results-402-joyful",
+      "requestedSeconds": 1.707523250160739,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 1.7283333333333333,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-joyful-001.733.png",
+      "fixture": "three-results-402-joyful",
+      "requestedSeconds": 1.7325232501607388,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 1.755,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-joyful-001.758.png",
+      "fixture": "three-results-402-joyful",
+      "requestedSeconds": 1.7575232501607387,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 1.7783333333333333,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-joyful-001.783.png",
+      "fixture": "three-results-402-joyful",
+      "requestedSeconds": 1.7825232501607389,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 5.41,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-star-hug-005.415.png",
+      "fixture": "three-results-402-star-hug",
+      "requestedSeconds": 5.414583000121638,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 5.4383333333333335,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-star-hug-005.440.png",
+      "fixture": "three-results-402-star-hug",
+      "requestedSeconds": 5.4395830001216385,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 5.46,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-star-hug-005.465.png",
+      "fixture": "three-results-402-star-hug",
+      "requestedSeconds": 5.464583000121638,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 5.476666666666667,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-star-hug-005.490.png",
+      "fixture": "three-results-402-star-hug",
+      "requestedSeconds": 5.489583000121638,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 5.51,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-star-hug-005.515.png",
+      "fixture": "three-results-402-star-hug",
+      "requestedSeconds": 5.514583000121638,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 5.525,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-star-hug-005.540.png",
+      "fixture": "three-results-402-star-hug",
+      "requestedSeconds": 5.539583000121638,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 5.558333333333334,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-star-hug-005.565.png",
+      "fixture": "three-results-402-star-hug",
+      "requestedSeconds": 5.5645830001216385,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 5.586666666666667,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-star-hug-005.590.png",
+      "fixture": "three-results-402-star-hug",
+      "requestedSeconds": 5.589583000121638,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 5.601666666666667,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-star-hug-005.615.png",
+      "fixture": "three-results-402-star-hug",
+      "requestedSeconds": 5.614583000121638,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 5.635,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-star-hug-005.640.png",
+      "fixture": "three-results-402-star-hug",
+      "requestedSeconds": 5.639583000121638,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 5.653333333333333,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-star-hug-005.665.png",
+      "fixture": "three-results-402-star-hug",
+      "requestedSeconds": 5.664583000121638,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 5.685,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-star-hug-005.690.png",
+      "fixture": "three-results-402-star-hug",
+      "requestedSeconds": 5.6895830001216385,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 5.71,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-star-hug-005.715.png",
+      "fixture": "three-results-402-star-hug",
+      "requestedSeconds": 5.714583000121638,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 5.726666666666667,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-star-hug-005.740.png",
+      "fixture": "three-results-402-star-hug",
+      "requestedSeconds": 5.739583000121638,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 5.756666666666667,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-star-hug-005.765.png",
+      "fixture": "three-results-402-star-hug",
+      "requestedSeconds": 5.764583000121638,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 5.776666666666666,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-star-hug-005.790.png",
+      "fixture": "three-results-402-star-hug",
+      "requestedSeconds": 5.789583000121638,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 5.805,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-star-hug-005.815.png",
+      "fixture": "three-results-402-star-hug",
+      "requestedSeconds": 5.8145830001216385,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 5.836666666666667,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "file": "three-results-402-star-hug-005.840.png",
+      "fixture": "three-results-402-star-hug",
+      "requestedSeconds": 5.839583000121638,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 9.045,
+      "crop": [
+        180,
+        660,
+        846,
+        1110
+      ],
+      "file": "three-results-402-retry-009.058.png",
+      "fixture": "three-results-402-retry",
+      "requestedSeconds": 9.058336750138551,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 9.078333333333333,
+      "crop": [
+        180,
+        660,
+        846,
+        1110
+      ],
+      "file": "three-results-402-retry-009.083.png",
+      "fixture": "three-results-402-retry",
+      "requestedSeconds": 9.083336750138551,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 9.096666666666666,
+      "crop": [
+        180,
+        660,
+        846,
+        1110
+      ],
+      "file": "three-results-402-retry-009.108.png",
+      "fixture": "three-results-402-retry",
+      "requestedSeconds": 9.108336750138552,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 9.131666666666666,
+      "crop": [
+        180,
+        660,
+        846,
+        1110
+      ],
+      "file": "three-results-402-retry-009.133.png",
+      "fixture": "three-results-402-retry",
+      "requestedSeconds": 9.13333675013855,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 9.148333333333333,
+      "crop": [
+        180,
+        660,
+        846,
+        1110
+      ],
+      "file": "three-results-402-retry-009.158.png",
+      "fixture": "three-results-402-retry",
+      "requestedSeconds": 9.15833675013855,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 9.18,
+      "crop": [
+        180,
+        660,
+        846,
+        1110
+      ],
+      "file": "three-results-402-retry-009.183.png",
+      "fixture": "three-results-402-retry",
+      "requestedSeconds": 9.183336750138551,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 9.208333333333334,
+      "crop": [
+        180,
+        660,
+        846,
+        1110
+      ],
+      "file": "three-results-402-retry-009.208.png",
+      "fixture": "three-results-402-retry",
+      "requestedSeconds": 9.208336750138551,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 9.23,
+      "crop": [
+        180,
+        660,
+        846,
+        1110
+      ],
+      "file": "three-results-402-retry-009.233.png",
+      "fixture": "three-results-402-retry",
+      "requestedSeconds": 9.233336750138552,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 9.256666666666666,
+      "crop": [
+        180,
+        660,
+        846,
+        1110
+      ],
+      "file": "three-results-402-retry-009.258.png",
+      "fixture": "three-results-402-retry",
+      "requestedSeconds": 9.25833675013855,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 9.28,
+      "crop": [
+        180,
+        660,
+        846,
+        1110
+      ],
+      "file": "three-results-402-retry-009.283.png",
+      "fixture": "three-results-402-retry",
+      "requestedSeconds": 9.28333675013855,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 9.296666666666667,
+      "crop": [
+        180,
+        660,
+        846,
+        1110
+      ],
+      "file": "three-results-402-retry-009.308.png",
+      "fixture": "three-results-402-retry",
+      "requestedSeconds": 9.308336750138551,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 9.333333333333334,
+      "crop": [
+        180,
+        660,
+        846,
+        1110
+      ],
+      "file": "three-results-402-retry-009.333.png",
+      "fixture": "three-results-402-retry",
+      "requestedSeconds": 9.333336750138551,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 9.356666666666667,
+      "crop": [
+        180,
+        660,
+        846,
+        1110
+      ],
+      "file": "three-results-402-retry-009.358.png",
+      "fixture": "three-results-402-retry",
+      "requestedSeconds": 9.358336750138552,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 9.376666666666667,
+      "crop": [
+        180,
+        660,
+        846,
+        1110
+      ],
+      "file": "three-results-402-retry-009.383.png",
+      "fixture": "three-results-402-retry",
+      "requestedSeconds": 9.38333675013855,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 9.405,
+      "crop": [
+        180,
+        660,
+        846,
+        1110
+      ],
+      "file": "three-results-402-retry-009.408.png",
+      "fixture": "three-results-402-retry",
+      "requestedSeconds": 9.40833675013855,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 9.428333333333333,
+      "crop": [
+        180,
+        660,
+        846,
+        1110
+      ],
+      "file": "three-results-402-retry-009.433.png",
+      "fixture": "three-results-402-retry",
+      "requestedSeconds": 9.433336750138551,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 9.451666666666666,
+      "crop": [
+        180,
+        660,
+        846,
+        1110
+      ],
+      "file": "three-results-402-retry-009.458.png",
+      "fixture": "three-results-402-retry",
+      "requestedSeconds": 9.458336750138551,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 9.483333333333333,
+      "crop": [
+        180,
+        660,
+        846,
+        1110
+      ],
+      "file": "three-results-402-retry-009.483.png",
+      "fixture": "three-results-402-retry",
+      "requestedSeconds": 9.483336750138552,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 12.86,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-012.863.png",
+      "fixture": "three-results-320-joyful",
+      "requestedSeconds": 12.86274579167366,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 12.883333333333333,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-012.888.png",
+      "fixture": "three-results-320-joyful",
+      "requestedSeconds": 12.88774579167366,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 12.91,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-012.913.png",
+      "fixture": "three-results-320-joyful",
+      "requestedSeconds": 12.912745791673661,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 12.928333333333333,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-012.938.png",
+      "fixture": "three-results-320-joyful",
+      "requestedSeconds": 12.93774579167366,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 12.961666666666666,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-012.963.png",
+      "fixture": "three-results-320-joyful",
+      "requestedSeconds": 12.96274579167366,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 12.98,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-012.988.png",
+      "fixture": "three-results-320-joyful",
+      "requestedSeconds": 12.98774579167366,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 13.005,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-013.013.png",
+      "fixture": "three-results-320-joyful",
+      "requestedSeconds": 13.01274579167366,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 13.033333333333333,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-013.038.png",
+      "fixture": "three-results-320-joyful",
+      "requestedSeconds": 13.037745791673661,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 13.061666666666667,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-013.063.png",
+      "fixture": "three-results-320-joyful",
+      "requestedSeconds": 13.06274579167366,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 13.078333333333333,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-013.088.png",
+      "fixture": "three-results-320-joyful",
+      "requestedSeconds": 13.08774579167366,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 13.106666666666667,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-013.113.png",
+      "fixture": "three-results-320-joyful",
+      "requestedSeconds": 13.11274579167366,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 13.136666666666667,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-013.138.png",
+      "fixture": "three-results-320-joyful",
+      "requestedSeconds": 13.13774579167366,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 13.155,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-013.163.png",
+      "fixture": "three-results-320-joyful",
+      "requestedSeconds": 13.162745791673661,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 13.18,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-013.188.png",
+      "fixture": "three-results-320-joyful",
+      "requestedSeconds": 13.18774579167366,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 13.211666666666666,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-013.213.png",
+      "fixture": "three-results-320-joyful",
+      "requestedSeconds": 13.21274579167366,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 13.236666666666666,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-013.238.png",
+      "fixture": "three-results-320-joyful",
+      "requestedSeconds": 13.23774579167366,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 13.255,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-013.263.png",
+      "fixture": "three-results-320-joyful",
+      "requestedSeconds": 13.26274579167366,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 13.271666666666667,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-013.288.png",
+      "fixture": "three-results-320-joyful",
+      "requestedSeconds": 13.287745791673661,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 16.526666666666667,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-star-hug-016.529.png",
+      "fixture": "three-results-320-star-hug",
+      "requestedSeconds": 16.529300833353773,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 16.545,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-star-hug-016.554.png",
+      "fixture": "three-results-320-star-hug",
+      "requestedSeconds": 16.55430083335377,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 16.578333333333333,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-star-hug-016.579.png",
+      "fixture": "three-results-320-star-hug",
+      "requestedSeconds": 16.579300833353773,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 16.595,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-star-hug-016.604.png",
+      "fixture": "three-results-320-star-hug",
+      "requestedSeconds": 16.604300833353772,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 16.626666666666665,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-star-hug-016.629.png",
+      "fixture": "three-results-320-star-hug",
+      "requestedSeconds": 16.629300833353774,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 16.643333333333334,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-star-hug-016.654.png",
+      "fixture": "three-results-320-star-hug",
+      "requestedSeconds": 16.654300833353773,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 16.668333333333333,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-star-hug-016.679.png",
+      "fixture": "three-results-320-star-hug",
+      "requestedSeconds": 16.67930083335377,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 16.7,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-star-hug-016.704.png",
+      "fixture": "three-results-320-star-hug",
+      "requestedSeconds": 16.704300833353773,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 16.726666666666667,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-star-hug-016.729.png",
+      "fixture": "three-results-320-star-hug",
+      "requestedSeconds": 16.729300833353772,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 16.745,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-star-hug-016.754.png",
+      "fixture": "three-results-320-star-hug",
+      "requestedSeconds": 16.754300833353774,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 16.778333333333332,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-star-hug-016.779.png",
+      "fixture": "three-results-320-star-hug",
+      "requestedSeconds": 16.779300833353773,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 16.795,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-star-hug-016.804.png",
+      "fixture": "three-results-320-star-hug",
+      "requestedSeconds": 16.80430083335377,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 16.826666666666668,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-star-hug-016.829.png",
+      "fixture": "three-results-320-star-hug",
+      "requestedSeconds": 16.829300833353773,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 16.845,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-star-hug-016.854.png",
+      "fixture": "three-results-320-star-hug",
+      "requestedSeconds": 16.854300833353772,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 16.876666666666665,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-star-hug-016.879.png",
+      "fixture": "three-results-320-star-hug",
+      "requestedSeconds": 16.879300833353774,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 16.895,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-star-hug-016.904.png",
+      "fixture": "three-results-320-star-hug",
+      "requestedSeconds": 16.904300833353773,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 16.925,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-star-hug-016.929.png",
+      "fixture": "three-results-320-star-hug",
+      "requestedSeconds": 16.92930083335377,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 16.94333333333333,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-star-hug-016.954.png",
+      "fixture": "three-results-320-star-hug",
+      "requestedSeconds": 16.954300833353773,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 19.696666666666665,
+      "crop": [
+        105,
+        450,
+        750,
+        900
+      ],
+      "file": "three-results-320-retry-019.705.png",
+      "fixture": "three-results-320-retry",
+      "requestedSeconds": 19.704777750186622,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 19.72833333333333,
+      "crop": [
+        105,
+        450,
+        750,
+        900
+      ],
+      "file": "three-results-320-retry-019.730.png",
+      "fixture": "three-results-320-retry",
+      "requestedSeconds": 19.72977775018662,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 19.748333333333335,
+      "crop": [
+        105,
+        450,
+        750,
+        900
+      ],
+      "file": "three-results-320-retry-019.755.png",
+      "fixture": "three-results-320-retry",
+      "requestedSeconds": 19.754777750186623,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 19.778333333333332,
+      "crop": [
+        105,
+        450,
+        750,
+        900
+      ],
+      "file": "three-results-320-retry-019.780.png",
+      "fixture": "three-results-320-retry",
+      "requestedSeconds": 19.77977775018662,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 19.795,
+      "crop": [
+        105,
+        450,
+        750,
+        900
+      ],
+      "file": "three-results-320-retry-019.805.png",
+      "fixture": "three-results-320-retry",
+      "requestedSeconds": 19.804777750186624,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 19.826666666666668,
+      "crop": [
+        105,
+        450,
+        750,
+        900
+      ],
+      "file": "three-results-320-retry-019.830.png",
+      "fixture": "three-results-320-retry",
+      "requestedSeconds": 19.829777750186622,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 19.848333333333333,
+      "crop": [
+        105,
+        450,
+        750,
+        900
+      ],
+      "file": "three-results-320-retry-019.855.png",
+      "fixture": "three-results-320-retry",
+      "requestedSeconds": 19.85477775018662,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 19.876666666666665,
+      "crop": [
+        105,
+        450,
+        750,
+        900
+      ],
+      "file": "three-results-320-retry-019.880.png",
+      "fixture": "three-results-320-retry",
+      "requestedSeconds": 19.879777750186623,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 19.893333333333334,
+      "crop": [
+        105,
+        450,
+        750,
+        900
+      ],
+      "file": "three-results-320-retry-019.905.png",
+      "fixture": "three-results-320-retry",
+      "requestedSeconds": 19.90477775018662,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 19.926666666666666,
+      "crop": [
+        105,
+        450,
+        750,
+        900
+      ],
+      "file": "three-results-320-retry-019.930.png",
+      "fixture": "three-results-320-retry",
+      "requestedSeconds": 19.929777750186624,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 19.948333333333334,
+      "crop": [
+        105,
+        450,
+        750,
+        900
+      ],
+      "file": "three-results-320-retry-019.955.png",
+      "fixture": "three-results-320-retry",
+      "requestedSeconds": 19.954777750186622,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 19.97833333333333,
+      "crop": [
+        105,
+        450,
+        750,
+        900
+      ],
+      "file": "three-results-320-retry-019.980.png",
+      "fixture": "three-results-320-retry",
+      "requestedSeconds": 19.97977775018662,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 19.996666666666666,
+      "crop": [
+        105,
+        450,
+        750,
+        900
+      ],
+      "file": "three-results-320-retry-020.005.png",
+      "fixture": "three-results-320-retry",
+      "requestedSeconds": 20.004777750186623,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 20.025,
+      "crop": [
+        105,
+        450,
+        750,
+        900
+      ],
+      "file": "three-results-320-retry-020.030.png",
+      "fixture": "three-results-320-retry",
+      "requestedSeconds": 20.02977775018662,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 20.048333333333332,
+      "crop": [
+        105,
+        450,
+        750,
+        900
+      ],
+      "file": "three-results-320-retry-020.055.png",
+      "fixture": "three-results-320-retry",
+      "requestedSeconds": 20.054777750186624,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 20.075,
+      "crop": [
+        105,
+        450,
+        750,
+        900
+      ],
+      "file": "three-results-320-retry-020.080.png",
+      "fixture": "three-results-320-retry",
+      "requestedSeconds": 20.079777750186622,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 20.10333333333333,
+      "crop": [
+        105,
+        450,
+        750,
+        900
+      ],
+      "file": "three-results-320-retry-020.105.png",
+      "fixture": "three-results-320-retry",
+      "requestedSeconds": 20.10477775018662,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 20.121666666666666,
+      "crop": [
+        105,
+        450,
+        750,
+        900
+      ],
+      "file": "three-results-320-retry-020.130.png",
+      "fixture": "three-results-320-retry",
+      "requestedSeconds": 20.129777750186623,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 23.29,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-early-exit-023.291.png",
+      "fixture": "three-results-320-joyful-early-exit",
+      "requestedSeconds": 23.290819541784003,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 23.315,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-early-exit-023.316.png",
+      "fixture": "three-results-320-joyful-early-exit",
+      "requestedSeconds": 23.315819541784002,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 23.333333333333332,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-early-exit-023.341.png",
+      "fixture": "three-results-320-joyful-early-exit",
+      "requestedSeconds": 23.340819541784004,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 23.361666666666668,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-early-exit-023.366.png",
+      "fixture": "three-results-320-joyful-early-exit",
+      "requestedSeconds": 23.365819541784003,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 23.376666666666665,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-early-exit-023.391.png",
+      "fixture": "three-results-320-joyful-early-exit",
+      "requestedSeconds": 23.390819541784005,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 23.408333333333335,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-early-exit-023.416.png",
+      "fixture": "three-results-320-joyful-early-exit",
+      "requestedSeconds": 23.415819541784003,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 23.44,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-early-exit-023.441.png",
+      "fixture": "three-results-320-joyful-early-exit",
+      "requestedSeconds": 23.440819541784002,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 23.458333333333332,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-early-exit-023.466.png",
+      "fixture": "three-results-320-joyful-early-exit",
+      "requestedSeconds": 23.465819541784004,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 23.488333333333333,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-early-exit-023.491.png",
+      "fixture": "three-results-320-joyful-early-exit",
+      "requestedSeconds": 23.490819541784003,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 23.511666666666667,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-early-exit-023.516.png",
+      "fixture": "three-results-320-joyful-early-exit",
+      "requestedSeconds": 23.515819541784005,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 23.536666666666665,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-early-exit-023.541.png",
+      "fixture": "three-results-320-joyful-early-exit",
+      "requestedSeconds": 23.540819541784003,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 23.561666666666667,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-early-exit-023.566.png",
+      "fixture": "three-results-320-joyful-early-exit",
+      "requestedSeconds": 23.565819541784002,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 23.59,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-early-exit-023.591.png",
+      "fixture": "three-results-320-joyful-early-exit",
+      "requestedSeconds": 23.590819541784004,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 23.611666666666668,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-early-exit-023.616.png",
+      "fixture": "three-results-320-joyful-early-exit",
+      "requestedSeconds": 23.615819541784003,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 23.64,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-early-exit-023.641.png",
+      "fixture": "three-results-320-joyful-early-exit",
+      "requestedSeconds": 23.640819541784005,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 23.661666666666665,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-early-exit-023.666.png",
+      "fixture": "three-results-320-joyful-early-exit",
+      "requestedSeconds": 23.665819541784003,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 23.688333333333333,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-early-exit-023.691.png",
+      "fixture": "three-results-320-joyful-early-exit",
+      "requestedSeconds": 23.690819541784002,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    },
+    {
+      "actualSeconds": 23.715,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "file": "three-results-320-joyful-early-exit-023.716.png",
+      "fixture": "three-results-320-joyful-early-exit",
+      "requestedSeconds": 23.715819541784004,
+      "sourceHeight": 2622,
+      "sourceWidth": 1206
+    }
+  ],
+  "source": "final-root-result-entrances.mov",
+  "retention": "Video, seven contact sheets and one native-resolution sample per fixture retained. Other extracted PNG names identify local .build source frames."
+}

@@ -61,6 +61,164 @@ private struct ResultChromePixels {
 }
 
 final class ResultChoreographyTests: XCTestCase {
+    @MainActor func testActualRootThreeResultEntrancesAndExitsRunContinuouslyForVideoReview() async throws {
+        let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
+        let sequenceStart = ProcessInfo.processInfo.systemUptime
+        var observations = [[String: Any]]()
+        var fixtures: [(width: Int, performance: String, earlyExit: Bool)] = []
+        for width in [402, 320] {
+            for performance in ["joyful", "star-hug", "retry"] {
+                fixtures.append((width, performance, false))
+            }
+        }
+        fixtures.append((320, "joyful", true))
+        func descendants(_ view: UIView) -> [UIView] { [view] + view.subviews.flatMap(descendants) }
+        func controllers(_ controller: UIViewController) -> [UIViewController] {
+            [controller] + controller.children.flatMap(controllers)
+        }
+
+        for fixture in fixtures {
+            let name = "three-results-\(fixture.width)-\(fixture.performance)\(fixture.earlyExit ? "-early-exit" : "")"
+            let directory = FileManager.default.temporaryDirectory.appendingPathComponent(name + UUID().uuidString)
+            let model = AppModel(saveDirectory: directory, runsTimer: false, feedbackEnabled: false)
+            model.progress.tutorialCompleted = true; model.start(level: 6)
+            // Pick the actual Root's variant before it binds this session. Each
+            // fixture has its own host/save, so no event identity is reused there.
+            let fixedID = try XCTUnwrap(UUID(uuidString: fixture.performance == "star-hug"
+                ? "01000000-0000-4000-8000-000000000263" : "02000000-0000-4000-8000-000000000263"))
+            model.progress.session?.id = fixedID
+            let initial = try XCTUnwrap(model.session)
+            XCTAssertEqual(initial.puzzle.id, 6)
+            XCTAssertEqual(initial.id.uuid.0.isMultiple(of: 2), fixture.performance != "star-hug")
+            let previous = scene.windows.first(where: \.isKeyWindow)
+            let surround = UIWindow(windowScene: scene); surround.frame = scene.coordinateSpace.bounds
+            let backdrop = UIViewController(); backdrop.view.backgroundColor = .black
+            surround.rootViewController = backdrop; surround.windowLevel = UIWindow.Level(rawValue: 1)
+            surround.isHidden = false
+            let window = UIWindow(windowScene: scene)
+            window.windowLevel = UIWindow.Level(rawValue: 2); window.overrideUserInterfaceStyle = .light
+            window.frame = CGRect(x: 0, y: 0, width: fixture.width, height: fixture.width == 320 ? 568 : 874)
+            var frames = [String: CGRect]()
+            let host = UIHostingController(rootView: RootView(reduceMotionOverride: false).environmentObject(model)
+                .environment(\.scenePhase, .active).environment(\.capyLayoutObserver, { frames[$0] = $1 }))
+            window.rootViewController = host; window.makeKeyAndVisible()
+            defer {
+                model.setActive(false)
+                window.isHidden = true; window.rootViewController = nil
+                surround.isHidden = true; surround.rootViewController = nil; previous?.makeKeyAndVisible()
+                model.flushPendingSaves(); try? FileManager.default.removeItem(at: directory)
+            }
+            var events = [[String: Any]]()
+            func record(_ event: String) {
+                events.append(["event": event, "secondsFromSequenceStart": ProcessInfo.processInfo.systemUptime - sequenceStart,
+                    "level": model.session?.puzzle.id ?? -1, "found": model.session?.found.sorted() ?? [],
+                    "score": model.session?.score ?? -1, "lives": model.session?.lives ?? -1])
+            }
+            try await Task.sleep(nanoseconds: 300_000_000)
+            record("mounted-playing-L6")
+            let board = try XCTUnwrap(descendants(host.view).compactMap { $0 as? PuzzleGridUIView }.first)
+            let won = fixture.performance != "retry"
+            let submissions = won ? initial.puzzle.solution : Array(initial.puzzle.regions.indices
+                .filter { !initial.puzzle.solution.contains($0) }.prefix(initial.lives))
+            for (ordinal, cell) in submissions.enumerated() {
+                XCTAssertTrue(board.activate(index: cell, submit: true))
+                record("native-submit-\(cell)")
+                if ordinal < submissions.count - 1 { try await Task.sleep(nanoseconds: 80_000_000) }
+            }
+            let committed = try XCTUnwrap(model.session)
+            XCTAssertEqual(committed.id, fixedID); XCTAssertEqual(committed.status, won ? .won : .lost)
+            let terminalAt = ProcessInfo.processInfo.systemUptime
+            record("terminal-committed")
+            // Observe the real delayed event without changing its scheduler or
+            // taking a screenshot during the 180ms compositing transition.
+            var activeCharacter: ResultCharacterUIView?
+            for _ in 0..<320 {
+                if let character = descendants(host.view).compactMap({ $0 as? ResultCharacterUIView })
+                    .first(where: { $0.activeEventID != nil }) {
+                    activeCharacter = character; break
+                }
+                try await Task.sleep(nanoseconds: 5_000_000)
+            }
+            let character = try XCTUnwrap(activeCharacter, "The actual Root must start its finite result performance.")
+            let observedEntranceDelay = ProcessInfo.processInfo.systemUptime - terminalAt
+            XCTAssertGreaterThan(observedEntranceDelay, won ? 0.70 : 0.48,
+                "The board's ordinary celebration/error delay must not be bypassed by this fixture.")
+            XCTAssertEqual(character.playedEventCount, 1)
+            XCTAssertNotNil(frames["result_primary_action"])
+            record("character-event-observed")
+            if fixture.earlyExit {
+                try await Task.sleep(nanoseconds: 60_000_000)
+                XCTAssertNotNil(character.activeEventID)
+            } else {
+                // The character has settled and the entrance fade has ended;
+                // this readback cannot interrupt the compositing transition.
+                try await Task.sleep(nanoseconds: 1_350_000_000)
+                XCTAssertNil(character.activeEventID)
+                capture(window, name + "-settled-result")
+                record("settled-result-snapshot")
+            }
+            XCTAssertEqual(model.session, committed, "Result decoration cannot change the accepted outcome.")
+            let exitAction = fixture.earlyExit || (won && fixture.width == 320) ? "next"
+                : won ? "home" : "restart"
+            record("leave-\(exitAction)\(fixture.earlyExit ? "-during-entrance" : "")")
+            if exitAction == "next" { model.next() }
+            else if exitAction == "home" { model.home() }
+            else { model.restart() }
+            if exitAction == "home" { XCTAssertEqual(model.screen, .home) }
+            else { XCTAssertEqual(model.session?.status, .playing) }
+            XCTAssertNil(model.sheet); XCTAssertNil(model.errorMessage)
+            try await Task.sleep(nanoseconds: 60_000_000)
+            for owner in controllers(host).filter({
+                String(describing: type(of: $0)).hasPrefix("CapyAccessibilityController<") &&
+                    String(describing: type(of: $0)).contains("ResultPanel")
+            }) {
+                XCTAssertFalse(owner.view.isUserInteractionEnabled)
+                XCTAssertTrue(owner.view.accessibilityElementsHidden)
+            }
+            XCTAssertNil(character.activeEventID, "Leaving during the fade cancels the old joint performance.")
+            if exitAction == "home" {
+                // Home preserves the completed board. Resume it and explicitly
+                // advance, matching the existing user-facing Continue flow.
+                try await Task.sleep(nanoseconds: 220_000_000)
+                model.startOrContinue(); record("home-continue")
+                if model.session?.status == .won { model.next(); record("resumed-result-next") }
+            }
+            var resumedBoard: PuzzleGridUIView?
+            for _ in 0..<80 {
+                if let current = descendants(host.view).compactMap({ $0 as? PuzzleGridUIView }).first,
+                   current.accessibilityElements?.isEmpty == false {
+                    resumedBoard = current; break
+                }
+                try await Task.sleep(nanoseconds: 5_000_000)
+            }
+            let currentBoard = try XCTUnwrap(resumedBoard)
+            let resumed = try XCTUnwrap(model.session)
+            XCTAssertEqual(resumed.status, .playing); XCTAssertEqual(resumed.puzzle.id, won ? 7 : 6)
+            let mark = try XCTUnwrap(resumed.puzzle.regions.indices.first { !resumed.found.contains($0) })
+            XCTAssertTrue(currentBoard.activate(index: mark, submit: false))
+            XCTAssertTrue(model.session?.marks.contains(mark) == true)
+            XCTAssertTrue(currentBoard.activate(index: mark, submit: false))
+            XCTAssertEqual(model.session, resumed, "A mark and undo must preserve all other new-board state.")
+            let correct = try XCTUnwrap(resumed.puzzle.solution.first { !resumed.found.contains($0) })
+            XCTAssertTrue(currentBoard.activate(index: correct, submit: true))
+            let accepted = try XCTUnwrap(model.session)
+            XCTAssertEqual(accepted.found.count, resumed.found.count + 1); XCTAssertEqual(accepted.lives, resumed.lives)
+            record("destination-mark-undo-first-find-accepted")
+            try await Task.sleep(nanoseconds: fixture.earlyExit ? 1_400_000_000 : 300_000_000)
+            XCTAssertEqual(model.session, accepted, "A departed result's late cleanup cannot mutate the new game.")
+            XCTAssertNil(character.activeEventID)
+            capture(window, name + "-destination")
+            observations.append(["fixture": name, "width": fixture.width, "height": fixture.width == 320 ? 568 : 874,
+                "sessionID": fixedID.uuidString, "performance": fixture.performance, "earlyExit": fixture.earlyExit,
+                "observedEntranceDelaySeconds": observedEntranceDelay, "exitAction": exitAction, "events": events])
+        }
+        let data = try JSONSerialization.data(withJSONObject: ["fixtures": observations,
+            "boundary": "Actual Root with normal motion, real bundled L6 submissions through native board endpoints, six complete performances and one departure during entrance. No screenshot readback inside entrance/exit fades; stable snapshots only. Event observation uses the live monotonic clock, not frame synchronization. This is not physical-touch, live-audio, FPS, exact reference-timing or grouped-opacity pixel verification; external recording has its own time origin."],
+            options: [.prettyPrinted, .sortedKeys])
+        let attachment = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+        attachment.name = "three-result-root-natural-event-times"; attachment.lifetime = .keepAlways; add(attachment)
+    }
+
     @MainActor func testActualGameChromeHidesAtTerminalLayoutAndReturnsAfterNextRestartOrRevive() async throws {
         let fixture = try XCTUnwrap(Bundle(for: Self.self).url(forResource: "reference-gameplay-synthetic-row", withExtension: "json"))
         var reference = try JSONDecoder().decode(ReferenceLevelGameplay.self, from: Data(contentsOf: fixture))

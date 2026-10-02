@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "kind": "scoped_delta_to_88_item_audit",
+  "baseAudit": "Validation/checklist-0221-audit.json",
+  "sourceChecklist": "Validation/checklist-source.json",
+  "sourceCaseCount": 88,
+  "formalSignOff": false,
+  "full88Reexecuted": false,
+  "overallCountsRecomputed": false,
+  "build": "0.2.63 (66)",
+  "status": "verified_scoped_evidence_formal_status_unchanged",
+  "previousDelta": "Validation/checklist-0262-feedback-delta.json",
+  "scopedRows": 2,
+  "rows": [
+    {
+      "id": "14-03",
+      "title": "游戏奖励动效与降级",
+      "originalAcceptanceText": "操作  触发正确、错误、Combo、通关及签到动效。\n通过  与业务状态同步，不阻碍后续操作；轻量特效在低性能设备可降级。",
+      "originalRequirementIDs": [
+        "ART-02"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "结算角色整体淡入消除内部透出；两尺寸三动作及早退实际Root回归。正式美术和真机爽感仍待验。",
+      "evidence": [
+        "Validation/original-0263-feedback.json",
+        "Docs/original-feel-0263/manifest.json",
+        "Validation/test-runs/original-0263-app-final-summary.json",
+        "Validation/test-runs/original-0263-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    },
+    {
+      "id": "16-03",
+      "title": "最终构建全部问题复验",
+      "originalAcceptanceText": "操作  在最终构建复测所有失败用例及受影响流程。\n通过  每个Bug均有关联修复版本、复测结论和证据，旧版本通过不能代替复测。",
+      "originalRequirementIDs": [
+        "TECH-07"
+      ],
+      "priorStatus": "partial",
+      "formalStatusAfterThisRound": "partial",
+      "newEvidenceScope": "52项相关App与17e3项UI通过；保留旧版像素失败及新增导航fixture假设修正记录。",
+      "evidence": [
+        "Validation/original-0263-feedback.json",
+        "Docs/original-feel-0263/manifest.json",
+        "Validation/test-runs/original-0263-app-final-summary.json",
+        "Validation/test-runs/original-0263-17e-ui-summary.json"
+      ],
+      "verificationStatus": "verified_scoped_evidence_formal_status_unchanged"
+    }
+  ],
+  "verificationSnapshot": {
+    "app": {
+      "status": "Passed",
+      "passed": 52,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 110.798,
+      "summary": "Validation/test-runs/original-0263-app-final-summary.json",
+      "log": "Validation/test-runs/original-0263-app-final.log",
+      "bundle": "Validation/test-runs/original-0263-app-final.xcresult"
+    },
+    "ui": {
+      "status": "Passed",
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 71.144,
+      "summary": "Validation/test-runs/original-0263-17e-ui-summary.json",
+      "log": "Validation/test-runs/original-0263-17e-ui.log",
+      "bundle": "Validation/test-runs/original-0263-17e-ui.xcresult"
+    }
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  }
+}

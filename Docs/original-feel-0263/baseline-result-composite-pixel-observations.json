@@ -1,0 +1,38 @@
+[
+  {
+    "fractionAbove12" : 0.020516975308641976,
+    "meanMaxChannelError" : 0.88500482253086421,
+    "performance" : "joyfulRaise",
+    "side" : 140
+  },
+  {
+    "fractionAbove12" : 0.020414737654320989,
+    "meanMaxChannelError" : 0.9918672839506173,
+    "performance" : "starHug",
+    "side" : 140
+  },
+  {
+    "fractionAbove12" : 0.020763888888888887,
+    "meanMaxChannelError" : 0.94330150462962958,
+    "performance" : "gentleRetry",
+    "side" : 140
+  },
+  {
+    "fractionAbove12" : 0.065262345679012346,
+    "meanMaxChannelError" : 2.8240142746913581,
+    "performance" : "joyfulRaise",
+    "side" : 250
+  },
+  {
+    "fractionAbove12" : 0.064948881172839507,
+    "meanMaxChannelError" : 3.1619907407407406,
+    "performance" : "starHug",
+    "side" : 250
+  },
+  {
+    "fractionAbove12" : 0.066126543209876543,
+    "meanMaxChannelError" : 3.008455825617284,
+    "performance" : "gentleRetry",
+    "side" : 250
+  }
+]

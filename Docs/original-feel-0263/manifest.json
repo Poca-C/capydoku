@@ -1,0 +1,583 @@
+{
+  "build": "0.2.63 (66)",
+  "baselineBuild": "0.2.62 (65)",
+  "items": [
+    {
+      "file": "baseline-result-composite-pixel-observations.json",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "9E8C5779-F01D-46BB-BD05-4B83AB8E94DF.json",
+      "sha256": "226f2087ce9e8574c64134b78380fb25338c1290236635f9e3c6688ee8f57cba"
+    },
+    {
+      "file": "baseline-result-composite-gentleRetry-250pt-assembled-fade.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "B60AAAB4-3E79-45CA-9297-C3506029B903.png",
+      "sha256": "dfe9e3e8c3224f8abcf82c982dc9168d9be2c7711484d9caa737aecd25d7b357"
+    },
+    {
+      "file": "baseline-result-composite-gentleRetry-250pt-actual-fade.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "82351C2D-E272-40E9-BED6-8490DAEA7F38.png",
+      "sha256": "df4952b895a109cd9eda68f45181efc277638ea32bc3ca151ff26df53d987022"
+    },
+    {
+      "file": "baseline-result-composite-gentleRetry-250pt-full.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "DB12D51F-E963-414A-8075-98565C138C44.png",
+      "sha256": "e8f6d1b067c34dac75c8d5f12fef9edd53d60f110e96b3c461c74b7bf7ac1d2b"
+    },
+    {
+      "file": "baseline-result-composite-starHug-250pt-assembled-fade.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "78FF2F87-D53D-44B1-862A-AB01AC146DFE.png",
+      "sha256": "2af8440316c2b853be5246b12239bd7809c0b475a2c2e928c15a0b8c5f131b06"
+    },
+    {
+      "file": "baseline-result-composite-starHug-250pt-actual-fade.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "44DB3B8D-616A-4259-B365-AEE705B3DC76.png",
+      "sha256": "7077e09009aaabd6a4e06f4c2f6222047916ed0b4b23755e79f4d2181f331478"
+    },
+    {
+      "file": "baseline-result-composite-starHug-250pt-full.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "48F6B68C-B8B8-4EF7-ACCE-2DBA353FCB01.png",
+      "sha256": "bb589a4de1fd19cfbb69d8084b2eecf3dafe62fc3a5574ef0cdc345cba44a42e"
+    },
+    {
+      "file": "baseline-result-composite-joyfulRaise-250pt-assembled-fade.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "3D86312F-BAAC-41E9-9888-97FDDC860CA3.png",
+      "sha256": "b522ef9925fb8c18f0b805b24c875641ab18c73040f4804bd945c3dc5898b9c7"
+    },
+    {
+      "file": "baseline-result-composite-joyfulRaise-250pt-actual-fade.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "41A2F4A5-04EC-4563-8293-740804370CED.png",
+      "sha256": "2c736079ce48d4aa5e5d488eace78a5fbee6306612fc18fc433ce593c01c61d3"
+    },
+    {
+      "file": "baseline-result-composite-joyfulRaise-250pt-full.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "C52A7609-931A-4DA0-908A-C4AA77FE4267.png",
+      "sha256": "523c6635d8bdbd5c12bcab1b1c32387621f3eda196f0879499028bfb91b6c405"
+    },
+    {
+      "file": "baseline-result-composite-gentleRetry-140pt-assembled-fade.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "9A687ACF-0790-462B-B429-346E93BF8E31.png",
+      "sha256": "5b14105e62d0035ebba098549ba250af7389a5e14aea493d4fd99230fa883ed1"
+    },
+    {
+      "file": "baseline-result-composite-gentleRetry-140pt-actual-fade.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "24121C1D-FDB0-4EA0-A903-F15FAE5B2D44.png",
+      "sha256": "1bb8a97d3da6bfc44e581c53c668a0224f7e67579c2d11b9b760405cfc28c9ba"
+    },
+    {
+      "file": "baseline-result-composite-gentleRetry-140pt-full.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "C1B643B2-28F9-465E-804C-3D67F3FB8BBD.png",
+      "sha256": "b7684bd01d5f2296c555e0cd147407d3ad1f77ce5d60d4ef1e427e4715ffa4ba"
+    },
+    {
+      "file": "baseline-result-composite-starHug-140pt-assembled-fade.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "8FB8E528-3E5A-4FE2-8F7D-E2BB31F01F55.png",
+      "sha256": "157b62c4cc0cd2686e92f462cdbacdbc307334f8091d5359fd279713b8028cbe"
+    },
+    {
+      "file": "baseline-result-composite-starHug-140pt-actual-fade.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "BEB2CD23-2DB2-4D1C-BC56-0DD201C6E762.png",
+      "sha256": "3e777bde7e56d9e804771eb8364719262ff127c65608ae0ddaa17efe09e73780"
+    },
+    {
+      "file": "baseline-result-composite-starHug-140pt-full.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "9AFCB9D4-A902-40E0-8018-7325BAB18CC4.png",
+      "sha256": "dfdf048cc0dceaef7e7b2615bed42a2a7607b2b5db9566b632b8508b767689eb"
+    },
+    {
+      "file": "baseline-result-composite-joyfulRaise-140pt-assembled-fade.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "7A2F4F5E-BB3A-4123-AD76-47F837B60D59.png",
+      "sha256": "08fdf343612aca55d207fb3826b8c32baa10e9501a7dcf64f30a2f066a15093b"
+    },
+    {
+      "file": "baseline-result-composite-joyfulRaise-140pt-actual-fade.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "7B07C9BB-3E15-49D6-8243-E1D3468FE738.png",
+      "sha256": "504bf681eedec6c6be482238164aea98b92f06a4f72a5e59ed6cd76245952b03"
+    },
+    {
+      "file": "baseline-result-composite-joyfulRaise-140pt-full.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "053D325E-E61E-4258-9B9F-E9EEF8A26E27.png",
+      "sha256": "52d85941e3ba6e5c6e0354c2d42df4b77440b2ca55d0a63cea7f2751f9a726da"
+    },
+    {
+      "file": "final-result-composite-pixel-observations.json",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "2A5281A4-9F9C-4017-A479-78903A37F3ED.json",
+      "sha256": "60fc10a5d3690835c02ea720a38444d87423d9b81ee5e3a614b6ddac24ac3bc4"
+    },
+    {
+      "file": "final-result-composite-gentleRetry-250pt-assembled-fade.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "3D8BCAB4-B37B-4D15-882F-EDC978C39E51.png",
+      "sha256": "dfe9e3e8c3224f8abcf82c982dc9168d9be2c7711484d9caa737aecd25d7b357"
+    },
+    {
+      "file": "final-result-composite-gentleRetry-250pt-actual-fade.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "3C5B2E34-CD22-486F-AB05-52B0E0DA60E1.png",
+      "sha256": "0019032f32e4c24e48053708d2b4dada51c3be6371f8a5e3b54a178073d5c6a0"
+    },
+    {
+      "file": "final-result-composite-gentleRetry-250pt-full.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "B01C36D3-7320-4867-BA46-7AD4CB588943.png",
+      "sha256": "e8f6d1b067c34dac75c8d5f12fef9edd53d60f110e96b3c461c74b7bf7ac1d2b"
+    },
+    {
+      "file": "final-result-composite-starHug-250pt-assembled-fade.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "181CF250-49FE-4105-B8D3-13CBF83D9F81.png",
+      "sha256": "2af8440316c2b853be5246b12239bd7809c0b475a2c2e928c15a0b8c5f131b06"
+    },
+    {
+      "file": "final-result-composite-starHug-250pt-actual-fade.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "D3E349A5-A9AF-4B5A-98BD-47929B2F86F4.png",
+      "sha256": "9d2dcf94a68681c2160329d8babb76a6b2f7d17fe72ac4dab4c4b5301e9cc804"
+    },
+    {
+      "file": "final-result-composite-starHug-250pt-full.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "7F7D400E-8181-4A54-87E5-07E9A428F05C.png",
+      "sha256": "bb589a4de1fd19cfbb69d8084b2eecf3dafe62fc3a5574ef0cdc345cba44a42e"
+    },
+    {
+      "file": "final-result-composite-joyfulRaise-250pt-assembled-fade.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "F084A98C-7E96-497B-B45C-5A820E2B7B68.png",
+      "sha256": "b522ef9925fb8c18f0b805b24c875641ab18c73040f4804bd945c3dc5898b9c7"
+    },
+    {
+      "file": "final-result-composite-joyfulRaise-250pt-actual-fade.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "A43F0FBE-85AC-4342-BB48-132A9A6109F2.png",
+      "sha256": "0764482e6c7b0b2239487d57b697d9c82fc29ecf37cc3520dc711ddc90fe2e27"
+    },
+    {
+      "file": "final-result-composite-joyfulRaise-250pt-full.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "269B2F65-B26B-4BB2-8CAA-5C782137F44D.png",
+      "sha256": "523c6635d8bdbd5c12bcab1b1c32387621f3eda196f0879499028bfb91b6c405"
+    },
+    {
+      "file": "final-result-composite-gentleRetry-140pt-assembled-fade.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "2275E1A5-916D-4B38-8CCA-DCD52ECEB617.png",
+      "sha256": "5b14105e62d0035ebba098549ba250af7389a5e14aea493d4fd99230fa883ed1"
+    },
+    {
+      "file": "final-result-composite-gentleRetry-140pt-actual-fade.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "FD04F3F9-3104-4AB6-820F-3D504CCB36F7.png",
+      "sha256": "b98fd4a37e2ff06689c2c3b9a3b65600246942515fd47d5f709a79579db07357"
+    },
+    {
+      "file": "final-result-composite-gentleRetry-140pt-full.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "2C139EBD-7AEC-4D0B-A214-062AA8D40332.png",
+      "sha256": "b7684bd01d5f2296c555e0cd147407d3ad1f77ce5d60d4ef1e427e4715ffa4ba"
+    },
+    {
+      "file": "final-result-composite-starHug-140pt-assembled-fade.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "23D72936-C5B9-4515-A77E-3E2C0C109FC8.png",
+      "sha256": "157b62c4cc0cd2686e92f462cdbacdbc307334f8091d5359fd279713b8028cbe"
+    },
+    {
+      "file": "final-result-composite-starHug-140pt-actual-fade.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "4BAA0FEA-D81D-4060-BFDB-28290A582948.png",
+      "sha256": "c79f29753b510f7fb642bbf59a1712b453bb98c9d3f98484caeb6e48dd0688a4"
+    },
+    {
+      "file": "final-result-composite-starHug-140pt-full.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "2F897A2D-5DF0-47D3-985F-AB1F7EC6F992.png",
+      "sha256": "dfdf048cc0dceaef7e7b2615bed42a2a7607b2b5db9566b632b8508b767689eb"
+    },
+    {
+      "file": "final-result-composite-joyfulRaise-140pt-assembled-fade.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "6F091806-37BA-4873-84FD-BEEFFCD587BF.png",
+      "sha256": "08fdf343612aca55d207fb3826b8c32baa10e9501a7dcf64f30a2f066a15093b"
+    },
+    {
+      "file": "final-result-composite-joyfulRaise-140pt-actual-fade.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "B748874C-EFDC-4F80-BA61-C764810448A1.png",
+      "sha256": "58d75cf2b4ed40ca3aaaa34f99f613a1ce1dbbe2da5c67ce530c5ed21a86f8c7"
+    },
+    {
+      "file": "final-result-composite-joyfulRaise-140pt-full.png",
+      "test": "ResultCharacterTests/testSwiftUIOpacityFadesTheAssembledCharacterWithoutExposingHiddenParts()",
+      "sourceAttachment": "F1E18987-9A6B-4E7B-BE78-9E79939CFB2B.png",
+      "sha256": "52d85941e3ba6e5c6e0354c2d42df4b77440b2ca55d0a63cea7f2751f9a726da"
+    },
+    {
+      "file": "final-three-result-root-natural-event-times.json",
+      "test": "ResultChoreographyTests/testActualRootThreeResultEntrancesAndExitsRunContinuouslyForVideoReview()",
+      "sourceAttachment": "0E104C5D-8490-4E22-BCE6-1E0A1B20269C.json",
+      "sha256": "763e0aff8dd7e69d7570f6781bf4d4119d9d00bfcaef9363fb5ee96144416652"
+    },
+    {
+      "file": "final-three-results-320-joyful-early-exit-destination.png",
+      "test": "ResultChoreographyTests/testActualRootThreeResultEntrancesAndExitsRunContinuouslyForVideoReview()",
+      "sourceAttachment": "C0F43A62-88A0-4A9B-B98F-086AA686DA55.png",
+      "sha256": "e82a9e40cd9c2eacf5b28ea11eba42fcee4485b85524fef7992df0ff6f49a605"
+    },
+    {
+      "file": "final-three-results-320-retry-destination.png",
+      "test": "ResultChoreographyTests/testActualRootThreeResultEntrancesAndExitsRunContinuouslyForVideoReview()",
+      "sourceAttachment": "5C67359A-7545-4307-BD8D-C2B81E52A46A.png",
+      "sha256": "2924a3a8270bd7e000cd1fe20af469c3602008b8aac6fd94ccf015d0e75abc60"
+    },
+    {
+      "file": "final-three-results-320-retry-settled-result.png",
+      "test": "ResultChoreographyTests/testActualRootThreeResultEntrancesAndExitsRunContinuouslyForVideoReview()",
+      "sourceAttachment": "27E47D8B-02D4-48B0-ABDE-D7DE8C540369.png",
+      "sha256": "417de87067c589068601f7694e578eff64ccfaaf5ca4e0950d7649aaa36e7f09"
+    },
+    {
+      "file": "final-three-results-320-star-hug-destination.png",
+      "test": "ResultChoreographyTests/testActualRootThreeResultEntrancesAndExitsRunContinuouslyForVideoReview()",
+      "sourceAttachment": "0140F04E-69E1-4D25-87A0-144AEE023515.png",
+      "sha256": "e8793144594130243a67fde85857f3012e1d087f7d3586a1ee93c0a3bb41de73"
+    },
+    {
+      "file": "final-three-results-320-star-hug-settled-result.png",
+      "test": "ResultChoreographyTests/testActualRootThreeResultEntrancesAndExitsRunContinuouslyForVideoReview()",
+      "sourceAttachment": "F5FF184A-0899-41F5-AC1C-CECCB27B623D.png",
+      "sha256": "57b5f18faf3583c259377a3a60e161bc9e41605233668969a6e47b7cc719a3ef"
+    },
+    {
+      "file": "final-three-results-320-joyful-destination.png",
+      "test": "ResultChoreographyTests/testActualRootThreeResultEntrancesAndExitsRunContinuouslyForVideoReview()",
+      "sourceAttachment": "4ECCA4F0-3CAB-4624-82CF-D8DAADEBCF11.png",
+      "sha256": "709703694b07cb447326859bf4b4c725e260708ef368f185a6791ce092845b71"
+    },
+    {
+      "file": "final-three-results-320-joyful-settled-result.png",
+      "test": "ResultChoreographyTests/testActualRootThreeResultEntrancesAndExitsRunContinuouslyForVideoReview()",
+      "sourceAttachment": "41897D50-C52E-49B0-9DB6-3307AC77A2AF.png",
+      "sha256": "f74c71a3a7094bf02e31434de02f9be5d524e95bd9778d3209ee04d55e347b97"
+    },
+    {
+      "file": "final-three-results-402-retry-destination.png",
+      "test": "ResultChoreographyTests/testActualRootThreeResultEntrancesAndExitsRunContinuouslyForVideoReview()",
+      "sourceAttachment": "BDAF3B9B-C9F7-40AD-A4D2-EE6F6667CDFE.png",
+      "sha256": "42fba43f64c00bc839924301a86dd887e2014a6b3f0ab9a2cfd53f1b70c1b5ee"
+    },
+    {
+      "file": "final-three-results-402-retry-settled-result.png",
+      "test": "ResultChoreographyTests/testActualRootThreeResultEntrancesAndExitsRunContinuouslyForVideoReview()",
+      "sourceAttachment": "25834D68-3E59-48BD-9959-52859C99338F.png",
+      "sha256": "f3d826d0361833e896c85bf39ed523cccab6a7254df1e78403006484471166eb"
+    },
+    {
+      "file": "final-three-results-402-star-hug-destination.png",
+      "test": "ResultChoreographyTests/testActualRootThreeResultEntrancesAndExitsRunContinuouslyForVideoReview()",
+      "sourceAttachment": "138847C8-3DE9-4E89-84E9-A399DCF982EB.png",
+      "sha256": "b2bf1631aeb83d9357c9b6f0be3f0c078e14e7ff29e0f624f262bbf828a0de38"
+    },
+    {
+      "file": "final-three-results-402-star-hug-settled-result.png",
+      "test": "ResultChoreographyTests/testActualRootThreeResultEntrancesAndExitsRunContinuouslyForVideoReview()",
+      "sourceAttachment": "89075D18-5356-4780-A0AA-1378E22934E4.png",
+      "sha256": "09d04b7e5c9b6b19cac415ffab46d258c729ff565ac09a89e94da4cb4b2f8512"
+    },
+    {
+      "file": "final-three-results-402-joyful-destination.png",
+      "test": "ResultChoreographyTests/testActualRootThreeResultEntrancesAndExitsRunContinuouslyForVideoReview()",
+      "sourceAttachment": "6706C07C-6298-4C9C-8FFE-0A0243F2A784.png",
+      "sha256": "c48ec5e29dfa8a9ed1fad04b3de64053c14346bb814eef1623ae4ab349a1d73d"
+    },
+    {
+      "file": "final-three-results-402-joyful-settled-result.png",
+      "test": "ResultChoreographyTests/testActualRootThreeResultEntrancesAndExitsRunContinuouslyForVideoReview()",
+      "sourceAttachment": "22EBD142-6DF5-4F7F-9844-3D79C3E3423F.png",
+      "sha256": "a2580a6b15a247c46b252ba655cb5a9c1b6c3d63be85f29b900049c0f1f6c313"
+    },
+    {
+      "file": "full-opacity-clarity-comparison.json",
+      "sha256": "cb1d2d318a5ffce6077c28f1eaccdc04543a104ddbfab9945ba16e9743c02966"
+    },
+    {
+      "file": "before-after-fade.png",
+      "sha256": "254710fdf74fb68012cb2dff9ea7b13fcd3dd2375374bc155de904ff72004301"
+    },
+    {
+      "file": "final-root-result-entrances.mov",
+      "test": "ResultChoreographyTests/testActualRootThreeResultEntrancesAndExitsRunContinuouslyForVideoReview()",
+      "sha256": "a37fd63d705b3fb3ff0b56b44d6e280aeda7eac05f020b19602b9b7717c3d64e"
+    },
+    {
+      "file": "three-results-402-joyful-sheet.png",
+      "sourceVideo": "final-root-result-entrances.mov",
+      "sha256": "a760f7a8f96724f80652b42e42c62035494e8d466c80bc201e4cdd13aaf86e15"
+    },
+    {
+      "file": "native-three-results-402-joyful-001.608.png",
+      "sourceVideo": "final-root-result-entrances.mov",
+      "actualSeconds": 1.6033333333333333,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "sha256": "9312c41bca77428a8f4f51e766713918bda8cfbf7c897695bdb1b82489d54900"
+    },
+    {
+      "file": "three-results-402-star-hug-sheet.png",
+      "sourceVideo": "final-root-result-entrances.mov",
+      "sha256": "665f435f1b368a6831d534ae36278b5a228be14eef449b98a40366b437a06a20"
+    },
+    {
+      "file": "native-three-results-402-star-hug-005.665.png",
+      "sourceVideo": "final-root-result-entrances.mov",
+      "actualSeconds": 5.653333333333333,
+      "crop": [
+        180,
+        990,
+        846,
+        870
+      ],
+      "sha256": "f9f047a234fc658aceb7c3dfaadc2728ff95ef06c8479e149d3a9b1468ae0009"
+    },
+    {
+      "file": "three-results-402-retry-sheet.png",
+      "sourceVideo": "final-root-result-entrances.mov",
+      "sha256": "2f812af232737494b228b08ade78370413100e47352393f9357d32b4b896cabe"
+    },
+    {
+      "file": "native-three-results-402-retry-009.308.png",
+      "sourceVideo": "final-root-result-entrances.mov",
+      "actualSeconds": 9.296666666666667,
+      "crop": [
+        180,
+        660,
+        846,
+        1110
+      ],
+      "sha256": "e87ce0b2125d871ac67fbc9086bd65639451f68b6e2aa46ecfc470a8604d2206"
+    },
+    {
+      "file": "three-results-320-joyful-sheet.png",
+      "sourceVideo": "final-root-result-entrances.mov",
+      "sha256": "7f79cbcbe2d7719fe7eef7ca51624838f07f1ee6228f05ce9e6b0b3aa8f60775"
+    },
+    {
+      "file": "native-three-results-320-joyful-013.113.png",
+      "sourceVideo": "final-root-result-entrances.mov",
+      "actualSeconds": 13.106666666666667,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "sha256": "42d31caa07aa7bbc6b54fb158a718e23cdff56441e6520b946dbd78edcb5cee9"
+    },
+    {
+      "file": "three-results-320-star-hug-sheet.png",
+      "sourceVideo": "final-root-result-entrances.mov",
+      "sha256": "a14cf673de932e0746e16361158b417d73a1c64cac624ed22277062faf219b5d"
+    },
+    {
+      "file": "native-three-results-320-star-hug-016.779.png",
+      "sourceVideo": "final-root-result-entrances.mov",
+      "actualSeconds": 16.778333333333332,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "sha256": "2d353aa35ff23d5f71aa14cb6224f5cb98655ce30709906f0b4ff94b64882c04"
+    },
+    {
+      "file": "three-results-320-retry-sheet.png",
+      "sourceVideo": "final-root-result-entrances.mov",
+      "sha256": "0efd4a6b98f8647abe0e2a869cc252725473293272a5ebc5c197936c1b21fdb6"
+    },
+    {
+      "file": "native-three-results-320-retry-019.955.png",
+      "sourceVideo": "final-root-result-entrances.mov",
+      "actualSeconds": 19.948333333333334,
+      "crop": [
+        105,
+        450,
+        750,
+        900
+      ],
+      "sha256": "284d3d864a7a8a4b29edb60f748dd1d5052c2c8a9ad6c52b491f4cf8d0565a99"
+    },
+    {
+      "file": "three-results-320-joyful-early-exit-sheet.png",
+      "sourceVideo": "final-root-result-entrances.mov",
+      "sha256": "6fd8c68a34040fd4ff4c02b54beaabe6a240f87466465a266bb2e737862a8cd0"
+    },
+    {
+      "file": "native-three-results-320-joyful-early-exit-023.541.png",
+      "sourceVideo": "final-root-result-entrances.mov",
+      "actualSeconds": 23.536666666666665,
+      "crop": [
+        105,
+        690,
+        750,
+        660
+      ],
+      "sha256": "01f51225ac79a872056aaa8e880aeaee45bbea92f023c417955222b79e8e1f1b"
+    },
+    {
+      "file": "root-video-sampling.json"
+    }
+  ],
+  "pixelComparison": {
+    "baseline": [
+      {
+        "fractionAbove12": 0.020516975308641976,
+        "meanMaxChannelError": 0.8850048225308642,
+        "performance": "joyfulRaise",
+        "side": 140
+      },
+      {
+        "fractionAbove12": 0.02041473765432099,
+        "meanMaxChannelError": 0.9918672839506173,
+        "performance": "starHug",
+        "side": 140
+      },
+      {
+        "fractionAbove12": 0.020763888888888887,
+        "meanMaxChannelError": 0.9433015046296296,
+        "performance": "gentleRetry",
+        "side": 140
+      },
+      {
+        "fractionAbove12": 0.06526234567901235,
+        "meanMaxChannelError": 2.824014274691358,
+        "performance": "joyfulRaise",
+        "side": 250
+      },
+      {
+        "fractionAbove12": 0.0649488811728395,
+        "meanMaxChannelError": 3.1619907407407406,
+        "performance": "starHug",
+        "side": 250
+      },
+      {
+        "fractionAbove12": 0.06612654320987654,
+        "meanMaxChannelError": 3.008455825617284,
+        "performance": "gentleRetry",
+        "side": 250
+      }
+    ],
+    "final": [
+      {
+        "fractionAbove12": 0,
+        "meanMaxChannelError": 0.0442602237654321,
+        "performance": "joyfulRaise",
+        "side": 140
+      },
+      {
+        "fractionAbove12": 0,
+        "meanMaxChannelError": 0.04048611111111111,
+        "performance": "starHug",
+        "side": 140
+      },
+      {
+        "fractionAbove12": 0,
+        "meanMaxChannelError": 0.039227430555555554,
+        "performance": "gentleRetry",
+        "side": 140
+      },
+      {
+        "fractionAbove12": 0,
+        "meanMaxChannelError": 0.13905960648148147,
+        "performance": "joyfulRaise",
+        "side": 250
+      },
+      {
+        "fractionAbove12": 0,
+        "meanMaxChannelError": 0.1268846450617284,
+        "performance": "starHug",
+        "side": 250
+      },
+      {
+        "fractionAbove12": 0,
+        "meanMaxChannelError": 0.12431423611111111,
+        "performance": "gentleRetry",
+        "side": 250
+      }
+    ],
+    "fullOpacityClarity": [
+      {
+        "performance": "joyfulRaise",
+        "side": 140,
+        "meanMaxChannelError": 0.0,
+        "maxChannelError": 0,
+        "fractionAbove12": 0.0
+      },
+      {
+        "performance": "starHug",
+        "side": 140,
+        "meanMaxChannelError": 0.0,
+        "maxChannelError": 0,
+        "fractionAbove12": 0.0
+      },
+      {
+        "performance": "gentleRetry",
+        "side": 140,
+        "meanMaxChannelError": 0.0,
+        "maxChannelError": 0,
+        "fractionAbove12": 0.0
+      },
+      {
+        "performance": "joyfulRaise",
+        "side": 250,
+        "meanMaxChannelError": 0.0,
+        "maxChannelError": 0,
+        "fractionAbove12": 0.0
+      },
+      {
+        "performance": "starHug",
+        "side": 250,
+        "meanMaxChannelError": 0.0,
+        "maxChannelError": 0,
+        "fractionAbove12": 0.0
+      },
+      {
+        "performance": "gentleRetry",
+        "side": 250,
+        "meanMaxChannelError": 0.0,
+        "maxChannelError": 0,
+        "fractionAbove12": 0.0
+      }
+    ]
+  },
+  "visualReview": "六组固定0.45透明度的实际SwiftUI宿主像素对照；真实Root两尺寸三种结算及一次入场中退出，7组共126个25ms间隔请求帧的图条已查看。修正后淡入中未再观察到内部部件透出，背景棋盘仍按设计透过整个淡入角色。",
+  "limitations": [
+    "真实Root录屏25.108秒，视频零点独立于测试事件时钟；有限抽帧不证明精确参考时序、全帧率或所有设备品质。",
+    "静态比较是140/250pt三个姿态、0.45透明度；不等于所有动画相位的逐像素证明。",
+    "完全不透明的六组图与旧版本像素一致，仅证明此组样本未模糊或改图。",
+    "13张稳定Root截图是测试输出，并未逐张作审美验收。",
+    "未做最新真机声音、震动、低性能设备或正式发布验收。"
+  ]
+}

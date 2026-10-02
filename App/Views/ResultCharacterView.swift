@@ -22,6 +22,9 @@ struct ResultCharacterView: View {
             reduceMotion: motionOverride ?? systemReduceMotion,
             presentationEnabled: presentationEnabled && scenePhase == .active)
             .frame(width: size, height: size)
+            // Fade the assembled native character as one surface. Applying a
+            // parent opacity to its cutouts separately exposes hidden joints.
+            .compositingGroup()
             .allowsHitTesting(false).accessibilityHidden(true)
     }
 }
