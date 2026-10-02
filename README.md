@@ -6,7 +6,7 @@
 
 ## 快速运行
 
-1. 获得私有仓库访问权限后，克隆或拉取最新代码。
+1. 仓库已公开，可直接克隆或拉取最新代码，无需邀请即可查看与下载。
 2. 用 Xcode 打开 `Capydoku.xcodeproj`，选择 **Capydoku** scheme 和 iPhone 模拟器，点击 **Run**。工程已生成，无需安装第三方依赖；当前验证环境为 Xcode 26.6，最低编译目标为 iOS 15。
 3. 真机运行时，在 Xcode 登录自己的 Apple 账号，在 **Signing & Capabilities** 选择自己的 Personal Team 和可签名的唯一 Bundle Identifier。连接并信任 iPhone，按提示开启开发者模式后运行；个人签名修改请保留在本地。
 
