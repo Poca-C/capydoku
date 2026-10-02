@@ -1,0 +1,97 @@
+{
+  "build": "0.2.64 (67)",
+  "timestampUTC": "2026-10-02T01:21:36.628657+00:00",
+  "sourceCommit": "3487911",
+  "authorization": "User explicitly requested 更新手机; packaging a development build and in-place wireless installation authorized. GitHub publication remains paused.",
+  "device": {
+    "model": "iPhone 14 Pro Max",
+    "os": "26.3.1",
+    "transport": "localNetwork"
+  },
+  "package": {
+    "version": "0.2.64",
+    "build": "67",
+    "bundle": "com.capydoku.demo",
+    "environment": "internal_demo",
+    "profileIncludesPhone": true,
+    "team": [
+      "4QVSM46JU2"
+    ],
+    "profileExpiresUTC": "2026-10-08 04:04:05",
+    "applicationIdentifier": "4QVSM46JU2.com.capydoku.demo",
+    "binarySHA256": "9995f813c4c43d2811145d388ec4bc3382cedca32cf865d3914808d22abf89fa"
+  },
+  "signature": {
+    "strictVerification": true,
+    "buildLog": "Validation/test-runs/original-0264-physical-build.log",
+    "signatureLog": "Validation/test-runs/original-0264-codesign.log"
+  },
+  "installation": {
+    "passed": true,
+    "resetOrUninstall": false,
+    "normalBundleIdentifier": "com.capydoku.demo",
+    "previousVersion": "0.2.29 (32)",
+    "verifiedVersion": "0.2.64",
+    "verifiedBuild": "67",
+    "result": "Validation/test-runs/physical-0264-install.json",
+    "queriedVersionEvidence": "Validation/test-runs/physical-0264-final-apps.json"
+  },
+  "launch": {
+    "passed": true,
+    "normalArguments": [],
+    "terminatedExistingProcess": false,
+    "evidence": "Validation/test-runs/physical-0264-launch.json",
+    "processIdentifier": 749,
+    "subsequentProcessQueryAlive": true,
+    "physicalScreenAndGameplay": "not_observed"
+  },
+  "data": {
+    "observedFilesBefore": 8,
+    "observedFilesAfter": 8,
+    "allFilesIdentical": true,
+    "changedFiles": [],
+    "primaryAndBackupChecksums": [
+      {
+        "snapshot": "before",
+        "file": "progress.json",
+        "valid": true
+      },
+      {
+        "snapshot": "before",
+        "file": "progress.backup.json",
+        "valid": true
+      },
+      {
+        "snapshot": "after",
+        "file": "progress.json",
+        "valid": true
+      },
+      {
+        "snapshot": "after",
+        "file": "progress.backup.json",
+        "valid": true
+      }
+    ],
+    "historicalEventsCount": 292,
+    "eventsAfter": 292,
+    "allHistoricalEventsUnchanged": true,
+    "previousRewardEntries": 38,
+    "rewardEntriesAfter": 38,
+    "allPreviousRewardEntriesUnchanged": true,
+    "completedLevelsRetained": true,
+    "settingsUnchanged": true,
+    "checkInUnchanged": true,
+    "identityNamespaceUnchanged": true,
+    "currentLevelBefore": 2,
+    "currentLevelAfter": 2,
+    "sessionUnchanged": true,
+    "comparisonNote": "Read-only snapshots immediately before and after in-place update, before requested launch. No uninstall, reset or data restore."
+  },
+  "audio": {
+    "debugLocalTestResourcesPresent": true,
+    "files": 9,
+    "inventory": "Validation/test-runs/original-0264-audio-physical-inventory.json",
+    "audiblePlaybackOnDevice": "not_verified_by_assistant"
+  },
+  "acceptanceBoundary": "Development build signed with existing identity; queried installed0.2.64(67), launched without test arguments and same process later present. Eight before/after installation data files identical before launch. No physical gesture, haptic, audible A/B or rendered-screen acceptance claim. No App Store/TestFlight or GitHub upload."
+}

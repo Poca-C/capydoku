@@ -1,6 +1,6 @@
 # Capydoku · 原文对齐 Demo
 
-原生 Swift / SwiftUI iPhone 应用，默认简体中文、可在设置中切换 English、竖屏，最低编译目标 iOS 15。当前本地开发版本 **0.2.64（67）**，尚未达到正式验收或上架状态。手机最近确认安装的是0.2.29；按用户要求，本轮暂停打包分发、手机更新和GitHub上传。
+原生 Swift / SwiftUI iPhone 应用，默认简体中文、可在设置中切换 English、竖屏，最低编译目标 iOS 15。当前本地开发版本 **0.2.64（67）**，尚未达到正式验收或上架状态。用户授权更新后，0.2.64（67）已无线覆盖安装到iPhone并正常启动，现有存档保留；GitHub上传仍暂停。
 
 ## 唯一需求基准
 
@@ -18,7 +18,7 @@
 
 下列主页面图册保留0.2.1的实测版本；0.2.4新增操作反馈，分时组件截图见 Docs/original-feedback/manifest.json，不能用旧图替代新构建验收：[首页](Docs/original-reference/01-home.png) · [游戏](Docs/original-reference/04-gameplay.png) · [提示](Docs/original-reference/05-hint.png) · [设置](Docs/original-reference/02-settings.png) · [签到](Docs/original-reference/03-check-in.png)。
 
-无需第三方依赖或真实广告 SDK。模拟器运行/测试须保留本地签名（CODE_SIGNING_ALLOWED=YES），工程仅为模拟器配置钥匙串权限；禁用签名只能验证编译，不能验证真实钥匙串。0.2.29（32）已无线覆盖安装并由设备查询确认。请求启动前的安装前后8份文件逐字节一致，第10关对局、287条事件、38条奖励及设置/签到/身份保持，见[真机记录](Validation/original-0229-physical-install.json)。本次自动启动被手机锁屏阻止，需解锁后打开App；未记录为启动成功或真机手感验收。
+无需第三方依赖或真实广告 SDK。模拟器运行/测试须保留本地签名（CODE_SIGNING_ALLOWED=YES），工程仅为模拟器配置钥匙串权限；禁用签名只能验证编译，不能验证真实钥匙串。0.2.64（67）已无线覆盖安装，由设备查询确认并无测试参数正常启动，随后进程仍在运行。安装前后8份数据文件逐字节一致，第2关对局、292条历史事件、38条奖励以及设置/签到保持，见[当前安装记录](Validation/original-0264-physical-install.json)。用户完整真机试玩、声音和震动体验尚待反馈。
 
 ## 0.2.64 密集棋盘道具反馈
 

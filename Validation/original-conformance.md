@@ -2,7 +2,7 @@
 
 本记录以原始 Word V1.3 正文及附图为依据。结论：**可内部试玩，部分符合；客户端仍有未实现项，冻结参考、外部接入和上架尚未验收。** 后续报告和旧 Checklist 不覆盖原文。
 
-当前已验证本地构建：**0.2.64 (67)**，手机最近安装证据为**0.2.29 (32)**。实际测试范围与结果见 [当前验证记录](original-0264-feedback.json)；此前综合记录保留在 [历史验证记录](original-verification.json)。
+当前已验证本地构建：**0.2.64 (67)**，手机已安装并启动**0.2.64 (67)**，见[真机更新记录](original-0264-physical-install.json)。实际测试范围与结果见 [当前验证记录](original-0264-feedback.json)；此前综合记录保留在 [历史验证记录](original-verification.json)。
 
 原文校验值：`274bbf15f031bd80bb8b360cf14c0266acff370a230d9cad1b1785461df54dd2`。原文[n]对应 [document.txt](../Reference/Original/document.txt) 的0-based正文块索引（含表格），不是页码。83行是实质要求分组，不是完成率。
 
