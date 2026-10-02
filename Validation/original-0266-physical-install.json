@@ -52,7 +52,12 @@
     "userUnlockRequested": true
   },
   "physicalPlaybackVerified": false,
-  "physicalAudibilityConfirmedByUser": false,
-  "nextAction": "Unlock iPhone, launch the normal app without test arguments, then read Library/Caches/capydoku-audio-runtime.json. Ask user to confirm actual audibility; isPlaying alone cannot prove sound is heard.",
-  "githubPublished": false
+  "physicalAudibilityConfirmedByUser": true,
+  "nextAction": "Publish the reviewed project to GitHub as requested; keep local-only reference audio excluded. Formal audio mapping and full physical listening acceptance remain open.",
+  "githubPublished": false,
+  "userFollowUp": {
+    "date": "2026-10-02",
+    "message": "可以 修复完了 接下来把这个推送到我的GitHub上",
+    "interpretation": "User accepts the audio fix and requests GitHub publication. This is user confirmation, not an additional remote playback measurement or formal audio acceptance."
+  }
 }

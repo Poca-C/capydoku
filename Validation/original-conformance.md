@@ -2,7 +2,7 @@
 
 本记录以原始 Word V1.3 正文及附图为依据。结论：**可内部试玩，部分符合；客户端仍有未实现项，冻结参考、外部接入和上架尚未验收。** 后续报告和旧 Checklist 不覆盖原文。
 
-当前已验证本地构建：**0.2.66 (69)**，手机已覆盖安装**0.2.66 (69)**，存档保留；设备仍锁屏，尚未核对本版真机实际播放与可听性，见[真机更新记录](original-0266-physical-install.json)。实际测试范围与结果见 [当前验证记录](original-0266-audio.json)；此前综合记录保留在 [历史验证记录](original-verification.json)。
+当前已验证本地构建：**0.2.66 (69)**，手机已覆盖安装**0.2.66 (69)**，存档保留。用户于2026-10-02确认声音修复；本次反馈不替代逐事件真机测量、参考A/B或正式音频验收，见[真机更新记录](original-0266-physical-install.json)。实际测试范围与结果见 [当前验证记录](original-0266-audio.json)；此前综合记录保留在 [历史验证记录](original-verification.json)。
 
 原文校验值：`274bbf15f031bd80bb8b360cf14c0266acff370a230d9cad1b1785461df54dd2`。原文[n]对应 [document.txt](../Reference/Original/document.txt) 的0-based正文块索引（含表格），不是页码。83行是实质要求分组，不是完成率。
 

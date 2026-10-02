@@ -1,6 +1,17 @@
 # Capydoku · 原文对齐 Demo
 
-原生 Swift / SwiftUI iPhone 应用，默认简体中文、可在设置中切换 English、竖屏，最低编译目标 iOS 15。当前本地开发版本 **0.2.66（69）**，尚未达到正式验收或上架状态。0.2.66（69）已无线覆盖安装到iPhone，8个存档文件完全保留；手机仍锁屏，真机实际音频输出尚待解锁核对。GitHub上传仍暂停。
+原生 Swift / SwiftUI iPhone 应用，默认简体中文、可在设置中切换 English、竖屏，最低编译目标 iOS 15。当前开发版本 **0.2.66（69）**，尚未达到正式验收或上架状态。已无线覆盖安装到 iPhone，8 个存档文件完全保留；用户于 2026-10-02 确认声音修复，并要求上传 GitHub 供协作检阅。这是用户反馈，不代表全部音频项目或正式 Checklist 已验收。
+
+## 同事从这里开始
+
+1. 获得私有仓库访问权限后，用 Xcode 的 Clone Git Repository 或自己的 Git 工具克隆本仓库。
+2. 打开根目录的 `Capydoku.xcodeproj`，选择 **Capydoku** scheme 和已安装的 iPhone 模拟器，点击 Run。无需广告 SDK 或第三方包；本机使用 Xcode 26.6，工程最低系统目标为 iOS 15。
+3. 真机检阅：在 Xcode 设置中登录自己的 Apple 账号；在 Capydoku target 的 **Signing & Capabilities** 选择自己的 Personal Team，使用自己可签名的唯一 Bundle Identifier，连接并信任 iPhone 后 Run。手机按系统提示开启开发者模式并信任开发者。个人签名修改请保留在本地，勿覆盖团队配置。
+4. 需求看 [原文提取](Reference/Original/document.txt)，当前差距看 [逐章验收状态](Validation/original-conformance.md)，最近修改看 [变更记录](CHANGELOG.md)。下方各版本段落是当时的历史记录，其中旧的安装版本与“暂停上传”不代表当前状态。
+
+**音频边界：仓库不包含本机授权试听的 Meowdoku 原声。** 干净克隆可以正常构建与游玩，但当前正式音频清单仍为空，游戏没有音乐或音效是预期情况；手机上本机试听版的声音不会随源码上传。后续需另行交付获准共享的正式音频并完成映射验收。
+
+仓库保留开发历史、测试记录与演出录屏，当前检出约 873 MiB，首次克隆可能较慢。编译产物、个人签名、手机存档和 `LocalTestAssets/MeowdokuAudio/` 不入库。协作修改请从最新默认分支建立各自分支，review 后再合并。
 
 ## 唯一需求基准
 
