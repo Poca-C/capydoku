@@ -1,6 +1,7 @@
-"""Stage local-only reference listening files; never part of any archive/distribution.
+"""Stage internal-demo listening files; never part of any archive/distribution.
 
-No audio is downloaded or extracted by builds. This optional input is ignored by Git.
+No audio is downloaded or extracted by builds. The private collaboration repository
+includes the user-requested WAV files and manifest; missing inputs remain optional.
 Every build clears the previous output first, including incremental configuration swaps.
 """
 from pathlib import Path

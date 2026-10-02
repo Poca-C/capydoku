@@ -10,5 +10,16 @@ Validation/screenshots/
 Validation/test-runs/
 ~$*
 
-# User-authorized reference audio for this machine only; never publish.
-/LocalTestAssets/MeowdokuAudio/
+# User requested these listening assets in the private collaboration repository.
+# Keep extraction inputs and machine-specific provenance out of Git.
+/LocalTestAssets/MeowdokuAudio/*
+!/LocalTestAssets/MeowdokuAudio/local-test-audio.json
+!/LocalTestAssets/MeowdokuAudio/meow-test-bgm_meowdoku_melody.wav
+!/LocalTestAssets/MeowdokuAudio/meow-test-btn_click_2.wav
+!/LocalTestAssets/MeowdokuAudio/meow-test-combo_excellent_s6.wav
+!/LocalTestAssets/MeowdokuAudio/meow-test-combo_great_s6.wav
+!/LocalTestAssets/MeowdokuAudio/meow-test-combo_nice_s6.wav
+!/LocalTestAssets/MeowdokuAudio/meow-test-mark_cat.wav
+!/LocalTestAssets/MeowdokuAudio/meow-test-mark_wrong_1.wav
+!/LocalTestAssets/MeowdokuAudio/meow-test-mark_x_2.wav
+!/LocalTestAssets/MeowdokuAudio/meow-test-unmark_x_2.wav

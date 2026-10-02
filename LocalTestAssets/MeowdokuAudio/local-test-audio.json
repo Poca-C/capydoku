@@ -1,0 +1,449 @@
+{
+  "schemaVersion": 1,
+  "purpose": "local-user-authorized-audio-test",
+  "allowedEnvironment": "internal_demo",
+  "referenceVerified": false,
+  "sourceVersion": "Meowdoku 1.19.1 (457), installed official application",
+  "mappingStatus": "Filename-semantic experimental mapping, no reference timing/volume/frozen-version signoff. Swipe temporarily uses the mark sample. Demo Combo counts 2/3/4. Local 0.2.27 listening experiment: Combo shares one voice channel; normal swipe release finishes active short clips and at most one already-due cue, discarding future queue.",
+  "files": {
+    "meow-test-bgm_meowdoku_melody.wav": "7977f4802ea5715c9e935636d56555bdfce9ff3fca1d9dad8937875a74e2f593",
+    "meow-test-btn_click_2.wav": "714a1f358a079040af73038456571d69c566c04638a319b4ba6467d19b7e70dd",
+    "meow-test-combo_excellent_s6.wav": "ab9b9da86ce1cb26b73e1b0f187bf4e4e8275873e9543140aebc78d4ee86c21f",
+    "meow-test-combo_great_s6.wav": "156cdb517d0fc4c136126b31b269ef5872c064eabf71d3377983c8e4c91b74e7",
+    "meow-test-combo_nice_s6.wav": "f90f0fa1dab21ec10f9123e14dc681087b333ee2f3ad424b2fcb482a97e32086",
+    "meow-test-mark_cat.wav": "52dd253b6940c0afad4806ac12ba592f031258b1c075c020ad66ecaf9eeb2b0e",
+    "meow-test-mark_wrong_1.wav": "1ec4ca3156b856f3a46a1dc6391dab26c2a2241401fa93ca81786d0c26ab2ab9",
+    "meow-test-mark_x_2.wav": "30f0bc23ab6d145afafaed161bb97fdd72605150dadb3e9f5883a889eeaf73d4",
+    "meow-test-unmark_x_2.wav": "d3b19049ca95d326d0d9f1a0415eae51247ab290a9b9a8415a2de73ea35bc6b2"
+  },
+  "playback": {
+    "version": "local-meowdoku-1.19.1-457-test-0227",
+    "referenceVerified": false,
+    "clips": {
+      "background_music": {
+        "file": "meow-test-bgm_meowdoku_melody.wav",
+        "group": "music",
+        "volume": 0.4,
+        "delay": 0,
+        "minimumInterval": 0.15,
+        "maximumConcurrent": 1,
+        "overflow": "stopOldest",
+        "loops": -1,
+        "fadeIn": 0.25,
+        "fadeOut": 0.15,
+        "contextChange": "followCurrentScope",
+        "scope": {
+          "pages": [
+            "home",
+            "game",
+            "checkIn"
+          ],
+          "overlays": [
+            "none",
+            "tutorial",
+            "won",
+            "lost"
+          ]
+        }
+      },
+      "button_tap": {
+        "file": "meow-test-btn_click_2.wav",
+        "group": "sound",
+        "volume": 0.9,
+        "delay": 0,
+        "minimumInterval": 0.075,
+        "maximumConcurrent": 3,
+        "overflow": "stopOldest",
+        "loops": 0,
+        "fadeIn": 0,
+        "fadeOut": 0,
+        "contextChange": "followCurrentScope",
+        "scope": {
+          "pages": [
+            "startup",
+            "home",
+            "game",
+            "settings",
+            "checkIn"
+          ],
+          "overlays": [
+            "none",
+            "tutorial",
+            "settings",
+            "debug",
+            "hint",
+            "won",
+            "lost",
+            "challenge",
+            "loading",
+            "notice",
+            "error"
+          ]
+        }
+      },
+      "mark_x": {
+        "file": "meow-test-mark_x_2.wav",
+        "group": "sound",
+        "volume": 0.9,
+        "delay": 0,
+        "minimumInterval": 0.075,
+        "maximumConcurrent": 3,
+        "overflow": "stopOldest",
+        "loops": 0,
+        "fadeIn": 0,
+        "fadeOut": 0,
+        "contextChange": "followCurrentScope",
+        "scope": {
+          "pages": [
+            "game"
+          ],
+          "overlays": [
+            "none",
+            "tutorial",
+            "won",
+            "lost"
+          ]
+        }
+      },
+      "swipe_x": {
+        "file": "meow-test-mark_x_2.wav",
+        "group": "sound",
+        "volume": 0.9,
+        "delay": 0,
+        "minimumInterval": 0.075,
+        "maximumConcurrent": 3,
+        "overflow": "stopOldest",
+        "loops": 0,
+        "fadeIn": 0,
+        "fadeOut": 0,
+        "contextChange": "followCurrentScope",
+        "scope": {
+          "pages": [
+            "game"
+          ],
+          "overlays": [
+            "none",
+            "tutorial",
+            "won",
+            "lost"
+          ]
+        }
+      },
+      "erase_x": {
+        "file": "meow-test-unmark_x_2.wav",
+        "group": "sound",
+        "volume": 0.9,
+        "delay": 0,
+        "minimumInterval": 0.075,
+        "maximumConcurrent": 3,
+        "overflow": "stopOldest",
+        "loops": 0,
+        "fadeIn": 0,
+        "fadeOut": 0,
+        "contextChange": "followCurrentScope",
+        "scope": {
+          "pages": [
+            "game"
+          ],
+          "overlays": [
+            "none",
+            "tutorial",
+            "won",
+            "lost"
+          ]
+        }
+      },
+      "double_tap_correct": {
+        "file": "meow-test-mark_cat.wav",
+        "group": "sound",
+        "volume": 0.9,
+        "delay": 0,
+        "minimumInterval": 0.15,
+        "maximumConcurrent": 3,
+        "overflow": "stopOldest",
+        "loops": 0,
+        "fadeIn": 0,
+        "fadeOut": 0,
+        "contextChange": "completeInTriggerScope",
+        "scope": {
+          "pages": [
+            "game"
+          ],
+          "overlays": [
+            "none",
+            "tutorial",
+            "won",
+            "lost"
+          ]
+        }
+      },
+      "double_tap_wrong": {
+        "file": "meow-test-mark_wrong_1.wav",
+        "group": "sound",
+        "volume": 0.9,
+        "delay": 0,
+        "minimumInterval": 0.15,
+        "maximumConcurrent": 3,
+        "overflow": "stopOldest",
+        "loops": 0,
+        "fadeIn": 0,
+        "fadeOut": 0,
+        "contextChange": "completeInTriggerScope",
+        "scope": {
+          "pages": [
+            "game"
+          ],
+          "overlays": [
+            "none",
+            "tutorial",
+            "won",
+            "lost"
+          ]
+        }
+      },
+      "nice": {
+        "file": "meow-test-combo_nice_s6.wav",
+        "group": "voice",
+        "volume": 0.9,
+        "delay": 0,
+        "minimumInterval": 0.15,
+        "maximumConcurrent": 1,
+        "overflow": "stopOldest",
+        "loops": 0,
+        "fadeIn": 0,
+        "fadeOut": 0,
+        "contextChange": "completeInTriggerScope",
+        "scope": {
+          "pages": [
+            "game"
+          ],
+          "overlays": [
+            "none",
+            "tutorial",
+            "won",
+            "lost"
+          ]
+        },
+        "concurrencyGroup": "local-combo-voice"
+      },
+      "great": {
+        "file": "meow-test-combo_great_s6.wav",
+        "group": "voice",
+        "volume": 0.9,
+        "delay": 0,
+        "minimumInterval": 0.15,
+        "maximumConcurrent": 1,
+        "overflow": "stopOldest",
+        "loops": 0,
+        "fadeIn": 0,
+        "fadeOut": 0,
+        "contextChange": "completeInTriggerScope",
+        "scope": {
+          "pages": [
+            "game"
+          ],
+          "overlays": [
+            "none",
+            "tutorial",
+            "won",
+            "lost"
+          ]
+        },
+        "concurrencyGroup": "local-combo-voice"
+      },
+      "excellent": {
+        "file": "meow-test-combo_excellent_s6.wav",
+        "group": "voice",
+        "volume": 0.9,
+        "delay": 0,
+        "minimumInterval": 0.15,
+        "maximumConcurrent": 1,
+        "overflow": "stopOldest",
+        "loops": 0,
+        "fadeIn": 0,
+        "fadeOut": 0,
+        "contextChange": "completeInTriggerScope",
+        "scope": {
+          "pages": [
+            "game"
+          ],
+          "overlays": [
+            "none",
+            "tutorial",
+            "won",
+            "lost"
+          ]
+        },
+        "concurrencyGroup": "local-combo-voice"
+      }
+    },
+    "musicTransitions": {
+      "contextChanged": "resume",
+      "levelEntered": "resume",
+      "levelExited": "resume",
+      "pause": "pause",
+      "resume": "resume",
+      "adStarted": "pause",
+      "adEnded": "resume",
+      "background": "pause",
+      "foreground": "resume",
+      "inputLocked": "resume",
+      "inputUnlocked": "resume",
+      "interruptionBegan": "pause",
+      "interruptionEnded": "resume",
+      "mediaReset": "resume",
+      "musicEnabled": "resume",
+      "musicDisabled": "pause",
+      "startupEntered": "resume",
+      "homeEntered": "resume",
+      "gameEntered": "resume",
+      "settingsEntered": "resume",
+      "checkInEntered": "resume",
+      "tutorialOpened": "resume",
+      "settingsOpened": "resume",
+      "debugOpened": "resume",
+      "hintOpened": "resume",
+      "won": "resume",
+      "lost": "resume",
+      "challengeOpened": "resume",
+      "loadingBegan": "resume",
+      "noticeOpened": "resume",
+      "errorOpened": "resume",
+      "overlayClosed": "resume"
+    },
+    "swipe": {
+      "mode": "perCell",
+      "cadenceSeconds": 0.075,
+      "maximumQueued": 12,
+      "end": "finishCurrent",
+      "cancel": "immediately"
+    },
+    "buttons": {
+      "alert_ok": {
+        "playWhenDisabled": false
+      },
+      "button": {
+        "playWhenDisabled": false
+      },
+      "challenge_continue": {
+        "playWhenDisabled": false
+      },
+      "check_in": {
+        "playWhenDisabled": false
+      },
+      "checkin_home": {
+        "playWhenDisabled": false
+      },
+      "debug_done": {
+        "playWhenDisabled": false
+      },
+      "direct": {
+        "playWhenDisabled": false
+      },
+      "export_diagnostics": {
+        "playWhenDisabled": false
+      },
+      "feedback": {
+        "playWhenDisabled": false
+      },
+      "generic": {
+        "playWhenDisabled": false
+      },
+      "haptics_toggle": {
+        "playWhenDisabled": false
+      },
+      "hint": {
+        "playWhenDisabled": false
+      },
+      "hint_apply": {
+        "playWhenDisabled": false
+      },
+      "home": {
+        "playWhenDisabled": false
+      },
+      "language_en": {
+        "playWhenDisabled": false
+      },
+      "language_zh_hans": {
+        "playWhenDisabled": false
+      },
+      "last_life_continue": {
+        "playWhenDisabled": false
+      },
+      "level_start_free": {
+        "playWhenDisabled": false
+      },
+      "music_toggle": {
+        "playWhenDisabled": false
+      },
+      "next_level": {
+        "playWhenDisabled": false
+      },
+      "play": {
+        "playWhenDisabled": false
+      },
+      "recover_save": {
+        "playWhenDisabled": false
+      },
+      "replay_tutorial": {
+        "playWhenDisabled": false
+      },
+      "restart": {
+        "playWhenDisabled": false
+      },
+      "result_home": {
+        "playWhenDisabled": false
+      },
+      "result_restart": {
+        "playWhenDisabled": false
+      },
+      "revive": {
+        "playWhenDisabled": false
+      },
+      "reward_close": {
+        "playWhenDisabled": false
+      },
+      "run_reward": {
+        "playWhenDisabled": false
+      },
+      "settings": {
+        "playWhenDisabled": false
+      },
+      "settings_done": {
+        "playWhenDisabled": false
+      },
+      "skip_tutorial": {
+        "playWhenDisabled": false
+      },
+      "sound_toggle": {
+        "playWhenDisabled": false
+      },
+      "tutorial_next": {
+        "playWhenDisabled": false
+      },
+      "voice_toggle": {
+        "playWhenDisabled": false
+      },
+      "claim_reward": {
+        "playWhenDisabled": false
+      }
+    },
+    "combo": {
+      "cues": [
+        {
+          "count": 2,
+          "event": "nice"
+        },
+        {
+          "count": 3,
+          "event": "great"
+        },
+        {
+          "count": 4,
+          "event": "excellent"
+        }
+      ],
+      "repeatLast": true
+    }
+  }
+}

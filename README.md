@@ -9,11 +9,11 @@
 3. 真机检阅：在 Xcode 设置中登录自己的 Apple 账号；在 Capydoku target 的 **Signing & Capabilities** 选择自己的 Personal Team，使用自己可签名的唯一 Bundle Identifier，连接并信任 iPhone 后 Run。手机按系统提示开启开发者模式并信任开发者。个人签名修改请保留在本地，勿覆盖团队配置。
 4. 需求看 [原文提取](Reference/Original/document.txt)，当前差距看 [逐章验收状态](Validation/original-conformance.md)，最近修改看 [变更记录](CHANGELOG.md)。下方各版本段落是当时的历史记录，其中旧的安装版本与“暂停上传”不代表当前状态。
 
-**音频边界：仓库不包含本机授权试听的 Meowdoku 原声。** 干净克隆可以正常构建与游玩，但当前正式音频清单仍为空，游戏没有音乐或音效是预期情况；手机上本机试听版的声音不会随源码上传。后续需另行交付获准共享的正式音频并完成映射验收。
+**已按用户要求加入当前手机试玩版的 9 个试听音频及播放配置。** 同事克隆或拉取最新代码后，选择 **Capydoku → Run（默认 Debug）** 即自动带上背景音乐、按钮、标记／撤销、正确／错误和 Combo 语音，无需另拷资源。游戏设置中的音乐、音效和语音开关继续生效。这批资源用于私有协作内测；Release／TestFlight／Staging／Production 和 Archive 仍按原配置排除试听音频，正式音频清单与验收状态保持不变。
 
-仓库保留开发历史、测试记录与演出录屏，当前检出约 873 MiB，首次克隆可能较慢。编译产物、个人签名、手机存档和 `LocalTestAssets/MeowdokuAudio/` 不入库。协作修改请从最新默认分支建立各自分支，review 后再合并。
+仓库保留开发历史、测试记录与演出录屏，当前检出约 887 MiB，首次克隆可能较慢。编译产物、个人签名、手机存档及音频提取中间文件不入库。协作修改请从最新默认分支建立各自分支，review 后再合并。
 
-本轮已在不含本机试听资源的干净克隆中完成一次 Debug 模拟器构建与签名校验，见 [协作构建记录](Validation/github-0266-handoff.json)。
+首次上传时的无音频构建记录保留在 [协作构建记录](Validation/github-0266-handoff.json)；此次加入声音的范围与克隆验证见 [音频协作记录](Validation/github-0266-shared-audio.json)。
 
 ## 唯一需求基准
 
