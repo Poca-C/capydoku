@@ -1,0 +1,56 @@
+{
+  "date": "2026-10-02",
+  "version": "0.2.66 (69)",
+  "repository": "https://github.com/Poca-C/capydoku",
+  "repositoryPrivateBeforeUpload": true,
+  "authorization": "User explicitly requested adding the listening audio to this private collaboration repository. This supersedes the earlier source-only handoff.",
+  "sourceCommit": "66a837abc7604bd2018e82ff0d7c7ea5dbba1936",
+  "sharedInputs": {
+    "wavFileCount": 9,
+    "wavBytes": 14100232,
+    "manifest": "LocalTestAssets/MeowdokuAudio/local-test-audio.json",
+    "sha256": {
+      "meow-test-bgm_meowdoku_melody.wav": "7977f4802ea5715c9e935636d56555bdfce9ff3fca1d9dad8937875a74e2f593",
+      "meow-test-btn_click_2.wav": "714a1f358a079040af73038456571d69c566c04638a319b4ba6467d19b7e70dd",
+      "meow-test-combo_excellent_s6.wav": "ab9b9da86ce1cb26b73e1b0f187bf4e4e8275873e9543140aebc78d4ee86c21f",
+      "meow-test-combo_great_s6.wav": "156cdb517d0fc4c136126b31b269ef5872c064eabf71d3377983c8e4c91b74e7",
+      "meow-test-combo_nice_s6.wav": "f90f0fa1dab21ec10f9123e14dc681087b333ee2f3ad424b2fcb482a97e32086",
+      "meow-test-mark_cat.wav": "52dd253b6940c0afad4806ac12ba592f031258b1c075c020ad66ecaf9eeb2b0e",
+      "meow-test-mark_wrong_1.wav": "1ec4ca3156b856f3a46a1dc6391dab26c2a2241401fa93ca81786d0c26ab2ab9",
+      "meow-test-mark_x_2.wav": "30f0bc23ab6d145afafaed161bb97fdd72605150dadb3e9f5883a889eeaf73d4",
+      "meow-test-unmark_x_2.wav": "d3b19049ca95d326d0d9f1a0415eae51247ab290a9b9a8415a2de73ea35bc6b2"
+    },
+    "sourceFilesChanged": false,
+    "excluded": [
+      "original OGG extraction inputs",
+      "source-provenance.json"
+    ]
+  },
+  "cleanCheckoutValidation": {
+    "checkout": ".build/GitHubCleanCheck",
+    "configuration": "Debug/internal_demo",
+    "destination": "iPhone 17 Pro simulator",
+    "toolchain": "Xcode 26.6 (17F113)",
+    "buildPassed": true,
+    "appStrictSignatureVerificationPassed": true,
+    "bundledWavCount": 9,
+    "bundledManifestCount": 1,
+    "allBundleHashesMatch": true,
+    "testsPassed": 2,
+    "testsFailed": 0,
+    "testsSkipped": 0,
+    "actualAVAudioPlayer": {
+      "isPlaying": true,
+      "timeAfter100ms": 0.08596371882086168,
+      "outputVolume": 0.6
+    },
+    "localResultBundle": "Validation/test-runs/github-shared-audio-final.xcresult",
+    "preliminaryAttempt": "A first command used the previous clean-checkout commit due to a working-directory mistake and was cancelled; it is not acceptance evidence. The final run explicitly checked out the stated source commit."
+  },
+  "buildIsolationTests": {
+    "passed": 8,
+    "failed": 0,
+    "distributionAndArchiveExclusionUnchanged": true
+  },
+  "scope": "Private collaborative Debug review. Production reference verification remains false; no full regression or new physical-device listening test claimed."
+}
