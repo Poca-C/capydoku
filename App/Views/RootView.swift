@@ -797,7 +797,7 @@ struct ToolButton: View {
                             Image(systemName: "play.fill").font(.system(size: 12, weight: .bold))
                                 .frame(width: 31, height: 22).background(CapyPalette.video).clipShape(Capsule())
                         }
-                    }.foregroundColor(.white).offset(x: 6, y: -5)
+                    }.foregroundColor(.white).capyLayoutProbe(id + "_badge").offset(x: 6, y: -5)
                 }
         }.buttonStyle(ToolPressStyle(direct: isDirect)).accessibilityLabel(language.text(title))
             .accessibilityValue(language.text(count > 0 ? "\(count) available" : "Video reward"))

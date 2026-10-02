@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-02",
+  "build": "0.2.64 (67)",
+  "status": "scoped_dense_play_and_tool_feedback_verified_simulator_only",
+  "previousReport": "Validation/original-0263-feedback.json",
+  "previousGoalTurn": {
+    "classification": "progress",
+    "evidence": "5306837修复结算角色合成淡入，52项App和3项UI及真实Root证据。"
+  },
+  "sourceParagraphs": [
+    69,
+    70,
+    136,
+    254
+  ],
+  "finding": "真实L101两尺寸密集89个X录屏显示，放大镜进入棋盘后被全格避让遮罩切碎；新增自然presentation样本旧版中央圆片最差仅2.04%/14.29%未遮挡。",
+  "changes": [
+    "放大镜在真实道具位置左侧14pt短抬起，上移依真实棋盘边界限制至最多22pt；目标四角、角色出现与分数仍立即确认。",
+    "保留原0.48秒动作和0.52秒清理、输入与库存时机、遮罩、取消和减少动态模式；不新增声音或计时器。",
+    "补充当前包L70的8×8及L101的10×10在两尺寸的连续标记、撤销、提示关闭/Apply、连续正确、错误后正确、通关及下一关首步。"
+  ],
+  "verificationHistory": [
+    {
+      "status": "Failed",
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "sessionSeconds": 60.526,
+      "scope": "新增mixed fixture的4次整个Session相等断言误含提示库存。提示打开即扣次是原规则；采样点移到showHint后，产品业务未改。",
+      "summary": "Validation/test-runs/original-0264-dense-baseline-summary.json",
+      "log": "Validation/test-runs/original-0264-dense-baseline.log",
+      "bundle": "Validation/test-runs/original-0264-dense-baseline.xcresult"
+    },
+    {
+      "status": "Passed",
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "sessionSeconds": 50.276,
+      "scope": "修正fixture后两项连续诊断通过；仍为0263生产代码。",
+      "summary": "Validation/test-runs/original-0264-dense-audit-summary.json",
+      "log": "Validation/test-runs/original-0264-dense-audit.log",
+      "bundle": "Validation/test-runs/original-0264-dense-audit.xcresult"
+    },
+    {
+      "status": "Failed",
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "sessionSeconds": 18.513,
+      "scope": "0263加镜片遮罩检查：1项失败，两尺寸各1条，复现可见圆片被挖空。",
+      "summary": "Validation/test-runs/original-0264-lens-baseline-summary.json",
+      "log": "Validation/test-runs/original-0264-lens-baseline.log",
+      "bundle": "Validation/test-runs/original-0264-lens-baseline.xcresult"
+    },
+    {
+      "status": "Passed",
+      "passed": 32,
+      "failed": 0,
+      "skipped": 0,
+      "sessionSeconds": 99.72,
+      "scope": "未左移版本32项通过，独立审查指出角标遮挡风险；随后补左移及实际角标边界检查，此结果不替代最终r2。",
+      "summary": "Validation/test-runs/original-0264-app-final-summary.json",
+      "log": "Validation/test-runs/original-0264-app-final.log",
+      "bundle": "Validation/test-runs/original-0264-app-final.xcresult"
+    }
+  ],
+  "applicationTests": {
+    "status": "Passed",
+    "passed": 32,
+    "failed": 0,
+    "skipped": 0,
+    "sessionSeconds": 100.094,
+    "scope": "最终32项相关App，非全量App/Core。",
+    "summary": "Validation/test-runs/original-0264-app-final-r2-summary.json",
+    "log": "Validation/test-runs/original-0264-app-final-r2.log",
+    "bundle": "Validation/test-runs/original-0264-app-final-r2.xcresult"
+  },
+  "uiTests": {
+    "status": "Passed",
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "sessionSeconds": 57.646,
+    "scope": "17e原生UI：直接找答案与重开、提示关闭、提示Apply。",
+    "summary": "Validation/test-runs/original-0264-17e-ui-summary.json",
+    "log": "Validation/test-runs/original-0264-17e-ui.log",
+    "bundle": "Validation/test-runs/original-0264-17e-ui.xcresult"
+  },
+  "visualEvidence": "Docs/original-feel-0264/manifest.json",
+  "testedScope": [
+    "最终两尺寸各17个自然presentation样本的镜片中央圆片未遮比例均为1，实测镜片包围框与视频角标相交次数为0。",
+    "前后实际Root道具录屏和最终大棋盘连续游玩录屏；有限抽帧目视，不代表逐帧或真机手感验收。",
+    "独立只读审查无阻断项，确认当前真实布局避让及原生命周期保持。"
+  ],
+  "reference": {
+    "latestSuccessfulPlaytest": "Validation/meowdoku-playtest-comparison-0249.json",
+    "newSuccessfulPlaytestThisRound": false,
+    "equivalenceClaimed": false,
+    "implementationSummary": {
+      "status": "Nine major observed directions have Demo implementations, including clapping and whole-board hearts that were missing in the historical0232 review. Quality equivalence has not been established.",
+      "implementedDirections": [
+        "动态手势教学",
+        "角色待机/正确/错误表情",
+        "浮分/彩粒/飞星/鼓掌及顶部联动",
+        "错误原因与规则可视化",
+        "扣命与一命提醒",
+        "Combo及分层胜败演出",
+        "新盘错峰入场",
+        "提示与找答案反馈",
+        "签到点亮与实际到账演出"
+      ],
+      "audio": "9 local Debug-only reference WAVs remain an authorized testing experiment; no live audio or physical haptic A/B in this round.",
+      "qualityGaps": [
+        "角色动作自然度与整段连续操作节奏",
+        "密集布局的奖励位置仍需更多实际试玩",
+        "最新真机声音、震动与音画同步",
+        "正式参考配置与发布资源验收"
+      ],
+      "notReplicatedFromLatestPlaytest": [
+        "Reference horn-playing character pose",
+        "Every observed praise phrase",
+        "Automatic check-in interstitial during victory; current Demo check-in entry remains on home"
+      ]
+    },
+    "thisRoundAccessBoundary": "CUA只返回缩小倾斜窗口缩略图，未用作新的参考玩法观察；本轮以原文、当前代码和实际Capydoku模拟器录屏为证。"
+  },
+  "audio": {
+    "modified": false,
+    "localTestWAVCount": 9,
+    "currentDebugInventory": "Validation/audio-isolation-0264-debug.json",
+    "formalManifestClipsEmpty": true,
+    "liveAuditoryAB": false,
+    "releaseRebuilt": false,
+    "inventoryIdenticalTo0263": true
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49",
+    "currentPackSizes": {
+      "4": 2,
+      "6": 48,
+      "8": 55,
+      "10": 45
+    },
+    "sizeCorrection": "本轮一度由若干样本误推最大8×8；读取全包纠正为含45个10×10，已向用户更正，L101实际使用原包10×10。"
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  }
+}

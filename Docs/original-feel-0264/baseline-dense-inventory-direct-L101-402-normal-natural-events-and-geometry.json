@@ -1,0 +1,368 @@
+{
+  "boardFrameInWindow" : [
+    37,
+    310,
+    328,
+    328
+  ],
+  "boardSize" : 10,
+  "boundary" : "Real Root, bundled L101 and production inventory Direct. Ordinary marks and later correct input use the native board accessibility entry point, not physical touches. Natural normal-motion playback; no image readback, CA freeze or forced layout during the tool flight. Business assertions do not grade magnifier visibility\/continuity; review the external continuous recording. Audio is disabled and no device\/FPS\/parity claim is made.",
+  "directSequenceObservedSeconds" : 1.7392093332018703,
+  "events" : [
+    {
+      "event" : "dense-board-settled",
+      "found" : [
+        31,
+        45,
+        53,
+        67,
+        74,
+        86,
+        98
+      ],
+      "inventory" : 1,
+      "markCount" : 89,
+      "score" : 1120,
+      "secondsFromSequenceStart" : 0.81905637495219707
+    },
+    {
+      "event" : "inventory-direct-request",
+      "found" : [
+        31,
+        45,
+        53,
+        67,
+        74,
+        86,
+        98
+      ],
+      "inventory" : 1,
+      "markCount" : 89,
+      "score" : 1120,
+      "secondsFromSequenceStart" : 0.83410979155451059
+    },
+    {
+      "event" : "inventory-direct-committed",
+      "found" : [
+        29,
+        31,
+        45,
+        53,
+        67,
+        74,
+        86,
+        98
+      ],
+      "inventory" : 0,
+      "markCount" : 89,
+      "score" : 1360,
+      "secondsFromSequenceStart" : 0.83989387494511902
+    },
+    {
+      "event" : "native-mark-during-direct",
+      "found" : [
+        29,
+        31,
+        45,
+        53,
+        67,
+        74,
+        86,
+        98
+      ],
+      "inventory" : 0,
+      "markCount" : 90,
+      "score" : 1360,
+      "secondsFromSequenceStart" : 0.99686354165896773
+    },
+    {
+      "event" : "native-undo-during-direct",
+      "found" : [
+        29,
+        31,
+        45,
+        53,
+        67,
+        74,
+        86,
+        98
+      ],
+      "inventory" : 0,
+      "markCount" : 89,
+      "score" : 1360,
+      "secondsFromSequenceStart" : 1.1088497082237154
+    },
+    {
+      "event" : "direct-natural-playback-finished",
+      "found" : [
+        29,
+        31,
+        45,
+        53,
+        67,
+        74,
+        86,
+        98
+      ],
+      "inventory" : 0,
+      "markCount" : 89,
+      "score" : 1360,
+      "secondsFromSequenceStart" : 1.7858040833380073
+    },
+    {
+      "event" : "next-native-correct-accepted",
+      "found" : [
+        0,
+        29,
+        31,
+        45,
+        53,
+        67,
+        74,
+        86,
+        98
+      ],
+      "inventory" : 0,
+      "markCount" : 89,
+      "score" : 1620,
+      "secondsFromSequenceStart" : 1.7925267915707082
+    },
+    {
+      "event" : "settled-before-only-image-readback",
+      "found" : [
+        0,
+        29,
+        31,
+        45,
+        53,
+        67,
+        74,
+        86,
+        98
+      ],
+      "inventory" : 0,
+      "markCount" : 89,
+      "score" : 1620,
+      "secondsFromSequenceStart" : 2.5731401250232011
+    }
+  ],
+  "fixture" : "dense-inventory-direct-L101-402-normal",
+  "initialFound" : [
+    31,
+    45,
+    53,
+    67,
+    74,
+    86,
+    98
+  ],
+  "initialMarks" : [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    30,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97
+  ],
+  "level" : 101,
+  "liveMarkCell" : 99,
+  "remainingCellFramesInWindow" : {
+    "0" : [
+      44,
+      317,
+      31.400000000000006,
+      31.399999999999977
+    ],
+    "12" : [
+      106.8,
+      348.39999999999998,
+      31.399999999999991,
+      31.400000000000034
+    ],
+    "29" : [
+      326.59999999999997,
+      379.80000000000001,
+      31.399999999999977,
+      31.399999999999977
+    ]
+  },
+  "remainingUpperCells" : [
+    0,
+    12,
+    29
+  ],
+  "revealedCell" : 29,
+  "rootMeasuredFrames" : {
+    "applause_feedback" : [
+      354,
+      280,
+      34,
+      30
+    ],
+    "combo_feedback" : [
+      96.666666666666657,
+      281,
+      208.66666666666671,
+      28
+    ],
+    "direct" : [
+      105,
+      718,
+      62,
+      62
+    ],
+    "found_count" : [
+      90.666666666666671,
+      168.5,
+      90.666666666666643,
+      35
+    ],
+    "game_footer" : [
+      14,
+      662,
+      374,
+      130
+    ],
+    "hint" : [
+      235,
+      718,
+      62,
+      62
+    ],
+    "home" : [
+      22,
+      66,
+      44,
+      44
+    ],
+    "level_title" : [
+      121.66666666666669,
+      112.83333333333334,
+      43.333333333333314,
+      50.333333333333314
+    ],
+    "lives" : [
+      199.33333333333331,
+      168.5,
+      112,
+      35
+    ],
+    "local_score_240" : [
+      310.29999999999995,
+      335.80000000000001,
+      64,
+      28
+    ],
+    "local_score_260" : [
+      27.700000000000003,
+      364.39999999999998,
+      64,
+      28
+    ],
+    "puzzle_board" : [
+      37,
+      310,
+      328,
+      328
+    ],
+    "rule_strip" : [
+      14,
+      218,
+      374,
+      58
+    ],
+    "settings" : [
+      336,
+      66,
+      44,
+      44
+    ]
+  },
+  "screenSize" : [
+    402,
+    874
+  ]
+}

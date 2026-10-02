@@ -283,6 +283,60 @@ final class DirectToolRevealVisualTests: XCTestCase {
         }
     }
 
+    @MainActor func testDenseBoardKeepsTheVisibleMagnifierDiscIntactWhileItAcknowledgesTheTool() async throws {
+        try await BundledStartupResources().prepare()
+        for width in [CGFloat(402), CGFloat(320)] {
+            let rig = try DirectToolRootRig(level: 101, width: width, reduced: false, remaining: 3)
+            defer { rig.close() }
+            rig.model.start(level: 101)
+            let puzzle = try XCTUnwrap(rig.model.session).puzzle
+            for cell in puzzle.solution.dropFirst(3) { rig.model.submit(cell) }
+            for cell in puzzle.regions.indices where !puzzle.solution.contains(cell) { rig.model.toggle(cell) }
+            try await Task.sleep(nanoseconds: 650_000_000)
+            let before = try XCTUnwrap(rig.model.session)
+            XCTAssertEqual(before.marks.count, 90)
+            rig.model.direct()
+            let accepted = rig.model.session
+            let started = CACurrentMediaTime()
+            var samples: [[String: Double]] = []
+            var badgeIntersections = 0
+            // Sample live layer geometry and the installed protection mask.
+            // The central disc is opaque artwork, so holes here remove visible
+            // lens pixels. This does not estimate frame rate or full art quality.
+            for _ in 0..<21 {
+                try await Task.sleep(nanoseconds: 20_000_000)
+                guard let effect = effects(in: rig).first,
+                      let lens = effect.layer.sublayers?.first(where: { $0.name == "direct-tool-lens" })?.presentation(),
+                      lens.opacity > 0.15, let mask = effect.layer.mask as? CAShapeLayer,
+                      let path = mask.path else { continue }
+                var allowed = 0, total = 0
+                for y in -4...4 { for x in -4...4 where x*x + y*y <= 16 {
+                    let point = CGPoint(x: lens.bounds.midX + CGFloat(x) * lens.bounds.width * 0.1,
+                                        y: lens.bounds.midY + CGFloat(y) * lens.bounds.height * 0.1)
+                    let projected = lens.convert(point, to: lens.superlayer)
+                    total += 1
+                    if path.contains(projected, using: .evenOdd) { allowed += 1 }
+                } }
+                samples.append(["seconds": CACurrentMediaTime() - started,
+                    "opacity": Double(lens.opacity), "unmaskedDiscFraction": Double(allowed) / Double(total),
+                    "centerX": lens.position.x, "centerY": lens.position.y])
+                let badge = try XCTUnwrap(rig.measurements.frames["direct_badge"])
+                let lensFrame = effect.convert(lens.frame, to: rig.window)
+                if lensFrame.intersects(badge) { badgeIntersections += 1 }
+            }
+            XCTAssertGreaterThanOrEqual(samples.count, 5)
+            let minimum = try XCTUnwrap(samples.map { $0["unmaskedDiscFraction"]! }.min())
+            XCTAssertGreaterThanOrEqual(minimum, 0.9, "The visible magnifier must remain whole instead of being punched through by dense marks.")
+            XCTAssertEqual(badgeIntersections, 0, "The acknowledgement must leave the newly displayed video badge readable.")
+            XCTAssertEqual(rig.model.session, accepted)
+            let report: [String: Any] = ["width": width, "samples": samples,
+                "minimumUnmaskedDiscFraction": minimum, "badgeIntersections": badgeIntersections,
+                "boundary": "Natural presentation-layer samples of opaque central lens disc against actual installed mask, and transformed lens bounds against measured tool badge. Finite geometric visibility check, not FPS or auditory testing."]
+            let a = XCTAttachment(data: try JSONSerialization.data(withJSONObject: report, options: [.prettyPrinted, .sortedKeys]), uniformTypeIdentifier: "public.json")
+            a.name = "dense-lens-visibility-\(Int(width))"; a.lifetime = .keepAlways; add(a)
+        }
+    }
+
     @MainActor func testHostedReducedReceiptNearDuplicateTargetCannotReopenItsProtectedPixels() async throws {
         let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
         let previous = scene.windows.first(where: \.isKeyWindow)

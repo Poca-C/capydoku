@@ -458,6 +458,98 @@ final class GameFeelVisualTests: XCTestCase {
         attachment.name = "full-level-rhythm-event-times"; attachment.lifetime = .keepAlways; add(attachment)
     }
 
+    /// Mixed play on packaged 8x8 and 10x10 boards, including both hint exits.
+    /// No screenshot readbacks interrupt the active sequence.
+    @MainActor func testActualRootDenseBoardsContinueThroughHintMistakeAndWin() async throws {
+        try await BundledStartupResources().prepare()
+        let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
+        var events: [[String: Any]] = []
+        let start = CACurrentMediaTime()
+        for (level, width, height) in [(70, 402, 874), (101, 402, 874), (70, 320, 568), (101, 320, 568)] {
+            let name = "dense-rhythm-L\(level)-\(width)"
+            let directory = FileManager.default.temporaryDirectory.appendingPathComponent(name + UUID().uuidString)
+            let model = AppModel(saveDirectory: directory, runsTimer: false, feedbackEnabled: false)
+            model.config = DemoConfig(hintsPerLevel: 2)
+            model.progress.tutorialCompleted = true; model.start(level: level)
+            let initial = try XCTUnwrap(model.session), solution = initial.puzzle.solution
+            let previous = scene.windows.first(where: \.isKeyWindow), window = UIWindow(windowScene: scene)
+            let surround = UIWindow(windowScene: scene)
+            surround.frame = scene.coordinateSpace.bounds; surround.windowLevel = UIWindow.Level(rawValue: 1)
+            let background = UIViewController(); background.view.backgroundColor = .black
+            surround.rootViewController = background; surround.isHidden = false
+            window.windowLevel = UIWindow.Level(rawValue: 2)
+            window.frame = CGRect(x: 0, y: 0, width: width, height: height)
+            let host = UIHostingController(rootView: RootView(reduceMotionOverride: false).environmentObject(model)
+                .environment(\.scenePhase, .active))
+            window.rootViewController = host; window.makeKeyAndVisible()
+            defer {
+                window.isHidden = true; window.rootViewController = nil
+                surround.isHidden = true; surround.rootViewController = nil; previous?.makeKeyAndVisible()
+                model.flushPendingSaves(); try? FileManager.default.removeItem(at: directory)
+            }
+            func record(_ event: String) {
+                events.append(["fixture": name, "event": event, "secondsFromSequenceStart": CACurrentMediaTime() - start,
+                    "found": model.session!.found.sorted(), "marks": model.session!.marks.sorted(),
+                    "score": model.session!.score, "lives": model.session!.lives])
+            }
+            try await Task.sleep(nanoseconds: 620_000_000)
+            let board = try XCTUnwrap(grid(in: host.view))
+            let mark = try XCTUnwrap(initial.puzzle.regions.indices.first { !solution.contains($0) })
+            XCTAssertTrue(board.activate(index: mark, submit: false)); record("mark")
+            try await Task.sleep(nanoseconds: 320_000_000)
+            XCTAssertTrue(board.activate(index: mark, submit: false)); record("undo")
+            try await Task.sleep(nanoseconds: 350_000_000)
+            XCTAssertTrue(board.activate(index: solution[0], submit: true)); record("first-find")
+            try await Task.sleep(nanoseconds: 650_000_000)
+            model.showHint(); XCTAssertNotNil(model.hint); record("hint-preview-close")
+            let beforeHint = model.session
+            try await Task.sleep(nanoseconds: 800_000_000)
+            XCTAssertFalse(board.activate(index: solution[1], submit: true))
+            XCTAssertTrue(model.closeHint()); XCTAssertEqual(model.session, beforeHint); record("hint-closed")
+            try await Task.sleep(nanoseconds: 250_000_000)
+            model.showHint(); let hint = try XCTUnwrap(model.hint); record("hint-preview-apply")
+            try await Task.sleep(nanoseconds: 800_000_000)
+            model.applyHint(); XCTAssertNil(model.hint); record("hint-applied")
+            XCTAssertTrue(Set(hint.cells).isSubset(of: try XCTUnwrap(model.session).marks))
+            try await Task.sleep(nanoseconds: 180_000_000)
+            for index in solution[1...2] {
+                XCTAssertTrue(board.activate(index: index, submit: true)); record("rapid-find")
+                try await Task.sleep(nanoseconds: 190_000_000)
+            }
+            let beforeError = try XCTUnwrap(model.session)
+            XCTAssertTrue(board.activate(index: mark, submit: true)); record("mistake")
+            XCTAssertEqual(model.session?.lives, beforeError.lives - 1)
+            try await Task.sleep(nanoseconds: 240_000_000)
+            XCTAssertTrue(board.activate(index: solution[3], submit: true)); record("recover-with-correct")
+            try await Task.sleep(nanoseconds: 700_000_000)
+            for (offset, index) in solution.dropFirst(4).enumerated() {
+                XCTAssertTrue(board.activate(index: index, submit: true)); record("remaining-find")
+                try await Task.sleep(nanoseconds: offset.isMultiple(of: 2) ? 480_000_000 : 210_000_000)
+            }
+            XCTAssertEqual(model.session?.status, .won)
+            XCTAssertEqual(model.session?.found, Set(solution))
+            XCTAssertEqual(model.session?.lives, initial.lives - 1)
+            try await Task.sleep(nanoseconds: 1_650_000_000)
+            record("result")
+            model.next(); record("next")
+            try await Task.sleep(nanoseconds: 150_000_000)
+            let next = try XCTUnwrap(model.session), nextBoard = try XCTUnwrap(grid(in: host.view))
+            XCTAssertEqual(next.puzzle.id, level + 1)
+            let firstMark = try XCTUnwrap(next.puzzle.regions.indices.first { !next.found.contains($0) })
+            XCTAssertTrue(nextBoard.activate(index: firstMark, submit: false)); record("next-first-mark")
+            try await Task.sleep(nanoseconds: 500_000_000)
+            let image = UIGraphicsImageRenderer(bounds: window.bounds).image { _ in
+                window.drawHierarchy(in: window.bounds, afterScreenUpdates: false)
+            }
+            let picture = XCTAttachment(image: image); picture.name = name + "-next-board"
+            picture.lifetime = .keepAlways; add(picture)
+        }
+        let report: [String: Any] = ["events": events,
+            "boundary": "Packaged L70 and L101 at 402x874 and 320x568. Real Root/native action endpoints, normal animation clock; test-only two-hint inventory. No audio, physical touch or frame-rate measurement. Video zero is independent."]
+        let attachment = XCTAttachment(data: try JSONSerialization.data(withJSONObject: report, options: [.prettyPrinted, .sortedKeys]), uniformTypeIdentifier: "public.json")
+        attachment.name = "dense-rhythm-event-times"; attachment.lifetime = .keepAlways; add(attachment)
+    }
+
     @MainActor private func applause(in view: UIView) -> ApplauseFeedbackUIView? {
         (view as? ApplauseFeedbackUIView) ?? view.subviews.lazy.compactMap { self.applause(in: $0) }.first
     }

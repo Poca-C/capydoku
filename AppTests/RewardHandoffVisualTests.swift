@@ -157,6 +157,135 @@ final class RewardHandoffVisualTests: XCTestCase {
         }
     }
 
+    @MainActor func testActualRootDenseMarkedDirectRunsContinuouslyForVideoReview() async throws {
+        try await BundledStartupResources().prepare()
+        let sequenceStarted = CACurrentMediaTime()
+        let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
+        for width in [402, 320] {
+            let name = "dense-inventory-direct-L101-\(width)-normal"
+            let directory = FileManager.default.temporaryDirectory.appendingPathComponent(name + UUID().uuidString)
+            let model = AppModel(saveDirectory: directory, runsTimer: false, feedbackEnabled: false)
+            model.progress.tutorialCompleted = true
+            model.config = DemoConfig(directPerLevel: 1)
+            model.start(level: 101)
+            let puzzle = try XCTUnwrap(model.session).puzzle
+            XCTAssertEqual(puzzle.size, 10, "This fixture must exercise the actual bundled L101, not a generated replacement.")
+            // Leave the three uppermost answers so the real inventory tool
+            // travels through a long, densely marked portion of this board.
+            let remaining = Set(puzzle.solution.sorted().prefix(3))
+            for cell in puzzle.solution where !remaining.contains(cell) { model.submit(cell) }
+            let ordinaryCells = puzzle.regions.indices.filter { !puzzle.solution.contains($0) }
+            let liveMark = try XCTUnwrap(ordinaryCells.last)
+            for cell in ordinaryCells where cell != liveMark { model.toggle(cell) }
+            let before = try XCTUnwrap(model.session)
+            XCTAssertEqual(before.puzzle.id, 101); XCTAssertEqual(before.status, .playing)
+            XCTAssertEqual(before.found.count, puzzle.size - 3)
+            XCTAssertEqual(before.marks.count, ordinaryCells.count - 1)
+            XCTAssertEqual(model.progress.availableDirect, 1)
+
+            let previous = scene.windows.first(where: \.isKeyWindow)
+            let surround = UIWindow(windowScene: scene); surround.frame = scene.coordinateSpace.bounds
+            let backdrop = UIViewController(); backdrop.view.backgroundColor = .black
+            surround.rootViewController = backdrop; surround.windowLevel = UIWindow.Level(rawValue: 1)
+            surround.isHidden = false
+            let window = UIWindow(windowScene: scene)
+            window.windowLevel = UIWindow.Level(rawValue: 2); window.overrideUserInterfaceStyle = .light
+            window.frame = CGRect(x: 0, y: 0, width: width, height: width == 320 ? 568 : 874)
+            var layout = [String: CGRect]()
+            let host = UIHostingController(rootView: RootView(reduceMotionOverride: false).environmentObject(model)
+                .environment(\.scenePhase, .active).environment(\.capyLayoutObserver, { layout[$0] = $1 }))
+            window.rootViewController = host; window.makeKeyAndVisible()
+            host.view.frame = window.bounds
+            defer {
+                model.setActive(false)
+                window.isHidden = true; window.rootViewController = nil
+                surround.isHidden = true; surround.rootViewController = nil; previous?.makeKeyAndVisible()
+                model.flushPendingSaves(); try? FileManager.default.removeItem(at: directory)
+            }
+            var events = [[String: Any]]()
+            func record(_ event: String) {
+                events.append(["event": event, "secondsFromSequenceStart": CACurrentMediaTime() - sequenceStarted,
+                    "found": model.session?.found.sorted() ?? [], "markCount": model.session?.marks.count ?? -1,
+                    "score": model.session?.score ?? -1, "inventory": model.progress.availableDirect])
+            }
+            try await Task.sleep(nanoseconds: 620_000_000)
+            record("dense-board-settled")
+            let board = try XCTUnwrap(views(window).compactMap { $0.0 as? PuzzleGridUIView }.first)
+            let boardFrame = board.convert(board.bounds, to: window)
+            var remainingFrames = [String: [Double]]()
+            for index in remaining.sorted() {
+                let element = try XCTUnwrap(board.accessibilityElements?[index] as? UIAccessibilityElement)
+                remainingFrames[String(index)] = rectValues(board.convert(element.accessibilityFrameInContainerSpace, to: window))
+            }
+
+            let directStarted = CACurrentMediaTime()
+            record("inventory-direct-request")
+            model.direct()
+            let accepted = try XCTUnwrap(model.session)
+            let receipt = try XCTUnwrap(model.directRevealFeedback)
+            let added = accepted.found.subtracting(before.found)
+            XCTAssertEqual(added, [receipt.cell]); XCTAssertTrue(remaining.contains(receipt.cell))
+            XCTAssertEqual(receipt.sessionID, before.id); XCTAssertEqual(accepted.id, before.id)
+            XCTAssertEqual(accepted.status, .playing); XCTAssertEqual(accepted.marks, before.marks)
+            XCTAssertEqual(accepted.errors, before.errors); XCTAssertEqual(accepted.lives, before.lives)
+            XCTAssertGreaterThan(accepted.score, before.score); XCTAssertEqual(model.progress.availableDirect, 0)
+            record("inventory-direct-committed")
+
+            // Leave the natural animation clock and compositor undisturbed.
+            // These native accessibility actions check input while it runs;
+            // they do not read back pixels or force presentation-layer phases.
+            try await Task.sleep(nanoseconds: 150_000_000)
+            XCTAssertTrue(nativeBoardAcceptsMark(board, index: liveMark))
+            XCTAssertTrue(try XCTUnwrap(model.session).marks.contains(liveMark))
+            record("native-mark-during-direct")
+            try await Task.sleep(nanoseconds: 100_000_000)
+            XCTAssertTrue(nativeBoardAcceptsMark(board, index: liveMark))
+            XCTAssertEqual(model.session, accepted)
+            record("native-undo-during-direct")
+            try await Task.sleep(nanoseconds: 650_000_000)
+            XCTAssertEqual(model.session, accepted)
+            XCTAssertTrue(views(window).allSatisfy { !($0.0 is DirectToolRevealUIView) }, "The dense-board receipt must clean up normally.")
+            record("direct-natural-playback-finished")
+
+            let nextAnimal = try XCTUnwrap(puzzle.solution.first { !accepted.found.contains($0) })
+            XCTAssertTrue(board.activate(index: nextAnimal, submit: true))
+            let continued = try XCTUnwrap(model.session)
+            XCTAssertEqual(continued.id, accepted.id); XCTAssertEqual(continued.status, .playing)
+            XCTAssertEqual(continued.found, accepted.found.union([nextAnimal]))
+            XCTAssertEqual(continued.marks, accepted.marks); XCTAssertEqual(continued.lives, accepted.lives)
+            XCTAssertEqual(model.progress.availableDirect, 0)
+            record("next-native-correct-accepted")
+            try await Task.sleep(nanoseconds: 760_000_000)
+            XCTAssertEqual(model.session, continued)
+            record("settled-before-only-image-readback")
+
+            let report: [String: Any] = ["fixture": name, "level": 101, "boardSize": puzzle.size,
+                "screenSize": [width, width == 320 ? 568 : 874], "initialFound": before.found.sorted(),
+                "initialMarks": before.marks.sorted(), "remainingUpperCells": remaining.sorted(),
+                "revealedCell": receipt.cell, "liveMarkCell": liveMark,
+                "boardFrameInWindow": rectValues(boardFrame), "remainingCellFramesInWindow": remainingFrames,
+                "rootMeasuredFrames": layout.mapValues { rectValues($0) }, "events": events,
+                "directSequenceObservedSeconds": CACurrentMediaTime() - directStarted,
+                "boundary": "Real Root, bundled L101 and production inventory Direct. The in-flight mark/undo and later correct input use the native board accessibility entry point, not physical touches. Natural normal-motion playback; no image readback, CA freeze or forced layout during the tool acknowledgement. Business assertions do not grade magnifier visibility/continuity; review the external continuous recording. Audio is disabled and no device/FPS/parity claim is made."]
+            let diagnostic = XCTAttachment(data: try JSONSerialization.data(withJSONObject: report, options: [.prettyPrinted, .sortedKeys]),
+                uniformTypeIdentifier: "public.json")
+            diagnostic.name = name + "-natural-events-and-geometry"; diagnostic.lifetime = .keepAlways; add(diagnostic)
+            let format = UIGraphicsImageRendererFormat()
+            format.scale = window.screen.scale; format.preferredRange = .standard
+            var rendered = false
+            let image = UIGraphicsImageRenderer(bounds: window.bounds, format: format).image { _ in
+                rendered = window.drawHierarchy(in: window.bounds, afterScreenUpdates: false)
+            }
+            XCTAssertTrue(rendered)
+            let stableImage = XCTAttachment(image: image)
+            stableImage.name = name + "-settled-after-next-correct"; stableImage.lifetime = .keepAlways; add(stableImage)
+        }
+    }
+
+    @MainActor private func nativeBoardAcceptsMark(_ board: PuzzleGridUIView, index: Int) -> Bool {
+        board.activate(index: index, submit: false)
+    }
+
     @MainActor func testActualRootRewardToMidBoardDirectRecordsNaturalHandoffAndInventoryControl() async throws {
         try await BundledStartupResources().prepare()
         for (width, height, reduced) in [(402, 874, false), (320, 568, false), (402, 874, true), (320, 568, true)] {

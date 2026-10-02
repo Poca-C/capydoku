@@ -1,0 +1,169 @@
+{
+  "build": "0.2.64 (67)",
+  "source": "Actual Root on iPhone17Pro simulator; packaged L101 direct and packaged L70/L101 mixed play.",
+  "visuallyReviewed": [
+    "direct-before-normal.jpg",
+    "direct-before-compact.jpg",
+    "direct-after-normal.jpg",
+    "direct-after-compact.jpg",
+    "final-dense-selected-frames.jpg"
+  ],
+  "limits": [
+    "Finite video frames, no audio/haptic or physical-touch validation.",
+    "Before and after Direct may select different remaining targets; neither changed the puzzle or picker.",
+    "Compact320x568 fixture sits within a larger simulator surface; outside black area and simulator status bar are harness surroundings.",
+    "Mixed baseline first run had four incorrect full-session comparisons across the legitimate hint inventory debit; fixture corrected without product rule changes."
+  ],
+  "files": [
+    {
+      "name": "after-dense-direct.mov",
+      "bytes": 6998235,
+      "sha256": "42c827ffa1145d188b7bb628b3e940262ef3ded76b57c25faae2f9a28152390c"
+    },
+    {
+      "name": "baseline-dense-inventory-direct-L101-320-normal-natural-events-and-geometry.json",
+      "bytes": 5641,
+      "sha256": "e982f302db84ca35e45b2f72c4e297c7b19fc23324a4bc43e402f4a9c1d4e223"
+    },
+    {
+      "name": "baseline-dense-inventory-direct-L101-320-normal-settled-after-next-correct.png",
+      "bytes": 371827,
+      "sha256": "59085408f6edcb8fb1b6c344d69bae74740c120508ed5e2984385fd1087e7808"
+    },
+    {
+      "name": "baseline-dense-inventory-direct-L101-402-normal-natural-events-and-geometry.json",
+      "bytes": 5648,
+      "sha256": "4097c95fe1229a3de69c20a2a6cbb1c1051d202754a44945645824b023d60c8e"
+    },
+    {
+      "name": "baseline-dense-inventory-direct-L101-402-normal-settled-after-next-correct.png",
+      "bytes": 526301,
+      "sha256": "f585647198a4f7600412db3a7bc0f7f80b5c2ea76c6e9abe8727973ddbf19043"
+    },
+    {
+      "name": "baseline-dense-rhythm-L101-320-next-board.png",
+      "bytes": 346060,
+      "sha256": "63bd2cd2c2e007de930dbd5effe1108215b866c9845f2e4fb140709585d99606"
+    },
+    {
+      "name": "baseline-dense-rhythm-L101-402-next-board.png",
+      "bytes": 421151,
+      "sha256": "c962ff2711ab314f924f41b41d8b8a42e47399feef21301771d8d98c51ed3552"
+    },
+    {
+      "name": "baseline-dense-rhythm-L70-320-next-board.png",
+      "bytes": 284351,
+      "sha256": "f10acf05a03a8327f5cfcd3c120a7cf06386c2a4dba367a5106211d54ab93ae5"
+    },
+    {
+      "name": "baseline-dense-rhythm-L70-402-next-board.png",
+      "bytes": 382927,
+      "sha256": "8b080f1726acb4d7a6e7ff9c5354a4dcb315ced277512f97560f0c05c4886a83"
+    },
+    {
+      "name": "baseline-dense-rhythm-event-times.json",
+      "bytes": 29939,
+      "sha256": "3ee0c90f301204e650629b53d38fa8c63c0be6a4e588a614c4f170b5d7cd7b6d"
+    },
+    {
+      "name": "baseline-lens-dense-lens-visibility-320.json",
+      "bytes": 3285,
+      "sha256": "be039ab40dcf521b7e55aaaacb5ca926a15197dbdab97b1620382437a682e2a3"
+    },
+    {
+      "name": "baseline-lens-dense-lens-visibility-402.json",
+      "bytes": 3472,
+      "sha256": "cfa754925b48958be7e815e73833cdc6882815890b1000d604b09865dce4476f"
+    },
+    {
+      "name": "before-dense-direct.mov",
+      "bytes": 6231188,
+      "sha256": "487853390bc011b3185c127d016e57ab244f953de2fff877d191fc8d04738a94"
+    },
+    {
+      "name": "direct-after-compact.jpg",
+      "bytes": 386321,
+      "sha256": "5d4696a19905add43b2421db668ceafa950fcc0f4784458784fe05fcf50db57b"
+    },
+    {
+      "name": "direct-after-normal.jpg",
+      "bytes": 368131,
+      "sha256": "fd8aac45e923fb76b889706561d2285ffc92638fae94d8ca89cf32edde09d1fe"
+    },
+    {
+      "name": "direct-before-compact.jpg",
+      "bytes": 277571,
+      "sha256": "2a34e175b4fffd7a3f52a189277d42ef16072f416d48cdf06accb8574d58e94f"
+    },
+    {
+      "name": "direct-before-normal.jpg",
+      "bytes": 281725,
+      "sha256": "3f682b0d957ab3d178d703b4ca4361aecdc19455af2f3366fdf142997a0e86dc"
+    },
+    {
+      "name": "final-dense-inventory-direct-L101-320-normal-natural-events-and-geometry.json",
+      "bytes": 5793,
+      "sha256": "5d0d11817865881a8f6936d3ebd0ebbfc1abfae173094d3700295c6708ae3ab0"
+    },
+    {
+      "name": "final-dense-inventory-direct-L101-320-normal-settled-after-next-correct.png",
+      "bytes": 372031,
+      "sha256": "3e61f08a9317b5b774c9e6c87721c54e56ea3eb8840643104c9512e1b6bf402d"
+    },
+    {
+      "name": "final-dense-inventory-direct-L101-402-normal-natural-events-and-geometry.json",
+      "bytes": 5800,
+      "sha256": "db5cce6252a709727410bd00f85bbdc7b99565b8304a312293a16cf29f7083f1"
+    },
+    {
+      "name": "final-dense-inventory-direct-L101-402-normal-settled-after-next-correct.png",
+      "bytes": 526345,
+      "sha256": "38bb78e3cb9951c887be19d90594239b6a1cb7672e305d7cc61d7197c7b34226"
+    },
+    {
+      "name": "final-dense-lens-visibility-320.json",
+      "bytes": 3458,
+      "sha256": "f0d599a0c45785a7946d48d848a24b93108692a0237be834d3b61834baa52c0d"
+    },
+    {
+      "name": "final-dense-lens-visibility-402.json",
+      "bytes": 3480,
+      "sha256": "5e731ea20c6d0412c480aa9d42e6b454127054f03f85ed66d92cbf0fa4c21007"
+    },
+    {
+      "name": "final-dense-playthrough.mov",
+      "bytes": 71081987,
+      "sha256": "8d1025d213a0565650df21dea331ea660035db5d6634d5722a3b3a28159334ad"
+    },
+    {
+      "name": "final-dense-rhythm-L101-320-next-board.png",
+      "bytes": 346060,
+      "sha256": "63bd2cd2c2e007de930dbd5effe1108215b866c9845f2e4fb140709585d99606"
+    },
+    {
+      "name": "final-dense-rhythm-L101-402-next-board.png",
+      "bytes": 421151,
+      "sha256": "c962ff2711ab314f924f41b41d8b8a42e47399feef21301771d8d98c51ed3552"
+    },
+    {
+      "name": "final-dense-rhythm-L70-320-next-board.png",
+      "bytes": 284351,
+      "sha256": "f10acf05a03a8327f5cfcd3c120a7cf06386c2a4dba367a5106211d54ab93ae5"
+    },
+    {
+      "name": "final-dense-rhythm-L70-402-next-board.png",
+      "bytes": 382927,
+      "sha256": "8b080f1726acb4d7a6e7ff9c5354a4dcb315ced277512f97560f0c05c4886a83"
+    },
+    {
+      "name": "final-dense-rhythm-event-times.json",
+      "bytes": 29941,
+      "sha256": "fc87a88ed4398a4dce40c199cfef56e2813a0bb3429fd1fdcefbbe4099cd7fce"
+    },
+    {
+      "name": "final-dense-selected-frames.jpg",
+      "bytes": 197830,
+      "sha256": "a579adaf9939d8b2c125e119e836a30675c7bb3da8f1f5ba0d71cc5a27d1bce9"
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "boundary" : "Natural presentation-layer samples of opaque central lens disc against actual installed mask. Finite geometric visibility check, not FPS or auditory testing.",
+  "minimumUnmaskedDiscFraction" : 0.020408163265306121,
+  "samples" : [
+    {
+      "centerX" : 144.46149500198663,
+      "centerY" : 672.50102528743446,
+      "opacity" : 0.95898449420928955,
+      "seconds" : 0.05092304153367877,
+      "unmaskedDiscFraction" : 1
+    },
+    {
+      "centerX" : 160.17143138498068,
+      "centerY" : 645.58167234808207,
+      "opacity" : 0.88283360004425049,
+      "seconds" : 0.073371833190321922,
+      "unmaskedDiscFraction" : 1
+    },
+    {
+      "centerX" : 174.98834432214497,
+      "centerY" : 620.19253651052713,
+      "opacity" : 0.81101143360137939,
+      "seconds" : 0.095760124968364835,
+      "unmaskedDiscFraction" : 1
+    },
+    {
+      "centerX" : 188.8215514242649,
+      "centerY" : 596.4890042245388,
+      "opacity" : 0.74395757913589478,
+      "seconds" : 0.11738345818594098,
+      "unmaskedDiscFraction" : 1
+    },
+    {
+      "centerX" : 202.61917570829391,
+      "centerY" : 572.84644395112991,
+      "opacity" : 0.67707622051239014,
+      "seconds" : 0.13972162478603423,
+      "unmaskedDiscFraction" : 0.81632653061224492
+    },
+    {
+      "centerX" : 215.92235406339168,
+      "centerY" : 550.05112864077091,
+      "opacity" : 0.61259162425994873,
+      "seconds" : 0.16206029150635004,
+      "unmaskedDiscFraction" : 0.020408163265306121
+    },
+    {
+      "centerX" : 228.57766382992264,
+      "centerY" : 528.36595170199871,
+      "opacity" : 0.55124735832214355,
+      "seconds" : 0.18412316660396755,
+      "unmaskedDiscFraction" : 0.14285714285714285
+    },
+    {
+      "centerX" : 240.43153479099271,
+      "centerY" : 508.05405938625336,
+      "opacity" : 0.49378800392150879,
+      "seconds" : 0.20560291665606201,
+      "unmaskedDiscFraction" : 0.20408163265306123
+    },
+    {
+      "centerX" : 252.30272528529164,
+      "centerY" : 487.71248963475227,
+      "opacity" : 0.4362446665763855,
+      "seconds" : 0.22803741646930575,
+      "unmaskedDiscFraction" : 0.020408163265306121
+    },
+    {
+      "centerX" : 263.64085288643832,
+      "centerY" : 468.28433594107628,
+      "opacity" : 0.38128525018692017,
+      "seconds" : 0.25040487479418516,
+      "unmaskedDiscFraction" : 0.18367346938775511
+    },
+    {
+      "centerX" : 274.41327055096622,
+      "centerY" : 449.82553979754448,
+      "opacity" : 0.32906800508499146,
+      "seconds" : 0.27275670832023025,
+      "unmaskedDiscFraction" : 0.081632653061224483
+    },
+    {
+      "centerX" : 284.74579543471333,
+      "centerY" : 432.12051048874855,
+      "opacity" : 0.27898305654525757,
+      "seconds" : 0.29563349997624755,
+      "unmaskedDiscFraction" : 0.020408163265306121
+    },
+    {
+      "centerX" : 294.05842913985248,
+      "centerY" : 416.16308918595314,
+      "opacity" : 0.23384183645248413,
+      "seconds" : 0.31734633329324424,
+      "unmaskedDiscFraction" : 0.24489795918367346
+    },
+    {
+      "centerX" : 302.46943880915637,
+      "centerY" : 401.75062230229378,
+      "opacity" : 0.19307106733322144,
+      "seconds" : 0.33846199978142977,
+      "unmaskedDiscFraction" : 0.12244897959183673
+    },
+    {
+      "centerX" : 310.89728230237955,
+      "centerY" : 387.30931025743484,
+      "opacity" : 0.15221869945526123,
+      "seconds" : 0.36129795829765499,
+      "unmaskedDiscFraction" : 0.10204081632653061
+    }
+  ],
+  "width" : 402
+}

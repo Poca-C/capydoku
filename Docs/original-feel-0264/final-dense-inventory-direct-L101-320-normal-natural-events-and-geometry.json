@@ -1,0 +1,380 @@
+{
+  "boardFrameInWindow" : [
+    65,
+    270,
+    190,
+    190
+  ],
+  "boardSize" : 10,
+  "boundary" : "Real Root, bundled L101 and production inventory Direct. The in-flight mark\/undo and later correct input use the native board accessibility entry point, not physical touches. Natural normal-motion playback; no image readback, CA freeze or forced layout during the tool acknowledgement. Business assertions do not grade magnifier visibility\/continuity; review the external continuous recording. Audio is disabled and no device\/FPS\/parity claim is made.",
+  "directSequenceObservedSeconds" : 1.7037620833143592,
+  "events" : [
+    {
+      "event" : "dense-board-settled",
+      "found" : [
+        31,
+        45,
+        53,
+        67,
+        74,
+        86,
+        98
+      ],
+      "inventory" : 1,
+      "markCount" : 89,
+      "score" : 1120,
+      "secondsFromSequenceStart" : 3.357875999994576
+    },
+    {
+      "event" : "inventory-direct-request",
+      "found" : [
+        31,
+        45,
+        53,
+        67,
+        74,
+        86,
+        98
+      ],
+      "inventory" : 1,
+      "markCount" : 89,
+      "score" : 1120,
+      "secondsFromSequenceStart" : 3.3583916248753667
+    },
+    {
+      "event" : "inventory-direct-committed",
+      "found" : [
+        0,
+        31,
+        45,
+        53,
+        67,
+        74,
+        86,
+        98
+      ],
+      "inventory" : 0,
+      "markCount" : 89,
+      "score" : 1360,
+      "secondsFromSequenceStart" : 3.3644464164972305
+    },
+    {
+      "event" : "native-mark-during-direct",
+      "found" : [
+        0,
+        31,
+        45,
+        53,
+        67,
+        74,
+        86,
+        98
+      ],
+      "inventory" : 0,
+      "markCount" : 90,
+      "score" : 1360,
+      "secondsFromSequenceStart" : 3.5212565832771361
+    },
+    {
+      "event" : "native-undo-during-direct",
+      "found" : [
+        0,
+        31,
+        45,
+        53,
+        67,
+        74,
+        86,
+        98
+      ],
+      "inventory" : 0,
+      "markCount" : 89,
+      "score" : 1360,
+      "secondsFromSequenceStart" : 3.6302595832385123
+    },
+    {
+      "event" : "direct-natural-playback-finished",
+      "found" : [
+        0,
+        31,
+        45,
+        53,
+        67,
+        74,
+        86,
+        98
+      ],
+      "inventory" : 0,
+      "markCount" : 89,
+      "score" : 1360,
+      "secondsFromSequenceStart" : 4.291208166629076
+    },
+    {
+      "event" : "next-native-correct-accepted",
+      "found" : [
+        0,
+        12,
+        31,
+        45,
+        53,
+        67,
+        74,
+        86,
+        98
+      ],
+      "inventory" : 0,
+      "markCount" : 89,
+      "score" : 1620,
+      "secondsFromSequenceStart" : 4.2985163750126958
+    },
+    {
+      "event" : "settled-before-only-image-readback",
+      "found" : [
+        0,
+        12,
+        31,
+        45,
+        53,
+        67,
+        74,
+        86,
+        98
+      ],
+      "inventory" : 0,
+      "markCount" : 89,
+      "score" : 1620,
+      "secondsFromSequenceStart" : 5.0620035415049642
+    }
+  ],
+  "fixture" : "dense-inventory-direct-L101-320-normal",
+  "initialFound" : [
+    31,
+    45,
+    53,
+    67,
+    74,
+    86,
+    98
+  ],
+  "initialMarks" : [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    30,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97
+  ],
+  "level" : 101,
+  "liveMarkCell" : 99,
+  "remainingCellFramesInWindow" : {
+    "0" : [
+      72,
+      277,
+      17.599999999999994,
+      17.600000000000023
+    ],
+    "12" : [
+      107.2,
+      294.60000000000002,
+      17.600000000000009,
+      17.599999999999966
+    ],
+    "29" : [
+      230.40000000000001,
+      312.19999999999999,
+      17.599999999999994,
+      17.600000000000023
+    ]
+  },
+  "remainingUpperCells" : [
+    0,
+    12,
+    29
+  ],
+  "revealedCell" : 0,
+  "rootMeasuredFrames" : {
+    "applause_feedback" : [
+      278,
+      246,
+      28,
+      24
+    ],
+    "combo_feedback" : [
+      62.333333333333343,
+      247,
+      195.33333333333329,
+      22
+    ],
+    "direct" : [
+      72,
+      468,
+      62,
+      62
+    ],
+    "direct_badge" : [
+      109,
+      463,
+      31,
+      22
+    ],
+    "found_count" : [
+      58.666666666666686,
+      152.5,
+      90.666666666666657,
+      35
+    ],
+    "game_footer" : [
+      72,
+      464,
+      176,
+      70
+    ],
+    "hint" : [
+      186,
+      468,
+      62,
+      62
+    ],
+    "hint_badge" : [
+      230,
+      463,
+      24,
+      24
+    ],
+    "home" : [
+      22,
+      66,
+      44,
+      44
+    ],
+    "level_title" : [
+      87.166666666666671,
+      110.5,
+      38,
+      43
+    ],
+    "lives" : [
+      161.33333333333334,
+      154.33333333333331,
+      99.999999999999972,
+      31.333333333333343
+    ],
+    "local_score_240" : [
+      56.799999999999997,
+      302.85000000000002,
+      48,
+      23
+    ],
+    "local_score_260" : [
+      109.44999999999999,
+      326.44999999999999,
+      48,
+      23
+    ],
+    "puzzle_board" : [
+      65,
+      270,
+      190,
+      190
+    ],
+    "rule_strip" : [
+      14,
+      190,
+      292,
+      56
+    ],
+    "settings" : [
+      254,
+      66,
+      44,
+      44
+    ]
+  },
+  "screenSize" : [
+    320,
+    568
+  ]
+}

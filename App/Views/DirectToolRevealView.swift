@@ -14,7 +14,7 @@ struct DirectToolRevealView: UIViewRepresentable {
 }
 
 /// Corners identify the accepted tile while its happy face remains unobstructed.
-/// The same mask also protects existing and newly added board content in flight.
+/// The same mask also protects existing and newly added board content.
 final class DirectToolRevealUIView: UIView {
     private let corners = CAShapeLayer()
     private let backdrop = CAShapeLayer()
@@ -85,7 +85,15 @@ final class DirectToolRevealUIView: UIView {
         corners.lineWidth = max(1.2, min(2.4, side * 0.055))
         backdrop.lineWidth = corners.lineWidth + 1
         lens.removeAllAnimations(); lens.opacity = 0
-        lens.position = reveal.destination
+        // A densely marked board has no continuous route for a full lens.
+        // Acknowledge the tool beside its measured button; the target corners
+        // and accepted character identify the result without hiding either.
+        let lift = reveal.boardFrame.map { min(22, max(0, reveal.origin.y - $0.maxY - 22)) } ?? 0
+        // Begin left of the button's count/video badge, including the rotated
+        // lens envelope, so spending the last use leaves its new badge readable.
+        let lensOrigin = CGPoint(x: reveal.origin.x - 14, y: reveal.origin.y)
+        let acknowledgement = CGPoint(x: lensOrigin.x, y: lensOrigin.y - lift)
+        lens.position = acknowledgement
         CATransaction.commit()
         guard !reveal.reduceMotion else { return }
         let fade = CAKeyframeAnimation(keyPath: "opacity")
@@ -94,13 +102,13 @@ final class DirectToolRevealUIView: UIView {
         draw.fromValue = 0.2; draw.toValue = 1; draw.duration = 0.10
         for stroke in [backdrop, corners] { stroke.add(fade, forKey: "receipt"); stroke.add(draw, forKey: "trace") }
         let travel = CABasicAnimation(keyPath: "position")
-        travel.fromValue = NSValue(cgPoint: reveal.origin); travel.toValue = NSValue(cgPoint: reveal.destination)
+        travel.fromValue = NSValue(cgPoint: lensOrigin); travel.toValue = NSValue(cgPoint: acknowledgement)
         let scale = CABasicAnimation(keyPath: "transform.scale")
-        scale.fromValue = 1; scale.toValue = 0.65
+        scale.fromValue = 1; scale.toValue = 0.82
         let turn = CABasicAnimation(keyPath: "transform.rotation.z")
-        turn.fromValue = -16 * Double.pi / 180; turn.toValue = 12 * Double.pi / 180
-        let disappear = CABasicAnimation(keyPath: "opacity")
-        disappear.fromValue = 1; disappear.toValue = 0
+        turn.fromValue = -10 * Double.pi / 180; turn.toValue = 0
+        let disappear = CAKeyframeAnimation(keyPath: "opacity")
+        disappear.values = [0.9, 1, 0.7, 0]; disappear.keyTimes = [0, 0.15, 0.65, 1]
         let flight = CAAnimationGroup(); flight.animations = [travel, scale, turn, disappear]
         flight.duration = 0.48; flight.timingFunction = CAMediaTimingFunction(name: .easeOut)
         lens.add(flight, forKey: "flight")

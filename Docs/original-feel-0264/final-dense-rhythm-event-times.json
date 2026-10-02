@@ -1,0 +1,1911 @@
+{
+  "boundary" : "Packaged L70 and L101 at 402x874 and 320x568. Real Root\/native action endpoints, normal animation clock; test-only two-hint inventory. No audio, physical touch or frame-rate measurement. Video zero is independent.",
+  "events" : [
+    {
+      "event" : "mark",
+      "fixture" : "dense-rhythm-L70-402",
+      "found" : [
+
+      ],
+      "lives" : 3,
+      "marks" : [
+        0
+      ],
+      "score" : 0,
+      "secondsFromSequenceStart" : 0.66008129180409014
+    },
+    {
+      "event" : "undo",
+      "fixture" : "dense-rhythm-L70-402",
+      "found" : [
+
+      ],
+      "lives" : 3,
+      "marks" : [
+
+      ],
+      "score" : 0,
+      "secondsFromSequenceStart" : 0.98801325005479157
+    },
+    {
+      "event" : "first-find",
+      "fixture" : "dense-rhythm-L70-402",
+      "found" : [
+        5
+      ],
+      "lives" : 3,
+      "marks" : [
+
+      ],
+      "score" : 100,
+      "secondsFromSequenceStart" : 1.3433272084221244
+    },
+    {
+      "event" : "hint-preview-close",
+      "fixture" : "dense-rhythm-L70-402",
+      "found" : [
+        5
+      ],
+      "lives" : 3,
+      "marks" : [
+
+      ],
+      "score" : 100,
+      "secondsFromSequenceStart" : 2.0115850418806076
+    },
+    {
+      "event" : "hint-closed",
+      "fixture" : "dense-rhythm-L70-402",
+      "found" : [
+        5
+      ],
+      "lives" : 3,
+      "marks" : [
+
+      ],
+      "score" : 100,
+      "secondsFromSequenceStart" : 2.8344268335495144
+    },
+    {
+      "event" : "hint-preview-apply",
+      "fixture" : "dense-rhythm-L70-402",
+      "found" : [
+        5
+      ],
+      "lives" : 3,
+      "marks" : [
+
+      ],
+      "score" : 100,
+      "secondsFromSequenceStart" : 3.0930671668611467
+    },
+    {
+      "event" : "hint-applied",
+      "fixture" : "dense-rhythm-L70-402",
+      "found" : [
+        5
+      ],
+      "lives" : 3,
+      "marks" : [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        12,
+        13,
+        14,
+        21,
+        29,
+        37,
+        45,
+        53,
+        61
+      ],
+      "score" : 100,
+      "secondsFromSequenceStart" : 3.9011960418429226
+    },
+    {
+      "event" : "rapid-find",
+      "fixture" : "dense-rhythm-L70-402",
+      "found" : [
+        5,
+        8
+      ],
+      "lives" : 3,
+      "marks" : [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        12,
+        13,
+        14,
+        21,
+        29,
+        37,
+        45,
+        53,
+        61
+      ],
+      "score" : 220,
+      "secondsFromSequenceStart" : 4.0895911250263453
+    },
+    {
+      "event" : "rapid-find",
+      "fixture" : "dense-rhythm-L70-402",
+      "found" : [
+        5,
+        8,
+        20
+      ],
+      "lives" : 3,
+      "marks" : [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        12,
+        13,
+        14,
+        21,
+        29,
+        37,
+        45,
+        53,
+        61
+      ],
+      "score" : 360,
+      "secondsFromSequenceStart" : 4.2864297500345856
+    },
+    {
+      "event" : "mistake",
+      "fixture" : "dense-rhythm-L70-402",
+      "found" : [
+        5,
+        8,
+        20
+      ],
+      "lives" : 2,
+      "marks" : [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        12,
+        13,
+        14,
+        21,
+        29,
+        37,
+        45,
+        53,
+        61
+      ],
+      "score" : 360,
+      "secondsFromSequenceStart" : 4.4851884166710079
+    },
+    {
+      "event" : "recover-with-correct",
+      "fixture" : "dense-rhythm-L70-402",
+      "found" : [
+        5,
+        8,
+        20,
+        31
+      ],
+      "lives" : 2,
+      "marks" : [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        12,
+        13,
+        14,
+        21,
+        29,
+        37,
+        45,
+        53,
+        61
+      ],
+      "score" : 460,
+      "secondsFromSequenceStart" : 4.7336969585157931
+    },
+    {
+      "event" : "remaining-find",
+      "fixture" : "dense-rhythm-L70-402",
+      "found" : [
+        5,
+        8,
+        20,
+        31,
+        33
+      ],
+      "lives" : 2,
+      "marks" : [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        12,
+        13,
+        14,
+        21,
+        29,
+        37,
+        45,
+        53,
+        61
+      ],
+      "score" : 580,
+      "secondsFromSequenceStart" : 5.4406082918867469
+    },
+    {
+      "event" : "remaining-find",
+      "fixture" : "dense-rhythm-L70-402",
+      "found" : [
+        5,
+        8,
+        20,
+        31,
+        33,
+        43
+      ],
+      "lives" : 2,
+      "marks" : [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        12,
+        13,
+        14,
+        21,
+        29,
+        37,
+        45,
+        53,
+        61
+      ],
+      "score" : 720,
+      "secondsFromSequenceStart" : 5.9361191252246499
+    },
+    {
+      "event" : "remaining-find",
+      "fixture" : "dense-rhythm-L70-402",
+      "found" : [
+        5,
+        8,
+        20,
+        31,
+        33,
+        43,
+        54
+      ],
+      "lives" : 2,
+      "marks" : [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        12,
+        13,
+        14,
+        21,
+        29,
+        37,
+        45,
+        53,
+        61
+      ],
+      "score" : 880,
+      "secondsFromSequenceStart" : 6.1528514167293906
+    },
+    {
+      "event" : "remaining-find",
+      "fixture" : "dense-rhythm-L70-402",
+      "found" : [
+        5,
+        8,
+        20,
+        31,
+        33,
+        43,
+        54,
+        58
+      ],
+      "lives" : 2,
+      "marks" : [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        12,
+        13,
+        14,
+        21,
+        29,
+        37,
+        45,
+        53,
+        61
+      ],
+      "score" : 1060,
+      "secondsFromSequenceStart" : 6.6374764167703688
+    },
+    {
+      "event" : "result",
+      "fixture" : "dense-rhythm-L70-402",
+      "found" : [
+        5,
+        8,
+        20,
+        31,
+        33,
+        43,
+        54,
+        58
+      ],
+      "lives" : 2,
+      "marks" : [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        12,
+        13,
+        14,
+        21,
+        29,
+        37,
+        45,
+        53,
+        61
+      ],
+      "score" : 1060,
+      "secondsFromSequenceStart" : 8.5004059583880007
+    },
+    {
+      "event" : "next",
+      "fixture" : "dense-rhythm-L70-402",
+      "found" : [
+
+      ],
+      "lives" : 3,
+      "marks" : [
+
+      ],
+      "score" : 0,
+      "secondsFromSequenceStart" : 8.507322583347559
+    },
+    {
+      "event" : "next-first-mark",
+      "fixture" : "dense-rhythm-L70-402",
+      "found" : [
+
+      ],
+      "lives" : 3,
+      "marks" : [
+        0
+      ],
+      "score" : 0,
+      "secondsFromSequenceStart" : 8.6637165835127234
+    },
+    {
+      "event" : "mark",
+      "fixture" : "dense-rhythm-L101-402",
+      "found" : [
+
+      ],
+      "lives" : 3,
+      "marks" : [
+        1
+      ],
+      "score" : 0,
+      "secondsFromSequenceStart" : 10.059583875117823
+    },
+    {
+      "event" : "undo",
+      "fixture" : "dense-rhythm-L101-402",
+      "found" : [
+
+      ],
+      "lives" : 3,
+      "marks" : [
+
+      ],
+      "score" : 0,
+      "secondsFromSequenceStart" : 10.394996375078335
+    },
+    {
+      "event" : "first-find",
+      "fixture" : "dense-rhythm-L101-402",
+      "found" : [
+        0
+      ],
+      "lives" : 3,
+      "marks" : [
+
+      ],
+      "score" : 100,
+      "secondsFromSequenceStart" : 10.757794333389029
+    },
+    {
+      "event" : "hint-preview-close",
+      "fixture" : "dense-rhythm-L101-402",
+      "found" : [
+        0
+      ],
+      "lives" : 3,
+      "marks" : [
+
+      ],
+      "score" : 100,
+      "secondsFromSequenceStart" : 11.422303333412856
+    },
+    {
+      "event" : "hint-closed",
+      "fixture" : "dense-rhythm-L101-402",
+      "found" : [
+        0
+      ],
+      "lives" : 3,
+      "marks" : [
+
+      ],
+      "score" : 100,
+      "secondsFromSequenceStart" : 12.256096875062212
+    },
+    {
+      "event" : "hint-preview-apply",
+      "fixture" : "dense-rhythm-L101-402",
+      "found" : [
+        0
+      ],
+      "lives" : 3,
+      "marks" : [
+
+      ],
+      "score" : 100,
+      "secondsFromSequenceStart" : 12.510540500050411
+    },
+    {
+      "event" : "hint-applied",
+      "fixture" : "dense-rhythm-L101-402",
+      "found" : [
+        0
+      ],
+      "lives" : 3,
+      "marks" : [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90
+      ],
+      "score" : 100,
+      "secondsFromSequenceStart" : 13.343193958513439
+    },
+    {
+      "event" : "rapid-find",
+      "fixture" : "dense-rhythm-L101-402",
+      "found" : [
+        0,
+        12
+      ],
+      "lives" : 3,
+      "marks" : [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90
+      ],
+      "score" : 220,
+      "secondsFromSequenceStart" : 13.529625375056639
+    },
+    {
+      "event" : "rapid-find",
+      "fixture" : "dense-rhythm-L101-402",
+      "found" : [
+        0,
+        12,
+        29
+      ],
+      "lives" : 3,
+      "marks" : [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90
+      ],
+      "score" : 360,
+      "secondsFromSequenceStart" : 13.734522416722029
+    },
+    {
+      "event" : "mistake",
+      "fixture" : "dense-rhythm-L101-402",
+      "found" : [
+        0,
+        12,
+        29
+      ],
+      "lives" : 2,
+      "marks" : [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90
+      ],
+      "score" : 360,
+      "secondsFromSequenceStart" : 13.934869791846722
+    },
+    {
+      "event" : "recover-with-correct",
+      "fixture" : "dense-rhythm-L101-402",
+      "found" : [
+        0,
+        12,
+        29,
+        31
+      ],
+      "lives" : 2,
+      "marks" : [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90
+      ],
+      "score" : 460,
+      "secondsFromSequenceStart" : 14.184338083490729
+    },
+    {
+      "event" : "remaining-find",
+      "fixture" : "dense-rhythm-L101-402",
+      "found" : [
+        0,
+        12,
+        29,
+        31,
+        45
+      ],
+      "lives" : 2,
+      "marks" : [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90
+      ],
+      "score" : 580,
+      "secondsFromSequenceStart" : 14.905631916830316
+    },
+    {
+      "event" : "remaining-find",
+      "fixture" : "dense-rhythm-L101-402",
+      "found" : [
+        0,
+        12,
+        29,
+        31,
+        45,
+        53
+      ],
+      "lives" : 2,
+      "marks" : [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90
+      ],
+      "score" : 720,
+      "secondsFromSequenceStart" : 15.396236708387733
+    },
+    {
+      "event" : "remaining-find",
+      "fixture" : "dense-rhythm-L101-402",
+      "found" : [
+        0,
+        12,
+        29,
+        31,
+        45,
+        53,
+        67
+      ],
+      "lives" : 2,
+      "marks" : [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90
+      ],
+      "score" : 880,
+      "secondsFromSequenceStart" : 15.619793833466247
+    },
+    {
+      "event" : "remaining-find",
+      "fixture" : "dense-rhythm-L101-402",
+      "found" : [
+        0,
+        12,
+        29,
+        31,
+        45,
+        53,
+        67,
+        74
+      ],
+      "lives" : 2,
+      "marks" : [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90
+      ],
+      "score" : 1060,
+      "secondsFromSequenceStart" : 16.105213458416983
+    },
+    {
+      "event" : "remaining-find",
+      "fixture" : "dense-rhythm-L101-402",
+      "found" : [
+        0,
+        12,
+        29,
+        31,
+        45,
+        53,
+        67,
+        74,
+        86
+      ],
+      "lives" : 2,
+      "marks" : [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90
+      ],
+      "score" : 1260,
+      "secondsFromSequenceStart" : 16.32337012514472
+    },
+    {
+      "event" : "remaining-find",
+      "fixture" : "dense-rhythm-L101-402",
+      "found" : [
+        0,
+        12,
+        29,
+        31,
+        45,
+        53,
+        67,
+        74,
+        86,
+        98
+      ],
+      "lives" : 2,
+      "marks" : [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90
+      ],
+      "score" : 1480,
+      "secondsFromSequenceStart" : 16.819359416840598
+    },
+    {
+      "event" : "result",
+      "fixture" : "dense-rhythm-L101-402",
+      "found" : [
+        0,
+        12,
+        29,
+        31,
+        45,
+        53,
+        67,
+        74,
+        86,
+        98
+      ],
+      "lives" : 2,
+      "marks" : [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90
+      ],
+      "score" : 1480,
+      "secondsFromSequenceStart" : 18.681259666802362
+    },
+    {
+      "event" : "next",
+      "fixture" : "dense-rhythm-L101-402",
+      "found" : [
+
+      ],
+      "lives" : 3,
+      "marks" : [
+
+      ],
+      "score" : 0,
+      "secondsFromSequenceStart" : 18.697561916895211
+    },
+    {
+      "event" : "next-first-mark",
+      "fixture" : "dense-rhythm-L101-402",
+      "found" : [
+
+      ],
+      "lives" : 3,
+      "marks" : [
+        0
+      ],
+      "score" : 0,
+      "secondsFromSequenceStart" : 18.851143791805953
+    },
+    {
+      "event" : "mark",
+      "fixture" : "dense-rhythm-L70-320",
+      "found" : [
+
+      ],
+      "lives" : 3,
+      "marks" : [
+        0
+      ],
+      "score" : 0,
+      "secondsFromSequenceStart" : 20.285064250230789
+    },
+    {
+      "event" : "undo",
+      "fixture" : "dense-rhythm-L70-320",
+      "found" : [
+
+      ],
+      "lives" : 3,
+      "marks" : [
+
+      ],
+      "score" : 0,
+      "secondsFromSequenceStart" : 20.62641525012441
+    },
+    {
+      "event" : "first-find",
+      "fixture" : "dense-rhythm-L70-320",
+      "found" : [
+        5
+      ],
+      "lives" : 3,
+      "marks" : [
+
+      ],
+      "score" : 100,
+      "secondsFromSequenceStart" : 20.988340708427131
+    },
+    {
+      "event" : "hint-preview-close",
+      "fixture" : "dense-rhythm-L70-320",
+      "found" : [
+        5
+      ],
+      "lives" : 3,
+      "marks" : [
+
+      ],
+      "score" : 100,
+      "secondsFromSequenceStart" : 21.655672708526254
+    },
+    {
+      "event" : "hint-closed",
+      "fixture" : "dense-rhythm-L70-320",
+      "found" : [
+        5
+      ],
+      "lives" : 3,
+      "marks" : [
+
+      ],
+      "score" : 100,
+      "secondsFromSequenceStart" : 22.471640166826546
+    },
+    {
+      "event" : "hint-preview-apply",
+      "fixture" : "dense-rhythm-L70-320",
+      "found" : [
+        5
+      ],
+      "lives" : 3,
+      "marks" : [
+
+      ],
+      "score" : 100,
+      "secondsFromSequenceStart" : 22.732189416885376
+    },
+    {
+      "event" : "hint-applied",
+      "fixture" : "dense-rhythm-L70-320",
+      "found" : [
+        5
+      ],
+      "lives" : 3,
+      "marks" : [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        12,
+        13,
+        14,
+        21,
+        29,
+        37,
+        45,
+        53,
+        61
+      ],
+      "score" : 100,
+      "secondsFromSequenceStart" : 23.576603541849181
+    },
+    {
+      "event" : "rapid-find",
+      "fixture" : "dense-rhythm-L70-320",
+      "found" : [
+        5,
+        8
+      ],
+      "lives" : 3,
+      "marks" : [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        12,
+        13,
+        14,
+        21,
+        29,
+        37,
+        45,
+        53,
+        61
+      ],
+      "score" : 220,
+      "secondsFromSequenceStart" : 23.762884166790172
+    },
+    {
+      "event" : "rapid-find",
+      "fixture" : "dense-rhythm-L70-320",
+      "found" : [
+        5,
+        8,
+        20
+      ],
+      "lives" : 3,
+      "marks" : [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        12,
+        13,
+        14,
+        21,
+        29,
+        37,
+        45,
+        53,
+        61
+      ],
+      "score" : 360,
+      "secondsFromSequenceStart" : 23.965089958393946
+    },
+    {
+      "event" : "mistake",
+      "fixture" : "dense-rhythm-L70-320",
+      "found" : [
+        5,
+        8,
+        20
+      ],
+      "lives" : 2,
+      "marks" : [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        12,
+        13,
+        14,
+        21,
+        29,
+        37,
+        45,
+        53,
+        61
+      ],
+      "score" : 360,
+      "secondsFromSequenceStart" : 24.165274583501741
+    },
+    {
+      "event" : "recover-with-correct",
+      "fixture" : "dense-rhythm-L70-320",
+      "found" : [
+        5,
+        8,
+        20,
+        31
+      ],
+      "lives" : 2,
+      "marks" : [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        12,
+        13,
+        14,
+        21,
+        29,
+        37,
+        45,
+        53,
+        61
+      ],
+      "score" : 460,
+      "secondsFromSequenceStart" : 24.415961541701108
+    },
+    {
+      "event" : "remaining-find",
+      "fixture" : "dense-rhythm-L70-320",
+      "found" : [
+        5,
+        8,
+        20,
+        31,
+        33
+      ],
+      "lives" : 2,
+      "marks" : [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        12,
+        13,
+        14,
+        21,
+        29,
+        37,
+        45,
+        53,
+        61
+      ],
+      "score" : 580,
+      "secondsFromSequenceStart" : 25.125228416873142
+    },
+    {
+      "event" : "remaining-find",
+      "fixture" : "dense-rhythm-L70-320",
+      "found" : [
+        5,
+        8,
+        20,
+        31,
+        33,
+        43
+      ],
+      "lives" : 2,
+      "marks" : [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        12,
+        13,
+        14,
+        21,
+        29,
+        37,
+        45,
+        53,
+        61
+      ],
+      "score" : 720,
+      "secondsFromSequenceStart" : 25.618768458487466
+    },
+    {
+      "event" : "remaining-find",
+      "fixture" : "dense-rhythm-L70-320",
+      "found" : [
+        5,
+        8,
+        20,
+        31,
+        33,
+        43,
+        54
+      ],
+      "lives" : 2,
+      "marks" : [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        12,
+        13,
+        14,
+        21,
+        29,
+        37,
+        45,
+        53,
+        61
+      ],
+      "score" : 880,
+      "secondsFromSequenceStart" : 25.835394125198945
+    },
+    {
+      "event" : "remaining-find",
+      "fixture" : "dense-rhythm-L70-320",
+      "found" : [
+        5,
+        8,
+        20,
+        31,
+        33,
+        43,
+        54,
+        58
+      ],
+      "lives" : 2,
+      "marks" : [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        12,
+        13,
+        14,
+        21,
+        29,
+        37,
+        45,
+        53,
+        61
+      ],
+      "score" : 1060,
+      "secondsFromSequenceStart" : 26.319670916767791
+    },
+    {
+      "event" : "result",
+      "fixture" : "dense-rhythm-L70-320",
+      "found" : [
+        5,
+        8,
+        20,
+        31,
+        33,
+        43,
+        54,
+        58
+      ],
+      "lives" : 2,
+      "marks" : [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        12,
+        13,
+        14,
+        21,
+        29,
+        37,
+        45,
+        53,
+        61
+      ],
+      "score" : 1060,
+      "secondsFromSequenceStart" : 28.18107600021176
+    },
+    {
+      "event" : "next",
+      "fixture" : "dense-rhythm-L70-320",
+      "found" : [
+
+      ],
+      "lives" : 3,
+      "marks" : [
+
+      ],
+      "score" : 0,
+      "secondsFromSequenceStart" : 28.188201458426192
+    },
+    {
+      "event" : "next-first-mark",
+      "fixture" : "dense-rhythm-L70-320",
+      "found" : [
+
+      ],
+      "lives" : 3,
+      "marks" : [
+        0
+      ],
+      "score" : 0,
+      "secondsFromSequenceStart" : 28.34575445833616
+    },
+    {
+      "event" : "mark",
+      "fixture" : "dense-rhythm-L101-320",
+      "found" : [
+
+      ],
+      "lives" : 3,
+      "marks" : [
+        1
+      ],
+      "score" : 0,
+      "secondsFromSequenceStart" : 29.650263333460316
+    },
+    {
+      "event" : "undo",
+      "fixture" : "dense-rhythm-L101-320",
+      "found" : [
+
+      ],
+      "lives" : 3,
+      "marks" : [
+
+      ],
+      "score" : 0,
+      "secondsFromSequenceStart" : 29.984294750029221
+    },
+    {
+      "event" : "first-find",
+      "fixture" : "dense-rhythm-L101-320",
+      "found" : [
+        0
+      ],
+      "lives" : 3,
+      "marks" : [
+
+      ],
+      "score" : 100,
+      "secondsFromSequenceStart" : 30.360464416677132
+    },
+    {
+      "event" : "hint-preview-close",
+      "fixture" : "dense-rhythm-L101-320",
+      "found" : [
+        0
+      ],
+      "lives" : 3,
+      "marks" : [
+
+      ],
+      "score" : 100,
+      "secondsFromSequenceStart" : 31.021539666689932
+    },
+    {
+      "event" : "hint-closed",
+      "fixture" : "dense-rhythm-L101-320",
+      "found" : [
+        0
+      ],
+      "lives" : 3,
+      "marks" : [
+
+      ],
+      "score" : 100,
+      "secondsFromSequenceStart" : 31.857471000170335
+    },
+    {
+      "event" : "hint-preview-apply",
+      "fixture" : "dense-rhythm-L101-320",
+      "found" : [
+        0
+      ],
+      "lives" : 3,
+      "marks" : [
+
+      ],
+      "score" : 100,
+      "secondsFromSequenceStart" : 32.119572583353147
+    },
+    {
+      "event" : "hint-applied",
+      "fixture" : "dense-rhythm-L101-320",
+      "found" : [
+        0
+      ],
+      "lives" : 3,
+      "marks" : [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90
+      ],
+      "score" : 100,
+      "secondsFromSequenceStart" : 32.934251666767523
+    },
+    {
+      "event" : "rapid-find",
+      "fixture" : "dense-rhythm-L101-320",
+      "found" : [
+        0,
+        12
+      ],
+      "lives" : 3,
+      "marks" : [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90
+      ],
+      "score" : 220,
+      "secondsFromSequenceStart" : 33.119089166866615
+    },
+    {
+      "event" : "rapid-find",
+      "fixture" : "dense-rhythm-L101-320",
+      "found" : [
+        0,
+        12,
+        29
+      ],
+      "lives" : 3,
+      "marks" : [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90
+      ],
+      "score" : 360,
+      "secondsFromSequenceStart" : 33.317973791854456
+    },
+    {
+      "event" : "mistake",
+      "fixture" : "dense-rhythm-L101-320",
+      "found" : [
+        0,
+        12,
+        29
+      ],
+      "lives" : 2,
+      "marks" : [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90
+      ],
+      "score" : 360,
+      "secondsFromSequenceStart" : 33.517112375004217
+    },
+    {
+      "event" : "recover-with-correct",
+      "fixture" : "dense-rhythm-L101-320",
+      "found" : [
+        0,
+        12,
+        29,
+        31
+      ],
+      "lives" : 2,
+      "marks" : [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90
+      ],
+      "score" : 460,
+      "secondsFromSequenceStart" : 33.765588708454743
+    },
+    {
+      "event" : "remaining-find",
+      "fixture" : "dense-rhythm-L101-320",
+      "found" : [
+        0,
+        12,
+        29,
+        31,
+        45
+      ],
+      "lives" : 2,
+      "marks" : [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90
+      ],
+      "score" : 580,
+      "secondsFromSequenceStart" : 34.472848125034943
+    },
+    {
+      "event" : "remaining-find",
+      "fixture" : "dense-rhythm-L101-320",
+      "found" : [
+        0,
+        12,
+        29,
+        31,
+        45,
+        53
+      ],
+      "lives" : 2,
+      "marks" : [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90
+      ],
+      "score" : 720,
+      "secondsFromSequenceStart" : 34.959160083439201
+    },
+    {
+      "event" : "remaining-find",
+      "fixture" : "dense-rhythm-L101-320",
+      "found" : [
+        0,
+        12,
+        29,
+        31,
+        45,
+        53,
+        67
+      ],
+      "lives" : 2,
+      "marks" : [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90
+      ],
+      "score" : 880,
+      "secondsFromSequenceStart" : 35.178596750134602
+    },
+    {
+      "event" : "remaining-find",
+      "fixture" : "dense-rhythm-L101-320",
+      "found" : [
+        0,
+        12,
+        29,
+        31,
+        45,
+        53,
+        67,
+        74
+      ],
+      "lives" : 2,
+      "marks" : [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90
+      ],
+      "score" : 1060,
+      "secondsFromSequenceStart" : 35.663568000076339
+    },
+    {
+      "event" : "remaining-find",
+      "fixture" : "dense-rhythm-L101-320",
+      "found" : [
+        0,
+        12,
+        29,
+        31,
+        45,
+        53,
+        67,
+        74,
+        86
+      ],
+      "lives" : 2,
+      "marks" : [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90
+      ],
+      "score" : 1260,
+      "secondsFromSequenceStart" : 35.880468541756272
+    },
+    {
+      "event" : "remaining-find",
+      "fixture" : "dense-rhythm-L101-320",
+      "found" : [
+        0,
+        12,
+        29,
+        31,
+        45,
+        53,
+        67,
+        74,
+        86,
+        98
+      ],
+      "lives" : 2,
+      "marks" : [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90
+      ],
+      "score" : 1480,
+      "secondsFromSequenceStart" : 36.369168875040486
+    },
+    {
+      "event" : "result",
+      "fixture" : "dense-rhythm-L101-320",
+      "found" : [
+        0,
+        12,
+        29,
+        31,
+        45,
+        53,
+        67,
+        74,
+        86,
+        98
+      ],
+      "lives" : 2,
+      "marks" : [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90
+      ],
+      "score" : 1480,
+      "secondsFromSequenceStart" : 38.233769500162452
+    },
+    {
+      "event" : "next",
+      "fixture" : "dense-rhythm-L101-320",
+      "found" : [
+
+      ],
+      "lives" : 3,
+      "marks" : [
+
+      ],
+      "score" : 0,
+      "secondsFromSequenceStart" : 38.250468750018626
+    },
+    {
+      "event" : "next-first-mark",
+      "fixture" : "dense-rhythm-L101-320",
+      "found" : [
+
+      ],
+      "lives" : 3,
+      "marks" : [
+        0
+      ],
+      "score" : 0,
+      "secondsFromSequenceStart" : 38.408195333555341
+    }
+  ]
+}

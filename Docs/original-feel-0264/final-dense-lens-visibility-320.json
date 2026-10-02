@@ -1,0 +1,127 @@
+{
+  "badgeIntersections" : 0,
+  "boundary" : "Natural presentation-layer samples of opaque central lens disc against actual installed mask, and transformed lens bounds against measured tool badge. Finite geometric visibility check, not FPS or auditory testing.",
+  "minimumUnmaskedDiscFraction" : 1,
+  "samples" : [
+    {
+      "centerX" : 89,
+      "centerY" : 435.7582670673728,
+      "opacity" : 0.93762826919555664,
+      "seconds" : 0.050052374834194779,
+      "unmaskedDiscFraction" : 1
+    },
+    {
+      "centerX" : 89,
+      "centerY" : 434.12721753120422,
+      "opacity" : 0.98705399036407471,
+      "seconds" : 0.072379041463136673,
+      "unmaskedDiscFraction" : 1
+    },
+    {
+      "centerX" : 89,
+      "centerY" : 432.66068994998932,
+      "opacity" : 0.97165518999099731,
+      "seconds" : 0.093354458222165704,
+      "unmaskedDiscFraction" : 1
+    },
+    {
+      "centerX" : 89,
+      "centerY" : 431.21817755699158,
+      "opacity" : 0.93231391906738281,
+      "seconds" : 0.11449399986304343,
+      "unmaskedDiscFraction" : 1
+    },
+    {
+      "centerX" : 89,
+      "centerY" : 429.74948436021805,
+      "opacity" : 0.89225864410400391,
+      "seconds" : 0.13694754149764776,
+      "unmaskedDiscFraction" : 1
+    },
+    {
+      "centerX" : 89,
+      "centerY" : 428.31927984952927,
+      "opacity" : 0.8532530665397644,
+      "seconds" : 0.1596017915289849,
+      "unmaskedDiscFraction" : 1
+    },
+    {
+      "centerX" : 89,
+      "centerY" : 427.01560091972351,
+      "opacity" : 0.81769824028015137,
+      "seconds" : 0.18101199995726347,
+      "unmaskedDiscFraction" : 1
+    },
+    {
+      "centerX" : 89,
+      "centerY" : 425.76876497268677,
+      "opacity" : 0.78369361162185669,
+      "seconds" : 0.20219874987378716,
+      "unmaskedDiscFraction" : 1
+    },
+    {
+      "centerX" : 89,
+      "centerY" : 424.49494636058807,
+      "opacity" : 0.74895310401916504,
+      "seconds" : 0.22485570819117129,
+      "unmaskedDiscFraction" : 1
+    },
+    {
+      "centerX" : 89,
+      "centerY" : 423.2325347661972,
+      "opacity" : 0.71452367305755615,
+      "seconds" : 0.24843491660431027,
+      "unmaskedDiscFraction" : 1
+    },
+    {
+      "centerX" : 89,
+      "centerY" : 422.11118650436401,
+      "opacity" : 0.64647150039672852,
+      "seconds" : 0.27037299983203411,
+      "unmaskedDiscFraction" : 1
+    },
+    {
+      "centerX" : 89,
+      "centerY" : 421.00467169284821,
+      "opacity" : 0.54587924480438232,
+      "seconds" : 0.2933102915994823,
+      "unmaskedDiscFraction" : 1
+    },
+    {
+      "centerX" : 89,
+      "centerY" : 420.03794693946838,
+      "opacity" : 0.45799517631530762,
+      "seconds" : 0.3146957082208246,
+      "unmaskedDiscFraction" : 1
+    },
+    {
+      "centerX" : 89,
+      "centerY" : 419.11973118782043,
+      "opacity" : 0.37452101707458496,
+      "seconds" : 0.33647970831952989,
+      "unmaskedDiscFraction" : 1
+    },
+    {
+      "centerX" : 89,
+      "centerY" : 418.23775720596313,
+      "opacity" : 0.2943415641784668,
+      "seconds" : 0.35911054164171219,
+      "unmaskedDiscFraction" : 1
+    },
+    {
+      "centerX" : 89,
+      "centerY" : 417.45393025875092,
+      "opacity" : 0.22308458387851715,
+      "seconds" : 0.38140116655267775,
+      "unmaskedDiscFraction" : 1
+    },
+    {
+      "centerX" : 89,
+      "centerY" : 416.78021204471588,
+      "opacity" : 0.16183744370937347,
+      "seconds" : 0.40291174990125,
+      "unmaskedDiscFraction" : 1
+    }
+  ],
+  "width" : 320
+}
