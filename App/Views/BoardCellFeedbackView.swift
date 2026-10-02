@@ -318,6 +318,7 @@ final class BoardCellFeedbackView: UIView {
 /// Immediate contact acknowledgement, with no recognizer delay or model write.
 final class BoardPressedCellView: UIView {
     let cellIndex: Int
+    private(set) var isPendingTap = false
     init(cellIndex: Int, frame: CGRect) {
         self.cellIndex = cellIndex
         super.init(frame: frame)
@@ -329,4 +330,15 @@ final class BoardPressedCellView: UIView {
         layer.borderColor = UIColor.white.withAlphaComponent(0.72).cgColor
     }
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+
+    /// Demo styling only: acknowledge the lifted finger while UIKit resolves
+    /// single versus double tap. This is neither a provisional X nor a move.
+    func waitForTapDecision() {
+        guard !isPendingTap else { return }
+        isPendingTap = true
+        CATransaction.begin(); CATransaction.setDisableActions(true)
+        backgroundColor = UIColor.white.withAlphaComponent(0.14)
+        layer.borderColor = UIColor.white.withAlphaComponent(0.52).cgColor
+        CATransaction.commit()
+    }
 }

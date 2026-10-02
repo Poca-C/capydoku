@@ -2,7 +2,7 @@
 
 本记录以原始 Word V1.3 正文及附图为依据。结论：**可内部试玩，部分符合；客户端仍有未实现项，冻结参考、外部接入和上架尚未验收。** 后续报告和旧 Checklist 不覆盖原文。
 
-当前已验证本地构建：**0.2.60 (63)**，手机最近安装证据为**0.2.29 (32)**。实际测试范围与结果见 [当前验证记录](original-0260-feedback.json)；此前综合记录保留在 [历史验证记录](original-verification.json)。
+当前已验证本地构建：**0.2.61 (64)**，手机最近安装证据为**0.2.29 (32)**。实际测试范围与结果见 [当前验证记录](original-0261-feedback.json)；此前综合记录保留在 [历史验证记录](original-verification.json)。
 
 原文校验值：`274bbf15f031bd80bb8b360cf14c0266acff370a230d9cad1b1785461df54dd2`。原文[n]对应 [document.txt](../Reference/Original/document.txt) 的0-based正文块索引（含表格），不是页码。83行是实质要求分组，不是完成率。
 
@@ -60,10 +60,11 @@
 - 0.2.56道具遮挡使用六组实际Root与工具层透明像素检查；末格/下一关、近重复遮罩、非法几何和手势回归通过。首次夹具跳过真实启动预热导致的时限失败及修正保留；非全量、真机或参考品质验收。见Validation/original-0256-feedback.json。
 - 0.2.59在真实Root修复奖励卡白幕遮挡答案起始反馈；120ms前无截图的两尺寸/减少动态像素与实际命中检查，29项App和5项UI通过。不代表精确屏幕退场时长、真机或参考品质验收。见Validation/original-0259-feedback.json。
 - 0.2.60五组实际Root快速操作分别显示160/180，旧版为合计340；业务计分未变。68项相关App与4项UI通过，不代替真机、全88条或参考品质验收。0259整关测试选择器的范围更正见Validation/original-0259-feedback.json。
+- 0.2.61实际17e短按录屏前后验证按压→待确认→X衔接；组件注入与原生证据分开记录，有限抽帧不推断精确触控延迟。65项相关App和4项UI通过；无真机、参考品质或全88条验收。见Validation/original-0261-feedback.json。
 
 ## 后续处理项
 
-0.2.60把连续找对合并浮分改为逐笔实际得分；68项相关App与4项UI通过。九类参考方向均有Demo实现，整体自然度与最新真机音画触感仍待验，83/88正式状态保持。
+0.2.61保留单击抬手后等待双击判断的静态轮廓，原生录屏确认消除反馈空窗；65项相关App和4项UI通过。业务判定时点不变，整体自然度与最新真机音画触感仍待验，83/88正式状态保持。
 
 - **CLIENT-01 · P1 · Do not accept unimplemented imported behavior silently**：原文要求执行冻结参考的开局免费广告顺序和重开流程。当前triggerOrder未消费、重开无确认分支，导入restartCreatesNewBoard=true会明确拒绝。两个字段由工程自行设计，不能据其名称推导原文必须每次换地图。 获取冻结交互语义后完成对应顺序/确认/棋盘路径；未定义的数字含义不得自行猜测。
 - **CLIENT-02 · 本地原声实验可用，正式映射与真机待验 · Complete audio playback/configuration contract**：播放器策略及App路由已有验证；0.2.26按用户明确授权导入9个本地原声文件映射10事件，7项资源导入/解码、8项构建隔离及6产物清单检查通过。正式清单仍空且未确认，实验只在本地Debug internal_demo启用。 冻结正式原声版本/事件映射/音量时序并完成使用确认和真机听觉对比。
@@ -199,4 +200,4 @@
 | ADS-13<br>[448] [449] [450] [451] [452] | 广告漏斗、收益回传与商业化看板<br>`partial` | 本地激励事件包含offer/status/rewardGranted及ad_type/network/ad_unit_id。 0.2.7补已确认激励奖励的completed持久恢复，保留原ID/发生时间/归属，按实际执行或补偿决定reward_granted。 0.2.8补本地插页offer/result和actual started，以冻结事件重试，所有插页reward_granted=false，无收益估算。 0.2.9补buff_use原子保存和冷恢复，奖励完成→使用→通关顺序经过含真实offer上下文的本地故障测试。 0.2.10补原offer及实际started/skipped/failed/加载超时的持久保存，重试保留原ID/时间/归属；未知最终回调不猜结果、不补奖。9项核心新增与14项应用新增专项通过。<br>**缺口：**真实收益回传/线上去重、正式插页placement/closed/元数据合同和看板仍待联调。激励错误类别目前是本地分类，真实SDK错误与元数据时机尚待映射。<br>[AnalyticsRecorder.swift](../App/Services/AnalyticsRecorder.swift) · [AppModel.swift](../App/AppModel.swift) · [analytics-startup-audit.json](../Validation/analytics-startup-audit.json) · [RewardCompletionRecoveryTests.swift](../AppTests/RewardCompletionRecoveryTests.swift) · [RewardAnalyticsReceiptTests.swift](../Tests/CapydokuCoreTests/RewardAnalyticsReceiptTests.swift) · [original-verification.json](../Validation/original-verification.json) · [InterstitialAnalyticsTests.swift](../AppTests/InterstitialAnalyticsTests.swift) · [AnalyticsRecorderTests.swift](../AppTests/AnalyticsRecorderTests.swift) · [interstitial-analytics-contract.md](../Reference/interstitial-analytics-contract.md) · [BuffUseDurabilityTests.swift](../AppTests/BuffUseDurabilityTests.swift) · [HintUsePersistenceTests.swift](../Tests/CapydokuCoreTests/HintUsePersistenceTests.swift) · [RewardLifecycleDurabilityTests.swift](../AppTests/RewardLifecycleDurabilityTests.swift) · [RewardAdEventPersistenceTests.swift](../Tests/CapydokuCoreTests/RewardAdEventPersistenceTests.swift) |
 | ADS-14<br>[454] [455] [456] [457] [458] | L1–20逐关及故障场景广告验收<br>`partial` | 模拟器有奖励失败/中断/重复/超时与库存一致性测试基础。<br>**缺口：**缺原L1–20配置，不能逐关通过；真实SDK、环境、CMP、收益及音频前后必须在外部资料齐全后联调。<br>[AppModelTests.swift](../AppTests/AppModelTests.swift) · [HardeningUITests.swift](../UITests/HardeningUITests.swift) · [reference-gameplay-import.json](../Validation/reference-gameplay-import.json) |
 
-本表与 [当前验证记录](original-0260-feedback.json) 及 [历史综合验证记录](original-verification.json) 配合阅读；历史测试失败保留，仅明确标注的通过重验计入证据。
+本表与 [当前验证记录](original-0261-feedback.json) 及 [历史综合验证记录](original-verification.json) 配合阅读；历史测试失败保留，仅明确标注的通过重验计入证据。

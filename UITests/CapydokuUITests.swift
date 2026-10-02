@@ -60,6 +60,37 @@ final class CapydokuUITests: XCTestCase {
         add(attachment)
     }
 
+    func testShortNativeContactsKeepTapUndoAndDoubleTapOutcomesDistinct() throws {
+        launchGame()
+        let target = cell(0), frame = target.frame
+        let center = target.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+        var observations: [[String: Any]] = []
+        for (name, expected) in [("add", "marked"), ("undo", "empty")] {
+            let start = ProcessInfo.processInfo.systemUptime
+            center.press(forDuration: 0.14)
+            let end = ProcessInfo.processInfo.systemUptime
+            expectValue(target, expected)
+            XCTAssertEqual(app.staticTexts["score"].label, "0")
+            expectValue(app.otherElements["lives"], "3")
+            observations.append(["action": name, "callStartUptime": start, "callReturnedUptime": end,
+                                 "finalValue": expected])
+            attachScreen("native-short-contact-\(name)-settled")
+        }
+        cell(1).doubleTap(); expectValue(cell(1), "found")
+        XCTAssertEqual(app.staticTexts["score"].label, "100")
+        expectValue(app.otherElements["lives"], "3")
+        XCTAssertEqual(boardValues(), (0..<16).map { $0 == 1 ? "found" : "empty" })
+        tapButton("hint"); XCTAssertTrue(app.buttons["hint_apply"].waitForExistence(timeout: 5))
+        tapButton("hint_close")
+        let report: [String: Any] = ["cellFrame": [frame.minX, frame.minY, frame.width, frame.height],
+            "appFrame": [app.frame.minX, app.frame.minY, app.frame.width, app.frame.height],
+            "actions": observations,
+            "boundary": "Real native0.14-second contacts and double tap; XCTest call durations include idle waits and do not measure touch-up or visible animation latency. Finite recording review is separate from final-state assertions."]
+        let data = try JSONSerialization.data(withJSONObject: report, options: [.prettyPrinted, .sortedKeys])
+        let attachment = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+        attachment.name = "native-short-contact-observations"; attachment.lifetime = .keepAlways; add(attachment)
+    }
+
     func testHomeTutorialSkipAndDoubleTapDoesNotLeakAMark() {
         app.launchArguments = ["-ui-testing", "-legacy-fixture", "-reset-demo"]
         app.launch()

@@ -1,0 +1,130 @@
+{
+  "artifact": ".build/Xcode/Build/Products/Debug-iphonesimulator/Capydoku.app",
+  "bundleVersion": "0.2.61",
+  "build": "64",
+  "environment": "internal_demo",
+  "expectation": "present",
+  "passed": true,
+  "errors": [],
+  "formalAudioReferenceVerified": false,
+  "totalRegularFiles": 65,
+  "localTestFiles": [
+    {
+      "path": "LocalReferenceAudio/local-test-audio.json",
+      "bytes": 11526,
+      "sha256": "17096fa7ba4c4172f56a0a8dab2759d7c9b98c65264fb551513919112a026694"
+    },
+    {
+      "path": "LocalReferenceAudio/meow-test-bgm_meowdoku_melody.wav",
+      "bytes": 13154448,
+      "sha256": "7977f4802ea5715c9e935636d56555bdfce9ff3fca1d9dad8937875a74e2f593"
+    },
+    {
+      "path": "LocalReferenceAudio/meow-test-btn_click_2.wav",
+      "bytes": 46252,
+      "sha256": "714a1f358a079040af73038456571d69c566c04638a319b4ba6467d19b7e70dd"
+    },
+    {
+      "path": "LocalReferenceAudio/meow-test-combo_excellent_s6.wav",
+      "bytes": 127300,
+      "sha256": "ab9b9da86ce1cb26b73e1b0f187bf4e4e8275873e9543140aebc78d4ee86c21f"
+    },
+    {
+      "path": "LocalReferenceAudio/meow-test-combo_great_s6.wav",
+      "bytes": 122196,
+      "sha256": "156cdb517d0fc4c136126b31b269ef5872c064eabf71d3377983c8e4c91b74e7"
+    },
+    {
+      "path": "LocalReferenceAudio/meow-test-combo_nice_s6.wav",
+      "bytes": 124972,
+      "sha256": "f90f0fa1dab21ec10f9123e14dc681087b333ee2f3ad424b2fcb482a97e32086"
+    },
+    {
+      "path": "LocalReferenceAudio/meow-test-mark_cat.wav",
+      "bytes": 196112,
+      "sha256": "52dd253b6940c0afad4806ac12ba592f031258b1c075c020ad66ecaf9eeb2b0e"
+    },
+    {
+      "path": "LocalReferenceAudio/meow-test-mark_wrong_1.wav",
+      "bytes": 266944,
+      "sha256": "1ec4ca3156b856f3a46a1dc6391dab26c2a2241401fa93ca81786d0c26ab2ab9"
+    },
+    {
+      "path": "LocalReferenceAudio/meow-test-mark_x_2.wav",
+      "bytes": 32216,
+      "sha256": "30f0bc23ab6d145afafaed161bb97fdd72605150dadb3e9f5883a889eeaf73d4"
+    },
+    {
+      "path": "LocalReferenceAudio/meow-test-unmark_x_2.wav",
+      "bytes": 29792,
+      "sha256": "d3b19049ca95d326d0d9f1a0415eae51247ab290a9b9a8415a2de73ea35bc6b2"
+    }
+  ],
+  "resourceInventory": [
+    "AppIcon60x60@2x.png",
+    "AppIcon76x76@2x~ipad.png",
+    "Assets.car",
+    "Capydoku",
+    "Capydoku.debug.dylib",
+    "Frameworks/Testing.framework/Info.plist",
+    "Frameworks/Testing.framework/Testing",
+    "Frameworks/Testing.framework/_CodeSignature/CodeResources",
+    "Frameworks/Testing.framework/version.plist",
+    "Frameworks/XCTAutomationSupport.framework/Info.plist",
+    "Frameworks/XCTAutomationSupport.framework/XCTAutomationSupport",
+    "Frameworks/XCTAutomationSupport.framework/_CodeSignature/CodeResources",
+    "Frameworks/XCTAutomationSupport.framework/version.plist",
+    "Frameworks/XCTest.framework/Info.plist",
+    "Frameworks/XCTest.framework/XCTest",
+    "Frameworks/XCTest.framework/_CodeSignature/CodeResources",
+    "Frameworks/XCTest.framework/version.plist",
+    "Frameworks/XCTestCore.framework/Info.plist",
+    "Frameworks/XCTestCore.framework/XCTestCore",
+    "Frameworks/XCTestCore.framework/_CodeSignature/CodeResources",
+    "Frameworks/XCTestCore.framework/version.plist",
+    "Frameworks/XCTestSupport.framework/Info.plist",
+    "Frameworks/XCTestSupport.framework/XCTestSupport",
+    "Frameworks/XCTestSupport.framework/_CodeSignature/CodeResources",
+    "Frameworks/XCTestSupport.framework/version.plist",
+    "Frameworks/XCUIAutomation.framework/Info.plist",
+    "Frameworks/XCUIAutomation.framework/XCUIAutomation",
+    "Frameworks/XCUIAutomation.framework/_CodeSignature/CodeResources",
+    "Frameworks/XCUIAutomation.framework/version.plist",
+    "Frameworks/XCUnit.framework/Info.plist",
+    "Frameworks/XCUnit.framework/XCUnit",
+    "Frameworks/XCUnit.framework/_CodeSignature/CodeResources",
+    "Frameworks/XCUnit.framework/version.plist",
+    "Frameworks/libXCTestBundleInject.dylib",
+    "Frameworks/libXCTestSwiftSupport.dylib",
+    "Info.plist",
+    "LocalReferenceAudio/local-test-audio.json",
+    "LocalReferenceAudio/meow-test-bgm_meowdoku_melody.wav",
+    "LocalReferenceAudio/meow-test-btn_click_2.wav",
+    "LocalReferenceAudio/meow-test-combo_excellent_s6.wav",
+    "LocalReferenceAudio/meow-test-combo_great_s6.wav",
+    "LocalReferenceAudio/meow-test-combo_nice_s6.wav",
+    "LocalReferenceAudio/meow-test-mark_cat.wav",
+    "LocalReferenceAudio/meow-test-mark_wrong_1.wav",
+    "LocalReferenceAudio/meow-test-mark_x_2.wav",
+    "LocalReferenceAudio/meow-test-unmark_x_2.wav",
+    "PkgInfo",
+    "PlugIns/CapydokuAppTests.xctest/CapydokuAppTests",
+    "PlugIns/CapydokuAppTests.xctest/Info.plist",
+    "PlugIns/CapydokuAppTests.xctest/_CodeSignature/CodeResources",
+    "PlugIns/CapydokuAppTests.xctest/reference-gameplay-synthetic-row.json",
+    "PrivacyInfo.xcprivacy",
+    "UIStringsCore.json",
+    "UIStringsGame.json",
+    "UIStringsStartup.json",
+    "UIStringsSupport.json",
+    "_CodeSignature/CodeResources",
+    "__preview.dylib",
+    "audio-manifest.json",
+    "difficulty-profiles.json",
+    "en.lproj/InfoPlist.strings",
+    "levels-legacy-v2.json",
+    "levels.json",
+    "result-face-artwork-0231.json",
+    "zh-Hans.lproj/InfoPlist.strings"
+  ]
+}

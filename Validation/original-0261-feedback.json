@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-02",
+  "build": "0.2.61 (64)",
+  "status": "scoped_native_tap_acknowledgement_verified_simulator_only",
+  "previousReport": "Validation/original-0260-feedback.json",
+  "previousGoalTurn": {
+    "classification": "progress",
+    "evidence": "HEADfed2712 implements and verifies individual accepted-find score feedback;65/4 current tests follow that state."
+  },
+  "sourceParagraphs": [
+    130,
+    134,
+    136,
+    252,
+    254
+  ],
+  "finding": "The press highlight used to disappear on finger-up while the single-tap recognizer still awaited double-tap failure. In the unchanged0260 native recording, the cell loses its highlight at sampled5.150s and remains plain at5.450s, before an X stroke at5.525s. The functional result was already correct; this is an acknowledgement gap.",
+  "changes": [
+    "Transfer a valid short contact into a lighter static pending outline while the existing recognizer ledger is busy. Keep the old X or empty cell underneath; no provisional marks, sounds, scoring, life changes or timer.",
+    "Separate normal pan touch-end from cancellation/reset. Early pan reset does not retire a transferred pending tap. Single/double acceptance clears only its target; a new contact or recognized pan removes the previous pending decoration.",
+    "Input completion, out-of-board movement, cancellation, cover/preview/lock, background, hidden/detached view, session replacement and geometry changes clear the outline. Existing three recognizers, double-tap precedence, thresholds and business commit times are unchanged."
+  ],
+  "verificationHistory": [
+    {
+      "status": "Passed",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 17.898,
+      "summary": "Validation/test-runs/original-0261-native-baseline-summary.json",
+      "log": "Validation/test-runs/original-0261-native-baseline.log",
+      "bundle": "Validation/test-runs/original-0261-native-baseline.xcresult",
+      "scope": "Unchanged0260 production plus the same new real-native UI test. One functional test passed; visual gap was confirmed from recording, not represented as a failed functional assertion."
+    }
+  ],
+  "applicationTests": {
+    "status": "Passed",
+    "passed": 65,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 25.971,
+    "summary": "Validation/test-runs/original-0261-app-final-summary.json",
+    "log": "Validation/test-runs/original-0261-app-final.log",
+    "bundle": "Validation/test-runs/original-0261-app-final.xcresult"
+  },
+  "uiTests": {
+    "status": "Passed",
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 151.73,
+    "summary": "Validation/test-runs/original-0261-17e-ui-summary.json",
+    "log": "Validation/test-runs/original-0261-17e-ui.log",
+    "bundle": "Validation/test-runs/original-0261-17e-ui.xcresult"
+  },
+  "visualEvidence": "Docs/original-feel-0261/manifest.json",
+  "testedScope": [
+    "Four new App tests: pending add/undo normal and reduced motion without early state writes; second contact/double outcome; prior-cell completion while another contact waits; cancellation, pan end, outside, lock, hidden, effects-off, preview, background, replacement, resize, detach, all-recognizers-finished and missing-active-attempt cases.",
+    "Existing cell feedback, guidance, input ownership, particle lifecycle, individual score receipt and actual full-level victory→next-board tests ran;65 total passed, no skips.",
+    "Four17e native UI tests: new short press/add/undo/double/hint; tutorial skip/double no leaked X; tap/double/horizontal/vertical/diagonal/outside then tools; mixed consecutive gestures without repeated damage/score.",
+    "Same target frame45.6667,302,74.75,74.75pt on390x844pt app in both native runs. Final4.600–4.900s sampled lighter outline bridges held contact to X at4.975s; recording origins differ. Undo RGB remains light during the wait too. These samples do not establish a universal precise wait duration.",
+    "Two independent read-only code reviews found no blocking issue; native recording was necessary to verify the actual pan-reset behavior that injected tests cannot establish."
+  ],
+  "naturalPlayEvidence": {
+    "newSuccessfulSimulatorPlay": true,
+    "build": "0.2.60 (63), before this change",
+    "scope": "CUA normal L4: two correct single-region finds and manual marks. CUA drag calls did not demonstrate a native swipe; no swipe defect inferred. Dedicated native XCTest later verified horizontal/vertical gestures.",
+    "recording": ".build/original-0261-normal-play.mov",
+    "newSuccessfulPhysicalPlay": false
+  },
+  "reference": {
+    "latestSuccessfulPlaytest": "Validation/meowdoku-playtest-comparison-0249.json",
+    "newSuccessfulPlaytestThisRound": false,
+    "equivalenceClaimed": false,
+    "implementationSummary": {
+      "status": "Nine major observed directions have Demo implementations, including clapping and whole-board hearts that were missing in the historical0232 review. Quality equivalence has not been established.",
+      "implementedDirections": [
+        "动态手势教学",
+        "角色待机/正确/错误表情",
+        "浮分/彩粒/飞星/鼓掌及顶部联动",
+        "错误原因与规则可视化",
+        "扣命与一命提醒",
+        "Combo及分层胜败演出",
+        "新盘错峰入场",
+        "提示与找答案反馈",
+        "签到点亮与实际到账演出"
+      ],
+      "audio": "9 local Debug-only reference WAVs remain an authorized testing experiment; no live audio or physical haptic A/B in this round.",
+      "qualityGaps": [
+        "角色动作自然度与整段连续操作节奏",
+        "密集布局的奖励位置仍需更多实际试玩",
+        "最新真机声音、震动与音画同步",
+        "正式参考配置与发布资源验收"
+      ],
+      "notReplicatedFromLatestPlaytest": [
+        "Reference horn-playing character pose",
+        "Every observed praise phrase",
+        "Automatic check-in interstitial during victory; current Demo check-in entry remains on home"
+      ]
+    }
+  },
+  "audio": {
+    "modified": false,
+    "localTestWAVCount": 9,
+    "currentDebugInventory": "Validation/audio-isolation-0261-debug.json",
+    "inventoryIdenticalTo0260": true,
+    "formalManifestClipsEmpty": true,
+    "liveAuditoryAB": false,
+    "releaseRebuilt": false
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  },
+  "formalSignOff": false,
+  "formalConformanceRowsUnchanged": 83,
+  "historicalChecklistCountUnchanged": 88,
+  "remaining": [
+    "角色自然度、连续整体节奏及最新真机音画触感仍待验。",
+    "本轮未进行新参考试玩、听觉A/B、手机安装、打包分发或GitHub上传。",
+    "有限模拟器原生手势与生命周期证据，不是全量App/Core、全88条或150关试玩验收。"
+  ]
+}

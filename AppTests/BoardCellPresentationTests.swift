@@ -10,6 +10,11 @@ private final class CellPresentationRig {
         solution: [1, 7, 8, 14], seed: 11400714819535654101,
         generatorVersion: "original-pipeline-v3", difficulty: "easy")
     var session = GameSession(puzzle: CellPresentationRig.puzzle)
+    var reduceMotion = false
+    var locked = false
+    var hidden = false
+    var effectsEnabled = true
+    var preview: Set<Int> = []
     let board = PuzzleGridUIView(frame: CGRect(x: 20, y: 140, width: 320, height: 320))
     let window: UIWindow
     private let previousWindow: UIWindow?
@@ -25,9 +30,9 @@ private final class CellPresentationRig {
 
     func refresh(_ target: PuzzleGridUIView? = nil) {
         (target ?? board).configure(size: session.puzzle.size, regions: session.puzzle.regions,
-            found: session.found, marks: session.marks, errors: session.errors, preview: [],
-            sessionID: session.id, lives: session.lives, reduceMotion: false,
-            tutorialTargets: [], locked: false,
+            found: session.found, marks: session.marks, errors: session.errors, preview: preview,
+            sessionID: session.id, lives: session.lives, effectsEnabled: effectsEnabled, reduceMotion: reduceMotion,
+            tutorialTargets: [], locked: locked, hideAccessibility: hidden,
             onToggle: { [weak self] index in
                 guard let self else { return }; session.toggleMark(at: index); refresh()
             }, onSubmit: { [weak self] index in
@@ -49,6 +54,112 @@ private final class CellPresentationRig {
 }
 
 final class BoardCellPresentationTests: XCTestCase {
+    @MainActor private func presses(_ rig: CellPresentationRig) -> [BoardPressedCellView] {
+        rig.board.subviews.flatMap(\.subviews).compactMap { $0 as? BoardPressedCellView }
+    }
+
+    @MainActor func testShortContactKeepsStaticAcknowledgementUntilMarkAndUndoResolve() async throws {
+        for reduced in [false, true] {
+            let rig = try CellPresentationRig(); defer { rig.close() }
+            rig.reduceMotion = reduced; rig.refresh()
+            for undo in [false, true] {
+                let tap = UUID(), before = rig.session
+                rig.board.inputActivity.begin(tap)
+                rig.board.beginCellPress(at: try rig.center(0))
+                let contact = try XCTUnwrap(presses(rig).first)
+                rig.board.releaseCellPress()
+                XCTAssertTrue(presses(rig).contains { $0 === contact })
+                XCTAssertEqual(rig.session, before, "Finger-up acknowledges intent without an early mark, score or life change.")
+                XCTAssertTrue(rig.board.inputActivity.isBusy, "Presentation cannot release the existing double-tap barrier.")
+                try await Task.sleep(nanoseconds: 90_000_000)
+                XCTAssertNotNil(contact.superview, "The wait is tied to recognition, not an invented visual timeout.")
+                XCTAssertTrue(animations(contact.layer).isEmpty, "Pending feedback is static, including reduced motion.")
+                capture(rig.window, name: "tap-wait-\(reduced ? "reduced" : "normal")-\(undo ? "undo" : "add")-before-resolution")
+                rig.board.activate(index: 0, submit: false)
+                XCTAssertNil(contact.superview)
+                XCTAssertEqual(rig.session.marks, undo ? [] : [0])
+                XCTAssertEqual(rig.session.score, before.score); XCTAssertEqual(rig.session.lives, before.lives)
+                XCTAssertEqual(rig.effects.first?.kind, undo ? .markRemoved : .markAdded)
+                rig.board.inputActivity.end(tap)
+                XCTAssertTrue(presses(rig).isEmpty)
+                try await Task.sleep(nanoseconds: 220_000_000)
+            }
+        }
+    }
+
+    @MainActor func testSecondContactAndDoubleAcceptanceNeverPreviewOrCommitASingleX() throws {
+        let rig = try CellPresentationRig(); defer { rig.close() }
+        let tap = UUID(), initial = rig.session
+        rig.board.inputActivity.begin(tap)
+        rig.board.beginCellPress(at: try rig.center(1)); rig.board.releaseCellPress()
+        let first = try XCTUnwrap(presses(rig).first)
+        rig.board.beginCellPress(at: try rig.center(1))
+        XCTAssertNil(first.superview)
+        XCTAssertEqual(presses(rig).count, 1)
+        XCTAssertEqual(rig.session, initial); XCTAssertTrue(rig.effects.isEmpty)
+        rig.board.releaseCellPress()
+        rig.board.activate(index: 1, submit: true)
+        XCTAssertTrue(presses(rig).isEmpty)
+        XCTAssertEqual(rig.session.found, [1]); XCTAssertTrue(rig.session.marks.isEmpty)
+        XCTAssertEqual(rig.session.score, initial.config.baseScore)
+        XCTAssertEqual(rig.session.lives, initial.lives)
+        rig.board.inputActivity.end(tap)
+    }
+
+    @MainActor func testEarlierResolutionCannotRemoveAnotherCellsNewContactOrWait() throws {
+        let rig = try CellPresentationRig(); defer { rig.close() }
+        let first = UUID(), second = UUID()
+        rig.board.inputActivity.begin(first)
+        rig.board.beginCellPress(at: try rig.center(0)); rig.board.releaseCellPress()
+        let old = try XCTUnwrap(presses(rig).first)
+        rig.board.inputActivity.begin(second)
+        rig.board.beginCellPress(at: try rig.center(2))
+        let current = try XCTUnwrap(presses(rig).first)
+        XCTAssertNil(old.superview)
+        rig.board.activate(index: 0, submit: false)
+        XCTAssertNotNil(current.superview, "An earlier cell resolving must not clear the new finger's feedback.")
+        rig.board.releaseCellPress()
+        rig.board.inputActivity.end(first)
+        XCTAssertNotNil(current.superview, "The remaining recognizer owns this wait.")
+        XCTAssertTrue(rig.board.inputActivity.isBusy)
+        rig.board.activate(index: 2, submit: false)
+        XCTAssertNil(current.superview)
+        XCTAssertEqual(rig.session.marks, [0, 2])
+        rig.board.inputActivity.end(second)
+        XCTAssertTrue(presses(rig).isEmpty)
+    }
+
+    @MainActor func testPendingTapFeedbackClearsForCancellationCoverReplacementAndGeometryChanges() throws {
+        for boundary in ["cancel", "pan", "outside", "lock", "hidden", "effects", "preview", "background", "new-session", "resize", "detach", "recognizers-finished"] {
+            let rig = try CellPresentationRig(); defer { rig.close() }
+            let tap = UUID(), before = rig.session
+            rig.board.inputActivity.begin(tap)
+            rig.board.beginCellPress(at: try rig.center(0))
+            if boundary == "outside" { rig.board.moveCellPress(to: CGPoint(x: -10, y: -10)) }
+            rig.board.releaseCellPress(allowTapWait: boundary != "pan")
+            switch boundary {
+            case "cancel": rig.board.endCellPress()
+            case "lock": rig.locked = true; rig.refresh()
+            case "hidden": rig.hidden = true; rig.refresh()
+            case "effects": rig.effectsEnabled = false; rig.refresh()
+            case "preview": rig.preview = [0]; rig.refresh()
+            case "background": NotificationCenter.default.post(name: UIApplication.willResignActiveNotification, object: nil)
+            case "new-session": rig.session = GameSession(puzzle: CellPresentationRig.puzzle); rig.refresh()
+            case "resize": rig.board.frame.size = CGSize(width: 260, height: 260); rig.board.setNeedsLayout(); rig.board.layoutIfNeeded()
+            case "detach": rig.board.removeFromSuperview()
+            case "recognizers-finished": rig.board.inputActivity.end(tap)
+            default: break
+            }
+            XCTAssertTrue(presses(rig).isEmpty, boundary)
+            if boundary != "new-session" { XCTAssertEqual(rig.session, before, boundary) }
+            rig.board.inputActivity.end(tap)
+            if boundary == "background" { NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil) }
+        }
+        let rig = try CellPresentationRig(); defer { rig.close() }
+        rig.board.beginCellPress(at: try rig.center(0)); rig.board.releaseCellPress()
+        XCTAssertTrue(presses(rig).isEmpty, "A contact without a live recognition attempt must not leave a ghost wait.")
+    }
+
     @MainActor func testConfirmedMistakeEndsPreviousCelebrationWithoutWaitingToApplyDamage() throws {
         let rig = try CellPresentationRig(); defer { rig.close() }
         rig.board.activate(index: 1, submit: true)

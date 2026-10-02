@@ -92,7 +92,9 @@ private final class BoardActivityPanRecognizer: UIPanGestureRecognizer {
     weak var activity: BoardInputActivity?
     var onContactBegan: ((CGPoint) -> Void)?
     var onContactMoved: ((CGPoint) -> Void)?
-    var onContactEnded: (() -> Void)?
+    var onContactEnded: ((Bool) -> Void)?
+    var onContactCancelled: (() -> Void)?
+    var onContactReset: (() -> Void)?
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
         activity?.begin(activityID)
@@ -106,18 +108,20 @@ private final class BoardActivityPanRecognizer: UIPanGestureRecognizer {
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent) {
-        onContactEnded?()
+        // Only an unrecognized pan may still belong to a pending single tap.
+        // A recognized drag must never leave a tap-wait decoration behind.
+        onContactEnded?(state == .possible)
         super.touchesEnded(touches, with: event)
     }
 
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent) {
-        onContactEnded?()
+        onContactCancelled?()
         super.touchesCancelled(touches, with: event)
     }
 
     override func reset() {
         super.reset()
-        onContactEnded?()
+        onContactReset?()
         activity?.end(activityID)
     }
 }
@@ -175,7 +179,9 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     private var pendingSubmission: Int?
     private let feedbackOverlay = UIView()
     private var pressFeedback: BoardPressedCellView?
+    private var pendingTapFeedback: BoardPressedCellView?
     private var trackingContact = false
+    private var contactAllowsTapWait = false
     private var effectsEnabled = true
     private var reduceMotionOverride: Bool?
     private var applicationAllowsPresentation = true
@@ -196,7 +202,10 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         isMultipleTouchEnabled = false
         isAccessibilityElement = false
         accessibilityIdentifier = "puzzle_board"
-        inputActivity.onChange = { [weak self] owner, busy in self?.onInputActivityChange?(owner, busy) }
+        inputActivity.onChange = { [weak self] owner, busy in
+            if !busy { self?.clearPendingTapFeedback() }
+            self?.onInputActivityChange?(owner, busy)
+        }
         let single = BoardActivityTapRecognizer(target: self, action: #selector(singleTap(_:)))
         let double = BoardActivityTapRecognizer(target: self, action: #selector(doubleTap(_:)))
         single.activity = inputActivity
@@ -209,7 +218,13 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         // recognizer, change its thresholds or alter double-tap precedence.
         pan.onContactBegan = { [weak self] in self?.beginCellPress(at: $0) }
         pan.onContactMoved = { [weak self] in self?.moveCellPress(to: $0) }
-        pan.onContactEnded = { [weak self] in self?.endCellPress() }
+        pan.onContactEnded = { [weak self] in self?.releaseCellPress(allowTapWait: $0) }
+        pan.onContactCancelled = { [weak self] in self?.endCellPress() }
+        pan.onContactReset = { [weak self] in
+            // After normal lift, releaseCellPress already transferred ownership
+            // to the tap attempt. The pan's early reset must not erase it.
+            if self?.trackingContact == true { self?.endCellPress() }
+        }
         pan.maximumNumberOfTouches = 1
         pan.delegate = self
         addGestureRecognizer(single)
@@ -297,7 +312,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
             clearEntrancePresentation()
         }
         if !preview.isEmpty || (hideAccessibility && found.count != size) { clearScenePresentation() }
-        if locked || hideAccessibility || !preview.isEmpty { clearGuidance() }
+        if locked || hideAccessibility || !preview.isEmpty { clearGuidance(); endCellPress() }
         if receivedMistake || !preview.isEmpty || ((locked || hideAccessibility) && found.count != size) { clearPlacementBursts() }
         for effect in feedbackOverlay.subviews.compactMap({ $0 as? BoardPlacementBurstView }) where !found.contains(effect.cellIndex) {
             effect.removeFromSuperview()
@@ -359,6 +374,10 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         self.onScoreFeedback = onScoreFeedback
         if clearedConflict { self.onConflictFeedback?([]) }
         if let pressed = pressFeedback?.cellIndex, !canPress(pressed) { endCellPress() }
+        if let pending = pendingTapFeedback?.cellIndex,
+           !canPress(pending) || changedMarks.contains(pending) || addedErrors.contains(pending) {
+            clearPendingTapFeedback(at: pending)
+        }
         updateInputAvailability()
         // Clock/HUD/closure updates do not change any board pixels or spoken
         // cell state. Keep callbacks fresh without rebuilding every cell action.
@@ -446,19 +465,50 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         endCellPress()
         guard let index = cell(at: point), canPress(index) else { return }
         trackingContact = true
+        contactAllowsTapWait = true
         showCellPress(index)
     }
 
     func moveCellPress(to point: CGPoint) {
         guard trackingContact else { return }
         guard let index = cell(at: point) else { endCellPress(); return }
-        guard canPress(index) else { pressFeedback?.removeFromSuperview(); pressFeedback = nil; return }
+        guard canPress(index) else {
+            contactAllowsTapWait = false
+            pressFeedback?.removeFromSuperview(); pressFeedback = nil; clearPendingTapFeedback()
+            return
+        }
         showCellPress(index)
+    }
+
+    /// Finger-up is earlier than the tap decision. Preserve a lighter static
+    /// acknowledgement until UIKit resolves that attempt, without writing an X
+    /// or starting a timer. Cancellation continues to use endCellPress instead.
+    func releaseCellPress(allowTapWait: Bool = true) {
+        guard allowTapWait else { endCellPress(); return }
+        guard trackingContact else { return }
+        trackingContact = false
+        let eligible = contactAllowsTapWait
+        contactAllowsTapWait = false
+        guard eligible, inputActivity.isBusy, let view = pressFeedback, canPress(view.cellIndex) else {
+            pressFeedback?.removeFromSuperview(); pressFeedback = nil; clearPendingTapFeedback()
+            return
+        }
+        clearPendingTapFeedback()
+        pressFeedback = nil
+        view.waitForTapDecision()
+        pendingTapFeedback = view
     }
 
     func endCellPress() {
         trackingContact = false
+        contactAllowsTapWait = false
         pressFeedback?.removeFromSuperview(); pressFeedback = nil
+        clearPendingTapFeedback()
+    }
+
+    private func clearPendingTapFeedback(at index: Int? = nil) {
+        guard index == nil || pendingTapFeedback?.cellIndex == index else { return }
+        pendingTapFeedback?.removeFromSuperview(); pendingTapFeedback = nil
     }
 
     private func showCellPress(_ index: Int) {
@@ -520,6 +570,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
 
     @objc private func singleTap(_ gesture: UITapGestureRecognizer) {
         guard gesture.state == .recognized, !locked, let index = cell(at: gesture.location(in: self)), !found.contains(index) else { return }
+        clearPendingTapFeedback(at: index)
         clearEntrancePresentation()
         onToggle?(index)
     }
@@ -529,6 +580,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     }
 
     private func submit(_ index: Int) {
+        clearPendingTapFeedback(at: index)
         clearEntrancePresentation()
         pendingSubmission = index
         onSubmit?(index)
@@ -539,6 +591,8 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         let location = gesture.location(in: self)
         let movement = gesture.translation(in: self)
         if gesture.state == .began {
+            contactAllowsTapWait = false
+            clearPendingTapFeedback()
             clearEntrancePresentation()
             dragStartPoint = CGPoint(x: location.x - movement.x, y: location.y - movement.y)
             dragStart = cell(at: dragStartPoint)
@@ -614,6 +668,8 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         if window == nil { cancelInputActivity(); clearFeedback(); pendingSubmission = nil }
         else { updateInputAvailability(); updateTutorialGuide(); updateIdleBlinkScheduling(); presentPendingEntranceIfPossible() }
     }
+
+    override var isHidden: Bool { didSet { if isHidden { endCellPress() } } }
 
     func cancelPresentation() {
         cancelInputActivity(); clearFeedback(); pendingSubmission = nil
@@ -734,6 +790,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
 
     @discardableResult func activate(index: Int, submit: Bool) -> Bool {
         guard !locked, (0..<(size * size)).contains(index), !found.contains(index) else { return false }
+        clearPendingTapFeedback(at: index)
         clearEntrancePresentation()
         if submit { self.submit(index) } else { onToggle?(index) }
         return true

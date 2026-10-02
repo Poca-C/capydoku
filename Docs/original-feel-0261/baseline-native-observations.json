@@ -1,0 +1,29 @@
+{
+  "actions" : [
+    {
+      "action" : "add",
+      "callReturnedUptime" : 1213474.5369691667,
+      "callStartUptime" : 1213474.0696535001,
+      "finalValue" : "marked"
+    },
+    {
+      "action" : "undo",
+      "callReturnedUptime" : 1213477.3418465417,
+      "callStartUptime" : 1213476.8792317917,
+      "finalValue" : "empty"
+    }
+  ],
+  "appFrame" : [
+    0,
+    0,
+    390,
+    844
+  ],
+  "boundary" : "Real native0.14-second contacts and double tap; XCTest call durations include idle waits and do not measure touch-up or visible animation latency. Finite recording review is separate from final-state assertions.",
+  "cellFrame" : [
+    45.666666666666664,
+    302,
+    74.75,
+    74.75
+  ]
+}

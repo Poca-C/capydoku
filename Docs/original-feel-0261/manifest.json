@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "build": "0.2.61 (64)",
+  "baselineBuild": "0.2.60 (63)",
+  "method": "Same real native0.14s press/undo/double-tap test on17e, before and after. Final-state assertions pass both versions; before/after recording demonstrates the presentation improvement. Four lifecycle tests use explicit contact and input-ledger injection separately.",
+  "reviewed": "Baseline/final eight-frame addition contact sheets and two hosted-board screenshots individually reviewed. RGB sampling also records undo transitions; full videos are retained, not claimed fully watched.",
+  "boundary": "25ms samples may map to duplicate decoded frame times. Different recording origins; no exact tap recognition latency, live audio, physical haptics, reference equivalence or full88 sign-off.",
+  "artifacts": [
+    {
+      "path": "Docs/original-feel-0261/baseline-native-contact.png",
+      "sha256": "275d193b4df0af1502b49ed2465d85499597e0025b2d2b54dbaa85ad036396f6",
+      "scope": "Eight individually reviewed native-video crops showing held contact, lifted unhighlighted gap, and final X. Times are relative to this recording only."
+    },
+    {
+      "path": "Docs/original-feel-0261/final-native-contact.png",
+      "sha256": "90ee87d77b0a38b0e620a83161474a12678a9a59a7285f1416bce1ba8c456119",
+      "scope": "Eight individually reviewed native-video crops showing contact, lighter pending outline, and X. This recording has a different time origin."
+    },
+    {
+      "path": "Docs/original-feel-0261/baseline-video-sampling.json",
+      "sha256": "c4fbb7a219cf7918472c58bbb54bdbf67c20eb4b4aaf669723e502da242b0b03",
+      "scope": "Requested/actual decoded timestamps for25ms finite sampling; raw cropped frames remain under.build. No physical touch-up or reference timing claim."
+    },
+    {
+      "path": "Docs/original-feel-0261/baseline-pixel-observations.json",
+      "sha256": "83494b09e0fbec5ec87c603ff5fccfba8d4b0fa60774513d4f5f25b184e9422b",
+      "scope": "Corner RGB and central white-pixel count of recorded cell; qualitative state evidence, not a general performance metric."
+    },
+    {
+      "path": "Docs/original-feel-0261/baseline-native-short-contact.mov",
+      "sha256": "25df8eea8a483ab158ffab76b0c1d9509c1ba4822b50740aac0f095250539274",
+      "scope": "Unedited17e simulator recording of real short contacts, double tap and hint return. Selected addition crops reviewed; not complete per-frame, sound or physical haptic review."
+    },
+    {
+      "path": "Docs/original-feel-0261/final-video-sampling.json",
+      "sha256": "c7b09d07670ddc1bafc2003f78c4b5152f3bed909d7dd896391ce5d5f970e536",
+      "scope": "Requested/actual decoded timestamps for25ms finite sampling; raw cropped frames remain under.build. No physical touch-up or reference timing claim."
+    },
+    {
+      "path": "Docs/original-feel-0261/final-pixel-observations.json",
+      "sha256": "8378586b3fbca4c71f973af0f0ef60345d6aa84a2c20e110e1d6694c12c05ac8",
+      "scope": "Corner RGB and central white-pixel count of recorded cell; qualitative state evidence, not a general performance metric."
+    },
+    {
+      "path": "Docs/original-feel-0261/final-native-short-contact.mov",
+      "sha256": "e3498b46e9cff6567c5e41b6b4ba74d30720a6c5c2054b1eef2a3c7f1416de4a",
+      "scope": "Unedited17e simulator recording of real short contacts, double tap and hint return. Selected addition crops reviewed; not complete per-frame, sound or physical haptic review."
+    },
+    {
+      "path": "Docs/original-feel-0261/baseline-native-observations.json",
+      "sha256": "ee869f9c74c05a61a1be61e35748be4881c360da654ae7a4d55c965f00dcc63e",
+      "scope": "Actual XCTest call timing and target geometry; call duration includes idle waits."
+    },
+    {
+      "path": "Docs/original-feel-0261/final-native-observations.json",
+      "sha256": "11a95e92fb17920722aff317581dcae5f9f5f44975440d40817ace0e875fa6b8",
+      "scope": "Final actual target geometry matches baseline exactly; calls are not touch-up timing measurements."
+    },
+    {
+      "path": "Docs/original-feel-0261/tap-wait-normal-add-before-resolution.png",
+      "sha256": "bc2ec7b0fd1daf9f7b2cf56e5a19b8dd6bc13cb8da489e9f6acfaadd1e135b6b",
+      "scope": "Individually reviewed hosted-board screenshot using injected contact/recognizer lifecycle, not a real touch. Confirms static normal/reduced appearance."
+    },
+    {
+      "path": "Docs/original-feel-0261/tap-wait-reduced-undo-before-resolution.png",
+      "sha256": "959518551f835e203ef410092efe22e8f02260ac2622b9d1c5a4d0410154468d",
+      "scope": "Individually reviewed hosted-board screenshot using injected contact/recognizer lifecycle, not a real touch. Confirms static normal/reduced appearance."
+    }
+  ]
+}

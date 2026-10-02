@@ -1,0 +1,7806 @@
+{
+  "boundary" : "Finite sampled native screen recording crops; duplicate decoded timestamps possible. No exact touch-up time inferred from XCTest call durations.",
+  "durationSeconds" : 17.703333333333333,
+  "frames" : [
+    {
+      "actualSeconds" : 0,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.000.png",
+      "requestedSeconds" : 0
+    },
+    {
+      "actualSeconds" : 0.0066666666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.025.png",
+      "requestedSeconds" : 0.025000000000000001
+    },
+    {
+      "actualSeconds" : 0.03833333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.050.png",
+      "requestedSeconds" : 0.050000000000000003
+    },
+    {
+      "actualSeconds" : 0.063333333333333339,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.075.png",
+      "requestedSeconds" : 0.075000000000000011
+    },
+    {
+      "actualSeconds" : 0.098333333333333328,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.100.png",
+      "requestedSeconds" : 0.10000000000000001
+    },
+    {
+      "actualSeconds" : 0.11,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.125.png",
+      "requestedSeconds" : 0.125
+    },
+    {
+      "actualSeconds" : 0.14666666666666667,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.150.png",
+      "requestedSeconds" : 0.15000000000000002
+    },
+    {
+      "actualSeconds" : 0.16333333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.175.png",
+      "requestedSeconds" : 0.17500000000000002
+    },
+    {
+      "actualSeconds" : 0.19666666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.200.png",
+      "requestedSeconds" : 0.20000000000000001
+    },
+    {
+      "actualSeconds" : 0.21333333333333335,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.225.png",
+      "requestedSeconds" : 0.22500000000000001
+    },
+    {
+      "actualSeconds" : 0.24666666666666667,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.250.png",
+      "requestedSeconds" : 0.25
+    },
+    {
+      "actualSeconds" : 0.26333333333333331,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.275.png",
+      "requestedSeconds" : 0.27500000000000002
+    },
+    {
+      "actualSeconds" : 0.29666666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.300.png",
+      "requestedSeconds" : 0.30000000000000004
+    },
+    {
+      "actualSeconds" : 0.31333333333333335,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.325.png",
+      "requestedSeconds" : 0.32500000000000001
+    },
+    {
+      "actualSeconds" : 0.34666666666666668,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.350.png",
+      "requestedSeconds" : 0.35000000000000003
+    },
+    {
+      "actualSeconds" : 0.36333333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.375.png",
+      "requestedSeconds" : 0.375
+    },
+    {
+      "actualSeconds" : 0.39833333333333332,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.400.png",
+      "requestedSeconds" : 0.40000000000000002
+    },
+    {
+      "actualSeconds" : 0.41333333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.425.png",
+      "requestedSeconds" : 0.42500000000000004
+    },
+    {
+      "actualSeconds" : 0.44833333333333331,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.450.png",
+      "requestedSeconds" : 0.45000000000000001
+    },
+    {
+      "actualSeconds" : 0.46500000000000002,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.475.png",
+      "requestedSeconds" : 0.47500000000000003
+    },
+    {
+      "actualSeconds" : 0.49833333333333335,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.500.png",
+      "requestedSeconds" : 0.5
+    },
+    {
+      "actualSeconds" : 0.51333333333333331,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.525.png",
+      "requestedSeconds" : 0.52500000000000002
+    },
+    {
+      "actualSeconds" : 0.54666666666666663,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.550.png",
+      "requestedSeconds" : 0.55000000000000004
+    },
+    {
+      "actualSeconds" : 0.56333333333333335,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.575.png",
+      "requestedSeconds" : 0.57500000000000007
+    },
+    {
+      "actualSeconds" : 0.59666666666666668,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.600.png",
+      "requestedSeconds" : 0.60000000000000009
+    },
+    {
+      "actualSeconds" : 0.61333333333333329,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.625.png",
+      "requestedSeconds" : 0.625
+    },
+    {
+      "actualSeconds" : 0.6283333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.650.png",
+      "requestedSeconds" : 0.65000000000000002
+    },
+    {
+      "actualSeconds" : 0.6283333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.675.png",
+      "requestedSeconds" : 0.67500000000000004
+    },
+    {
+      "actualSeconds" : 0.6283333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.700.png",
+      "requestedSeconds" : 0.70000000000000007
+    },
+    {
+      "actualSeconds" : 0.6283333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.725.png",
+      "requestedSeconds" : 0.72500000000000009
+    },
+    {
+      "actualSeconds" : 0.6283333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.750.png",
+      "requestedSeconds" : 0.75
+    },
+    {
+      "actualSeconds" : 0.6283333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.775.png",
+      "requestedSeconds" : 0.77500000000000002
+    },
+    {
+      "actualSeconds" : 0.6283333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.800.png",
+      "requestedSeconds" : 0.80000000000000004
+    },
+    {
+      "actualSeconds" : 0.6283333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.825.png",
+      "requestedSeconds" : 0.82500000000000007
+    },
+    {
+      "actualSeconds" : 0.6283333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.850.png",
+      "requestedSeconds" : 0.85000000000000009
+    },
+    {
+      "actualSeconds" : 0.6283333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.875.png",
+      "requestedSeconds" : 0.875
+    },
+    {
+      "actualSeconds" : 0.6283333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.900.png",
+      "requestedSeconds" : 0.90000000000000002
+    },
+    {
+      "actualSeconds" : 0.6283333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.925.png",
+      "requestedSeconds" : 0.92500000000000004
+    },
+    {
+      "actualSeconds" : 0.6283333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.950.png",
+      "requestedSeconds" : 0.95000000000000007
+    },
+    {
+      "actualSeconds" : 0.6283333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-000.975.png",
+      "requestedSeconds" : 0.97500000000000009
+    },
+    {
+      "actualSeconds" : 0.6283333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.000.png",
+      "requestedSeconds" : 1
+    },
+    {
+      "actualSeconds" : 0.6283333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.025.png",
+      "requestedSeconds" : 1.0250000000000001
+    },
+    {
+      "actualSeconds" : 0.6283333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.050.png",
+      "requestedSeconds" : 1.05
+    },
+    {
+      "actualSeconds" : 0.6283333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.075.png",
+      "requestedSeconds" : 1.075
+    },
+    {
+      "actualSeconds" : 1.0983333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.100.png",
+      "requestedSeconds" : 1.1000000000000001
+    },
+    {
+      "actualSeconds" : 1.0983333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.125.png",
+      "requestedSeconds" : 1.125
+    },
+    {
+      "actualSeconds" : 1.0983333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.150.png",
+      "requestedSeconds" : 1.1500000000000001
+    },
+    {
+      "actualSeconds" : 1.0983333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.175.png",
+      "requestedSeconds" : 1.175
+    },
+    {
+      "actualSeconds" : 1.1966666666666668,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.200.png",
+      "requestedSeconds" : 1.2000000000000002
+    },
+    {
+      "actualSeconds" : 1.2133333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.225.png",
+      "requestedSeconds" : 1.2250000000000001
+    },
+    {
+      "actualSeconds" : 1.2483333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.250.png",
+      "requestedSeconds" : 1.25
+    },
+    {
+      "actualSeconds" : 1.2649999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.275.png",
+      "requestedSeconds" : 1.2750000000000001
+    },
+    {
+      "actualSeconds" : 1.28,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.300.png",
+      "requestedSeconds" : 1.3
+    },
+    {
+      "actualSeconds" : 1.3133333333333332,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.325.png",
+      "requestedSeconds" : 1.3250000000000002
+    },
+    {
+      "actualSeconds" : 1.345,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.350.png",
+      "requestedSeconds" : 1.3500000000000001
+    },
+    {
+      "actualSeconds" : 1.3633333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.375.png",
+      "requestedSeconds" : 1.375
+    },
+    {
+      "actualSeconds" : 1.3983333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.400.png",
+      "requestedSeconds" : 1.4000000000000001
+    },
+    {
+      "actualSeconds" : 1.4133333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.425.png",
+      "requestedSeconds" : 1.425
+    },
+    {
+      "actualSeconds" : 1.4483333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.450.png",
+      "requestedSeconds" : 1.4500000000000002
+    },
+    {
+      "actualSeconds" : 1.4650000000000001,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.475.png",
+      "requestedSeconds" : 1.4750000000000001
+    },
+    {
+      "actualSeconds" : 1.4816666666666667,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.500.png",
+      "requestedSeconds" : 1.5
+    },
+    {
+      "actualSeconds" : 1.5183333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.525.png",
+      "requestedSeconds" : 1.5250000000000001
+    },
+    {
+      "actualSeconds" : 1.5466666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.550.png",
+      "requestedSeconds" : 1.55
+    },
+    {
+      "actualSeconds" : 1.5649999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.575.png",
+      "requestedSeconds" : 1.5750000000000002
+    },
+    {
+      "actualSeconds" : 1.6000000000000001,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.600.png",
+      "requestedSeconds" : 1.6000000000000001
+    },
+    {
+      "actualSeconds" : 1.6166666666666667,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.625.png",
+      "requestedSeconds" : 1.625
+    },
+    {
+      "actualSeconds" : 1.6333333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.650.png",
+      "requestedSeconds" : 1.6500000000000001
+    },
+    {
+      "actualSeconds" : 1.6666666666666667,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.675.png",
+      "requestedSeconds" : 1.675
+    },
+    {
+      "actualSeconds" : 1.7,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.700.png",
+      "requestedSeconds" : 1.7000000000000002
+    },
+    {
+      "actualSeconds" : 1.7233333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.725.png",
+      "requestedSeconds" : 1.7250000000000001
+    },
+    {
+      "actualSeconds" : 1.7483333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.750.png",
+      "requestedSeconds" : 1.75
+    },
+    {
+      "actualSeconds" : 1.7666666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.775.png",
+      "requestedSeconds" : 1.7750000000000001
+    },
+    {
+      "actualSeconds" : 1.8,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.800.png",
+      "requestedSeconds" : 1.8
+    },
+    {
+      "actualSeconds" : 1.8166666666666667,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.825.png",
+      "requestedSeconds" : 1.8250000000000002
+    },
+    {
+      "actualSeconds" : 1.8333333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.850.png",
+      "requestedSeconds" : 1.8500000000000001
+    },
+    {
+      "actualSeconds" : 1.8666666666666667,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.875.png",
+      "requestedSeconds" : 1.875
+    },
+    {
+      "actualSeconds" : 1.8999999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.900.png",
+      "requestedSeconds" : 1.9000000000000001
+    },
+    {
+      "actualSeconds" : 1.925,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.925.png",
+      "requestedSeconds" : 1.925
+    },
+    {
+      "actualSeconds" : 1.9466666666666668,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.950.png",
+      "requestedSeconds" : 1.9500000000000002
+    },
+    {
+      "actualSeconds" : 1.9633333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-001.975.png",
+      "requestedSeconds" : 1.9750000000000001
+    },
+    {
+      "actualSeconds" : 1.9966666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.000.png",
+      "requestedSeconds" : 2
+    },
+    {
+      "actualSeconds" : 2.0133333333333332,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.025.png",
+      "requestedSeconds" : 2.0249999999999999
+    },
+    {
+      "actualSeconds" : 2.0466666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.050.png",
+      "requestedSeconds" : 2.0500000000000003
+    },
+    {
+      "actualSeconds" : 2.0616666666666665,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.075.png",
+      "requestedSeconds" : 2.0750000000000002
+    },
+    {
+      "actualSeconds" : 2.0950000000000002,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.100.png",
+      "requestedSeconds" : 2.1000000000000001
+    },
+    {
+      "actualSeconds" : 2.1116666666666668,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.125.png",
+      "requestedSeconds" : 2.125
+    },
+    {
+      "actualSeconds" : 2.145,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.150.png",
+      "requestedSeconds" : 2.1499999999999999
+    },
+    {
+      "actualSeconds" : 2.1616666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.175.png",
+      "requestedSeconds" : 2.1750000000000003
+    },
+    {
+      "actualSeconds" : 2.1949999999999998,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.200.png",
+      "requestedSeconds" : 2.2000000000000002
+    },
+    {
+      "actualSeconds" : 2.2133333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.225.png",
+      "requestedSeconds" : 2.2250000000000001
+    },
+    {
+      "actualSeconds" : 2.2450000000000001,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.250.png",
+      "requestedSeconds" : 2.25
+    },
+    {
+      "actualSeconds" : 2.2616666666666667,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.275.png",
+      "requestedSeconds" : 2.2749999999999999
+    },
+    {
+      "actualSeconds" : 2.2949999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.300.png",
+      "requestedSeconds" : 2.3000000000000003
+    },
+    {
+      "actualSeconds" : 2.2949999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.325.png",
+      "requestedSeconds" : 2.3250000000000002
+    },
+    {
+      "actualSeconds" : 2.2949999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.350.png",
+      "requestedSeconds" : 2.3500000000000001
+    },
+    {
+      "actualSeconds" : 2.3616666666666668,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.375.png",
+      "requestedSeconds" : 2.375
+    },
+    {
+      "actualSeconds" : 2.395,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.400.png",
+      "requestedSeconds" : 2.4000000000000004
+    },
+    {
+      "actualSeconds" : 2.4133333333333336,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.425.png",
+      "requestedSeconds" : 2.4250000000000003
+    },
+    {
+      "actualSeconds" : 2.4133333333333336,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.450.png",
+      "requestedSeconds" : 2.4500000000000002
+    },
+    {
+      "actualSeconds" : 2.4133333333333336,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.475.png",
+      "requestedSeconds" : 2.4750000000000001
+    },
+    {
+      "actualSeconds" : 2.4833333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.500.png",
+      "requestedSeconds" : 2.5
+    },
+    {
+      "actualSeconds" : 2.4833333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.525.png",
+      "requestedSeconds" : 2.5250000000000004
+    },
+    {
+      "actualSeconds" : 2.4833333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.550.png",
+      "requestedSeconds" : 2.5500000000000003
+    },
+    {
+      "actualSeconds" : 2.4833333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.575.png",
+      "requestedSeconds" : 2.5750000000000002
+    },
+    {
+      "actualSeconds" : 2.5966666666666667,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.600.png",
+      "requestedSeconds" : 2.6000000000000001
+    },
+    {
+      "actualSeconds" : 2.6166666666666667,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.625.png",
+      "requestedSeconds" : 2.625
+    },
+    {
+      "actualSeconds" : 2.6483333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.650.png",
+      "requestedSeconds" : 2.6500000000000004
+    },
+    {
+      "actualSeconds" : 2.6733333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.675.png",
+      "requestedSeconds" : 2.6750000000000003
+    },
+    {
+      "actualSeconds" : 2.6899999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.700.png",
+      "requestedSeconds" : 2.7000000000000002
+    },
+    {
+      "actualSeconds" : 2.7233333333333332,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.725.png",
+      "requestedSeconds" : 2.7250000000000001
+    },
+    {
+      "actualSeconds" : 2.7383333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.750.png",
+      "requestedSeconds" : 2.75
+    },
+    {
+      "actualSeconds" : 2.7533333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.775.png",
+      "requestedSeconds" : 2.7750000000000004
+    },
+    {
+      "actualSeconds" : 2.7916666666666665,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.800.png",
+      "requestedSeconds" : 2.8000000000000003
+    },
+    {
+      "actualSeconds" : 2.8233333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.825.png",
+      "requestedSeconds" : 2.8250000000000002
+    },
+    {
+      "actualSeconds" : 2.8383333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.850.png",
+      "requestedSeconds" : 2.8500000000000001
+    },
+    {
+      "actualSeconds" : 2.8733333333333335,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.875.png",
+      "requestedSeconds" : 2.875
+    },
+    {
+      "actualSeconds" : 2.8883333333333332,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.900.png",
+      "requestedSeconds" : 2.9000000000000004
+    },
+    {
+      "actualSeconds" : 2.9233333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.925.png",
+      "requestedSeconds" : 2.9250000000000003
+    },
+    {
+      "actualSeconds" : 2.9383333333333335,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.950.png",
+      "requestedSeconds" : 2.9500000000000002
+    },
+    {
+      "actualSeconds" : 2.9649999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-002.975.png",
+      "requestedSeconds" : 2.9750000000000001
+    },
+    {
+      "actualSeconds" : 2.9649999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.000.png",
+      "requestedSeconds" : 3
+    },
+    {
+      "actualSeconds" : 3.0233333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.025.png",
+      "requestedSeconds" : 3.0250000000000004
+    },
+    {
+      "actualSeconds" : 3.0499999999999998,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.050.png",
+      "requestedSeconds" : 3.0500000000000003
+    },
+    {
+      "actualSeconds" : 3.0666666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.075.png",
+      "requestedSeconds" : 3.0750000000000002
+    },
+    {
+      "actualSeconds" : 3.0983333333333332,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.100.png",
+      "requestedSeconds" : 3.1000000000000001
+    },
+    {
+      "actualSeconds" : 3.1183333333333332,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.125.png",
+      "requestedSeconds" : 3.125
+    },
+    {
+      "actualSeconds" : 3.1483333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.150.png",
+      "requestedSeconds" : 3.1500000000000004
+    },
+    {
+      "actualSeconds" : 3.165,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.175.png",
+      "requestedSeconds" : 3.1750000000000003
+    },
+    {
+      "actualSeconds" : 3.2000000000000002,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.200.png",
+      "requestedSeconds" : 3.2000000000000002
+    },
+    {
+      "actualSeconds" : 3.2166666666666668,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.225.png",
+      "requestedSeconds" : 3.2250000000000001
+    },
+    {
+      "actualSeconds" : 3.25,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.250.png",
+      "requestedSeconds" : 3.25
+    },
+    {
+      "actualSeconds" : 3.2650000000000001,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.275.png",
+      "requestedSeconds" : 3.2750000000000004
+    },
+    {
+      "actualSeconds" : 3.2949999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.300.png",
+      "requestedSeconds" : 3.3000000000000003
+    },
+    {
+      "actualSeconds" : 3.2949999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.325.png",
+      "requestedSeconds" : 3.3250000000000002
+    },
+    {
+      "actualSeconds" : 3.2949999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.350.png",
+      "requestedSeconds" : 3.3500000000000001
+    },
+    {
+      "actualSeconds" : 3.2949999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.375.png",
+      "requestedSeconds" : 3.375
+    },
+    {
+      "actualSeconds" : 3.2949999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.400.png",
+      "requestedSeconds" : 3.4000000000000004
+    },
+    {
+      "actualSeconds" : 3.2949999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.425.png",
+      "requestedSeconds" : 3.4250000000000003
+    },
+    {
+      "actualSeconds" : 3.2949999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.450.png",
+      "requestedSeconds" : 3.4500000000000002
+    },
+    {
+      "actualSeconds" : 3.2949999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.475.png",
+      "requestedSeconds" : 3.4750000000000001
+    },
+    {
+      "actualSeconds" : 3.2949999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.500.png",
+      "requestedSeconds" : 3.5
+    },
+    {
+      "actualSeconds" : 3.2949999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.525.png",
+      "requestedSeconds" : 3.5250000000000004
+    },
+    {
+      "actualSeconds" : 3.2949999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.550.png",
+      "requestedSeconds" : 3.5500000000000003
+    },
+    {
+      "actualSeconds" : 3.2949999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.575.png",
+      "requestedSeconds" : 3.5750000000000002
+    },
+    {
+      "actualSeconds" : 3.2949999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.600.png",
+      "requestedSeconds" : 3.6000000000000001
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.625.png",
+      "requestedSeconds" : 3.625
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.650.png",
+      "requestedSeconds" : 3.6500000000000004
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.675.png",
+      "requestedSeconds" : 3.6750000000000003
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.700.png",
+      "requestedSeconds" : 3.7000000000000002
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.725.png",
+      "requestedSeconds" : 3.7250000000000001
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.750.png",
+      "requestedSeconds" : 3.75
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.775.png",
+      "requestedSeconds" : 3.7750000000000004
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.800.png",
+      "requestedSeconds" : 3.8000000000000003
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.825.png",
+      "requestedSeconds" : 3.8250000000000002
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.850.png",
+      "requestedSeconds" : 3.8500000000000001
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.875.png",
+      "requestedSeconds" : 3.875
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.900.png",
+      "requestedSeconds" : 3.9000000000000004
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.925.png",
+      "requestedSeconds" : 3.9250000000000003
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.950.png",
+      "requestedSeconds" : 3.9500000000000002
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-003.975.png",
+      "requestedSeconds" : 3.9750000000000001
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.000.png",
+      "requestedSeconds" : 4
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.025.png",
+      "requestedSeconds" : 4.0250000000000004
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.050.png",
+      "requestedSeconds" : 4.0499999999999998
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.075.png",
+      "requestedSeconds" : 4.0750000000000002
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.100.png",
+      "requestedSeconds" : 4.1000000000000005
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.125.png",
+      "requestedSeconds" : 4.125
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.150.png",
+      "requestedSeconds" : 4.1500000000000004
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.175.png",
+      "requestedSeconds" : 4.1749999999999998
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.200.png",
+      "requestedSeconds" : 4.2000000000000002
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.225.png",
+      "requestedSeconds" : 4.2250000000000005
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.250.png",
+      "requestedSeconds" : 4.25
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.275.png",
+      "requestedSeconds" : 4.2750000000000004
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.300.png",
+      "requestedSeconds" : 4.2999999999999998
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.325.png",
+      "requestedSeconds" : 4.3250000000000002
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.350.png",
+      "requestedSeconds" : 4.3500000000000005
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.375.png",
+      "requestedSeconds" : 4.375
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.400.png",
+      "requestedSeconds" : 4.4000000000000004
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.425.png",
+      "requestedSeconds" : 4.4249999999999998
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.450.png",
+      "requestedSeconds" : 4.4500000000000002
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.475.png",
+      "requestedSeconds" : 4.4750000000000005
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.500.png",
+      "requestedSeconds" : 4.5
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.525.png",
+      "requestedSeconds" : 4.5250000000000004
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.550.png",
+      "requestedSeconds" : 4.5499999999999998
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.575.png",
+      "requestedSeconds" : 4.5750000000000002
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.600.png",
+      "requestedSeconds" : 4.6000000000000005
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.625.png",
+      "requestedSeconds" : 4.625
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.650.png",
+      "requestedSeconds" : 4.6500000000000004
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.675.png",
+      "requestedSeconds" : 4.6749999999999998
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.700.png",
+      "requestedSeconds" : 4.7000000000000002
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.725.png",
+      "requestedSeconds" : 4.7250000000000005
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.750.png",
+      "requestedSeconds" : 4.75
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.775.png",
+      "requestedSeconds" : 4.7750000000000004
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.800.png",
+      "requestedSeconds" : 4.8000000000000007
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.825.png",
+      "requestedSeconds" : 4.8250000000000002
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.850.png",
+      "requestedSeconds" : 4.8500000000000005
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.875.png",
+      "requestedSeconds" : 4.875
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.900.png",
+      "requestedSeconds" : 4.9000000000000004
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.925.png",
+      "requestedSeconds" : 4.9250000000000007
+    },
+    {
+      "actualSeconds" : 3.6099999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.950.png",
+      "requestedSeconds" : 4.9500000000000002
+    },
+    {
+      "actualSeconds" : 4.9683333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-004.975.png",
+      "requestedSeconds" : 4.9750000000000005
+    },
+    {
+      "actualSeconds" : 4.9683333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.000.png",
+      "requestedSeconds" : 5
+    },
+    {
+      "actualSeconds" : 4.9683333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.025.png",
+      "requestedSeconds" : 5.0250000000000004
+    },
+    {
+      "actualSeconds" : 4.9683333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.050.png",
+      "requestedSeconds" : 5.0500000000000007
+    },
+    {
+      "actualSeconds" : 4.9683333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.075.png",
+      "requestedSeconds" : 5.0750000000000002
+    },
+    {
+      "actualSeconds" : 4.9683333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.100.png",
+      "requestedSeconds" : 5.1000000000000005
+    },
+    {
+      "actualSeconds" : 4.9683333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.125.png",
+      "requestedSeconds" : 5.125
+    },
+    {
+      "actualSeconds" : 5.1333333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.150.png",
+      "requestedSeconds" : 5.1500000000000004
+    },
+    {
+      "actualSeconds" : 5.1333333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.175.png",
+      "requestedSeconds" : 5.1750000000000007
+    },
+    {
+      "actualSeconds" : 5.1333333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.200.png",
+      "requestedSeconds" : 5.2000000000000002
+    },
+    {
+      "actualSeconds" : 5.1333333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.225.png",
+      "requestedSeconds" : 5.2250000000000005
+    },
+    {
+      "actualSeconds" : 5.1333333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.250.png",
+      "requestedSeconds" : 5.25
+    },
+    {
+      "actualSeconds" : 5.1333333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.275.png",
+      "requestedSeconds" : 5.2750000000000004
+    },
+    {
+      "actualSeconds" : 5.1333333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.300.png",
+      "requestedSeconds" : 5.3000000000000007
+    },
+    {
+      "actualSeconds" : 5.1333333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.325.png",
+      "requestedSeconds" : 5.3250000000000002
+    },
+    {
+      "actualSeconds" : 5.1333333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.350.png",
+      "requestedSeconds" : 5.3500000000000005
+    },
+    {
+      "actualSeconds" : 5.1333333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.375.png",
+      "requestedSeconds" : 5.375
+    },
+    {
+      "actualSeconds" : 5.1333333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.400.png",
+      "requestedSeconds" : 5.4000000000000004
+    },
+    {
+      "actualSeconds" : 5.1333333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.425.png",
+      "requestedSeconds" : 5.4250000000000007
+    },
+    {
+      "actualSeconds" : 5.1333333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.450.png",
+      "requestedSeconds" : 5.4500000000000002
+    },
+    {
+      "actualSeconds" : 5.1333333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.475.png",
+      "requestedSeconds" : 5.4750000000000005
+    },
+    {
+      "actualSeconds" : 5.1333333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.500.png",
+      "requestedSeconds" : 5.5
+    },
+    {
+      "actualSeconds" : 5.5233333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.525.png",
+      "requestedSeconds" : 5.5250000000000004
+    },
+    {
+      "actualSeconds" : 5.5383333333333331,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.550.png",
+      "requestedSeconds" : 5.5500000000000007
+    },
+    {
+      "actualSeconds" : 5.5716666666666663,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.575.png",
+      "requestedSeconds" : 5.5750000000000002
+    },
+    {
+      "actualSeconds" : 5.5883333333333329,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.600.png",
+      "requestedSeconds" : 5.6000000000000005
+    },
+    {
+      "actualSeconds" : 5.621666666666667,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.625.png",
+      "requestedSeconds" : 5.625
+    },
+    {
+      "actualSeconds" : 5.6383333333333336,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.650.png",
+      "requestedSeconds" : 5.6500000000000004
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.675.png",
+      "requestedSeconds" : 5.6750000000000007
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.700.png",
+      "requestedSeconds" : 5.7000000000000002
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.725.png",
+      "requestedSeconds" : 5.7250000000000005
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.750.png",
+      "requestedSeconds" : 5.75
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.775.png",
+      "requestedSeconds" : 5.7750000000000004
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.800.png",
+      "requestedSeconds" : 5.8000000000000007
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.825.png",
+      "requestedSeconds" : 5.8250000000000002
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.850.png",
+      "requestedSeconds" : 5.8500000000000005
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.875.png",
+      "requestedSeconds" : 5.875
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.900.png",
+      "requestedSeconds" : 5.9000000000000004
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.925.png",
+      "requestedSeconds" : 5.9250000000000007
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.950.png",
+      "requestedSeconds" : 5.9500000000000002
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-005.975.png",
+      "requestedSeconds" : 5.9750000000000005
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.000.png",
+      "requestedSeconds" : 6
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.025.png",
+      "requestedSeconds" : 6.0250000000000004
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.050.png",
+      "requestedSeconds" : 6.0500000000000007
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.075.png",
+      "requestedSeconds" : 6.0750000000000002
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.100.png",
+      "requestedSeconds" : 6.1000000000000005
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.125.png",
+      "requestedSeconds" : 6.125
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.150.png",
+      "requestedSeconds" : 6.1500000000000004
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.175.png",
+      "requestedSeconds" : 6.1750000000000007
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.200.png",
+      "requestedSeconds" : 6.2000000000000002
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.225.png",
+      "requestedSeconds" : 6.2250000000000005
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.250.png",
+      "requestedSeconds" : 6.25
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.275.png",
+      "requestedSeconds" : 6.2750000000000004
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.300.png",
+      "requestedSeconds" : 6.3000000000000007
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.325.png",
+      "requestedSeconds" : 6.3250000000000002
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.350.png",
+      "requestedSeconds" : 6.3500000000000005
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.375.png",
+      "requestedSeconds" : 6.375
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.400.png",
+      "requestedSeconds" : 6.4000000000000004
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.425.png",
+      "requestedSeconds" : 6.4250000000000007
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.450.png",
+      "requestedSeconds" : 6.4500000000000002
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.475.png",
+      "requestedSeconds" : 6.4750000000000005
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.500.png",
+      "requestedSeconds" : 6.5
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.525.png",
+      "requestedSeconds" : 6.5250000000000004
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.550.png",
+      "requestedSeconds" : 6.5500000000000007
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.575.png",
+      "requestedSeconds" : 6.5750000000000002
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.600.png",
+      "requestedSeconds" : 6.6000000000000005
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.625.png",
+      "requestedSeconds" : 6.625
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.650.png",
+      "requestedSeconds" : 6.6500000000000004
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.675.png",
+      "requestedSeconds" : 6.6750000000000007
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.700.png",
+      "requestedSeconds" : 6.7000000000000002
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.725.png",
+      "requestedSeconds" : 6.7250000000000005
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.750.png",
+      "requestedSeconds" : 6.75
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.775.png",
+      "requestedSeconds" : 6.7750000000000004
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.800.png",
+      "requestedSeconds" : 6.8000000000000007
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.825.png",
+      "requestedSeconds" : 6.8250000000000002
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.850.png",
+      "requestedSeconds" : 6.8500000000000005
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.875.png",
+      "requestedSeconds" : 6.875
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.900.png",
+      "requestedSeconds" : 6.9000000000000004
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.925.png",
+      "requestedSeconds" : 6.9250000000000007
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.950.png",
+      "requestedSeconds" : 6.9500000000000002
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-006.975.png",
+      "requestedSeconds" : 6.9750000000000005
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.000.png",
+      "requestedSeconds" : 7
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.025.png",
+      "requestedSeconds" : 7.0250000000000004
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.050.png",
+      "requestedSeconds" : 7.0500000000000007
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.075.png",
+      "requestedSeconds" : 7.0750000000000002
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.100.png",
+      "requestedSeconds" : 7.1000000000000005
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.125.png",
+      "requestedSeconds" : 7.125
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.150.png",
+      "requestedSeconds" : 7.1500000000000004
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.175.png",
+      "requestedSeconds" : 7.1750000000000007
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.200.png",
+      "requestedSeconds" : 7.2000000000000002
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.225.png",
+      "requestedSeconds" : 7.2250000000000005
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.250.png",
+      "requestedSeconds" : 7.25
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.275.png",
+      "requestedSeconds" : 7.2750000000000004
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.300.png",
+      "requestedSeconds" : 7.3000000000000007
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.325.png",
+      "requestedSeconds" : 7.3250000000000002
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.350.png",
+      "requestedSeconds" : 7.3500000000000005
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.375.png",
+      "requestedSeconds" : 7.375
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.400.png",
+      "requestedSeconds" : 7.4000000000000004
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.425.png",
+      "requestedSeconds" : 7.4250000000000007
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.450.png",
+      "requestedSeconds" : 7.4500000000000002
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.475.png",
+      "requestedSeconds" : 7.4750000000000005
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.500.png",
+      "requestedSeconds" : 7.5
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.525.png",
+      "requestedSeconds" : 7.5250000000000004
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.550.png",
+      "requestedSeconds" : 7.5500000000000007
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.575.png",
+      "requestedSeconds" : 7.5750000000000002
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.600.png",
+      "requestedSeconds" : 7.6000000000000005
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.625.png",
+      "requestedSeconds" : 7.625
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.650.png",
+      "requestedSeconds" : 7.6500000000000004
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.675.png",
+      "requestedSeconds" : 7.6750000000000007
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.700.png",
+      "requestedSeconds" : 7.7000000000000002
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.725.png",
+      "requestedSeconds" : 7.7250000000000005
+    },
+    {
+      "actualSeconds" : 5.6616666666666671,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.750.png",
+      "requestedSeconds" : 7.75
+    },
+    {
+      "actualSeconds" : 7.7733333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.775.png",
+      "requestedSeconds" : 7.7750000000000004
+    },
+    {
+      "actualSeconds" : 7.7733333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.800.png",
+      "requestedSeconds" : 7.8000000000000007
+    },
+    {
+      "actualSeconds" : 7.7733333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.825.png",
+      "requestedSeconds" : 7.8250000000000002
+    },
+    {
+      "actualSeconds" : 7.7733333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.850.png",
+      "requestedSeconds" : 7.8500000000000005
+    },
+    {
+      "actualSeconds" : 7.7733333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.875.png",
+      "requestedSeconds" : 7.875
+    },
+    {
+      "actualSeconds" : 7.7733333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.900.png",
+      "requestedSeconds" : 7.9000000000000004
+    },
+    {
+      "actualSeconds" : 7.7733333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.925.png",
+      "requestedSeconds" : 7.9250000000000007
+    },
+    {
+      "actualSeconds" : 7.9283333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.950.png",
+      "requestedSeconds" : 7.9500000000000002
+    },
+    {
+      "actualSeconds" : 7.9283333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-007.975.png",
+      "requestedSeconds" : 7.9750000000000005
+    },
+    {
+      "actualSeconds" : 7.9283333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.000.png",
+      "requestedSeconds" : 8
+    },
+    {
+      "actualSeconds" : 7.9283333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.025.png",
+      "requestedSeconds" : 8.0250000000000004
+    },
+    {
+      "actualSeconds" : 7.9283333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.050.png",
+      "requestedSeconds" : 8.0500000000000007
+    },
+    {
+      "actualSeconds" : 7.9283333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.075.png",
+      "requestedSeconds" : 8.0750000000000011
+    },
+    {
+      "actualSeconds" : 7.9283333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.100.png",
+      "requestedSeconds" : 8.0999999999999996
+    },
+    {
+      "actualSeconds" : 7.9283333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.125.png",
+      "requestedSeconds" : 8.125
+    },
+    {
+      "actualSeconds" : 7.9283333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.150.png",
+      "requestedSeconds" : 8.1500000000000004
+    },
+    {
+      "actualSeconds" : 7.9283333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.175.png",
+      "requestedSeconds" : 8.1750000000000007
+    },
+    {
+      "actualSeconds" : 7.9283333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.200.png",
+      "requestedSeconds" : 8.2000000000000011
+    },
+    {
+      "actualSeconds" : 7.9283333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.225.png",
+      "requestedSeconds" : 8.2249999999999996
+    },
+    {
+      "actualSeconds" : 7.9283333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.250.png",
+      "requestedSeconds" : 8.25
+    },
+    {
+      "actualSeconds" : 7.9283333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.275.png",
+      "requestedSeconds" : 8.2750000000000004
+    },
+    {
+      "actualSeconds" : 7.9283333333333337,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.300.png",
+      "requestedSeconds" : 8.3000000000000007
+    },
+    {
+      "actualSeconds" : 8.3149999999999995,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.325.png",
+      "requestedSeconds" : 8.3250000000000011
+    },
+    {
+      "actualSeconds" : 8.3466666666666658,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.350.png",
+      "requestedSeconds" : 8.3499999999999996
+    },
+    {
+      "actualSeconds" : 8.3633333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.375.png",
+      "requestedSeconds" : 8.375
+    },
+    {
+      "actualSeconds" : 8.3966666666666665,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.400.png",
+      "requestedSeconds" : 8.4000000000000004
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.425.png",
+      "requestedSeconds" : 8.4250000000000007
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.450.png",
+      "requestedSeconds" : 8.4500000000000011
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.475.png",
+      "requestedSeconds" : 8.4749999999999996
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.500.png",
+      "requestedSeconds" : 8.5
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.525.png",
+      "requestedSeconds" : 8.5250000000000004
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.550.png",
+      "requestedSeconds" : 8.5500000000000007
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.575.png",
+      "requestedSeconds" : 8.5750000000000011
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.600.png",
+      "requestedSeconds" : 8.5999999999999996
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.625.png",
+      "requestedSeconds" : 8.625
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.650.png",
+      "requestedSeconds" : 8.6500000000000004
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.675.png",
+      "requestedSeconds" : 8.6750000000000007
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.700.png",
+      "requestedSeconds" : 8.7000000000000011
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.725.png",
+      "requestedSeconds" : 8.7249999999999996
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.750.png",
+      "requestedSeconds" : 8.75
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.775.png",
+      "requestedSeconds" : 8.7750000000000004
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.800.png",
+      "requestedSeconds" : 8.8000000000000007
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.825.png",
+      "requestedSeconds" : 8.8250000000000011
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.850.png",
+      "requestedSeconds" : 8.8499999999999996
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.875.png",
+      "requestedSeconds" : 8.875
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.900.png",
+      "requestedSeconds" : 8.9000000000000004
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.925.png",
+      "requestedSeconds" : 8.9250000000000007
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.950.png",
+      "requestedSeconds" : 8.9500000000000011
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-008.975.png",
+      "requestedSeconds" : 8.9749999999999996
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.000.png",
+      "requestedSeconds" : 9
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.025.png",
+      "requestedSeconds" : 9.0250000000000004
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.050.png",
+      "requestedSeconds" : 9.0500000000000007
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.075.png",
+      "requestedSeconds" : 9.0750000000000011
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.100.png",
+      "requestedSeconds" : 9.0999999999999996
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.125.png",
+      "requestedSeconds" : 9.125
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.150.png",
+      "requestedSeconds" : 9.1500000000000004
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.175.png",
+      "requestedSeconds" : 9.1750000000000007
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.200.png",
+      "requestedSeconds" : 9.2000000000000011
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.225.png",
+      "requestedSeconds" : 9.2249999999999996
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.250.png",
+      "requestedSeconds" : 9.25
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.275.png",
+      "requestedSeconds" : 9.2750000000000004
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.300.png",
+      "requestedSeconds" : 9.3000000000000007
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.325.png",
+      "requestedSeconds" : 9.3250000000000011
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.350.png",
+      "requestedSeconds" : 9.3499999999999996
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.375.png",
+      "requestedSeconds" : 9.375
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.400.png",
+      "requestedSeconds" : 9.4000000000000004
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.425.png",
+      "requestedSeconds" : 9.4250000000000007
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.450.png",
+      "requestedSeconds" : 9.4500000000000011
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.475.png",
+      "requestedSeconds" : 9.4749999999999996
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.500.png",
+      "requestedSeconds" : 9.5
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.525.png",
+      "requestedSeconds" : 9.5250000000000004
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.550.png",
+      "requestedSeconds" : 9.5500000000000007
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.575.png",
+      "requestedSeconds" : 9.5750000000000011
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.600.png",
+      "requestedSeconds" : 9.6000000000000014
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.625.png",
+      "requestedSeconds" : 9.625
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.650.png",
+      "requestedSeconds" : 9.6500000000000004
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.675.png",
+      "requestedSeconds" : 9.6750000000000007
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.700.png",
+      "requestedSeconds" : 9.7000000000000011
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.725.png",
+      "requestedSeconds" : 9.7250000000000014
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.750.png",
+      "requestedSeconds" : 9.75
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.775.png",
+      "requestedSeconds" : 9.7750000000000004
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.800.png",
+      "requestedSeconds" : 9.8000000000000007
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.825.png",
+      "requestedSeconds" : 9.8250000000000011
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.850.png",
+      "requestedSeconds" : 9.8500000000000014
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.875.png",
+      "requestedSeconds" : 9.875
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.900.png",
+      "requestedSeconds" : 9.9000000000000004
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.925.png",
+      "requestedSeconds" : 9.9250000000000007
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.950.png",
+      "requestedSeconds" : 9.9500000000000011
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-009.975.png",
+      "requestedSeconds" : 9.9750000000000014
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.000.png",
+      "requestedSeconds" : 10
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.025.png",
+      "requestedSeconds" : 10.025
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.050.png",
+      "requestedSeconds" : 10.050000000000001
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.075.png",
+      "requestedSeconds" : 10.075000000000001
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.100.png",
+      "requestedSeconds" : 10.100000000000001
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.125.png",
+      "requestedSeconds" : 10.125
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.150.png",
+      "requestedSeconds" : 10.15
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.175.png",
+      "requestedSeconds" : 10.175000000000001
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.200.png",
+      "requestedSeconds" : 10.200000000000001
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.225.png",
+      "requestedSeconds" : 10.225000000000001
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.250.png",
+      "requestedSeconds" : 10.25
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.275.png",
+      "requestedSeconds" : 10.275
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.300.png",
+      "requestedSeconds" : 10.300000000000001
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.325.png",
+      "requestedSeconds" : 10.325000000000001
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.350.png",
+      "requestedSeconds" : 10.350000000000001
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.375.png",
+      "requestedSeconds" : 10.375
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.400.png",
+      "requestedSeconds" : 10.4
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.425.png",
+      "requestedSeconds" : 10.425000000000001
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.450.png",
+      "requestedSeconds" : 10.450000000000001
+    },
+    {
+      "actualSeconds" : 8.4216666666666669,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.475.png",
+      "requestedSeconds" : 10.475000000000001
+    },
+    {
+      "actualSeconds" : 10.476666666666667,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.500.png",
+      "requestedSeconds" : 10.5
+    },
+    {
+      "actualSeconds" : 10.476666666666667,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.525.png",
+      "requestedSeconds" : 10.525
+    },
+    {
+      "actualSeconds" : 10.548333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.550.png",
+      "requestedSeconds" : 10.550000000000001
+    },
+    {
+      "actualSeconds" : 10.548333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.575.png",
+      "requestedSeconds" : 10.575000000000001
+    },
+    {
+      "actualSeconds" : 10.548333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.600.png",
+      "requestedSeconds" : 10.600000000000001
+    },
+    {
+      "actualSeconds" : 10.548333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.625.png",
+      "requestedSeconds" : 10.625
+    },
+    {
+      "actualSeconds" : 10.648333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.650.png",
+      "requestedSeconds" : 10.65
+    },
+    {
+      "actualSeconds" : 10.666666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.675.png",
+      "requestedSeconds" : 10.675000000000001
+    },
+    {
+      "actualSeconds" : 10.691666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.700.png",
+      "requestedSeconds" : 10.700000000000001
+    },
+    {
+      "actualSeconds" : 10.723333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.725.png",
+      "requestedSeconds" : 10.725000000000001
+    },
+    {
+      "actualSeconds" : 10.75,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.750.png",
+      "requestedSeconds" : 10.75
+    },
+    {
+      "actualSeconds" : 10.763333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.775.png",
+      "requestedSeconds" : 10.775
+    },
+    {
+      "actualSeconds" : 10.798333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.800.png",
+      "requestedSeconds" : 10.800000000000001
+    },
+    {
+      "actualSeconds" : 10.815,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.825.png",
+      "requestedSeconds" : 10.825000000000001
+    },
+    {
+      "actualSeconds" : 10.848333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.850.png",
+      "requestedSeconds" : 10.850000000000001
+    },
+    {
+      "actualSeconds" : 10.863333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.875.png",
+      "requestedSeconds" : 10.875
+    },
+    {
+      "actualSeconds" : 10.896666666666667,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.900.png",
+      "requestedSeconds" : 10.9
+    },
+    {
+      "actualSeconds" : 10.913333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.925.png",
+      "requestedSeconds" : 10.925000000000001
+    },
+    {
+      "actualSeconds" : 10.946666666666667,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.950.png",
+      "requestedSeconds" : 10.950000000000001
+    },
+    {
+      "actualSeconds" : 10.971666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-010.975.png",
+      "requestedSeconds" : 10.975000000000001
+    },
+    {
+      "actualSeconds" : 10.996666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.000.png",
+      "requestedSeconds" : 11
+    },
+    {
+      "actualSeconds" : 11.013333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.025.png",
+      "requestedSeconds" : 11.025
+    },
+    {
+      "actualSeconds" : 11.048333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.050.png",
+      "requestedSeconds" : 11.050000000000001
+    },
+    {
+      "actualSeconds" : 11.065,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.075.png",
+      "requestedSeconds" : 11.075000000000001
+    },
+    {
+      "actualSeconds" : 11.098333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.100.png",
+      "requestedSeconds" : 11.100000000000001
+    },
+    {
+      "actualSeconds" : 11.115,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.125.png",
+      "requestedSeconds" : 11.125
+    },
+    {
+      "actualSeconds" : 11.148333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.150.png",
+      "requestedSeconds" : 11.15
+    },
+    {
+      "actualSeconds" : 11.168333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.175.png",
+      "requestedSeconds" : 11.175000000000001
+    },
+    {
+      "actualSeconds" : 11.198333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.200.png",
+      "requestedSeconds" : 11.200000000000001
+    },
+    {
+      "actualSeconds" : 11.215,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.225.png",
+      "requestedSeconds" : 11.225000000000001
+    },
+    {
+      "actualSeconds" : 11.248333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.250.png",
+      "requestedSeconds" : 11.25
+    },
+    {
+      "actualSeconds" : 11.261666666666667,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.275.png",
+      "requestedSeconds" : 11.275
+    },
+    {
+      "actualSeconds" : 11.296666666666667,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.300.png",
+      "requestedSeconds" : 11.300000000000001
+    },
+    {
+      "actualSeconds" : 11.313333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.325.png",
+      "requestedSeconds" : 11.325000000000001
+    },
+    {
+      "actualSeconds" : 11.345000000000001,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.350.png",
+      "requestedSeconds" : 11.350000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.375.png",
+      "requestedSeconds" : 11.375
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.400.png",
+      "requestedSeconds" : 11.4
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.425.png",
+      "requestedSeconds" : 11.425000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.450.png",
+      "requestedSeconds" : 11.450000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.475.png",
+      "requestedSeconds" : 11.475000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.500.png",
+      "requestedSeconds" : 11.5
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.525.png",
+      "requestedSeconds" : 11.525
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.550.png",
+      "requestedSeconds" : 11.550000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.575.png",
+      "requestedSeconds" : 11.575000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.600.png",
+      "requestedSeconds" : 11.600000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.625.png",
+      "requestedSeconds" : 11.625
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.650.png",
+      "requestedSeconds" : 11.65
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.675.png",
+      "requestedSeconds" : 11.675000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.700.png",
+      "requestedSeconds" : 11.700000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.725.png",
+      "requestedSeconds" : 11.725000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.750.png",
+      "requestedSeconds" : 11.75
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.775.png",
+      "requestedSeconds" : 11.775
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.800.png",
+      "requestedSeconds" : 11.800000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.825.png",
+      "requestedSeconds" : 11.825000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.850.png",
+      "requestedSeconds" : 11.850000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.875.png",
+      "requestedSeconds" : 11.875
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.900.png",
+      "requestedSeconds" : 11.9
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.925.png",
+      "requestedSeconds" : 11.925000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.950.png",
+      "requestedSeconds" : 11.950000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-011.975.png",
+      "requestedSeconds" : 11.975000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.000.png",
+      "requestedSeconds" : 12
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.025.png",
+      "requestedSeconds" : 12.025
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.050.png",
+      "requestedSeconds" : 12.050000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.075.png",
+      "requestedSeconds" : 12.075000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.100.png",
+      "requestedSeconds" : 12.100000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.125.png",
+      "requestedSeconds" : 12.125
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.150.png",
+      "requestedSeconds" : 12.15
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.175.png",
+      "requestedSeconds" : 12.175000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.200.png",
+      "requestedSeconds" : 12.200000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.225.png",
+      "requestedSeconds" : 12.225000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.250.png",
+      "requestedSeconds" : 12.25
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.275.png",
+      "requestedSeconds" : 12.275
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.300.png",
+      "requestedSeconds" : 12.300000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.325.png",
+      "requestedSeconds" : 12.325000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.350.png",
+      "requestedSeconds" : 12.350000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.375.png",
+      "requestedSeconds" : 12.375
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.400.png",
+      "requestedSeconds" : 12.4
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.425.png",
+      "requestedSeconds" : 12.425000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.450.png",
+      "requestedSeconds" : 12.450000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.475.png",
+      "requestedSeconds" : 12.475000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.500.png",
+      "requestedSeconds" : 12.5
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.525.png",
+      "requestedSeconds" : 12.525
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.550.png",
+      "requestedSeconds" : 12.550000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.575.png",
+      "requestedSeconds" : 12.575000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.600.png",
+      "requestedSeconds" : 12.600000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.625.png",
+      "requestedSeconds" : 12.625
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.650.png",
+      "requestedSeconds" : 12.65
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.675.png",
+      "requestedSeconds" : 12.675000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.700.png",
+      "requestedSeconds" : 12.700000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.725.png",
+      "requestedSeconds" : 12.725000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.750.png",
+      "requestedSeconds" : 12.75
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.775.png",
+      "requestedSeconds" : 12.775
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.800.png",
+      "requestedSeconds" : 12.800000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.825.png",
+      "requestedSeconds" : 12.825000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.850.png",
+      "requestedSeconds" : 12.850000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.875.png",
+      "requestedSeconds" : 12.875
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.900.png",
+      "requestedSeconds" : 12.9
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.925.png",
+      "requestedSeconds" : 12.925000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.950.png",
+      "requestedSeconds" : 12.950000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-012.975.png",
+      "requestedSeconds" : 12.975000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.000.png",
+      "requestedSeconds" : 13
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.025.png",
+      "requestedSeconds" : 13.025
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.050.png",
+      "requestedSeconds" : 13.050000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.075.png",
+      "requestedSeconds" : 13.075000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.100.png",
+      "requestedSeconds" : 13.100000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.125.png",
+      "requestedSeconds" : 13.125
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.150.png",
+      "requestedSeconds" : 13.15
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.175.png",
+      "requestedSeconds" : 13.175000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.200.png",
+      "requestedSeconds" : 13.200000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.225.png",
+      "requestedSeconds" : 13.225000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.250.png",
+      "requestedSeconds" : 13.25
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.275.png",
+      "requestedSeconds" : 13.275
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.300.png",
+      "requestedSeconds" : 13.300000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.325.png",
+      "requestedSeconds" : 13.325000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.350.png",
+      "requestedSeconds" : 13.350000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.375.png",
+      "requestedSeconds" : 13.375
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.400.png",
+      "requestedSeconds" : 13.4
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.425.png",
+      "requestedSeconds" : 13.425000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.450.png",
+      "requestedSeconds" : 13.450000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.475.png",
+      "requestedSeconds" : 13.475000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.500.png",
+      "requestedSeconds" : 13.5
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.525.png",
+      "requestedSeconds" : 13.525
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.550.png",
+      "requestedSeconds" : 13.550000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.575.png",
+      "requestedSeconds" : 13.575000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.600.png",
+      "requestedSeconds" : 13.600000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.625.png",
+      "requestedSeconds" : 13.625
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.650.png",
+      "requestedSeconds" : 13.65
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.675.png",
+      "requestedSeconds" : 13.675000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.700.png",
+      "requestedSeconds" : 13.700000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.725.png",
+      "requestedSeconds" : 13.725000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.750.png",
+      "requestedSeconds" : 13.75
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.775.png",
+      "requestedSeconds" : 13.775
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.800.png",
+      "requestedSeconds" : 13.800000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.825.png",
+      "requestedSeconds" : 13.825000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.850.png",
+      "requestedSeconds" : 13.850000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.875.png",
+      "requestedSeconds" : 13.875
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.900.png",
+      "requestedSeconds" : 13.9
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.925.png",
+      "requestedSeconds" : 13.925000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.950.png",
+      "requestedSeconds" : 13.950000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-013.975.png",
+      "requestedSeconds" : 13.975000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.000.png",
+      "requestedSeconds" : 14
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.025.png",
+      "requestedSeconds" : 14.025
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.050.png",
+      "requestedSeconds" : 14.050000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.075.png",
+      "requestedSeconds" : 14.075000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.100.png",
+      "requestedSeconds" : 14.100000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.125.png",
+      "requestedSeconds" : 14.125
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.150.png",
+      "requestedSeconds" : 14.15
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.175.png",
+      "requestedSeconds" : 14.175000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.200.png",
+      "requestedSeconds" : 14.200000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.225.png",
+      "requestedSeconds" : 14.225000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.250.png",
+      "requestedSeconds" : 14.25
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.275.png",
+      "requestedSeconds" : 14.275
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.300.png",
+      "requestedSeconds" : 14.300000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.325.png",
+      "requestedSeconds" : 14.325000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.350.png",
+      "requestedSeconds" : 14.350000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.375.png",
+      "requestedSeconds" : 14.375
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.400.png",
+      "requestedSeconds" : 14.4
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.425.png",
+      "requestedSeconds" : 14.425000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.450.png",
+      "requestedSeconds" : 14.450000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.475.png",
+      "requestedSeconds" : 14.475000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.500.png",
+      "requestedSeconds" : 14.5
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.525.png",
+      "requestedSeconds" : 14.525
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.550.png",
+      "requestedSeconds" : 14.550000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.575.png",
+      "requestedSeconds" : 14.575000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.600.png",
+      "requestedSeconds" : 14.600000000000001
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.625.png",
+      "requestedSeconds" : 14.625
+    },
+    {
+      "actualSeconds" : 11.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.650.png",
+      "requestedSeconds" : 14.65
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.675.png",
+      "requestedSeconds" : 14.675000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.700.png",
+      "requestedSeconds" : 14.700000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.725.png",
+      "requestedSeconds" : 14.725000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.750.png",
+      "requestedSeconds" : 14.75
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.775.png",
+      "requestedSeconds" : 14.775
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.800.png",
+      "requestedSeconds" : 14.800000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.825.png",
+      "requestedSeconds" : 14.825000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.850.png",
+      "requestedSeconds" : 14.850000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.875.png",
+      "requestedSeconds" : 14.875
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.900.png",
+      "requestedSeconds" : 14.9
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.925.png",
+      "requestedSeconds" : 14.925000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.950.png",
+      "requestedSeconds" : 14.950000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-014.975.png",
+      "requestedSeconds" : 14.975000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.000.png",
+      "requestedSeconds" : 15
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.025.png",
+      "requestedSeconds" : 15.025
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.050.png",
+      "requestedSeconds" : 15.050000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.075.png",
+      "requestedSeconds" : 15.075000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.100.png",
+      "requestedSeconds" : 15.100000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.125.png",
+      "requestedSeconds" : 15.125
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.150.png",
+      "requestedSeconds" : 15.15
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.175.png",
+      "requestedSeconds" : 15.175000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.200.png",
+      "requestedSeconds" : 15.200000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.225.png",
+      "requestedSeconds" : 15.225000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.250.png",
+      "requestedSeconds" : 15.25
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.275.png",
+      "requestedSeconds" : 15.275
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.300.png",
+      "requestedSeconds" : 15.300000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.325.png",
+      "requestedSeconds" : 15.325000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.350.png",
+      "requestedSeconds" : 15.350000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.375.png",
+      "requestedSeconds" : 15.375
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.400.png",
+      "requestedSeconds" : 15.4
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.425.png",
+      "requestedSeconds" : 15.425000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.450.png",
+      "requestedSeconds" : 15.450000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.475.png",
+      "requestedSeconds" : 15.475000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.500.png",
+      "requestedSeconds" : 15.5
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.525.png",
+      "requestedSeconds" : 15.525
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.550.png",
+      "requestedSeconds" : 15.550000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.575.png",
+      "requestedSeconds" : 15.575000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.600.png",
+      "requestedSeconds" : 15.600000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.625.png",
+      "requestedSeconds" : 15.625
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.650.png",
+      "requestedSeconds" : 15.65
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.675.png",
+      "requestedSeconds" : 15.675000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.700.png",
+      "requestedSeconds" : 15.700000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.725.png",
+      "requestedSeconds" : 15.725000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.750.png",
+      "requestedSeconds" : 15.75
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.775.png",
+      "requestedSeconds" : 15.775
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.800.png",
+      "requestedSeconds" : 15.800000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.825.png",
+      "requestedSeconds" : 15.825000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.850.png",
+      "requestedSeconds" : 15.850000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.875.png",
+      "requestedSeconds" : 15.875
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.900.png",
+      "requestedSeconds" : 15.9
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.925.png",
+      "requestedSeconds" : 15.925000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.950.png",
+      "requestedSeconds" : 15.950000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-015.975.png",
+      "requestedSeconds" : 15.975000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.000.png",
+      "requestedSeconds" : 16
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.025.png",
+      "requestedSeconds" : 16.025000000000002
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.050.png",
+      "requestedSeconds" : 16.050000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.075.png",
+      "requestedSeconds" : 16.074999999999999
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.100.png",
+      "requestedSeconds" : 16.100000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.125.png",
+      "requestedSeconds" : 16.125
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.150.png",
+      "requestedSeconds" : 16.150000000000002
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.175.png",
+      "requestedSeconds" : 16.175000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.200.png",
+      "requestedSeconds" : 16.199999999999999
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.225.png",
+      "requestedSeconds" : 16.225000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.250.png",
+      "requestedSeconds" : 16.25
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.275.png",
+      "requestedSeconds" : 16.275000000000002
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.300.png",
+      "requestedSeconds" : 16.300000000000001
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.325.png",
+      "requestedSeconds" : 16.324999999999999
+    },
+    {
+      "actualSeconds" : 14.656666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.350.png",
+      "requestedSeconds" : 16.350000000000001
+    },
+    {
+      "actualSeconds" : 16.371666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.375.png",
+      "requestedSeconds" : 16.375
+    },
+    {
+      "actualSeconds" : 16.371666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.400.png",
+      "requestedSeconds" : 16.400000000000002
+    },
+    {
+      "actualSeconds" : 16.371666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.425.png",
+      "requestedSeconds" : 16.425000000000001
+    },
+    {
+      "actualSeconds" : 16.371666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.450.png",
+      "requestedSeconds" : 16.449999999999999
+    },
+    {
+      "actualSeconds" : 16.371666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.475.png",
+      "requestedSeconds" : 16.475000000000001
+    },
+    {
+      "actualSeconds" : 16.371666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.500.png",
+      "requestedSeconds" : 16.5
+    },
+    {
+      "actualSeconds" : 16.371666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.525.png",
+      "requestedSeconds" : 16.525000000000002
+    },
+    {
+      "actualSeconds" : 16.371666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.550.png",
+      "requestedSeconds" : 16.550000000000001
+    },
+    {
+      "actualSeconds" : 16.371666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.575.png",
+      "requestedSeconds" : 16.574999999999999
+    },
+    {
+      "actualSeconds" : 16.371666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.600.png",
+      "requestedSeconds" : 16.600000000000001
+    },
+    {
+      "actualSeconds" : 16.371666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.625.png",
+      "requestedSeconds" : 16.625
+    },
+    {
+      "actualSeconds" : 16.371666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.650.png",
+      "requestedSeconds" : 16.650000000000002
+    },
+    {
+      "actualSeconds" : 16.371666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.675.png",
+      "requestedSeconds" : 16.675000000000001
+    },
+    {
+      "actualSeconds" : 16.371666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.700.png",
+      "requestedSeconds" : 16.699999999999999
+    },
+    {
+      "actualSeconds" : 16.371666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.725.png",
+      "requestedSeconds" : 16.725000000000001
+    },
+    {
+      "actualSeconds" : 16.371666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.750.png",
+      "requestedSeconds" : 16.75
+    },
+    {
+      "actualSeconds" : 16.371666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.775.png",
+      "requestedSeconds" : 16.775000000000002
+    },
+    {
+      "actualSeconds" : 16.371666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.800.png",
+      "requestedSeconds" : 16.800000000000001
+    },
+    {
+      "actualSeconds" : 16.371666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.825.png",
+      "requestedSeconds" : 16.824999999999999
+    },
+    {
+      "actualSeconds" : 16.371666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.850.png",
+      "requestedSeconds" : 16.850000000000001
+    },
+    {
+      "actualSeconds" : 16.371666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.875.png",
+      "requestedSeconds" : 16.875
+    },
+    {
+      "actualSeconds" : 16.371666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.900.png",
+      "requestedSeconds" : 16.900000000000002
+    },
+    {
+      "actualSeconds" : 16.371666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.925.png",
+      "requestedSeconds" : 16.925000000000001
+    },
+    {
+      "actualSeconds" : 16.371666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.950.png",
+      "requestedSeconds" : 16.949999999999999
+    },
+    {
+      "actualSeconds" : 16.371666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-016.975.png",
+      "requestedSeconds" : 16.975000000000001
+    },
+    {
+      "actualSeconds" : 16.371666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-017.000.png",
+      "requestedSeconds" : 17
+    },
+    {
+      "actualSeconds" : 16.371666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-017.025.png",
+      "requestedSeconds" : 17.025000000000002
+    },
+    {
+      "actualSeconds" : 16.371666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-017.050.png",
+      "requestedSeconds" : 17.050000000000001
+    },
+    {
+      "actualSeconds" : 16.371666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-017.075.png",
+      "requestedSeconds" : 17.074999999999999
+    },
+    {
+      "actualSeconds" : 16.371666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-017.100.png",
+      "requestedSeconds" : 17.100000000000001
+    },
+    {
+      "actualSeconds" : 16.371666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-017.125.png",
+      "requestedSeconds" : 17.125
+    },
+    {
+      "actualSeconds" : 16.371666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-017.150.png",
+      "requestedSeconds" : 17.150000000000002
+    },
+    {
+      "actualSeconds" : 16.371666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-017.175.png",
+      "requestedSeconds" : 17.175000000000001
+    },
+    {
+      "actualSeconds" : 17.196666666666665,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-017.200.png",
+      "requestedSeconds" : 17.199999999999999
+    },
+    {
+      "actualSeconds" : 17.196666666666665,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-017.225.png",
+      "requestedSeconds" : 17.225000000000001
+    },
+    {
+      "actualSeconds" : 17.196666666666665,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-017.250.png",
+      "requestedSeconds" : 17.25
+    },
+    {
+      "actualSeconds" : 17.274999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-017.275.png",
+      "requestedSeconds" : 17.275000000000002
+    },
+    {
+      "actualSeconds" : 17.298333333333332,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-017.300.png",
+      "requestedSeconds" : 17.300000000000001
+    },
+    {
+      "actualSeconds" : 17.313333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-017.325.png",
+      "requestedSeconds" : 17.324999999999999
+    },
+    {
+      "actualSeconds" : 17.346666666666668,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-017.350.png",
+      "requestedSeconds" : 17.350000000000001
+    },
+    {
+      "actualSeconds" : 17.363333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-017.375.png",
+      "requestedSeconds" : 17.375
+    },
+    {
+      "actualSeconds" : 17.398333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-017.400.png",
+      "requestedSeconds" : 17.400000000000002
+    },
+    {
+      "actualSeconds" : 17.413333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-017.425.png",
+      "requestedSeconds" : 17.425000000000001
+    },
+    {
+      "actualSeconds" : 17.448333333333334,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-017.450.png",
+      "requestedSeconds" : 17.449999999999999
+    },
+    {
+      "actualSeconds" : 17.465,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-017.475.png",
+      "requestedSeconds" : 17.475000000000001
+    },
+    {
+      "actualSeconds" : 17.496666666666666,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-017.500.png",
+      "requestedSeconds" : 17.5
+    },
+    {
+      "actualSeconds" : 17.511666666666667,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-017.525.png",
+      "requestedSeconds" : 17.525000000000002
+    },
+    {
+      "actualSeconds" : 17.546666666666667,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-017.550.png",
+      "requestedSeconds" : 17.550000000000001
+    },
+    {
+      "actualSeconds" : 17.563333333333333,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-017.575.png",
+      "requestedSeconds" : 17.574999999999999
+    },
+    {
+      "actualSeconds" : 17.596666666666668,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-017.600.png",
+      "requestedSeconds" : 17.600000000000001
+    },
+    {
+      "actualSeconds" : 17.614999999999998,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-017.625.png",
+      "requestedSeconds" : 17.625
+    },
+    {
+      "actualSeconds" : 17.646666666666668,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-017.650.png",
+      "requestedSeconds" : 17.650000000000002
+    },
+    {
+      "actualSeconds" : 17.664999999999999,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-017.675.png",
+      "requestedSeconds" : 17.675000000000001
+    },
+    {
+      "actualSeconds" : 17.696666666666665,
+      "cropRectPixels" : [
+        137,
+        906,
+        225,
+        225
+      ],
+      "file" : "cell-017.700.png",
+      "requestedSeconds" : 17.699999999999999
+    }
+  ],
+  "source" : "\/Users\/poca\/Documents\/ChatGPT\/capydoku开发\/.build\/original-0261-native-baseline-native-short-contact.mov"
+}
