@@ -83,6 +83,49 @@ private final class AcceptedMoveAudioRig {
 
 final class AcceptedMoveAudioTests: XCTestCase {
     @MainActor
+    func testRapidAcceptedMarksAndErasesReachPlaybackBeforeReturningWithoutQueuedReplay() throws {
+        let (app, rig, imported) = try fixture()
+        let mark = try XCTUnwrap(imported.manifest.clips["mark_x"])
+        let erase = try XCTUnwrap(imported.manifest.clips["erase_x"])
+        let initial = try XCTUnwrap(app.session)
+        let cells = Array(initial.puzzle.regions.indices.prefix(3))
+        for (ordinal, cell) in cells.enumerated() {
+            app.toggle(cell)
+            XCTAssertEqual(rig.playTimes(for: mark).count, ordinal + 1,
+                           "An accepted mark must start its cue in this input callback")
+            rig.clock.advance(0.04)
+        }
+        XCTAssertEqual(app.session?.marks, Set(cells))
+        for (ordinal, cell) in cells.enumerated() {
+            app.toggle(cell)
+            XCTAssertEqual(rig.playTimes(for: erase).count, ordinal + 1)
+            rig.clock.advance(0.04)
+        }
+        XCTAssertTrue(app.session?.marks.isEmpty == true)
+        XCTAssertEqual(app.session?.lives, initial.lives)
+        let count = rig.cues.count
+        rig.clock.advance(1)
+        XCTAssertEqual(rig.cues.count, count, "Old clicks must not replay after the fingers have moved on")
+    }
+
+    @MainActor
+    func testAcceptedCorrectAndWrongStartAudioInTheSameInputCallback() throws {
+        let (app, rig, imported) = try fixture()
+        let initial = try XCTUnwrap(app.session)
+        let correct = try XCTUnwrap(imported.manifest.clips["double_tap_correct"])
+        let wrong = try XCTUnwrap(imported.manifest.clips["double_tap_wrong"])
+        app.submit(initial.puzzle.solution[0])
+        XCTAssertEqual(rig.playTimes(for: correct), [0])
+        let mistake = try XCTUnwrap(initial.puzzle.regions.indices.first { !initial.puzzle.solution.contains($0) })
+        app.submit(mistake)
+        XCTAssertEqual(rig.playTimes(for: wrong), [0])
+        XCTAssertEqual(app.session?.lives, initial.lives - 1)
+        rig.clock.advance(1)
+        XCTAssertEqual(rig.playTimes(for: correct).count, 1)
+        XCTAssertEqual(rig.playTimes(for: wrong).count, 1)
+    }
+
+    @MainActor
     private func fixture() throws -> (AppModel, AcceptedMoveAudioRig, LocalTestAudioImport) {
         guard let imported = LocalTestAudioImport.load() else {
             throw XCTSkip("Requires the authorized local Debug audio experiment; clean clones and distribution builds intentionally omit it")

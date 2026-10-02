@@ -69,20 +69,109 @@ struct PuzzleBoardView: UIViewRepresentable {
     }
 }
 
-/// UIKit resets a recognizer only after its recognition attempt reaches a
-/// terminal state. In particular, touchesEnded is too early for double taps.
-/// https://developer.apple.com/documentation/uikit/uigesturerecognizer/reset()
+/// Each accepted native tap is classified by cell, so touching a new cell can
+/// finish the previous single immediately. The 0.30 s interval is a provisional
+/// Demo input setting, not a measured reference-product or UIKit constant.
+@MainActor
+final class BoardTapDecision {
+    let interval: TimeInterval
+    var now: () -> TimeInterval
+    var schedule: (TimeInterval, DispatchWorkItem) -> Void
+    var onSingle: (Int) -> Void = { _ in }
+    var onDouble: (Int) -> Void = { _ in }
+    var onPreview: (Int?) -> Void = { _ in }
+    var onBusy: (Bool) -> Void = { _ in }
+    private var pending: (cell: Int, deadline: TimeInterval, token: UUID)?
+    private var secondContact: Int?
+    private var deadlineWork: DispatchWorkItem?
+    var pendingCell: Int? { pending?.cell }
+
+    init(interval: TimeInterval = 0.30,
+         now: @escaping () -> TimeInterval = { ProcessInfo.processInfo.systemUptime },
+         schedule: @escaping (TimeInterval, DispatchWorkItem) -> Void = { delay, work in
+             DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: work)
+         }) {
+        self.interval = interval; self.now = now; self.schedule = schedule
+    }
+
+    deinit { deadlineWork?.cancel() }
+
+    func contactBegan(cell: Int?) {
+        secondContact = nil
+        guard let pending else { return }
+        if cell == pending.cell && now() <= pending.deadline {
+            secondContact = cell
+            deadlineWork?.cancel(); deadlineWork = nil
+        } else {
+            commitSingle()
+        }
+    }
+
+    func acceptedTap(cell: Int) {
+        if secondContact == cell, pending?.cell == cell {
+            clearPending()
+            onDouble(cell)
+            onBusy(false)
+            return
+        }
+        commitSingle()
+        let token = UUID()
+        pending = (cell, now() + interval, token)
+        onBusy(true); onPreview(cell)
+        let work = DispatchWorkItem { [weak self] in
+            guard let self, self.pending?.token == token, self.secondContact == nil else { return }
+            self.commitSingle()
+        }
+        deadlineWork = work; schedule(interval, work)
+    }
+
+    /// A failed second contact (for example, a drag) cannot erase an earlier
+    /// valid single. The drag then proceeds through its normal marking route.
+    func contactCancelled() {
+        guard secondContact != nil else { return }
+        secondContact = nil
+        commitSingle()
+    }
+
+    func commitSingle() {
+        guard let cell = pending?.cell else { return }
+        clearPending(notifyPreview: false)
+        onSingle(cell)
+        onPreview(nil)
+        onBusy(false)
+    }
+
+    func cancel() {
+        let wasPending = pending != nil
+        clearPending()
+        if wasPending { onBusy(false) }
+    }
+
+    private func clearPending(notifyPreview: Bool = true) {
+        deadlineWork?.cancel(); deadlineWork = nil
+        pending = nil; secondContact = nil
+        if notifyPreview { onPreview(nil) }
+    }
+}
+
+/// UIKit still decides whether an individual contact is a tap or a pan. Only
+/// the single-versus-double decision moves to the cell-aware router above.
 private final class BoardActivityTapRecognizer: UITapGestureRecognizer {
     private let activityID = UUID()
     weak var activity: BoardInputActivity?
+    var onContactBegan: ((CGPoint) -> Void)?
+    var onContactCancelled: (() -> Void)?
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
         activity?.begin(activityID)
+        if let touch = touches.first, let view { onContactBegan?(touch.location(in: view)) }
         super.touchesBegan(touches, with: event)
     }
 
     override func reset() {
+        let cancelled = state == .failed || state == .cancelled
         super.reset()
+        if cancelled { onContactCancelled?() }
         activity?.end(activityID)
     }
 }
@@ -126,7 +215,7 @@ private final class BoardActivityPanRecognizer: UIPanGestureRecognizer {
     }
 }
 
-/// UIKit owns all three recognizers, so a double tap can never leak a single-tap X.
+/// Native tap and pan recognition feed a cell-aware, side-effect-free tap preview.
 final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     /// Read-only work counters for hosted efficiency checks, never gameplay state.
     struct RefreshDiagnostics: Equatable {
@@ -160,6 +249,12 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     private var onConflictFeedback: (([VisibleConflictKind]) -> Void)?
     private var onScoreFeedback: ((Int, BoardFeedbackAnchor) -> Void)?
     let inputActivity = BoardInputActivity()
+    let tapDecision = BoardTapDecision()
+    private let pendingTapActivityID = UUID()
+    private var pendingTapPreview: UIView?
+    private var pendingTapPreviewCell: Int?
+    private var committedTapPreviews: [Int: UIView] = [:]
+    private var confirmedTapPreviewCells = Set<Int>()
     private var inputRecognizers: [UIGestureRecognizer] = []
     private var swipeFeedbackActive = false
     private var cells: [PuzzleCellAccessibilityElement] = []
@@ -207,30 +302,46 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
             self?.onInputActivityChange?(owner, busy)
         }
         let single = BoardActivityTapRecognizer(target: self, action: #selector(singleTap(_:)))
-        let double = BoardActivityTapRecognizer(target: self, action: #selector(doubleTap(_:)))
         single.activity = inputActivity
-        double.activity = inputActivity
-        double.numberOfTapsRequired = 2
-        single.require(toFail: double)
+        single.onContactBegan = { [weak self] point in self?.tapDecision.contactBegan(cell: self?.cell(at: point)) }
+        single.onContactCancelled = { [weak self] in self?.tapDecision.contactCancelled() }
+        tapDecision.onSingle = { [weak self] index in
+            guard let self, !self.locked, !self.found.contains(index),
+                  self.tutorialAction == nil || self.tutorialAction == "tap" else { return }
+            self.clearPendingTapFeedback(at: index)
+            self.clearEntrancePresentation()
+            self.confirmedTapPreviewCells.insert(index)
+            if self.pendingTapPreviewCell == index, let preview = self.pendingTapPreview {
+                self.committedTapPreviews[index]?.removeFromSuperview()
+                self.committedTapPreviews[index] = preview
+                self.pendingTapPreview = nil; self.pendingTapPreviewCell = nil
+            }
+            self.onToggle?(index)
+        }
+        tapDecision.onDouble = { [weak self] index in
+            guard let self, !self.locked, !self.found.contains(index) else { return }
+            self.submit(index)
+        }
+        tapDecision.onPreview = { [weak self] in self?.showPendingTapPreview($0) }
+        tapDecision.onBusy = { [weak self] busy in
+            guard let self else { return }
+            if busy { self.inputActivity.begin(self.pendingTapActivityID) }
+            else { self.inputActivity.end(self.pendingTapActivityID) }
+        }
         let pan = BoardActivityPanRecognizer(target: self, action: #selector(pan(_:)))
         pan.activity = inputActivity
-        // Observe the existing pan recognizer's raw contacts; do not add a
-        // recognizer, change its thresholds or alter double-tap precedence.
         pan.onContactBegan = { [weak self] in self?.beginCellPress(at: $0) }
         pan.onContactMoved = { [weak self] in self?.moveCellPress(to: $0) }
         pan.onContactEnded = { [weak self] in self?.releaseCellPress(allowTapWait: $0) }
         pan.onContactCancelled = { [weak self] in self?.endCellPress() }
         pan.onContactReset = { [weak self] in
-            // After normal lift, releaseCellPress already transferred ownership
-            // to the tap attempt. The pan's early reset must not erase it.
             if self?.trackingContact == true { self?.endCellPress() }
         }
         pan.maximumNumberOfTouches = 1
         pan.delegate = self
         addGestureRecognizer(single)
-        addGestureRecognizer(double)
         addGestureRecognizer(pan)
-        inputRecognizers = [single, double, pan]
+        inputRecognizers = [single, pan]
         updateInputAvailability()
         contentMode = .redraw
         feedbackOverlay.isUserInteractionEnabled = false
@@ -274,6 +385,8 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         let addedErrors = errors.subtracting(self.errors)
         let removedErrors = self.errors.subtracting(errors)
         let changedMarks = marks.symmetricDifference(self.marks).subtracting(found).subtracting(errors)
+        let previewedTapCells = sameBoard ? confirmedTapPreviewCells : []
+        confirmedTapPreviewCells.removeAll()
         let becameComplete = hasConfigured && sameBoard && self.found.count < size && found.count == size
             && !addedFound.isEmpty && found.allSatisfy { (0..<(size * size)).contains($0) }
         let scoreDelta = self.score.flatMap { before in score.map { $0 - before } } ?? 0
@@ -312,7 +425,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
             clearEntrancePresentation()
         }
         if !preview.isEmpty || (hideAccessibility && found.count != size) { clearScenePresentation() }
-        if locked || hideAccessibility || !preview.isEmpty { clearGuidance(); endCellPress() }
+        if locked || hideAccessibility || !preview.isEmpty { tapDecision.cancel(); clearGuidance(); endCellPress() }
         if receivedMistake || !preview.isEmpty || ((locked || hideAccessibility) && found.count != size) { clearPlacementBursts() }
         for effect in feedbackOverlay.subviews.compactMap({ $0 as? BoardPlacementBurstView }) where !found.contains(effect.cellIndex) {
             effect.removeFromSuperview()
@@ -385,6 +498,10 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
             refreshAccessibility(indices: fullAccessibilityRefresh ? nil : changedAccessibilityCells)
         }
         if redrawBoard { refreshDiagnostics.displayInvalidations += 1; setNeedsDisplay() }
+        // Keep committed previews opaque until this actual board update owns
+        // their saved state; removing them at callback time could flash old ink.
+        committedTapPreviews.values.forEach { $0.removeFromSuperview() }
+        committedTapPreviews.removeAll()
         updateTutorialGuide()
         if hasConfigured, sameBoard, canPresentEffects {
             for index in addedFound.sorted() where !suppressPositiveFeedback && (0..<(size * size)).contains(index) {
@@ -397,6 +514,9 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
                 }
             }
             for index in changedMarks.sorted() {
+                // The pending tap already showed the complete target state.
+                // Hand it to the saved board without drawing that X twice.
+                if previewedTapCells.contains(index) { continue }
                 // The newer error owns the scene, including coalesced updates.
                 // Do not place an old erasing X under its explanation links.
                 if receivedMistake && !marks.contains(index) { continue }
@@ -571,12 +691,25 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     @objc private func singleTap(_ gesture: UITapGestureRecognizer) {
         guard gesture.state == .recognized, !locked, let index = cell(at: gesture.location(in: self)), !found.contains(index) else { return }
         clearPendingTapFeedback(at: index)
-        clearEntrancePresentation()
-        onToggle?(index)
+        tapDecision.acceptedTap(cell: index)
     }
-    @objc private func doubleTap(_ gesture: UITapGestureRecognizer) {
-        guard gesture.state == .recognized, !locked, let index = cell(at: gesture.location(in: self)), !found.contains(index) else { return }
-        submit(index)
+
+    private func showPendingTapPreview(_ index: Int?) {
+        pendingTapPreview?.removeFromSuperview(); pendingTapPreview = nil; pendingTapPreviewCell = nil
+        guard let index, canPress(index), cellSide > 0,
+              tutorialAction == nil || tutorialAction == "tap" || tutorialAction == "doubleTap" else { return }
+        let palette = ((region(index) % CapyPalette.regionColors.count) + CapyPalette.regionColors.count) % CapyPalette.regionColors.count
+        let gap = max(1.1, min(2, cellSide * 0.028))
+        let container = UIView(frame: rect(for: index).insetBy(dx: gap, dy: gap))
+        container.isUserInteractionEnabled = false
+        container.isAccessibilityElement = false; container.accessibilityElementsHidden = true
+        container.accessibilityIdentifier = "pending_tap_preview_\(index)"
+        let preview = BoardCellFeedbackView(cellIndex: index, kind: marks.contains(index) ? .markRemoved : .markAdded,
+            frame: container.bounds, tileColor: UIColor(CapyPalette.regionColors[palette]), reduceMotion: true)
+        // No play(), sound, model mutation or save: this is the prospective X
+        // state and disappears atomically if the contact becomes a double tap.
+        container.addSubview(preview)
+        feedbackOverlay.addSubview(container); pendingTapPreview = container; pendingTapPreviewCell = index
     }
 
     private func submit(_ index: Int) {
@@ -591,6 +724,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         let location = gesture.location(in: self)
         let movement = gesture.translation(in: self)
         if gesture.state == .began {
+            tapDecision.commitSingle()
             contactAllowsTapWait = false
             clearPendingTapFeedback()
             clearEntrancePresentation()
@@ -669,13 +803,14 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         else { updateInputAvailability(); updateTutorialGuide(); updateIdleBlinkScheduling(); presentPendingEntranceIfPossible() }
     }
 
-    override var isHidden: Bool { didSet { if isHidden { endCellPress() } } }
+    override var isHidden: Bool { didSet { if isHidden { cancelInputActivity() } else { updateInputAvailability() } } }
 
     func cancelPresentation() {
         cancelInputActivity(); clearFeedback(); pendingSubmission = nil
     }
 
     func cancelInputActivity() {
+        tapDecision.cancel()
         endCellPress()
         for recognizer in inputRecognizers where recognizer.isEnabled { recognizer.isEnabled = false }
         finishSwipe(cancelled: true)
@@ -686,7 +821,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     }
 
     private func updateInputAvailability() {
-        let enabled = !locked && window != nil && applicationAllowsPresentation
+        let enabled = !locked && !isHidden && window != nil && applicationAllowsPresentation
         for recognizer in inputRecognizers where recognizer.isEnabled != enabled { recognizer.isEnabled = enabled }
     }
 
@@ -869,6 +1004,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         cancelIdleBlink()
         lastBlinkedCell = nil
         idleReactionOrdinal = 0
+        committedTapPreviews.removeAll()
         endCellPress()
         let views = Set(marks.map { ObjectIdentifier($0) })
         let layers = Set(marks.map { ObjectIdentifier($0.layer) })

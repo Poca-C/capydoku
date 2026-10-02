@@ -1,0 +1,10 @@
+{
+  "build": "0.2.65 (68)",
+  "video": "native-mixed.mov",
+  "test": "CapydokuUITests/testNativeTapRouterKeepsMarkUndoDoubleAndSwipeDistinct",
+  "device": "iPhone 17e simulator",
+  "content": "UIKit原生单击标记、撤销、双击、已标记格双击、横向滑动与打开关闭提示。",
+  "boundary": "XCTest调用包含idle等待，非sub-300ms物理手势速度或实测延迟；录屏无声。",
+  "selectedFrames": "native-selected-frames.jpg",
+  "review": "Reviewed finite samples from seconds 2–21: mark/undo, found state, swipe marks and hint are visible without residual preview; not a frame-by-frame or latency measurement. UI fixture deliberately uses English; normal phone keeps saved Chinese."
+}

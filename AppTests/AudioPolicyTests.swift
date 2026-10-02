@@ -186,22 +186,31 @@ extension AudioPolicyTests {
         print("AUDIO_DIAGNOSTIC combo: only latest Excellent remains playing at t=0.400; preceding Nice and Great each stopped once")
     }
 
-    @MainActor func testExperienceDiagnosticLocalSwipeLiftPreservesActiveClipsWithoutFutureTail() throws {
+    @MainActor func testLocalSwipeFollowsNewCellsImmediatelyWithoutQueuedBacklog() throws {
         let rig = AudioExperienceDiagnosticRig(), player = try rig.player()
         player.beginSwipe(); player.playMarks(count: 5)
+        XCTAssertEqual(rig.handles.count, 1, "The current batch sounds before its callback returns")
         rig.clock.advance(0.08)
+        XCTAssertEqual(rig.handles.count, 1, "No old cells sound while the finger pauses")
+        player.playMarks(count: 4)
         XCTAssertEqual(rig.handles.count, 2)
-        XCTAssertTrue(rig.handles.allSatisfy { $0.isPlaying && $0.currentTime < $0.duration })
+        player.playMarks(count: 3)
+        XCTAssertEqual(rig.handles.count, 2, "Same-instant batches coalesce, rather than queue")
         player.endSwipe(cancelled: false); rig.clock.advance(1)
         XCTAssertEqual(rig.handles.count, 2)
         XCTAssertTrue(rig.handles.allSatisfy { $0.stopCount == 0 })
-        print("AUDIO_DIAGNOSTIC swipe: five accepted cells, lift at 80ms: two active 182ms clips are not stopped; three future cues discarded, no long tail")
+        player.beginSwipe(); player.playMarks(count: 1)
+        XCTAssertEqual(rig.handles.count, 3, "A new stroke immediately acknowledges its first cell")
+        player.endSwipe(cancelled: true)
+        XCTAssertFalse(rig.handles[2].isPlaying)
+        rig.clock.advance(1)
+        XCTAssertEqual(rig.handles.count, 3)
     }
 
     @MainActor func testExperienceDiagnosticLocalSwipeEndingInSameCallbackCompletesOneDueClip() throws {
         let rig = AudioExperienceDiagnosticRig(), player = try rig.player()
         // PuzzleBoardUIView.pan(.ended) can mark fresh cells and finish the swipe
-        // in the same callback; delay zero still schedules a later main-queue job.
+        // in the same callback; the local zero-delay cue starts immediately.
         player.beginSwipe(); player.playMarks(count: 3); player.endSwipe(cancelled: false)
         rig.clock.advance(1)
         XCTAssertEqual(rig.handles.count, 1)
@@ -221,17 +230,17 @@ extension AudioPolicyTests {
         print("AUDIO_DIAGNOSTIC final hit: correct and Excellent both start after won/inputLocked and remain uncut at 500ms")
     }
 
-    @MainActor func testExperienceDiagnosticLocalEveryShortEffectCreatesPlayerAtDeferredTrigger() throws {
+    @MainActor func testLocalZeroDelayEffectsStartBeforeReturningAndDoNotReplayLater() throws {
         let rig = AudioExperienceDiagnosticRig(), player = try rig.player()
         XCTAssertTrue(rig.handles.isEmpty); XCTAssertTrue(rig.sessionChanges.isEmpty)
         player.play(.mark)
-        XCTAssertTrue(rig.handles.isEmpty, "Zero-delay cue still waits for its scheduled callback")
+        XCTAssertEqual(rig.handles.count, 1, "Zero-delay local cue starts in the input callback")
         rig.clock.advance(0)
         XCTAssertEqual(rig.handles.count, 1); XCTAssertEqual(rig.sessionChanges, [true])
         rig.clock.advance(0.25); player.play(.mark); rig.clock.advance(0)
         XCTAssertEqual(rig.handles.count, 2)
         XCTAssertEqual(rig.resources, ["meow-test-mark_x_2.wav", "meow-test-mark_x_2.wav"])
-        print("AUDIO_DIAGNOSTIC latency architecture: no prepared player at first event; both marks create fresh players inside the scheduled callback; device latency not measured")
+        print("AUDIO_DIAGNOSTIC local zero-delay cues start synchronously; output-device latency is not measured")
     }
 
     @MainActor func testExperienceDiagnosticLocalMusicCoexistsWithEffectsAndSettingsBackgroundResume() throws {

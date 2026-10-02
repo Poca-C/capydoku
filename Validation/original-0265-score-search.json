@@ -1,0 +1,20 @@
+{
+  "boundary" : "Frozen 0.2.64 algorithm versus production, identical measured fonts and real board prefixes; normal\/compact, forward\/reverse, side space enabled\/disabled. Exact center, size, font and travel equality; deterministic geometry-operation counts, not device input latency or frame-rate claims.",
+  "costPrunedCandidates" : 139401,
+  "denseTenByTenPrunedCases" : 19,
+  "legacyCandidateChecks" : 152337,
+  "legacyObstacleChecks" : 855217,
+  "levels" : [
+    1,
+    2,
+    6,
+    20,
+    70,
+    101,
+    150
+  ],
+  "optimizedCandidateChecks" : 12936,
+  "optimizedObstacleChecks" : 31450,
+  "prunedCases" : 113,
+  "sampledPlacements" : 368
+}

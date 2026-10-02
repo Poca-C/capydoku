@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "kind": "scoped_delta_to_88_item_audit",
+  "build": "0.2.65 (68)",
+  "baseAudit": "Validation/checklist-0221-audit.json",
+  "previousDelta": "Validation/checklist-0264-feedback-delta.json",
+  "formalSignOff": false,
+  "full88Reexecuted": false,
+  "overallCountsRecomputed": false,
+  "rows": [
+    {
+      "id": "04-02",
+      "title": "单击标记与撤销",
+      "originalAcceptanceText": "操作  单击空格，再次单击该X。\n通过  添加后可撤销；生命、分数和找到数量不变。",
+      "baseAuditStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "unchanged",
+      "newEvidenceScope": "即时单击预览与确认/撤销，无生命或分数变更。",
+      "evidence": [
+        "Validation/original-0265-feedback.json"
+      ]
+    },
+    {
+      "id": "04-03",
+      "title": "正确双击只提交一次",
+      "originalAcceptanceText": "操作  双击正确空格和带普通X的正确格。\n通过  各提交一次，清除原X并显示动物；不为其他格自动打叉。",
+      "baseAuditStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "unchanged",
+      "newEvidenceScope": "同格双击优先及已标记正确格原生触摸回归。",
+      "evidence": [
+        "Validation/original-0265-feedback.json"
+      ]
+    },
+    {
+      "id": "04-04",
+      "title": "错误双击反馈幂等",
+      "originalAcceptanceText": "操作  双击错误格，观察整个手势和动画。\n通过  只扣一次生命并反馈一次；不出现额外提交或临时X残留。",
+      "baseAuditStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "unchanged",
+      "newEvidenceScope": "原生连续错误只扣一次血且不泄漏临时X。",
+      "evidence": [
+        "Validation/original-0265-feedback.json"
+      ]
+    },
+    {
+      "id": "04-05",
+      "title": "横纵滑动与保护格",
+      "originalAcceptanceText": "操作  横纵滑过空格、已有X、动物及锁定格，再斜滑。\n通过  只新增允许的X，不覆盖保护格；斜向不批量标记。",
+      "baseAuditStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "unchanged",
+      "newEvidenceScope": "横纵滑动、斜向及离开棋盘回归。",
+      "evidence": [
+        "Validation/original-0265-feedback.json"
+      ]
+    },
+    {
+      "id": "04-06",
+      "title": "快速手势切换",
+      "originalAcceptanceText": "操作  快速切换单击、双击和滑动，并中途离开棋盘。\n通过  手势不串扰、不重复扣血；双击优先，滑动结束后不继续标记。",
+      "baseAuditStatus": "verified_local_scope",
+      "formalStatusAfterThisRound": "unchanged",
+      "newEvidenceScope": "单/双击路由跨格提前确认、混合输入与取消。",
+      "evidence": [
+        "Validation/original-0265-feedback.json"
+      ]
+    },
+    {
+      "id": "14-04",
+      "title": "原音频文件与触发验收",
+      "originalAcceptanceText": "操作  逐项触发按钮、X、滑动、撤销、正确错误及Combo声音。\n通过  文件、触发次数、节奏和分组符合冻结音频表；没有未经确认的额外声音。",
+      "baseAuditStatus": "pending",
+      "formalStatusAfterThisRound": "unchanged",
+      "newEvidenceScope": "9个本地原声保持，实际bundle可解码与触发测试通过；正式音频表未签收。",
+      "evidence": [
+        "Validation/original-0265-feedback.json"
+      ]
+    },
+    {
+      "id": "14-05",
+      "title": "音频叠加打断与恢复",
+      "originalAcceptanceText": "操作  快速操作并切前后台，测试外部播放前后及四个开关。\n通过  声音不失控叠加、不漏停或错误重播；恢复前次开关与播放状态。",
+      "baseAuditStatus": "partial",
+      "formalStatusAfterThisRound": "unchanged",
+      "newEvidenceScope": "立即播放、滑动不积压、开关/前后台和中断音频回归。",
+      "evidence": [
+        "Validation/original-0265-feedback.json"
+      ]
+    },
+    {
+      "id": "16-03",
+      "title": "最终构建全部问题复验",
+      "originalAcceptanceText": "操作  在最终构建复测所有失败用例及受影响流程。\n通过  每个Bug均有关联修复版本、复测结论和证据，旧版本通过不能代替复测。",
+      "baseAuditStatus": "partial",
+      "formalStatusAfterThisRound": "unchanged",
+      "newEvidenceScope": "最终146项App及2项17eUI；教学补丁前另7项原生UI均通过。",
+      "evidence": [
+        "Validation/original-0265-feedback.json"
+      ]
+    }
+  ]
+}

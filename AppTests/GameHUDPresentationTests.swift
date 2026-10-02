@@ -842,3 +842,216 @@ final class GameHUDPresentationTests: XCTestCase {
     }
 
 }
+
+extension GameHUDPresentationTests {
+    @MainActor func testScoreSearchPruningPreservesLegacyPlacementsAcrossRealBoardsAndCutsCollisionWork() throws {
+        let url = try XCTUnwrap(Bundle.main.url(forResource: "levels", withExtension: "json"))
+        let pack = try JSONDecoder().decode([Puzzle].self, from: Data(contentsOf: url))
+        let levelIDs: Set<Int> = [1, 2, 6, 20, 70, 101, 150]
+        let puzzles = pack.filter { levelIDs.contains($0.id) }
+        XCTAssertEqual(Set(puzzles.map(\.id)), levelIDs)
+        XCTAssertEqual(Set(puzzles.map(\.size)), [4, 6, 8, 10])
+        let beforeCounts = CellScorePlacement.SearchDiagnostics()
+        let afterCounts = CellScorePlacement.SearchDiagnostics()
+        var samples = 0, prunedCases = 0, densePrunedCases = 0
+        for puzzle in puzzles {
+            for (host, content) in [(CGFloat(190), CGFloat(320)), (CGFloat(374), CGFloat(402))] {
+                let board = CGRect(x: 17.25 + (content - host) / 2 + 7,
+                                   y: 29.75, width: host - 14, height: host - 14)
+                let available = CGRect(x: 17.25 + 14, y: board.minY,
+                                       width: content - 28, height: board.height)
+                let unit = board.width / CGFloat(puzzle.size)
+                for (direction, order) in [("forward", puzzle.solution), ("reverse", Array(puzzle.solution.reversed()))] {
+                    var found = [CGRect]()
+                    for (step, index) in order.enumerated() {
+                        let cell = CGRect(x: board.minX + CGFloat(index % puzzle.size) * unit,
+                                          y: board.minY + CGFloat(index / puzzle.size) * unit,
+                                          width: unit, height: unit)
+                        found.append(cell)
+                        for useSideSpace in [false, true] {
+                            let beforeCandidateCount = beforeCounts.candidateChecks
+                            let beforeObstacleCount = beforeCounts.obstacleChecks
+                            let afterCandidateCount = afterCounts.candidateChecks
+                            let afterObstacleCount = afterCounts.obstacleChecks
+                            let beforePrunedCount = afterCounts.costPrunedCandidates
+                            let amount = 100 + step * 20
+                            let frame: CGRect? = useSideSpace ? available : nil
+                            let context = "level=\(puzzle.id), host=\(host), order=\(direction), step=\(step), sideSpace=\(useSideSpace)"
+                            let before = LegacyCellScorePlacement0264.anchored(amount: amount,
+                                cellFrame: cell, boardFrame: board, avoiding: found,
+                                availableFrame: frame, diagnostics: beforeCounts)
+                            let after = CellScorePlacement.anchored(amount: amount,
+                                cellFrame: cell, boardFrame: board, avoiding: found,
+                                availableFrame: frame, diagnostics: afterCounts)
+                            XCTAssertEqual(after?.center, before?.center, context)
+                            XCTAssertEqual(after?.size, before?.size, context)
+                            XCTAssertEqual(after?.verticalTravel, before?.verticalTravel, context)
+                            XCTAssertEqual(after?.fontSize, before?.fontSize, context)
+                            let pruned = afterCounts.costPrunedCandidates - beforePrunedCount
+                            XCTAssertEqual(afterCounts.candidateChecks - afterCandidateCount + pruned,
+                                           beforeCounts.candidateChecks - beforeCandidateCount, context)
+                            XCTAssertLessThanOrEqual(afterCounts.obstacleChecks - afterObstacleCount,
+                                                     beforeCounts.obstacleChecks - beforeObstacleCount, context)
+                            if pruned > 0 {
+                                prunedCases += 1
+                                if puzzle.size == 10 && found.count >= 8 { densePrunedCases += 1 }
+                            }
+                            samples += 1
+                        }
+                    }
+                }
+            }
+        }
+        XCTAssertEqual(samples, puzzles.reduce(0) { $0 + $1.size } * 8)
+        XCTAssertGreaterThan(prunedCases, 0)
+        XCTAssertGreaterThan(densePrunedCases, 0, "Include late 10×10 play, where the original search does the most work.")
+        XCTAssertLessThan(afterCounts.candidateChecks, beforeCounts.candidateChecks)
+        XCTAssertLessThan(afterCounts.obstacleChecks, beforeCounts.obstacleChecks)
+        let data = try JSONSerialization.data(withJSONObject: [
+            "sampledPlacements": samples, "levels": levelIDs.sorted(),
+            "prunedCases": prunedCases, "denseTenByTenPrunedCases": densePrunedCases,
+            "legacyCandidateChecks": beforeCounts.candidateChecks,
+            "optimizedCandidateChecks": afterCounts.candidateChecks,
+            "costPrunedCandidates": afterCounts.costPrunedCandidates,
+            "legacyObstacleChecks": beforeCounts.obstacleChecks,
+            "optimizedObstacleChecks": afterCounts.obstacleChecks,
+            "boundary": "Frozen 0.2.64 algorithm versus production, identical measured fonts and real board prefixes; normal/compact, forward/reverse, side space enabled/disabled. Exact center, size, font and travel equality; deterministic geometry-operation counts, not device input latency or frame-rate claims."
+        ], options: [.prettyPrinted, .sortedKeys])
+        let attachment = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+        attachment.name = "score-search-pruning-0265"; attachment.lifetime = .keepAlways; add(attachment)
+    }
+}
+
+// Frozen 0.2.64 search oracle. Keep its candidate order, geometry and tie rules
+// independent of production so latency work cannot silently relocate rewards.
+private struct LegacyCellScorePlacement0264 {
+    let center: CGPoint
+    let size: CGSize
+    let verticalTravel: CGFloat
+    let fontSize: CGFloat
+    var horizontalPadding: CGFloat { fontSize <= 15 ? 3 : 6 }
+
+    init(amount: Int, center: CGPoint, verticalTravel: CGFloat = -12) {
+        self.init(amount: amount, center: center, verticalTravel: verticalTravel, fontSize: 19)
+    }
+
+    private init(amount: Int, center: CGPoint, verticalTravel: CGFloat, fontSize: CGFloat) {
+        let base = UIFont.systemFont(ofSize: fontSize, weight: .heavy)
+        let font = UIFont(descriptor: base.fontDescriptor.withDesign(.rounded) ?? base.fontDescriptor, size: fontSize)
+        let textWidth = ("+\(amount)" as NSString).size(withAttributes: [.font: font]).width
+        self.center = center; self.fontSize = fontSize
+        size = CGSize(width: ceil(textWidth) + (fontSize <= 15 ? 6 : 12),
+                      height: max(ceil(font.lineHeight) + 4, ceil(fontSize * 24 / 19) + 4))
+        self.verticalTravel = verticalTravel
+    }
+
+    private init(center: CGPoint, size: CGSize, verticalTravel: CGFloat, fontSize: CGFloat) {
+        self.center = center; self.size = size; self.verticalTravel = verticalTravel; self.fontSize = fontSize
+    }
+
+    var sweptFrame: CGRect {
+        let start = CGRect(x: center.x - size.width / 2, y: center.y - size.height / 2,
+                           width: size.width, height: size.height)
+        return start.union(start.offsetBy(dx: 0, dy: verticalTravel))
+    }
+
+    static func anchored(amount: Int, cellFrame: CGRect, boardFrame: CGRect, avoiding: [CGRect] = [], availableFrame: CGRect? = nil, diagnostics: CellScorePlacement.SearchDiagnostics) -> LegacyCellScorePlacement0264? {
+        // Short screens leave wide empty margins beside a compact board. Let
+        // an edge reward use that space instead of appearing across the puzzle.
+        // The board owns the vertical band: never enter rules, Combo or tools.
+        let placementFrame: CGRect
+        if let availableFrame, !availableFrame.isEmpty, !availableFrame.isNull, !availableFrame.isInfinite,
+           [availableFrame.minX, availableFrame.minY, availableFrame.width, availableFrame.height].allSatisfy(\.isFinite),
+           availableFrame.contains(boardFrame) {
+            placementFrame = CGRect(x: availableFrame.minX, y: boardFrame.minY,
+                                    width: availableFrame.width, height: boardFrame.height)
+        } else { placementFrame = boardFrame }
+        let preferredSize = max(15, min(19, cellFrame.width * 0.6))
+        let preferred = place(amount: amount, cellFrame: cellFrame, boardFrame: placementFrame,
+                              avoiding: avoiding, fontSize: preferredSize, diagnostics: diagnostics)
+        guard preferredSize > 15 else { return preferred }
+        let compact = place(amount: amount, cellFrame: cellFrame, boardFrame: placementFrame,
+                            avoiding: avoiding, fontSize: 15, diagnostics: diagnostics)
+        guard let preferred else { return compact }
+        guard let compact else { return preferred }
+        // Preserve the more readable original type unless smaller text makes
+        // a material difference to its association with the new character.
+        let compactCost = compact.proximityCost(to: cellFrame) + (preferredSize - 15) * 2
+        return compactCost + 0.001 < preferred.proximityCost(to: cellFrame) ? compact : preferred
+    }
+
+    private func proximityCost(to cell: CGRect) -> CGFloat {
+        // Small tie-break preference for visible drift; never send a badge
+        // across the board merely to keep a full12pt upward movement.
+        hypot(center.x - cell.midX, center.y - cell.midY) + (12 - abs(verticalTravel)) * 0.25
+    }
+
+    private static func place(amount: Int, cellFrame: CGRect, boardFrame: CGRect, avoiding: [CGRect], fontSize: CGFloat, diagnostics: CellScorePlacement.SearchDiagnostics) -> LegacyCellScorePlacement0264? {
+        guard amount > 0, !cellFrame.isEmpty, !boardFrame.isEmpty,
+              [cellFrame.minX, cellFrame.minY, cellFrame.width, cellFrame.height,
+               boardFrame.minX, boardFrame.minY, boardFrame.width, boardFrame.height].allSatisfy(\.isFinite) else { return nil }
+        let bounds = boardFrame.insetBy(dx: 2, dy: 2)
+        let measured = LegacyCellScorePlacement0264(amount: amount, center: .zero, verticalTravel: -12, fontSize: fontSize)
+        let size = CGSize(width: min(measured.size.width, bounds.width), height: measured.size.height)
+        guard size.width > 0, bounds.height >= size.height else { return nil }
+        let obstacles = [cellFrame] + avoiding.filter { !$0.isEmpty && !$0.isInfinite && !$0.isNull }
+        func clampX(_ x: CGFloat) -> CGFloat { min(max(x, bounds.minX + size.width / 2), bounds.maxX - size.width / 2) }
+        func candidate(x: CGFloat, y: CGFloat, direction: CGFloat, travel: CGFloat = 12) -> LegacyCellScorePlacement0264? {
+            diagnostics.candidateChecks += 1
+            let result = LegacyCellScorePlacement0264(center: CGPoint(x: x, y: y), size: size,
+                verticalTravel: direction * travel, fontSize: fontSize)
+            guard bounds.insetBy(dx: -0.0001, dy: -0.0001).contains(result.sweptFrame),
+                  !obstacles.contains(where: { obstacle in
+                      diagnostics.obstacleChecks += 1
+                      return obstacle.insetBy(dx: -2, dy: -2).intersects(result.sweptFrame)
+                  }) else { return nil }
+            return result
+        }
+        let x = clampX(cellFrame.midX)
+        var best: LegacyCellScorePlacement0264?
+        var bestCost = CGFloat.infinity
+        func consider(_ option: LegacyCellScorePlacement0264?) {
+            guard let option else { return }
+            let cost = option.proximityCost(to: cellFrame)
+            if cost + 0.001 < bestCost { best = option; bestCost = cost }
+        }
+        for direction in [CGFloat(-1), CGFloat(1)] {
+            let y = direction < 0 ? cellFrame.minY - 4 - size.height / 2 : cellFrame.maxY + 4 + size.height / 2
+            let direct = candidate(x: x, y: y, direction: direction)
+            // Aligned above/below is the shortest clear axis for this wide
+            // label. Keep the normal-board fast path and its familiar motion.
+            if let direct, abs(x - cellFrame.midX) < 0.001 { return direct }
+            consider(direct)
+        }
+        // Tight late-game boards may have another animal above and below.
+        // Search only obstacle edges and board limits, then choose the closest
+        // clear position; at most 10 occupied cells bound this small search.
+        // Search just beyond the required2pt exclusion. Using the normal4pt
+        // aesthetic gap here can miss valid narrow slots between two animals.
+        let searchGap: CGFloat = 2.25
+        var horizontal = [x, bounds.minX + size.width / 2, bounds.maxX - size.width / 2]
+        for obstacle in obstacles {
+            horizontal.append(clampX(obstacle.minX - searchGap - size.width / 2))
+            horizontal.append(clampX(obstacle.maxX + searchGap + size.width / 2))
+        }
+        let xs = Array(Set(horizontal)).sorted()
+        for travel in [CGFloat(12), CGFloat(6), CGFloat(0)] {
+            for direction in [CGFloat(-1), CGFloat(1)] {
+                let upward: CGFloat = direction < 0 ? travel : 0
+                let downward: CGFloat = direction > 0 ? travel : 0
+                var vertical = [cellFrame.midY, bounds.minY + size.height / 2 + upward,
+                                bounds.maxY - size.height / 2 - downward]
+                for obstacle in obstacles {
+                    vertical.append(obstacle.minY - searchGap - size.height / 2 - downward)
+                    vertical.append(obstacle.maxY + searchGap + size.height / 2 + upward)
+                }
+                let ys = Array(Set(vertical)).sorted()
+                for cx in xs { for cy in ys {
+                    guard let option = candidate(x: cx, y: cy, direction: direction, travel: travel) else { continue }
+                    consider(option)
+                } }
+            }
+        }
+        return best
+    }
+}

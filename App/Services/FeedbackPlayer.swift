@@ -93,6 +93,7 @@ final class FeedbackPlayer {
     private var pending: [UUID: Pending] = [:]
     private var swipeQueue = SwipeAudioQueue()
     private var swiping = false
+    private var lastLocalSwipeCue: TimeInterval?
     private var observers: [NSObjectProtocol] = []
     private var preparedEffects: [String: [PreparedEffect]] = [:]
     private var preparedPoolEnabled = false
@@ -268,6 +269,16 @@ final class FeedbackPlayer {
         haptics.playMarks(count: count)
         guard let clip = playable("swipe_x"), let policy = manifest.swipe else { return }
         if !swiping { swiping = true }
+        if usesLocalTestAudio, policy.mode == .perCell, clip.delay == 0 {
+            // Local listening policy: acknowledge the cells arriving now,
+            // coalescing dense batches instead of playing stale cells later.
+            let now = clock()
+            let cadence = max(clip.minimumInterval, policy.cadenceSeconds)
+            guard lastLocalSwipeCue.map({ now - $0 >= cadence }) ?? true else { return }
+            lastLocalSwipeCue = now
+            scheduleClip("swipe_x", after: 0, swipe: true)
+            return
+        }
         if policy.mode == .continuous {
             if !effects.values.contains(where: { $0.key == "swipe_x" }) && !pending.values.contains(where: { $0.swipe }) { enqueue("swipe_x", swipe: true) }
         } else {
@@ -286,6 +297,7 @@ final class FeedbackPlayer {
             due.action()
         }
         swiping = false
+        lastLocalSwipeCue = nil
         for (id, item) in pending where item.swipe { item.task.cancel(); pending.removeValue(forKey: id) }
         swipeQueue.cancel()
         // An infinite loop cannot finish naturally, so finishCurrent ends it at the next loop boundary.
@@ -355,8 +367,17 @@ final class FeedbackPlayer {
                 else { self.schedulePreparedPlaybackEnd(playing, id: id) }
             }
         }
-        let task = schedule(delay, action)
-        pending[id] = Pending(key: key, swipe: swipe, dueAt: dueAt, task: task, action: action)
+        if usesLocalTestAudio, delay <= 0 {
+            // An already accepted local move has no requested delay. Starting
+            // here prevents rendering or other queued work from postponing its
+            // sound. Imported formal scheduling remains unchanged.
+            pending[id] = Pending(key: key, swipe: swipe, dueAt: dueAt,
+                                  task: AudioScheduledTask {}, action: action)
+            action()
+        } else {
+            let task = schedule(delay, action)
+            pending[id] = Pending(key: key, swipe: swipe, dueAt: dueAt, task: task, action: action)
+        }
     }
     private func newPlayer(key: String, clip: AudioClipPolicy) -> Playing? {
         guard trusted else { return nil }
@@ -499,7 +520,7 @@ final class FeedbackPlayer {
     private func cancelTransient() {
         for item in pending.values { item.task.cancel() }; pending.removeAll()
         for item in effects.values { stop(item) }; effects.removeAll()
-        swiping = false; swipeQueue.cancel()
+        swiping = false; lastLocalSwipeCue = nil; swipeQueue.cancel()
     }
     private func cancelOutOfScopeAudio() {
         func obsolete(_ clip: AudioClipPolicy) -> Bool {

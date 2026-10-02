@@ -20,6 +20,7 @@ import CapydokuCore
     var locked = false
     var hideAccessibility = false
     var tutorialTargets = Set<Int>()
+    var tutorialAction: String?
     var preview = Set<Int>()
     var actions = 0
     var arrivals: [(index: Int, cellFrame: CGRect)] = []
@@ -40,7 +41,7 @@ import CapydokuCore
             found: session.found, marks: session.marks, errors: session.errors, preview: preview,
             sessionID: session.id, lives: session.lives, effectsEnabled: effectsEnabled,
             reduceMotion: reduceMotion,
-            tutorialTargets: tutorialTargets, locked: locked || session.status != .playing,
+            tutorialTargets: tutorialTargets, tutorialAction: tutorialAction, locked: locked || session.status != .playing,
             hideAccessibility: hideAccessibility || session.status != .playing,
             onToggle: { [weak self] index in
                 guard let self else { return }; actions += 1
@@ -72,6 +73,80 @@ import CapydokuCore
 }
 
 final class BoardInteractionFeedbackTests: XCTestCase {
+    @MainActor func testPendingTapShowsTargetStateWithoutCommittingAndHandsOffWithoutSecondAnimation() throws {
+        let rig = try InteractionFeedbackRig(); defer { rig.close() }
+        var time = 0.0
+        var deadlines: [DispatchWorkItem] = []
+        rig.board.tapDecision.now = { time }
+        rig.board.tapDecision.schedule = { _, work in deadlines.append(work) }
+        func preview() -> UIView? { rig.transients.first { $0.accessibilityIdentifier == "pending_tap_preview_0" } }
+        let before = rig.session
+        rig.board.tapDecision.contactBegan(cell: 0); rig.board.tapDecision.acceptedTap(cell: 0)
+        let pending = try XCTUnwrap(preview())
+        XCTAssertEqual((pending.subviews.first as? BoardCellFeedbackView)?.kind, .markAdded)
+        XCTAssertEqual(rig.session, before); XCTAssertEqual(rig.actions, 0)
+        XCTAssertTrue(rig.board.inputActivity.isBusy, "Tools cannot interrupt the unresolved single/double decision.")
+        time = 0.06; rig.board.tapDecision.contactBegan(cell: 1)
+        XCTAssertEqual(rig.session.marks, [0]); XCTAssertEqual(rig.actions, 1)
+        XCTAssertNil(preview()); XCTAssertTrue(rig.cells.isEmpty, "Committing the already-visible X must not redraw it from zero.")
+        rig.board.tapDecision.acceptedTap(cell: 1)
+        time = 0.12; rig.board.tapDecision.contactBegan(cell: 1); rig.board.tapDecision.acceptedTap(cell: 1)
+        XCTAssertEqual(rig.session.found, [1]); XCTAssertEqual(rig.session.marks, [0])
+        XCTAssertEqual(rig.session.lives, before.lives); XCTAssertEqual(rig.actions, 2)
+        XCTAssertFalse(rig.board.inputActivity.isBusy)
+        deadlines.forEach { $0.perform() }
+        XCTAssertEqual(rig.actions, 2, "Old deadlines cannot add a mark beneath the accepted answer.")
+        time = 1; rig.board.tapDecision.contactBegan(cell: 0); rig.board.tapDecision.acceptedTap(cell: 0)
+        XCTAssertEqual((try XCTUnwrap(preview()).subviews.first as? BoardCellFeedbackView)?.kind, .markRemoved)
+        XCTAssertEqual(rig.session.marks, [0], "Undo preview is also presentation only.")
+        time = 1.31; deadlines.last?.perform()
+        XCTAssertTrue(rig.session.marks.isEmpty); XCTAssertNil(preview())
+        XCTAssertTrue(rig.cells.allSatisfy { $0.kind == .found }, "Undo handoff must not put the old X back for an erasing replay.")
+    }
+
+    @MainActor func testTeachingRejectedSingleDropsItsPreviewAndSwipeTeachingNeverPreviewsTapMarks() throws {
+        let rig = try InteractionFeedbackRig(); defer { rig.close() }
+        var deadlines: [DispatchWorkItem] = []
+        rig.board.tapDecision.schedule = { _, work in deadlines.append(work) }
+        rig.tutorialTargets = [1]; rig.tutorialAction = "doubleTap"; rig.refresh()
+        let before = rig.session
+        rig.board.tapDecision.acceptedTap(cell: 1)
+        XCTAssertTrue(rig.transients.contains { $0.accessibilityIdentifier == "pending_tap_preview_1" })
+        deadlines.last?.perform()
+        XCTAssertEqual(rig.session, before); XCTAssertEqual(rig.actions, 0)
+        XCTAssertFalse(rig.transients.contains { $0.accessibilityIdentifier == "pending_tap_preview_1" },
+                       "An expired first click is rejected by double-tap teaching and must restore the untouched board immediately.")
+        rig.tutorialTargets = [0, 1]; rig.tutorialAction = "swipe"; rig.refresh()
+        rig.board.tapDecision.acceptedTap(cell: 0)
+        XCTAssertFalse(rig.transients.contains { $0.accessibilityIdentifier == "pending_tap_preview_0" })
+        deadlines.last?.perform()
+        XCTAssertEqual(rig.session, before); XCTAssertEqual(rig.actions, 0)
+        XCTAssertFalse(rig.board.inputActivity.isBusy)
+    }
+
+    @MainActor func testPendingTapIsDiscardedByLockSessionReplacementAndBackground() throws {
+        let rig = try InteractionFeedbackRig(); defer { rig.close() }
+        var deadlines: [DispatchWorkItem] = []
+        rig.board.tapDecision.schedule = { _, work in deadlines.append(work) }
+        for cancellation in 0..<3 {
+            rig.locked = false; rig.refresh()
+            let before = rig.session
+            rig.board.tapDecision.acceptedTap(cell: 0)
+            XCTAssertTrue(rig.board.inputActivity.isBusy)
+            switch cancellation {
+            case 0: rig.locked = true; rig.refresh()
+            case 1: rig.session.id = UUID(); rig.refresh()
+            default:
+                NotificationCenter.default.post(name: UIApplication.willResignActiveNotification, object: nil)
+                NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
+            }
+            deadlines.forEach { $0.perform() }
+            XCTAssertTrue(rig.session.marks.isEmpty); XCTAssertEqual(rig.session.lives, before.lives)
+            XCTAssertEqual(rig.actions, 0); XCTAssertFalse(rig.board.inputActivity.isBusy)
+            XCTAssertFalse(rig.transients.contains { $0.accessibilityIdentifier == "pending_tap_preview_0" })
+        }
+    }
+
     @MainActor func testPowerPolicyNotificationCancelsSettlingFaceWithoutReplayingOrChangingTheMove() async throws {
         let rig = try InteractionFeedbackRig(); defer { rig.close() }
         rig.board.activate(index: 1, submit: true)
@@ -104,7 +179,7 @@ final class BoardInteractionFeedbackTests: XCTestCase {
         XCTAssertEqual(highlight.cellIndex, 0)
         XCTAssertFalse(highlight.isUserInteractionEnabled)
         XCTAssertTrue(rig.board.hitTest(first, with: nil) === rig.board)
-        XCTAssertEqual(rig.board.gestureRecognizers?.count, 3)
+        XCTAssertEqual(rig.board.gestureRecognizers?.count, 2)
         XCTAssertFalse(rig.board.inputActivity.isBusy)
         capture(rig.window, "board-contact-before-recognition")
         rig.board.moveCellPress(to: next)

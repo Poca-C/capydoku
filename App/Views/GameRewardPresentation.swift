@@ -427,6 +427,14 @@ struct ProgressFlightStar: View {
 /// Place the entire badge and its travel outside the accepted cell. The board
 /// supplies actual geometry; no duplicated padding or guessed cell dimensions.
 struct CellScorePlacement {
+    /// Optional operation counts for deterministic regression tests; ordinary
+    /// presentation supplies no observer and creates no diagnostics object.
+    final class SearchDiagnostics {
+        var candidateChecks = 0
+        var obstacleChecks = 0
+        var costPrunedCandidates = 0
+    }
+
     let center: CGPoint
     let size: CGSize
     let verticalTravel: CGFloat
@@ -457,7 +465,7 @@ struct CellScorePlacement {
         return start.union(start.offsetBy(dx: 0, dy: verticalTravel))
     }
 
-    static func anchored(amount: Int, cellFrame: CGRect, boardFrame: CGRect, avoiding: [CGRect] = [], availableFrame: CGRect? = nil) -> CellScorePlacement? {
+    static func anchored(amount: Int, cellFrame: CGRect, boardFrame: CGRect, avoiding: [CGRect] = [], availableFrame: CGRect? = nil, diagnostics: SearchDiagnostics? = nil) -> CellScorePlacement? {
         // Short screens leave wide empty margins beside a compact board. Let
         // an edge reward use that space instead of appearing across the puzzle.
         // The board owns the vertical band: never enter rules, Combo or tools.
@@ -470,10 +478,10 @@ struct CellScorePlacement {
         } else { placementFrame = boardFrame }
         let preferredSize = max(15, min(19, cellFrame.width * 0.6))
         let preferred = place(amount: amount, cellFrame: cellFrame, boardFrame: placementFrame,
-                              avoiding: avoiding, fontSize: preferredSize)
+                              avoiding: avoiding, fontSize: preferredSize, diagnostics: diagnostics)
         guard preferredSize > 15 else { return preferred }
         let compact = place(amount: amount, cellFrame: cellFrame, boardFrame: placementFrame,
-                            avoiding: avoiding, fontSize: 15)
+                            avoiding: avoiding, fontSize: 15, diagnostics: diagnostics)
         guard let preferred else { return compact }
         guard let compact else { return preferred }
         // Preserve the more readable original type unless smaller text makes
@@ -488,7 +496,7 @@ struct CellScorePlacement {
         hypot(center.x - cell.midX, center.y - cell.midY) + (12 - abs(verticalTravel)) * 0.25
     }
 
-    private static func place(amount: Int, cellFrame: CGRect, boardFrame: CGRect, avoiding: [CGRect], fontSize: CGFloat) -> CellScorePlacement? {
+    private static func place(amount: Int, cellFrame: CGRect, boardFrame: CGRect, avoiding: [CGRect], fontSize: CGFloat, diagnostics: SearchDiagnostics?) -> CellScorePlacement? {
         guard amount > 0, !cellFrame.isEmpty, !boardFrame.isEmpty,
               [cellFrame.minX, cellFrame.minY, cellFrame.width, cellFrame.height,
                boardFrame.minX, boardFrame.minY, boardFrame.width, boardFrame.height].allSatisfy(\.isFinite) else { return nil }
@@ -497,12 +505,19 @@ struct CellScorePlacement {
         let size = CGSize(width: min(measured.size.width, bounds.width), height: measured.size.height)
         guard size.width > 0, bounds.height >= size.height else { return nil }
         let obstacles = [cellFrame] + avoiding.filter { !$0.isEmpty && !$0.isInfinite && !$0.isNull }
+        let collisionBounds = bounds.insetBy(dx: -0.0001, dy: -0.0001)
+        let paddedObstacles = obstacles.map { $0.insetBy(dx: -2, dy: -2) }
         func clampX(_ x: CGFloat) -> CGFloat { min(max(x, bounds.minX + size.width / 2), bounds.maxX - size.width / 2) }
         func candidate(x: CGFloat, y: CGFloat, direction: CGFloat, travel: CGFloat = 12) -> CellScorePlacement? {
+            diagnostics?.candidateChecks += 1
             let result = CellScorePlacement(center: CGPoint(x: x, y: y), size: size,
                 verticalTravel: direction * travel, fontSize: fontSize)
-            guard bounds.insetBy(dx: -0.0001, dy: -0.0001).contains(result.sweptFrame),
-                  !obstacles.contains(where: { $0.insetBy(dx: -2, dy: -2).intersects(result.sweptFrame) }) else { return nil }
+            let swept = result.sweptFrame
+            guard collisionBounds.contains(swept),
+                  !paddedObstacles.contains(where: { obstacle in
+                      diagnostics?.obstacleChecks += 1
+                      return obstacle.intersects(swept)
+                  }) else { return nil }
             return result
         }
         let x = clampX(cellFrame.midX)
@@ -545,8 +560,17 @@ struct CellScorePlacement {
                 }
                 let ys = Array(Set(vertical)).sorted()
                 for cx in xs { for cy in ys {
+                    // Geometry cannot improve this candidate's cost. Preserve
+                    // the original order and exact tie rule, but avoid all
+                    // rectangle construction/intersections once it cannot win.
+                    let cost = hypot(cx - cellFrame.midX, cy - cellFrame.midY)
+                        + (12 - abs(direction * travel)) * 0.25
+                    guard cost + 0.001 < bestCost else {
+                        diagnostics?.costPrunedCandidates += 1
+                        continue
+                    }
                     guard let option = candidate(x: cx, y: cy, direction: direction, travel: travel) else { continue }
-                    consider(option)
+                    best = option; bestCost = cost
                 } }
             }
         }

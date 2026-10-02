@@ -91,6 +91,30 @@ final class CapydokuUITests: XCTestCase {
         attachment.name = "native-short-contact-observations"; attachment.lifetime = .keepAlways; add(attachment)
     }
 
+    func testNativeTapRouterKeepsMarkUndoDoubleAndSwipeDistinct() {
+        launchGame()
+        // These go through UIKit's real contact recognizers. XCTest inserts
+        // idle waits between calls, so the sub-300ms cross-cell interval is
+        // asserted by BoardTapDecisionTests rather than claimed here.
+        cell(0).coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        expectValue(cell(0), "marked")
+        cell(0).coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        expectValue(cell(0), "empty")
+        cell(1).doubleTap(); expectValue(cell(1), "found")
+        XCTAssertEqual(app.staticTexts["score"].label, "100")
+        expectValue(app.otherElements["lives"], "3")
+        // A double on an existing X must still submit just once.
+        cell(7).tap(); expectValue(cell(7), "marked")
+        cell(7).doubleTap(); expectValue(cell(7), "found")
+        drag(from: 4, to: 6)
+        for index in [4, 5, 6] { expectValue(cell(index), "marked") }
+        cell(8).doubleTap(); expectValue(cell(8), "found")
+        expectValue(app.otherElements["lives"], "3")
+        tapButton("hint"); XCTAssertTrue(app.buttons["hint_close"].waitForExistence(timeout: 5))
+        tapButton("hint_close")
+        XCTAssertEqual(boardValues(), (0..<16).map { [1, 7, 8].contains($0) ? "found" : [4, 5, 6].contains($0) ? "marked" : "empty" })
+    }
+
     func testHomeTutorialSkipAndDoubleTapDoesNotLeakAMark() {
         app.launchArguments = ["-ui-testing", "-legacy-fixture", "-reset-demo"]
         app.launch()

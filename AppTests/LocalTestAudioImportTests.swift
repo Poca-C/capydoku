@@ -50,6 +50,8 @@ final class LocalTestAudioImportTests: XCTestCase {
         let imported = try XCTUnwrap(LocalTestAudioImport.load(directory: directory, environment: .demo))
         XCTAssertFalse(imported.manifest.referenceVerified)
         var expected = playback
+        expected.clips["mark_x"]?.minimumInterval = 0
+        expected.clips["erase_x"]?.minimumInterval = 0
         expected.clips["double_tap_correct"]?.minimumInterval = 0
         expected.clips["double_tap_wrong"]?.minimumInterval = 0
         let encoder = JSONEncoder(); encoder.outputFormatting = [.sortedKeys]

@@ -45,12 +45,12 @@ struct LocalTestAudioImport {
         }, validateUnverified: true)
         guard errors.isEmpty else { return nil }
         var playback = envelope.playback
-        // Demo tuning only: AppModel emits these after a committed find/life
-        // loss and already rejects duplicate input. The original [335/336]
-        // requires a cue for each accepted move; the experimental 150ms
-        // throttle incorrectly silenced distinct moves. Keep source files,
+        // Demo tuning only: AppModel emits these after committed moves and
+        // already rejects duplicate submissions. Accepted rapid marks/erases
+        // must not be silenced by the experimental per-key throttle either.
+        // Keep source files,
         // other cue policies and the separate formal import unchanged.
-        for event in ["double_tap_correct", "double_tap_wrong"] {
+        for event in ["mark_x", "erase_x", "double_tap_correct", "double_tap_wrong"] {
             playback.clips[event]?.minimumInterval = 0
         }
         return Self(manifest: playback, directory: directory)

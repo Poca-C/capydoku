@@ -1,0 +1,87 @@
+{
+  "build": "0.2.65 (68)",
+  "request": "原声在游戏中可播放，优化连续单击、双击、横纵滑动的反应与反馈。",
+  "originalRequirementBlocks": [
+    127,
+    130,
+    133,
+    134,
+    136,
+    331,
+    332,
+    333,
+    334,
+    335,
+    336
+  ],
+  "changes": [
+    "原生单次tap仍由UIKit验证；按格决定单/双击，首击即时展示临时X或撤销；另一格按下立即确认前一格，同格双击只提交答案。",
+    "未决定的单击不写存档、不发已提交音效；0.30秒为临时Demo双击窗口。取消、背景、换盘清除；教学拒绝单击时不残留预览；确认后不重复画X。",
+    "已授权本地原声的零延迟效果直接启动，已接受mark/erase不再被同类节流吞掉；滑动只反馈当前新格，按原本地75ms节拍合并密集批次，不积压旧声。正式音频导入协议不变。",
+    "答对飘分位置搜索预计算矩形并剪除无法胜出的候选；368组新旧几何精确一致，碰撞检查855217降至31450。这是计算量指标，不是整机响应时间或帧率。"
+  ],
+  "validation": {
+    "baseline": {
+      "name": "original-0265-audio-baseline",
+      "passed": 0,
+      "failed": 2,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0265-audio-baseline-summary.json",
+      "bundle": "Validation/test-runs/original-0265-audio-baseline.xcresult",
+      "build": "0.2.64 (67), before this round fixes"
+    },
+    "intermediateApp": {
+      "name": "original-0265-app",
+      "passed": 145,
+      "failed": 0,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0265-app-summary.json",
+      "bundle": "Validation/test-runs/original-0265-app.xcresult",
+      "scope": "Before the final teaching-preview guard"
+    },
+    "intermediateUI": {
+      "name": "original-0265-17e-ui",
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0265-17e-ui-summary.json",
+      "bundle": "Validation/test-runs/original-0265-17e-ui.xcresult",
+      "scope": "Before the final teaching-preview guard"
+    },
+    "finalApp": {
+      "name": "original-0265-app-final",
+      "passed": 146,
+      "failed": 0,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0265-app-final-summary.json",
+      "bundle": "Validation/test-runs/original-0265-app-final.xcresult"
+    },
+    "finalUI": {
+      "name": "original-0265-17e-final",
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "summary": "Validation/test-runs/original-0265-17e-final-summary.json",
+      "bundle": "Validation/test-runs/original-0265-17e-final.xcresult"
+    },
+    "assetIsolationTests": {
+      "passed": 8,
+      "command": "python3 scripts/test_local_test_audio.py"
+    },
+    "scoreGeometry": "Validation/original-0265-score-search.json",
+    "audioInventory": "Validation/audio-isolation-0265-debug.json",
+    "nativeVideo": "Docs/rapid-feedback-0265/native-mixed.mov"
+  },
+  "limits": [
+    "XCTest原生手势包含等待空闲，不能作为精确触摸延迟测量；60ms跨格顺序由生产路由和真实board的受控时钟测试验证。",
+    "真实喇叭输出延迟、主观听感与真机触感未由自动测试证明。原声仍仅限用户授权的本地Debug内部测试。",
+    "正式83行和88条Checklist不重判通过；无全量Core重跑或正式难度验收。"
+  ],
+  "unchanged": {
+    "levelPackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49",
+    "originalWavAndLocalManifestUnmodified": true,
+    "formalAudioManifestUnmodified": true,
+    "githubPublished": false
+  },
+  "physicalInstallation": "Validation/original-0265-physical-install.json"
+}

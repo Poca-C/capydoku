@@ -1,0 +1,77 @@
+{
+  "build": "0.2.65 (68)",
+  "timestampUTC": "2026-10-02T01:52:49.983872+00:00",
+  "authorization": "User requested original audio in the game and faster input; existing phone-update authorization persists. In-place update, no reset or uninstall. GitHub publication remains paused.",
+  "device": {
+    "model": "iPhone 14 Pro Max",
+    "os": "26.3.1",
+    "transport": "localNetwork"
+  },
+  "package": {
+    "version": "0.2.65",
+    "build": "68",
+    "bundle": "com.capydoku.demo",
+    "environment": "internal_demo",
+    "profileIncludesPhone": true,
+    "profileExpiresUTC": "2026-10-08 04:04:05",
+    "team": [
+      "4QVSM46JU2"
+    ],
+    "binarySHA256": "993ecd98c1843cda5e2edf7765e4d04c961c3a08bd63a6fc252f20f92f409980",
+    "signatureVerified": true
+  },
+  "installation": {
+    "passed": true,
+    "previousVersion": "0.2.64 (67)",
+    "verifiedVersion": "0.2.65",
+    "verifiedBuild": "68",
+    "evidence": "Validation/test-runs/physical-0265-install.json",
+    "appsEvidence": "Validation/test-runs/physical-0265-apps.json"
+  },
+  "launch": {
+    "passed": false,
+    "blockedByDeviceLock": true,
+    "error": "FBSOpenApplicationErrorDomain 7: device locked",
+    "normalArguments": [],
+    "evidence": "Validation/test-runs/physical-0265-launch.json",
+    "nextAction": "User unlocks iPhone and opens Capydoku. No new trust requirement observed."
+  },
+  "data": {
+    "beforeFileCount": 8,
+    "afterFileCount": 8,
+    "allFilesIdentical": true,
+    "changedFiles": [],
+    "checksums": [
+      {
+        "snapshot": "before",
+        "file": "Capydoku/progress.backup.json",
+        "valid": true
+      },
+      {
+        "snapshot": "before",
+        "file": "Capydoku/progress.json",
+        "valid": true
+      },
+      {
+        "snapshot": "after",
+        "file": "Capydoku/progress.backup.json",
+        "valid": true
+      },
+      {
+        "snapshot": "after",
+        "file": "Capydoku/progress.json",
+        "valid": true
+      }
+    ],
+    "primaryStateUnchanged": true,
+    "settingsUnchanged": true
+  },
+  "audio": {
+    "includedOriginalTestWavs": 9,
+    "verifiedHashes": true,
+    "evidence": "Validation/test-runs/original-0265-audio-physical-inventory.json",
+    "actualPhysicalListeningVerified": false
+  },
+  "physicalGameplayAndHaptics": "not observed",
+  "githubPublished": false
+}
