@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-02",
+  "version": "0.2.66 (69)",
+  "repository": "https://github.com/Poca-C/capydoku",
+  "visibility": "private",
+  "sourceImplementationCommit": "89125cf",
+  "scope": "Current implementation and reachable development history; preexisting untracked workspace files not newly staged. Historical project documents remain in existing commits.",
+  "cleanCheckout": {
+    "sourceCommit": "89125cf",
+    "configuration": "Debug",
+    "destination": "generic/platform=iOS Simulator",
+    "toolchain": "Xcode 26.6 (17F113)",
+    "simulatorSDK": "26.5",
+    "deploymentTarget": "15.0",
+    "buildPassed": true,
+    "strictCodeSignatureVerificationPassed": true,
+    "containsLocalTestAudio": false,
+    "testsRerun": false,
+    "localLog": "Validation/test-runs/github-clean-clone.log"
+  },
+  "publicationAudit": {
+    "headFileCountBeforeDocumentationUpdate": 1511,
+    "checkoutApproxMiB": 873,
+    "historyBlobAtOrAbove100MiB": false,
+    "localReferenceAudioTrackedInHistory": false,
+    "credentialOrSigningArtifactFound": false,
+    "notes": "Targeted path/content audit is not a universal secret-detection guarantee. Existing simulator fixtures are test data; physical reports contain summaries, not full player saves."
+  },
+  "audio": "Clean clones run silently while the formal audio manifest is empty. The locally authorized reference listening files are excluded.",
+  "acceptance": "User accepted the audio fix on 2026-10-02. Formal audio, external integrations and App Store acceptance remain open."
+}
