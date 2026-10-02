@@ -1,0 +1,211 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-02",
+  "build": "0.2.62 (65)",
+  "status": "scoped_landing_weight_verified_simulator_only",
+  "previousReport": "Validation/original-0261-feedback.json",
+  "previousGoalTurn": {
+    "classification": "no_progress",
+    "reason": "上一轮只回答实现覆盖情况，未修改产品；本轮重新检查当前HEAD、原文及动画后继续实际优化。"
+  },
+  "sourceParagraphs": [
+    136,
+    241,
+    249,
+    254
+  ],
+  "finding": "欢呼双跳原来在下降过程中已压扁；第一次最大压缩与下一跳起点重合，缺少触地后的承重。旧版三尺寸实际presentation采样的离地最小纵向比例约0.913，新增用例共6条断言失败。",
+  "changes": [
+    "保持双跳及1.05秒总时长，第一跳先到达原触地基线，在该基线上完成压缩与恢复，再进行第二跳；第二跳也在触地后压缩收势。",
+    "横纵比例和地面影子跟随新的触地节拍；原内部关节、手腕、头部、表情及动作取消策略不变。"
+  ],
+  "demoTuning": "触地/承重相位为本轮原创Demo调校；不是Meowdoku逐帧测量值或正式冻结配置。",
+  "verificationHistory": [
+    {
+      "status": "Passed",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 4.443,
+      "summary": "Validation/test-runs/original-0262-motion-baseline-summary.json",
+      "log": "Validation/test-runs/original-0262-motion-baseline.log",
+      "bundle": "Validation/test-runs/original-0262-motion-baseline.xcresult",
+      "scope": "旧0261原样的三动作组件录屏，1项通过。"
+    },
+    {
+      "status": "Failed",
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "seconds": 3.958,
+      "summary": "Validation/test-runs/original-0262-contact-baseline-summary.json",
+      "log": "Validation/test-runs/original-0262-contact-baseline.log",
+      "bundle": "Validation/test-runs/original-0262-contact-baseline.xcresult",
+      "failedAssertions": 6,
+      "scope": "旧0261生产代码加新自然播放检查；三尺寸均捕捉到离地压扁。250pt包含截图开销，不能用缺样数量推导帧率。"
+    },
+    {
+      "status": "Failed",
+      "passed": 48,
+      "failed": 1,
+      "skipped": 0,
+      "seconds": 79.593,
+      "summary": "Validation/test-runs/original-0262-app-final-summary.json",
+      "log": "Validation/test-runs/original-0262-app-final.log",
+      "bundle": "Validation/test-runs/original-0262-app-final.xcresult",
+      "failedAssertions": 2,
+      "scope": "首轮0262，48项通过、1项失败。250pt测量同时截图，漏掉短暂承重采样；将截图与测量分离并增加有界截止时间，生产动作参数未因此更改。"
+    }
+  ],
+  "applicationTests": {
+    "status": "Passed",
+    "passed": 50,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 80.32,
+    "summary": "Validation/test-runs/original-0262-app-r2-summary.json",
+    "log": "Validation/test-runs/original-0262-app-r2.log",
+    "bundle": "Validation/test-runs/original-0262-app-r2.xcresult"
+  },
+  "uiTests": {
+    "status": "Passed",
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 71.193,
+    "summary": "Validation/test-runs/original-0262-17e-ui-summary.json",
+    "log": "Validation/test-runs/original-0262-17e-ui.log",
+    "bundle": "Validation/test-runs/original-0262-17e-ui.xcresult"
+  },
+  "visualEvidence": "Docs/original-feel-0262/manifest.json",
+  "naturalMotionSamples": {
+    "baseline": {
+      "140": {
+        "sampleCount": 116,
+        "airborneMinScaleY": 0.9132184648513795,
+        "groundedCompressionSamples": [
+          2,
+          3
+        ]
+      },
+      "168": {
+        "sampleCount": 116,
+        "airborneMinScaleY": 0.9142909881472587,
+        "groundedCompressionSamples": [
+          0,
+          4
+        ]
+      },
+      "250": {
+        "sampleCount": 96,
+        "airborneMinScaleY": 0.9133231130242346,
+        "groundedCompressionSamples": [
+          0,
+          1
+        ]
+      }
+    },
+    "final": {
+      "140": {
+        "sampleCount": 107,
+        "airborneMinScaleY": 1.0004723924398422,
+        "groundedCompressionSamples": [
+          4,
+          5
+        ]
+      },
+      "168": {
+        "sampleCount": 107,
+        "airborneMinScaleY": 1.0000480222702026,
+        "groundedCompressionSamples": [
+          5,
+          5
+        ]
+      },
+      "250": {
+        "sampleCount": 107,
+        "airborneMinScaleY": 1.000175364971161,
+        "groundedCompressionSamples": [
+          5,
+          7
+        ]
+      }
+    }
+  },
+  "verifiedScope": [
+    "50项相关App检查包括三尺寸外层触地、关节/袖形连接和视口、表情、取消/后台/减少动态/低电量、两种胜利和失败演出，以及实际Root整关到下一关。",
+    "17e三项原生UI：通关下一关、离开结果页进入首页设置签到再回游戏、失败与模拟复活。",
+    "前后组件原生录屏各查看12个欢呼采样帧；五张新组件render图只用于造型/裁切，不代替动态时序。",
+    "代码独立复核无阻断问题。"
+  ],
+  "visualLimitations": [
+    "录屏分别起始，不能按相同文件秒数直接比较动作相位。",
+    "基线新测试内包含截图；最终测量独立于截图，保留首轮测量干扰失败记录。",
+    "外层位移为0证明到达原触地基线，不证明全部脚底像素始终贴地。",
+    "未重新听觉A/B、测试真机或确认参考品质等价。",
+    "五张新增组件render截图中前三张重复；仅作造型和裁切检查，不作为不同动作相位证据。落地时序依据独立自然采样和原生录屏。"
+  ],
+  "reference": {
+    "latestSuccessfulPlaytest": "Validation/meowdoku-playtest-comparison-0249.json",
+    "newSuccessfulPlaytestThisRound": false,
+    "equivalenceClaimed": false,
+    "implementationSummary": {
+      "status": "Nine major observed directions have Demo implementations, including clapping and whole-board hearts that were missing in the historical0232 review. Quality equivalence has not been established.",
+      "implementedDirections": [
+        "动态手势教学",
+        "角色待机/正确/错误表情",
+        "浮分/彩粒/飞星/鼓掌及顶部联动",
+        "错误原因与规则可视化",
+        "扣命与一命提醒",
+        "Combo及分层胜败演出",
+        "新盘错峰入场",
+        "提示与找答案反馈",
+        "签到点亮与实际到账演出"
+      ],
+      "audio": "9 local Debug-only reference WAVs remain an authorized testing experiment; no live audio or physical haptic A/B in this round.",
+      "qualityGaps": [
+        "角色动作自然度与整段连续操作节奏",
+        "密集布局的奖励位置仍需更多实际试玩",
+        "最新真机声音、震动与音画同步",
+        "正式参考配置与发布资源验收"
+      ],
+      "notReplicatedFromLatestPlaytest": [
+        "Reference horn-playing character pose",
+        "Every observed praise phrase",
+        "Automatic check-in interstitial during victory; current Demo check-in entry remains on home"
+      ]
+    }
+  },
+  "audio": {
+    "modified": false,
+    "localTestWAVCount": 9,
+    "currentDebugInventory": "Validation/audio-isolation-0262-debug.json",
+    "formalManifestClipsEmpty": true,
+    "liveAuditoryAB": false,
+    "releaseRebuilt": false,
+    "inventoryIdenticalTo0261": true
+  },
+  "coreAndLevels": {
+    "modified": false,
+    "rerunThisBuild": false,
+    "latestCoreBuild": "0.2.24 (27)",
+    "latestCorePassed": 177,
+    "fixed150PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49"
+  },
+  "distribution": {
+    "userPausedPackagingAndDistribution": true,
+    "phonePackageCreated": false,
+    "physicalInstallationPerformed": false,
+    "distributionArchiveCreated": false,
+    "githubPublished": false,
+    "latestVerifiedPhoneBuild": "0.2.29 (32)"
+  },
+  "formalSignOff": false,
+  "formalConformanceRowsUnchanged": 83,
+  "historicalChecklistCountUnchanged": 88,
+  "remaining": [
+    "整体角色自然度、连续节奏和最新真机音画触感仍未完整验收。",
+    "本轮没有重新提取或修改9个测试原声，没有真机更新、打包或GitHub上传。",
+    "未重跑全量App/Core、全部88条或150关试玩，不能以此次专项通过替代正式验收。"
+  ]
+}

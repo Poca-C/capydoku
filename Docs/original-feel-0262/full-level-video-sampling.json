@@ -1,0 +1,57 @@
+{
+  "durationSeconds" : 6.2783333333333333,
+  "frames" : [
+    {
+      "actualSeconds" : 0,
+      "file" : "frame-000.000.png",
+      "requestedSeconds" : 0
+    },
+    {
+      "actualSeconds" : 0.64166666666666672,
+      "file" : "frame-000.650.png",
+      "requestedSeconds" : 0.65000000000000002
+    },
+    {
+      "actualSeconds" : 1.2983333333333333,
+      "file" : "frame-001.300.png",
+      "requestedSeconds" : 1.3
+    },
+    {
+      "actualSeconds" : 1.9483333333333333,
+      "file" : "frame-001.950.png",
+      "requestedSeconds" : 1.9500000000000002
+    },
+    {
+      "actualSeconds" : 2.5966666666666667,
+      "file" : "frame-002.600.png",
+      "requestedSeconds" : 2.6000000000000001
+    },
+    {
+      "actualSeconds" : 3.2450000000000001,
+      "file" : "frame-003.250.png",
+      "requestedSeconds" : 3.25
+    },
+    {
+      "actualSeconds" : 3.8966666666666665,
+      "file" : "frame-003.900.png",
+      "requestedSeconds" : 3.9000000000000004
+    },
+    {
+      "actualSeconds" : 4.5499999999999998,
+      "file" : "frame-004.550.png",
+      "requestedSeconds" : 4.5499999999999998
+    },
+    {
+      "actualSeconds" : 5.1983333333333333,
+      "file" : "frame-005.200.png",
+      "requestedSeconds" : 5.2000000000000002
+    },
+    {
+      "actualSeconds" : 5.8399999999999999,
+      "file" : "frame-005.850.png",
+      "requestedSeconds" : 5.8500000000000005
+    }
+  ],
+  "sampleIntervalSeconds" : 0.65000000000000002,
+  "source" : "\/Users\/poca\/Documents\/ChatGPT\/capydoku开发\/.build\/original-0262-app-r2-full-level-rhythm.mov"
+}

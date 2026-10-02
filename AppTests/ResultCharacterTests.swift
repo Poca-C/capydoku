@@ -50,6 +50,65 @@ import UIKit
 }
 
 final class ResultCharacterTests: XCTestCase {
+    @MainActor func testActualCheerCompressesAfterGroundContactAndReboundsWithoutAnAirborneSquash() async throws {
+        for side: CGFloat in [140, 168, 250] {
+            let rig = try ResultCharacterRig(side: side); defer { rig.close() }
+            rig.window.rootViewController?.view.backgroundColor = UIColor(CapyPalette.cream)
+            rig.configure(id: nil)
+            try await Task.sleep(nanoseconds: 80_000_000)
+            rig.configure(id: UUID())
+            let character = try XCTUnwrap(layers(rig.view.layer).first { $0.name == "result-character" })
+            let flight = try XCTUnwrap(character.animation(forKey: "result-transform.translation.y"))
+            var samples: [[String: Double]] = []
+            let deadline = CACurrentMediaTime() + flight.duration + 0.5
+            while rig.view.activeEventID != nil, CACurrentMediaTime() < deadline {
+                let phase = (character.convertTime(CACurrentMediaTime(), from: nil) - flight.beginTime) / flight.duration
+                if let actual = character.presentation(), phase >= 0, phase <= 1 {
+                    let y = try XCTUnwrap(actual.value(forKeyPath: "transform.translation.y") as? NSNumber).doubleValue
+                    let scaleY = try XCTUnwrap(actual.value(forKeyPath: "transform.scale.y") as? NSNumber).doubleValue
+                    samples.append(["phase": phase, "height": -y, "scaleY": scaleY])
+                }
+                try await Task.sleep(nanoseconds: 8_000_000)
+            }
+            let attachment = XCTAttachment(data: try JSONSerialization.data(withJSONObject: samples, options: [.prettyPrinted, .sortedKeys]),
+                                           uniformTypeIdentifier: "public.json")
+            attachment.name = "cheer-contact-\(Int(side))pt-natural-samples"; attachment.lifetime = .keepAlways; add(attachment)
+            let airborne = samples.filter { $0["phase"]! > 0.32 && $0["height"]! > 0.5 }
+            XCTAssertGreaterThan(airborne.count, 8, "Observe both descents during natural playback.")
+            XCTAssertGreaterThanOrEqual(try XCTUnwrap(airborne.map { $0["scaleY"]! }.min()), 0.98,
+                "A landing squash belongs after contact; the character must not flatten while still in the air.")
+            for interval in [0.36...0.62, 0.70...0.98] {
+                let groundedCompression = samples.filter {
+                    interval.contains($0["phase"]!) && abs($0["height"]!) < 0.05 && $0["scaleY"]! < 0.97
+                }
+                XCTAssertGreaterThanOrEqual(groundedCompression.count, 2,
+                    "Each landing needs a visible load-bearing compression before rebound or rest.")
+            }
+            XCTAssertTrue(CATransform3DIsIdentity(character.transform))
+            XCTAssertTrue(animations(rig.view).isEmpty)
+            XCTAssertNil(rig.view.activeEventID, "The original finite presentation must still finish.")
+        }
+    }
+
+    @MainActor func testActualCheerLandingFramesForVisualReview() async throws {
+        let rig = try ResultCharacterRig(side: 250); defer { rig.close() }
+        rig.window.rootViewController?.view.backgroundColor = UIColor(CapyPalette.cream)
+        rig.configure(id: nil)
+        try await Task.sleep(nanoseconds: 80_000_000)
+        rig.configure(id: UUID())
+        let character = try XCTUnwrap(layers(rig.view.layer).first { $0.name == "result-character" })
+        let flight = try XCTUnwrap(character.animation(forKey: "result-transform.translation.y"))
+        // Rendering images can block the host long enough to miss a short
+        // contact. Keep this visual pass separate from natural motion sampling.
+        for target in [0.42, 0.48, 0.51, 0.80, 0.85] {
+            let elapsed = character.convertTime(CACurrentMediaTime(), from: nil) - flight.beginTime
+            let remaining = target * flight.duration - elapsed
+            if remaining > 0 { try await Task.sleep(nanoseconds: UInt64(remaining * 1_000_000_000)) }
+            let phase = (character.convertTime(CACurrentMediaTime(), from: nil) - flight.beginTime) / flight.duration
+            capture(rig.view, name: "cheer-contact-250pt-phase-\(String(format: "%.3f", phase))")
+        }
+    }
+
     @MainActor private func layers(_ layer: CALayer) -> [CALayer] {
         [layer] + (layer.sublayers ?? []).flatMap(layers)
     }

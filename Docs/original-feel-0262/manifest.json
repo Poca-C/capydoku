@@ -1,0 +1,220 @@
+{
+  "build": "0.2.62 (65)",
+  "baselineBuild": "0.2.61 (64)",
+  "items": [
+    {
+      "file": "baseline-cheer-250pt-samples.json",
+      "test": "ResultCharacterTests/testActualCheerCompressesAfterGroundContactAndReboundsWithoutAnAirborneSquash()",
+      "attachment": "0A82188E-2A77-4D83-9E7C-47DB919FA2DC.json",
+      "sourceFolder": ".build/attachments-0262-baseline",
+      "sha256": "9df73c955c000acc034db3aba61c15ce8db16a4993ebe756de14d61eb7ba57aa"
+    },
+    {
+      "file": "baseline-cheer-phase-0.853.png",
+      "test": "ResultCharacterTests/testActualCheerCompressesAfterGroundContactAndReboundsWithoutAnAirborneSquash()",
+      "attachment": "BFAA2376-D55F-4957-987E-8D933EFB9D4B.png",
+      "sourceFolder": ".build/attachments-0262-baseline",
+      "sha256": "8badcfdafc986398a393ffbfab91945dcc579cc0436d12238e4158a09f48bb8d"
+    },
+    {
+      "file": "baseline-cheer-phase-0.803.png",
+      "test": "ResultCharacterTests/testActualCheerCompressesAfterGroundContactAndReboundsWithoutAnAirborneSquash()",
+      "attachment": "06116174-99EB-4C9F-9A45-DA60B78E8F5D.png",
+      "sourceFolder": ".build/attachments-0262-baseline",
+      "sha256": "dab091d4e0a37e7ece72c85b58718bb11924c66db1ea02ee8cd61963b17ccbca"
+    },
+    {
+      "file": "baseline-cheer-phase-0.520.png",
+      "test": "ResultCharacterTests/testActualCheerCompressesAfterGroundContactAndReboundsWithoutAnAirborneSquash()",
+      "attachment": "136EBE20-840C-4F8D-A934-F7D201A0FD9C.png",
+      "sourceFolder": ".build/attachments-0262-baseline",
+      "sha256": "570d167738b1112ecdea6ca62fd55143f25a906e9b4d70a24db5e89c87cd7c4e"
+    },
+    {
+      "file": "baseline-cheer-phase-0.482.png",
+      "test": "ResultCharacterTests/testActualCheerCompressesAfterGroundContactAndReboundsWithoutAnAirborneSquash()",
+      "attachment": "30B41CE4-AA51-420C-BA03-412C087E9EC7.png",
+      "sourceFolder": ".build/attachments-0262-baseline",
+      "sha256": "1007fe6bd1af6b3696e3690e6bebce07ba707456a5caeb89316f8f73305805b3"
+    },
+    {
+      "file": "baseline-cheer-phase-0.425.png",
+      "test": "ResultCharacterTests/testActualCheerCompressesAfterGroundContactAndReboundsWithoutAnAirborneSquash()",
+      "attachment": "1979D855-80DD-4A0D-B9B4-DFE599370E4A.png",
+      "sourceFolder": ".build/attachments-0262-baseline",
+      "sha256": "20efc6f8c0ffaf73b42420025d0deadb73ac4448118013ce7e67f5381b22d46a"
+    },
+    {
+      "file": "baseline-cheer-168pt-samples.json",
+      "test": "ResultCharacterTests/testActualCheerCompressesAfterGroundContactAndReboundsWithoutAnAirborneSquash()",
+      "attachment": "9ED370C2-E22A-4269-87DD-F221D2CDF227.json",
+      "sourceFolder": ".build/attachments-0262-baseline",
+      "sha256": "5ab329d650c8c28622dc4dbc2195dc0ec5cb4f6c3810e6f4df350eb8c6ed8960"
+    },
+    {
+      "file": "baseline-cheer-140pt-samples.json",
+      "test": "ResultCharacterTests/testActualCheerCompressesAfterGroundContactAndReboundsWithoutAnAirborneSquash()",
+      "attachment": "6DCCED09-45C9-49A8-9E44-A9121975C919.json",
+      "sourceFolder": ".build/attachments-0262-baseline",
+      "sha256": "f1c7d7fd85e9b3fefb16f251e742fc11c5b86afbcf3e811b946409614ee3672e"
+    },
+    {
+      "file": "baseline-cheer-contact-sheet.png",
+      "source": "Cropped from actual simulator recording, twelve sampled frames. Video origins are not aligned.",
+      "sha256": "4ee337c31379dcdf974b04458610fda0d3600a63cf67ac52bbd5c7cbd17b4de5"
+    },
+    {
+      "file": "baseline-result-performances.mov",
+      "test": "ResultCharacterChoreographyTests/testActualRigPerformancesRunContinuouslyForVideoReview()",
+      "sha256": "d3adac9cea766561cc6e21708a0e102cce085e17e6c585757928dd6ca01ebfbd"
+    },
+    {
+      "file": "baseline-video-sampling.json"
+    },
+    {
+      "file": "final-cheer-250pt-samples.json",
+      "test": "ResultCharacterTests/testActualCheerCompressesAfterGroundContactAndReboundsWithoutAnAirborneSquash()",
+      "attachment": "F2294E8A-F929-47DD-B1C0-56ED1F40BEAC.json",
+      "sourceFolder": ".build/attachments-0262-final",
+      "sha256": "1747442cb49ee809791faffb5baee7000f74560b34d17a3f6efb0b5d1ebe294b"
+    },
+    {
+      "file": "final-cheer-168pt-samples.json",
+      "test": "ResultCharacterTests/testActualCheerCompressesAfterGroundContactAndReboundsWithoutAnAirborneSquash()",
+      "attachment": "EFEEB7CF-5EF4-47AA-ACE9-60C842B2CDAF.json",
+      "sourceFolder": ".build/attachments-0262-final",
+      "sha256": "ee8f9846b0c946b837a2a1a99d8eb0fe240237ae9b0d53598985fa83d75c6c14"
+    },
+    {
+      "file": "final-cheer-140pt-samples.json",
+      "test": "ResultCharacterTests/testActualCheerCompressesAfterGroundContactAndReboundsWithoutAnAirborneSquash()",
+      "attachment": "11061B76-9D08-4BC3-B406-9979FAE025B7.json",
+      "sourceFolder": ".build/attachments-0262-final",
+      "sha256": "ff46880b3fc48439e829e466c803fe8f0fd6e3f599f85f8be7a93612141649b2"
+    },
+    {
+      "file": "final-cheer-phase-0.862.png",
+      "test": "ResultCharacterTests/testActualCheerLandingFramesForVisualReview()",
+      "attachment": "A21E24E8-79BE-41F9-9368-DBFD922DBFF4.png",
+      "sourceFolder": ".build/attachments-0262-final",
+      "sha256": "254a5e01f615adbd90849145f3ed5dace1f6ae64134bf5b35ebcf5936813e530"
+    },
+    {
+      "file": "final-cheer-phase-0.816.png",
+      "test": "ResultCharacterTests/testActualCheerLandingFramesForVisualReview()",
+      "attachment": "3F40FD13-4FF8-45D1-8663-02F3CA8E1CA1.png",
+      "sourceFolder": ".build/attachments-0262-final",
+      "sha256": "254a5e01f615adbd90849145f3ed5dace1f6ae64134bf5b35ebcf5936813e530"
+    },
+    {
+      "file": "final-cheer-phase-0.521.png",
+      "test": "ResultCharacterTests/testActualCheerLandingFramesForVisualReview()",
+      "attachment": "0BDFC92D-C992-4541-8419-235596A035E2.png",
+      "sourceFolder": ".build/attachments-0262-final",
+      "sha256": "0bf4a7e50abf1a70e75873cf0729a1598571294e5ec25385dea83ffb5e43213d"
+    },
+    {
+      "file": "final-cheer-phase-0.491.png",
+      "test": "ResultCharacterTests/testActualCheerLandingFramesForVisualReview()",
+      "attachment": "1B5A56B2-B8CC-46DE-8307-ED4E72362DCF.png",
+      "sourceFolder": ".build/attachments-0262-final",
+      "sha256": "0bf4a7e50abf1a70e75873cf0729a1598571294e5ec25385dea83ffb5e43213d"
+    },
+    {
+      "file": "final-cheer-phase-0.440.png",
+      "test": "ResultCharacterTests/testActualCheerLandingFramesForVisualReview()",
+      "attachment": "DEC0B33A-A5C0-41CC-B8A5-14CB81162F64.png",
+      "sourceFolder": ".build/attachments-0262-final",
+      "sha256": "0bf4a7e50abf1a70e75873cf0729a1598571294e5ec25385dea83ffb5e43213d"
+    },
+    {
+      "file": "final-cheer-contact-sheet.png",
+      "source": "Cropped from actual simulator recording, twelve sampled frames. Video origins are not aligned.",
+      "sha256": "ed9b5417081a7765adab0e6d291587daa45ba92d503dcd6fcf9ccd21bf2c4d7b"
+    },
+    {
+      "file": "final-result-performances.mov",
+      "test": "ResultCharacterChoreographyTests/testActualRigPerformancesRunContinuouslyForVideoReview()",
+      "sha256": "60b748dad7d6394ba89facb8b03d42f05189a9a1e7cd8df9a4092834ae8968d2"
+    },
+    {
+      "file": "final-video-sampling.json"
+    },
+    {
+      "file": "final-full-level-rhythm.mov",
+      "test": "GameFeelVisualTests/testActualRootFullLevelRhythmThroughVictoryAndNextBoard()",
+      "sha256": "6ec7d8ec50078b079e551442edacefc8069111651dee995a290bf4b9336cdafa"
+    },
+    {
+      "file": "full-level-video-sampling.json",
+      "reviewedRequestedSeconds": [
+        3.25,
+        4.55,
+        5.85
+      ],
+      "review": "有限抽帧确认L6末盘、结果入场和L7已接受标记；不代表完整逐帧检查。"
+    }
+  ],
+  "motionSamples": {
+    "baseline": {
+      "140": {
+        "sampleCount": 116,
+        "airborneMinScaleY": 0.9132184648513795,
+        "groundedCompressionSamples": [
+          2,
+          3
+        ]
+      },
+      "168": {
+        "sampleCount": 116,
+        "airborneMinScaleY": 0.9142909881472587,
+        "groundedCompressionSamples": [
+          0,
+          4
+        ]
+      },
+      "250": {
+        "sampleCount": 96,
+        "airborneMinScaleY": 0.9133231130242346,
+        "groundedCompressionSamples": [
+          0,
+          1
+        ]
+      }
+    },
+    "final": {
+      "140": {
+        "sampleCount": 107,
+        "airborneMinScaleY": 1.0004723924398422,
+        "groundedCompressionSamples": [
+          4,
+          5
+        ]
+      },
+      "168": {
+        "sampleCount": 107,
+        "airborneMinScaleY": 1.0000480222702026,
+        "groundedCompressionSamples": [
+          5,
+          5
+        ]
+      },
+      "250": {
+        "sampleCount": 107,
+        "airborneMinScaleY": 1.000175364971161,
+        "groundedCompressionSamples": [
+          5,
+          7
+        ]
+      }
+    }
+  },
+  "review": "两段组件实际录屏的欢呼动作各抽取12帧核对，另保留自然采样及单独截图。有限图像不等于连续帧率或真机主观手感验收。",
+  "limitations": [
+    "录屏分别起始，不能按相同文件秒数直接比较动作相位。",
+    "基线新测试内包含截图；最终测量独立于截图，保留首轮测量干扰失败记录。",
+    "外层位移为0证明到达原触地基线，不证明全部脚底像素始终贴地。",
+    "未重新听觉A/B、测试真机或确认参考品质等价。",
+    "五张新增组件render截图中前三张重复；仅作造型和裁切检查，不作为不同动作相位证据。落地时序依据独立自然采样和原生录屏。"
+  ]
+}

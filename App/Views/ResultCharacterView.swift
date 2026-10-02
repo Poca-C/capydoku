@@ -370,18 +370,23 @@ final class ResultCharacterUIView: UIView {
 
     private func playBounce(duration: TimeInterval) {
         let side = min(bounds.width, bounds.height)
-        keyframes(character, key: "transform.translation.y", values: [0, 0, -side * 0.07, 0, -side * 0.045, 0, 0],
-                  times: [0, 0.12, 0.36, 0.50, 0.67, 0.84, 1], duration: duration,
-                  easing: [.easeInEaseOut, .easeOut, .easeIn, .easeOut, .easeIn, .easeOut])
-        let contacts: [NSNumber] = [0, 0.12, 0.23, 0.36, 0.50, 0.56, 0.60, 0.67, 0.84, 0.92, 1]
-        keyframes(character, key: "transform.scale.x", values: [1, 1.025, 0.985, 0.99, 1.045, 1.015, 0.99, 0.995, 1.03, 0.995, 1],
+        // Reach the ground before loading the next spring. The previous curve
+        // flattened the character throughout its descent, then left the ground
+        // at the same instant as maximum compression. Keep each landing on the
+        // shared foot baseline while it compresses and recovers; internal joints,
+        // the two apex heights and the finite performance duration stay intact.
+        keyframes(character, key: "transform.translation.y", values: [0, 0, -side * 0.07, 0, 0, -side * 0.045, 0, 0],
+                  times: [0, 0.12, 0.36, 0.46, 0.54, 0.67, 0.80, 1], duration: duration,
+                  easing: [.easeInEaseOut, .easeOut, .easeIn, .linear, .easeOut, .easeIn, .easeOut])
+        let contacts: [NSNumber] = [0, 0.12, 0.23, 0.36, 0.46, 0.50, 0.54, 0.60, 0.67, 0.80, 0.84, 0.92, 1]
+        keyframes(character, key: "transform.scale.x", values: [1, 1.025, 0.985, 0.99, 1, 1.045, 1, 0.99, 0.995, 1, 1.03, 0.995, 1],
                   times: contacts, duration: duration)
-        keyframes(character, key: "transform.scale.y", values: [1, 0.95, 1.035, 1.015, 0.91, 0.97, 1.025, 1.012, 0.94, 1.005, 1],
+        keyframes(character, key: "transform.scale.y", values: [1, 0.95, 1.035, 1.015, 1, 0.91, 1, 1.025, 1.012, 1, 0.94, 1.005, 1],
                   times: contacts, duration: duration)
         keyframes(character, key: "transform.rotation.z", values: [0, -0.025, 0.025, -0.020, 0.016, 0],
                   times: [0, 0.12, 0.36, 0.56, 0.76, 1], duration: duration)
-        keyframes(groundShadow, key: "transform.scale", values: [1, 0.70, 1.10, 0.78, 1.06, 1],
-                  times: [0, 0.36, 0.50, 0.67, 0.84, 1], duration: duration)
+        keyframes(groundShadow, key: "transform.scale", values: [1, 0.70, 1, 1.10, 1, 0.78, 1, 1.06, 1],
+                  times: [0, 0.36, 0.46, 0.50, 0.54, 0.67, 0.80, 0.84, 1], duration: duration)
         for (index, star) in wingStars.enumerated() {
             keyframes(star, key: "opacity", values: [0, 1, 0.4, 1, 0], times: [0, 0.34, 0.50, 0.73, 1], duration: duration)
             keyframes(star, key: "transform.rotation.z", values: [0, index < 2 ? -0.4 : 0.4, 0], times: [0, 0.55, 1], duration: duration)
