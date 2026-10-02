@@ -11,7 +11,7 @@ final class HardeningUITests: XCTestCase {
     }
 
     private func launch(tutorial: Bool = false) {
-        app.launchArguments = ["-ui-testing", "-legacy-fixture", "-reset-demo", "-level", "1"]
+        app.launchArguments = ["-ui-testing", "-legacy-fixture", "-reset-demo", "-tutorial-plan-version", "2", "-level", "1"]
         if !tutorial { app.launchArguments.append("-skip-tutorial") }
         app.launch()
         XCTAssertTrue(cell(0).waitForExistence(timeout: 15))

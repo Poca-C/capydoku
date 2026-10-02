@@ -84,9 +84,19 @@ final class AppLanguageUITests: XCTestCase {
     func testChineseTutorialAndAllBoardSizesRender() {
         app.launchArguments = ["-ui-testing", "-reset-demo", "-level", "1"]
         app.launch()
-        XCTAssertTrue(item("tutorial_next").waitForExistence(timeout: 12))
-        XCTAssertTrue(app.staticTexts["每个连通的颜色区域恰好有一只卡皮巴拉。"].exists)
-        capture("chinese-tutorial")
+        XCTAssertTrue(item("tutorial_title").waitForExistence(timeout: 12))
+        XCTAssertEqual(item("tutorial_title").label, "找到第一只卡皮巴拉")
+        XCTAssertTrue(app.staticTexts["每种颜色的区域各有一只卡皮巴拉。双击这个区域里唯一的格子，找到它。"].exists)
+        XCTAssertFalse(item("tutorial_next").exists, "The current introduction starts with a real board action.")
+        XCTAssertTrue(item("cell_1").isHittable)
+        capture("chinese-v3-tutorial-first-action")
+        item("cell_1").doubleTap()
+        let found = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", "found"), object: item("cell_1"))
+        XCTAssertEqual(XCTWaiter.wait(for: [found], timeout: 5), .completed)
+        XCTAssertEqual(item("tutorial_title").label, "单击标记 X")
+        XCTAssertTrue(app.staticTexts["这一行已经有卡皮巴拉了。单击高亮空格，标记 X。"].exists)
+        XCTAssertEqual(board(), (0..<16).map { $0 == 1 ? "found" : "empty" })
+        capture("chinese-v3-tutorial-first-placement")
         for (level, size) in [(1,4), (6,6), (51,8), (101,10)] {
             app.terminate()
             app.launchArguments = ["-ui-testing", "-reset-demo", "-skip-tutorial", "-level", "\(level)"]

@@ -14,6 +14,9 @@ import CapydokuCore
     private let previousWindow: UIWindow?
     var targets = Set<Int>()
     var action: String?
+    var focusCells: Set<Int>?
+    var tutorialStepID: String?
+    var guideVisible = true
     var locked = false
     var hidden = false
     var preview = Set<Int>()
@@ -42,6 +45,7 @@ import CapydokuCore
             sessionID: session.id, lives: session.lives, score: session.score,
             scoreAwards: scoreAwards, latestSubmissionSucceeded: latestSubmissionSucceeded, effectsEnabled: effectsEnabled,
             reduceMotion: reduceMotion, tutorialTargets: targets, tutorialAction: action,
+            focusCells: focusCells, tutorialStepID: tutorialStepID, tutorialGuideVisible: guideVisible,
             locked: locked, hideAccessibility: hidden,
             onToggle: { [weak self] index in
                 guard let self else { return }; session.toggleMark(at: index); refresh()
@@ -82,6 +86,54 @@ import CapydokuCore
 }
 
 final class BoardGuidancePresentationTests: XCTestCase {
+    @MainActor func testGuidedExclusionFocusStaysOnRuleWhileHandMovesToUnmarkedTargets() throws {
+        let rig = try GuidanceRig(); defer { rig.close() }
+        rig.targets = [0, 2, 3]; rig.focusCells = [0, 1, 2, 3]
+        rig.action = "exclude"; rig.tutorialStepID = "same-session:v3:row"; rig.reduceMotion = true; rig.refresh()
+        let guide = try XCTUnwrap(rig.guides.first)
+        XCTAssertEqual(guide.focusCells, [0, 1, 2, 3]); XCTAssertEqual(guide.targetCells, [0])
+        let shade = try XCTUnwrap(guide.layer.sublayers?.first { $0.name == "tutorial-focus-shade" } as? CAShapeLayer)
+        XCTAssertFalse(try XCTUnwrap(shade.path).contains(try rig.center(1), using: .evenOdd),
+                       "The visible animal/rule focus stays bright although it is not an action target.")
+        XCTAssertTrue(try XCTUnwrap(shade.path).contains(try rig.center(4), using: .evenOdd))
+        let before = rig.session
+        rig.board.tapDecision.acceptedTap(cell: 0)
+        XCTAssertEqual(rig.session, before, "The native prospective X cannot mutate the board before acceptance.")
+        XCTAssertTrue(rig.board.subviews.flatMap(\.subviews).contains { $0.accessibilityIdentifier == "pending_tap_preview_0" })
+        rig.board.tapDecision.commitSingle()
+        XCTAssertEqual(rig.session.marks, [0])
+        let next = try XCTUnwrap(rig.guides.first)
+        XCTAssertEqual(next.targetCells, [2]); XCTAssertEqual(next.focusCells, guide.focusCells)
+        XCTAssertNil(guide.superview); XCTAssertTrue(animations(guide.layer).isEmpty)
+        rig.board.tapDecision.acceptedTap(cell: 6); rig.board.tapDecision.commitSingle()
+        XCTAssertEqual(rig.session.marks, [0], "A contact outside the exclusion instruction is ignored.")
+        XCTAssertTrue(rig.board.hitTest(try rig.center(2), with: nil) === rig.board)
+        capture(rig.window, "v3-exclusion-rule-focus-next-unmarked-target")
+    }
+
+    @MainActor func testFreeFinishHidesAnswerCueUntilHintAndKeepsOrdinaryMarkingAvailable() throws {
+        let rig = try GuidanceRig(); defer { rig.close() }
+        rig.targets = [8]; rig.focusCells = [8]; rig.action = "finish"
+        rig.tutorialStepID = "same-session:v3:finish"; rig.guideVisible = false; rig.refresh()
+        XCTAssertTrue(rig.guides.isEmpty)
+        let elements = try XCTUnwrap(rig.board.accessibilityElements as? [UIAccessibilityElement])
+        XCTAssertTrue(elements.allSatisfy { !($0.accessibilityHint ?? "").contains("教学目标") && !($0.accessibilityHint ?? "").contains("Tutorial target") })
+        rig.board.tapDecision.acceptedTap(cell: 2)
+        XCTAssertTrue(rig.board.subviews.flatMap(\.subviews).contains { $0.accessibilityIdentifier == "pending_tap_preview_2" },
+                      "Free finish must not restrict interaction to its undisclosed answer.")
+        rig.board.tapDecision.commitSingle(); XCTAssertEqual(rig.session.marks, [2])
+        capture(rig.window, "v3-free-finish-no-answer-guide")
+        rig.guideVisible = true; rig.reduceMotion = true; rig.refresh()
+        let guide = try XCTUnwrap(rig.guides.first)
+        XCTAssertEqual(guide.action, "finish"); XCTAssertEqual(guide.targetCells, [8])
+        XCTAssertTrue((guide.layer.sublayers ?? []).contains { $0.name == "tutorial-double-tap-static" })
+        XCTAssertTrue(animations(guide.layer).isEmpty)
+        XCTAssertEqual(rig.session.marks, [2], "Revealing a teaching hint never adds Xs.")
+        capture(rig.window, "v3-free-finish-optional-static-hint")
+        rig.hidden = true; rig.refresh()
+        XCTAssertNil(guide.superview); XCTAssertTrue(rig.guides.isEmpty)
+    }
+
     @MainActor func testNewMistakeRetiresEarlierMarkErasureIncludingCoalescedChanges() throws {
         for reduced in [false, true] { for coalesced in [false, true] {
             let rig = try GuidanceRig(); defer { rig.close() }
@@ -119,6 +171,8 @@ final class BoardGuidancePresentationTests: XCTestCase {
 
     @MainActor func testOnlyVisibleAnimalsExplainActualMistakesAndRedrawNeverRepeatsCallback() throws {
         let rig = try GuidanceRig(); defer { rig.close() }
+        let inputRecognizers = (rig.board.gestureRecognizers ?? []).map(ObjectIdentifier.init)
+        XCTAssertFalse(inputRecognizers.isEmpty)
         rig.board.activate(index: 0, submit: true)
         XCTAssertEqual(rig.session.lives, 2)
         XCTAssertTrue(rig.conflicts.isEmpty); XCTAssertEqual(rig.callbacks, [[]],
@@ -134,7 +188,8 @@ final class BoardGuidancePresentationTests: XCTestCase {
         XCTAssertEqual(rig.callbacks.count, 2)
         XCTAssertTrue(rig.board.hitTest(try rig.center(0), with: nil) === rig.board)
         XCTAssertFalse(effect.isUserInteractionEnabled); XCTAssertTrue(effect.accessibilityElementsHidden)
-        XCTAssertEqual(rig.board.gestureRecognizers?.count, 3)
+        XCTAssertEqual((rig.board.gestureRecognizers ?? []).map(ObjectIdentifier.init), inputRecognizers,
+                       "Conflict decoration must neither replace nor add input recognizers.")
     }
 
     @MainActor func testConflictDoesNotReplayOnRestoreAndClearsForBlockingChanges() throws {

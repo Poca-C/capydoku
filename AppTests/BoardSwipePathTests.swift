@@ -25,18 +25,28 @@ import UIKit.UIGestureRecognizerSubclass
     var beganCount = 0
     var endedCancelled: [Bool] = []
     private var origin = CGPoint.zero
+    private let sessionID = UUID()
+    private let found: Set<Int>
+    var tutorialTargets = Set<Int>()
+    var tutorialStepID: String?
 
     init(found: Set<Int> = []) {
+        self.found = found
         window.addSubview(board)
+        refresh()
+        board.layoutIfNeeded()
+    }
+
+    func refresh() {
         board.configure(size: 4, regions: (0..<16).map { $0 / 4 }, found: found,
-                        marks: [], errors: [], preview: [], sessionID: UUID(), lives: 3,
-                        effectsEnabled: false, tutorialTargets: [], locked: false,
+                        marks: Set(marked), errors: [], preview: [], sessionID: sessionID, lives: 3,
+                        effectsEnabled: false, tutorialTargets: tutorialTargets,
+                        tutorialAction: tutorialStepID == nil ? nil : "exclude", tutorialStepID: tutorialStepID, locked: false,
                         onToggle: { _ in XCTFail("A pan must not invoke the tap callback.") },
                         onSubmit: { _ in XCTFail("A pan must not submit a capybara.") },
                         onMark: { [weak self] in self?.marked.append(contentsOf: $0) },
                         onBeginSwipe: { [weak self] in self?.beganCount += 1 },
                         onEndSwipe: { [weak self] in self?.endedCancelled.append($0) })
-        board.layoutIfNeeded()
     }
 
     func center(_ index: Int) -> CGPoint {
@@ -71,6 +81,35 @@ import UIKit.UIGestureRecognizerSubclass
 }
 
 final class BoardSwipePathTests: XCTestCase {
+    @MainActor func testTeachingStrokeStopsAtItsOwnTargetsBeforeDelayedUIRefresh() {
+        let rig = SwipePathRig(); defer { rig.close() }
+        rig.tutorialTargets = [0, 1]; rig.tutorialStepID = "attempt:v3:first"; rig.refresh()
+        rig.begin(at: 0, horizontal: true)
+        rig.send(.changed, to: 1)
+        // Deliberately withhold configure: a SwiftUI coalesced update must not
+        // let the still-held finger start work belonging to the next instruction.
+        rig.send(.changed, to: 2); rig.send(.ended, to: 3)
+        XCTAssertEqual(rig.marked, [0, 1]); XCTAssertEqual(rig.endedCancelled, [false])
+        rig.tutorialTargets = [2, 3]; rig.tutorialStepID = "attempt:v3:second"; rig.refresh()
+        rig.send(.changed, to: 3)
+        XCTAssertEqual(rig.marked, [0, 1], "A stale sample cannot become a new gesture after a step change.")
+        rig.begin(at: 2, horizontal: true); rig.send(.ended, to: 3)
+        XCTAssertEqual(rig.marked, [0, 1, 2, 3]); XCTAssertEqual(rig.beganCount, 2)
+    }
+
+    @MainActor func testTeachingIdentityChangeCancelsPartialStrokeButSameStepRefreshDoesNot() {
+        let rig = SwipePathRig(); defer { rig.close() }
+        rig.tutorialTargets = [0, 1, 2]; rig.tutorialStepID = "attempt:v3:old"; rig.refresh()
+        rig.begin(at: 0, horizontal: true)
+        rig.refresh(); rig.send(.changed, to: 1)
+        XCTAssertEqual(rig.marked, [0, 1], "Saving a partial swipe within one step must keep it alive.")
+        rig.tutorialTargets = [2, 3]; rig.tutorialStepID = "attempt:v3:new"; rig.refresh()
+        rig.send(.changed, to: 2); rig.send(.ended, to: 3)
+        XCTAssertEqual(rig.marked, [0, 1]); XCTAssertEqual(rig.endedCancelled, [true])
+        rig.begin(at: 2, horizontal: true); rig.send(.ended, to: 3)
+        XCTAssertEqual(rig.marked, [0, 1, 2, 3]); XCTAssertEqual(rig.endedCancelled, [true, false])
+    }
+
     @MainActor func testHorizontalSwipeMarksPassedCellsOnlyOnceIncludingReverseTravel() {
         let rig = SwipePathRig(); defer { rig.close() }
         rig.begin(at: 0, horizontal: true)

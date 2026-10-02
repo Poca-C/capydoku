@@ -139,44 +139,75 @@ final class CapydokuUITests: XCTestCase {
         attachScreen("First capy found")
     }
 
-    func testGuidedTutorialCoversRulesTapUndoBothSwipesAndFind() {
-        // Current original-pipeline-v4 L1, seed 11400714819535654101, candidate 70.
-        // Region 1 is the singleton at cell 1. Its rule conflicts derive the
-        // teaching path: tap/undo 0, row swipe 2→3, column swipe 0→4, find 1.
+    func testGuidedTutorialCoversRulesTapUndoBothSwipesAndFind() { completePlayAlongTutorial(chinese: false) }
+
+    func testChinesePlayAlongTutorialCompletesIntoLevelTwo() { completePlayAlongTutorial(chinese: true) }
+
+    private func completePlayAlongTutorial(chinese: Bool) {
+        // Current original-pipeline-v4 L1, candidate 70. This fixture follows
+        // the generated v3 play-along plan, not a replacement/tutorial map.
         app.launchArguments = ["-ui-testing", "-reset-demo", "-level", "1"]
+        let titles: [String: String] = [
+            "Find the first capybara": "找到第一只卡皮巴拉",
+            "Tap to mark X": "单击标记 X",
+            "Tap again to undo": "再次单击撤销",
+            "Swipe across a row": "沿一行滑动",
+            "Swipe down a column": "沿一列滑动",
+            "Cross out the remaining spaces": "排除剩余空格",
+            "Give them space": "保持距离",
+            "One space left in this row": "这一行只剩一格",
+            "One space left in this region": "这个区域只剩一格",
+            "Find the last capybara": "找到最后一只卡皮巴拉",
+            "Tutorial complete": "新手教学完成",
+            "Start game": "开始游戏",
+        ]
+        func localized(_ text: String) -> String { chinese ? (titles[text] ?? text) : text }
+        app.launchEnvironment["CAPYDOKU_UI_LANGUAGE"] = chinese ? "zh-Hans" : "en"
         app.launch()
-        XCTAssertTrue(app.staticTexts["tutorial_title"].waitForExistence(timeout: 15))
-        // Singleton 1 proves the animal; its five neighbors add the most exclusions,
-        // followed by two new column exclusions and one new row exclusion.
-        for rule in ["One per region", "Give them space", "One per column", "One per row"] {
-            XCTAssertTrue(app.staticTexts["tutorial_title"].label.contains(rule))
-            attachScreen("v2-current-board-\(rule)")
-            cell(0).tap()
-            expectValue(cell(0), "empty", timeout: 5)
-            tapButton("tutorial_next")
+        func title(_ text: String) {
+            let label = app.staticTexts["tutorial_title"]
+            let expected = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", localized(text)), object: label)
+            XCTAssertEqual(XCTWaiter.wait(for: [expected], timeout: 8), .completed)
         }
-        XCTAssertTrue(app.staticTexts["tutorial_title"].label.contains("Tap to mark"))
-        cell(0).tap()
-        expectValue(cell(0), "marked")
-        XCTAssertTrue(app.staticTexts["tutorial_title"].label.contains("undo"))
-        cell(0).tap()
-        expectValue(cell(0), "empty")
-        XCTAssertTrue(app.staticTexts["tutorial_title"].label.contains("row"))
-        drag(from: 2, to: 3)
-        expectValue(cell(2), "marked")
-        expectValue(cell(3), "marked")
-        XCTAssertTrue(app.staticTexts["tutorial_title"].label.contains("column"))
-        drag(from: 0, to: 4)
-        expectValue(cell(0), "marked")
-        expectValue(cell(4), "marked")
-        XCTAssertTrue(app.staticTexts["tutorial_title"].label.contains("Double-tap"))
-        cell(1).doubleTap()
-        expectValue(cell(1), "found")
-        XCTAssertTrue(app.buttons["hint"].waitForExistence(timeout: 5))
+        title("Find the first capybara")
+        XCTAssertFalse(app.buttons["tutorial_next"].exists, "The first screen invites a real double tap, not four reading pages.")
+        attachScreen("v3-current-board-first-action")
+        cell(1).doubleTap(); expectValue(cell(1), "found")
+        XCTAssertEqual(boardValues(), (0..<16).map { $0 == 1 ? "found" : "empty" }, "Teaching cannot auto-fill X marks.")
+        title("Tap to mark X"); cell(0).tap(); expectValue(cell(0), "marked")
+        title("Tap again to undo"); cell(0).tap(); expectValue(cell(0), "empty")
+        title("Swipe across a row"); drag(from: 2, to: 3)
+        expectValue(cell(2), "marked"); expectValue(cell(3), "marked")
+        title("Swipe down a column"); drag(from: 5, to: 9)
+        expectValue(cell(5), "marked"); expectValue(cell(9), "marked")
+        title("Cross out the remaining spaces")
+        for index in [0, 13] { cell(index).tap(); expectValue(cell(index), "marked") }
+        title("Give them space")
+        for index in [4, 6] { cell(index).tap(); expectValue(cell(index), "marked") }
+        title("One space left in this row"); cell(7).doubleTap(); expectValue(cell(7), "found")
+        title("Give them space"); drag(from: 10, to: 11)
+        expectValue(cell(10), "marked"); expectValue(cell(11), "marked")
+        title("One space left in this region"); cell(14).doubleTap(); expectValue(cell(14), "found")
+        title("Find the last capybara")
+        XCTAssertEqual(boardValues().filter { $0 == "found" }.count, 3)
+        // This is free play: a non-answer cell still supports normal mark/undo.
+        cell(12).tap(); expectValue(cell(12), "marked")
+        cell(12).tap(); expectValue(cell(12), "empty")
+        let beforeHint = boardValues()
+        attachScreen("v3-current-board-independent-last-find")
+        tapButton("tutorial_hint")
+        XCTAssertEqual(boardValues(), beforeHint, "The optional teaching hint is visual only.")
+        attachScreen("v3-current-board-optional-last-hint")
+        cell(8).doubleTap()
+        XCTAssertTrue(app.staticTexts["win_result"].waitForExistence(timeout: 8))
+        XCTAssertEqual(app.staticTexts["win_result"].label, localized("Tutorial complete"))
+        XCTAssertEqual(app.buttons["next_level"].label, localized("Start game"))
+        attachScreen("v3-current-board-tutorial-complete")
+        tapButton("next_level")
+        XCTAssertTrue(app.staticTexts["level_title"].waitForExistence(timeout: 8))
+        XCTAssertEqual(app.staticTexts["level_title"].label, chinese ? "第 2 关" : "Level 2")
         XCTAssertFalse(app.staticTexts["tutorial_title"].exists)
         expectValue(app.otherElements["lives"], "3")
-        XCTAssertEqual(boardValues(), (0..<16).map { $0 == 1 ? "found" : [0, 2, 3, 4].contains($0) ? "marked" : "empty" })
-        attachScreen("Current Level 1 guided tutorial complete")
     }
 
     func testHorizontalAndVerticalSwipesOnlyAddMarks() {

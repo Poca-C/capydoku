@@ -120,14 +120,16 @@ final class PuzzleEngineTests: XCTestCase {
         renamed.regions = puzzle.regions.map { puzzle.size - 1 - $0 }
         XCTAssertEqual(puzzle.fingerprint, renamed.fingerprint)
         let steps = PuzzleHints.tutorial(puzzle: puzzle)
-        XCTAssertEqual(steps.count, 9)
+        XCTAssertTrue(PlayAlongTutorial.isValid(puzzle: puzzle, steps: steps))
         XCTAssertEqual(steps.filter { $0.action == "swipe" }.count, 2)
-        XCTAssertEqual(Set(steps.prefix(4).map(\.id)), Set(["row", "column", "region", "neighbors"]))
-        for step in steps where step.action == "tap" || step.action == "swipe" {
+        XCTAssertEqual(steps.first?.action, "doubleTap")
+        XCTAssertEqual(steps.last?.action, "finish")
+        XCTAssertFalse(steps.contains { $0.action == "read" })
+        for step in steps where step.action == "tap" || step.action == "swipe" || step.action == "exclude" {
             XCTAssertFalse(step.targetCells.isEmpty)
             XCTAssertTrue(Set(step.targetCells).isDisjoint(with: Set(puzzle.solution)))
         }
-        let teachingCell = try XCTUnwrap(steps.last?.targetCells.first)
+        let teachingCell = try XCTUnwrap(steps.first?.targetCells.first)
         XCTAssertTrue(puzzle.solution.contains(teachingCell))
         XCTAssertEqual(puzzle.regions.filter { $0 == puzzle.regions[teachingCell] }.count, 1)
     }

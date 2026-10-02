@@ -1,0 +1,188 @@
+[
+  {
+    "action" : "doubleTap",
+    "focusCells" : [
+      1
+    ],
+    "id" : "find_1",
+    "instruction" : "Each color region has one capybara. Double-tap the only cell in this region.",
+    "targetCells" : [
+      1
+    ],
+    "title" : "Find the first capybara"
+  },
+  {
+    "action" : "tap",
+    "focusCells" : [
+      0,
+      1,
+      2,
+      3
+    ],
+    "id" : "mark",
+    "instruction" : "This row already has its capybara. Tap the highlighted space to mark X.",
+    "targetCells" : [
+      0
+    ],
+    "title" : "Tap to mark X"
+  },
+  {
+    "action" : "tap",
+    "focusCells" : [
+      0,
+      1,
+      2,
+      3
+    ],
+    "id" : "undo",
+    "instruction" : "Tap the same X again to remove it.",
+    "targetCells" : [
+      0
+    ],
+    "title" : "Tap again to undo"
+  },
+  {
+    "action" : "swipe",
+    "focusCells" : [
+      0,
+      1,
+      2,
+      3
+    ],
+    "id" : "swipe",
+    "instruction" : "One capybara per row. Swipe across these spaces to mark X.",
+    "targetCells" : [
+      2,
+      3
+    ],
+    "title" : "Swipe across a row"
+  },
+  {
+    "action" : "swipe",
+    "focusCells" : [
+      1,
+      5,
+      9,
+      13
+    ],
+    "id" : "swipeVertical",
+    "instruction" : "One capybara per column. Swipe down these spaces to mark X.",
+    "targetCells" : [
+      5,
+      9
+    ],
+    "title" : "Swipe down a column"
+  },
+  {
+    "action" : "exclude",
+    "focusCells" : [
+      0,
+      1,
+      2,
+      3,
+      5,
+      9,
+      13
+    ],
+    "id" : "exclude_lines_6",
+    "instruction" : "One capybara per row and column. Mark the remaining highlighted spaces with X.",
+    "targetCells" : [
+      0,
+      13
+    ],
+    "title" : "Cross out the remaining spaces"
+  },
+  {
+    "action" : "exclude",
+    "focusCells" : [
+      0,
+      1,
+      2,
+      4,
+      5,
+      6
+    ],
+    "id" : "exclude_neighbors_7",
+    "instruction" : "Capybaras cannot touch, even diagonally. Mark these neighboring cells with X.",
+    "targetCells" : [
+      4,
+      6
+    ],
+    "title" : "Give them space"
+  },
+  {
+    "action" : "doubleTap",
+    "focusCells" : [
+      4,
+      5,
+      6,
+      7
+    ],
+    "id" : "find_2",
+    "instruction" : "The X marks leave only one space in this row. Double-tap to find its capybara.",
+    "targetCells" : [
+      7
+    ],
+    "title" : "One space left in this row"
+  },
+  {
+    "action" : "exclude",
+    "focusCells" : [
+      2,
+      3,
+      6,
+      7,
+      10,
+      11
+    ],
+    "id" : "exclude_neighbors_9",
+    "instruction" : "Capybaras cannot touch, even diagonally. Mark these neighboring cells with X.",
+    "targetCells" : [
+      10,
+      11
+    ],
+    "title" : "Give them space"
+  },
+  {
+    "action" : "doubleTap",
+    "focusCells" : [
+      9,
+      10,
+      13,
+      14
+    ],
+    "id" : "find_3",
+    "instruction" : "The X marks leave only one space in this region. Double-tap to find its capybara.",
+    "targetCells" : [
+      14
+    ],
+    "title" : "One space left in this region"
+  },
+  {
+    "action" : "finish",
+    "focusCells" : [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "id" : "finish_4",
+    "instruction" : "One capybara left. Find it yourself, or tap Hint if you need a hand.",
+    "targetCells" : [
+      8
+    ],
+    "title" : "Find the last capybara"
+  }
+]

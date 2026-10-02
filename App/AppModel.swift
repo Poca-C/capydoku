@@ -87,6 +87,8 @@ final class AppModel: ObservableObject {
     // Each UIKit board owns its token until all recognizers finish, including
     // the system's single-tap wait for a possible second tap.
     private var boardInputOwners: [UUID: UUID] = [:]
+    private var swipeTeachingContextActive = false
+    private var swipeTeachingIdentity: String?
     private var timer: Timer?
     private var loadingID = UUID()
     private var generationCandidateLimitOverride: Int?
@@ -237,6 +239,14 @@ final class AppModel: ObservableObject {
         if let i = args.firstIndex(of: "-level"), args.indices.contains(i + 1), let level = Int(args[i + 1]) {
             start(level: level)
         }
+        // Explicit historical UI fixture; ordinary launches and cold restores
+        // always keep the version stored with the current attempt.
+        if args.contains("-ui-testing"), args.contains("-reset-demo"),
+           let i = args.firstIndex(of: "-tutorial-plan-version"), args.indices.contains(i + 1),
+           let raw = Int(args[i + 1]), let version = TutorialPlanVersion(rawValue: raw) {
+            progress.tutorialPlanVersion = version
+            save()
+        }
         refreshGameplayConfiguration()
     }
 
@@ -306,6 +316,22 @@ final class AppModel: ObservableObject {
         return steps.indices.contains(progress.tutorialStep) ? steps[progress.tutorialStep] : nil
     }
     var tutorialCount: Int { session.map { PuzzleHints.tutorial(puzzle: $0.puzzle, version: progress.tutorialPlanVersion).count } ?? 0 }
+    var tutorialHintRevealed: Bool {
+        tutorial?.action == "finish" && progress.tutorialHintSessionID == session?.id
+    }
+    var showsTutorialCompletion: Bool {
+        guard let s = session else { return false }
+        return s.status == .won && progress.tutorialCompletionSessionID == s.id
+    }
+    private var teachingIdentity: String? {
+        guard let s = session, let step = tutorial else { return nil }
+        return "\(s.id)/\(progress.tutorialPlanVersion.rawValue)/\(step.id)"
+    }
+    func revealTutorialHint() {
+        guard tutorial?.action == "finish", let s = session else { return }
+        progress.tutorialHintSessionID = s.id
+        save()
+    }
 
     func loadProgress() {
         clearSceneFeedback()
@@ -813,14 +839,30 @@ final class AppModel: ObservableObject {
 
     private func tutorialAllows(_ action: String, cells: [Int]) -> Bool {
         guard let t = tutorial else { return true }
+        if t.action == "finish" { return !cells.isEmpty }
+        if t.action == "exclude" {
+            return (action == "tap" || action == "swipe") && !cells.isEmpty && Set(cells).isSubset(of: Set(t.targetCells))
+        }
         return t.action == action && !cells.isEmpty && Set(cells).isSubset(of: Set(t.targetCells))
     }
     func advanceTutorial() {
-        let completes = progress.tutorialStep + 1 >= tutorialCount
-        if completes { trackTutorialEnd("complete") }
-        progress.tutorialStep += 1
-        if completes { progress.tutorialCompleted = true }
+        guard let step = tutorial, step.action == "read" else { return }
+        completeTutorialStep(step)
         save()
+    }
+    /// Capture the accepted step before submitting: the final find changes the
+    /// session to won, so the computed active tutorial is already nil afterwards.
+    private func completeTutorialStep(_ step: TutorialStep) {
+        guard let s = session, !progress.tutorialCompleted else { return }
+        let steps = PuzzleHints.tutorial(puzzle: s.puzzle, version: progress.tutorialPlanVersion)
+        guard steps.indices.contains(progress.tutorialStep), steps[progress.tutorialStep].id == step.id else { return }
+        let completes = progress.tutorialStep + 1 >= tutorialCount
+        if completes { trackTutorialEnd("complete", capturedStep: true) }
+        progress.tutorialStep += 1
+        if completes {
+            progress.tutorialCompleted = true
+            if progress.tutorialPlanVersion == .playAlong { progress.tutorialCompletionSessionID = s.id }
+        }
     }
     func skipTutorial() { trackTutorialEnd("quit"); progress.tutorialCompleted = true; save() }
     func replayTutorial() {
@@ -830,20 +872,27 @@ final class AppModel: ObservableObject {
     func toggle(_ cell: Int) {
         syncFeedbackState(); defer { syncFeedbackState() }
         guard canTouchBoard, tutorialAllows("tap", cells: [cell]) else { return }
+        let step = tutorial
         let wasMarked = session?.marks.contains(cell) == true
         if progress.session?.toggleMark(at: cell) == true {
             feedback.play(wasMarked ? .erase : .mark)
-            if tutorial != nil { advanceTutorial() }
+            if let step, step.action == "tap" || (step.action == "exclude" && Set(step.targetCells).isSubset(of: session?.marks ?? [])) {
+                completeTutorialStep(step)
+            }
             save()
         }
     }
     func mark(_ cells: [Int]) {
         syncFeedbackState(); defer { syncFeedbackState() }
         guard canTouchBoard, tutorialAllows("swipe", cells: cells) else { return }
+        guard !swipeTeachingContextActive || swipeTeachingIdentity == teachingIdentity else { return }
+        let step = tutorial
         let count = progress.session?.markMany(cells) ?? 0
         guard count > 0 else { return }
         feedback.playMarks(count: count)
-        if let t = tutorial, Set(t.targetCells).isSubset(of: session?.marks ?? []) { advanceTutorial() }
+        if let step, (step.action == "swipe" || step.action == "exclude"), Set(step.targetCells).isSubset(of: session?.marks ?? []) {
+            completeTutorialStep(step)
+        }
         save()
     }
     func submit(_ cell: Int) {
@@ -853,13 +902,14 @@ final class AppModel: ObservableObject {
         // Ignore a duplicated delivery of this gesture, not all future attempts at this cell.
         if let last = lastSubmission, last.sessionID == sessionID, last.cell == cell, timestamp - last.time < 0.28 { return }
         lastSubmission = (sessionID, cell, timestamp)
+        let teachingStep = tutorial
         let before = session
         let result = progress.session?.submit(cell: cell)
         switch result {
         case .correct:
             recordScoreAward(cell: cell, before: before)
             playRevealFeedback()
-            if tutorial != nil { advanceTutorial() }
+            if let teachingStep { completeTutorialStep(teachingStep) }
             afterAction()
         case .incorrect: clearSceneFeedback(); feedback.play(.wrong); if session?.status == .lost { trackLevelEnd(.lose) }; save()
         default: break
@@ -1253,8 +1303,17 @@ final class AppModel: ObservableObject {
         }
     }
     func uiTap(_ id: String = "button") { syncFeedbackState(); feedback.playButton(id: id) }
-    func beginSwipeFeedback() { syncFeedbackState(); if canTouchBoard { feedback.beginSwipe() } }
-    func endSwipeFeedback(cancelled: Bool) { feedback.endSwipe(cancelled: cancelled) }
+    func beginSwipeFeedback() {
+        syncFeedbackState()
+        if canTouchBoard {
+            swipeTeachingContextActive = true; swipeTeachingIdentity = teachingIdentity
+            feedback.beginSwipe()
+        }
+    }
+    func endSwipeFeedback(cancelled: Bool) {
+        swipeTeachingContextActive = false; swipeTeachingIdentity = nil
+        feedback.endSwipe(cancelled: cancelled)
+    }
     var currentAudioEnvironment: FeedbackEnvironment { feedback.environment }
     func comboFeedbackPresentation(for count: Int) -> ComboFeedbackPresentation? {
         guard count > 0 else { return nil }
@@ -1405,8 +1464,8 @@ final class AppModel: ObservableObject {
         // Disabled analytics never generates a retroactive pre-consent event.
         candidate.pendingLevelResultEvents[prepared.event.eventID] = data
     }
-    private func trackTutorialEnd(_ result: String) {
-        guard tutorial != nil, let s = session else { return }
+    private func trackTutorialEnd(_ result: String, capturedStep: Bool = false) {
+        guard tutorial != nil || capturedStep, let s = session else { return }
         track("tutorial_end", key: s.id.uuidString + ":" + result, parameters: ["tutorial_id": "level-1-dynamic", "result": result, "duration_sec": "\(Int(s.elapsedSeconds))"])
     }
     private func prepareBuff(_ type: String, key: String, applied: Bool, before: Int, after: Int,

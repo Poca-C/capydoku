@@ -120,7 +120,7 @@ final class AppLocalizationTests: XCTestCase {
         for version in [TutorialPlanVersion.legacy, .boardDriven] {
             let steps = PuzzleHints.tutorial(puzzle: puzzle, version: version)
             let order = version == .legacy ? expected.map { $0.0 }
-                : ["region", "neighbors", "row", "column", "mark", "undo", "swipe", "swipeVertical", "find"]
+                : ["region", "neighbors", "column", "row", "mark", "undo", "swipe", "swipeVertical", "find"]
             XCTAssertEqual(steps.map(\.id), order)
             for (id, title, instruction) in expected {
                 let step = try XCTUnwrap(steps.first { $0.id == id })
@@ -129,6 +129,22 @@ final class AppLocalizationTests: XCTestCase {
                 XCTAssertEqual(AppLanguage.english.text(step.title), step.title, id)
                 XCTAssertEqual(AppLanguage.english.text(step.instruction), step.instruction, id)
             }
+        }
+    }
+
+    func testPlayAlongTutorialAndCompletionAreChineseOnEveryReferenceBoard() throws {
+        var boards = [try XCTUnwrap(packagedPuzzles().first { $0.id == 1 })]
+        for seed: UInt64 in [7, 31, 222, 987] { boards.append(try PuzzleGenerator.generate(level: 1, seed: seed)) }
+        for board in boards {
+            for step in PuzzleHints.tutorial(puzzle: board, version: .playAlong) {
+                for text in [step.title, step.instruction] {
+                    XCTAssertNotEqual(chinese.text(text), text, "Missing Chinese tutorial copy: \(text)")
+                    XCTAssertNotNil(chinese.text(text).range(of: #"[\u4E00-\u9FFF]"#, options: .regularExpression))
+                }
+            }
+        }
+        for text in ["Tutorial complete", "Great! You have learned how to play.", "Start game", "Give me a hint"] {
+            XCTAssertNotEqual(chinese.text(text), text)
         }
     }
 

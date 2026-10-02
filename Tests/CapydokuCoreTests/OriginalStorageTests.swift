@@ -165,7 +165,7 @@ final class OriginalStorageTests: XCTestCase {
         let expected = PuzzleHints.tutorial(puzzle: puzzle)
         var noAnswer = puzzle; noAnswer.solution = []
         XCTAssertEqual(PuzzleHints.tutorial(puzzle: noAnswer), expected)
-        for step in expected where step.action == "tap" || step.action == "swipe" {
+        for step in expected where step.action == "tap" || step.action == "swipe" || step.action == "exclude" {
             for cell in step.targetCells {
                 XCTAssertTrue(PuzzleSolver.solutions(size: puzzle.size, regions: puzzle.regions, limit: 1, required: [cell]).isEmpty)
             }

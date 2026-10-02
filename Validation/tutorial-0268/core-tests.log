@@ -1,0 +1,71 @@
+Test Suite 'Selected tests' started at 2026-10-02 12:23:31.114.
+Test Suite 'CapydokuPackageTests.xctest' started at 2026-10-02 12:23:31.115.
+Test Suite 'DynamicTutorialPlanTests' started at 2026-10-02 12:23:31.115.
+Test Case '-[CapydokuCoreTests.DynamicTutorialPlanTests testDifferentRealBoardsChooseInformativeRuleOrdersAndRemainPlayable]' started.
+Test Case '-[CapydokuCoreTests.DynamicTutorialPlanTests testDifferentRealBoardsChooseInformativeRuleOrdersAndRemainPlayable]' passed (0.013 seconds).
+Test Case '-[CapydokuCoreTests.DynamicTutorialPlanTests testLegacyPathsRetainShippedStepIdentitiesAndCoordinates]' started.
+Test Case '-[CapydokuCoreTests.DynamicTutorialPlanTests testLegacyPathsRetainShippedStepIdentitiesAndCoordinates]' passed (0.004 seconds).
+Test Case '-[CapydokuCoreTests.DynamicTutorialPlanTests testPlanVersionsAreStableAndDoNotReadTheStoredAnswerOrSeed]' started.
+Test Case '-[CapydokuCoreTests.DynamicTutorialPlanTests testPlanVersionsAreStableAndDoNotReadTheStoredAnswerOrSeed]' passed (0.009 seconds).
+Test Suite 'DynamicTutorialPlanTests' passed at 2026-10-02 12:23:31.142.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.026 (0.026) seconds
+Test Suite 'PlayAlongTutorialTests' started at 2026-10-02 12:23:31.142.
+Test Case '-[CapydokuCoreTests.PlayAlongTutorialTests testCurrentAndBothArchivedBoardsTeachEveryOperationThroughACompleteWin]' started.
+Test Case '-[CapydokuCoreTests.PlayAlongTutorialTests testCurrentAndBothArchivedBoardsTeachEveryOperationThroughACompleteWin]' passed (0.011 seconds).
+Test Case '-[CapydokuCoreTests.PlayAlongTutorialTests testEligibilityRejectsAPlanThatMarksAnAnimalOrSkipsTheTouchingLesson]' started.
+Test Case '-[CapydokuCoreTests.PlayAlongTutorialTests testEligibilityRejectsAPlanThatMarksAnAnimalOrSkipsTheTouchingLesson]' passed (0.003 seconds).
+Test Case '-[CapydokuCoreTests.PlayAlongTutorialTests testFocusContextRoundTripsAndOldStepsDecodeWithoutIt]' started.
+Test Case '-[CapydokuCoreTests.PlayAlongTutorialTests testFocusContextRoundTripsAndOldStepsDecodeWithoutIt]' passed (0.002 seconds).
+Test Case '-[CapydokuCoreTests.PlayAlongTutorialTests testPlanIgnoresStoredAnswersAndSeedsAndRetainsOlderVersions]' started.
+Test Case '-[CapydokuCoreTests.PlayAlongTutorialTests testPlanIgnoresStoredAnswersAndSeedsAndRetainsOlderVersions]' passed (0.008 seconds).
+Test Case '-[CapydokuCoreTests.PlayAlongTutorialTests testSmallGeneratedSeedSampleHasSafeCompletePlansWithoutReplacingThePack]' started.
+Test Case '-[CapydokuCoreTests.PlayAlongTutorialTests testSmallGeneratedSeedSampleHasSafeCompletePlansWithoutReplacingThePack]' passed (0.536 seconds).
+Test Suite 'PlayAlongTutorialTests' passed at 2026-10-02 12:23:31.702.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.561 (0.561) seconds
+Test Suite 'PuzzleEngineTests' started at 2026-10-02 12:23:31.702.
+Test Case '-[CapydokuCoreTests.PuzzleEngineTests testDisconnectedRegionIsRejected]' started.
+Test Case '-[CapydokuCoreTests.PuzzleEngineTests testDisconnectedRegionIsRejected]' passed (0.000 seconds).
+Test Case '-[CapydokuCoreTests.PuzzleEngineTests testExperimentalThreeTenLevelGroupsWithRuntimeBudget]' started.
+Test Case '-[CapydokuCoreTests.PuzzleEngineTests testExperimentalThreeTenLevelGroupsWithRuntimeBudget]' passed (29.567 seconds).
+Test Case '-[CapydokuCoreTests.PuzzleEngineTests testFingerprintIgnoresRegionNamesAndTutorialTargetsMatchBoard]' started.
+Test Case '-[CapydokuCoreTests.PuzzleEngineTests testFingerprintIgnoresRegionNamesAndTutorialTargetsMatchBoard]' passed (0.134 seconds).
+Test Case '-[CapydokuCoreTests.PuzzleEngineTests testGeneratorBudgetsAndEndlessSizeCap]' started.
+Test Case '-[CapydokuCoreTests.PuzzleEngineTests testGeneratorBudgetsAndEndlessSizeCap]' passed (0.001 seconds).
+Test Case '-[CapydokuCoreTests.PuzzleEngineTests testHintsNeverTrustWrongPlayerMarksAndOnlyEliminateSafeCells]' started.
+Test Case '-[CapydokuCoreTests.PuzzleEngineTests testHintsNeverTrustWrongPlayerMarksAndOnlyEliminateSafeCells]' passed (0.033 seconds).
+Test Case '-[CapydokuCoreTests.PuzzleEngineTests testNoSolutionAndMalformedRegionsReturnSafely]' started.
+Test Case '-[CapydokuCoreTests.PuzzleEngineTests testNoSolutionAndMalformedRegionsReturnSafely]' passed (0.000 seconds).
+Test Case '-[CapydokuCoreTests.PuzzleEngineTests testRowStripesHaveTwoSolutionsAndRejectDiagonalTouching]' started.
+Test Case '-[CapydokuCoreTests.PuzzleEngineTests testRowStripesHaveTwoSolutionsAndRejectDiagonalTouching]' passed (0.000 seconds).
+Test Case '-[CapydokuCoreTests.PuzzleEngineTests testSeedReproductionAndAllSupportedBoardSizes]' started.
+Test Case '-[CapydokuCoreTests.PuzzleEngineTests testSeedReproductionAndAllSupportedBoardSizes]' passed (3.634 seconds).
+Test Suite 'PuzzleEngineTests' passed at 2026-10-02 12:24:05.072.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 33.369 (33.369) seconds
+Test Suite 'TutorialEligibilityTests' started at 2026-10-02 12:24:05.072.
+Test Case '-[CapydokuCoreTests.TutorialEligibilityTests testGeneratedFirstLevelsPassEligibilityAcrossSeeds]' started.
+Test Case '-[CapydokuCoreTests.TutorialEligibilityTests testGeneratedFirstLevelsPassEligibilityAcrossSeeds]' passed (8.931 seconds).
+Test Case '-[CapydokuCoreTests.TutorialEligibilityTests testPackagedFirstPuzzleRemainsReproducibleAndTeachablyPlayable]' started.
+Test Case '-[CapydokuCoreTests.TutorialEligibilityTests testPackagedFirstPuzzleRemainsReproducibleAndTeachablyPlayable]' passed (0.005 seconds).
+Test Case '-[CapydokuCoreTests.TutorialEligibilityTests testValidUniquePuzzleWithoutSingletonIsRejectedForTeaching]' started.
+Test Case '-[CapydokuCoreTests.TutorialEligibilityTests testValidUniquePuzzleWithoutSingletonIsRejectedForTeaching]' passed (0.001 seconds).
+Test Case '-[CapydokuCoreTests.TutorialEligibilityTests testWrongLevelSizeAndMalformedBoardsAreNotTeachingEligible]' started.
+Test Case '-[CapydokuCoreTests.TutorialEligibilityTests testWrongLevelSizeAndMalformedBoardsAreNotTeachingEligible]' passed (0.181 seconds).
+Test Suite 'TutorialEligibilityTests' passed at 2026-10-02 12:24:14.190.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 9.118 (9.118) seconds
+Test Suite 'TutorialPlanStorageTests' started at 2026-10-02 12:24:14.190.
+Test Case '-[CapydokuCoreTests.TutorialPlanStorageTests testActualSchemaThreeMissingVersionMigratesWithoutReinterpretingTheUnfinishedStep]' started.
+Test Case '-[CapydokuCoreTests.TutorialPlanStorageTests testActualSchemaThreeMissingVersionMigratesWithoutReinterpretingTheUnfinishedStep]' passed (0.009 seconds).
+Test Case '-[CapydokuCoreTests.TutorialPlanStorageTests testAllExplicitPlansRoundTripButOnlyNewUnfinishedAttemptsAdoptTheCurrentPlan]' started.
+Test Case '-[CapydokuCoreTests.TutorialPlanStorageTests testAllExplicitPlansRoundTripButOnlyNewUnfinishedAttemptsAdoptTheCurrentPlan]' passed (0.012 seconds).
+Test Case '-[CapydokuCoreTests.TutorialPlanStorageTests testCurrentSchemaRequiresExplicitKnownPlanAndPreservesRejectedPrimaryOnBackupRecovery]' started.
+Test Case '-[CapydokuCoreTests.TutorialPlanStorageTests testCurrentSchemaRequiresExplicitKnownPlanAndPreservesRejectedPrimaryOnBackupRecovery]' passed (0.015 seconds).
+Test Case '-[CapydokuCoreTests.TutorialPlanStorageTests testFutureSchemaIsNotMisinterpretedAsTheCurrentTeachingPlan]' started.
+Test Case '-[CapydokuCoreTests.TutorialPlanStorageTests testFutureSchemaIsNotMisinterpretedAsTheCurrentTeachingPlan]' passed (0.003 seconds).
+Test Case '-[CapydokuCoreTests.TutorialPlanStorageTests testOldSchemasDefaultOnlyMissingPlanNotExplicitInvalidValues]' started.
+Test Case '-[CapydokuCoreTests.TutorialPlanStorageTests testOldSchemasDefaultOnlyMissingPlanNotExplicitInvalidValues]' passed (0.010 seconds).
+Test Suite 'TutorialPlanStorageTests' passed at 2026-10-02 12:24:14.239.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.049 (0.049) seconds
+Test Suite 'CapydokuPackageTests.xctest' passed at 2026-10-02 12:24:14.239.
+	 Executed 25 tests, with 0 failures (0 unexpected) in 43.122 (43.124) seconds
+Test Suite 'Selected tests' passed at 2026-10-02 12:24:14.239.
+	 Executed 25 tests, with 0 failures (0 unexpected) in 43.122 (43.125) seconds

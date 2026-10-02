@@ -29,6 +29,9 @@ struct PuzzleBoardView: UIViewRepresentable {
     var preview: Set<Int> = []
     var tutorialTargets: Set<Int> = []
     var tutorialAction: String? = nil
+    var focusCells: Set<Int>? = nil
+    var tutorialStepID: String? = nil
+    var tutorialGuideVisible = true
     var hideAccessibility: Bool = false
     let locked: Bool
     let onToggle: (Int) -> Void
@@ -55,7 +58,9 @@ struct PuzzleBoardView: UIViewRepresentable {
                          scoreAwards: scoreAwards,
                          latestSubmissionSucceeded: latestSubmissionSucceeded, effectsEnabled: effectsEnabled,
                          reduceMotion: reduceMotion,
-                         tutorialTargets: tutorialTargets, tutorialAction: tutorialAction, locked: locked, hideAccessibility: hideAccessibility,
+                         tutorialTargets: tutorialTargets, tutorialAction: tutorialAction,
+                         focusCells: focusCells, tutorialStepID: tutorialStepID, tutorialGuideVisible: tutorialGuideVisible,
+                         locked: locked, hideAccessibility: hideAccessibility,
                          language: language,
                          onToggle: onToggle, onSubmit: onSubmit, onMark: onMark,
                          onBeginSwipe: onBeginSwipe, onEndSwipe: onEndSwipe,
@@ -235,6 +240,10 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     private var preview = Set<Int>()
     private var tutorialTargets = Set<Int>()
     private var tutorialAction: String?
+    private var tutorialFocusCells = Set<Int>()
+    private var tutorialStepID: String?
+    private var tutorialGuideVisible = true
+    private var dragTutorialStepID: String?
     private var tutorialGuide: BoardTutorialGuideView?
     private var locked = false
     private var hideAccessibility = false
@@ -307,7 +316,8 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         single.onContactCancelled = { [weak self] in self?.tapDecision.contactCancelled() }
         tapDecision.onSingle = { [weak self] index in
             guard let self, !self.locked, !self.found.contains(index),
-                  self.tutorialAction == nil || self.tutorialAction == "tap" else { return }
+                  self.tutorialAction == nil || ["tap", "exclude", "finish"].contains(self.tutorialAction ?? ""),
+                  self.tutorialAllowsContact(index) else { return }
             self.clearPendingTapFeedback(at: index)
             self.clearEntrancePresentation()
             self.confirmedTapPreviewCells.insert(index)
@@ -363,7 +373,9 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
                    scoreAwards: [ScoreFeedbackAward]? = nil,
                    latestSubmissionSucceeded: Bool? = nil, effectsEnabled: Bool = true,
                    reduceMotion: Bool? = nil,
-                   tutorialTargets: Set<Int>, tutorialAction: String? = nil, locked: Bool, hideAccessibility: Bool = false,
+                   tutorialTargets: Set<Int>, tutorialAction: String? = nil,
+                   focusCells: Set<Int>? = nil, tutorialStepID: String? = nil, tutorialGuideVisible: Bool = true,
+                   locked: Bool, hideAccessibility: Bool = false,
                    language: AppLanguage = .simplifiedChinese,
                    onToggle: @escaping (Int) -> Void, onSubmit: @escaping (Int) -> Void,
                    onMark: @escaping ([Int]) -> Void,
@@ -374,13 +386,17 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
                    onScoreFeedback: @escaping (Int, BoardFeedbackAnchor) -> Void = { _, _ in }) {
         refreshDiagnostics.configurations += 1
         let sameBoard = self.size == size && self.regions == regions && self.sessionID == sessionID
+        let resolvedFocusCells = focusCells ?? tutorialTargets
+        let teachingStepChanged = hasConfigured && self.tutorialStepID != tutorialStepID
         let fullAccessibilityRefresh = !hasConfigured || !sameBoard || self.language != language || self.locked != locked
+            || self.tutorialGuideVisible != tutorialGuideVisible
         let changedAccessibilityCells = found.symmetricDifference(self.found)
             .union(marks.symmetricDifference(self.marks)).union(errors.symmetricDifference(self.errors))
             .union(preview.symmetricDifference(self.preview)).union(tutorialTargets.symmetricDifference(self.tutorialTargets))
         let refreshAccessibilityVisibility = self.hideAccessibility != hideAccessibility
         let redrawBoard = !hasConfigured || !sameBoard || self.found != found || self.marks != marks
             || self.errors != errors || self.preview != preview || self.tutorialTargets != tutorialTargets
+            || self.tutorialFocusCells != resolvedFocusCells || self.tutorialGuideVisible != tutorialGuideVisible
         let addedFound = found.subtracting(self.found)
         let addedErrors = errors.subtracting(self.errors)
         let removedErrors = self.errors.subtracting(errors)
@@ -421,6 +437,12 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
             && !suppressPositiveFeedback && knownLatestSubmissionSucceeded != false
         let motionPolicyChanged = reducesMotion != (reduceMotion ?? UIAccessibility.isReduceMotionEnabled)
         if !sameBoard || !effectsEnabled || motionPolicyChanged { clearFeedback() }
+        if teachingStepChanged {
+            // The finger may still be down when the model advances teaching.
+            // Retire that stroke/tap; new targets require a new contact.
+            tapDecision.cancel()
+            invalidateSwipePath()
+        }
         if (locked && tutorialAction != "read") || hideAccessibility || !preview.isEmpty || !addedFound.isEmpty || !changedMarks.isEmpty || !addedErrors.isEmpty {
             clearEntrancePresentation()
         }
@@ -468,6 +490,9 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         self.preview = preview
         self.tutorialTargets = tutorialTargets
         self.tutorialAction = tutorialAction
+        self.tutorialFocusCells = resolvedFocusCells
+        self.tutorialStepID = tutorialStepID
+        self.tutorialGuideVisible = tutorialGuideVisible
         self.locked = locked
         self.hideAccessibility = hideAccessibility
         self.language = language
@@ -569,9 +594,13 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
 
     private var reducesMotion: Bool { reduceMotionOverride ?? UIAccessibility.isReduceMotionEnabled }
 
+    private func tutorialAllowsContact(_ index: Int) -> Bool {
+        tutorialAction == "finish" || tutorialTargets.isEmpty || tutorialTargets.contains(index)
+    }
+
     private func canPress(_ index: Int) -> Bool {
         canPresentEffects && !locked && !hideAccessibility && preview.isEmpty && !found.contains(index)
-            && (tutorialTargets.isEmpty || tutorialTargets.contains(index))
+            && tutorialAllowsContact(index)
     }
 
     /// Called from raw contacts on the existing pan recognizer, before either
@@ -697,7 +726,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
     private func showPendingTapPreview(_ index: Int?) {
         pendingTapPreview?.removeFromSuperview(); pendingTapPreview = nil; pendingTapPreviewCell = nil
         guard let index, canPress(index), cellSide > 0,
-              tutorialAction == nil || tutorialAction == "tap" || tutorialAction == "doubleTap" else { return }
+              tutorialAction == nil || ["tap", "doubleTap", "exclude", "finish"].contains(tutorialAction ?? "") else { return }
         let palette = ((region(index) % CapyPalette.regionColors.count) + CapyPalette.regionColors.count) % CapyPalette.regionColors.count
         let gap = max(1.1, min(2, cellSide * 0.028))
         let container = UIView(frame: rect(for: index).insetBy(dx: gap, dy: gap))
@@ -724,6 +753,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         let location = gesture.location(in: self)
         let movement = gesture.translation(in: self)
         if gesture.state == .began {
+            dragTutorialStepID = tutorialStepID
             tapDecision.commitSingle()
             contactAllowsTapWait = false
             clearPendingTapFeedback()
@@ -736,6 +766,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
             dragAxis = .pending
             visited.removeAll()
         }
+        guard dragTutorialStepID == tutorialStepID else { invalidateSwipePath(); return }
         guard let start = dragStart else { return }
         // End this stroke as soon as the finger leaves the board. Clearing its
         // origin also prevents re-entry from filling the gap back to that origin.
@@ -772,9 +803,21 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
                 indexes = (min(start / size, row)...max(start / size, row)).map { $0 * size + start % size }
             case .pending, .invalid: break
             }
-            let fresh = indexes.filter { !visited.contains($0) && !found.contains($0) && !errors.contains($0) }
+            let stepTargets = tutorialTargets
+            let requiresFreshStroke = tutorialStepID != nil && ["swipe", "exclude"].contains(tutorialAction ?? "")
+            let fresh = indexes.filter {
+                !visited.contains($0) && !found.contains($0) && !errors.contains($0) && tutorialAllowsContact($0)
+            }
             visited.formUnion(indexes)
+            let reachedTeachingBoundary = requiresFreshStroke && !stepTargets.isEmpty
+                && stepTargets.isSubset(of: marks.union(visited))
             if !fresh.isEmpty { onMark?(fresh) }
+            // Do not wait for SwiftUI's next configure: the accepted callback
+            // may already have advanced the model within this same run loop.
+            if reachedTeachingBoundary {
+                finishSwipe(cancelled: false)
+                dragStart = nil; dragAxis = .invalid; visited.removeAll()
+            }
         }
         if gesture.state == .ended || gesture.state == .cancelled || gesture.state == .failed {
             finishSwipe(cancelled: gesture.state != .ended)
@@ -788,6 +831,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         finishSwipe(cancelled: true)
         dragStart = nil
         dragAxis = .invalid
+        dragTutorialStepID = nil
         visited.removeAll()
     }
 
@@ -816,6 +860,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
         finishSwipe(cancelled: true)
         dragStart = nil
         dragAxis = .pending
+        dragTutorialStepID = nil
         visited.removeAll()
         inputActivity.cancelAll()
     }
@@ -909,7 +954,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
             // Chinese label also speaks the state without relying on that token.
             element.accessibilityLabel = language == .simplifiedChinese ? position + "，" + language.text(state) : position
             element.accessibilityValue = state
-            let extra = tutorialTargets.contains(index) ? language.text("Tutorial target.") : preview.contains(index) ? language.text("Hint preview.") : ""
+            let extra = tutorialGuideVisible && tutorialTargets.contains(index) ? language.text("Tutorial target.") : preview.contains(index) ? language.text("Hint preview.") : ""
             let instruction = language.text(locked ? "Read-only board preview." : "Activate to toggle an exclusion mark. Use the Confirm capybara custom action to submit.")
             element.accessibilityHint = [instruction, extra].filter { !$0.isEmpty }.joined(separator: language == .simplifiedChinese ? "" : " ")
             element.accessibilityCustomActions = locked || found.contains(index) ? nil : [
@@ -954,7 +999,7 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
                     UIColor.black.withAlphaComponent(0.66).setFill(); tile.fill()
                 }
             }
-            if tutorialTargets.contains(index) {
+            if tutorialGuideVisible && tutorialFocusCells.contains(index) {
                 context.setStrokeColor(UIColor(CapyPalette.orange).cgColor)
                 context.setLineWidth(3)
                 context.addPath(UIBezierPath(roundedRect: r.insetBy(dx: 2, dy: 2), cornerRadius: 5).cgPath)
@@ -1119,17 +1164,22 @@ final class PuzzleGridUIView: UIView, UIGestureRecognizerDelegate {
 
     private func updateTutorialGuide() {
         guard applicationAllowsPresentation, window != nil, window?.isHidden == false, !isHidden, alpha > 0,
-              !hideAccessibility, preview.isEmpty, !tutorialTargets.isEmpty,
-              let action = tutorialAction, ["read", "tap", "swipe", "doubleTap"].contains(action),
+              !hideAccessibility, preview.isEmpty, tutorialGuideVisible, !tutorialTargets.isEmpty,
+              let action = tutorialAction, ["read", "tap", "swipe", "doubleTap", "exclude", "finish"].contains(action),
               !locked || action == "read", cellSide > 0 else {
             tutorialGuide?.removeFromSuperview(); tutorialGuide = nil; return
         }
         let staticGuide = reducesMotion || !effectsEnabled
-        if let current = tutorialGuide, current.action == action, current.targetCells == tutorialTargets,
+        // Exclusion targets may span several lines. Point only to the next
+        // still-empty target; keep the larger rule/region focus visible.
+        let guideTargets = action == "exclude" ? Set(tutorialTargets.subtracting(marks).subtracting(found).sorted().prefix(1)) : tutorialTargets
+        if let current = tutorialGuide, current.action == action, current.targetCells == guideTargets,
+           current.focusCells == tutorialFocusCells,
            current.boardRect == boardRect, current.reduceMotion == staticGuide { return }
         tutorialGuide?.removeFromSuperview()
         let guide = BoardTutorialGuideView(frame: bounds, boardRect: boardRect, size: size,
-                                          targetCells: tutorialTargets, action: action, reduceMotion: staticGuide)
+                                          targetCells: guideTargets, focusCells: tutorialFocusCells,
+                                          action: action, reduceMotion: staticGuide)
         feedbackOverlay.insertSubview(guide, at: 0); tutorialGuide = guide; guide.play()
     }
 

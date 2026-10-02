@@ -2,242 +2,177 @@ import XCTest
 import CapydokuCore
 @testable import Capydoku
 
-/// Exercises the saved onboarding as actual player actions, including a fresh model
-/// before every step and halfway through each swipe. No launch flags inject progress.
+/// Exercise real actions and cold restoration, including partial exclusions.
 final class TutorialRecoveryTests: XCTestCase {
+    private func directory() -> URL {
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("tutorial-\(UUID().uuidString)")
+        addTeardownBlock { try? FileManager.default.removeItem(at: url) }
+        return url
+    }
     @MainActor private func model(at directory: URL, puzzle: Puzzle? = nil) -> AppModel {
         AppModel(saveDirectory: directory, runsTimer: false, feedbackEnabled: false, bundledPuzzles: puzzle.map { [$0] })
     }
-
-    private func directory() -> URL {
-        FileManager.default.temporaryDirectory.appendingPathComponent("tutorial-\(UUID().uuidString)")
-    }
-
     @MainActor private func restore(_ previous: AppModel, at directory: URL) throws -> AppModel {
         let session = try XCTUnwrap(previous.session)
-        let step = previous.progress.tutorialStep
-        let completed = previous.progress.tutorialCompleted
         let restored = model(at: directory, puzzle: session.puzzle)
-        XCTAssertNil(restored.errorMessage)
-        XCTAssertNil(restored.notice, "A normal teaching checkpoint must load without backup recovery.")
+        XCTAssertNil(restored.errorMessage); XCTAssertNil(restored.notice)
         restored.startOrContinue()
-        XCTAssertEqual(restored.progress.tutorialStep, step)
-        XCTAssertEqual(restored.progress.tutorialCompleted, completed)
-        XCTAssertEqual(restored.progress.tutorialPlanVersion, previous.progress.tutorialPlanVersion)
-        XCTAssertEqual(restored.tutorial, previous.tutorial, "Cold recovery keeps the same rule identity, wording and targets.")
-        XCTAssertEqual(restored.session, session, "Restoration must preserve the board, marks, found cells, score, lives and attempt.")
-        XCTAssertEqual(restored.screen, .game)
+        XCTAssertEqual(restored.progress, previous.progress)
+        XCTAssertEqual(restored.session, session)
+        XCTAssertEqual(restored.tutorial, previous.tutorial)
+        XCTAssertEqual(restored.tutorialHintRevealed, previous.tutorialHintRevealed)
+        XCTAssertEqual(restored.showsTutorialCompletion, previous.showsTutorialCompletion)
         return restored
     }
-
-    private func validateTargets(_ step: TutorialStep, puzzle: Puzzle, animal: Int) throws {
-        let targets = Set(step.targetCells)
-        XCTAssertFalse(targets.isEmpty, "Every teaching action needs targets on this board.")
-        XCTAssertEqual(targets.count, step.targetCells.count)
-        XCTAssertTrue(targets.isSubset(of: Set(puzzle.regions.indices)))
-        switch step.id {
-        case "row":
-            XCTAssertEqual(targets.count, puzzle.size)
-            XCTAssertTrue(targets.allSatisfy { $0 / puzzle.size == animal / puzzle.size })
-        case "column":
-            XCTAssertEqual(targets.count, puzzle.size)
-            XCTAssertTrue(targets.allSatisfy { $0 % puzzle.size == animal % puzzle.size })
-        case "region":
-            XCTAssertEqual(targets, Set(puzzle.regions.indices.filter { puzzle.regions[$0] == puzzle.regions[animal] }))
-        case "neighbors":
-            XCTAssertFalse(targets.contains(animal))
-            XCTAssertTrue(targets.allSatisfy {
-                abs($0 / puzzle.size - animal / puzzle.size) <= 1 && abs($0 % puzzle.size - animal % puzzle.size) <= 1
-            })
-        case "mark", "undo":
-            XCTAssertEqual(targets.count, 1)
-            XCTAssertTrue(targets.isDisjoint(with: puzzle.solution), "Teaching must never mark an actual answer as empty.")
-        case "swipe", "swipeVertical":
-            XCTAssertEqual(targets.count, 2)
-            XCTAssertTrue(targets.isDisjoint(with: puzzle.solution))
-            let ordered = step.targetCells.sorted()
-            let first = try XCTUnwrap(ordered.first), last = try XCTUnwrap(ordered.last)
-            if step.id == "swipe" {
-                XCTAssertEqual(first / puzzle.size, last / puzzle.size)
-                XCTAssertEqual(last - first, 1)
-            } else {
-                XCTAssertEqual(first % puzzle.size, last % puzzle.size)
-                XCTAssertEqual(last - first, puzzle.size)
-            }
-        case "find":
-            XCTAssertEqual(targets, [animal])
-            XCTAssertTrue(puzzle.solution.contains(animal))
-            XCTAssertEqual(puzzle.regions.filter { $0 == puzzle.regions[animal] }.count, 1,
-                           "The final instruction's single-cell-region explanation must be true.")
-        default:
-            XCTFail("Unexpected tutorial step \(step.id)")
+    @MainActor private func act(_ app: AppModel, step: TutorialStep) throws {
+        switch step.action {
+        case "tap": app.toggle(try XCTUnwrap(step.targetCells.first))
+        case "swipe", "exclude": app.mark(step.targetCells)
+        case "doubleTap", "finish": app.submit(try XCTUnwrap(step.targetCells.first))
+        default: XCTFail("The new lesson must use actual board actions, not reading pages: \(step.action)")
         }
     }
-
     @MainActor private func completeTutorial(_ initial: AppModel, at directory: URL) throws {
         var app = initial
         let original = try XCTUnwrap(app.session)
-        let puzzle = original.puzzle
-        let version = app.progress.tutorialPlanVersion
-        let allSteps = PuzzleHints.tutorial(puzzle: puzzle, version: version)
-        XCTAssertEqual(allSteps.count, 9)
-        let animal = try XCTUnwrap(allSteps.last?.targetCells.first)
-        for index in 0..<9 {
-            // Recreate from disk before EVERY step, rather than just inspect saved fields.
+        let steps = PuzzleHints.tutorial(puzzle: original.puzzle, version: .playAlong)
+        XCTAssertEqual(steps.first?.action, "doubleTap")
+        XCTAssertEqual(steps.last?.action, "finish")
+        XCTAssertFalse(steps.contains { $0.action == "read" })
+        for index in steps.indices {
             app = try restore(app, at: directory)
-            XCTAssertEqual(app.progress.tutorialStep, index)
-            let step = try XCTUnwrap(app.tutorial)
-            XCTAssertEqual(step, allSteps[index])
-            XCTAssertEqual(app.progress.tutorialPlanVersion, version)
-            try validateTargets(step, puzzle: puzzle, animal: animal)
-            let before = try XCTUnwrap(app.session)
-
-            // Guesses outside this instruction's highlighted targets must be ignored.
-            let outside = try XCTUnwrap(puzzle.regions.indices.first { !step.targetCells.contains($0) })
-            app.submit(outside)
-            XCTAssertEqual(app.session, before)
-            XCTAssertEqual(app.progress.tutorialStep, index)
-
-            switch step.action {
-            case "read":
-                app.advanceTutorial()
+            let step = try XCTUnwrap(app.tutorial), before = try XCTUnwrap(app.session)
+            XCTAssertEqual(step, steps[index]); XCTAssertEqual(app.progress.tutorialStep, index)
+            app.advanceTutorial()
+            XCTAssertEqual(app.progress.tutorialStep, index, "A read-button callback cannot skip an action.")
+            if step.action != "finish" {
+                let outside = try XCTUnwrap(original.puzzle.regions.indices.first { !step.targetCells.contains($0) })
+                app.submit(outside)
                 XCTAssertEqual(app.session, before)
-            case "tap":
-                let cell = try XCTUnwrap(step.targetCells.first)
-                XCTAssertEqual(before.marks.contains(cell), step.id == "undo",
-                               "Mark needs an empty cell; undo needs an existing X.")
-                app.toggle(cell)
-                XCTAssertEqual(app.session?.marks, before.marks.symmetricDifference([cell]))
-                XCTAssertEqual(app.session?.score, before.score)
-            case "swipe":
-                let first = try XCTUnwrap(step.targetCells.first)
-                app.mark([first])
-                XCTAssertEqual(app.progress.tutorialStep, index, "A partial swipe must not finish the two-cell instruction.")
-                XCTAssertTrue(app.session?.marks.contains(first) == true)
-                app = try restore(app, at: directory)
-                XCTAssertEqual(app.tutorial?.id, step.id)
-                app.mark(Array(step.targetCells.dropFirst()))
-                XCTAssertEqual(app.session?.marks, before.marks.union(step.targetCells))
-                XCTAssertEqual(app.session?.score, before.score)
-            case "doubleTap":
-                let target = try XCTUnwrap(step.targetCells.first)
-                app.submit(target)
-                XCTAssertEqual(app.session?.found, before.found.union([target]))
-                XCTAssertGreaterThan(try XCTUnwrap(app.session?.score), before.score)
-            default:
-                XCTFail("Unknown tutorial action \(step.action)")
             }
-
-            XCTAssertNil(app.errorMessage)
-            XCTAssertEqual(app.progress.tutorialStep, index + 1, "The requested operation should advance exactly one step.")
-            XCTAssertEqual(app.session?.lives, original.lives, "Following the generated teaching targets must never cost a life.")
+            if ["swipe", "exclude"].contains(step.action), step.targetCells.count > 1 {
+                app.mark([step.targetCells[0]])
+                XCTAssertEqual(app.progress.tutorialStep, index)
+                app = try restore(app, at: directory)
+                app.mark(Array(step.targetCells.dropFirst()))
+            } else {
+                try act(app, step: step)
+            }
+            XCTAssertEqual(app.progress.tutorialStep, index + 1)
+            XCTAssertEqual(app.session?.lives, original.lives)
             XCTAssertEqual(app.session?.errors, [])
-            XCTAssertTrue(try XCTUnwrap(app.session?.marks).isDisjoint(with: puzzle.solution))
+            if ["doubleTap", "finish"].contains(step.action) {
+                XCTAssertEqual(app.session?.marks, before.marks, "Finding an animal must never auto-exclude cells.")
+                XCTAssertEqual(app.session?.found, before.found.union(step.targetCells))
+            }
+            XCTAssertNil(app.errorMessage)
         }
         XCTAssertTrue(app.progress.tutorialCompleted)
-        XCTAssertEqual(app.progress.tutorialPlanVersion, version)
-        XCTAssertNil(app.tutorial)
-        XCTAssertEqual(app.session?.found, [animal])
-        XCTAssertEqual(app.session?.score, original.config.baseScore)
+        XCTAssertTrue(app.showsTutorialCompletion)
+        XCTAssertEqual(app.session?.status, .won)
+        XCTAssertEqual(app.session?.found, Set(original.puzzle.solution))
+        XCTAssertTrue(app.progress.completedLevels.contains(1))
+        XCTAssertEqual(app.progress.unlockedLevel, 2)
         app = try restore(app, at: directory)
-        XCTAssertTrue(app.progress.tutorialCompleted)
-        XCTAssertNil(app.tutorial, "A completed introduction must not start again after relaunch.")
-        XCTAssertEqual(app.session?.found, [animal])
-        XCTAssertEqual(app.session?.lives, original.lives)
-        // The player can keep playing the same puzzle after the restored tutorial.
-        let next = try XCTUnwrap(puzzle.solution.first { $0 != animal })
-        app.submit(next)
-        XCTAssertEqual(app.session?.found, [animal, next])
         XCTAssertNil(app.tutorial)
-        XCTAssertEqual(app.session?.lives, original.lives)
+        XCTAssertTrue(app.showsTutorialCompletion, "The final action and teaching completion must be saved together.")
+        let completed = app.progress
+        app.submit(original.puzzle.solution.last!)
+        XCTAssertEqual(app.progress, completed, "Duplicate final callbacks cannot award again.")
     }
 
     @MainActor func testEveryPackagedTutorialStepRestoresAndCanContinue() throws {
-        let dir = directory()
-        defer { try? FileManager.default.removeItem(at: dir) }
-        let app = model(at: dir)
+        let dir = directory(), app = model(at: dir)
         app.start(level: 1)
-        XCTAssertEqual(app.session?.puzzle.id, 1)
-        XCTAssertEqual(app.progress.tutorialPlanVersion, .current)
-        XCTAssertEqual(PuzzleHints.tutorial(puzzle: try XCTUnwrap(app.session?.puzzle), version: .current).prefix(4).map(\.id),
-                       ["region", "neighbors", "column", "row"], "Current packaged L1 follows its board-derived rule order.")
+        XCTAssertEqual(app.progress.tutorialPlanVersion, .playAlong)
         try completeTutorial(app, at: dir)
     }
 
     @MainActor func testRestartDuringUndoOrPartialSwipeReplaysTheCompleteTutorial() throws {
-        for stopAtPartialSwipe in [false, true] {
+        for checkpoint in ["undo", "swipeVertical"] {
             let dir = directory()
-            defer { try? FileManager.default.removeItem(at: dir) }
             var app = model(at: dir)
             app.start(level: 1)
-            for _ in 0..<4 { app.advanceTutorial() }
-            XCTAssertEqual(app.tutorial?.id, "mark")
-            let markedCell = try XCTUnwrap(app.tutorial?.targetCells.first)
-            app.toggle(markedCell)
-            XCTAssertEqual(app.tutorial?.id, "undo")
-            XCTAssertTrue(app.session?.marks.contains(markedCell) == true)
-            if stopAtPartialSwipe {
-                app.toggle(markedCell)
-                XCTAssertFalse(app.session?.marks.contains(markedCell) == true)
-                XCTAssertEqual(app.tutorial?.id, "swipe")
-                let swipeCell = try XCTUnwrap(app.tutorial?.targetCells.first)
-                app.mark([swipeCell])
-                XCTAssertEqual(app.tutorial?.id, "swipe")
-                XCTAssertEqual(app.session?.marks, [swipeCell])
+            for _ in 0..<app.tutorialCount {
+                guard let step = app.tutorial, step.id != checkpoint else { break }
+                try act(app, step: step)
             }
-
-            // Returning home and loading the same saved attempt must not reset it.
-            let checkpoint = try XCTUnwrap(app.session)
-            let checkpointStep = app.progress.tutorialStep
+            XCTAssertEqual(app.tutorial?.id, checkpoint)
+            if checkpoint == "swipeVertical" { app.mark([try XCTUnwrap(app.tutorial?.targetCells.first)]) }
+            let previous = try XCTUnwrap(app.session)
             app.home(); app.startOrContinue()
-            var continued = checkpoint
-            XCTAssertNotNil(continued.claimResult(.quit))
-            XCTAssertTrue(continued.resumeAfterQuit())
-            XCTAssertEqual(app.session, continued, "Continuing only reopens result tracking; all tutorial board state remains identical.")
-            XCTAssertEqual(app.progress.tutorialStep, checkpointStep)
+            XCTAssertEqual(app.session?.marks, previous.marks)
+            XCTAssertEqual(app.session?.found, previous.found)
             app = try restore(app, at: dir)
-
-            app.sheet = .settings
             app.restart()
-            app.sheet = nil
-            XCTAssertNotEqual(app.session?.id, checkpoint.id)
-            XCTAssertEqual(app.session?.attempt, checkpoint.attempt + 1)
-            XCTAssertEqual(app.session?.marks, [])
-            XCTAssertEqual(app.tutorial?.id, "region")
-            XCTAssertEqual(app.progress.tutorialPlanVersion, .current)
-            XCTAssertFalse(app.progress.tutorialCompleted)
-            // Execute all four rules, mark, actual undo, both swipes and double tap;
-            // the shared helper also restores between every action and mid-swipe.
+            XCTAssertNotEqual(app.session?.id, previous.id)
+            XCTAssertEqual(app.session?.attempt, previous.attempt + 1)
+            XCTAssertEqual(app.tutorial?.id, "find_1")
+            XCTAssertEqual(app.session?.marks, []); XCTAssertEqual(app.session?.found, [])
             try completeTutorial(app, at: dir)
-
-            let completed = model(at: dir)
-            completed.startOrContinue()
-            XCTAssertTrue(completed.progress.tutorialCompleted)
-            completed.restart()
-            XCTAssertNil(completed.tutorial, "A completed tutorial stays completed on a new attempt.")
-            let puzzle = try XCTUnwrap(completed.session?.puzzle)
-            let answer = try XCTUnwrap(puzzle.solution.first)
-            completed.submit(answer)
-            XCTAssertEqual(completed.session?.found, [answer], "Ordinary play must remain available after restarting.")
+            let completed = model(at: dir); completed.startOrContinue(); completed.restart()
+            XCTAssertNil(completed.tutorial)
+            XCTAssertFalse(completed.showsTutorialCompletion)
         }
     }
 
     @MainActor func testGeneratedTutorialTargetsWorkAcrossEightSeedsAndEverySavedStep() throws {
-        let seeds: [UInt64] = [1, 7, 42, 123, 991, 2_026, 9_001, 0xCA9D0C0]
         var fingerprints = Set<String>()
-        for seed in seeds {
+        for seed: UInt64 in [1, 7, 42, 123, 991, 2_026, 9_001, 0xCA9D0C0] {
             let dir = directory()
-            defer { try? FileManager.default.removeItem(at: dir) }
             let puzzle = try PuzzleGenerator.generate(level: 1, seed: seed, timeBudgetMilliseconds: 8_000)
             XCTAssertTrue(PuzzleSolver.validate(puzzle).valid)
             fingerprints.insert(puzzle.fingerprint)
             let app = model(at: dir, puzzle: puzzle)
-            app.progress.begin(puzzle: puzzle, config: app.config)
-            app.save()
-            app.startOrContinue() // Preserve this generated board instead of loading the bundled Level 1.
-            XCTAssertEqual(app.session?.puzzle.seed, seed)
+            app.start(level: 1)
             try completeTutorial(app, at: dir)
         }
-        XCTAssertGreaterThan(fingerprints.count, 1, "The generated-board test must exercise more than one region layout.")
+        XCTAssertGreaterThan(fingerprints.count, 1)
+    }
+
+    @MainActor func testFinalFreePlayAndOptionalHintPersistWithoutSpendingInventory() throws {
+        let dir = directory()
+        var app = model(at: dir); app.start(level: 1)
+        for _ in 0..<app.tutorialCount {
+            guard let step = app.tutorial, step.action != "finish" else { break }
+            try act(app, step: step)
+        }
+        let step = try XCTUnwrap(app.tutorial), before = try XCTUnwrap(app.session)
+        XCTAssertEqual(step.action, "finish"); XCTAssertFalse(app.tutorialHintRevealed)
+        let other = try XCTUnwrap(before.puzzle.regions.indices.first { !before.found.contains($0) && !step.targetCells.contains($0) })
+        app.toggle(other)
+        XCTAssertNotEqual(app.session?.marks, before.marks, "Final free play must allow other cells.")
+        app.toggle(other)
+        app.submit(other)
+        XCTAssertEqual(app.session?.lives, before.lives - 1, "An ordinary wrong guess is not silently target-gated.")
+        XCTAssertEqual(app.tutorial, step)
+        let inventory = app.progress.availableHints
+        let unchangedBoard = app.session
+        app.revealTutorialHint(); app.revealTutorialHint()
+        XCTAssertTrue(app.tutorialHintRevealed)
+        XCTAssertEqual(app.progress.availableHints, inventory)
+        XCTAssertEqual(app.session, unchangedBoard)
+        app = try restore(app, at: dir)
+        XCTAssertTrue(app.tutorialHintRevealed)
+        app.submit(try XCTUnwrap(step.targetCells.first))
+        XCTAssertTrue(app.showsTutorialCompletion)
+    }
+
+    @MainActor func testOneHeldSwipeCannotApplyToTheFollowingTeachingStep() throws {
+        let dir = directory(), app = model(at: dir); app.start(level: 1)
+        for _ in 0..<app.tutorialCount {
+            guard let step = app.tutorial, step.id != "swipe" else { break }
+            try act(app, step: step)
+        }
+        let horizontal = try XCTUnwrap(app.tutorial)
+        app.beginSwipeFeedback(); app.mark(horizontal.targetCells)
+        XCTAssertEqual(app.tutorial?.id, "swipeVertical")
+        let vertical = try XCTUnwrap(app.tutorial), marks = app.session?.marks
+        app.mark(vertical.targetCells)
+        XCTAssertEqual(app.session?.marks, marks)
+        XCTAssertEqual(app.tutorial, vertical)
+        app.endSwipeFeedback(cancelled: false)
+        app.beginSwipeFeedback(); app.mark(vertical.targetCells); app.endSwipeFeedback(cancelled: false)
+        XCTAssertNotEqual(app.tutorial, vertical)
     }
 }

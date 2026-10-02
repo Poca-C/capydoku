@@ -63,23 +63,41 @@ final class OperationReinstallUITests: XCTestCase {
         app.terminate()
     }
     private func completeActualTutorial() {
-        // Current packaged Level 1 path, also covered by the ordinary guided
-        // tutorial regression. The script verifies this exact installed pack's
-        // singleton/answer coordinates before executing the UI; this is not a
-        // claim that the UI can discover targets for arbitrary generated boards.
+        // Execute the current generated L1 v3 path as player gestures. The
+        // companion script checks this exact packaged board and saved plan.
         XCTAssertTrue(item("tutorial_title").waitForExistence(timeout: 10))
-        for _ in 0..<4 { tap("tutorial_next") }
-        tap("cell_0"); expectValue("cell_0", "marked")
-        tap("cell_0"); expectValue("cell_0", "empty")
-        for pair in [[4, 5], [9, 13]] {
-            let from = item("cell_\(pair[0])").coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
-            let to = item("cell_\(pair[1])").coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
-            from.press(forDuration: 0.05, thenDragTo: to)
-            for index in pair { expectValue("cell_\(index)", "marked") }
+        func title(_ expected: String) {
+            let wait = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", expected), object: item("tutorial_title"))
+            XCTAssertEqual(XCTWaiter.wait(for: [wait], timeout: 8), .completed)
         }
-        item("cell_8").doubleTap(); expectFound(1)
-        XCTAssertFalse(item("tutorial_title").exists)
-        capture("actual-nine-step-tutorial-completed")
+        func drag(_ first: Int, _ last: Int) {
+            let from = item("cell_\(first)").coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+            let to = item("cell_\(last)").coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+            from.press(forDuration: 0.05, thenDragTo: to)
+            expectValue("cell_\(first)", "marked"); expectValue("cell_\(last)", "marked")
+        }
+        title("Find the first capybara"); item("cell_1").doubleTap(); expectFound(1)
+        title("Tap to mark X"); tap("cell_0"); expectValue("cell_0", "marked")
+        title("Tap again to undo"); tap("cell_0"); expectValue("cell_0", "empty")
+        title("Swipe across a row"); drag(2, 3)
+        title("Swipe down a column"); drag(5, 9)
+        title("Cross out the remaining spaces")
+        for cell in [0, 13] { tap("cell_\(cell)"); expectValue("cell_\(cell)", "marked") }
+        title("Give them space")
+        for cell in [4, 6] { tap("cell_\(cell)"); expectValue("cell_\(cell)", "marked") }
+        title("One space left in this row"); item("cell_7").doubleTap(); expectFound(2)
+        title("Give them space"); drag(10, 11)
+        title("One space left in this region"); item("cell_14").doubleTap(); expectFound(3)
+        title("Find the last capybara"); tap("tutorial_hint"); item("cell_8").doubleTap()
+        XCTAssertTrue(item("win_result").waitForExistence(timeout: 8))
+        XCTAssertEqual(item("win_result").label, "Tutorial complete")
+        XCTAssertEqual(item("next_level").label, "Start game")
+        capture("actual-v3-tutorial-completed-full-board")
+        // Normal restart keeps the existing L1 cold-recovery scenario useful.
+        // It is attempt 2; tutorial remains completed and no stock is replenished.
+        tap("result_home"); tap("settings"); tap("restart")
+        expectValue("cell_1", "empty"); XCTAssertFalse(item("tutorial_title").exists)
+        item("cell_1").doubleTap(); expectFound(1)
     }
 
     func test01CreatePersistentStateThroughUI() {
@@ -103,11 +121,10 @@ final class OperationReinstallUITests: XCTestCase {
         capture("depleted-direct-tool-offers-simulated-video")
         tap("direct"); expectFound(3)
         expectValue("direct", "Video reward")
-        // A teaching exclusion is a genuine incorrect answer; exercise life/error
-        // persistence without reading or injecting the stored board solution.
-        let marked = (0..<16).filter { item("cell_\($0)").value as? String == "marked" }
-        XCTAssertFalse(marked.isEmpty)
-        item("cell_\(marked[0])").doubleTap(); expectValue("lives", "2")
+        // The player just learned that cell 0 shares the first animal's row.
+        // Recreate that manual exclusion in the ordinary restarted attempt.
+        tap("cell_0"); expectValue("cell_0", "marked")
+        item("cell_0").doubleTap(); expectValue("lives", "2")
         XCTAssertGreaterThan(Int(item("score").label) ?? 0, 0)
         XCTAssertEqual(values().filter { $0 == "found" }.count, 3)
         expectValue("hint", "2 available")
@@ -135,7 +152,7 @@ final class OperationReinstallUITests: XCTestCase {
         expectFound(3); expectValue("lives", "2")
         expectValue("direct", "Video reward"); expectValue("hint", "2 available")
         XCTAssertGreaterThan(Int(item("score").label) ?? 0, 0)
-        XCTAssertGreaterThan(values().filter { $0 == "marked" }.count, 0)
+        XCTAssertEqual(item("cell_0").value as? String, "error")
         capture("cold-restored-actual-board-and-inventory")
         tap("home"); backgroundAndTerminate()
     }

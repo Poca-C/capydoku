@@ -1,0 +1,172 @@
+Test Suite 'Selected tests' started at 2026-10-02 12:28:42.816.
+Test Suite 'CapydokuUITests.xctest' started at 2026-10-02 12:28:42.816.
+Test Suite 'CapydokuUITests' started at 2026-10-02 12:28:42.816.
+Test Case '-[CapydokuUITests.CapydokuUITests testGuidedTutorialCoversRulesTapUndoBothSwipesAndFind]' started.
+Test Case '-[CapydokuUITests.CapydokuUITests testGuidedTutorialCoversRulesTapUndoBothSwipesAndFind]' passed (47.746 seconds).
+Test Suite 'CapydokuUITests' passed at 2026-10-02 12:29:30.563.
+	 Executed 1 test, with 0 failures (0 unexpected) in 47.746 (47.747) seconds
+Test Suite 'CapydokuUITests.xctest' passed at 2026-10-02 12:29:30.563.
+	 Executed 1 test, with 0 failures (0 unexpected) in 47.746 (47.747) seconds
+Test Suite 'Selected tests' passed at 2026-10-02 12:29:30.564.
+	 Executed 1 test, with 0 failures (0 unexpected) in 47.746 (47.748) seconds
+Test Suite 'Selected tests' started at 2026-10-02 12:29:31.524.
+Test Suite 'CapydokuAppTests.xctest' started at 2026-10-02 12:29:31.525.
+Test Suite 'AnalyticsRecorderTests' started at 2026-10-02 12:29:31.525.
+Test Case '-[CapydokuAppTests.AnalyticsRecorderTests testContractRejectsMissingFieldsPIIAndWrongEnumsWithoutCoercingStringIDs]' started.
+Test Case '-[CapydokuAppTests.AnalyticsRecorderTests testContractRejectsMissingFieldsPIIAndWrongEnumsWithoutCoercingStringIDs]' passed (0.004 seconds).
+Test Case '-[CapydokuAppTests.AnalyticsRecorderTests testFailedCrashSessionSettlementStillStartsNewColdSessionAndRecoveryPreservesEvents]' started.
+Test Case '-[CapydokuAppTests.AnalyticsRecorderTests testFailedCrashSessionSettlementStillStartsNewColdSessionAndRecoveryPreservesEvents]' passed (0.004 seconds).
+Test Case '-[CapydokuAppTests.AnalyticsRecorderTests testFailedLongBackgroundSettlementDoesNotAttachResumeActivityToEndedSession]' started.
+Test Case '-[CapydokuAppTests.AnalyticsRecorderTests testFailedLongBackgroundSettlementDoesNotAttachResumeActivityToEndedSession]' passed (0.003 seconds).
+Test Case '-[CapydokuAppTests.AnalyticsRecorderTests testFailedWritesRetainOriginalEventsAndRetryAfterStorageRecovers]' started.
+Test Case '-[CapydokuAppTests.AnalyticsRecorderTests testFailedWritesRetainOriginalEventsAndRetryAfterStorageRecovers]' passed (0.002 seconds).
+Test Case '-[CapydokuAppTests.AnalyticsRecorderTests testInterruptedSessionRecoversOriginalIDsAndKnownDuration]' started.
+Test Case '-[CapydokuAppTests.AnalyticsRecorderTests testInterruptedSessionRecoversOriginalIDsAndKnownDuration]' passed (0.004 seconds).
+Test Case '-[CapydokuAppTests.AnalyticsRecorderTests testInterstitialContractRequiresSeparatePlacementAndRejectsAnyGameReward]' started.
+Test Case '-[CapydokuAppTests.AnalyticsRecorderTests testInterstitialContractRequiresSeparatePlacementAndRejectsAnyGameReward]' passed (0.003 seconds).
+Test Case '-[CapydokuAppTests.AnalyticsRecorderTests testNoCollectionBeforeConsentAndFirstOpenAndBusinessResultsAreIdempotent]' started.
+Test Case '-[CapydokuAppTests.AnalyticsRecorderTests testNoCollectionBeforeConsentAndFirstOpenAndBusinessResultsAreIdempotent]' passed (0.004 seconds).
+Test Case '-[CapydokuAppTests.AnalyticsRecorderTests testOriginal383CompleteLocalBusinessPathPreservesOrderOwnershipAndDurability]' started.
+Test Case '-[CapydokuAppTests.AnalyticsRecorderTests testOriginal383CompleteLocalBusinessPathPreservesOrderOwnershipAndDurability]' passed (0.911 seconds).
+Test Case '-[CapydokuAppTests.AnalyticsRecorderTests testShortBackgroundKeepsSessionAndLongBackgroundEndsOnceWithoutDoubleDuration]' started.
+Test Case '-[CapydokuAppTests.AnalyticsRecorderTests testShortBackgroundKeepsSessionAndLongBackgroundEndsOnceWithoutDoubleDuration]' passed (0.006 seconds).
+Test Suite 'AnalyticsRecorderTests' passed at 2026-10-02 12:29:32.467.
+	 Executed 9 tests, with 0 failures (0 unexpected) in 0.940 (0.942) seconds
+Test Suite 'AppLocalizationTests' started at 2026-10-02 12:29:32.468.
+Test Case '-[CapydokuAppTests.AppLocalizationTests testActualPackTutorialCoversAllFourRulesAndAllOperationsInChinese]' started.
+Test Case '-[CapydokuAppTests.AppLocalizationTests testActualPackTutorialCoversAllFourRulesAndAllOperationsInChinese]' passed (0.003 seconds).
+Test Case '-[CapydokuAppTests.AppLocalizationTests testAllFourBundledCatalogsLoadWithoutMissingEmptyOrConflictingEntries]' started.
+Test Case '-[CapydokuAppTests.AppLocalizationTests testAllFourBundledCatalogsLoadWithoutMissingEmptyOrConflictingEntries]' passed (0.003 seconds).
+Test Case '-[CapydokuAppTests.AppLocalizationTests testChineseIsDefaultAndBothLanguageNamesRemainRecognizable]' started.
+Test Case '-[CapydokuAppTests.AppLocalizationTests testChineseIsDefaultAndBothLanguageNamesRemainRecognizable]' passed (0.000 seconds).
+Test Case '-[CapydokuAppTests.AppLocalizationTests testEnglishIsByteForByteSourceAndUnknownTechnicalValuesStayUnchanged]' started.
+Test Case '-[CapydokuAppTests.AppLocalizationTests testEnglishIsByteForByteSourceAndUnknownTechnicalValuesStayUnchanged]' passed (0.001 seconds).
+Test Case '-[CapydokuAppTests.AppLocalizationTests testExactMultilineCopyAndNestedLegalTitleUseTheirIntendedTranslations]' started.
+Test Case '-[CapydokuAppTests.AppLocalizationTests testExactMultilineCopyAndNestedLegalTitleUseTheirIntendedTranslations]' passed (0.000 seconds).
+Test Case '-[CapydokuAppTests.AppLocalizationTests testHintAccessibilitySentenceTranslatesRuleAndMultipleExplanationSentences]' started.
+Test Case '-[CapydokuAppTests.AppLocalizationTests testHintAccessibilitySentenceTranslatesRuleAndMultipleExplanationSentences]' passed (0.001 seconds).
+Test Case '-[CapydokuAppTests.AppLocalizationTests testMultilineSaveWarningsTranslateEachKnownLineAndPreserveSeparators]' started.
+Test Case '-[CapydokuAppTests.AppLocalizationTests testMultilineSaveWarningsTranslateEachKnownLineAndPreserveSeparators]' passed (0.000 seconds).
+Test Case '-[CapydokuAppTests.AppLocalizationTests testNestedRowColumnAndRegionNamesTranslateInsideSolverExplanations]' started.
+Test Case '-[CapydokuAppTests.AppLocalizationTests testNestedRowColumnAndRegionNamesTranslateInsideSolverExplanations]' passed (0.001 seconds).
+Test Case '-[CapydokuAppTests.AppLocalizationTests testNumericAndSpecificTemplatesPreserveValuesAndChooseWholeSentence]' started.
+Test Case '-[CapydokuAppTests.AppLocalizationTests testNumericAndSpecificTemplatesPreserveValuesAndChooseWholeSentence]' passed (0.001 seconds).
+Test Case '-[CapydokuAppTests.AppLocalizationTests testPlayAlongTutorialAndCompletionAreChineseOnEveryReferenceBoard]' started.
+Test Case '-[CapydokuAppTests.AppLocalizationTests testPlayAlongTutorialAndCompletionAreChineseOnEveryReferenceBoard]' passed (0.431 seconds).
+Test Case '-[CapydokuAppTests.AppLocalizationTests testSavedEnglishHintsFromRealBoardsRemainUsableInEitherLanguage]' started.
+Test Case '-[CapydokuAppTests.AppLocalizationTests testSavedEnglishHintsFromRealBoardsRemainUsableInEitherLanguage]' passed (0.003 seconds).
+Test Case '-[CapydokuAppTests.AppLocalizationTests testTwoUnitLockRecursivelyTranslatesAllUnitFamiliesWithoutLosingIndices]' started.
+Test Case '-[CapydokuAppTests.AppLocalizationTests testTwoUnitLockRecursivelyTranslatesAllUnitFamiliesWithoutLosingIndices]' passed (0.001 seconds).
+Test Suite 'AppLocalizationTests' passed at 2026-10-02 12:29:32.914.
+	 Executed 12 tests, with 0 failures (0 unexpected) in 0.445 (0.446) seconds
+Test Suite 'BoardGuidancePresentationTests' started at 2026-10-02 12:29:32.914.
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testActualHostedIdleLooksShowBothDirectionsAndSettleWithoutChangingTheGame]' started.
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testActualHostedIdleLooksShowBothDirectionsAndSettleWithoutChangingTheGame]' passed (2.072 seconds).
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testActualHostSamplesTutorialMotionConflictExplanationAndSettledCleanup]' started.
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testActualHostSamplesTutorialMotionConflictExplanationAndSettledCleanup]' passed (3.406 seconds).
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testAnOrdinaryMarkPreservesTheMistakeAndANewWrongMoveReplacesItsExplanation]' started.
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testAnOrdinaryMarkPreservesTheMistakeAndANewWrongMoveReplacesItsExplanation]' passed (0.011 seconds).
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testCoalescedAcceptedScoreReceiptsKeepActualAmountsAndInputOrderWithoutReplay]' started.
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testCoalescedAcceptedScoreReceiptsKeepActualAmountsAndInputOrderWithoutReplay]' passed (0.006 seconds).
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testCoalescedMistakeEpochLeavesOnlyTheNewAcceptedScoreReceipt]' started.
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testCoalescedMistakeEpochLeavesOnlyTheNewAcceptedScoreReceipt]' passed (0.033 seconds).
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testConflictDoesNotReplayOnRestoreAndClearsForBlockingChanges]' started.
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testConflictDoesNotReplayOnRestoreAndClearsForBlockingChanges]' passed (0.006 seconds).
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testDynamicSwipeGuideUsesActualAxisAndChangingTargetsCancelsPreviousAnimation]' started.
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testDynamicSwipeGuideUsesActualAxisAndChangingTargetsCancelsPreviousAnimation]' passed (0.004 seconds).
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testExplicitEmptyScoreReceiptsNeverInventAnAggregateOrReplayOnRestoreAndUncover]' started.
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testExplicitEmptyScoreReceiptsNeverInventAnAggregateOrReplayOnRestoreAndUncover]' passed (0.004 seconds).
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testFreeFinishHidesAnswerCueUntilHintAndKeepsOrdinaryMarkingAvailable]' started.
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testFreeFinishHidesAnswerCueUntilHintAndKeepsOrdinaryMarkingAvailable]' passed (0.063 seconds).
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testGuidanceCleanupOnPreviewBackgroundRemovalAndNoOldInputOrMistakeReplay]' started.
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testGuidanceCleanupOnPreviewBackgroundRemovalAndNoOldInputOrMistakeReplay]' passed (0.004 seconds).
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testGuidedExclusionFocusStaysOnRuleWhileHandMovesToUnmarkedTargets]' started.
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testGuidedExclusionFocusStaysOnRuleWhileHandMovesToUnmarkedTargets]' passed (0.040 seconds).
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testIdleBlinkHasOneBoardJobAcrossRedrawsAndRotatesOneFoundAnimalAtATime]' started.
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testIdleBlinkHasOneBoardJobAcrossRedrawsAndRotatesOneFoundAnimalAtATime]' passed (0.025 seconds).
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testIdleBlinkJobsCancelForTutorialPreviewLockMotionBackgroundNewSessionAndRemoval]' started.
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testIdleBlinkJobsCancelForTutorialPreviewLockMotionBackgroundNewSessionAndRemoval]' passed (0.006 seconds).
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testIdleBlinkSkipsActiveFeedbackAndResumesOnNextBoardTick]' started.
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testIdleBlinkSkipsActiveFeedbackAndResumesOnNextBoardTick]' passed (0.745 seconds).
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testNewMistakeRetiresEarlierMarkErasureIncludingCoalescedChanges]' started.
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testNewMistakeRetiresEarlierMarkErasureIncludingCoalescedChanges]' passed (0.034 seconds).
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testOnlyVisibleAnimalsExplainActualMistakesAndRedrawNeverRepeatsCallback]' started.
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testOnlyVisibleAnimalsExplainActualMistakesAndRedrawNeverRepeatsCallback]' passed (0.007 seconds).
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testReadGuideRemainsVisibleButLockedAndReducedMotionHasStaticTapAndSwipeMeaning]' started.
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testReadGuideRemainsVisibleButLockedAndReducedMotionHasStaticTapAndSwipeMeaning]' passed (0.006 seconds).
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testRenderedMistakeYieldsToTheNextCorrectMoveWithoutLosingItsReward]' started.
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testRenderedMistakeYieldsToTheNextCorrectMoveWithoutLosingItsReward]' passed (0.460 seconds).
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testReplacingConflictPartnersCannotLeaveAnOldStartledFaceAfterTheNextCorrectMove]' started.
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testReplacingConflictPartnersCannotLeaveAnOldStartledFaceAfterTheNextCorrectMove]' passed (0.175 seconds).
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testScoreReceiptsRejectForeignDuplicateNonAddedAndNonPositiveEntries]' started.
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testScoreReceiptsRejectForeignDuplicateNonAddedAndNonPositiveEntries]' passed (0.004 seconds).
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testScoreUsesActualCommittedIncreaseOnceAndCoalescedMovesReportOneTotal]' started.
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testScoreUsesActualCommittedIncreaseOnceAndCoalescedMovesReportOneTotal]' passed (0.005 seconds).
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testSmallCellGuidesClipToBoardAndInvalidOrDiagonalTargetsInventNoSwipe]' started.
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testSmallCellGuidesClipToBoardAndInvalidOrDiagonalTargetsInventNoSwipe]' passed (0.006 seconds).
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testSmallCellHandFitsAllFourCornersWithoutMovingTouchTargetsOrSwipePath]' started.
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testSmallCellHandFitsAllFourCornersWithoutMovingTouchTargetsOrSwipePath]' passed (0.001 seconds).
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testUndoingAnErrorImmediatelyClearsItsConflictPartnersAndRuleEmphasis]' started.
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testUndoingAnErrorImmediatelyClearsItsConflictPartnersAndRuleEmphasis]' passed (0.005 seconds).
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testVisibleIdleLookCancelsImmediatelyForContactAndEveryBoardLifecycleBoundary]' started.
+Test Case '-[CapydokuAppTests.BoardGuidancePresentationTests testVisibleIdleLookCancelsImmediatelyForContactAndEveryBoardLifecycleBoundary]' passed (0.025 seconds).
+Test Suite 'BoardGuidancePresentationTests' passed at 2026-10-02 12:29:40.074.
+	 Executed 25 tests, with 0 failures (0 unexpected) in 7.153 (7.159) seconds
+Test Suite 'BoardSwipePathTests' started at 2026-10-02 12:29:40.074.
+Test Case '-[CapydokuAppTests.BoardSwipePathTests testBeginningOutsideBoardNeverCreatesMarksAfterEntering]' started.
+Test Case '-[CapydokuAppTests.BoardSwipePathTests testBeginningOutsideBoardNeverCreatesMarksAfterEntering]' passed (0.001 seconds).
+Test Case '-[CapydokuAppTests.BoardSwipePathTests testCancelledStrokeKeepsPriorMarksAndEndsFeedbackOnlyOnce]' started.
+Test Case '-[CapydokuAppTests.BoardSwipePathTests testCancelledStrokeKeepsPriorMarksAndEndsFeedbackOnlyOnce]' passed (0.001 seconds).
+Test Case '-[CapydokuAppTests.BoardSwipePathTests testFoundCapybaraCannotStartEitherAxisOfSwipe]' started.
+Test Case '-[CapydokuAppTests.BoardSwipePathTests testFoundCapybaraCannotStartEitherAxisOfSwipe]' passed (0.002 seconds).
+Test Case '-[CapydokuAppTests.BoardSwipePathTests testHorizontalSwipeMarksPassedCellsOnlyOnceIncludingReverseTravel]' started.
+Test Case '-[CapydokuAppTests.BoardSwipePathTests testHorizontalSwipeMarksPassedCellsOnlyOnceIncludingReverseTravel]' passed (0.001 seconds).
+Test Case '-[CapydokuAppTests.BoardSwipePathTests testHorizontalTurnStopsWithoutProjectingOrRestartingOnReentry]' started.
+Test Case '-[CapydokuAppTests.BoardSwipePathTests testHorizontalTurnStopsWithoutProjectingOrRestartingOnReentry]' passed (0.001 seconds).
+Test Case '-[CapydokuAppTests.BoardSwipePathTests testInitiallyDiagonalSwipeDoesNotBecomeAnAxisSwipeLater]' started.
+Test Case '-[CapydokuAppTests.BoardSwipePathTests testInitiallyDiagonalSwipeDoesNotBecomeAnAxisSwipeLater]' passed (0.001 seconds).
+Test Case '-[CapydokuAppTests.BoardSwipePathTests testLeavingBoardStopsStrokeAndReentryCannotFillTheGap]' started.
+Test Case '-[CapydokuAppTests.BoardSwipePathTests testLeavingBoardStopsStrokeAndReentryCannotFillTheGap]' passed (0.001 seconds).
+Test Case '-[CapydokuAppTests.BoardSwipePathTests testLegalSwipeCanCrossFoundCellWithoutOverwritingIt]' started.
+Test Case '-[CapydokuAppTests.BoardSwipePathTests testLegalSwipeCanCrossFoundCellWithoutOverwritingIt]' passed (0.001 seconds).
+Test Case '-[CapydokuAppTests.BoardSwipePathTests testTeachingIdentityChangeCancelsPartialStrokeButSameStepRefreshDoesNot]' started.
+Test Case '-[CapydokuAppTests.BoardSwipePathTests testTeachingIdentityChangeCancelsPartialStrokeButSameStepRefreshDoesNot]' passed (0.001 seconds).
+Test Case '-[CapydokuAppTests.BoardSwipePathTests testTeachingStrokeStopsAtItsOwnTargetsBeforeDelayedUIRefresh]' started.
+Test Case '-[CapydokuAppTests.BoardSwipePathTests testTeachingStrokeStopsAtItsOwnTargetsBeforeDelayedUIRefresh]' passed (0.001 seconds).
+Test Case '-[CapydokuAppTests.BoardSwipePathTests testVerticalSwipeMarksPassedCellsOnlyOnceIncludingReverseTravel]' started.
+Test Case '-[CapydokuAppTests.BoardSwipePathTests testVerticalSwipeMarksPassedCellsOnlyOnceIncludingReverseTravel]' passed (0.001 seconds).
+Test Case '-[CapydokuAppTests.BoardSwipePathTests testVerticalTurnStopsWithoutProjectingOrRestartingOnReentry]' started.
+Test Case '-[CapydokuAppTests.BoardSwipePathTests testVerticalTurnStopsWithoutProjectingOrRestartingOnReentry]' passed (0.001 seconds).
+Test Suite 'BoardSwipePathTests' passed at 2026-10-02 12:29:40.090.
+	 Executed 12 tests, with 0 failures (0 unexpected) in 0.014 (0.016) seconds
+Test Suite 'TutorialPlanMigrationTests' started at 2026-10-02 12:29:40.090.
+Test Case '-[CapydokuAppTests.TutorialPlanMigrationTests testCompletedLegacyPlanDoesNotReopenOnColdContinueOrRestartButExplicitReplayDoes]' started.
+Test Case '-[CapydokuAppTests.TutorialPlanMigrationTests testCompletedLegacyPlanDoesNotReopenOnColdContinueOrRestartButExplicitReplayDoes]' passed (0.086 seconds).
+Test Case '-[CapydokuAppTests.TutorialPlanMigrationTests testEveryHistoricalStepKeepsFrozenIdentityAndCoordinatesIncludingUndoAndPartialSwipes]' started.
+Test Case '-[CapydokuAppTests.TutorialPlanMigrationTests testEveryHistoricalStepKeepsFrozenIdentityAndCoordinatesIncludingUndoAndPartialSwipes]' passed (0.247 seconds).
+Test Case '-[CapydokuAppTests.TutorialPlanMigrationTests testLegacyContinuePreservesUndoAndPartialSwipesButRestartSelectsCurrentPlan]' started.
+Test Case '-[CapydokuAppTests.TutorialPlanMigrationTests testLegacyContinuePreservesUndoAndPartialSwipesButRestartSelectsCurrentPlan]' passed (0.275 seconds).
+Test Case '-[CapydokuAppTests.TutorialPlanMigrationTests testNewLevelOneAttemptAndExplicitReplayUpgradeAnUnfinishedLegacyPlan]' started.
+Test Case '-[CapydokuAppTests.TutorialPlanMigrationTests testNewLevelOneAttemptAndExplicitReplayUpgradeAnUnfinishedLegacyPlan]' passed (0.079 seconds).
+Test Case '-[CapydokuAppTests.TutorialPlanMigrationTests testVersionTwoEveryCheckpointKeepsItsPlanUntilExplicitRestart]' started.
+Test Case '-[CapydokuAppTests.TutorialPlanMigrationTests testVersionTwoEveryCheckpointKeepsItsPlanUntilExplicitRestart]' passed (0.185 seconds).
+Test Suite 'TutorialPlanMigrationTests' passed at 2026-10-02 12:29:40.962.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.872 (0.873) seconds
+Test Suite 'TutorialRecoveryTests' started at 2026-10-02 12:29:40.962.
+Test Case '-[CapydokuAppTests.TutorialRecoveryTests testEveryPackagedTutorialStepRestoresAndCanContinue]' started.
+Test Case '-[CapydokuAppTests.TutorialRecoveryTests testEveryPackagedTutorialStepRestoresAndCanContinue]' passed (0.263 seconds).
+Test Case '-[CapydokuAppTests.TutorialRecoveryTests testFinalFreePlayAndOptionalHintPersistWithoutSpendingInventory]' started.
+Test Case '-[CapydokuAppTests.TutorialRecoveryTests testFinalFreePlayAndOptionalHintPersistWithoutSpendingInventory]' passed (0.058 seconds).
+Test Case '-[CapydokuAppTests.TutorialRecoveryTests testGeneratedTutorialTargetsWorkAcrossEightSeedsAndEverySavedStep]' started.
+Test Case '-[CapydokuAppTests.TutorialRecoveryTests testGeneratedTutorialTargetsWorkAcrossEightSeedsAndEverySavedStep]' passed (2.908 seconds).
+Test Case '-[CapydokuAppTests.TutorialRecoveryTests testOneHeldSwipeCannotApplyToTheFollowingTeachingStep]' started.
+Test Case '-[CapydokuAppTests.TutorialRecoveryTests testOneHeldSwipeCannotApplyToTheFollowingTeachingStep]' passed (0.027 seconds).
+Test Case '-[CapydokuAppTests.TutorialRecoveryTests testRestartDuringUndoOrPartialSwipeReplaysTheCompleteTutorial]' started.
+Test Case '-[CapydokuAppTests.TutorialRecoveryTests testRestartDuringUndoOrPartialSwipeReplaysTheCompleteTutorial]' passed (0.593 seconds).
+Test Suite 'TutorialRecoveryTests' passed at 2026-10-02 12:29:44.813.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 3.850 (3.851) seconds
+Test Suite 'CapydokuAppTests.xctest' passed at 2026-10-02 12:29:44.813.
+	 Executed 68 tests, with 0 failures (0 unexpected) in 13.274 (13.288) seconds
+Test Suite 'Selected tests' passed at 2026-10-02 12:29:44.813.
+	 Executed 68 tests, with 0 failures (0 unexpected) in 13.274 (13.289) seconds
+** TEST SUCCEEDED **

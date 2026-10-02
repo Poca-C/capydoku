@@ -3,6 +3,7 @@
 public enum TutorialPlanVersion: Int, Codable, Sendable {
     case legacy = 1
     case boardDriven = 2
+    case playAlong = 3
 
-    public static let current = Self.boardDriven
+    public static let current = Self.playAlong
 }

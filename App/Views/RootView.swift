@@ -53,6 +53,7 @@ struct RootView: View {
     // A value snapshot keeps only the departing decoration coherent while the
     // model immediately enters the next board/home. It never drives actions.
     @State private var lastResultSession: GameSession?
+    @State private var lastResultWasTutorial = false
     private var hasCard: Bool { model.sheet == .settings || model.sheet == .reward }
     private var hasResult: Bool { model.screen == .game && model.session?.status != .playing && model.session != nil }
     private var resultTransitionEnabled: Bool {
@@ -114,7 +115,9 @@ struct RootView: View {
             if let resultSession = resultSessionForDisplay {
                 CapyAccessibilityHost(hidden: !showsResultPanel || hasCard || model.loading || model.challengePending) {
                     ResultPanel(won: resultSession.status == .won, isPresented: showsResultPanel,
-                                displaySession: resultSession, showsDecoration: showsResultPanel && resultDecorationReady,
+                                displaySession: resultSession,
+                                tutorialCompletion: hasResult ? model.showsTutorialCompletion : lastResultWasTutorial,
+                                showsDecoration: showsResultPanel && resultDecorationReady,
                                 animationID: resultEntrance.animationID, presentationEnabled: animatesResult,
                                 transitionEnabled: resultTransitionEnabled,
                                 stage: animatesResult ? resultEntrance.stage : .settled)
@@ -198,7 +201,10 @@ struct RootView: View {
     }
     private var defaultFocus: String { model.screen == .game ? "level_title" : model.screen == .checkIn ? "checkin_streak" : "play" }
     private func updateResultEntrance() {
-        if hasResult { lastResultSession = model.session }
+        if hasResult {
+            lastResultSession = model.session
+            lastResultWasTutorial = model.showsTutorialCompletion
+        }
         resultEntrance.update(sessionID: model.session?.id, status: model.session?.status, animate: animatesResult)
     }
     private func activate(_ id: String?) {
@@ -493,6 +499,11 @@ struct GameView: View {
                                         effectsEnabled: canPresentFeedback,
                                         preview: Set(model.hint?.cells ?? []), tutorialTargets: Set(model.tutorial?.targetCells ?? []),
                                         tutorialAction: model.tutorial?.action,
+                                        focusCells: model.tutorial.map {
+                                            Set($0.action == "finish" ? $0.targetCells : ($0.focusCells ?? $0.targetCells))
+                                        },
+                                        tutorialStepID: model.tutorial.map { "\(s.id.uuidString):\(model.progress.tutorialPlanVersion.rawValue):\($0.id)" },
+                                        tutorialGuideVisible: model.tutorial?.action != "finish" || model.tutorialHintRevealed,
                                         hideAccessibility: covered,
                                         locked: s.status != .playing || !canPresentFeedback || lifeFocused || model.tutorial?.action == "read",
                                         onToggle: { feedback.cancelPendingLastLife(); model.toggle($0) },
@@ -882,7 +893,9 @@ struct TutorialPanel: View {
         CapyCard(padding: 12) {
             VStack(alignment: .leading, spacing: 5) {
                 HStack {
-                    Text("\(model.progress.tutorialStep + 1)/\(model.tutorialCount) · \(language.text(step.title))")
+                    Text(model.progress.tutorialPlanVersion.rawValue >= 3
+                         ? language.text(step.title)
+                         : "\(model.progress.tutorialStep + 1)/\(model.tutorialCount) · \(language.text(step.title))")
                         .font(.system(size: 14, weight: .bold, design: .rounded)).accessibilityIdentifier("tutorial_title")
                     Spacer()
                     CapyButton(language.text("Skip"), id: "skip_tutorial", action: model.skipTutorial).buttonStyle(CapyPressStyle()).font(.system(size: 13, weight: .bold, design: .rounded)).frame(minWidth: 44, minHeight: 44).accessibilityIdentifier("skip_tutorial").capyLayoutProbe("skip_tutorial")
@@ -890,6 +903,10 @@ struct TutorialPanel: View {
                 Text(language.text(step.instruction)).font(.system(size: 12, design: .rounded)).fixedSize(horizontal: false, vertical: true)
                 if step.action == "read" {
                     CapyButton(language.text("Got it"), id: "tutorial_next", action: model.advanceTutorial).buttonStyle(CapyButtonStyle(compact: true)).accessibilityIdentifier("tutorial_next").capyLayoutProbe("tutorial_next")
+                } else if step.action == "finish" && !model.tutorialHintRevealed {
+                    CapyButton(language.text("Give me a hint"), id: "tutorial_hint", action: model.revealTutorialHint)
+                        .buttonStyle(CapyButtonStyle(compact: true))
+                        .accessibilityIdentifier("tutorial_hint").capyLayoutProbe("tutorial_hint")
                 }
             }.frame(maxWidth: .infinity, alignment: .leading)
         }
@@ -924,20 +941,23 @@ struct ResultPanel: View {
     let won: Bool
     var isPresented = true
     var displaySession: GameSession? = nil
+    var tutorialCompletion: Bool? = nil
     var showsDecoration = true
     var animationID: UUID? = nil
     var presentationEnabled = true
     var transitionEnabled = true
     var stage: ResultEntrancePresentation.Stage = .settled
     private var session: GameSession? { displaySession ?? model.session }
+    private var isTutorialCompletion: Bool { won && (tutorialCompletion ?? model.showsTutorialCompletion) }
     private var titleVisible: Bool { showsDecoration && (reduceMotion || stage >= .title) }
     private var detailVisible: Bool { showsDecoration && (reduceMotion || stage >= .detail) }
     private var variant: ResultCelebrationVariant {
         (session?.id.uuid.0 ?? 0).isMultiple(of: 2) ? .joyfulBounce : .proudCrown
     }
-    private var praise: String { variant == .joyfulBounce ? "Nice Work" : "Intelligent" }
+    private var praise: String { isTutorialCompletion ? "Tutorial complete" : variant == .joyfulBounce ? "Nice Work" : "Intelligent" }
     private var failure: ReferenceFailureConfiguration? { session?.config.referenceGameplay?.failure }
     private var victoryDetail: String {
+        if isTutorialCompletion { return "Great! You have learned how to play." }
         guard let session else { return "All Capybaras found!" }
         if session.attempt == 1 { return "A solid victory on your very first attempt!" }
         if !session.hasRevived && session.lives == session.config.initialLives { return "No mistakes!" }
@@ -950,7 +970,7 @@ struct ResultPanel: View {
                 VStack(spacing: 20) {
                     VStack(spacing: 20) {
                     Text(language.text(won ? praise : (failure?.title ?? "So Close!")))
-                        .font(.system(size: 39, weight: .heavy, design: .rounded)).foregroundColor(.white)
+                        .font(.system(size: isTutorialCompletion ? 30 : 39, weight: .heavy, design: .rounded)).foregroundColor(.white)
                         .multilineTextAlignment(.center).fixedSize(horizontal: false, vertical: true)
                         .shadow(color: CapyPalette.orange, radius: 0, x: 1, y: 2)
                         .accessibilityIdentifier(won ? "win_result" : "loss_result")
@@ -987,7 +1007,7 @@ struct ResultPanel: View {
                     CapyButton(id: won ? "next_level" : "revive") {
                         if won { model.next() } else { model.revive() }
                     } label: {
-                        Text(language.text(won ? "Level \((session?.puzzle.id ?? 1) + 1)" : (failure?.reviveButtonTitle ?? "Play On"))).frame(maxWidth: .infinity)
+                        Text(language.text(won ? (isTutorialCompletion ? "Start game" : "Level \((session?.puzzle.id ?? 1) + 1)") : (failure?.reviveButtonTitle ?? "Play On"))).frame(maxWidth: .infinity)
                     }.buttonStyle(CapyButtonStyle()).disabled(!won && !model.reviveAvailable).accessibilityIdentifier(won ? "next_level" : "revive")
                         .capyLayoutProbe("result_primary_action")
                         .overlay(alignment: .topTrailing) {

@@ -1,0 +1,53 @@
+{
+  "build": "0.2.68 (71)",
+  "source": "XCTest screenshots from actual simulator UI and compact host. Not reference-product screenshots.",
+  "visuallyReviewed": [
+    "17pro-v3-current-board-first-action.png",
+    "17pro-v3-current-board-independent-last-find.png",
+    "17e-v3-current-board-first-action.png",
+    "17e-v3-current-board-tutorial-complete.png",
+    "17e-portrait-320x568-tutorial-finish-scrolled.png"
+  ],
+  "files": [
+    {
+      "path": "17e-portrait-320x568-tutorial-finish-scrolled.png",
+      "sha256": "3cd166f524a198eea9bfee5faac6a265f3011e63306145dcd9e1fcf2b8364642"
+    },
+    {
+      "path": "17e-portrait-320x568-tutorial-first-initial.png",
+      "sha256": "17af8d4f599af8052cc345119e021efaf75cdcbf1ec0ff355c4a7b1d12a48a56"
+    },
+    {
+      "path": "17e-v3-current-board-first-action.png",
+      "sha256": "9b56947c63666e58226c0f0d41e1899529f0f3f518e68b914dcc8757faa31c4e"
+    },
+    {
+      "path": "17e-v3-current-board-independent-last-find.png",
+      "sha256": "54b33d10f41c421dd5836fc1d1fb47685dfe94376f2c73468c4fe416c10ba809"
+    },
+    {
+      "path": "17e-v3-current-board-optional-last-hint.png",
+      "sha256": "6f7b49ccfff98b187b4ebb1028939d80c17c84ce2bea847ebe20df4494262108"
+    },
+    {
+      "path": "17e-v3-current-board-tutorial-complete.png",
+      "sha256": "184bfd9cbdfd739cb4a61c184aa8282a4ec7032032e62bf177207198f79a9355"
+    },
+    {
+      "path": "17pro-v3-current-board-first-action.png",
+      "sha256": "faf5057e6b0a91e2437dd29fbd580855c8c3938fbee921ed063667edd68586c7"
+    },
+    {
+      "path": "17pro-v3-current-board-independent-last-find.png",
+      "sha256": "b9a325fa2d7b9d7c7d36d4a1b50b17aff2113f063340aead133c05ce3f9ff31d"
+    },
+    {
+      "path": "17pro-v3-current-board-optional-last-hint.png",
+      "sha256": "f1ddbf4ef3320c06c1d74099e00984611364d02ea87a48b6d4529e19c8e7c664"
+    },
+    {
+      "path": "17pro-v3-current-board-tutorial-complete.png",
+      "sha256": "33c0be6a28c8cbe7780bcce7a036e16e3868d5577306d40234cf02a987400f02"
+    }
+  ]
+}

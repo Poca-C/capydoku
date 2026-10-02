@@ -1,0 +1,17 @@
+[
+  {
+    "catalog" : "levels",
+    "generatorVersion" : "original-pipeline-v4",
+    "sameBoard" : "true"
+  },
+  {
+    "catalog" : "levels-legacy-v3",
+    "generatorVersion" : "original-pipeline-v3",
+    "sameBoard" : "true"
+  },
+  {
+    "catalog" : "levels-legacy-v2",
+    "error" : "invalidLevel",
+    "generatorVersion" : "demo-connected-v2"
+  }
+]

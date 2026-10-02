@@ -5,6 +5,7 @@ import UIKit
 final class BoardTutorialGuideView: UIView {
     let action: String
     let targetCells: Set<Int>
+    let focusCells: Set<Int>
     let targetFrames: [CGRect]
     let gestureStart: CGPoint?
     let gestureEnd: CGPoint?
@@ -13,11 +14,14 @@ final class BoardTutorialGuideView: UIView {
     private let hand = CALayer()
     private let touchRing = CAShapeLayer()
 
-    init(frame: CGRect, boardRect: CGRect, size: Int, targetCells: Set<Int>, action: String, reduceMotion: Bool) {
+    init(frame: CGRect, boardRect: CGRect, size: Int, targetCells: Set<Int>, focusCells: Set<Int>? = nil,
+         action: String, reduceMotion: Bool) {
         self.action = action; self.boardRect = boardRect; self.reduceMotion = reduceMotion
         let count = (1...16).contains(size) ? size * size : 0
         let targets = targetCells.filter { (0..<count).contains($0) }
         self.targetCells = targets
+        let focus = (focusCells ?? targets).filter { (0..<count).contains($0) }
+        self.focusCells = focus
         let side = boardRect.width / CGFloat(max(1, size))
         let frames = targets.sorted().map { index in
             CGRect(x: boardRect.minX + CGFloat(index % size) * side,
@@ -29,7 +33,7 @@ final class BoardTutorialGuideView: UIView {
             || centers.allSatisfy { abs($0.y - centers[0].y) < 0.1 })
         if action == "swipe" && aligned {
             gestureStart = centers.first; gestureEnd = centers.last
-        } else if action == "tap" || action == "doubleTap" {
+        } else if ["tap", "doubleTap", "exclude", "finish"].contains(action) {
             gestureStart = centers.first; gestureEnd = centers.first
         } else { gestureStart = nil; gestureEnd = nil }
         super.init(frame: frame)
@@ -38,7 +42,11 @@ final class BoardTutorialGuideView: UIView {
         let mask = CAShapeLayer(); mask.path = UIBezierPath(roundedRect: boardRect, cornerRadius: 4).cgPath
         layer.mask = mask
         let dim = UIBezierPath(rect: boardRect)
-        for rect in frames { dim.append(UIBezierPath(roundedRect: rect.insetBy(dx: 1, dy: 1), cornerRadius: 3)) }
+        for index in focus.sorted() {
+            let rect = CGRect(x: boardRect.minX + CGFloat(index % size) * side,
+                              y: boardRect.minY + CGFloat(index / size) * side, width: side, height: side)
+            dim.append(UIBezierPath(roundedRect: rect.insetBy(dx: 1, dy: 1), cornerRadius: 3))
+        }
         let shade = CAShapeLayer(); shade.name = "tutorial-focus-shade"; shade.path = dim.cgPath
         shade.fillRule = .evenOdd; shade.fillColor = UIColor(CapyPalette.ink).withAlphaComponent(0.26).cgColor
         layer.addSublayer(shade)
@@ -73,7 +81,7 @@ final class BoardTutorialGuideView: UIView {
         hand.contentsGravity = .resizeAspect; hand.shadowColor = UIColor(CapyPalette.markOutline).cgColor
         hand.shadowOffset = .zero; hand.shadowRadius = 1.5; hand.shadowOpacity = 0.8
         layer.addSublayer(hand)
-        if action == "doubleTap" && reduceMotion {
+        if (action == "doubleTap" || action == "finish") && reduceMotion {
             let second = CAShapeLayer(); second.name = "tutorial-double-tap-static"
             second.path = UIBezierPath(ovalIn: CGRect(x: start.x - radius - 4, y: start.y - radius - 4, width: radius * 2 + 8, height: radius * 2 + 8)).cgPath
             second.fillColor = UIColor.clear.cgColor; second.strokeColor = UIColor(CapyPalette.orange).cgColor; second.lineWidth = 1.5
@@ -108,11 +116,11 @@ final class BoardTutorialGuideView: UIView {
             }
         } else {
             let scale = CAKeyframeAnimation(keyPath: "transform.scale")
-            scale.values = action == "doubleTap" ? [1, 0.82, 1, 0.82, 1, 1] : [1, 0.82, 1, 1]
-            scale.keyTimes = action == "doubleTap" ? [0, 0.12, 0.22, 0.32, 0.42, 1] : [0, 0.13, 0.3, 1]
+            scale.values = (action == "doubleTap" || action == "finish") ? [1, 0.82, 1, 0.82, 1, 1] : [1, 0.82, 1, 1]
+            scale.keyTimes = (action == "doubleTap" || action == "finish") ? [0, 0.12, 0.22, 0.32, 0.42, 1] : [0, 0.13, 0.3, 1]
             scale.duration = 1.65; scale.repeatCount = .infinity; hand.add(scale, forKey: "tutorial-tap")
             let pulse = scale.copy() as! CAKeyframeAnimation
-            pulse.values = action == "doubleTap" ? [0.75, 1.18, 0.75, 1.18, 0.75, 0.75] : [0.75, 1.18, 0.75, 0.75]
+            pulse.values = (action == "doubleTap" || action == "finish") ? [0.75, 1.18, 0.75, 1.18, 0.75, 0.75] : [0.75, 1.18, 0.75, 0.75]
             touchRing.add(pulse, forKey: "tutorial-touch")
         }
     }

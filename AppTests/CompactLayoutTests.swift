@@ -174,7 +174,7 @@ final class CompactLayoutTests: XCTestCase {
     }
 
     @MainActor func testCompactHintTutorialAndConfiguredFreeToolRemainUsableWithoutPageScrolling() async throws {
-        for state in ["hint", "tutorial", "free-tool"] {
+        for state in ["hint", "tutorial-legacy-read", "tutorial-first", "tutorial-finish", "free-tool"] {
             let rig = try CompactLayoutRig(size: CGSize(width: 320, height: 568),
                                            type: state == "hint" ? .accessibility5 : .large) { model in
                 if state == "free-tool" {
@@ -188,10 +188,35 @@ final class CompactLayoutTests: XCTestCase {
                 }
                 model.start(level: 1)
                 if state == "hint" { model.showHint() }
-                if state == "tutorial" {
+                if state.hasPrefix("tutorial-") {
                     model.progress.tutorialCompleted = false
-                    let steps = PuzzleHints.tutorial(puzzle: try XCTUnwrap(model.session).puzzle)
-                    model.progress.tutorialStep = try XCTUnwrap(steps.firstIndex { $0.action == "read" })
+                    model.progress.tutorialPlanVersion = state == "tutorial-legacy-read" ? .boardDriven : .current
+                    model.progress.tutorialStep = 0
+                    let steps = PuzzleHints.tutorial(puzzle: try XCTUnwrap(model.session).puzzle,
+                                                     version: model.progress.tutorialPlanVersion)
+                    if state == "tutorial-legacy-read" {
+                        // Keep the existing scrollable read-panel regression as
+                        // an explicit v2 saved-plan fixture, not current onboarding.
+                        model.progress.tutorialStep = try XCTUnwrap(steps.firstIndex { $0.action == "read" })
+                    } else if state == "tutorial-finish" {
+                        // Reach this layout through real accepted model actions;
+                        // do not inject a step index over an empty board.
+                        for _ in steps.indices {
+                            let step = try XCTUnwrap(model.tutorial)
+                            if step.action == "finish" { break }
+                            switch step.action {
+                            case "tap": model.toggle(try XCTUnwrap(step.targetCells.first))
+                            case "swipe", "exclude": model.mark(step.targetCells)
+                            case "doubleTap": model.submit(try XCTUnwrap(step.targetCells.first))
+                            default: XCTFail("Unexpected current tutorial action: " + step.action)
+                            }
+                        }
+                        XCTAssertEqual(model.tutorial?.action, "finish")
+                        XCTAssertEqual(model.session?.found.count, 3)
+                    } else {
+                        XCTAssertEqual(model.tutorial?.action, "doubleTap")
+                        XCTAssertEqual(model.tutorial?.title, "Find the first capybara")
+                    }
                 }
             }
             defer { rig.close() }
@@ -208,14 +233,18 @@ final class CompactLayoutTests: XCTestCase {
                 XCTAssertFalse(current is UIScrollView)
                 ancestor = current.superview
             }
-            let controls = state == "hint" ? ["hint_close", "hint_apply"] : state == "tutorial" ? ["skip_tutorial"] : ["direct", "level_start_free", "hint"]
+            let controls = state == "hint" ? ["hint_close", "hint_apply"] : state.hasPrefix("tutorial-") ? ["skip_tutorial"] : ["direct", "level_start_free", "hint"]
             for identifier in controls {
                 let frame = try rig.frame(of: identifier)
                 assertVisible(frame, within: rig.host.view.bounds, identifier)
                 XCTAssertGreaterThanOrEqual(frame.width, 44)
                 XCTAssertGreaterThanOrEqual(frame.height, 44)
             }
-            if state == "tutorial" || state == "hint" {
+            if state == "tutorial-first" {
+                XCTAssertNil(rig.measurements.frames["tutorial_next"])
+                XCTAssertNil(rig.measurements.frames["tutorial_hint"])
+            }
+            if state == "tutorial-legacy-read" || state == "tutorial-finish" || state == "hint" {
                 let scroll = try XCTUnwrap(rig.views.compactMap { $0 as? UIScrollView }.first {
                     $0.contentSize.height > $0.bounds.height + 1
                 }, "Only the text panel should scroll when its content needs more space.")
@@ -224,10 +253,21 @@ final class CompactLayoutTests: XCTestCase {
                 scroll.setContentOffset(CGPoint(x: 0, y: scroll.contentSize.height - scroll.bounds.height), animated: false)
                 try await settle(rig)
                 try capture(rig, "portrait-320x568-\(state)-scrolled")
-                if state == "tutorial" {
-                    let next = try rig.frame(of: "tutorial_next")
-                    assertVisible(next, within: rig.host.view.bounds, "tutorial confirm after scrolling")
-                    XCTAssertGreaterThanOrEqual(next.width, 44); XCTAssertGreaterThanOrEqual(next.height, 44)
+                if state == "tutorial-legacy-read" || state == "tutorial-finish" {
+                    let identifier = state == "tutorial-legacy-read" ? "tutorial_next" : "tutorial_hint"
+                    let action = try rig.frame(of: identifier)
+                    assertVisible(action, within: rig.host.view.bounds, "tutorial action after scrolling")
+                    XCTAssertGreaterThanOrEqual(action.width, 44); XCTAssertGreaterThanOrEqual(action.height, 44)
+                    if state == "tutorial-finish" {
+                        XCTAssertNil(rig.measurements.frames["tutorial_next"])
+                        XCTAssertFalse(rig.model.tutorialHintRevealed)
+                        let stock = rig.model.progress.availableHints
+                        rig.model.revealTutorialHint()
+                        try await settle(rig)
+                        XCTAssertTrue(rig.model.tutorialHintRevealed)
+                        XCTAssertEqual(rig.model.progress.availableHints, stock)
+                        try capture(rig, "portrait-320x568-tutorial-finish-optional-hint")
+                    }
                 }
             }
             XCTAssertEqual(rig.model.session, before)

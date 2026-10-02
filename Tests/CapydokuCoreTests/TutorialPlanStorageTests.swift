@@ -50,8 +50,8 @@ final class TutorialPlanStorageTests: XCTestCase {
         let puzzle = try XCTUnwrap(expected.session?.puzzle)
         XCTAssertEqual(PuzzleHints.tutorial(puzzle: puzzle, version: result.progress.tutorialPlanVersion)[result.progress.tutorialStep].id, "undo")
     }
-    func testBothExplicitPlansRoundTripButOnlyNewUnfinishedAttemptsAdoptTheCurrentPlan() throws {
-        for version in [TutorialPlanVersion.legacy, .boardDriven] {
+    func testAllExplicitPlansRoundTripButOnlyNewUnfinishedAttemptsAdoptTheCurrentPlan() throws {
+        for version in [TutorialPlanVersion.legacy, .boardDriven, .playAlong] {
             var value = try progress(); value.tutorialPlanVersion = version
             let store = SaveStore(directory: directory()); try store.save(value)
             XCTAssertEqual(store.load().progress, value)

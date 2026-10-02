@@ -1,0 +1,23 @@
+Test Suite 'Selected tests' started at 2026-10-02 12:32:25.087.
+Test Suite 'CapydokuUITests.xctest' started at 2026-10-02 12:32:25.088.
+Test Suite 'CapydokuUITests' started at 2026-10-02 12:32:25.088.
+Test Case '-[CapydokuUITests.CapydokuUITests testChinesePlayAlongTutorialCompletesIntoLevelTwo]' started.
+Test Case '-[CapydokuUITests.CapydokuUITests testChinesePlayAlongTutorialCompletesIntoLevelTwo]' passed (47.405 seconds).
+Test Suite 'CapydokuUITests' passed at 2026-10-02 12:33:12.493.
+	 Executed 1 test, with 0 failures (0 unexpected) in 47.405 (47.405) seconds
+Test Suite 'CapydokuUITests.xctest' passed at 2026-10-02 12:33:12.493.
+	 Executed 1 test, with 0 failures (0 unexpected) in 47.405 (47.406) seconds
+Test Suite 'Selected tests' passed at 2026-10-02 12:33:12.494.
+	 Executed 1 test, with 0 failures (0 unexpected) in 47.405 (47.406) seconds
+Test Suite 'Selected tests' started at 2026-10-02 12:33:13.439.
+Test Suite 'CapydokuAppTests.xctest' started at 2026-10-02 12:33:13.440.
+Test Suite 'CompactLayoutTests' started at 2026-10-02 12:33:13.440.
+Test Case '-[CapydokuAppTests.CompactLayoutTests testCompactHintTutorialAndConfiguredFreeToolRemainUsableWithoutPageScrolling]' started.
+Test Case '-[CapydokuAppTests.CompactLayoutTests testCompactHintTutorialAndConfiguredFreeToolRemainUsableWithoutPageScrolling]' passed (5.120 seconds).
+Test Suite 'CompactLayoutTests' passed at 2026-10-02 12:33:18.560.
+	 Executed 1 test, with 0 failures (0 unexpected) in 5.120 (5.121) seconds
+Test Suite 'CapydokuAppTests.xctest' passed at 2026-10-02 12:33:18.561.
+	 Executed 1 test, with 0 failures (0 unexpected) in 5.120 (5.121) seconds
+Test Suite 'Selected tests' passed at 2026-10-02 12:33:18.561.
+	 Executed 1 test, with 0 failures (0 unexpected) in 5.120 (5.121) seconds
+** TEST SUCCEEDED **

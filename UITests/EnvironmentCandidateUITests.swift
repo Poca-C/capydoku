@@ -152,34 +152,41 @@ final class EnvironmentCandidateUITests: XCTestCase {
             observations.append("Tutorial already completed; not replayed or reset.")
             return
         }
-        // Current Resources/levels.json fixture: original-pipeline-v4,
-        // L1 4x4, seed 11400714819535654101, candidate 70, solution [1, 7, 8, 14].
-        // Singleton region at 1 proves the current v2 path: region, neighbors,
-        // column, row, tap/undo 0, swipe 2->3, swipe 0->4, double-tap 1.
-        // A partly played/other tutorial is not reset or silently skipped.
-        let rules = ["每个区域一只", "保持距离", "每列一只", "每行一只"]
-        for (index, rule) in rules.enumerated() {
-            expectLabel("tutorial_title", "\(index + 1)/9 · \(rule)")
-            if index == 0 { capture("current-pack-chinese-tutorial") }
-            tap("tutorial_next")
-        }
-        expectLabel("tutorial_title", "5/9 · 单击标记 X")
-        tap("cell_0"); expectValue("cell_0", "marked")
-        expectLabel("tutorial_title", "6/9 · 再次单击撤销")
-        tap("cell_0"); expectValue("cell_0", "empty")
-        expectLabel("tutorial_title", "7/9 · 沿一行滑动")
-        drag(from: 2, to: 3)
-        expectValue("cell_2", "marked"); expectValue("cell_3", "marked")
-        expectLabel("tutorial_title", "8/9 · 沿一列滑动")
-        drag(from: 0, to: 4)
-        expectValue("cell_0", "marked"); expectValue("cell_4", "marked")
-        expectLabel("tutorial_title", "9/9 · 双击寻找")
+        // Current generated L1 v3: eleven real actions/groups, ending in a
+        // complete board. A partial/other tutorial is never silently reset.
+        expectLabel("tutorial_title", "找到第一只卡皮巴拉")
+        capture("current-pack-chinese-tutorial-first-action")
         item("cell_1").doubleTap(); expectValue("cell_1", "found")
-        waitFor({ !self.item("tutorial_title").exists && self.item("hint").exists }, "Tutorial must finish into ordinary play.")
-        XCTAssertEqual((0..<16).map { item("cell_\($0)").value as? String ?? "missing" },
-                       (0..<16).map { $0 == 1 ? "found" : [0, 2, 3, 4].contains($0) ? "marked" : "empty" })
-        observations.append("Completed all nine current-pack teaching steps through real UI gestures.")
-        capture("chinese-tutorial-complete-one-found")
+        expectLabel("tutorial_title", "单击标记 X"); tap("cell_0"); expectValue("cell_0", "marked")
+        expectLabel("tutorial_title", "再次单击撤销"); tap("cell_0"); expectValue("cell_0", "empty")
+        expectLabel("tutorial_title", "沿一行滑动"); drag(from: 2, to: 3)
+        expectValue("cell_2", "marked"); expectValue("cell_3", "marked")
+        expectLabel("tutorial_title", "沿一列滑动"); drag(from: 5, to: 9)
+        expectValue("cell_5", "marked"); expectValue("cell_9", "marked")
+        expectLabel("tutorial_title", "排除剩余空格")
+        for cell in [0, 13] { tap("cell_\(cell)"); expectValue("cell_\(cell)", "marked") }
+        expectLabel("tutorial_title", "保持距离")
+        for cell in [4, 6] { tap("cell_\(cell)"); expectValue("cell_\(cell)", "marked") }
+        expectLabel("tutorial_title", "这一行只剩一格")
+        item("cell_7").doubleTap(); expectValue("cell_7", "found")
+        expectLabel("tutorial_title", "保持距离"); drag(from: 10, to: 11)
+        expectValue("cell_10", "marked"); expectValue("cell_11", "marked")
+        expectLabel("tutorial_title", "这个区域只剩一格")
+        item("cell_14").doubleTap(); expectValue("cell_14", "found")
+        expectLabel("tutorial_title", "找到最后一只卡皮巴拉")
+        tap("tutorial_hint"); capture("current-pack-chinese-last-hint")
+        item("cell_8").doubleTap()
+        expectLabel("win_result", "新手教学完成"); expectLabel("next_level", "开始游戏")
+        capture("chinese-tutorial-complete-full-board")
+        // Keep this environment audit's L1 persistence fixture through actual
+        // navigation and restart, without launch flags, save injection or reset.
+        tap("result_home"); tap("settings"); tap("restart")
+        waitFor({ self.item("cell_1").isHittable }, "Ordinary L1 restart must become playable.")
+        XCTAssertFalse(item("tutorial_title").exists)
+        XCTAssertEqual((0..<16).map { item("cell_\($0)").value as? String ?? "missing" }, Array(repeating: "empty", count: 16))
+        item("cell_1").doubleTap(); expectValue("cell_1", "found")
+        observations.append("Completed the eleven-step v3 tutorial through real actions, then normally restarted L1 (attempt 2) and found one animal for persistence checks.")
+        capture("chinese-ordinary-l1-after-completed-teaching")
     }
 
     private func inventory(_ id: String) -> Int {
@@ -235,7 +242,7 @@ final class EnvironmentCandidateUITests: XCTestCase {
         XCTAssertTrue(item("cell_15").waitForExistence(timeout: 10))
         completeFreshTutorialIfPresent()
         let before = snapshot(chinese: true)
-        XCTAssertEqual(before.values.filter { $0 == "found" }.count, 1, "Expected newly taught or previously audited L1; do not alter unrelated saved gameplay.")
+        XCTAssertEqual(before.values.filter { $0 == "found" }.count, 1, "Expected normally restarted or previously audited L1; do not alter unrelated saved gameplay.")
         XCTAssertEqual(before.values[1], "found")
         XCTAssertEqual(before.score, "100"); XCTAssertEqual(before.lives, "3")
         tap("home"); tap("settings"); tap("language_en")

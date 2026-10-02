@@ -15,8 +15,16 @@ public struct TutorialStep: Codable, Equatable, Identifiable, Sendable {
     public let title: String
     public let instruction: String
     public let targetCells: [Int]
-    /// read, tap, swipe or doubleTap.
+    /// read, tap, swipe, doubleTap, exclude or finish.
     public let action: String
+    /// Visual context may include already found animals or marked cells.
+    public let focusCells: [Int]?
+
+    public init(id: String, title: String, instruction: String, targetCells: [Int], action: String,
+                focusCells: [Int]? = nil) {
+        self.id = id; self.title = title; self.instruction = instruction
+        self.targetCells = targetCells; self.action = action; self.focusCells = focusCells
+    }
 }
 
 public enum PuzzleHints {
@@ -167,58 +175,16 @@ public enum PuzzleHints {
                                     remainingUnresolved: p.size - confirmed.count, requiresSearch: confirmed.count != p.size)
     }
 
-    /// Eligibility gate for the current nine-step Level 1 introduction.
+    /// Eligibility gate for a complete play-along Level 1 introduction.
     /// A valid puzzle alone is insufficient: its highlighted operations and the
     /// complete action path must follow a current logical deduction, not the saved answer.
     public static func canTeach(puzzle p: Puzzle) -> Bool {
         guard p.id == 1, p.size == 4, PuzzleSolver.validate(p).valid else { return false }
-        let steps = tutorial(puzzle: p)
-        guard steps.count == 9,
-              Set(steps.prefix(4).map(\.id)) == Set(["row", "column", "region", "neighbors"]),
-              steps.dropFirst(4).map(\.id) == ["mark", "undo", "swipe", "swipeVertical", "find"],
-              steps.map(\.action) == ["read", "read", "read", "read", "tap", "tap", "swipe", "swipe", "doubleTap"] else { return false }
-        let cells = Set(p.regions.indices)
-        guard steps.allSatisfy({ !$0.targetCells.isEmpty && Set($0.targetCells).count == $0.targetCells.count && Set($0.targetCells).isSubset(of: cells) }),
-              steps[8].targetCells.count == 1, let animal = steps[8].targetCells.first,
-              let proof = deduction(p, candidates: cells, confirmed: []), proof.forced == animal else { return false }
-
-        // The four rule demonstrations must describe this board and this animal.
-        let row = Set(cells.filter { $0 / p.size == animal / p.size })
-        let column = Set(cells.filter { $0 % p.size == animal % p.size })
-        let region = Set(cells.filter { p.regions[$0] == p.regions[animal] })
-        let neighbors = Set(cells.filter {
-            $0 != animal && abs($0 / p.size - animal / p.size) <= 1 && abs($0 % p.size - animal % p.size) <= 1
-        })
-        let ruleTargets = ["row": row, "column": column, "region": region, "neighbors": neighbors]
-        guard steps.prefix(4).allSatisfy({ Set($0.targetCells) == ruleTargets[$0.id] }),
-              steps[4].targetCells.count == 1, steps[4].targetCells == steps[5].targetCells else { return false }
-
-        var marks = Set<Int>()
-        for step in steps[4...7] {
-            let targets = Set(step.targetCells)
-            guard targets.isSubset(of: proof.excluded) else { return false }
-            if step.action == "tap" {
-                let cell = step.targetCells[0]
-                if marks.contains(cell) { marks.remove(cell) } else { marks.insert(cell) }
-            } else {
-                // Both cells must still be available so partial swipe callbacks
-                // cannot finish the next instruction before its own swipe occurs.
-                guard targets.count == 2, targets.isDisjoint(with: marks) else { return false }
-                let ordered = step.targetCells.sorted()
-                if step.id == "swipe" {
-                    guard ordered[0] / p.size == ordered[1] / p.size,
-                          ordered[1] - ordered[0] == 1 else { return false }
-                } else {
-                    guard ordered[0] % p.size == ordered[1] % p.size,
-                          ordered[1] - ordered[0] == p.size else { return false }
-                }
-                marks.formUnion(targets)
-            }
-        }
-        return !marks.contains(animal)
+        return PlayAlongTutorial.isValid(puzzle: p, steps: PlayAlongTutorial.steps(puzzle: p))
     }
 
     public static func tutorial(puzzle p: Puzzle, version: TutorialPlanVersion = .current) -> [TutorialStep] {
+        if version == .playAlong { return PlayAlongTutorial.steps(puzzle: p) }
         let legacy = legacyTutorial(puzzle: p)
         guard version == .boardDriven else { return legacy }
         guard legacy.count == 9, let region = legacy.first(where: { $0.id == "region" }),

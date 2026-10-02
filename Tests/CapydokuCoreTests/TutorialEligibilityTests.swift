@@ -46,9 +46,11 @@ final class TutorialEligibilityTests: XCTestCase {
             let puzzle = try PuzzleGenerator.generate(level: 1, seed: seed, timeBudgetMilliseconds: 8_000)
             XCTAssertTrue(PuzzleHints.canTeach(puzzle: puzzle), "Seed \(seed)")
             let steps = PuzzleHints.tutorial(puzzle: puzzle)
-            XCTAssertEqual(steps.count, 9)
+            XCTAssertTrue(PlayAlongTutorial.isValid(puzzle: puzzle, steps: steps))
+            XCTAssertEqual(steps.first?.action, "doubleTap")
+            XCTAssertEqual(steps.last?.action, "finish")
             XCTAssertEqual(steps.filter { $0.action == "swipe" }.map { $0.targetCells.count }, [2, 2])
-            let animal = try XCTUnwrap(steps.last?.targetCells.first)
+            let animal = try XCTUnwrap(steps.first?.targetCells.first)
             XCTAssertEqual(puzzle.regions.filter { $0 == puzzle.regions[animal] }.count, 1)
             fingerprints.insert(puzzle.fingerprint)
         }

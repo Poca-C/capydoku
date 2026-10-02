@@ -209,17 +209,17 @@ def main():
         frozen_sha = app_fingerprint(app)
         pack_bytes = (app / "levels.json").read_bytes()
         board = next(row for row in json.loads(pack_bytes) if row["id"] == 1)
-        assert board["size"] == 4 and 8 in board["solution"]
-        assert board["regions"].count(board["regions"][8]) == 1
-        assert set([0, 4, 5, 9, 13]).isdisjoint(board["solution"]), "Installed tutorial path changed; update the real UI regression deliberately"
+        assert board["size"] == 4 and 1 in board["solution"]
+        assert board["regions"].count(board["regions"][1]) == 1
+        assert set([0, 2, 3, 4, 5, 6, 9, 10, 11, 13]).isdisjoint(board["solution"]), "Installed tutorial path changed; update the real UI regression deliberately"
         report["build"] = {"appVersion": info.get("CFBundleShortVersionString"), "appBuild": info.get("CFBundleVersion"),
                            "bundleID": bundle, "appPath": str(app), "appTreeSHA256": frozen_sha,
                            "levelPackSHA256": sha(pack_bytes), "signing": "simulator ad hoc only", "xctestrun": str(xctestrun)}
         save_report()
         run_ui("01-real-ui-state", "test01CreatePersistentStateThroughUI", xctestrun)
         before, before_queue, original_save = observe("beforeColdRestore", bundle)
-        assert before["tutorialCompleted"] and before["tutorialStep"] == 9
-        assert before["currentLevel"] == 1 and before["session"]["attempt"] == 1
+        assert before["tutorialCompleted"] and before["tutorialStep"] == 11 and before["tutorialPlanVersion"] == 3
+        assert before["currentLevel"] == 1 and before["session"]["attempt"] == 2
         assert len(before["session"]["found"]) == 3 and before["session"]["marks"] and before["session"]["errors"]
         assert before["session"]["lives"] == 2 and before["session"]["score"] > 0
         assert before["checkIn"]["streak"] == 1 and before["checkIn"]["cycleDay"] == 1

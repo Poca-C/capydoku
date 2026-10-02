@@ -241,24 +241,26 @@ extension AnalyticsRecorderTests {
         let teachingBoard = try XCTUnwrap(app.session?.puzzle)
         XCTAssertEqual(teachingBoard.id, 1)
         XCTAssertFalse(app.progress.tutorialCompleted)
-        XCTAssertEqual(app.tutorialCount, 9)
+        XCTAssertGreaterThan(app.tutorialCount, 9)
         // Complete all original instructional operations, rather than setting
         // tutorialCompleted or manufacturing tutorial events in the recorder.
         var teachingActions: [String] = []
-        for index in 0..<9 {
+        for index in 0..<app.tutorialCount {
             let step = try XCTUnwrap(app.tutorial)
             teachingActions.append(step.action)
             switch step.action {
             case "read": app.advanceTutorial()
             case "tap": app.toggle(try XCTUnwrap(step.targetCells.first))
-            case "swipe": app.mark(step.targetCells)
-            case "doubleTap": app.submit(try XCTUnwrap(step.targetCells.first))
+            case "swipe", "exclude": app.mark(step.targetCells)
+            case "doubleTap", "finish": app.submit(try XCTUnwrap(step.targetCells.first))
             default: XCTFail("Unexpected tutorial action: \(step.action)")
             }
             XCTAssertEqual(app.progress.tutorialStep, index + 1)
             XCTAssertNil(app.errorMessage)
         }
-        XCTAssertEqual(teachingActions, ["read", "read", "read", "read", "tap", "tap", "swipe", "swipe", "doubleTap"])
+        XCTAssertEqual(teachingActions.first, "doubleTap")
+        XCTAssertFalse(teachingActions.contains("read"))
+        XCTAssertEqual(teachingActions.last, "finish")
         XCTAssertTrue(app.progress.tutorialCompleted); XCTAssertNil(app.tutorial)
         // The introduction is embedded in Level 1. Finish that same board and
         // use Next to enter the first ordinary attempt after the introduction.

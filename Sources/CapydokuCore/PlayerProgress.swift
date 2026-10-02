@@ -131,6 +131,9 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
     /// Upgrading the application must not reorder an unfinished introduction.
     public var tutorialPlanVersion: TutorialPlanVersion
     public var tutorialCompleted: Bool
+    /// Scope teaching presentation to the attempt that earned/requested it.
+    public var tutorialCompletionSessionID: UUID?
+    public var tutorialHintSessionID: UUID?
     public var checkIn: CheckInState
     public var bonusHints: Int
     public var bonusDirect: Int
@@ -163,6 +166,8 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
         tutorialStep = 0
         tutorialPlanVersion = .current
         tutorialCompleted = false
+        tutorialCompletionSessionID = nil
+        tutorialHintSessionID = nil
         checkIn = CheckInState()
         bonusHints = 0
         bonusDirect = 0
@@ -536,6 +541,7 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
     private enum CodingKeys: String, CodingKey {
         case unlockedLevel, currentLevel, completedLevels, attemptCounts, session, settings, experimentalHistoryCheckpoint
         case tutorialStep, tutorialPlanVersion, tutorialCompleted, checkIn, bonusHints, bonusDirect, rewardLedger
+        case tutorialCompletionSessionID, tutorialHintSessionID
         case pendingLevelResultEvents, activeHintUse, pendingBuffEvents
         case freeToolGrantedLevels, levelToolBalances, referenceToolGrantKeys, carriedToolBalance, levelStartLocalBalances, freeReviveUsage
         case bonusToolSources, levelToolSources, carriedToolSources
@@ -555,6 +561,8 @@ public struct PlayerProgress: Codable, Equatable, Sendable {
         tutorialPlanVersion = values.contains(.tutorialPlanVersion)
             ? try values.decode(TutorialPlanVersion.self, forKey: .tutorialPlanVersion) : .legacy
         tutorialCompleted = try values.decodeIfPresent(Bool.self, forKey: .tutorialCompleted) ?? false
+        tutorialCompletionSessionID = try values.decodeIfPresent(UUID.self, forKey: .tutorialCompletionSessionID)
+        tutorialHintSessionID = try values.decodeIfPresent(UUID.self, forKey: .tutorialHintSessionID)
         checkIn = try values.decodeIfPresent(CheckInState.self, forKey: .checkIn) ?? CheckInState()
         bonusHints = try values.decodeIfPresent(Int.self, forKey: .bonusHints) ?? 0
         bonusDirect = try values.decodeIfPresent(Int.self, forKey: .bonusDirect) ?? 0

@@ -1,0 +1,76 @@
+{
+  "build": "0.2.68 (71)",
+  "date": "2026-10-02",
+  "status": "passed within recorded scope",
+  "scope": "Meowdoku-inspired play-along onboarding; no level-pack regeneration, new sound work or external integration",
+  "reference": "reference-observations.json",
+  "actualCurrentPlan": "current-level1-plan.json",
+  "actualCurrentStepCount": 11,
+  "implementation": [
+    "First screen invites a real double tap; remove four up-front reading pages from new attempts.",
+    "Player performs mark, undo, horizontal/vertical swipe and rule-based exclusions before finding the remaining animals.",
+    "Separate visual rule focus from permitted input targets; every exclusion requires real player input.",
+    "Final independent stage allows ordinary input, including wrong guesses; optional free visual hint does not change board or inventory.",
+    "Persist plan version, hint attempt and completion attempt; v1/v2 unfinished lessons retain their original steps.",
+    "Final correct submission commits tutorial completion, win and unlock together; duplicate callbacks do not award again.",
+    "Native stroke identity and model guard prevent a held swipe from applying to a later teaching step.",
+    "Chinese and English copy and tutorial-complete Start Game route into level 2."
+  ],
+  "verification": {
+    "core": {
+      "passed": 25,
+      "failed": 0,
+      "log": "core-tests.log"
+    },
+    "app": {
+      "passed": 68,
+      "failed": 0,
+      "log": "17pro-final-tests.log",
+      "groups": [
+        "TutorialRecoveryTests",
+        "TutorialPlanMigrationTests",
+        "AppLocalizationTests",
+        "AnalyticsRecorderTests",
+        "BoardGuidancePresentationTests",
+        "BoardSwipePathTests"
+      ]
+    },
+    "iphone17Pro": {
+      "passed": 1,
+      "failed": 0,
+      "language": "English",
+      "path": "entire current tutorial, last free play/optional hint, completion, Start game to L2"
+    },
+    "iphone17e": {
+      "passed": 1,
+      "failed": 0,
+      "language": "Simplified Chinese",
+      "path": "entire current tutorial, final free play/optional hint, completion, Start Game to L2",
+      "log": "17e-final-tests.log"
+    },
+    "firstAppAttempt": {
+      "passed": 66,
+      "failed": 2,
+      "resolution": "Updated two historical test assumptions: current packaged v2 row/column order, and exact recognizer identity instead of obsolete fixed count 3. Production behavior unchanged by these corrections."
+    },
+    "seedRebuild": "level1-rebuild.json; current v4 and archived v3 exact. Historical demo-connected-v2 has never been supported by this metadata rebuild API; its full snapshot and new teaching path were tested separately.",
+    "actualColdRecovery": "Each new step and partial swipe/exclusion, all eight generated sample seeds, v1 absent-version payload and v2 saved steps; completion and hint cold recovery.",
+    "packSHA256": "9233f079cd8311286dd2bdac9150d7db8b18874160eb3b6e821e51c7fba6791b",
+    "compactLayout": {
+      "passed": 1,
+      "failed": 0,
+      "viewport": "320×568 host on iPhone 17e simulator",
+      "cases": "existing hint, explicit v2 read panel, v3 first action, v3 final free play/free hint, free tool",
+      "log": "17e-final-tests.log"
+    },
+    "screenshots": "../../Docs/tutorial-0268/manifest.json"
+  },
+  "limits": [
+    "Not a fresh full native Meowdoku tutorial playthrough in this round; recorded comparison source/version boundaries are explicit.",
+    "Not a frame-by-frame animation/timing match; own generated map changes the order of some deductions.",
+    "No current-build physical-iPhone installation or human usability sign-off.",
+    "Environment candidate/reinstall helpers updated and compiled, but the full multi-environment reinstall matrix was not repeated.",
+    "No full 88-item checklist or formal app-store/external-service acceptance."
+  ],
+  "supervision": "generation_progress_manager reviewed bounded exits and final implementation; no further feature expansion."
+}

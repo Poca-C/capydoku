@@ -78,14 +78,15 @@ final class DynamicTutorialPlanTests: XCTestCase {
     }
 
     func testPlanVersionsAreStableAndDoNotReadTheStoredAnswerOrSeed() throws {
-        XCTAssertEqual(TutorialPlanVersion.current, .boardDriven)
+        XCTAssertEqual(TutorialPlanVersion.current, .playAlong)
         XCTAssertEqual(try JSONEncoder().encode(TutorialPlanVersion.legacy), Data("1".utf8))
         XCTAssertEqual(try JSONEncoder().encode(TutorialPlanVersion.boardDriven), Data("2".utf8))
-        XCTAssertThrowsError(try JSONDecoder().decode(TutorialPlanVersion.self, from: Data("3".utf8)))
+        XCTAssertEqual(try JSONEncoder().encode(TutorialPlanVersion.playAlong), Data("3".utf8))
+        XCTAssertThrowsError(try JSONDecoder().decode(TutorialPlanVersion.self, from: Data("4".utf8)))
         for catalog in ["levels-legacy-v3", "levels-legacy-v2", "levels"] {
             let puzzle = try firstPuzzle(catalog: catalog)
-            XCTAssertEqual(PuzzleHints.tutorial(puzzle: puzzle), PuzzleHints.tutorial(puzzle: puzzle, version: .boardDriven))
-            for version in [TutorialPlanVersion.legacy, .boardDriven] {
+            XCTAssertEqual(PuzzleHints.tutorial(puzzle: puzzle), PuzzleHints.tutorial(puzzle: puzzle, version: .playAlong))
+            for version in [TutorialPlanVersion.legacy, .boardDriven, .playAlong] {
                 let expected = PuzzleHints.tutorial(puzzle: puzzle, version: version)
                 var changed = puzzle
                 changed.solution = []

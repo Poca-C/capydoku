@@ -1,0 +1,41 @@
+{
+  "build": "0.2.68 (71)",
+  "sourceChecklist": "Validation/checklist-source.json",
+  "full88Reexecuted": false,
+  "formalSignOff": false,
+  "rows": [
+    {
+      "id": "08-01",
+      "module": "动态新手教学",
+      "originalAcceptanceText": "操作  更换多个合格L1种子，完整完成教学。\n通过  均为4×4合格教学盘；目标随棋盘变化且明确，不依赖固定坐标。",
+      "thisRound": "Current play-along implementation and scoped automated verification; final free-play step intentionally allows ordinary guesses, guided stages remain target-gated.",
+      "formalStatusAfterThisRound": "unchanged; scoped engineering verification, human comprehension and formal reference sign-off pending",
+      "evidence": [
+        "Validation/tutorial-0268/summary.json",
+        "Validation/tutorial-0268/reference-observations.json"
+      ]
+    },
+    {
+      "id": "08-02",
+      "module": "动态新手教学",
+      "originalAcceptanceText": "操作  逐项检查教学内容，并操作非目标格。\n通过  覆盖单击及撤销、横纵滑动、双击和四条规则；越权操作不破坏教学。",
+      "thisRound": "Current play-along implementation and scoped automated verification; final free-play step intentionally allows ordinary guesses, guided stages remain target-gated.",
+      "formalStatusAfterThisRound": "unchanged; scoped engineering verification, human comprehension and formal reference sign-off pending",
+      "evidence": [
+        "Validation/tutorial-0268/summary.json",
+        "Validation/tutorial-0268/reference-observations.json"
+      ]
+    },
+    {
+      "id": "08-03",
+      "module": "动态新手教学",
+      "originalAcceptanceText": "操作  中途退出或强退后重进，再完成并重新启动。\n通过  按F4恢复或重启，完成状态保存；无教学路径的候选被拒绝。",
+      "thisRound": "Current play-along implementation and scoped automated verification; final free-play step intentionally allows ordinary guesses, guided stages remain target-gated.",
+      "formalStatusAfterThisRound": "unchanged; scoped engineering verification, human comprehension and formal reference sign-off pending",
+      "evidence": [
+        "Validation/tutorial-0268/summary.json",
+        "Validation/tutorial-0268/reference-observations.json"
+      ]
+    }
+  ]
+}

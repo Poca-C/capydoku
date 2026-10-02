@@ -1,0 +1,54 @@
+{
+  "date": "2026-10-02",
+  "request": "参考 Meowdoku 的新手教学来实现",
+  "source": {
+    "title": "Meowdoku! (by Oakever Games) IOS Gameplay Video (HD)",
+    "url": "https://www.youtube.com/watch?v=yZU1fIf3w_c",
+    "publisher": "IOSTouchplayHD",
+    "appVersion": "unknown"
+  },
+  "method": "在浏览器播放、暂停和逐帧查看公开实机录像。当前本机 Meowdoku 已打开至普通第5关，但 native coordinate input 返回 noWindowsAvailable，未在本轮重新完整试玩其教学。历史本机1.19.1(457)教学观察仅用于交叉核对手指、遮罩和操作表现。",
+  "observations": [
+    {
+      "time": "00:10",
+      "observed": "开场直接要求双击单格颜色区域，目标明亮、周围变暗，手指演示。没有先读四屏规则。"
+    },
+    {
+      "time": "00:14–00:20",
+      "observed": "第一只出现后，同行同列亮起；玩家逐格标记X，做完排除后继续。"
+    },
+    {
+      "time": "约00:21",
+      "observed": "剩余粉色区域只剩一格，双击放第二只。"
+    },
+    {
+      "time": "00:25",
+      "observed": "讲相邻禁区，要求滑过邻格标记X。"
+    },
+    {
+      "time": "约00:26",
+      "observed": "浅蓝色区域余一格，放第三只。"
+    },
+    {
+      "time": "00:30",
+      "observed": "整盘可见，要求找最后一只；页面提供提示入口。"
+    },
+    {
+      "time": "00:35",
+      "observed": "全盘完成，出现庆祝和Start Game。"
+    }
+  ],
+  "implementedAdaptation": [
+    "采用先操作、再结合已找到角色解释规则、逐步排除、最后自主找、可选提示、开始游戏的结构。",
+    "根据自己的生成棋盘选择目标与证明；现包11步，邻格规则出现顺序随自有棋盘变化，不复制参考棋盘。",
+    "保留原文额外明确要求的撤销与横纵两个方向滑动，融入实际排除；不是声称录像本身完整示范了这些操作。",
+    "使用原有卡皮巴拉素材、中文文案和手指/遮罩实现；本次没有逐帧还原参考节奏或替换音效。"
+  ],
+  "limits": [
+    "录像App版本未知；未冻结正式参考难度与参数。",
+    "未直接观察录像中最后提示按钮被点击的全过程，不声称精确复刻提示时机。",
+    "本轮当前手机未安装或真人试玩。"
+  ],
+  "originalRequirement": "Reference/Original/document.txt blocks [159]–[169]",
+  "historicalNativeEvidence": "Validation/meowdoku-playtest-comparison-0223.json"
+}

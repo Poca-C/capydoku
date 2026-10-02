@@ -156,7 +156,7 @@ final class TutorialPlanMigrationTests: XCTestCase {
             XCTAssertEqual(app.progress.tutorialPlanVersion, .current)
             XCTAssertEqual(app.progress.tutorialStep, 0)
             XCTAssertFalse(app.progress.tutorialCompleted)
-            XCTAssertEqual(app.tutorial?.id, "region")
+            XCTAssertEqual(app.tutorial?.id, "find_1")
             XCTAssertNotEqual(app.session?.id, checkpoint.id)
             XCTAssertEqual(app.session?.attempt, checkpoint.attempt + 1)
             XCTAssertEqual(app.session?.puzzle, checkpoint.puzzle)
@@ -179,7 +179,7 @@ final class TutorialPlanMigrationTests: XCTestCase {
             XCTAssertEqual(app.progress.tutorialPlanVersion, .current)
             XCTAssertEqual(app.progress.tutorialStep, 0)
             XCTAssertFalse(app.progress.tutorialCompleted)
-            XCTAssertEqual(app.tutorial?.id, "region")
+            XCTAssertEqual(app.tutorial?.id, "find_1")
             XCTAssertNotEqual(app.session?.id, before.id)
             XCTAssertEqual(app.session?.attempt, before.attempt + 1)
             XCTAssertEqual(app.session?.marks, [])
@@ -204,6 +204,35 @@ final class TutorialPlanMigrationTests: XCTestCase {
         XCTAssertFalse(restored.progress.tutorialCompleted)
         XCTAssertEqual(restored.progress.tutorialPlanVersion, .current)
         XCTAssertEqual(restored.progress.tutorialStep, 0)
-        XCTAssertEqual(restored.tutorial?.id, "region")
+        XCTAssertEqual(restored.tutorial?.id, "find_1")
     }
+    @MainActor func testVersionTwoEveryCheckpointKeepsItsPlanUntilExplicitRestart() throws {
+        let root = directory()
+        var app = model(at: root); app.start(level: 1)
+        app.progress.tutorialPlanVersion = .boardDriven; app.save()
+        let original = try XCTUnwrap(app.session)
+        let plan = PuzzleHints.tutorial(puzzle: original.puzzle, version: .boardDriven)
+        XCTAssertEqual(plan.count, 9)
+        for index in plan.indices {
+            let previous = app.progress
+            app = model(at: root); app.startOrContinue()
+            XCTAssertEqual(app.progress, previous)
+            XCTAssertEqual(app.tutorial, plan[index])
+            if plan[index].action == "swipe" {
+                app.mark([plan[index].targetCells[0]])
+                let partial = app.progress
+                app = model(at: root); app.startOrContinue()
+                XCTAssertEqual(app.progress, partial)
+                app.mark(Array(plan[index].targetCells.dropFirst()))
+            } else { try performStep(app) }
+            XCTAssertEqual(app.progress.tutorialStep, index + 1)
+        }
+        XCTAssertTrue(app.progress.tutorialCompleted)
+        XCTAssertEqual(app.session?.found.count, 1)
+        XCTAssertFalse(app.showsTutorialCompletion)
+        app.replayTutorial()
+        XCTAssertEqual(app.progress.tutorialPlanVersion, .playAlong)
+        XCTAssertEqual(app.tutorial?.id, "find_1")
+    }
+
 }
