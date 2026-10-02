@@ -41,6 +41,9 @@ let outputDirectory = URL(fileURLWithPath: argument("--output", fallback: FileMa
 let first = Int(argument("--start", fallback: "1")) ?? 1
 let count = Int(argument("--count", fallback: "150")) ?? 150
 let experimental = args.contains("--experimental")
+let maximumBatches = Int(argument("--max-batches", fallback: "20")) ?? 0
+let totalBudgetSeconds = Double(argument("--total-budget-seconds", fallback: "1800")) ?? 0
+let generationStarted = ProcessInfo.processInfo.systemUptime
 let encoder = JSONEncoder()
 encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
 
@@ -106,7 +109,8 @@ do {
         print("PASS: \(rows.count) selected candidates rebuilt exactly from generation metadata; tutorial mapping exported.")
         exit(0)
     }
-    guard first > 0, count > 0, count <= 10_000 else { throw PuzzleGenerationError.invalidLevel }
+    guard first > 0, count > 0, count <= 10_000, (1...20).contains(maximumBatches),
+          totalBudgetSeconds.isFinite, totalBudgetSeconds > 0 else { throw PuzzleGenerationError.invalidLevel }
     var catalog: DifficultyProfileCatalog?
     if args.contains("--profiles") {
         let imported = try DifficultyProfileCatalog.importing(Data(contentsOf: URL(fileURLWithPath: argument("--profiles", fallback: ""))))
@@ -129,11 +133,14 @@ do {
         let prior = try JSONDecoder().decode([Puzzle].self, from: Data(contentsOf: URL(fileURLWithPath: argument("--history-levels", fallback: ""))))
         corpus = prior.map { SimilarityCorpusEntry(game: "CapyDoku", puzzle: $0) }
     }
-    var similarity = SimilarityConfiguration.strict
+    let similarityURL = URL(fileURLWithPath: argument("--similarity-config", fallback: "Resources/similarity-config.json"))
+    var similarity = try SimilarityConfiguration.decode(Data(contentsOf: similarityURL))
     if args.contains("--similarity-corpus") {
         corpus += try JSONDecoder().decode([SimilarityCorpusEntry].self, from: Data(contentsOf: URL(fileURLWithPath: argument("--similarity-corpus", fallback: ""))))
         similarity.crossProductCorpusAvailable = corpus.contains { $0.game != "CapyDoku" }
     }
+    try FileManager.default.createDirectory(at: outputDirectory.appendingPathComponent("Validation"), withIntermediateDirectories: true)
+    try encoder.encode(similarity).write(to: outputDirectory.appendingPathComponent("Validation/similarity-config-used.json"), options: .atomic)
     var puzzles: [Puzzle] = [], records: [LevelRecord] = [], fingerprints = Set<String>()
     for level in first..<(first + count) {
         if let catalog = catalog, catalog.profile(level: level) == nil {
@@ -142,7 +149,10 @@ do {
         let began = ProcessInfo.processInfo.systemUptime
         var accepted: Puzzle?
         var acceptedPipeline: GenerationPipelineReport?
-        for retry in 0..<20 {
+        for retry in 0..<maximumBatches {
+            guard ProcessInfo.processInfo.systemUptime - generationStarted < totalBudgetSeconds else {
+                throw PuzzleGenerationError.timeBudgetExceeded
+            }
             let seed = UInt64(level) &* 0x9E3779B97F4A7C15 &+ 0xCA9D0C0 &+ UInt64(retry) &* 0xD1B54A32D192ED03
             let result = try PuzzleGenerator.generateAudited(level: level, seed: seed, profile: catalog?.profile(level: level),
                 corpus: corpus, similarityConfiguration: similarity)
@@ -155,7 +165,7 @@ do {
             }
             if fingerprints.insert(puzzle.fingerprint).inserted { accepted = puzzle; acceptedPipeline = result.report; break }
         }
-        guard let puzzle = accepted else { throw PuzzleGenerationError.exhausted(attempts: 20) }
+        guard let puzzle = accepted else { throw PuzzleGenerationError.exhausted(attempts: maximumBatches * 100) }
         let validation = PuzzleSolver.validate(puzzle)
         guard validation.valid else { throw PuzzleGenerationError.exhausted(attempts: 500) }
         let walkthrough = (level <= 20 || puzzle.difficulty == "Hard" || puzzle.difficulty == "Recovery" || experimental)

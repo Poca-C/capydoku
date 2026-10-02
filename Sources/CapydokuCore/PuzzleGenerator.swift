@@ -14,7 +14,7 @@ public enum PuzzleGenerationError: Error, LocalizedError, Equatable {
 }
 
 public struct PuzzleGenerator: Sendable {
-    public static let version = "original-pipeline-v3"
+    public static let version = "original-pipeline-v4"
     public static let maximumBoardSize = 10
     public static let generationTimeBudget: TimeInterval = 8
     public init() {}

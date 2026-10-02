@@ -1,0 +1,320 @@
+[
+  {
+    "source": "rejected-level-105-batch-0.json",
+    "level": 105,
+    "seed": 16483435311736993117,
+    "termination": "no_candidate_matched",
+    "candidates": 100,
+    "rejectionReasons": {
+      "difficulty:band_score_outside_target": 21,
+      "difficulty:difficulty_score_outside_target": 21,
+      "difficulty:elimination_chain_length_outside_target": 4,
+      "difficulty:error_risk_outside_target": 6,
+      "difficulty:fail_pressure_estimate_outside_target": 6,
+      "difficulty:forced_move_density_outside_target": 15,
+      "difficulty:hint_pressure_estimate_outside_target": 15,
+      "solver:invalid_or_non_unique": 79
+    }
+  },
+  {
+    "source": "rejected-level-105-batch-1.json",
+    "level": 105,
+    "seed": 13147756944863896160,
+    "termination": "no_candidate_matched",
+    "candidates": 100,
+    "rejectionReasons": {
+      "difficulty:band_score_outside_target": 29,
+      "difficulty:difficulty_score_outside_target": 29,
+      "difficulty:elimination_chain_length_outside_target": 12,
+      "difficulty:error_risk_outside_target": 12,
+      "difficulty:fail_pressure_estimate_outside_target": 12,
+      "difficulty:forced_move_density_outside_target": 18,
+      "difficulty:hint_pressure_estimate_outside_target": 18,
+      "solver:invalid_or_non_unique": 71
+    }
+  },
+  {
+    "source": "rejected-level-109-batch-0.json",
+    "level": 109,
+    "seed": 6746062367901132209,
+    "termination": "no_candidate_matched",
+    "candidates": 100,
+    "rejectionReasons": {
+      "difficulty:band_score_outside_target": 18,
+      "difficulty:difficulty_score_outside_target": 18,
+      "difficulty:elimination_chain_length_outside_target": 6,
+      "difficulty:error_risk_outside_target": 9,
+      "difficulty:fail_pressure_estimate_outside_target": 9,
+      "difficulty:forced_move_density_outside_target": 9,
+      "difficulty:hint_pressure_estimate_outside_target": 11,
+      "difficulty:logical_step_count_outside_target": 1,
+      "difficulty:reasoning_depth_outside_target": 6,
+      "difficulty:trial_not_allowed": 2,
+      "solver:invalid_or_non_unique": 82
+    }
+  },
+  {
+    "source": "rejected-level-110-batch-0.json",
+    "level": 110,
+    "seed": 18146777187224330694,
+    "termination": "no_candidate_matched",
+    "candidates": 100,
+    "rejectionReasons": {
+      "difficulty:band_score_outside_target": 27,
+      "difficulty:difficulty_score_outside_target": 27,
+      "difficulty:elimination_chain_length_outside_target": 6,
+      "difficulty:error_risk_outside_target": 20,
+      "difficulty:fail_pressure_estimate_outside_target": 20,
+      "difficulty:forced_move_density_outside_target": 24,
+      "difficulty:hint_pressure_estimate_outside_target": 24,
+      "difficulty:reasoning_depth_outside_target": 5,
+      "difficulty:solve_time_estimate_outside_target": 11,
+      "solver:invalid_or_non_unique": 72
+    }
+  },
+  {
+    "source": "rejected-level-115-batch-0.json",
+    "level": 115,
+    "seed": 1363374989002116655,
+    "termination": "no_candidate_matched",
+    "candidates": 100,
+    "rejectionReasons": {
+      "difficulty:band_score_outside_target": 29,
+      "difficulty:difficulty_score_outside_target": 29,
+      "difficulty:elimination_chain_length_outside_target": 8,
+      "difficulty:error_risk_outside_target": 7,
+      "difficulty:fail_pressure_estimate_outside_target": 7,
+      "difficulty:forced_move_density_outside_target": 16,
+      "difficulty:hint_pressure_estimate_outside_target": 16,
+      "solver:invalid_or_non_unique": 71
+    }
+  },
+  {
+    "source": "rejected-level-125-batch-0.json",
+    "level": 125,
+    "seed": 4690058739976791809,
+    "termination": "no_candidate_matched",
+    "candidates": 100,
+    "rejectionReasons": {
+      "difficulty:band_score_outside_target": 16,
+      "difficulty:difficulty_score_outside_target": 16,
+      "difficulty:elimination_chain_length_outside_target": 6,
+      "difficulty:error_risk_outside_target": 9,
+      "difficulty:fail_pressure_estimate_outside_target": 9,
+      "difficulty:forced_move_density_outside_target": 12,
+      "difficulty:hint_pressure_estimate_outside_target": 12,
+      "solver:invalid_or_non_unique": 84
+    }
+  },
+  {
+    "source": "rejected-level-128-batch-0.json",
+    "level": 128,
+    "seed": 1998715050527284032,
+    "termination": "no_candidate_matched",
+    "candidates": 100,
+    "rejectionReasons": {
+      "difficulty:band_score_outside_target": 18,
+      "difficulty:difficulty_score_outside_target": 18,
+      "difficulty:elimination_chain_length_outside_target": 8,
+      "difficulty:error_risk_outside_target": 9,
+      "difficulty:fail_pressure_estimate_outside_target": 9,
+      "difficulty:forced_move_density_outside_target": 13,
+      "difficulty:hint_pressure_estimate_outside_target": 13,
+      "solver:invalid_or_non_unique": 82
+    }
+  },
+  {
+    "source": "rejected-level-129-batch-0.json",
+    "level": 129,
+    "seed": 13399429869850482517,
+    "termination": "no_candidate_matched",
+    "candidates": 100,
+    "rejectionReasons": {
+      "difficulty:band_score_outside_target": 20,
+      "difficulty:difficulty_score_outside_target": 20,
+      "difficulty:elimination_chain_length_outside_target": 8,
+      "difficulty:error_risk_outside_target": 8,
+      "difficulty:fail_pressure_estimate_outside_target": 8,
+      "difficulty:forced_move_density_outside_target": 11,
+      "difficulty:hint_pressure_estimate_outside_target": 11,
+      "difficulty:reasoning_depth_outside_target": 8,
+      "solver:invalid_or_non_unique": 80
+    }
+  },
+  {
+    "source": "rejected-level-148-batch-0.json",
+    "level": 148,
+    "seed": 8652082552476634340,
+    "termination": "no_candidate_matched",
+    "candidates": 100,
+    "rejectionReasons": {
+      "difficulty:band_score_outside_target": 25,
+      "difficulty:difficulty_score_outside_target": 24,
+      "difficulty:elimination_chain_length_outside_target": 6,
+      "difficulty:error_risk_outside_target": 7,
+      "difficulty:fail_pressure_estimate_outside_target": 7,
+      "difficulty:forced_move_density_outside_target": 16,
+      "difficulty:hint_pressure_estimate_outside_target": 16,
+      "solver:invalid_or_non_unique": 75
+    }
+  },
+  {
+    "source": "rejected-level-148-batch-1.json",
+    "level": 148,
+    "seed": 5316404185603537383,
+    "termination": "no_candidate_matched",
+    "candidates": 100,
+    "rejectionReasons": {
+      "difficulty:band_score_outside_target": 21,
+      "difficulty:difficulty_score_outside_target": 18,
+      "difficulty:elimination_chain_length_outside_target": 3,
+      "difficulty:error_risk_outside_target": 7,
+      "difficulty:fail_pressure_estimate_outside_target": 7,
+      "difficulty:forced_move_density_outside_target": 13,
+      "difficulty:hint_pressure_estimate_outside_target": 14,
+      "difficulty:trial_not_allowed": 1,
+      "solver:invalid_or_non_unique": 79
+    }
+  },
+  {
+    "source": "rejected-level-148-batch-2.json",
+    "level": 148,
+    "seed": 1980725818730440426,
+    "termination": "no_candidate_matched",
+    "candidates": 100,
+    "rejectionReasons": {
+      "difficulty:band_score_outside_target": 26,
+      "difficulty:difficulty_score_outside_target": 26,
+      "difficulty:elimination_chain_length_outside_target": 13,
+      "difficulty:error_risk_outside_target": 13,
+      "difficulty:fail_pressure_estimate_outside_target": 13,
+      "difficulty:forced_move_density_outside_target": 18,
+      "difficulty:hint_pressure_estimate_outside_target": 18,
+      "solver:invalid_or_non_unique": 74
+    }
+  },
+  {
+    "source": "rejected-level-148-batch-3.json",
+    "level": 148,
+    "seed": 17091791525566895085,
+    "termination": "no_candidate_matched",
+    "candidates": 100,
+    "rejectionReasons": {
+      "difficulty:band_score_outside_target": 23,
+      "difficulty:difficulty_score_outside_target": 23,
+      "difficulty:elimination_chain_length_outside_target": 7,
+      "difficulty:error_risk_outside_target": 10,
+      "difficulty:fail_pressure_estimate_outside_target": 10,
+      "difficulty:forced_move_density_outside_target": 12,
+      "difficulty:hint_pressure_estimate_outside_target": 15,
+      "difficulty:logical_step_count_outside_target": 2,
+      "difficulty:trial_not_allowed": 3,
+      "solver:invalid_or_non_unique": 77
+    }
+  },
+  {
+    "source": "rejected-level-149-batch-0.json",
+    "level": 149,
+    "seed": 1606053298090281209,
+    "termination": "no_candidate_matched",
+    "candidates": 100,
+    "rejectionReasons": {
+      "difficulty:band_score_outside_target": 29,
+      "difficulty:candidate_density_outside_target": 1,
+      "difficulty:difficulty_score_outside_target": 29,
+      "difficulty:elimination_chain_length_outside_target": 9,
+      "difficulty:error_risk_outside_target": 12,
+      "difficulty:fail_pressure_estimate_outside_target": 12,
+      "difficulty:forced_move_density_outside_target": 18,
+      "difficulty:hint_pressure_estimate_outside_target": 20,
+      "difficulty:logical_step_count_outside_target": 1,
+      "difficulty:reasoning_depth_outside_target": 9,
+      "difficulty:trial_not_allowed": 2,
+      "solver:invalid_or_non_unique": 71
+    }
+  },
+  {
+    "source": "rejected-level-15-batch-0.json",
+    "level": 15,
+    "seed": 4990025626674468347,
+    "termination": "no_candidate_matched",
+    "candidates": 100,
+    "rejectionReasons": {
+      "difficulty:band_score_outside_target": 63,
+      "difficulty:difficulty_score_outside_target": 61,
+      "difficulty:elimination_chain_length_outside_target": 33,
+      "difficulty:error_risk_outside_target": 70,
+      "difficulty:fail_pressure_estimate_outside_target": 70,
+      "difficulty:forced_move_density_outside_target": 41,
+      "difficulty:hint_pressure_estimate_outside_target": 41,
+      "difficulty:solve_time_estimate_outside_target": 33,
+      "solver:invalid_or_non_unique": 29
+    }
+  },
+  {
+    "source": "rejected-level-30-batch-0.json",
+    "level": 30,
+    "seed": 9980051253136481078,
+    "termination": "no_candidate_matched",
+    "candidates": 100,
+    "rejectionReasons": {
+      "difficulty:band_score_outside_target": 67,
+      "difficulty:candidate_density_outside_target": 1,
+      "difficulty:difficulty_score_outside_target": 68,
+      "difficulty:elimination_chain_length_outside_target": 27,
+      "difficulty:error_risk_outside_target": 49,
+      "difficulty:fail_pressure_estimate_outside_target": 49,
+      "difficulty:forced_move_density_outside_target": 53,
+      "difficulty:hint_pressure_estimate_outside_target": 53,
+      "difficulty:logical_step_count_outside_target": 1,
+      "difficulty:reasoning_depth_outside_target": 27,
+      "difficulty:solve_time_estimate_outside_target": 54,
+      "difficulty:trial_not_allowed": 1,
+      "solver:invalid_or_non_unique": 32
+    }
+  },
+  {
+    "source": "rejected-level-40-batch-0.json",
+    "level": 40,
+    "seed": 13306735004111156232,
+    "termination": "no_candidate_matched",
+    "candidates": 100,
+    "rejectionReasons": {
+      "difficulty:band_score_outside_target": 68,
+      "difficulty:difficulty_score_outside_target": 67,
+      "difficulty:elimination_chain_length_outside_target": 21,
+      "difficulty:error_risk_outside_target": 44,
+      "difficulty:fail_pressure_estimate_outside_target": 44,
+      "difficulty:forced_move_density_outside_target": 47,
+      "difficulty:hint_pressure_estimate_outside_target": 47,
+      "difficulty:reasoning_depth_outside_target": 21,
+      "difficulty:solve_time_estimate_outside_target": 49,
+      "similarity:answer_pattern": 2,
+      "similarity:rejected": 2,
+      "solver:invalid_or_non_unique": 30
+    }
+  },
+  {
+    "source": "rejected-level-50-batch-0.json",
+    "level": 50,
+    "seed": 16633418755085831386,
+    "termination": "no_candidate_matched",
+    "candidates": 100,
+    "rejectionReasons": {
+      "difficulty:band_score_outside_target": 77,
+      "difficulty:candidate_density_outside_target": 1,
+      "difficulty:difficulty_score_outside_target": 78,
+      "difficulty:elimination_chain_length_outside_target": 27,
+      "difficulty:error_risk_outside_target": 58,
+      "difficulty:fail_pressure_estimate_outside_target": 58,
+      "difficulty:forced_move_density_outside_target": 57,
+      "difficulty:hint_pressure_estimate_outside_target": 57,
+      "difficulty:reasoning_depth_outside_target": 27,
+      "difficulty:solve_time_estimate_outside_target": 64,
+      "difficulty:trial_not_allowed": 1,
+      "similarity:answer_pattern": 1,
+      "similarity:rejected": 1,
+      "solver:invalid_or_non_unique": 21
+    }
+  }
+]

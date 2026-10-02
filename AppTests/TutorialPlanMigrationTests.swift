@@ -54,9 +54,16 @@ final class TutorialPlanMigrationTests: XCTestCase {
     }
 
     @MainActor private func legacyModel(at directory: URL) throws -> AppModel {
-        let fresh = model(at: directory); fresh.start(level: 1)
+        let archiveURL = try XCTUnwrap(Bundle.main.url(forResource: "levels-legacy-v3", withExtension: "json"))
+        let historicalPuzzles = try JSONDecoder().decode([Puzzle].self, from: Data(contentsOf: archiveURL))
+        // Create the historical save with its actual shipped board. Cold reloads
+        // still use the normal current AppModel, exercising the upgrade boundary.
+        let fresh = AppModel(saveDirectory: directory, runsTimer: false, feedbackEnabled: false,
+                             bundledPuzzles: historicalPuzzles)
+        fresh.start(level: 1)
         XCTAssertEqual(fresh.progress.tutorialPlanVersion, .current)
         XCTAssertEqual(fresh.session?.puzzle.size, 4)
+        XCTAssertEqual(fresh.session?.puzzle.generatorVersion, "original-pipeline-v3")
         XCTAssertEqual(fresh.session?.puzzle.solution, [1, 7, 8, 14], "Frozen historical coordinates refer to the shipped L1.")
         return try reloadWithoutVersion(fresh, at: directory)
     }

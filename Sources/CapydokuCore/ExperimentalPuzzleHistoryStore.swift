@@ -106,9 +106,12 @@ public final class ExperimentalPuzzleHistoryStore: @unchecked Sendable {
         guard envelope.version == 1, Self.digest(envelope.payload) == envelope.sha256 else { throw HistoryError.incomplete }
         let payload = try JSONDecoder().decode(Payload.self, from: envelope.payload)
         guard payload.records.count <= 100_000,
-              Set(payload.records.map(\.boardSHA256)).count == payload.records.count,
-              payload.records.allSatisfy(Self.validRecord) else { throw HistoryError.incomplete }
-        return Snapshot(records: payload.records, importedLegacyCache: payload.importedLegacyCache)
+              Set(payload.records.map(\.boardSHA256)).count == payload.records.count else { throw HistoryError.incomplete }
+        // Normalize verified legacy fingerprints before comparing primary/backup
+        // prefixes. The saved board hashes and player checkpoint stay unchanged.
+        let upgraded = payload.records.compactMap(Self.verifiedRecord)
+        guard upgraded.count == payload.records.count else { throw HistoryError.incomplete }
+        return Snapshot(records: upgraded, importedLegacyCache: payload.importedLegacyCache)
     }
 
     private func legacySnapshot() throws -> Snapshot {
@@ -139,19 +142,24 @@ public final class ExperimentalPuzzleHistoryStore: @unchecked Sendable {
         return Record(boardSHA256: digest(try encoder.encode(puzzle)), entry: SimilarityCorpusEntry(game: "CapyDoku", puzzle: puzzle))
     }
 
-    private static func validRecord(_ record: Record) -> Bool {
+    private static func verifiedRecord(_ record: Record) -> Record? {
         let entry = record.entry, f = entry.fingerprint, n = f.gridSize
         guard record.boardSHA256.count == 64, record.boardSHA256.allSatisfy({ $0.isHexDigit }),
               entry.game == "CapyDoku", (151...100_000).contains(entry.levelID), [4, 6, 8, 10].contains(n),
               f.regionGraph.count == n * n, f.regionGraph.allSatisfy({ (0..<n).contains($0) }),
               Set(f.regionGraph).count == n, f.answerPattern.count == n,
-              f.answerPattern.allSatisfy({ (0..<(n * n)).contains($0) }) else { return false }
+              f.answerPattern.allSatisfy({ (0..<(n * n)).contains($0) }) else { return nil }
         let puzzle = Puzzle(id: entry.levelID, size: n, regions: f.regionGraph, solution: f.answerPattern, seed: 0, generatorVersion: "history", difficulty: "history")
-        return PuzzleFingerprint(puzzle: puzzle) == f
-            && Set(f.answerPattern.map { $0 / n }).count == n
-            && Set(f.answerPattern.map { $0 % n }).count == n
-            && Set(f.answerPattern.map { f.regionGraph[$0] }).count == n
-            && zip(f.answerPattern, f.answerPattern.dropFirst()).allSatisfy { abs($0 % n - $1 % n) > 1 }
+        let current = PuzzleFingerprint(puzzle: puzzle)
+        guard current.matchesLegacyFields(of: f),
+              f.openingDetails == nil || f.openingDetails == current.openingDetails,
+              Set(f.answerPattern.map { $0 / n }).count == n,
+              Set(f.answerPattern.map { $0 % n }).count == n,
+              Set(f.answerPattern.map { f.regionGraph[$0] }).count == n,
+              zip(f.answerPattern, f.answerPattern.dropFirst()).allSatisfy({ abs($0 % n - $1 % n) > 1 }) else { return nil }
+        var result = record
+        result.entry.fingerprint = current
+        return result
     }
     private static func digest(_ data: Data) -> String { SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined() }
 }

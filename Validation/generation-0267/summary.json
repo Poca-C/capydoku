@@ -1,0 +1,299 @@
+{
+  "build": "0.2.67 (70)",
+  "date": "2026-10-02",
+  "status": "completed_for_authorized_local_engineering_scope",
+  "originalConformance": "partial; frozen reference calibration and cross-product corpus remain pending",
+  "supervision": {
+    "agent": "generation_progress_manager",
+    "milestones": [
+      "M1 evidence template",
+      "M2 deduction trace and bounded difficulty plus quality selection",
+      "M3 configurable similarity and history compatibility",
+      "M4 150+30 production and regression"
+    ],
+    "scopeFreeze": "Only failures caused by this change may be corrected after generation starts. No visual/audio polish or new metrics.",
+    "maximumProductionCorrectionRounds": 1,
+    "productionCorrectionRoundsUsed": 0,
+    "finalReview": "M1 preparation, M2, M3 and M4 engineering exits approved by generation_progress_manager; stop further optimization this round."
+  },
+  "changes": [
+    "Replayable deduction trace and separate maximum consecutive elimination chain; rule tier is not claimed as human depth.",
+    "Role-specific local ranges replace permissive unit ranges.",
+    "Independent geometry and deduction-coverage quality breaks exact target-distance ties after all hard gates.",
+    "Versioned shared similarity configuration, bounded answer-independent opening prefix and first breakthrough.",
+    "v3 pack archived; existing saved boards and legacy history retained on upgrade.",
+    "Production CLI bounded by per-level batches and total time."
+  ],
+  "generatorVersion": "original-pipeline-v4",
+  "profileVersion": "original-ch3-local-bounded-v2",
+  "endlessProfileVersion": "original-ch3-endless-bounded-v3",
+  "artifacts": {
+    "Resources/levels.json": "9233f079cd8311286dd2bdac9150d7db8b18874160eb3b6e821e51c7fba6791b",
+    "Validation/experimental-levels.json": "29f70c4761d6839bb71483d1aa873197ea4bc71960382383b23ae018dd83fc22",
+    "Validation/levels-report.json": "b809ee2ebd418a478cafb4bf249ee81befaa0a796f34ec48ca153f86c628d02f",
+    "Validation/experimental-levels-report.json": "ca00efe64052da34738c149216a9f42c92e1496e92e36563aa258efe1b568656",
+    "Resources/difficulty-profiles.json": "5f580a6d7bf91c329f45ce3551361790c8185565146cc514ee14049c755124ac",
+    "Resources/levels-legacy-v3.json": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49",
+    "Resources/similarity-config.json": "38cc55b00e7cdc6c707e116827dec967e562b057ef932ccd23313a758c4eae27"
+  },
+  "production": {
+    "levels": 150,
+    "experimentalConsecutiveLevels": [
+      151,
+      180
+    ],
+    "acceptedBatches": 180,
+    "candidatesPerBatch": 100,
+    "rejectedBatches": 17,
+    "totalCandidates": 19700,
+    "changedRegionMaps": 16,
+    "independentAudit": "Validation/generation-0267/independent-audit.json",
+    "seedRebuildAudit": "Validation/generation-0267/seed-rebuild-audit.json",
+    "automatedSolverGuidedPlaythroughs": 76,
+    "humanPlaytests": 0,
+    "pilots": [
+      {
+        "level": 1,
+        "passed": true,
+        "size": 4,
+        "generationMilliseconds": 12
+      },
+      {
+        "level": 10,
+        "passed": true,
+        "size": 6,
+        "generationMilliseconds": 24
+      },
+      {
+        "level": 11,
+        "passed": true,
+        "size": 6,
+        "generationMilliseconds": 19
+      },
+      {
+        "level": 16,
+        "passed": true,
+        "size": 6,
+        "generationMilliseconds": 16
+      },
+      {
+        "level": 151,
+        "passed": true,
+        "size": 10,
+        "generationMilliseconds": 45
+      },
+      {
+        "level": 160,
+        "passed": true,
+        "size": 8,
+        "generationMilliseconds": 32
+      }
+    ]
+  },
+  "legacyCompatibility": {
+    "v3PackSHA256": "bf6c5caa15e8d4f659c629261124b86c0a5d8f3190980e2e0febecbc08a4be49",
+    "oldV3SeedRebuildsPassed": 150,
+    "oldV3SeedRebuildsTotal": 150,
+    "appSavedBoardUpgradeTestPassed": true
+  },
+  "verification": {
+    "coreFull": {
+      "passed": 195,
+      "failed": 0,
+      "scope": "Final engine code, pre-promotion resource pack; generation tests include new profiles."
+    },
+    "finalPackAffectedCore": {
+      "passed": 67,
+      "failed": 0,
+      "scope": "New resource pack and v2/v3/current tutorial cases; includes runtime-budget, save and hint consumers."
+    },
+    "app": {
+      "passed": 18,
+      "failed": 0,
+      "device": "iPhone 17 Pro simulator / iOS 26.5",
+      "scope": "Generation audit, history, tutorial recovery/migration and v3 saved-board upgrade."
+    },
+    "ui": {
+      "passed": 3,
+      "failed": 0,
+      "device": "iPhone 17e simulator / iOS 26.5",
+      "scope": "Current L1 nine-step tutorial, L150 to generated L151 with cold same-board restore, generation failure preserves completed L150."
+    },
+    "runtimeBudget": {
+      "build": "macOS Swift debug tests, not physical iPhone performance",
+      "budgetMilliseconds": 4000,
+      "maxElapsedMilliseconds": 3635,
+      "rows": [
+        {
+          "level": 151,
+          "elapsedMilliseconds": 1112,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 152,
+          "elapsedMilliseconds": 575,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 153,
+          "elapsedMilliseconds": 683,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 154,
+          "elapsedMilliseconds": 2547,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 155,
+          "elapsedMilliseconds": 835,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 156,
+          "elapsedMilliseconds": 673,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 157,
+          "elapsedMilliseconds": 1447,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 158,
+          "elapsedMilliseconds": 1069,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 159,
+          "elapsedMilliseconds": 2432,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 160,
+          "elapsedMilliseconds": 902,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 161,
+          "elapsedMilliseconds": 740,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 162,
+          "elapsedMilliseconds": 520,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 163,
+          "elapsedMilliseconds": 560,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 164,
+          "elapsedMilliseconds": 1178,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 165,
+          "elapsedMilliseconds": 2389,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 166,
+          "elapsedMilliseconds": 1551,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 167,
+          "elapsedMilliseconds": 1235,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 168,
+          "elapsedMilliseconds": 1111,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 169,
+          "elapsedMilliseconds": 1064,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 170,
+          "elapsedMilliseconds": 937,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 171,
+          "elapsedMilliseconds": 1785,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 172,
+          "elapsedMilliseconds": 988,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 173,
+          "elapsedMilliseconds": 1300,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 174,
+          "elapsedMilliseconds": 776,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 175,
+          "elapsedMilliseconds": 1985,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 176,
+          "elapsedMilliseconds": 2820,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 177,
+          "elapsedMilliseconds": 3635,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 178,
+          "elapsedMilliseconds": 1104,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 179,
+          "elapsedMilliseconds": 1330,
+          "budgetMilliseconds": 4000
+        },
+        {
+          "level": 180,
+          "elapsedMilliseconds": 700,
+          "budgetMilliseconds": 4000
+        }
+      ]
+    },
+    "logs": [
+      "Validation/test-runs/generation-0267-core-full.log",
+      "Validation/test-runs/generation-0267-final-pack-core.log",
+      "Validation/test-runs/generation-0267-app.xcresult",
+      "Validation/test-runs/generation-0267-ui.xcresult"
+    ],
+    "logAvailability": "Raw local test logs/bundles are git-ignored; this summary and independent reports are committed."
+  },
+  "remaining": [
+    "Confirm whether the original Pawdoku or the observed Meowdoku is the formal difficulty reference.",
+    "Collect and freeze real reference levels 1–150 and player measurements; validate ±10–15% against calibrated targets.",
+    "Supply real cross-product corpus and review/calibrate global similarity weights/threshold.",
+    "Physical iPhone playtest of the new pack and formal release acceptance; no phone update performed this round."
+  ],
+  "noClaim": [
+    "No actual reference sampling completed this round.",
+    "Quality/difficulty/time/risk estimates are local Demo heuristics, not measured player behavior.",
+    "No proof of unlimited generation or human minimum reasoning depth.",
+    "The 88-item original checklist was not fully reexecuted."
+  ]
+}

@@ -2,9 +2,9 @@ import XCTest
 @testable import CapydokuCore
 
 final class DynamicTutorialPlanTests: XCTestCase {
-    private func firstPuzzle(legacy: Bool = false) throws -> Puzzle {
+    private func firstPuzzle(catalog: String) throws -> Puzzle {
         let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
-        let path = legacy ? "Resources/levels-legacy-v2.json" : "Resources/levels.json"
+        let path = "Resources/\(catalog).json"
         let puzzles = try JSONDecoder().decode([Puzzle].self, from: Data(contentsOf: root.appendingPathComponent(path)))
         return try XCTUnwrap(puzzles.first { $0.id == 1 })
     }
@@ -13,12 +13,12 @@ final class DynamicTutorialPlanTests: XCTestCase {
         let expectedIDs = ["row", "column", "region", "neighbors", "mark", "undo", "swipe", "swipeVertical", "find"]
         let expectedActions = ["read", "read", "read", "read", "tap", "tap", "swipe", "swipe", "doubleTap"]
         // These are the actual two shipped L1 geometries, not generated expectations.
-        let cases: [(Bool, [[Int]])] = [
-            (false, [[8, 9, 10, 11], [0, 4, 8, 12], [8], [4, 5, 9, 12, 13], [0], [0], [4, 5], [9, 13], [8]]),
-            (true, [[0, 1, 2, 3], [1, 5, 9, 13], [1], [0, 2, 4, 5, 6], [0], [0], [2, 3], [0, 4], [1]])
+        let cases: [(String, [[Int]])] = [
+            ("levels-legacy-v3", [[8, 9, 10, 11], [0, 4, 8, 12], [8], [4, 5, 9, 12, 13], [0], [0], [4, 5], [9, 13], [8]]),
+            ("levels-legacy-v2", [[0, 1, 2, 3], [1, 5, 9, 13], [1], [0, 2, 4, 5, 6], [0], [0], [2, 3], [0, 4], [1]])
         ]
         for (legacyCatalog, targets) in cases {
-            let steps = PuzzleHints.tutorial(puzzle: try firstPuzzle(legacy: legacyCatalog), version: .legacy)
+            let steps = PuzzleHints.tutorial(puzzle: try firstPuzzle(catalog: legacyCatalog), version: .legacy)
             XCTAssertEqual(steps.map(\.id), expectedIDs)
             XCTAssertEqual(steps.map(\.action), expectedActions)
             XCTAssertEqual(steps.map(\.targetCells), targets,
@@ -27,13 +27,14 @@ final class DynamicTutorialPlanTests: XCTestCase {
     }
 
     func testDifferentRealBoardsChooseInformativeRuleOrdersAndRemainPlayable() throws {
-        let cases: [(Bool, [String])] = [
-            (false, ["region", "neighbors", "row", "column"]),
-            (true, ["region", "neighbors", "column", "row"])
+        let cases: [(String, [String])] = [
+            ("levels-legacy-v3", ["region", "neighbors", "row", "column"]),
+            ("levels-legacy-v2", ["region", "neighbors", "column", "row"]),
+            ("levels", ["region", "neighbors", "column", "row"])
         ]
         var orders = Set<[String]>()
-        for (legacyCatalog, expectedOrder) in cases {
-            let puzzle = try firstPuzzle(legacy: legacyCatalog)
+        for (catalog, expectedOrder) in cases {
+            let puzzle = try firstPuzzle(catalog: catalog)
             XCTAssertTrue(PuzzleSolver.validate(puzzle).valid)
             XCTAssertTrue(PuzzleHints.canTeach(puzzle: puzzle))
             let steps = PuzzleHints.tutorial(puzzle: puzzle, version: .boardDriven)
@@ -59,7 +60,7 @@ final class DynamicTutorialPlanTests: XCTestCase {
                 XCTAssertEqual(rule.action, "read")
                 XCTAssertEqual(Set(rule.targetCells), geometry[rule.id])
             }
-            // Both boards teach five neighboring exclusions first. Their orientation
+            // These boards teach five neighboring exclusions first. Their orientation
             // changes which line adds two NEW cells and which adds only one.
             var explained = Set<Int>()
             let newExclusionCounts = rules.map { step -> Int in
@@ -81,8 +82,8 @@ final class DynamicTutorialPlanTests: XCTestCase {
         XCTAssertEqual(try JSONEncoder().encode(TutorialPlanVersion.legacy), Data("1".utf8))
         XCTAssertEqual(try JSONEncoder().encode(TutorialPlanVersion.boardDriven), Data("2".utf8))
         XCTAssertThrowsError(try JSONDecoder().decode(TutorialPlanVersion.self, from: Data("3".utf8)))
-        for legacyCatalog in [false, true] {
-            let puzzle = try firstPuzzle(legacy: legacyCatalog)
+        for catalog in ["levels-legacy-v3", "levels-legacy-v2", "levels"] {
+            let puzzle = try firstPuzzle(catalog: catalog)
             XCTAssertEqual(PuzzleHints.tutorial(puzzle: puzzle), PuzzleHints.tutorial(puzzle: puzzle, version: .boardDriven))
             for version in [TutorialPlanVersion.legacy, .boardDriven] {
                 let expected = PuzzleHints.tutorial(puzzle: puzzle, version: version)

@@ -152,12 +152,12 @@ final class EnvironmentCandidateUITests: XCTestCase {
             observations.append("Tutorial already completed; not replayed or reset.")
             return
         }
-        // Exact unchanged Resources/levels.json fixture: original-pipeline-v3,
-        // L1 4x4, seed 11400714819535654101, solution [1, 7, 8, 14].
-        // Singleton region at 8 proves the current v2 path: region, neighbors,
-        // row, column, tap/undo 0, swipe 4->5, swipe 9->13, double-tap 8.
+        // Current Resources/levels.json fixture: original-pipeline-v4,
+        // L1 4x4, seed 11400714819535654101, candidate 70, solution [1, 7, 8, 14].
+        // Singleton region at 1 proves the current v2 path: region, neighbors,
+        // column, row, tap/undo 0, swipe 2->3, swipe 0->4, double-tap 1.
         // A partly played/other tutorial is not reset or silently skipped.
-        let rules = ["每个区域一只", "保持距离", "每行一只", "每列一只"]
+        let rules = ["每个区域一只", "保持距离", "每列一只", "每行一只"]
         for (index, rule) in rules.enumerated() {
             expectLabel("tutorial_title", "\(index + 1)/9 · \(rule)")
             if index == 0 { capture("current-pack-chinese-tutorial") }
@@ -168,16 +168,16 @@ final class EnvironmentCandidateUITests: XCTestCase {
         expectLabel("tutorial_title", "6/9 · 再次单击撤销")
         tap("cell_0"); expectValue("cell_0", "empty")
         expectLabel("tutorial_title", "7/9 · 沿一行滑动")
-        drag(from: 4, to: 5)
-        expectValue("cell_4", "marked"); expectValue("cell_5", "marked")
+        drag(from: 2, to: 3)
+        expectValue("cell_2", "marked"); expectValue("cell_3", "marked")
         expectLabel("tutorial_title", "8/9 · 沿一列滑动")
-        drag(from: 9, to: 13)
-        expectValue("cell_9", "marked"); expectValue("cell_13", "marked")
+        drag(from: 0, to: 4)
+        expectValue("cell_0", "marked"); expectValue("cell_4", "marked")
         expectLabel("tutorial_title", "9/9 · 双击寻找")
-        item("cell_8").doubleTap(); expectValue("cell_8", "found")
+        item("cell_1").doubleTap(); expectValue("cell_1", "found")
         waitFor({ !self.item("tutorial_title").exists && self.item("hint").exists }, "Tutorial must finish into ordinary play.")
         XCTAssertEqual((0..<16).map { item("cell_\($0)").value as? String ?? "missing" },
-                       (0..<16).map { $0 == 8 ? "found" : [4, 5, 9, 13].contains($0) ? "marked" : "empty" })
+                       (0..<16).map { $0 == 1 ? "found" : [0, 2, 3, 4].contains($0) ? "marked" : "empty" })
         observations.append("Completed all nine current-pack teaching steps through real UI gestures.")
         capture("chinese-tutorial-complete-one-found")
     }
@@ -195,7 +195,7 @@ final class EnvironmentCandidateUITests: XCTestCase {
         expectLabel("level_title", chinese ? "第 1 关" : "Level 1")
         // Validate the actual visible region map as well as the player marks;
         // matching values alone would not establish restoration of the same board.
-        let regions = [0, 0, 1, 1, 0, 0, 0, 1, 2, 3, 0, 1, 3, 3, 3, 1]
+        let regions = [2, 0, 1, 1, 2, 2, 1, 1, 2, 3, 3, 1, 2, 3, 3, 1]
         let values = (0..<16).map { index -> String in
             let cell = item("cell_\(index)")
             let position = chinese
@@ -236,7 +236,7 @@ final class EnvironmentCandidateUITests: XCTestCase {
         completeFreshTutorialIfPresent()
         let before = snapshot(chinese: true)
         XCTAssertEqual(before.values.filter { $0 == "found" }.count, 1, "Expected newly taught or previously audited L1; do not alter unrelated saved gameplay.")
-        XCTAssertEqual(before.values[8], "found")
+        XCTAssertEqual(before.values[1], "found")
         XCTAssertEqual(before.score, "100"); XCTAssertEqual(before.lives, "3")
         tap("home"); tap("settings"); tap("language_en")
         expectLabel("settings_title", "Settings"); expectValue("language_en", "Selected")

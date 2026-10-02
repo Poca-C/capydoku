@@ -28,6 +28,42 @@ final class GenerationAuditIntegrationTests: XCTestCase {
         let generationAuditIssues: [String]
         let generationReportScope: String
     }
+    @MainActor func testInvalidSimilarityConfigurationPreservesPlayableBoard() throws {
+        let app = AppModel(saveDirectory: directory(), runsTimer: false, feedbackEnabled: false,
+            generationSimilarityData: Data("{\"threshold\":-1}".utf8))
+        app.progress.tutorialCompleted = true
+        app.start(level: 2)
+        let before = app.progress
+        XCTAssertNotNil(app.session)
+        app.start(level: 151)
+        XCTAssertNotNil(app.errorMessage)
+        XCTAssertFalse(app.loading)
+        XCTAssertEqual(app.progress, before)
+        XCTAssertNil(app.lastGenerationReport)
+    }
+    @MainActor func testV3InProgressBoardSurvivesV4PackUpgrade() throws {
+        let url = try XCTUnwrap(Bundle.main.url(forResource: "levels-legacy-v3", withExtension: "json"))
+        let oldPack = try JSONDecoder().decode([Puzzle].self, from: Data(contentsOf: url))
+        let currentURL = try XCTUnwrap(Bundle.main.url(forResource: "levels", withExtension: "json"))
+        let currentPack = try JSONDecoder().decode([Puzzle].self, from: Data(contentsOf: currentURL))
+        let oldBoard = try XCTUnwrap(oldPack.first { old in currentPack.contains { $0.id == old.id && $0 != old } })
+        let directory = directory()
+        let oldApp = AppModel(saveDirectory: directory, runsTimer: false, feedbackEnabled: false, bundledPuzzles: oldPack)
+        oldApp.progress.tutorialCompleted = true
+        oldApp.start(level: oldBoard.id)
+        let mark = try XCTUnwrap(oldBoard.regions.indices.first { !oldBoard.solution.contains($0) })
+        oldApp.toggle(mark)
+        oldApp.save(force: true)
+        XCTAssertTrue(oldApp.session?.marks.contains(mark) == true)
+        let before = oldApp.progress
+        let upgraded = model(directory)
+        XCTAssertEqual(upgraded.progress, before)
+        XCTAssertEqual(upgraded.session?.puzzle, oldBoard)
+        let fresh = model(self.directory())
+        fresh.start(level: oldBoard.id)
+        XCTAssertEqual(fresh.session?.puzzle, currentPack.first { $0.id == oldBoard.id })
+        XCTAssertNotEqual(fresh.session?.puzzle, oldBoard)
+    }
     @MainActor private func export(_ app: AppModel) throws -> Export {
         app.exportDiagnostics()
         let data = try Data(contentsOf: XCTUnwrap(app.exportURL))
@@ -39,6 +75,11 @@ final class GenerationAuditIntegrationTests: XCTestCase {
         try await generate(warm, level: 151)
         XCTAssertNil(warm.errorMessage)
         let accepted = try XCTUnwrap(warm.lastGenerationReport)
+        let url = try XCTUnwrap(Bundle.main.url(forResource: "similarity-config", withExtension: "json"))
+        let configuration = try SimilarityConfiguration.decode(Data(contentsOf: url))
+        XCTAssertEqual(accepted.selectedSimilarityReport?.configurationVersion, configuration.version)
+        XCTAssertNotNil(accepted.selectedQualityReport)
+        XCTAssertNotNil(accepted.selectedSolverReport?.deductionTrace)
         let board = try XCTUnwrap(warm.session?.puzzle)
         let before = warm.progress
         warm.config.generatorCandidateLimit = 1 // Applies only to the next generation, not the saved current session.

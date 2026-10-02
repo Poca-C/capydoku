@@ -1,0 +1,214 @@
+{
+  "build": "0.2.67 (70)",
+  "sourceChecklist": "Validation/checklist-source.json",
+  "full88Reexecuted": false,
+  "formalSignOff": false,
+  "rows": [
+    {
+      "id": "03-01",
+      "module": "棋盘规则与求解验证",
+      "originalAcceptanceText": "操作  校验已知合法、无解、多解与区域不连通样例。\n通过  仅合法且唯一解者通过；拒绝项有可复核原因。",
+      "formalStatusAfterThisRound": "unchanged; scoped engineering verification only",
+      "evidence": [
+        "Validation/generation-0267/summary.json",
+        "Validation/generation-0267/independent-audit.json"
+      ]
+    },
+    {
+      "id": "03-03",
+      "module": "棋盘规则与求解验证",
+      "originalAcceptanceText": "操作  对照答案、候选和逻辑求解步骤。\n通过  解数量为1；步骤理由成立，游戏判定与求解规则一致。",
+      "formalStatusAfterThisRound": "unchanged; scoped engineering verification only",
+      "evidence": [
+        "Validation/generation-0267/summary.json",
+        "Validation/generation-0267/independent-audit.json"
+      ]
+    },
+    {
+      "id": "06-01",
+      "module": "生成器与质量筛选",
+      "originalAcceptanceText": "操作  以教学、普通和Hard目标批量生成候选。\n通过  输入与批次有版本；候选数量、各阶段淘汰数及入选数可核对。",
+      "formalStatusAfterThisRound": "unchanged; scoped engineering verification only",
+      "evidence": [
+        "Validation/generation-0267/summary.json",
+        "Validation/generation-0267/independent-audit.json"
+      ]
+    },
+    {
+      "id": "06-02",
+      "module": "生成器与质量筛选",
+      "originalAcceptanceText": "操作  加入非法、非唯一解、难度越界及违规试探候选。\n通过  全部被相应筛选拒绝，不能混入正式包。",
+      "formalStatusAfterThisRound": "unchanged; scoped engineering verification only",
+      "evidence": [
+        "Validation/generation-0267/summary.json",
+        "Validation/generation-0267/independent-audit.json"
+      ]
+    },
+    {
+      "id": "06-03",
+      "module": "生成器与质量筛选",
+      "originalAcceptanceText": "操作  用重复与相似棋盘测试本产品及跨产品比较。\n通过  按冻结比较库、权重和阈值拒绝；报告包含命中对象与原因。",
+      "formalStatusAfterThisRound": "unchanged; scoped engineering verification only",
+      "evidence": [
+        "Validation/generation-0267/summary.json",
+        "Validation/generation-0267/independent-audit.json"
+      ]
+    },
+    {
+      "id": "06-04",
+      "module": "生成器与质量筛选",
+      "originalAcceptanceText": "操作  用同一seed、生成器和配置版本重建。\n通过  棋盘、答案及生成结果一致；关卡附求解、难度与相似度报告。",
+      "formalStatusAfterThisRound": "unchanged; scoped engineering verification only",
+      "evidence": [
+        "Validation/generation-0267/summary.json",
+        "Validation/generation-0267/independent-audit.json"
+      ]
+    },
+    {
+      "id": "06-05",
+      "module": "生成器与质量筛选",
+      "originalAcceptanceText": "操作  设置无法命中的目标或耗尽候选预算。\n通过  有明确终止及原因，不无期限重试、不返回不合格关卡。",
+      "formalStatusAfterThisRound": "unchanged; scoped engineering verification only",
+      "evidence": [
+        "Validation/generation-0267/summary.json",
+        "Validation/generation-0267/independent-audit.json"
+      ]
+    },
+    {
+      "id": "08-01",
+      "module": "动态新手教学",
+      "originalAcceptanceText": "操作  更换多个合格L1种子，完整完成教学。\n通过  均为4×4合格教学盘；目标随棋盘变化且明确，不依赖固定坐标。",
+      "formalStatusAfterThisRound": "unchanged; scoped engineering verification only",
+      "evidence": [
+        "Validation/generation-0267/summary.json",
+        "Validation/generation-0267/independent-audit.json"
+      ]
+    },
+    {
+      "id": "08-02",
+      "module": "动态新手教学",
+      "originalAcceptanceText": "操作  逐项检查教学内容，并操作非目标格。\n通过  覆盖单击及撤销、横纵滑动、双击和四条规则；越权操作不破坏教学。",
+      "formalStatusAfterThisRound": "unchanged; scoped engineering verification only",
+      "evidence": [
+        "Validation/generation-0267/summary.json",
+        "Validation/generation-0267/independent-audit.json"
+      ]
+    },
+    {
+      "id": "08-03",
+      "module": "动态新手教学",
+      "originalAcceptanceText": "操作  中途退出或强退后重进，再完成并重新启动。\n通过  按F4恢复或重启，完成状态保存；无教学路径的候选被拒绝。",
+      "formalStatusAfterThisRound": "unchanged; scoped engineering verification only",
+      "evidence": [
+        "Validation/generation-0267/summary.json",
+        "Validation/generation-0267/independent-audit.json"
+      ]
+    },
+    {
+      "id": "09-01",
+      "module": "前150关内容与难度曲线",
+      "originalAcceptanceText": "操作  核对正式包L1–150编号、配置及数据清单。\n通过  无缺号或重复；每关有Profile、seed、版本及三类报告，与验收版本一致。",
+      "formalStatusAfterThisRound": "unchanged; scoped engineering verification only",
+      "evidence": [
+        "Validation/generation-0267/summary.json",
+        "Validation/generation-0267/independent-audit.json"
+      ]
+    },
+    {
+      "id": "09-02",
+      "module": "前150关内容与难度曲线",
+      "originalAcceptanceText": "操作  执行150关全部硬校验与难度筛选。\n通过  全部合法、连通且唯一解；难度在冻结容差内、不跨分段。",
+      "formalStatusAfterThisRound": "unchanged; scoped engineering verification only",
+      "evidence": [
+        "Validation/generation-0267/summary.json",
+        "Validation/generation-0267/independent-audit.json"
+      ]
+    },
+    {
+      "id": "09-03",
+      "module": "前150关内容与难度曲线",
+      "originalAcceptanceText": "操作  核对前20关角色及L10至L150的十关节点。\n通过  符合冻结节奏；每十关节点为Hard，高难之后有恢复或稳定关。",
+      "formalStatusAfterThisRound": "unchanged; scoped engineering verification only",
+      "evidence": [
+        "Validation/generation-0267/summary.json",
+        "Validation/generation-0267/independent-audit.json"
+      ]
+    },
+    {
+      "id": "09-04",
+      "module": "前150关内容与难度曲线",
+      "originalAcceptanceText": "操作  试玩前20关、全部Hard与恢复关及其他抽样关。\n通过  提示和教学可用；保存体验记录，发现的难度或错误提示问题已修复复测。",
+      "formalStatusAfterThisRound": "unchanged; scoped engineering verification only",
+      "evidence": [
+        "Validation/generation-0267/summary.json",
+        "Validation/generation-0267/independent-audit.json"
+      ]
+    },
+    {
+      "id": "10-01",
+      "module": "151关以后的关卡循环",
+      "originalAcceptanceText": "操作  真机通关150并进入151，连续推进后续关卡。\n通过  顺利衔接；按确认的数据方案取关，不缺关、不换错答案。",
+      "formalStatusAfterThisRound": "unchanged; scoped engineering verification only",
+      "evidence": [
+        "Validation/generation-0267/summary.json",
+        "Validation/generation-0267/independent-audit.json"
+      ]
+    },
+    {
+      "id": "10-02",
+      "module": "151关以后的关卡循环",
+      "originalAcceptanceText": "操作  按F3约定的种子、棋盘规模与批次数量生成。\n通过  每十关至少2个Flow、1个Recovery，第10关Hard；不超过长期难度上限。",
+      "formalStatusAfterThisRound": "unchanged; scoped engineering verification only",
+      "evidence": [
+        "Validation/generation-0267/summary.json",
+        "Validation/generation-0267/independent-audit.json"
+      ]
+    },
+    {
+      "id": "10-03",
+      "module": "151关以后的关卡循环",
+      "originalAcceptanceText": "操作  检查每次生成的过滤日志，并测试超时和耗尽。\n通过  仍强制执行合法、难度和相似度校验；耗时和失败恢复符合约定。",
+      "formalStatusAfterThisRound": "unchanged; scoped engineering verification only",
+      "evidence": [
+        "Validation/generation-0267/summary.json",
+        "Validation/generation-0267/independent-audit.json"
+      ]
+    },
+    {
+      "id": "13-06",
+      "module": "本地存档与中断恢复",
+      "originalAcceptanceText": "操作  升级旧schema存档，并模拟迁移失败。\n通过  成功保留进度、库存及签到；失败保留旧文件，不静默覆盖坏数据。",
+      "formalStatusAfterThisRound": "unchanged; scoped engineering verification only",
+      "evidence": [
+        "Validation/generation-0267/summary.json",
+        "Validation/generation-0267/independent-audit.json"
+      ]
+    },
+    {
+      "id": "16-02",
+      "module": "真机测试与修复回归",
+      "originalAcceptanceText": "操作  按约定性能标准测启动、帧率、内存和生成耗时。\n通过  结果达到F7标准；不以“看起来流畅”代替测量，标准未定则标B。",
+      "formalStatusAfterThisRound": "unchanged; scoped engineering verification only",
+      "evidence": [
+        "Validation/generation-0267/summary.json",
+        "Validation/generation-0267/independent-audit.json"
+      ]
+    },
+    {
+      "id": "16-03",
+      "module": "真机测试与修复回归",
+      "originalAcceptanceText": "操作  在最终构建复测所有失败用例及受影响流程。\n通过  每个Bug均有关联修复版本、复测结论和证据，旧版本通过不能代替复测。",
+      "formalStatusAfterThisRound": "unchanged; scoped engineering verification only",
+      "evidence": [
+        "Validation/generation-0267/summary.json",
+        "Validation/generation-0267/independent-audit.json"
+      ]
+    }
+  ],
+  "remaining": [
+    "Pawdoku/Meowdoku正式基线选择待确认",
+    "真实前150关难度采样/玩家校准",
+    "跨产品语料和阈值评审",
+    "真机与正式上线验收"
+  ]
+}

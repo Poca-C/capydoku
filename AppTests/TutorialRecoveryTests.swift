@@ -160,7 +160,7 @@ final class TutorialRecoveryTests: XCTestCase {
         XCTAssertEqual(app.session?.puzzle.id, 1)
         XCTAssertEqual(app.progress.tutorialPlanVersion, .current)
         XCTAssertEqual(PuzzleHints.tutorial(puzzle: try XCTUnwrap(app.session?.puzzle), version: .current).prefix(4).map(\.id),
-                       ["region", "neighbors", "row", "column"], "Current packaged L1 follows its board-derived rule order.")
+                       ["region", "neighbors", "column", "row"], "Current packaged L1 follows its board-derived rule order.")
         try completeTutorial(app, at: dir)
     }
 

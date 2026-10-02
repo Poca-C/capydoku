@@ -1,7 +1,20 @@
 import Foundation
 
+/// A replayable observation of this deterministic deduction engine, not a proof
+/// of the minimum number of steps or reasoning depth required by a human.
+public struct DeductionTraceStep: Codable, Equatable, Sendable {
+    public var index: Int
+    public var rule: String
+    public var ruleTier: Int
+    public var candidatesBefore: Int
+    public var candidatesAfter: Int
+    public var confirmedCell: Int?
+    public var excludedCells: [Int]
+    public var eliminationChainLength: Int
+}
+
 public struct DifficultySolverReport: Codable, Equatable, Sendable {
-    public var evaluatorVersion = "shared-deduction-metrics-v1"
+    public var evaluatorVersion = "shared-deduction-trace-v2"
     public var metricStatus = "Local rule-engine estimates; not calibrated human solve time, failure probability, or proven minimal reasoning depth. trialRequired means this configured deduction engine stalls."
     public var uniqueSolution: Bool
     public var regionConnected: Bool
@@ -23,6 +36,9 @@ public struct DifficultySolverReport: Codable, Equatable, Sendable {
     public var estimatedFailPressure: Double
     public var rulesUsed: [String: Int]
     public var initialForcedCells: [Int]
+    // Optional for decoding reports produced before trace recording was added.
+    public var deductionTrace: [DeductionTraceStep]? = nil
+    public var maximumEliminationChainLength: Int? = nil
     public var hardChecksPassed: Bool { uniqueSolution && regionConnected && exactlyOnePerRow && exactlyOnePerColumn && exactlyOnePerRegion && noAdjacentCapybaras }
 }
 
@@ -34,6 +50,8 @@ public enum DifficultyEvaluator {
         let inBounds = validShape && answer.allSatisfy { cells.contains($0) }
         var candidates = cells, confirmed = Set<Int>(), rules: [String: Int] = [:]
         var steps = 0, forced = 0, depth = 0, densitySum = 0.0
+        var trace: [DeductionTraceStep] = []
+        var chain = 0, maximumChain = 0
         let initial = validShape ? Set(PuzzleHints.units(puzzle).filter { $0.1.count == 1 }.flatMap(\.1)).sorted() : []
         if validation.valid {
             while steps < n * n * 2, let deduction = PuzzleHints.deduction(puzzle, candidates: candidates, confirmed: confirmed) {
@@ -48,8 +66,15 @@ public enum DifficultyEvaluator {
                 }
                 depth = max(depth, ruleDepth)
                 rules[deduction.rule, default: 0] += 1
+                let before = candidates.count
+                let excluded = candidates.intersection(deduction.excluded).sorted()
+                if deduction.forced == nil { chain += 1; maximumChain = max(maximumChain, chain) }
                 candidates.subtract(deduction.excluded)
                 if let cell = deduction.forced { confirmed.insert(cell); candidates.remove(cell); forced += 1 }
+                trace.append(.init(index: steps, rule: deduction.rule, ruleTier: ruleDepth,
+                    candidatesBefore: before, candidatesAfter: candidates.count,
+                    confirmedCell: deduction.forced, excludedCells: excluded, eliminationChainLength: chain))
+                if deduction.forced != nil { chain = 0 }
                 steps += 1
             }
         }
@@ -77,7 +102,8 @@ public enum DifficultyEvaluator {
             candidateDensity: density, logicalStepCount: steps, errorRisk: errorRisk, trialRequired: trial,
             regionComplexity: complexity, estimatedSolveTime: Double(steps * 5 + max(0, depth - 1) * 15 + (trial ? 90 : 0)),
             estimatedHintPressure: min(1, (1 - forcedDensity) * 0.6 + (trial ? 0.4 : 0)),
-            estimatedFailPressure: errorRisk, rulesUsed: rules, initialForcedCells: initial)
+            estimatedFailPressure: errorRisk, rulesUsed: rules, initialForcedCells: initial,
+            deductionTrace: trace, maximumEliminationChainLength: maximumChain)
     }
 }
 
@@ -91,7 +117,7 @@ public struct DifficultyFilterReport: Codable, Equatable, Sendable {
 
 public enum DifficultyFilter {
     public static func evaluate(puzzle: Puzzle, solver: DifficultySolverReport, target: DifficultyProfile) -> DifficultyFilterReport {
-        let checks: [(String, Double, DifficultyRange)] = [
+        var checks: [(String, Double, DifficultyRange)] = [
             ("difficulty_score", solver.difficultyScore, target.difficultyScoreTarget),
             ("band_score", solver.difficultyScore, target.bandScoreRange),
             ("board_size", Double(puzzle.size), target.boardSizeCurveTarget),
@@ -107,6 +133,11 @@ public enum DifficultyFilter {
             ("fail_pressure_estimate", solver.estimatedFailPressure, target.failPressureTarget)
         ]
         var reasons = target.validationErrors
+        if let range = target.eliminationChainLengthTarget {
+            if let observed = solver.maximumEliminationChainLength {
+                checks.append(("elimination_chain_length", Double(observed), range))
+            } else { reasons.append("missing_deduction_trace") }
+        }
         if !solver.hardChecksPassed { reasons.append("solver_hard_checks") }
         if solver.trialRequired && !target.trialAllowed { reasons.append("trial_not_allowed") }
         for (name, value, range) in checks where !range.contains(value) { reasons.append(name + "_outside_target") }

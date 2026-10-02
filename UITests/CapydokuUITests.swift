@@ -140,15 +140,15 @@ final class CapydokuUITests: XCTestCase {
     }
 
     func testGuidedTutorialCoversRulesTapUndoBothSwipesAndFind() {
-        // Current original-pipeline-v3 L1, seed 11400714819535654101.
-        // Region 3 is the singleton at cell 8. Its rule conflicts derive the
-        // teaching path: tap/undo 0, row swipe 4→5, column swipe 9→13, find 8.
+        // Current original-pipeline-v4 L1, seed 11400714819535654101, candidate 70.
+        // Region 1 is the singleton at cell 1. Its rule conflicts derive the
+        // teaching path: tap/undo 0, row swipe 2→3, column swipe 0→4, find 1.
         app.launchArguments = ["-ui-testing", "-reset-demo", "-level", "1"]
         app.launch()
         XCTAssertTrue(app.staticTexts["tutorial_title"].waitForExistence(timeout: 15))
-        // Singleton 8 proves the animal; its five neighbors add the most exclusions,
-        // followed by two new row exclusions and one new column exclusion.
-        for rule in ["One per region", "Give them space", "One per row", "One per column"] {
+        // Singleton 1 proves the animal; its five neighbors add the most exclusions,
+        // followed by two new column exclusions and one new row exclusion.
+        for rule in ["One per region", "Give them space", "One per column", "One per row"] {
             XCTAssertTrue(app.staticTexts["tutorial_title"].label.contains(rule))
             attachScreen("v2-current-board-\(rule)")
             cell(0).tap()
@@ -162,20 +162,20 @@ final class CapydokuUITests: XCTestCase {
         cell(0).tap()
         expectValue(cell(0), "empty")
         XCTAssertTrue(app.staticTexts["tutorial_title"].label.contains("row"))
-        drag(from: 4, to: 5)
-        expectValue(cell(4), "marked")
-        expectValue(cell(5), "marked")
+        drag(from: 2, to: 3)
+        expectValue(cell(2), "marked")
+        expectValue(cell(3), "marked")
         XCTAssertTrue(app.staticTexts["tutorial_title"].label.contains("column"))
-        drag(from: 9, to: 13)
-        expectValue(cell(9), "marked")
-        expectValue(cell(13), "marked")
+        drag(from: 0, to: 4)
+        expectValue(cell(0), "marked")
+        expectValue(cell(4), "marked")
         XCTAssertTrue(app.staticTexts["tutorial_title"].label.contains("Double-tap"))
-        cell(8).doubleTap()
-        expectValue(cell(8), "found")
+        cell(1).doubleTap()
+        expectValue(cell(1), "found")
         XCTAssertTrue(app.buttons["hint"].waitForExistence(timeout: 5))
         XCTAssertFalse(app.staticTexts["tutorial_title"].exists)
         expectValue(app.otherElements["lives"], "3")
-        XCTAssertEqual(boardValues(), (0..<16).map { $0 == 8 ? "found" : [4, 5, 9, 13].contains($0) ? "marked" : "empty" })
+        XCTAssertEqual(boardValues(), (0..<16).map { $0 == 1 ? "found" : [0, 2, 3, 4].contains($0) ? "marked" : "empty" })
         attachScreen("Current Level 1 guided tutorial complete")
     }
 
@@ -577,7 +577,7 @@ final class CapydokuUITests: XCTestCase {
         app.launchArguments = ["-ui-testing", "-reset-demo", "-skip-tutorial", "-level", "10"]
         app.launch()
         XCTAssertTrue(cell(35).waitForExistence(timeout: 15))
-        // Current original-pipeline-v3 L10: 6×6, seed 3326683751187130770, candidate 48.
+        // Current original-pipeline-v4 L10: 6×6, seed 3326683751187130770, candidate 48.
         for index in [3, 7, 16, 20, 29, 30] {
             cell(index).doubleTap()
             if index != 30 { expectValue(cell(index), "found") }
@@ -607,7 +607,7 @@ final class CapydokuUITests: XCTestCase {
     }
 
     private func launchAndSolveLevel150(extraArguments: [String] = []) {
-        // Current Resources/levels.json: original-pipeline-v3, seed 13006768117413479694, candidate 12, 8×8.
+        // Current Resources/levels.json: original-pipeline-v4, seed 13006768117413479694, candidate 12, 8×8.
         app.launchArguments = ["-ui-testing", "-reset-demo", "-skip-tutorial"] + extraArguments + ["-level", "150"]
         app.launch()
         XCTAssertTrue(cell(63).waitForExistence(timeout: 15))

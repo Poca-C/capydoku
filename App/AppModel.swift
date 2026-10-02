@@ -91,6 +91,8 @@ final class AppModel: ObservableObject {
     private var loadingID = UUID()
     private var generationCandidateLimitOverride: Int?
     private var generationRetryCounts: [Int: Int] = [:]
+    private var generationSimilarityConfiguration: SimilarityConfiguration?
+    private var generationConfigurationError: String?
     private var activeOfferID: String?
     private var rewardDeadline: DispatchWorkItem?
     private var pendingRewardSignal: RewardSignal?
@@ -135,7 +137,7 @@ final class AppModel: ObservableObject {
     var usesLocalTestAudio: Bool { feedback.usesLocalTestAudio }
 
     init(saveDirectory: URL? = nil, rewardProvider: RewardProvider? = nil,
-         rewardTimeout: TimeInterval = 5, runsTimer: Bool = true, feedbackEnabled: Bool = true, bundledPuzzles: [Puzzle]? = nil, interstitialProvider: InterstitialProvider? = nil, startupBypassForTesting: Bool = true, analyticsIdentityStore: AnalyticsIdentityStore? = nil, gameplayConfigurationStore: GameplayConfigurationStore? = nil, feedbackPlayer: FeedbackPlayer? = nil) {
+         rewardTimeout: TimeInterval = 5, runsTimer: Bool = true, feedbackEnabled: Bool = true, bundledPuzzles: [Puzzle]? = nil, interstitialProvider: InterstitialProvider? = nil, startupBypassForTesting: Bool = true, analyticsIdentityStore: AnalyticsIdentityStore? = nil, gameplayConfigurationStore: GameplayConfigurationStore? = nil, feedbackPlayer: FeedbackPlayer? = nil, generationSimilarityData: Data? = nil) {
         #if DEBUG
         let args = ProcessInfo.processInfo.arguments
         #else
@@ -162,6 +164,13 @@ final class AppModel: ObservableObject {
         self.gameplayConfigurations = gameplayConfigurationStore ?? GameplayConfigurationStore(
             directory: self.saveDirectory, target: .current, bundledData: bundledConfiguration,
             provider: HTTPGameplayConfigurationProvider.configured())
+        do {
+            let data: Data
+            if let generationSimilarityData { data = generationSimilarityData }
+            else if let url = Bundle.main.url(forResource: "similarity-config", withExtension: "json") { data = try Data(contentsOf: url) }
+            else { throw NSError(domain: "GenerationConfiguration", code: 1) }
+            generationSimilarityConfiguration = try SimilarityConfiguration.decode(data)
+        } catch { generationConfigurationError = error.localizedDescription }
         let packName = args.contains("-legacy-fixture") ? "levels-legacy-v2" : "levels"
         if let bundledPuzzles { levels = Dictionary(uniqueKeysWithValues: bundledPuzzles.map { ($0.id, $0) }) }
         else if let url = Bundle.main.url(forResource: packName, withExtension: "json") {
@@ -171,8 +180,10 @@ final class AppModel: ObservableObject {
             } catch { errorMessage = "The packaged levels could not be loaded. \(error.localizedDescription)" }
         } else { errorMessage = "The level pack is missing from this build." }
         let packagedLevels = levels
-        let legacy: [Puzzle] = Bundle.main.url(forResource: "levels-legacy-v2", withExtension: "json")
-            .flatMap { try? Data(contentsOf: $0) }.flatMap { try? JSONDecoder().decode([Puzzle].self, from: $0) } ?? []
+        let legacy: [Puzzle] = ["levels-legacy-v2", "levels-legacy-v3"].flatMap { name in
+            Bundle.main.url(forResource: name, withExtension: "json")
+                .flatMap { try? Data(contentsOf: $0) }.flatMap { try? JSONDecoder().decode([Puzzle].self, from: $0) } ?? []
+        }
         store = SaveStore(directory: self.saveDirectory, packagedPuzzle: { packagedLevels[$0] }, archivedPuzzles: { id in legacy.filter { $0.id == id } })
         experimentalHistory = ExperimentalPuzzleHistoryStore(directory: self.saveDirectory)
         generationAudits = GenerationAuditStore(directory: self.saveDirectory)
@@ -535,6 +546,9 @@ final class AppModel: ObservableObject {
         guard level >= 151 && level <= 100_000 else {
             errorMessage = "This level is not included in the demo pack."; return
         }
+        guard let similarity = generationSimilarityConfiguration, generationConfigurationError == nil else {
+            errorMessage = "Generation stopped safely. Your current board is intact. Please retry."; return
+        }
         loading = true
         lastGenerationReport = nil
         flushPendingSaves()
@@ -556,7 +570,7 @@ final class AppModel: ObservableObject {
                 // Same-level variants are still historical boards and must not
                 // disappear from the similarity corpus on a repeat/debug start.
                 let corpus = packaged.map { SimilarityCorpusEntry(game: "CapyDoku", puzzle: $0) } + previous.corpus
-                let generated = try PuzzleGenerator.generateAudited(level: level, seed: retrySeed, corpus: corpus, similarityConfiguration: .strict, maxAttempts: candidateLimit, timeBudgetMilliseconds: configuration.generatorBudgetMilliseconds)
+                let generated = try PuzzleGenerator.generateAudited(level: level, seed: retrySeed, corpus: corpus, similarityConfiguration: similarity, maxAttempts: candidateLimit, timeBudgetMilliseconds: configuration.generatorBudgetMilliseconds)
                 // Original [190–194]: retain the complete batch result, including
                 // rejected batches, before a selected board can become playable.
                 try audits.record(generated)

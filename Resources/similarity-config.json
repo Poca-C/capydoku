@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "version": "local-demo-similarity-v2",
+  "provenance": "local demo, uncalibrated",
+  "threshold": 0.90,
+  "strictOriginalHardRejections": true,
+  "crossProductCorpusAvailable": false,
+  "weights": {
+    "regionGraph": 0.45,
+    "regionSizeDistribution": 0.15,
+    "answerPattern": 0.30,
+    "openingState": 0.10
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "sampling": {
+    "templateVersion": "difficulty-sampling-blank-v1",
+    "status": "blank_template_not_a_profile_catalog",
+    "sampleSetID": null,
+    "protocolVersion": null,
+    "sampledAt": null,
+    "capydokuLevelRange": { "minimum": 1, "maximum": 150 },
+    "requireEveryLevelMapped": true
+  },
+  "referenceProducts": {
+    "formalBaseline": {
+      "product": "Pawdoku",
+      "productVersion": null,
+      "sourceLocator": null,
+      "evidenceManifestSHA256": null,
+      "samplingStatus": "not_sampled"
+    },
+    "auxiliaryObservation": {
+      "product": "Meowdoku",
+      "productVersion": null,
+      "sourceLocator": null,
+      "formalBaselineReplacementConfirmed": null,
+      "confirmedBy": null,
+      "confirmationEvidenceID": null
+    }
+  },
+  "evidence": {
+    "files": [],
+    "blankFileRecord": {
+      "evidenceID": null,
+      "sourceProduct": null,
+      "artifactPath": null,
+      "sha256": null,
+      "capturedAt": null,
+      "description": null
+    }
+  },
+  "levelMappings": {
+    "records": [],
+    "blankRecord": {
+      "capydokuLevelID": null,
+      "referenceLevelRange": { "minimum": null, "maximum": null },
+      "observedBoardSizeRange": { "minimum": null, "maximum": null },
+      "observedRegionCountRange": { "minimum": null, "maximum": null },
+      "observedDifficultyRole": null,
+      "proposedDifficultyBand": null,
+      "evidenceIDs": []
+    }
+  },
+  "independentPlayerSamples": {
+    "records": [],
+    "blankRecord": {
+      "anonymousParticipantID": null,
+      "priorExperience": null,
+      "sourceProduct": null,
+      "referenceLevelID": null,
+      "attemptIndex": null,
+      "activeSolveSeconds": null,
+      "excludedPauseOrAdSeconds": null,
+      "hintsUsed": null,
+      "wrongPlacements": null,
+      "failed": null,
+      "completed": null,
+      "evidenceIDs": []
+    }
+  },
+  "engineMeasurementCalibration": {
+    "evaluatorVersion": null,
+    "records": [],
+    "blankRecord": {
+      "capydokuLevelID": null,
+      "ruleClassDepth": null,
+      "maximumEliminationChainLength": null,
+      "logicalStepCount": null,
+      "forcedMoveDensity": null,
+      "candidateDensity": null,
+      "engineStalled": null,
+      "engineEstimatedSolveSeconds": null,
+      "humanReasoningDepthReview": null,
+      "calibrationEvidenceIDs": []
+    },
+    "metricMappingMethod": null,
+    "calibrationStatus": "not_calibrated"
+  },
+  "profileCatalogPreparation": {
+    "baseCatalogPath": null,
+    "catalogVersion": null,
+    "profileVersion": null,
+    "aggregationAndOutlierRule": null,
+    "minimumIndependentSamplePolicy": null,
+    "tolerancePercent": null,
+    "bandBoundaryReviewEvidenceIDs": [],
+    "targetMappingAndCalibrationEvidenceIDs": [],
+    "proposedCatalogPath": null
+  },
+  "manualFreezeReview": {
+    "reviewers": [],
+    "reviewedAt": null,
+    "all150LevelsMapped": null,
+    "evidenceHashesVerified": null,
+    "humanMetricsCalibrated": null,
+    "toleranceAndBandBoundariesReviewed": null,
+    "decision": "not_frozen",
+    "reviewEvidenceID": null
+  }
+}
